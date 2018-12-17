@@ -1,0 +1,70 @@
+﻿@model EczaneNobetDegisimDetay
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h5 class="text-danger">Silmek istediğinizden emin misiniz?</h5>
+<div>
+    <h4>EczaneNobetDegisim</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGrupAdi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EskiNobetciEczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EskiNobetciEczaneAdi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kaydeden)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kaydeden)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KayitTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KayitTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

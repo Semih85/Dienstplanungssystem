@@ -1,0 +1,234 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-4">
+            <canvas id="myChart1"></canvas>
+        </div>
+        <div class="col-lg-4">
+            <canvas id="myChart2"></canvas>
+        </div>
+        <div class="col-lg-4">
+            <canvas id="myChart3"></canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <canvas id="myChart4"></canvas>
+        </div>
+        <div class="col-lg-4">
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        </div>
+    </div>
+
+
+
+</div>
+<script>
+
+    var ctx1 = document.getElementById('myChart1').getContext('2d');
+    var chart = new Chart(ctx1, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "My First dataset",
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    });
+
+</script>
+
+<script>
+    var ctx3 = document.getElementById("myChart3");
+    new Chart(ctx3,
+        {
+            type: "bubble",
+            data:
+            {
+                datasets: [{
+                    label: "First Dataset",
+                    data: [
+                        { "x": 12, "y": 36, "r": 12 },
+                        { "x": 33, "y": 12, "r": 18 },
+                        { "x": 20, "y": 30, "r": 22 },
+                        { "x": 40, "y": 10, "r": 10 }
+                    ],
+                    backgroundColor: "rgb(255, 99, 132)"
+                }]
+            }
+        });
+</script>
+
+<script>
+    var ctx2 = document.getElementById("myChart2");
+    var myChart = new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var ctx4 = document.getElementById("myChart4");
+
+    var myChart = new Chart(ctx4, {
+        type: 'line',
+        data: {
+            datasets: [{
+                data: [20, 50, 100, 75, 25, 0],
+                label: 'Left dataset',
+
+                // This binds the dataset to the left y axis
+                yAxisID: 'left-y-axis'
+            }, {
+                data: [0.1, 0.5, 1.0, 2.0, 1.5, 0],
+                label: 'Right dataset',
+
+                // This binds the dataset to the right y axis
+                yAxisID: 'right-y-axis',
+            }],
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    id: 'left-y-axis',
+                    type: 'linear',
+                    position: 'left'
+                }, {
+                    id: 'right-y-axis',
+                    type: 'linear',
+                    position: 'right'
+                }]
+            }
+        }
+    });
+
+
+    window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            exportEnabled: true,
+            title: {
+                text: "Temperature Comparison of Two Cities"
+            },
+            axisX: {
+                valueFormatString: "MMM"
+            },
+            axisY: {
+                includeZero: false,
+                suffix: " °C"
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: toggleDataSeries
+            },
+            data: [{
+                type: "rangeColumn",
+                name: "City 1",
+                showInLegend: true,
+                yValueFormatString: "#0.## °C",
+                xValueFormatString: "MMM, YYYY",
+                dataPoints: [
+                    { x: new Date(2016, 00), y: [08, 20] },
+                    { x: new Date(2016, 01), y: [10, 24] },
+                    { x: new Date(2016, 02), y: [16, 29] },
+                    { x: new Date(2016, 03), y: [21, 36] },
+                    { x: new Date(2016, 04), y: [26, 39] },
+                    { x: new Date(2016, 05), y: [22, 39] },
+                    { x: new Date(2016, 06), y: [20, 35] },
+                    { x: new Date(2016, 07), y: [20, 34] },
+                    { x: new Date(2016, 08), y: [20, 34] },
+                    { x: new Date(2016, 09), y: [19, 33] },
+                    { x: new Date(2016, 10), y: [13, 28] },
+                    { x: new Date(2016, 11), y: [09, 23] }
+                ]
+            },
+            {
+                type: "rangeColumn",
+                name: "City 2",
+                showInLegend: true,
+                yValueFormatString: "#0.## °C",
+                xValueFormatString: "MMM, YYYY",
+                dataPoints: [
+                    { x: new Date(2016, 00), y: [16, 28] },
+                    { x: new Date(2016, 01), y: [18, 31] },
+                    { x: new Date(2016, 02), y: [20, 33] },
+                    { x: new Date(2016, 03), y: [22, 34] },
+                    { x: new Date(2016, 04), y: [22, 33] },
+                    { x: new Date(2016, 05), y: [20, 29] },
+                    { x: new Date(2016, 06), y: [20, 28] },
+                    { x: new Date(2016, 07), y: [20, 28] },
+                    { x: new Date(2016, 08), y: [20, 28] },
+                    { x: new Date(2016, 09), y: [20, 28] },
+                    { x: new Date(2016, 10), y: [14, 27] },
+                    { x: new Date(2016, 11), y: [11, 26] }
+                ]
+            }]
+        });
+        chart.render();
+
+        function toggleDataSeries(e) {
+            if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            } else {
+                e.dataSeries.visible = true;
+            }
+            e.chart.render();
+        }
+
+    }
+</script>

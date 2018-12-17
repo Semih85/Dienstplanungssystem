@@ -1,0 +1,53 @@
+﻿
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+        border: thin;
+    }
+</style>
+
+
+<div class="container-fluid">
+
+    <h2>İletişim</h2>
+
+    <hr />
+
+    <table style="height: auto; border: none">
+        <tr>
+            <td>E-Posta</td>
+            <td>:</td>
+            <td><a href="mailto:nobetyaz@gmail.com">nobetyaz@gmail.com</a></td>
+        </tr>
+        <tr>
+            <td>Adres</td>
+            <td>:</td>
+            <td>-- </td>
+        </tr>
+    </table>
+
+    <hr />
+
+    <div id="map">
+        @* harita  *@
+    </div>
+</div>
+
+<script>
+    function myMap() {
+        var mapCanvas = document.getElementById("map");
+        var mapOptions = {
+            //center: new google.maps.LatLng(41.015137, 28.979530), //istanbul
+            center: new google.maps.LatLng(39.925533, 32.866287), //ankara
+            zoom: 10
+        };
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+    }
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP29ma6oCPNwQPFdXbilDCYBKP2Gk52CE&callback=myMap">
+
+</script>
+

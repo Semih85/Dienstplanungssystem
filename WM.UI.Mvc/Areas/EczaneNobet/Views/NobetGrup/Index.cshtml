@@ -1,0 +1,120 @@
+﻿@model NobetGrupViewModel
+@{
+    ViewBag.Title = "Nöbet Gruplar |  Nöbet Yaz";
+}
+
+<h4>
+    Nöbet Gruplar
+    <a class="btn btn-outline-success btn-sm ml-5" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+</h4>
+<hr />
+
+@{
+    SelectList eczaneOdalar = ViewBag.EczaneOdaId;
+    SelectList nobetUstGruplar = ViewBag.NobetUstGrupId;
+    //SelectList nobetGruplar = ViewBag.NobetGrupId;
+    var rolId = ViewBag.rolId;
+}
+
+@if (rolId < 3)
+{
+    using (Html.BeginForm("Index", "EczaneNobet", FormMethod.Post, new { @class = "form-inline" }))
+    {
+        <div class="form-group">
+            <label class="form-control-label mr-sm-2">Oda: </label>
+            @Html.DropDownList("eczaneOdalar", eczaneOdalar, htmlAttributes: new { @class = "form-control" })
+        </div>
+
+        <div class="form-group ml-3">
+            <label class="form-control-label mr-sm-2">Üst Grup: </label>
+            @Html.DropDownList("nobetUstGruplar", nobetUstGruplar, htmlAttributes: new { @class = "form-control" })
+        </div>
+
+        <div class="form-group ml-3" style="display:block">
+            <button type="submit" id="listele" class="btn btn-outline-primary">Listele</button>
+        </div>
+    }
+    <hr />
+}
+
+<table class="table table-hover table-striped table-sm">
+    <thead class="thead-light">
+        <tr>
+            <th style="width:10%">
+                @Html.DisplayNameFor(model => model.NobetGruplar.FirstOrDefault().NobetUstGrupAdi)
+            </th>
+            <th style="width:10%">
+                @Html.DisplayName("Nöbet Grubu")
+            </th>
+            <th style="width:10%">
+                @Html.DisplayName("Alt Grup")
+            </th>
+            <th style="width:10%">
+                Durum
+            </th>
+            <th style="width:10%"></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.NobetGruplar)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetUstGrupAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adi)               
+            </td>
+            <td>
+                @{
+                    var altGrup = @Model.NobetGruptakiAltGruplar.SingleOrDefault(x => x.NobetGrupId == item.Id);
+                    var altGrupSayisi = 0;
+                }
+
+                @if (altGrup != null)
+                {
+                    altGrupSayisi = altGrup.AltGrupSayisi;
+
+                <a class="badge badge-primary" href="@Url.Action("CreateAjax", "EczaneNobetGrupAltGrup", new { nobetGrupId = item.Id, area= "EczaneNobet" })" data-toggle="tooltip" data-placement="top" title="Alt grupları görmek için tıklayınız!">
+                    Var <span class="badge badge-light">@altGrupSayisi</span>
+                    @*<span class="fa fa-sitemap"></span>*@
+                </a>
+                }
+                else
+                {
+                    <span class="badge badge-light">Yok</span>
+                }
+
+            </td>
+            <td>
+                @if (item.BitisTarihi != null)
+                {
+                    <span class="badge badge-danger">
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        Pasif
+                    </span>
+                }
+                else
+                {
+                    <span class="badge badge-success">
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        Aktif
+                    </span>
+                }
+            </td>
+            <td>
+                @{
+                    var target = $"#islem{@item.Id}";
+                }
+                <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fa fa-cog"></span>
+                </button>
+                <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                    <a class="btn btn-outline-success btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                    <a class="btn btn-outline-primary btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                    <a class="btn btn-outline-danger btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,82 @@
+﻿@model EczaneNobetDegistir
+
+@{
+    ViewBag.Title = "Nöbet Değiştir |  Nöbet Yaz";
+}
+<h4>Nöbet Değiştir</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EczaneNobetGrupIdEski, "Eski Nöbetçi Eczane:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("EczaneNobetGrupIdEski", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.EczaneNobetGrupIdEski, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TakvimId, "Nöbet Tarihi:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TakvimId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.TakvimId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NobetGorevTipId, "Görev Tipi:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("NobetGorevTipId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                @Html.ValidationMessageFor(model => model.NobetGorevTipId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EczaneNobetGrupId, "Yeni Nöbetçi Eczane:", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold text-primary" })
+            <div class="col-md-10">
+                @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new { @class = "form-control selectpicker",
+               data_live_search = "true",
+               data_actions_box = "true",
+               title = "Eczane seçiniz..."
+           })
+                @Html.ValidationMessageFor(model => model.EczaneNobetGrupId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Açıklama:", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold text-primary" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control", placeHolder = "Lütfen nöbet değişim nedenini kısaca giriniz..." } })
+                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Nöbeti Değiştir" class="btn btn-outline-primary" title="Nöbeti Değiştir" />
+                @Html.ActionLink("Listeye Dön", "NobetDegistir", null, new { @class = "btn btn-outline-warning" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/validation/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+
+    <script>
+                                //$("EczaneNobetGrupIdEski")
+    </script>
+
+
+}

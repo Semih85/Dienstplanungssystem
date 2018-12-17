@@ -1,0 +1,50 @@
+﻿@model WM.Northwind.Entities.ComplexTypes.EczaneNobet.EczaneNobetIstekDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EczaneNobetIstek</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IstekAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IstekAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tarih)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

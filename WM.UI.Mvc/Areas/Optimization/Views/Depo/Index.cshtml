@@ -1,0 +1,44 @@
+﻿@model IEnumerable<WM.Northwind.Entities.Concrete.Transport.Depo>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@section SolTaraf{
+    @Html.Action("TransportDataPartialView", "Transport", new { area = "Optimization" })
+}
+
+<h2>Depolar</h2>
+
+<hr />
+<p>
+    @Html.ActionLink("Yeni Kayıt", "CreateAjax")
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Talep)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Talep)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Detaylar", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

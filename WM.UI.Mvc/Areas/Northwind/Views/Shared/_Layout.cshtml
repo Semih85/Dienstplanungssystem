@@ -1,0 +1,145 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <!-- Required meta tags -->
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap, font-awasome, Site CSS -->
+
+    @Styles.Render("~/bundle/style")
+    @RenderSection("styles", false)
+
+</head>
+<body>
+
+    <!-- Navbar -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top mb-5" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="/"> Nöbet Yaz</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor03">
+            <ul class="navbar-nav mr-auto">
+
+                @*<li class="nav-item active">
+                        <a class="nav-link" href="/"><i class="fa fa-home fa-lg" aria-hidden="true"></i> <span class="sr-only">(current)</span></a>
+                    </li>*@
+
+                @* Northwind Database UI *@
+                @*<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-database" aria-hidden="true"></i> Northwind </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            @Html.ActionLink("Kategoriler", "Index", "Category", new { area = "Northwind" }, new { @class = "dropdown-item" })
+                            <a class="dropdown-item" href="@Url.Action( "Index", "Product",new { area = "Northwind" })"><span class="fa fa-product-hunt"> Ürünler</span></a>
+                        </div>
+                    </li>*@
+
+                @* Araçlarım *@
+                @*<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-cogs" aria-hidden="true"></i> Araçlar</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="@Url.Action( "Index", "MyChart", new { area = "" })"><span class="fa fa-pie-chart"> Grafikler</span></a>
+                            <a class="dropdown-item" href="@Url.Action( "Index", "Makale", new { area = "" })"><span class="fa fa-edit"> Makaleler</span></a>
+                            <a class="dropdown-item" href="@Url.Action( "Index", "PivotTable", new { area = "" })"><span class="fa fa-table"> Pivot Table</span></a>
+                            <a class="dropdown-item" href="@Url.Action( "Index", "GridMvc", new { area = "" })"><span class="fa fa-codepen"> Grid Mvc</span></a>
+                        </div>
+                    </li>*@
+
+                @* Optimizasyon *@
+                @*<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-cubes" aria-hidden="true"></i> Optimizasyon </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            @Html.ActionLink("Blend", "Index", "Blend", new { area = "Optimization" }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Transport", "Index", "Transport", new { area = "Optimization" }, new { @class = "dropdown-item" })
+                            @Html.ActionLink("Eczane Nöbet", "Index", "EczaneNobet", new { area = "EczaneNobet" }, new { @class = "dropdown-item" })
+                        </div>
+                    </li>*@
+                @* İletişim *@
+            </ul>
+
+            <ul class="navbar-nav float-md-right">
+                <li class="nav-item"> <a class="nav-link" href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })"><span class="fa fa-envelope fa-lg"></span> İletişim</a> </li>
+                @Html.Partial("_LoginPartial")
+
+                @*<li class="nav-item"><a class="nav-link" href="@Url.Action( "Register", "Account",new { area = "" })"><span class="fa fa-sign-in"> Kaydol</span></a> </li>*@
+                @*<li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Your Cart <span class="fa fa-shopping-cart"></span></a>
+                        @await Component.InvokeAsync("CartSummary")
+                    </li>*@
+            </ul>
+
+            @*<form class="form-inline">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Ara" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> <span class="fa fa-search"></span> </button>
+                </form>*@
+
+        </div>
+    </nav>
+
+    <!-- Body -->
+
+    <div class="container-fluid mt-5 pt-5">
+
+        @if (IsSectionDefined("SolTaraf"))
+        {
+            <div class="row">
+
+                <!-- Kategoriler -->
+
+                <div class="col-md-2">
+
+                    @RenderSection("SolTaraf", false)
+
+                </div>
+
+                <!-- Render Body -->
+
+                <div class="col-md-10">
+                    @RenderBody()
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+
+                <!-- Render Body -->
+
+                <div class="col-md-12">
+                    @RenderBody()
+                </div>
+            </div>
+        }
+
+
+
+    </div>
+
+    <!-- Footer #bee5eb #f5f5f5-->
+    @*<footer class="footer fixed-bottom bg-dark">
+            <div class="container-fluid">
+                <div class="navbar navbar-expand-lg">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"> <a class="nav-link" href="@Url.Action( "About", "Home",new { area = "" })"><span class="fa fa-info-circle"> Hakkımızda</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })"><span class="fa fa-envelope fa-lg"> İletişim</span></a> </li>
+
+                    </ul>
+                    <a class="navbar text-right text-muted">&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</a>
+                </div>
+
+            </div>
+        </footer>*@
+
+
+    @Scripts.Render("~/bundle/scripts")
+    @RenderSection("scripts", false)
+</body>
+</html>

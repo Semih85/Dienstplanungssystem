@@ -1,0 +1,78 @@
+﻿@model EczaneNobetGrup
+
+<h4>Eczane Nöbet Grup Düzenle</h4>
+<hr />
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmEczaneNobetGrup" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <fieldset disabled>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EczaneId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("EczaneId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.EczaneId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NobetGrupGorevTipId, "Grup", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NobetGrupGorevTipId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </fieldset>
+
+        @Html.HiddenFor(m => m.EczaneId)
+        @Html.HiddenFor(m => m.NobetGrupGorevTipId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BaslangicTarihi, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BaslangicTarihi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BitisTarihi, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BitisTarihi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-outline-primary" />
+                @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-outline-warning" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Styles{
+    @Styles.Render("~/bundle/jqueryui/style")
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/queryui/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+
+}

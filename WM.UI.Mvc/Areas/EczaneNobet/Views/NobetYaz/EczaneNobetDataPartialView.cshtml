@@ -1,0 +1,112 @@
+﻿
+@using WM.UI.Mvc.Areas.EczaneNobet.Models
+
+@model EczaneNobetPartialViewModel
+
+
+<div class="container-fluid mb-4">
+    <h4>Sık Kullanılanlar</h4>
+
+    <hr />
+
+    <div class="list-group">
+
+        @foreach (var category in Model.Categories)
+        {
+            var css_a = "list-group-item list-group-item-action";
+            var css_badge = "badge badge-secondary";
+            var chk = Html.Raw("");
+
+            if (category.Key == Model.CurrentCategory)
+            {
+                css_a += " active";
+                css_badge = "badge badge-info";
+                chk = Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>&nbsp;");
+            }
+
+            string controller = "";
+            string action = "index";
+
+            /*
+             1,"Eczane Odası"),
+             2,"Eczane Üst Grubu"),
+             3,"Eczaneler"),
+             4,"Nöbet Grupları"),
+             5,"Eczane Nöbet Grubu Tanımlama"),
+             6,"Bayramlar"),
+             7,"Eczane Eş/Sınır Grubu Tanımlama"),
+             8,"Eczane Eş/Sınır Grubu Eşleştirme"),
+             9,"Mazeret Türü Tanımlama"),
+             10,"Mazeret Tanımlama"),
+             11,"Eczane Mazeret Girişi"),
+             12,"Takvim"),
+             13,"Taslak Sonuçlar"),
+             14,"Sonuçlar")
+             */
+
+            switch (category.Key)
+            {
+                case 1:
+                    controller = "EczaneOda";
+                    break;
+                case 2:
+                    controller = "NobetUstGrup";
+                    break;
+                case 3:
+                    controller = "NobetGrup";
+                    css_a = "list-group-item list-group-item-primary";
+                    break;
+                case 4:
+                    controller = "Eczane";
+                    break;
+                case 6:
+                    controller = "Bayram";
+                    break;
+                case 5:
+                    controller = "EczaneNobetMazeret";
+                    css_a = "list-group-item list-group-item-danger";
+                    break;
+                case 7:
+                    controller = "EczaneGrupTanim";
+                    break;
+                case 8:
+                    controller = "EczaneNobetGrup";
+                    css_a = "list-group-item list-group-item-info";
+                    break;
+                case 9:
+                    controller = "MazeretTur";
+                    break;
+                case 10:
+                    controller = "Mazeret";
+                    break;
+                case 11:
+                    controller = "EczaneGrup";
+                    css_a = "list-group-item list-group-item-warning";
+                    break;
+                case 12:
+                    controller = "Takvim";
+                    break;
+                case 13:
+                    controller = "EczaneNobetSonucAktif";
+                    break;
+                case 14:
+                    controller = "EczaneNobetSonuc";
+                    css_a = "list-group-item list-group-item-success";
+                    break;
+                case 15:
+                    controller = "EczaneNobetSonuc";
+                    action = "GorselSonuclar";
+                    css_a = "list-group-item list-group-item-primary";
+                    break;
+                default:
+                    break;
+            }
+
+            <a class="@css_a" href="@Url.Action(action, controller, new { area = "EczaneNobet" })">
+                <i class="fa fa-angle-double-right" aria-hidden="true"></i> @chk  @category.Value
+            </a>
+        }
+
+    </div>
+
+</div>

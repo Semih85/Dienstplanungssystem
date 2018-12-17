@@ -1,0 +1,42 @@
+﻿@model Takvim
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detaylar</h2>
+
+<div>
+    <h4>Takvim</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Bayram.TakvimId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bayram.TakvimId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tarih)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Listeye Dön", "Index")
+</p>

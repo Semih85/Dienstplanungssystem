@@ -1,0 +1,221 @@
+﻿@model IEnumerable<BayramDetay>
+
+@{
+    ViewBag.Title = "Bayramlar |  Nöbet Yaz";
+}
+@{
+    var postAjaxSecilenleriSil = new AjaxOptions
+    {
+        AllowCache = false,
+
+        Url = Url.Action("SecilenleriSil", "Bayram"),
+        HttpMethod = "POST",
+        UpdateTargetId = "bayramlar",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "wait"
+    };
+
+    var getAjaxSearch = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("SearchWithBayram", "Bayram"),
+        HttpMethod = "GET",
+        UpdateTargetId = "bayramlar",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "wait"
+    };
+}
+
+<div class="form-inline">
+    <h4 class="mr-5">Bayramlar</h4>
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"><i class="fa fa-filter"></i></span>
+        </div>
+        <input type="text" id="myInput" class="form-control" placeholder="Sayfada Ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+    </div>
+</div>
+
+
+<div class="btn-group my-2" role="group" aria-label="Basic example">
+
+    <a class="btn btn-outline-success btn-sm mr-3" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+
+    @using (Ajax.BeginForm(null, null, postAjaxSecilenleriSil, new { @class = "form-inline", id = "formAktif" }))
+    {
+        <button type="submit" style="display:none" id="delete" class="btn btn-outline-danger btn-sm"
+                value="Seçilenleri Sil"
+                onclick="return confirm('Seçilen kayıtları kalıcı olarak silmek istediğinizden emin misiniz?');">
+            Seçilenleri Sil <i class="fa fa-remove"></i>
+        </button>
+        @Html.Hidden("silinecekBayramlar")
+        @Html.Hidden("silinMEyecekBayramlar")
+
+    }
+</div>
+
+@{
+    SelectList bayramTurler = ViewBag.BayramTurId;
+    SelectList nobetGruplar = ViewBag.NobetGrupId;
+}
+
+<div class="well">
+    <div class="row mb-2">
+        <div class="col-4">
+            <div class="form-inline">
+                @using (Ajax.BeginForm(null, null, getAjaxSearch, new { @class = "form-inline mb-2", id = "formTumu" }))
+                {
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="form-group mr-3">
+                                @Html.DropDownList("NobetGrupId", null, htmlAttributes: new
+                           {
+                               @class = "form-control selectpicker",
+                               @id = "Id",
+                               onchange = "myFunction(event)",
+                               data_width = "auto",
+                               mobile = "true",
+                               data_live_search = "true"
+                           }, optionLabel: "Tüm Gruplar")
+                            </div>
+                            <div class="form-group mr-3">
+                                @Html.DropDownList("BayramTurId", null, htmlAttributes: new
+                           {
+                               @class = "form-control selectpicker",
+                               @id = "Id",
+                               onchange = "myFunction(event)",
+                               data_width = "auto",
+                               mobile = "true",
+                               data_live_search = "true"
+                           }, optionLabel: "Tüm Bayram Türleri")
+                            </div>
+                            <div class="form-group mr-3">
+                                <span class="input-group-btn">
+                                    <button type="submit" id="submitSorgula" class="btn btn-secondary my-2 pull-right"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="progress" id="islem" style="display:none;">
+        <div class="progress-bar progress-bar-striped bg-primary progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+    </div>*@
+<div id="wait" style="display:none; position:absolute;">
+    <img src='~/Content/images/orig.gif' />
+</div>
+
+@if (TempData["EklenenBayramSayisi"] != null)
+{
+    <div class="row justify-content-sm-center">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                <i class="fa fa-check"></i> @TempData["EklenenBayramSayisi"] bayram eklenmiştir.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col">
+        <div id="bayramlar">
+            @*@{
+                    Html.RenderAction("EczaneNobetMazeretPartialView", "EczaneNobetMazeret");
+                }*@
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+
+    <script>
+
+        setTimeout(function () { $('.alert').fadeOut(500); }, 10000);
+        var selectedIDs = new Array();
+
+        $("#checkAll").click(function () {
+            $(".checkBox").prop('checked',
+                $(this).prop('checked'));
+        });
+
+        function myFunction(e) {
+            //alert('e.target.value:' + e.target.value)
+            document.getElementById("input1").value = e.target.value
+            //alert('input1:' + document.getElementById("input1").value)
+        }
+
+        $('#tblEczaneGrupTanimlar').on('click', '.clickable-row', function (event) {
+            if ($(this).hasClass('alert-info')) {
+                $(this).removeClass('alert-info');
+            } else {
+                $(this).addClass('alert-info').siblings().removeClass('alert-info');
+            }
+        });
+
+        $("#submitSorgula").click(function (e) {
+
+            $("#delete").show();
+
+        });
+
+
+        $("#delete").click(function (e) {
+            //alert('aktif.click');
+            //var selectedIDs = new Array();
+            var unseletedeIDs = new Array();
+
+
+
+            $('input:checkbox.checkBox').each(function () {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+
+                }
+                else {
+                    unseletedeIDs.push($(this).val());
+                }
+            });
+            //alert('aktif.click 2');
+            secilenBayramSayisi = selectedIDs.length;
+
+            if (secilenBayramSayisi == 0) {
+                alert("Lütfen en az 1 bayram seçiniz.")
+                e.preventDefault();
+                return false;
+            }
+
+            $("#silinecekBayramlar").val(selectedIDs);
+            $("#silinMEyecekBayramlar").val(unseletedeIDs);
+
+            //alert('selectedIDs :' + selectedIDs);
+        });
+
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLocaleLowerCase('tr-TR');
+                $("#bayramTablo tr").filter(function () {
+                    $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}
+

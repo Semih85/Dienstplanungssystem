@@ -1,0 +1,54 @@
+﻿@using WM.Northwind.Entities.ComplexTypes
+@model TransportSonucDetail
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+@section SolTaraf{
+    @Html.Action("TransportDataPartialView", "Transport", new { area = "Optimization" })
+}
+
+<h2>Kayıt Sil</h2>
+
+<hr />
+<h3>Bu kayıt silinecek! Emin misiniz?</h3>
+<div>
+    <h4>Transport Sonuç</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DepoAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepoAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FabrikaAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FabrikaAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sonuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sonuc)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-default" /> |
+            @Html.ActionLink("Listeye Dön", "Index")
+        </div>
+    }
+</div>

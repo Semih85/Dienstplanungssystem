@@ -1,0 +1,125 @@
+﻿
+@{
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ekran Yönetim - nobetyaz.com</title>
+    <link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
+    <style>
+        /*body {
+            position: relative;
+            min-width: 1024px;
+            min-height: 768px;
+            height: 100%;
+        }*/
+        #container {
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 1900px;
+            height: 950px;
+            border: 1px solid black;
+        }
+
+        /*#container h3 {
+                text-align: center;
+                margin: 0;
+                margin-bottom: 10px;
+            }
+
+        #resizable {
+            background-position: top left;
+            width: 150px;
+            height: 150px;
+        }*/
+
+        /*#resizable, #container {
+            padding: 0.5em;
+        }*/
+
+        .site {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .resim {
+            background-image: url('../../../../Content/images/hemsireCizelgeleme2.jpg');
+        }
+
+        .resize {
+            height: 200px;
+            width: 350px;
+            border: 1px solid black;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+
+        /*#frmNobetYaz {
+            top: 17px;
+            left: 5px;
+            width: 1867px;
+            height: 710px;
+        }*/
+    </style>
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script>
+
+        $(function () {
+            $(".resize")
+                .resizable({
+                    //handles: "se",
+                    ghost: true,
+                    containment: "#container"
+                    //alsoResize: "#hemsireCizelgeleme2 img"
+                })
+                .draggable({
+                    cursor: "move",
+                    containment: "#container"
+                })
+                //.find(".ui-resizable-handle").hide();
+                ;
+
+            $(".resize").find("div.ui-resizable-se").removeClass("ui-icon");
+            $(".resize").find("div.ui-resizable-se").removeClass("ui-icon-gripsmall-diagonal-se");
+        });
+
+        //$(".resize").click(function () {
+        //    $(".resize").find(".ui-resizable-handle").show();
+        //});
+        //$(document).click(function (e) {
+        //    // matches all children of droppable, change selector as needed
+        //    if ($(e.target).is(".resize")) {
+        //        $(e.target).find(".ui-resizable-handle").hide();
+        //    }
+        //    else {
+        //        $(".resize").find(".ui-resizable-handle").show();
+        //    }
+        //});
+    </script>
+
+</head>
+<body>
+
+    <div id="container">
+        <div class="resize">
+            <iframe class="site" src="https://www.youtube.com/embed/62vDl5dWl8g"></iframe>
+        </div>
+        <div class="resize" id="frmNobetYaz">
+            <iframe id="iFrameDialog" class="site" src="http://www.nobetyaz.com/"></iframe>
+        </div>
+        <div class="resize">
+            <img src="~/Content/images/hemsireCizelgeleme2.jpg" style="width: 100%;height: 100%;" />
+        </div>
+    </div>
+</body>
+</html>

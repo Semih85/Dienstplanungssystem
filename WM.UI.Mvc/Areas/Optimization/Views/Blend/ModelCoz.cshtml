@@ -1,0 +1,67 @@
+﻿@using WM.UI.Mvc.Areas.Optimization.Models
+
+@model BlendResultViewModel
+
+@{
+    ViewBag.Title = "ModelCoz";
+    string _result = Model.blendResultModel.ResultMessage;
+}
+
+<a class="btn btn-light" href="@Url.Action("Index","Blend",null)"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Blend Ana Sayfa</a>
+
+<hr />
+
+<h5>Blend Modeli Sonuçlar:</h5>
+
+@if (_result != null)
+{
+    <hr />
+
+    _result = "<b>Tebrikler. " + _result + " <i class='fa fa-check' aria-hidden='true'></i> </B>" + "Blend" + " modeli aşağıdaki şekilde çözülmüştür:" + "<br />";
+    _result += "<br />" + "Çözüm Durumu: " + Model.blendResultModel.Satatus;
+    _result += "<br />" + "<br />" + "Optimal Cost: " + Math.Round(Model.blendResultModel.ObjectiveValue, 2);
+
+    _result += "<br />" + "<br />" + "Pure metal:";
+    for (int j = 0; j < Model.blendResultModel.BlendResults.MVals.Length; j++)
+    {
+        _result += "<br />" + "(" + j + ") " + Math.Round(Model.blendResultModel.BlendResults.MVals[j], 2);
+    }
+
+    _result += "<br />" + "<br />" + "Raw material:";
+    for (int j = 0; j < Model.blendResultModel.BlendResults.RVals.Length; j++)
+    {
+        _result += "<br />" + "(" + j + ") " + Math.Round(Model.blendResultModel.BlendResults.RVals[j], 2);
+
+    }
+
+    _result += "<br />" + "<br />" + "Scrap:";
+    for (int j = 0; j < Model.blendResultModel.BlendResults.SVals.Length; j++)
+    {
+        _result += "<br />" + "(" + j + ") " + Math.Round(Model.blendResultModel.BlendResults.SVals[j], 2);
+
+    }
+
+    _result += "<br />" + "<br />" + "Ingots:";
+    for (int j = 0; j < Model.blendResultModel.BlendResults.IVals.Length; j++)
+    {
+        _result += "<br />" + "(" + j + ") " + Math.Round(Model.blendResultModel.BlendResults.IVals[j], 2);
+
+    }
+
+    _result += "<br />" + "<br />" + "Elements:";
+    for (int j = 0; j < Model.blendResultModel.BlendResults.EVals.Length; j++)
+    {
+        _result += "<br />" + "(" + j + ") " + Math.Round(Model.blendResultModel.BlendResults.EVals[j], 2);
+    }
+
+    _result += "<br />" + "<br />" + "Hepsi bu kadar:) .....";
+
+    @Html.Raw(_result)
+}
+else
+{
+    @Html.Raw("İşlem başarısız")
+}
+
+
+

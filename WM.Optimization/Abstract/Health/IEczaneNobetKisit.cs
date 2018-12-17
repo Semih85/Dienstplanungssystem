@@ -1,0 +1,295 @@
+﻿using OPTANO.Modeling.Optimization;
+using System;
+using System.Collections.Generic;
+using WM.Core.Optimization;
+using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
+using WM.Optimization.Entities.KisitParametre;
+
+namespace WM.Optimization.Abstract.Health
+{
+    public interface IEczaneNobetKisit : IOptimization
+    //where T : class, IDataModel, new() 
+    {
+        void TalebiKarsila(KpTalebiKarsila talebiKarsilaKisitParametreModel);
+        void TarihAraligiOrtalamaEnFazla(KpTarihAraligiOrtalamaEnFazla tarihAraligiOrtalamaEnFazlaKisitParametreModel);
+        void PesPeseGorevEnAz(KpPesPeseGorevEnAz kisitParametreModel);
+        void EsGruptakiEczanelereAyniGunNobetYazma(KpEsGrubaAyniGunNobetYazma esGrubaAyniGunNobetYazmaKisitParametreModel);
+        void KumulatifToplamEnFazla(KpKumulatifToplam kumulatifToplamEnFazlaKisitParametreModel);
+        void HerAyPespeseGorev(KpHerAyPespeseGorev herAyPespeseGorevKisitParametreModel);
+        void MazereteGorevYazma(KpMazereteGorevYazma mazereteGorevYazmaKisitParametreModel);
+        void IstegiKarsila(KpIstegiKarsila istegiKarsilaKisitParametreModel);
+        void BayramPespeseFarkliTur(KpBayramPespeseFarkliTur bayramPespeseFarkliTurKisitParametreModel);
+        void HerAyHaftaIciPespeseGorev(KpHerAyHaftaIciPespeseGorev herAyHaftaIciPespeseGorevKisitParametreModel);        
+        void TarihAraligindaEnAz1NobetYaz(KpTarihAraligindaEnAz1NobetYaz tarihAraligindaEnAz1NobetYazKisitParametreModel);        
+        void AyIcindeSadece1KezAyniGunNobetTutulsun(KpAyIcindeSadece1KezAyniGunNobet ayIcindeSadece1KezAyniGunNobetKisitParametreModel);
+        void BirEczaneyeAyniGunSadece1GorevYaz(KpAyniGunSadece1NobetTuru ayniGunSadece1NobetTuruKisitParametreModel);
+        void NobetGorevTipineGoreDagilimYap(KpGorevTipineGorevDagilim kisitParametreModel);        
+        void IstenenEczanelerinNobetGunleriniKisitla(KpIstenenEczanelerinNobetGunleriniKisitla kpIstenenEczanelerinNobetGunleriniKisitla);
+
+        void AyIcindeSadece1KezAyniGunNobetTutulsunGiresunAltGrup(KpAyIcindeSadece1KezAyniGunNobetGiresunAltGrup p);
+
+        void AyIcindeSadece1KezAyniGunNobetTutulsunDegiskenDonusumlu(KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
+
+        void AltGruplarlaSiraliNobetTutulsun(Model model,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+            List<EczaneNobetSonucListe2> eczaneNobetSonuclar,
+            List<EczaneNobetGrupDetay> eczaneNobetGruplar,
+            List<EczaneNobetGrupAltGrupDetay> eczaneNobetGrupAltGruplar,
+            NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+            NobetGrupGorevTipDetay nobetGrupGorevTip,
+            DateTime nobetUstGrupBaslamaTarihi,
+            List<TakvimNobetGrup> bayramlar,
+            List<TakvimNobetGrup> pazarGunleri,
+            List<TakvimNobetGrup> haftaIciGunleri,
+            VariableCollection<EczaneNobetTarihAralik> _x);
+        NobetUstGrupKisitDetay NobetUstGrupKisit(List<NobetUstGrupKisitDetay> nobetUstGrupKisitlar, string kisitAdi, int nobetUstGrupId);
+
+        double OrtalamaNobetSayisi(int gunlukNobetciSayisi, int gruptakiNobetciSayisi, int gunSayisi);
+
+        int GetToplamGunKuralNobetSayisi(EczaneNobetGrupGunKuralIstatistikYatay eczaneNobetIstatistik, int nobetGunKuralId);
+
+        List<EczaneGrupDetay> GetEczaneGruplarByEczaneGrupTanimTipId(List<EczaneGrupDetay> eczaneGruplar, int eczaneGrupTanimTipId);
+        List<EczaneNobetSonucListe2> GetSonuclarByGunGrup(List<EczaneNobetSonucListe2> sonuclar, string gunGrup);
+    }
+}
+
+// gereksiz kısıtlar
+
+//void HaftaIciGunleri(Model model,
+//List<TakvimNobetGrup> tarihler,
+//EczaneNobetGrupDetay eczaneNobetGrup,
+//List<EczaneNobetTarihAralik> eczaneNobetTarihAralikEczaneBazli,
+//double yazilabilecekHaftaIciNobetSayisi,
+//int toplamNobetSayisi,
+//NobetUstGrupKisitDetay haftaninGunleriDagilimi,
+//VariableCollection<EczaneNobetTarihAralik> _x);
+
+//void PazarPespeseGorevEnAz(Model model,
+//    List<EczaneNobetSonucListe2> eczaneGrupNobetSonuclar,
+//    List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+//    NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+//    List<TakvimNobetGrup> pazarGunleri,
+//    int gruptakiNobetciSayisi,
+//    EczaneNobetGrupDetay eczaneNobetGrup,
+//    VariableCollection<EczaneNobetTarihAralik> _x);
+
+//void HaftaIciPespeseGorevEnAz(Model model,
+//    List<EczaneNobetSonucListe2> eczaneGrupNobetSonuclar,
+//    List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+//    NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+//    List<TakvimNobetGrup> haftaIciGunleri,
+//    EczaneNobetGrupDetay eczaneNobetGrup,
+//    double altLimit,
+//    VariableCollection<EczaneNobetTarihAralik> _x);
+
+//void HerAyEnFazlaGorev(Model model,
+//    double ortalamaNobetSayisi,
+//    EczaneNobetGrupDetay eczaneNobetGrup,
+//    List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+//    NobetUstGrupKisitDetay nobetUstGrupKisitDetaylar,
+//    VariableCollection<EczaneNobetTarihAralik> _x);
+
+//void HerAyEnFazlaHaftaIci(Model model,
+//    List<TakvimNobetGrup> haftaIciGunleri,
+//    double haftaIciOrtamalaNobetSayisi,
+//    EczaneNobetGrupDetay eczaneNobetGrup,
+//    List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+//    NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+//    VariableCollection<EczaneNobetTarihAralik> _x);
+
+//void HerAyEnFazla1Gunler(Model model,
+//    EczaneNobetGrupDetay eczaneNobetGrup,
+//    List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+//    int gunDegerId,
+//    VariableCollection<EczaneNobetTarihAralik> _x);
+
+//void BayramToplamEnFazla(Model model,
+//    List<TakvimNobetGrup> bayramlar,
+//    EczaneNobetGrupDetay eczaneNobetGrup,
+//    List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+//    int toplamBayramNobetSayisi,
+//    double yillikOrtalamaGunKuralSayisi,
+//    VariableCollection<EczaneNobetTarihAralik> _x);
+
+//void HerAyEnFazla1Bayram(Model model,
+//    List<TakvimNobetGrup> bayramlar,
+//    EczaneNobetGrupDetay eczaneNobetGrup,
+//    List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+//    VariableCollection<EczaneNobetTarihAralik> _x,
+//    bool kisitAktifMi);
+
+//void EczaneGrup(
+//    Model model,
+//    List<EczaneNobetTarihAralik> eczaneNobetTarihAralikTumu,
+//    List<EczaneNobetSonucListe2> eczaneNobetSonuclarTumu,
+//    NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+//    List<EczaneGrupTanimDetay> eczaneGrupTanimlar,
+//    List<EczaneGrupDetay> eczaneGruplarTumu,
+//    NobetGrupGorevTipDetay nobetGrupGorevTip,
+//    List<TakvimNobetGrup> tarihler,
+//    VariableCollection<EczaneNobetTarihAralik> _x);
+
+//void EczaneGrupCokluCozum(
+//    Model model,
+//    List<EczaneNobetTarihAralik> eczaneNobetTarihAralikTumu,
+//    NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+//    List<EczaneGrupTanimDetay> eczaneGrupTanimlar,
+//    List<EczaneGrupDetay> eczaneGruplarTumu,
+//    List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,
+//    List<TakvimNobetGrup> tarihlerTumu,
+//    VariableCollection<EczaneNobetTarihAralik> _x);
+
+//void HerAyEnAz1Gorev(Model model,
+//    NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+//    List<TakvimNobetGrup> tarihler,
+//    int gruptakiNobetciSayisi,
+//    EczaneNobetGrupDetay eczaneNobetGrup,
+//    List<EczaneNobetTarihAralik> eczaneNobetTarihAralikEczaneBazli,
+//    VariableCollection<EczaneNobetTarihAralik> _x);
+
+//void HerAyEnAz1HaftaIciGorev(Model model,
+//    NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+//    List<TakvimNobetGrup> haftaIciGunleri,
+//    int gruptakiNobetciSayisi,
+//    EczaneNobetGrupDetay eczaneNobetGrup,
+//    List<EczaneNobetTarihAralik> eczaneNobetTarihAralikEczaneBazli,
+//    VariableCollection<EczaneNobetTarihAralik> _x);
+
+//void FarkliAyPespeseGorev(Model model,
+//    List<EczaneNobetSonucListe2> eczaneGrupNobetSonuclar,
+//    List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+//    NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+//    List<TakvimNobetGrup> tarihler,
+//    int pespeseNobetSayisi,
+//    EczaneNobetGrupDetay eczaneNobetGrup,
+//    VariableCollection<EczaneNobetTarihAralik> _x);
+
+//primitive types
+/*
+        void TarihAraligiOrtalamaEnFazla(Model model,
+        List<TakvimNobetGrup> tarihler,
+        int gunSayisi,
+        double ortalamaNobetSayisi,
+        EczaneNobetGrupDetay eczaneNobetGrup,
+        List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+        NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+        VariableCollection<EczaneNobetTarihAralik> _x);
+ */
+
+/*
+        void PesPeseGorevEnAz(Model model,
+        int nobetSayisi,
+        List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+        NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+        List<TakvimNobetGrup> tarihler,
+        DateTime nobetYazilabilecekIlkTarih,
+        EczaneNobetGrupDetay eczaneNobetGrup,
+        VariableCollection<EczaneNobetTarihAralik> _x);        
+ */
+
+/*
+        void EsGruptakiEczanelereAyniGunNobetYazma(Model model,
+        List<EczaneNobetTarihAralik> eczaneNobetTarihAralikTumu,
+        List<EczaneNobetSonucListe2> eczaneNobetSonuclarTumu,
+        NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+        List<EczaneGrupDetay> eczaneGruplarTumu,
+        List<TakvimNobetGrup> tarihlerTumu,
+        VariableCollection<EczaneNobetTarihAralik> _x);
+ */
+
+
+/*
+       void KumulatifToplamEnFazla(Model model,
+       List<TakvimNobetGrup> tarihler,
+       EczaneNobetGrupDetay eczaneNobetGrup,
+       List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+       NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+       double kumulatifOrtalamaGunKuralSayisi,
+       int toplamNobetSayisi,
+       VariableCollection<EczaneNobetTarihAralik> _x);     
+ */
+
+/*
+       void TalebiKarsila(Model model,
+       List<EczaneNobetTarihAralik> eczaneNobetTarihAralikTumu,
+       int gunlukNobetciSayisi,
+       List<NobetGrupTalepDetay> nobetGrupTalepler,
+       NobetGrupGorevTipDetay nobetGrupGorevTip,
+       List<TakvimNobetGrup> tarihler,
+       VariableCollection<EczaneNobetTarihAralik> variableCollectionEczaneNobetTarihAralik);
+ */
+
+/*
+void HerAyPespeseGorev(Model model,
+    List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+    NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+    List<TakvimNobetGrup> tarihler,
+    int pespeseNobetSayisi,
+    EczaneNobetGrupDetay eczaneNobetGrup,
+    VariableCollection<EczaneNobetTarihAralik> _x);     
+*/
+/*
+ void MazereteGorevYazma(Model model,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralikTumu,
+            NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+            List<EczaneNobetMazeretDetay> eczaneNobetMazeretler,
+            VariableCollection<EczaneNobetTarihAralik> _x);
+     */
+/*
+ void IstegiKarsila(Model model,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralikTumu,
+            NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+            List<EczaneNobetIstekDetay> eczaneNobetIstekler,
+            VariableCollection<EczaneNobetTarihAralik> _x); 
+     */
+/*
+ void BayramPespeseFarkliTur(Model model,
+            List<TakvimNobetGrup> bayramlar,
+            EczaneNobetGrupDetay eczaneNobetGrup,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+            int sonBayramTuru,
+            VariableCollection<EczaneNobetTarihAralik> _x);        
+     */
+/*
+ void HerAyHaftaIciPespeseGorev(Model model,
+            List<TakvimNobetGrup> tarihler,
+            List<TakvimNobetGrup> haftaIciGunleri,
+            double haftaIciOrtamalaNobetSayisi,
+            EczaneNobetGrupDetay eczaneNobetGrup,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+            double pespeseNobetSayisiAltLimit,
+            VariableCollection<EczaneNobetTarihAralik> _x,
+            bool kisitAktifMi);*/
+/*
+ void TarihAraligindaEnAz1NobetYaz(Model model,
+            NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+            List<TakvimNobetGrup> tarihler,
+            int gruptakiNobetciSayisi,
+            EczaneNobetGrupDetay eczaneNobetGrup,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralikEczaneBazli,
+            VariableCollection<EczaneNobetTarihAralik> _x);
+     */
+
+/*
+         void AyIcindeSadece1KezAyniGunNobetTutulsun(Model model,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+            List<AyniGunTutulanNobetDetay> ikiliEczaneler,
+            NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+            List<TakvimNobetGrup> tarihler,
+            VariableCollection<EczaneNobetTarihAralik> _x);
+     */
+/*
+ void BirEczaneyeAyniGunSadece1GorevYaz(Model model,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+            List<EczaneNobetGrupDetay> eczaneNobetGruplar,
+            List<TakvimNobetGrup> tarihler,
+            NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+            VariableCollection<EczaneNobetTarihAralik> _x);
+ */
+/*
+ void IstenenEczanelerinNobetGunleriniKisitla(Model model,
+            List<int> nobetYazilmayacakGunKuralIdList,
+            List<EczaneNobetGrupDetay> eczaneNobetGruplar,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralikTumu,
+            NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+            VariableCollection<EczaneNobetTarihAralik> _x);*/

@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "ViewDemo";
+}
+
+<h2>View Demo</h2>
+
+<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<link href="~/Content/Site.css" rel="stylesheet" />
+
+<script>
+    //java script çalışması
+
+    /* document: web sayfasının ismi yerine geçiyor.
+      statement: Her bir çalıştırılabilir satıra denir.
+    */
+    document.write("Merhaba Java Script"); //bu bir statement.
+    //document.write("Nasılsın?");
+</script>
+
+<script>
+    $(document).ready(function () {
+        // jquery kodlarının yazıldığı yer.
+        // document.getElementsByTagName("p");
+        // document.getElementsById("bir");
+
+        //$("p").hide();
+        //$("#bir").hide();
+        //$("#bir,#iki").hide();
+
+        //$("button").click(function () {
+
+        //    $("#iki").hide(500);
+
+        //});
+
+        $("button").click(function () {
+
+            alert("Merhaba");
+
+        });
+
+        $("#iki").click(function () {
+
+            $(this).hide(500);
+
+        });
+    });
+</script>
+
+<p id="bir">
+    Tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel.
+</p>
+
+<p id="iki">
+    Nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio.
+</p>
+
+<p>
+    Ipsum gravida vel pretium tellus tincidunt integer eu augue augue nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut.
+</p>
+
+@*<input type="button" name="button" value="Tıkla" />*@
+
+@*<div class="classelement">
+        semih
+    </div>
+
+    <div id="idelement">
+        asd
+    </div>*@
+
+<button>Tıkla</button>

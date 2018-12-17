@@ -1,0 +1,147 @@
+﻿@model BayramCoklu
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h4>Bayram Ekle</h4>
+
+<hr />
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.EczaneNobetGrupId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.DropDownList("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control selectpicker",
+                   multiple = "true",
+                   data_live_search = "true",
+                   data_actions_box = "true",
+                   title = "Nöbet Grup Görev Tipi seçiniz...",
+                   data_selected_text_format = "count > 4"
+               })
+                    @Html.ValidationMessageFor(model => model.NobetGrupGorevTipId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NobetGunKuralId, "Kural", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("NobetGunKuralId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NobetGunKuralId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row mx-2">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(model => model.Tarih)
+                    @Html.EditorFor(model => model.Tarih, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.Tarih, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-2">
+                    @Html.LabelFor(model => model.BayramTurId, "Kural", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.DropDownList("BayramTurId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.BayramTurId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Ekle" id="formSubmitButton" class="btn btn-outline-primary" />
+                    @Html.ActionLink("Bayram Listesi", "Index", null, new { @class = "btn btn-outline-warning" })
+                </div>
+            </div>
+
+
+        </div>
+    }
+</div>
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
+
+@section Scripts{
+
+    @Scripts.Render("~/bundle/validation/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+
+    <script>
+
+        var deger;
+
+        $(document).ready(function () {
+            var secilenHaftaninGunuSayisi = @ViewBag.SecilenHaftaninGunuSayisi;
+
+            if (secilenHaftaninGunuSayisi == 0) {
+                $('#Deger').selectpicker('selectAll');
+                secilenHaftaninGunuSayisi = $("#Deger :selected").length;
+            }
+        });
+
+        $('#NobetGrupId').selectpicker();
+
+        $("#BitisTarihi").change(function () {
+
+            var baslangicStr = $("#BaslangicTarihi").val();
+            var baslangicArr = baslangicStr.split(".");
+            var baslangicDate = new Date(baslangicArr[2], baslangicArr[1], baslangicArr[0]);
+
+            var bitisStr = $("#BitisTarihi").val();
+            var bitisArr = bitisStr.split(".");
+            var bitisDate = new Date(bitisArr[2], bitisArr[1], bitisArr[0]);
+
+            if (baslangicDate > bitisDate) {
+                alert("Başlangıç tarihi (" + baslangicStr + ") bitiş tarihinden (" + bitisStr + ") büyük olamaz!!!.");
+                $("#BitisTarihi").val("");
+                $("#BitisTarihi").focus();
+            };
+        });
+
+        $("#formSubmitButton").click(function (e) {
+
+            var bitisTarihi = $('#BitisTarihi').val();
+            var baslangicTarihi = $('#BaslangicTarihi').val();
+
+            if (baslangicTarihi != "" && bitisTarihi != "") {
+                if (bitisTarihi < baslangicTarihi) {
+                    alert("Bitiş tarihi (" + bitisTarihi + ") başlangıç tarihinden (" + baslangicTarihi + ") küçük olamaz...")
+                    e.preventDefault();
+                    return false;
+                };
+            }
+
+            secilenGrupSayisi = $("#NobetGrupId :selected").length;
+
+            if (secilenGrupSayisi == 0) {
+                alert("Lütfen en az 1 grup seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+            else if (secilenGrupSayisi > 100) {
+                alert("En fazla 100 grup seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+            deger = $("#Deger :selected").length;
+
+            if (deger == 0) {
+                alert("Lütfen haftanin günlerini seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+        });
+
+    </script>
+}

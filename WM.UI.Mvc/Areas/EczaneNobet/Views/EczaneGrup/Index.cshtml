@@ -1,0 +1,167 @@
+﻿@model EczaneGrupViewModel
+
+@{
+    ViewBag.Title = "Eczane Gruplar |  Nöbet Yaz";
+}
+
+<!-- #region ajaxOptions -->
+@{
+    var getAjaxOptions = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("Search", "EczaneGrup"),
+        HttpMethod = "GET",
+        UpdateTargetId = "eczaneGruplar",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "wait"
+    };
+
+    var getAjaxOptionsPasif = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("Search", "EczaneGrup"),
+        HttpMethod = "GET",
+        UpdateTargetId = "eczaneGruplar",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "wait"
+    };
+
+    int grupTanimId = 0;
+    if (ViewBag.grupTanimId != null)
+    {
+        grupTanimId = ViewBag.grupTanimId;
+    }
+
+    int grupId = 0;
+    if (ViewBag.grupId != null)
+    {
+        grupId = ViewBag.grupId;
+    }
+}
+<!-- #endregion -->
+
+<div class="well">
+    <div class="form-inline">
+        <h4 class="mr-5">Eczane Gruplar</h4>
+        <div class="form-group mr-5">
+            <a class="btn btn-outline-success btn-sm pull-right" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+        </div>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="text" id="myInput" class="form-control" placeholder="Sayfada ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+        </div>
+    </div>
+</div>
+
+<div class="row my-2">
+    <div class="col">
+        <div class="form-inline mt-2">
+
+            @using (Ajax.BeginForm(null, null, getAjaxOptions, new { @class = "form-inline", id = "formAra" }))
+            {
+                <div class="form-group mr-2 mb-2">
+                    @*<label class="form-control-label font-weight-bold text-secondary mr-sm-2">Nöbet Grubu:</label>*@
+                    @Html.DropDownList("NobetGrupId", null, htmlAttributes: new { @class = "form-control selectpicker", data_width = "auto", mobile = "true", data_live_search = "true" }, optionLabel: "--Grup Seçiniz--")
+                </div>
+
+                <div class="form-group mr-2 mb-2">
+                    @*<label class="form-control-label font-weight-bold text-secondary mr-sm-2">Eczane Grubu:</label>*@
+                    @Html.DropDownList("EczaneGrupTanimId", null, htmlAttributes: new { @class = "form-control selectpicker", data_width = "auto", mobile = "true", data_live_search = "true" }, optionLabel: "--Eş Grup Seçiniz--")
+                </div>
+                @Html.Hidden("Keywords")
+            }
+
+            @using (Ajax.BeginForm(null, null, getAjaxOptionsPasif, new { @class = "form mb-2", id = "formPasif" }))
+            {
+                @Html.Hidden("nobetGrupId")
+                @Html.Hidden("eczaneGrupTanimId")
+            }
+
+        </div>
+    </div>
+</div>
+
+<div id="wait" style="display:none; position:absolute;">
+    <img src='~/Content/images/orig.gif' />
+</div>
+
+<div id="eczaneGruplar">
+    @{
+            Html.RenderAction("EczaneGrupPartialView", new { EczaneGrupTanimId = grupTanimId });
+        }
+</div>
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+
+    <script>
+        $("#NobetGrupId").change(function () {
+            var formSorguNobetGrubu = $('#NobetGrupId').val();
+            $('#nobetGrupId').val(formSorguNobetGrubu);
+            $('#formAra').submit();
+        });
+
+        $("#EczaneGrupTanimId").change(function () {
+            var formSorguNobetGunKuralId = $('#EczaneGrupTanimId').val();
+            $('#eczaneGrupTanimId').val(formSorguNobetGunKuralId);
+            $('#formAra').submit();
+        });
+
+        $(document).ready(function () {
+
+            if (@grupTanimId > 0 || @grupId>0) {
+                $('#formAra').submit();
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLocaleLowerCase('tr-TR');
+                $("#eczaneGrupTanimTablo tr").filter(function () {
+                    $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <script>
+        //setTimeout(function () { $('.alert').fadeOut(500); }, 3000);
+        $(function () {
+            $("#checkAll").click(function () {
+                $('input:checkbox').not(this).prop('checked', this.checked);
+            });
+
+            $('#searching').on('input', function () {
+                //if ($('#searching').val().length > 3) {
+                //    // alert($('#searching').val())
+                //    window.location.href = '/Kullanici/Teklifim/Create/' + $('#searching').val();
+                //}
+            });
+
+            //$(document).ajaxStart(function () {
+            //    $("#wait").show();
+            //});
+            //$(document).ajaxComplete(function () {
+            //    $("#wait").hide();
+            //});
+        });
+
+        $('#tblEczaneGruplar').on('click', '.clickable-row', function (event) {
+            if ($(this).hasClass('alert-info')) {
+                $(this).removeClass('alert-info');
+            } else {
+                $(this).addClass('alert-info').siblings().removeClass('alert-info');
+            }
+        });
+    </script>
+}

@@ -1,0 +1,15 @@
+﻿
+
+<div class="form-group mr-2">
+    @*<label class="form-control-label font-weight-bold text-secondary mr-sm-2">Eczane:</label>*@
+    @Html.DropDownList("EczaneId", null, htmlAttributes: new { @class = "form-control selectpicker",
+    //multiple = "true",
+    data_live_search = "true",
+    mobile = "true",
+    //data_actions_box = "true",
+    data_width = "auto"    
+    //data_selected_text_format = "count > 4"
+},
+optionLabel: "Eczane seçiniz..."
+)
+</div>

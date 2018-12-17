@@ -1,0 +1,58 @@
+﻿@model NobetGrupKuralDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>NobetGrupKural</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGrupAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetKuralAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetKuralAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BaslangicTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BaslangicTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BitisTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BitisTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Deger)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Deger)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<WM.Northwind.Entities.Concrete.Product>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Indexdene</title>
+</head>
+<body>
+
+    @* Herper metot deneme *@
+    <div class="row">
+        <h2>Helper Metod Deneme</h2>
+        <h4>Helper Button:</h4>
+        @MyHelperMethods.Input("BtnGonder", "Button", "Gönder")
+        <hr />
+        <h4>Helper Table:</h4>
+        @MyHelperMethods.Table("TblDene", 3, 3, "Ad", "Soyad", "Yaş")
+    </div>
+
+    @* Product listelemek için otomatik oluşturulan örnek tablo *@
+    <p>
+        <a class="btn btn-outline-success" href="@Url.Action("Create", null, new { @class= "btn btn-success" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+    </p>
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantityPerUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantityPerUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.ActionLink("Düzenle", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Detaylar", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Sil", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

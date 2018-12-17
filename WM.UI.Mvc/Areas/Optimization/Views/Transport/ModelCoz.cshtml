@@ -1,0 +1,25 @@
+﻿
+@using WM.UI.Mvc.Areas.Optimization.Models
+
+@model TransportResultViewModel
+
+@{
+   // string _result;
+}
+
+<a class="btn btn-light" href="@Url.Action("Index","Transport",new { area="Optimization" })"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Transport Ana Sayfa</a>
+
+<hr />
+
+<h5>Transport Modeli Sonuçlar:</h5>
+
+<b>Tebrikler. <i class='fa fa-check' aria-hidden='true'></i> </b> Tranport modeli aşağıdaki şekilde çözülmüştür:
+
+<hr />
+
+@*@foreach (var item in Model.transportResultModel.Sonuclar)
+{
+    _result += "key:<b>" + item.Key + "</b> val: " + Math.Round(item.Value, 2) + "<br />";
+}
+
+@Html.Raw(_result)*@

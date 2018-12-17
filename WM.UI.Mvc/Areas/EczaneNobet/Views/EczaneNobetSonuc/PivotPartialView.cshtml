@@ -1,0 +1,176 @@
+﻿@using GridMvc.Html
+@model IEnumerable<EczaneNobetSonucViewListe>
+
+<h2>Nöbetçi Eczaneler Pivot Tablo</h2>
+<hr />
+
+@section styles{
+    @Styles.Render("~/bundle/pivot/style")
+}
+
+<div class="row">
+    <div class="col-6">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck">
+            <label class="form-check-label" for="defaultCheck1">
+                Default checkbox
+            </label>
+        </div>
+        <button type="button" id="idelement" class="btn btn-primary">Primary</button>
+    </div>
+</div>
+@* Sonuç Analiz *@
+<div class="row mt-4">
+    <div class="col-sm-12 col-md-12">
+        <div id="output">
+            @* Pivot Table *@
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    @Scripts.Render("~/bundle/queryui/scripts",
+                        "~/bundle/pivot/scripts")
+    <script>
+        //pivot table
+        //Model.Select(s=> new { s.Ay, s.EczaneAdi, s.GunDeger, s.GunTanim, s.NobetGrupAdi, s.Yil })
+        var _sonuclar = @Html.Raw(Json.Encode(Model));
+
+        var deger = false;
+
+        //$("#defaultCheck").change(function () {
+        //    if (this.checked) {
+        //        //alert(1)
+        //        deger = false;
+        //        if (deger) {
+        //            table1()
+        //        }
+        //        else {
+        //            table1()
+        //        }
+        //    }
+        //});
+
+        $("#idelement").click(function () {
+            //if (this.checked) {
+            //    table1()
+            //}
+            //else {
+            //    table2()
+            //}
+            if (deger) {
+                deger=false
+            }
+            else {
+                deger = true
+            }
+            table1()
+        });
+
+        if (deger) {
+            $(function table1() {
+                $("#output").pivotUI(_sonuclar,
+                    {
+                        rows: ["NobetGrupAdi", "EczaneAdi"],
+                        cols: ["GunDeger", "GunTanim"],
+                        vals: ["NobetGrupAdi"],
+                        aggregatorName: "Count",
+                        rendererName: "Heatmap"
+                    }
+                );
+            });
+        }
+        else {
+            $(function table2() {
+                $("#output").pivotUI(_sonuclar,
+                    {
+                        rows: ["Tarih"],
+                        cols: ["NobetGrupAdi"],
+                        vals: ["EczaneAdi"],
+                        aggregatorName: "List Unique Values",
+                        rendererName: "Heatmap"
+                    }
+                );
+            });
+        }
+
+
+    </script>
+}
+
+
+@*<a class="btn btn-outline-success" href="@Url.Action("Create", null, new { @class= "btn btn-success" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>*@
+
+
+@*
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EczaneNobetGrupId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TakvimId)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EczaneNobetGrupId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TakvimId)
+                </td>
+                <td>
+                    @Html.ActionLink("Nöbet Degistir", "Edit", new { id = item.EczaneNobetGrupId })
+                    @Html.ActionLink("Detaylar", "Details", new { id=item.Id }) |
+                        @Html.ActionLink("Sil", "Delete", new { id=item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+*@
+
+
+@* Sonuç Tablosu *@
+@*<div class="row">
+        <div class="col-md-8">
+
+            @Html.Grid(Model).Named("sonuclar").Columns(col =>
+                                             {
+                                        //her kolona özel seçenek belirlenebilir.
+
+                                        //Id kolonu (gizli)
+                                        col.Add(x => x.EczaneNobetGrupId, true);
+
+                                        //düzenle
+                                        col.Add().Encoded(false).Sanitized(false).RenderValueAs(html =>
+                                                {
+                                                    string htmlStr = "<a href='/Optimization/TransportSonuc/Edit/" + html.EczaneNobetGrupId.ToString() + "' class='btn btn-warning btn-sm'><span class='fa fa-edit fa-lg'></span> </a>";
+                                                    return MvcHtmlString.Create(htmlStr);
+                                                }).SetWidth(30);
+
+                                        //sil
+                                        col.Add().Encoded(false).Sanitized(false).RenderValueAs(html =>
+                                                {
+                                                    string htmlStr = "<a  href='/Optimization/TransportSonuc/Delete/" + html.EczaneNobetGrupId.ToString() + "' class='btn btn-danger btn-sm'><span class='fa fa-remove fa-lg'></span> </a>";
+                                                    return MvcHtmlString.Create(htmlStr);
+                                                }).SetWidth(30);
+
+                                        //detay
+                                        col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => $"<a href='{Url.Action("Details", "TransportSonuc", new { area = "Optimization", id = x.EczaneNobetGrupId })}' class='btn btn-info btn-sm'> <span class='fa fa-info-circle fa-lg'> </span></a>").SetWidth(30);
+
+                                        //gösterilen kolonlar
+                                        col.Add(x => x.EczaneAdi).Titled("Eczane Adı");
+                                                 col.Add(x => x.NobetGrupAdi).Titled("Nöbet Grup Adı");
+                                                 col.Add(x => x.Tarih).Titled("Tarih");
+                                                 col.Add(x => x.GunTanim).Titled("Gün Tanım");
+
+                                             }).Filterable(true).Sortable(true).WithPaging(10, 10, "grid1_page").SetLanguage("tr")
+
+        </div>
+    </div>*@

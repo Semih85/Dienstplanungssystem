@@ -1,0 +1,79 @@
+﻿
+.table-hover > tbody > tr:hover {
+    background-color: #bee5eb
+}
+
+body > .container-fluid {
+    padding-bottom: 160px;
+}
+
+.buttonCakma {
+    cursor: pointer;
+    color: blue;
+}
+/*.classelement {
+    color: aqua
+}*/
+/*p{
+    color:orangered
+}*/
+#idelement {
+    color: brown
+}
+
+
+ul li a:hover {
+    color: #bee5eb
+}
+
+.jumbotron {
+    background-image: url("../Img/img7.jpg");
+    background-size: cover;
+    height: auto;
+}
+
+th, td {
+    padding: 5px;
+}
+
+th {
+    background-color: rgb(248, 248, 248);
+}
+
+#gridT, #gridT tr {
+    border: 1px solid #0D857B;
+}
+
+#subT, #subT tr {
+    border: 1px solid #f3f3f3;
+}
+
+#subT {
+    margin: 0px 0px 0px 10px;
+    padding: 5px;
+    width: 95%;
+}
+
+    #subT th {
+        font-size: 12px;
+    }
+
+.hoverEff {
+    cursor: pointer;
+}
+
+    .hoverEff:hover {
+        background-color: rgb(248, 242, 242);
+    }
+
+.expandm {
+    background-image: url('../../../../Content/images/pm.png');
+    background-position-x: -27px;
+    background-repeat: no-repeat;
+}
+
+.collapsem {
+    background-image: url('../../../../Content/images/pm.png');
+    background-position-x: -7px;
+    background-repeat: no-repeat;
+}

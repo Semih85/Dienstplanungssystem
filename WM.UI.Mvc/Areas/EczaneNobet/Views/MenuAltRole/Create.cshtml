@@ -1,0 +1,52 @@
+﻿@model MenuAltRole
+
+<h4>Menü Alt Rol Ekle</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.MenuAltId, "Menu Alt", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.DropDownList("MenuAltId", null, htmlAttributes: new { @class = "form-control selectpicker",
+               multiple = "true",
+               //data_width = "auto",
+               data_actions_box = "true",
+               mobile = "true",
+               data_live_search = "true",
+               data_selected_text_format = "count > 4",
+               title = "Menü Seçiniz..."
+           })
+                @Html.ValidationMessageFor(model => model.MenuAltId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RoleId, "Rol", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("RoleId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ekle" class="btn btn-primary" />
+                @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+}

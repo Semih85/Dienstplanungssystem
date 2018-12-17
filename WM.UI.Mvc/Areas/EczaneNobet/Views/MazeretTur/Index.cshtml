@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MazeretTur>
+
+<h2>
+    Mazeret Tür
+    <a class="btn btn-outline-success ml-5" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+</h2>
+
+<table class="table table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Adi)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adi)
+            </td>
+            <td>
+                <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="#islem" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fa fa-cog"></span>
+                </button>
+                <div class="collapse d-md-block" id="islem">
+                    @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-success btn-sm fa fa-edit fa-lg", title = "Düzenle" })
+                    @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm fa fa-info-circle fa-lg", title = "Detaylar" })
+                    @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm fa fa-remove fa-lg", title = "Sil" })
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

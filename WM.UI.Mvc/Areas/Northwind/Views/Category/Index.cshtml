@@ -1,0 +1,35 @@
+﻿@using WM.UI.Mvc.Areas.Northwind.Models
+
+@model CategoryListViewModel
+
+
+<div class="panel panel-default w-75">
+
+    <div class="panel panel-heading ">
+
+        <h2>Kategoriler</h2>
+    </div>
+
+    <hr />
+
+    <div class="panel panel-body ">
+        <table class="table table-responsive table-striped table-hover table-sm">
+            <tr>
+                <th>Category Name</th>
+                <th>Description</th>
+            </tr>
+            @foreach (var category in Model.Categories)
+            {
+                <tr>
+                    <td>@category.CategoryName</td>
+
+                    <td> <a href="/Northwind/product/index?categoryId=@category.CategoryId">@category.Description</a> </td>
+                    @*<td>@category.Description</td>*@
+                </tr>
+            }
+        </table>
+    </div>
+
+</div>
+
+

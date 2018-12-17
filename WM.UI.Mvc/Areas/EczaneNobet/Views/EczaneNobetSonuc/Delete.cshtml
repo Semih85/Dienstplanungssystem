@@ -1,0 +1,40 @@
+﻿@model EczaneNobetSonuc
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Kayıt Sil</h2>
+
+<h3>Bu kayıt silinecek! Emin misiniz?</h3>
+<div>
+    <h4>Eczane Nöbet Sonuç</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneNobetGrup.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneNobetGrup.Aciklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Takvim.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Takvim.Aciklama)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-default" /> |
+            @Html.ActionLink("Listeye Dön", "Index")
+        </div>
+    }
+</div>

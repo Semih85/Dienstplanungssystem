@@ -1,0 +1,70 @@
+﻿@model IEnumerable<EczaneNobetFeragatDetay>
+
+<h4>
+    Eczane Nöbet Feragat
+    <a class="btn btn-outline-success btn-sm ml-5" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+</h4>
+<hr />
+<table class="table table-hover table-sm">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EczaneNobetSonucId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EczaneAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NobetGrupAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tarih)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aciklama)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EczaneNobetSonucId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EczaneAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tarih)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aciklama)
+            </td>
+            <td>
+                @{
+                    var target = $"#islem{@item.EczaneNobetSonucId}";
+                }
+                <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fa fa-cog"></span>
+                </button>
+                <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                    @Html.ActionLink(" ", "Edit", "EczaneNobetSonuc", new { id = item.EczaneNobetSonucId, nobetGrupId = item.NobetGrupId, takvimId = item.TakvimId }, new { @class = "btn btn-outline-warning btn-sm fa fa-hand-o-right fa-lg" })
+                    @Html.ActionLink(" ", "Edit", new { id = item.EczaneNobetSonucId }, new { @class = "btn btn-outline-success btn-sm fa fa-edit fa-lg", @style = "height:23px;" })
+                    @Html.ActionLink(" ", "Details", new { id = item.EczaneNobetSonucId }, new { @class = "btn btn-outline-primary btn-sm fa fa-info-circle fa-lg", @style = "height:23px;" })
+                    @Html.ActionLink(" ", "Delete", new { id = item.EczaneNobetSonucId }, new { @class = "btn btn-outline-danger btn-sm fa fa-remove fa-lg", @style = "height:23px;" })
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

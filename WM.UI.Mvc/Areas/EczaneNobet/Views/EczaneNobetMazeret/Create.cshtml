@@ -1,0 +1,275 @@
+﻿@model EczaneNobetMazeretCoklu
+
+@{
+                /**/
+
+                ViewBag.Title = "Nöbet Mazeret Ekle | Nöbet Yaz";
+}
+
+<h4>Eczane Nöbet Mazeret Ekle</h4>
+<hr />
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.EczaneNobetGrupId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new { @class = "form-control selectpicker",
+                   multiple = "true",
+                   data_live_search = "true",
+                   data_actions_box = "true",
+                   title = "Eczane seçiniz...",
+                   data_selected_text_format = "count > 4"
+               })
+                    @Html.ValidationMessageFor(model => model.EczaneNobetGrupId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MazeretId, "Mazeret", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("MazeretId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MazeretId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row ml-2">
+                <div class="form-group" id="fromTarihAraligi" style="margin-left:8px;">
+                    <div class="input-group input-daterange" style="width:350px;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
+                                <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
+                            </span>
+                        </div>
+                        @Html.TextBox("BaslangicTarihi", null , new { @class = "form-control datepicker mr-2",
+                           //data_toggle = "tooltip",
+                           //data_placement = "top",
+                           //title = "Başlangıç Tarihi",
+                           autocomplete = "off",
+                           placeHolder = "Başlama Tarihi"
+                       })
+
+                        <div class="input-group-addon mr-2 mt-1 p-1">-</div>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
+                                <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
+                            </span>
+                        </div>
+                        @Html.TextBox("BitisTarihi", null, new { @class = "form-control datepicker mr-3",
+                           //data_toggle = "tooltip",
+                           //data_placement = "top",
+                           //title = "Bitiş Tarihi",
+                           autocomplete = "off",
+                           placeHolder = "Bitiş Tarihi"
+                       })
+
+                    </div>
+                    @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.HaftaninGunu, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("HaftaninGunu", null, htmlAttributes: new { @class = "form-control selectpicker", multiple = "true", data_actions_box = "true" })
+                    @Html.ValidationMessageFor(model => model.HaftaninGunu, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-row mx-2">
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(model => model.BaslangicTarihi, htmlAttributes: new { @class = "control-label" })
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text p-2">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(model => model.BaslangicTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(model => model.BitisTarihi, htmlAttributes: new { @class = "control-label" })
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text p-2">
+                                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(model => model.BitisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group col-md-2">
+                        @Html.LabelFor(model => model.HaftaninGunu)
+                        @Html.DropDownList("HaftaninGunu", null, htmlAttributes: new { @class = "form-control selectpicker", multiple = "true", data_actions_box = "true" })
+                        @Html.ValidationMessageFor(model => model.HaftaninGunu, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.Aciklama, "Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control", placeHolder = "Mazeret açıklaması giriniz..." })
+                    @*@Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control", placeHolder = "Mazeret açıklaması giriniz..." } })*@
+                    @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Ekle" id="formSubmitButton" class="btn btn-outline-primary" />
+                    @Html.ActionLink("Eczane Nöbet Mazeret Listesi", "Index", null, new { @class = "btn btn-outline-warning" })
+                </div>
+            </div>
+
+            @if (ViewBag.Mesaj != null)
+            {
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            Başlangıç ve bitiş tarih aralığı en az  <strong>@ViewBag.minYil</strong> ila en çok <strong>@ViewBag.maxYil</strong> arasında olmalıdır!
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewBag.MesajBayram != null)
+            {
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <i class="fa fa-warning"></i> @ViewBag.MesajBayram
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (ViewBag.Mesaj2 != null)
+            {
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Başlangıç tarihi (<strong>@Model.BaslangicTarihi.ToShortDateString()</strong>) bitiş tarihinden (<strong>@Model.BitisTarihi.ToShortDateString()</strong>) büyük olamaz!
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (TempData["EklenenMazeretSayisi"] != null)
+            {
+                <div class="form-group">
+                    <div class="col-10">
+                        <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                            <i class="fa fa-check"></i> @TempData["EklenenMazeretSayisi"] günlük mazeret eklenmiştir.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
+
+@section Scripts{
+
+    @Scripts.Render("~/bundle/validation/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+
+    <script>
+
+        var secilenHaftaninGunuSayisi;
+
+        $(document).ready(function () {
+            var secilenHaftaninGunuSayisi = @ViewBag.SecilenHaftaninGunuSayisi;
+
+            if (secilenHaftaninGunuSayisi == 0 || secilenHaftaninGunuSayisi == 9) {
+                $('#HaftaninGunu').selectpicker('selectAll');
+                secilenHaftaninGunuSayisi = $("#HaftaninGunu :selected").length;
+            }
+        });
+
+        $('#EczaneNobetGrupId').selectpicker();
+
+        $("#BitisTarihi").change(function () {
+
+            var baslangicStr = $("#BaslangicTarihi").val();
+            var baslangicArr = baslangicStr.split(".");
+            var baslangicDate = new Date(baslangicArr[0], baslangicArr[1], baslangicArr[2]);
+
+            var bitisStr = $("#BitisTarihi").val();
+            var bitisArr = bitisStr.split(".");
+            var bitisDate = new Date(bitisArr[0], bitisArr[1], bitisArr[2]);
+
+            if (baslangicDate > bitisDate) {
+                alert("Başlangıç tarihi (" + baslangicStr + ") bitiş tarihinden (" + bitisStr + ") büyük olamaz!!!.");
+                $("#BitisTarihi").val("");
+                $("#BitisTarihi").focus();
+            };
+        });
+
+        $("#formSubmitButton").click(function (e) {
+
+            var bitisTarihi = $('#BitisTarihi').val();
+            var baslangicTarihi = $('#BaslangicTarihi').val();
+
+            if (baslangicTarihi != "" && bitisTarihi != "") {
+                if (bitisTarihi < baslangicTarihi) {
+                    alert("Bitiş tarihi (" + bitisTarihi + ") başlangıç tarihinden (" + baslangicTarihi + ") küçük olamaz...")
+                    e.preventDefault();
+                    return false;
+                };
+            }
+
+            secilenEczaneSayisi = $("#EczaneNobetGrupId :selected").length;
+
+            if (secilenEczaneSayisi == 0) {
+                alert("Lütfen en az 1 eczane seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+            else if (secilenEczaneSayisi > 100) {
+                alert("En fazla 100 eczane seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+            secilenHaftaninGunuSayisi = $("#HaftaninGunu :selected").length;
+
+            if (secilenHaftaninGunuSayisi == 0) {
+                alert("Lütfen haftanin günlerini seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+        });
+
+        $('.input-daterange').datepicker();
+
+    </script>
+}

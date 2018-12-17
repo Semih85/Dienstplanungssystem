@@ -1,0 +1,28 @@
+﻿@model DateTime?
+
+@Html.TextBoxFor(t => t, new { @class = "form-control datepicker" })
+
+@*@section Scripts{
+        <script>
+            alert(1)
+            $(function () {
+                $('.datepicker').datetimepicker({
+                    format: 'MM.DD.YYYY hh:mm:ss'
+                });
+            });
+
+        </script>
+    }*@
+
+@*<script>
+    $(".datepicker").datepicker({
+
+        dateFormat: "yy-mm-dd",
+        //altFormat: "yy-mm-dd",
+        //altField: "#tarih-db",
+        monthNames: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+        dayNamesMin: ["Pa", "Pt", "Sl", "Ça", "Pe", "Cu", "Ct"],
+        firstDay: 1
+    });
+
+</script>*@

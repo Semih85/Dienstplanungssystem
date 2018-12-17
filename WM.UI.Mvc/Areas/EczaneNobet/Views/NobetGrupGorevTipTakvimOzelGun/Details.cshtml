@@ -1,0 +1,58 @@
+﻿@model NobetGrupGorevTipTakvimOzelGunDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h4>Nöbet Grup Gorev Tip Özel Gün</h4>
+<hr />
+
+<div>
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGrupAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGorevTipAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGunKuralAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGunKuralAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetOzelGunAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetOzelGunAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tarih)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

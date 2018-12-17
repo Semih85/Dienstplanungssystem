@@ -1,0 +1,40 @@
+﻿@model WM.Northwind.Entities.ComplexTypes.EczaneNobet.MenuAltRoleDetay
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h5 class="text-danger">Silmek istediğinizden emin misiniz?</h5>
+<div>
+    <h4>MenuAltRole</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MenuAltAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MenuAltAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RolAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RolAdi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

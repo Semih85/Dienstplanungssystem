@@ -1,0 +1,25 @@
+﻿
+@if (Request.IsAuthenticated)
+{
+    //kullanıcı adı ve logout linklerin çıkar
+
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="/" id="navbarDropdownLoginLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="fa fa-lg fa-user"></span>
+        <span class="d-inline d-md-none d-xl-inline"> Hesabım</span>    
+    </a>
+    <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownLoginLink">
+        <span class="dropdown-item-text">Merhaba, @User.Identity.Name</span>
+        <a class="dropdown-item" href="@Url.Action("Logout", "Account",new { area = "" })"><span class="fa fa-lg fa-sign-out"></span> Çıkış</a>
+    </div>
+</li>
+
+    @*<li class="nav-item"><a class="nav-link">Merhaba, @User.Identity.Name</a></li>
+    <li class="nav-item"><a class="nav-link" href="@Url.Action("Logout", "Account",new { area = "" })"><span class="fa fa-lg fa-sign-out"></span> Çıkış</a> </li>*@
+
+}
+else
+{
+    //login ve register linklerini çıkar
+    <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account",new { area = "" })"><span class="fa fa-lg fa-sign-in"></span> Giriş</a> </li>
+}

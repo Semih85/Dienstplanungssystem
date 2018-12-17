@@ -1,0 +1,41 @@
+﻿@model WM.Northwind.Entities.Concrete.Fabrika
+
+@{
+    ViewBag.Title = "Delete";
+}
+@section SolTaraf{
+    @Html.Action("TransportDataPartialView", "Transport", new { area = "Optimization" })
+}
+
+<h2>Bunu silmekten emin misin?</h2>
+<div>
+    <h4>Fabrika</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kapasite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kapasite)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-outline-danger" /> |
+            <a class="btn btn-outline-primary" href="@Url.Action("Index")"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Fabrikalara Dön</a>
+        </div>
+    }
+</div>

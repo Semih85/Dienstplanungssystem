@@ -1,0 +1,129 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <!-- Required meta tags -->
+    @*<link rel="icon" href="~/Content/images/logo-nobetyaz.png" sizes="16x16">*@
+    <link rel="icon" type="image/png" href="~/Content/images/favicon-32x32-transperent.png" sizes="32x32" />
+    @*<link rel="icon" href="../Content/images/icon.png" type="image/x-icon">*@
+    @*<link rel="icon" href="../Content/images/schedule1.png" type="image/x-icon">*@
+    @*<link rel="icon" href="~/Content/images/logo3.jpg" type="image/x-icon">*@
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Siz uğraşmayın, Nöbet Yaz'sın.">
+    <meta name="author" content="">
+    <meta name="keywords" content="Nöbetçi Eczane, Hemşire Nöbeti, Çizelgeleme, Akademik çözümler">
+    <title>Nöbet Yaz</title>
+    <!-- Bootstrap, font-awasome, Site CSS -->
+
+    @Styles.Render("~/bundle/style")
+    @RenderSection("styles", false)
+
+</head>
+<body>
+
+    <!-- Navbar -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top mb-5" style="background-color: #e3f2fd;">
+        <a class="navbar-brand" href="/"> Nöbet Yaz</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor03">
+            <ul class="navbar-nav mr-auto">
+
+                @*<li class="nav-item active">
+                        <a class="nav-link" href="/"><i class="fa fa-home fa-lg" aria-hidden="true"></i> <span class="sr-only">(current)</span></a>
+                    </li>*@
+
+                @* İletişim *@
+            </ul>
+            <ul class="navbar-nav float-md-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Content/images/Brosur.pdf"><span class="fa fa-file fa-lg"></span> Broşür</a>
+                </li>
+                <li class="nav-item"> <a class="nav-link" href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })"><span class="fa fa-envelope fa-lg"></span> İletişim</a> </li>
+                @Html.Partial("_LoginPartial")
+            </ul>
+
+            @*<form class="form-inline">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Ara" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> <span class="fa fa-search"></span> </button>
+                </form>*@
+
+        </div>
+    </nav>
+
+    <!-- Body -->
+
+    <div class="container-fluid mt-5 pt-5">
+
+        @if (IsSectionDefined("SolTaraf"))
+        {
+            <div class="row">
+
+                <!-- Kategoriler -->
+
+                <div class="col-md-2">
+
+                    @RenderSection("SolTaraf", false)
+
+                </div>
+
+                <!-- Render Body -->
+
+                <div class="col-md-10">
+                    @RenderBody()
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+
+                <!-- Render Body -->
+
+                <div class="col-md-12">
+                    @RenderBody()
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Footer #bee5eb #f5f5f5-->
+    @*<footer class="footer fixed-bottom bg-dark">
+            <div class="container-fluid">
+                <div class="navbar navbar-expand-lg">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"> <a class="nav-link" href="@Url.Action( "About", "Home",new { area = "" })"><span class="fa fa-info-circle"> Hakkımızda</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })"><span class="fa fa-envelope fa-lg"> İletişim</span></a> </li>
+
+                    </ul>
+                    <a class="navbar text-right text-muted">&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</a>
+                </div>
+
+            </div>
+        </footer>*@
+
+    @*<footer class="text-dark">
+            <hr />
+            <div class="container-fluid">
+                <p>
+                    &copy; @DateTime.Now.Year
+                    <a class="card-link text-dark" href="http://www.eniyiplan.com">  En İyi Plan</a>
+                </p>
+            </div>
+        </footer>*@
+
+    @*<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript"
+        SRC="//smarticon.geotrust.com/si.js"></SCRIPT>*@
+
+    @Scripts.Render("~/bundle/scripts")
+    @RenderSection("scripts", false)
+
+</body>
+</html>

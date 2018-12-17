@@ -1,0 +1,37 @@
+﻿@*@model IEnumerable<WM.Northwind.Entities.ComplexTypes.EczaneNobet.EczaneGrupDetay>*@
+@section Styles{
+
+    @Styles.Render("~/bundle/gridmvc/style")
+}
+
+<h3>Eczane Grup Index</h3>
+
+<div class="row">
+    <div class="col-md-6">
+        @Html.Action("GridMVCSortingPartial")
+    </div>
+</div>
+
+@section Scripts{
+
+    @Scripts.Render("~/bundle/gridmvc/scripts")
+
+    <script>
+
+        (function () {
+            //alert('1')
+            var gridName = 'EczaneNobetGrid';
+            //alert('2')
+            var pagingUrl = 'GridMVCSortingPager';
+            //alert('3')
+
+            //'Areas/EczaneNobet/EczaneGrup/EczaneGrupPartialPager'
+            $('.grid-mvc').gridmvc();
+            pageGrids[gridName].ajaxify({
+                getData: pagingUrl,
+                getPagedData: pagingUrl
+            });
+            //alert('4')
+        }())
+    </script>
+}

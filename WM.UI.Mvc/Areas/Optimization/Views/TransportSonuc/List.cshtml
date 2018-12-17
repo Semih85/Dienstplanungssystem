@@ -1,0 +1,168 @@
+﻿@using GridMvc.Html
+@using WM.UI.Mvc.Areas.Optimization.Models
+@model TransportSonucIndexModel
+
+@section SolTaraf{
+    @Html.Action("TransportDataPartialView", "Transport", new { area = "Optimization" })
+}
+
+@section Styles{
+
+    @Styles.Render("~/bundle/pivot/style")
+}
+
+<h2>Pivot Demo</h2>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+
+        @Html.Grid(Model.TransportSonucDetail).Named("kisiler1").Columns(col =>
+        {
+            //her kolona özel seçenek belirlenebilir.
+
+            //Id kolonu (gizli)
+            col.Add(x => x.Id, true);
+
+            //düzenle
+            col.Add().Encoded(false).Sanitized(false).RenderValueAs(html =>
+            {
+                string htmlStr = "<a href='/Optimization/TransportSonuc/Edit/" + html.Id.ToString() + "' class='btn btn-warning btn-sm'><span class='fa fa-edit fa-lg'></span> </a>";
+                return MvcHtmlString.Create(htmlStr);
+            }).SetWidth(30);
+
+            //sil
+            col.Add().Encoded(false).Sanitized(false).RenderValueAs(html =>
+            {
+                string htmlStr = "<a  href='/Optimization/TransportSonuc/Delete/" + html.Id.ToString() + "' class='btn btn-danger btn-sm'><span class='fa fa-remove fa-lg'></span> </a>";
+                return MvcHtmlString.Create(htmlStr);
+            }).SetWidth(30);
+
+            //detay
+            col.Add().Encoded(false).Sanitized(false).RenderValueAs(x =>
+            {
+                string htmlStr = "<a  href='/Optimization/TransportSonuc/Details/" + x.Id.ToString() + "' class='btn btn-info btn-sm'><span class='fa fa-info-circle fa-lg'></span> </a>";
+                return MvcHtmlString.Create(htmlStr);
+            }).SetWidth(30);
+
+            //checkbox
+
+            col.Add().Encoded(false).Sanitized(false).RenderValueAs(x =>
+            {
+                string htmlStr = "<label class='custom-control custom-checkbox'><input type='checkbox' class='custom-control-input'><span class='custom-control-indicator'></span></label>";
+                return MvcHtmlString.Create(htmlStr);
+            }).SetWidth(30);
+
+            //gösterilen kolonlar
+            col.Add(x => x.FabrikaAdi).Titled("Fabrika");
+            col.Add(x => x.DepoAdi).Titled("Depo");
+            col.Add(x => x.Sonuc);
+
+        }).Filterable(true).Sortable(true).WithPaging(7, 7, "grid1_page").SetLanguage("tr")
+
+    </div>
+    <div class="col-md-4">
+        <div id="detaylar">
+            <span class="font-weight-bold">Id: </span><span id="Id"></span><br />
+            <span class="font-weight-bold">Fabrika Adı: </span><span id="FabrikaAdi"></span><br />
+            <span class="font-weight-bold">Depo Adı: </span><span id="DepoAdi"></span><br />
+            <span class="font-weight-bold">Sonuc: </span><span id="Sonuc"></span><br />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2" id="output">
+
+    </div>
+</div>
+
+@section Scripts{
+
+    @Scripts.Render("~/bundle/gridmvc/scripts", "~/bundle/queryui/scripts", "~/bundle/pivot/scripts")
+
+    <script>
+        $(function () {
+
+            pageGrids.kisiler1.onRowSelect(function (e) {
+                var data = e.row;
+
+                $("#Id").text(data.Id);
+                $("#FabrikaAdi").text(data.FabrikaAdi);
+                $("#DepoAdi").text(data.DepoAdi);
+                $("#Sonuc").text(data.Sonuc);
+
+            });
+        })
+    </script>
+
+    @*@Scripts.Render("~/bundle/pivot/scripts")*@
+
+    <script>
+        // This example is the most basic usage of pivot()
+        var userObj = @Html.Raw(Json.Encode(Model));
+        var fAdi = userObj.FabrikaAdi;
+
+        function yaz() {
+            console.log(userObj);
+            console.log(fAdi);
+        }
+
+        yaz();
+
+        $(function () {
+
+
+            function bina(fabrika, depo) {
+                this.Fabrika = fabrika;
+                this.Depo = depo;
+            }
+
+
+
+
+            @foreach (var x in Model.TransportSonucDetail)
+            {
+               var bina = new { x.FabrikaAdi, x.DepoAdi };
+            }
+
+
+        })
+
+
+        $(function () {
+
+
+
+            var objs = [
+                { Fabrika: "A", Depo: "E", Sonuc:6 },
+                { Fabrika: "A", Depo: "F", Sonuc:4 },
+                { Fabrika: "B", Depo: "F", Sonuc:8 },
+                { Fabrika: "B", Depo: "G", Sonuc:15 },
+                { Fabrika: "C", Depo: "E", Sonuc:15 },
+                { Fabrika: "C", Depo: "F", Sonuc:2 },
+                { Fabrika: "C", Depo: "G", Sonuc:10 }
+            ]
+
+            //$.each(obj, function (key, value) {
+            //    alert(key + ": " + value);
+            //});
+
+            $.each(objs, function (name, asset) {
+                // name is the name (e.g. "assetX")
+                // asset is the object instance
+            });
+
+            $("#output").pivotUI(objs,
+                {
+                    rows: ["Fabrika"],
+                    cols: ["Depo"],
+                    vals: ["Sonuc"],
+                    aggregatorName: "Sum",
+                    rendererName: "Heatmap"
+                }
+            );
+        });
+    </script>
+}

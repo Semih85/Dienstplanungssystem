@@ -1,0 +1,56 @@
+﻿@model WM.Northwind.Entities.Concrete.TransportMaliyet
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@section SolTaraf{
+    @Html.Action("TransportDataPartialView", "Transport", new { area = "Optimization" })
+}
+
+<h2>Yeni Kayıt</h2>
+
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Transport Maliyet</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.FabrikaId, "Fabrika", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("FabrikaId", null, "--Fabrika Seçiniz--", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FabrikaId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepoId, "Depo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("DepoId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "--Depo Seçiniz--")
+                @Html.ValidationMessageFor(model => model.DepoId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Deger, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Deger, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Deger, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ekle" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Listeye Dön", "Index")
+</div>

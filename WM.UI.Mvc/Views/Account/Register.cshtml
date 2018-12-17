@@ -1,0 +1,59 @@
+﻿@model RegisterViewModel
+
+@{
+    Layout = "~/Areas/EczaneNobet/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h4>Yeni Kullanıcı Ekle</h4>
+</div>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()//herkese açık bir yer, güvenlik açısından
+    <div class="form-group">
+        @Html.LabelFor(model => model.User.Email, new { @class = "control-label" })
+        @Html.TextBoxFor(model => model.User.Email, new { @class = "form-control", @placeholder = "E-posta adresi yazınız..." })
+        @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.User.FirstName, new { @class = "control-label" })
+        @Html.TextBoxFor(model => model.User.FirstName, new { @class = "form-control", @placeholder = "Adını yazınız..." })
+        @Html.ValidationMessageFor(model => model.User.FirstName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.User.LastName, new { @class = "control-label" })
+        @Html.TextBoxFor(model => model.User.LastName, new { @class = "form-control", @placeholder = "Soyadını yazınız..." })
+        @Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.User.UserName, new { @class = "control-label" })
+        @Html.TextBoxFor(model => model.User.UserName, new { @class = "form-control", @placeholder = "Kullanıcı adını yazınız..." })
+        @Html.ValidationMessageFor(model => model.User.UserName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.User.Password, new { @class = "control-label" })
+        @Html.PasswordFor(model => model.User.Password, new { @class = "form-control", @placeholder = "İlk parolayı yazınız..." })
+        @Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
+    </div>
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.PasswordVreify, new { @class = "control-label" })
+            @Html.PasswordFor(model => model.PasswordVreify, new { @class = "form-control", @placeholder = "parolasını tekrar yazınız..." })
+            @Html.ValidationMessageFor(model => model.PasswordVreify, "", new { @class = "text-danger" })
+        </div>*@
+    @*<div class="form-group">
+            @ReCaptcha.GetHtml("6LfnxisUAAAAAHnxY6Oxa82qaVwaSHdyxtBBGrGo")
+        </div>*@
+
+
+    <button type="submit" class="btn btn-outline-primary">Kaydet</button>
+    @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-outline-warning" })
+}
+
+
+@section Scripts{
+    @*<script src="https://code.jquery.com/jquery-1.10.2.js"
+        integrity="sha256-it5nQKHTz+34HijZJQkpNBIHsjpV8b6QzMJs9tmOBSo="
+        crossorigin="anonymous"></script>*@
+    @Scripts.Render("~/bundle/validation/scripts")
+}

@@ -1,0 +1,136 @@
+﻿@model IEnumerable<EczaneGrupDetay>
+
+@{
+    int eczaneGrupTanimId = 0;
+    if (ViewBag.grupTanimId != null)
+    {
+        eczaneGrupTanimId = ViewBag.grupTanimId;
+    }
+}
+
+<table class="table table-striped table-bordered table-hover table-sm" id="tblEczaneGruplar">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NobetGrupAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EczaneAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EczaneGrupTanimAdi)
+            </th>
+            <th>
+                @Html.DisplayName("Grup Tipi")
+            </th>
+            <th style="width:7%">
+                Grup Kapalı mı
+            </th>
+            <th style="width:7%">
+                Grup Pasif mi
+            </th>
+            <th style="width:5%">
+                Pasif mi
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="eczaneGrupTanimTablo">
+        @foreach (var item in Model)
+        {
+            <tr class="clickable-row">
+                <td>
+                    @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EczaneAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EczaneGrupTanimAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EczaneGrupTanimTipAdi)
+                </td>
+                <td>
+                    @if (item.EczaneGrupTanimBitisTarihi != null)
+                    {
+                        <span class="badge badge-danger">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            Kapalı
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-success">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            Açık
+                        </span>
+                    }
+                </td>
+                <td>
+                    @if (item.EczaneGrupTanimPasifMi == true)
+                    {
+                        <span class="badge badge-danger">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            Pasif
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-success">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            Aktif
+                        </span>
+                    }
+                </td>
+                <td>
+                    @if (item.PasifMi == true)
+                    {
+                        <span class="badge badge-danger">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            Pasif
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-success">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            Aktif
+                        </span>
+                    }
+                </td>
+                <td>
+                    @{
+                        var target = $"#islem{@item.Id}";
+                    }
+                    <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="fa fa-cog"></span>
+                    </button>
+                    <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                        @if (item.PasifMi == false)
+                        {
+                            <a href="@Url.Action("PasifYap", "EczaneGrup", new { @Id = item.Id, eczaneGrupTanimId = eczaneGrupTanimId })" class="btn btn-danger py-0 btn-sm mr-2">
+                                <i class="fa fa-clock-o"></i> Pasif Yap
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("PasifYap", "EczaneGrup", new { @Id = item.Id, eczaneGrupTanimId = eczaneGrupTanimId })" class="btn btn-success py-0 btn-sm mr-2">
+                                <i class="fa fa-clock-o"></i> Aktif Yap
+                            </a>
+                        }
+                        <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                        <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                        <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,103 @@
+﻿@model IEnumerable<EczaneNobetMazeretIstekDetay>
+
+
+@if (TempData["silinenMazeretSayisi"] != null)
+{
+    <div class="row justify-content-sm-center">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                <i class="fa fa-check"></i> @TempData["silinenMazeretSayisi"] adet mazeret silinmiştir.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+@if (Model.Count() > 0)
+{
+    <table class="table table-hover table-sm">
+        <thead class="thead-light">
+            <tr>
+                <th><input type="checkbox" id="checkAll" /></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NobetGrupAdi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EczaneAdi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MazeretIstekAdi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tarih)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Aciklama)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="eczaneNobetMazeretTablo">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" class="checkBox"
+                               value="@item.Id;@item.MazeretIstekId" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EczaneAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MazeretIstekAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tarih)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Aciklama)
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="#islem" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="fa fa-cog"></span>
+                        </button>
+                        <div class="collapse d-md-block" id="islem">
+                            <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                            @*<a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>*@
+                            @*<a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>*@
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info alert-dismissible fade show mt-2" role="alert">
+        <i class="fa fa-info-circle"></i> Seçilen kritere uygun nöbet mazeret/istek kaydı bulunmamaktadır.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+}
+<script>
+    $(document).ready(function () {
+        $("#checkAll").click(function () {
+            $(".checkBox").prop('checked',
+                $(this).prop('checked'));
+        });
+    });
+</script>
+
+

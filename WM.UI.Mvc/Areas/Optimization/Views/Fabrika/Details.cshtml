@@ -1,0 +1,38 @@
+﻿@model WM.Northwind.Entities.Concrete.Fabrika
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@section SolTaraf{
+    @Html.Action("TransportDataPartialView", "Transport", new { area = "Optimization" })
+}
+
+<h2>Detaylar</h2>
+
+<div>
+    <h4>Fabrika</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kapasite)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kapasite)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.Id }, new { @class="btn btn-outline-warning" }) |
+    <a class="btn btn-outline-primary" href="@Url.Action("Index")"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Fabrikalara Dön</a>
+</p>

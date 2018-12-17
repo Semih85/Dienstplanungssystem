@@ -1,0 +1,584 @@
+﻿@model EczaneNobetSonucViewModel
+
+@{
+    ViewBag.Title = "Demo İstatistik |  Nöbet Yaz";
+}
+
+<h4>
+    Nöbet İstatistik <span class="small text-danger">(Demo)</span>
+    @*<a class="card-link font-weight-normal" target="_blank" style="font-size:medium" href="@Url.Action("PivotGunFarklari", null , new { area = "EczaneNobet" })">
+            <i class="fa fa-hand-o-right" aria-hidden="true"></i> Gün Farkları
+        </a>*@
+</h4>
+
+<hr />
+
+@{
+    SelectList yillar1 = ViewBag.YilBaslangiclar;
+    SelectList yillar2 = ViewBag.YilBitisler;
+    SelectList versiyonlar = ViewBag.Versiyonlar;
+    SelectList sekiller = ViewBag.PivotSekiller;
+    SelectList nobetGruplar = ViewBag.NobetGruplar;
+    int yilBaslangic = ViewBag.yilBaslangic;
+    int yilBitis = ViewBag.yilBitis;
+    int versiyon = ViewBag.versiyon;
+    int? sekil = ViewBag.sekil;
+    int nobetGrup = ViewBag.nobetGrup;
+    int toplamUzunluk = 8500;
+}
+
+@section styles{
+    @Styles.Render("~/bundle/pivot/style")
+}
+
+@if (ViewBag.ToplamUzunluk > toplamUzunluk)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir. Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir. Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@using (Html.BeginForm("DemoPivot", "EczaneNobetSonucDemo", FormMethod.Post, new { @class = "form-inline" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group mr-2 mt-1 mb-1">
+        @*<label class="form-control-label font-weight-bold text-secondary mr-sm-2">Nöbet Grubu: </label>*@
+        @Html.DropDownList("nobetGrup", nobetGruplar, htmlAttributes: new { @class = "form-control" }, optionLabel: "Tüm Gruplar")
+    </div>
+
+    <div class="form-group mr-2 mt-1 mb-1">
+        @*<label class="form-control-label font-weight-bold text-secondary mr-sm-2">Yıl: </label>*@
+        @Html.DropDownList("yilBaslangic", yillar1, htmlAttributes: new { @class = "form-control" })
+    </div>
+
+    <div class="form-group mr-2 mt-1 mb-1">
+        @*<label class="form-control-label font-weight-bold text-secondary mr-sm-2">-</label>*@
+        @Html.DropDownList("yilBitis", yillar2, htmlAttributes: new { @class = "form-control" })
+    </div>
+
+    <div class="form-group mr-1 mt-1 mb-1">
+        <label class="form-control-label font-weight-bold text-secondary mr-sm-2">Versiyon </label>
+        @Html.DropDownList("versiyon", versiyonlar, htmlAttributes: new { @class = "form-control" })
+    </div>
+
+    <div class="form-group mr-2 mt-1 mb-1">
+        <button type="submit" class="btn btn-secondary mr-5 p-1">
+            <i class="fa fa-line-chart" aria-hidden="true"></i> İstatistik
+        </button>
+    </div>
+
+    if (Model.PivotSonuclar.Count() > 0)
+    {
+        <ul class="nav nav-pills" id="pills-tab2" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-dagilim-tab" data-toggle="pill" href="#pills-dagilim" role="tab" aria-controls="pills-dagilim" aria-selected="true">Dağılımlar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-gunFarki-tab" data-toggle="pill" href="#pills-gunFarki" role="tab" aria-controls="pills-gunFarki" aria-selected="true">Gün Farkları</a>
+            </li>
+            @if (Model.EsGrubaAyniGunYazilanNobetler.Count() > 0)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-ayniGuneYazilanEsGrup-tab" data-toggle="pill" href="#pills-ayniGuneYazilanEsGrup" role="tab" aria-controls="pills-ayniGuneYazilanEsGrup" aria-selected="true">Aynı Gün Eş Grup</a>
+                </li>
+            }
+        </ul>
+    }
+}
+
+<hr />
+
+@if (Model.PivotSonuclar.Count() > 0)
+{
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-dagilim" role="tabpanel" aria-labelledby="pills-dagilim-tab">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-gun-tab" data-toggle="pill" href="#pills-gun" role="tab" aria-controls="pills-gun" aria-selected="true">Gün</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-ay-tab" data-toggle="pill" href="#pills-ay" role="tab" aria-controls="pills-ay" aria-selected="false">Ay</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-tarih-tab" data-toggle="pill" href="#pills-tarih" role="tab" aria-controls="pills-tarih" aria-selected="false">Tarih</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-nobetci-tab" data-toggle="pill" href="#pills-nobetci" role="tab" aria-controls="pills-nobetci" aria-selected="false">Nöbet Liste</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-gun" role="tabpanel" aria-labelledby="pills-gun-tab">
+                            <div class="row mt-4">
+                                <div class="col-sm-12 col-md-12">
+                                    <div id="gunDagilimi">
+                                        @* Pivot Tablo *@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-ay" role="tabpanel" aria-labelledby="pills-ay-tab">
+                            <div class="row mt-4">
+                                <div class="col-sm-12 col-md-12">
+                                    <div id="aylikDagilim">
+                                        @* Pivot Tablo *@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-tarih" role="tabpanel" aria-labelledby="pills-tarih-tab">
+                            <div class="row mt-4">
+                                <div class="col-sm-12 col-md-12">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        Bu görünümde aşağıdan <strong>Yıl, Ay, Nöbet Grubu vb.</strong> alanları seçerek veriyi sınırlandırınız !!!
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div id="gunlukDagilim">
+                                        @* Pivot Tablo *@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-nobetci" role="tabpanel" aria-labelledby="pills-nobetci-tab">
+                            <div class="row mt-4">
+                                <div class="col-sm-12 col-md-12">
+                                    <div id="nobetciListesi">
+                                        @* Pivot Tablo *@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="pills-gunFarki" role="tabpanel" aria-labelledby="pills-gunFarki-tab">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    @*<h5 class="card-title text-center" id="mdo">Gün Farkları</h5>*@
+                    @if (Model.GunFarklariTumSonuclar.Count() > 0)
+                    {
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-ozet-tab" data-toggle="pill" href="#pills-ozet" role="tab" aria-controls="pills-ozet" aria-selected="true">Özet</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-frekans-tab" data-toggle="pill" href="#pills-frekans" role="tab" aria-controls="pills-frekans" aria-selected="false">
+                                    <i class="fa fa-signal" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-dongu-tab" data-toggle="pill" href="#pills-dongu" role="tab" aria-controls="pills-dongu" aria-selected="false">
+                                    <i class="fa fa-repeat" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-detayliArtan-tab" data-toggle="pill" href="#pills-detayliArtan" role="tab" aria-controls="pills-detayliArtan" aria-selected="false">
+                                    <i class="fa fa-list-ul" aria-hidden="true"></i>
+                                    <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-detayliAzalan-tab" data-toggle="pill" href="#pills-detayliAzalan" role="tab" aria-controls="pills-detayliAzalan" aria-selected="false">
+                                    <i class="fa fa-list-ul" aria-hidden="true"></i>
+                                    <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-ozet" role="tabpanel" aria-labelledby="pills-ozet-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h6>Özet İstatistik (Enb., Enk., Ort., Std.Sap. vb.)</h6>
+                                        <div id="gunFarkiOzet">
+                                            @* Pivot Table *@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-frekans" role="tabpanel" aria-labelledby="pills-frekans-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h6>Gün Farkı Frekans Aralıkları</h6>
+                                        <div id="gunFarkiFrekans">
+                                            @* Pivot Table *@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-dongu" role="tabpanel" aria-labelledby="pills-dongu-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h6>Gün Grup Döngüleri</h6>
+                                        @if (ViewBag.ToplamUzunluk > toplamUzunluk)
+                                        {
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir. Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir. Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        }
+                                        <div id="donguler">
+                                            @* Pivot Table *@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-detayliArtan" role="tabpanel" aria-labelledby="pills-detayliArtan-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        @if (ViewBag.ToplamUzunluk > toplamUzunluk)
+                                        {
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir. Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir. Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        }
+                                        <h6>Gün Farkı Detaylı (Baştan Sona)</h6>
+                                        <div id="gunFarkiDetayli">
+                                            @* Pivot Table *@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-detayliAzalan" role="tabpanel" aria-labelledby="pills-detayliAzalan-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        @if (ViewBag.ToplamUzunluk > toplamUzunluk)
+                                        {
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir. Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir. Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        }
+                                        <h6>Gün Farkı Detaylı (Sondan Başa)</h6>
+                                        <div id="gunFarkiDetayli2">
+                                            @* Pivot Table *@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <i class="fa fa-warning"></i> <strong>Aynı türden</strong> (bayram, pazar vb.) <strong>en az 2 nöbet tutan eczane</strong> bulunmamaktadır.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @if (Model.EsGrubaAyniGunYazilanNobetler.Count() > 0)
+        {
+            <div class="tab-pane fade" id="pills-ayniGuneYazilanEsGrup" role="tabpanel" aria-labelledby="pills-ayniGuneYazilanEsGrup-tab">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <h6 class="text-center">Eş Grupta Aynı Güne Nöbet Yazılan Eczaneler</h6>
+                        <table class="table table-hover table-sm">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayName("Grup Tipi")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Grup Adı")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Nöbet Tarihi")
+                                    </th>
+                                    <th>
+                                        @Html.DisplayName("Aynı Gün Nöbet Tutan Eczane Sayısı")
+                                    </th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model.EsGrubaAyniGunYazilanNobetler)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EczaneGrupTanimTipAdi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EczaneGrupTanimAdi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NobetTarihi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AyniGunNobetTutanEczaneSayisi)
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+}
+else
+{
+    <p>Gösterilecek kayıt bulunmamaktadır.</p>
+}
+
+@section scripts{
+
+    @Scripts.Render("~/bundle/queryui/scripts", "~/bundle/pivot/scripts")
+
+    <script>
+        //setTimeout(function () { $('.alert').fadeOut(500); }, 3000);
+
+        var gunFarkiFrekanslar = @Html.Raw(Json.Encode(Model.GunFarklariFrekanslar.Select(s =>
+                   new
+                   {
+                       GünFarkı = s.GunFarki,
+                       Eczane = s.EczaneAdi,
+                       GünGrup = s.GunGrup,
+                       NöbetGrubu = s.NobetGrupAdi,
+                       EczaneSayısı = s.FrekanstakiEczaneSayisi
+                   })));
+
+        var gunFarkiFrekansListesi;
+        var gunFarkiDetaliArtanListesi;
+        var gunFarkiDetayliAzalanListesi;
+        var gunFarkiDonguListesi;
+
+        //maksimum
+        var gunFarkiOzetListesi = $(function table1() {
+            $("#gunFarkiOzet").pivotUI(gunFarkiFrekanslar,
+                {
+                    rows: ["NöbetGrubu"],
+                    cols: ["GünGrup"],
+                    vals: ["GünFarkı"],
+                    aggregatorName: "Maximum",
+                    rendererName: "Heatmap"
+                }
+            );
+        });
+
+        $('#pills-ozet-tab').click(function () {
+                gunFarkiOzetListesi;
+        });
+
+        //frekans
+        $('#pills-frekans-tab').click(function () {
+            if (gunFarkiFrekansListesi == null) {
+                gunFarkiFrekansListesi =  $(function table2() {
+                                                $("#gunFarkiFrekans").pivotUI(gunFarkiFrekanslar,
+                                                    {
+                                                        rows: ["GünGrup", "NöbetGrubu"],
+                                                        cols: ["GünFarkı"],
+                                                        vals: ["EczaneSayısı"],
+                                                        aggregatorName: "Integer Sum",
+                                                        rendererName: "Heatmap"
+                                                    }
+                                                );
+                });
+            }
+            else
+            {
+                gunFarkiFrekansListesi;
+            }
+
+        });
+
+        //detaylı
+        $('#pills-detayliArtan-tab').click(function () {
+
+            if (gunFarkiDetaliArtanListesi == null) {
+                gunFarkiDetaliArtanListesi = $(function table3() {
+                    $("#gunFarkiDetayli").pivotUI(gunFarklariTumSonuclar,
+                        {
+                            rows: ["NöbetGrubu", "Nöbet1", "Nöbet2", "Index", "Eczane"],
+                            cols: ["GünGrup"],
+                            vals: ["GünFarkı"],
+                            aggregatorName: "Integer Sum",
+                            rendererName: "Heatmap"
+                        }
+                    );
+                });
+            }
+            else {
+                gunFarkiDetaliArtanListesi;
+            }
+        });
+        //detaylı-2
+        $('#pills-detayliAzalan-tab').click(function () {
+
+            if (gunFarkiDetayliAzalanListesi == null) {
+                gunFarkiDetayliAzalanListesi = $(function table4() {
+                    $("#gunFarkiDetayli2").pivotUI(gunFarklariTumSonuclar,
+                        {
+                            rows: ["NöbetGrubu", "Nöbet2", "Nöbet1", "Index", "Eczane"],
+                            cols: ["GünGrup"],
+                            vals: ["GünFarkı"],
+                            aggregatorName: "Integer Sum",
+                            rendererName: "Heatmap"
+                        }
+                    );
+                });
+            }
+            else {
+                gunFarkiDetayliAzalanListesi;
+            }
+
+        });
+
+        //döngü
+        $('#pills-dongu-tab').click(function () {
+            if (gunFarkiDonguListesi == null) {
+                gunFarkiDonguListesi = $(function table5() {
+                    $("#donguler").pivotUI(gunFarklariTumSonuclar,
+                        {
+                            rows: ["NöbetGrubu", "GünGrup", "Index"],
+                            cols: ["N1Yıl", "N1Ay"],
+                            vals: ["GünFarkı"],
+                            aggregatorName: "Count",
+                            rendererName: "Heatmap"
+                        }
+                    );
+                });
+            }
+            else {
+                gunFarkiDonguListesi;
+            }
+        });
+
+        var gunFarklariTumSonuclar = @Html.Raw(Json.Encode(Model.GunFarklariTumSonuclar.Select(s =>
+           new {GünFarkı = s.GunFarki,
+               s.Index,
+               Nöbet1 = s.Nobet1,
+               N1Yıl = s.Nobet1Yil,
+               N1Ay = s.Nobet1Ay,
+               N1Gun = s.Nobet1Gun,
+
+               Nöbet2 = s.Nobet2,
+               N2Yıl = s.Nobet2Yil,
+               N2Ay = s.Nobet2Ay,
+               N2Gun = s.Nobet2Gun,
+               Eczane = s.EczaneAdi,
+               GünGrup = s.GunGrup,
+               NöbetGrubu = s.NobetGrupAdi}).Take(toplamUzunluk)));
+    </script>
+
+    <script>
+        //pivot tablo
+        var _sonuclar = @Html.Raw(Json.Encode(Model.PivotSonuclar.Select(s =>
+                   new {s.Ay,
+                       Eczane = s.EczaneAdi,
+                       Yıl_Ay = Convert.ToInt32(String.Format("{0:yyyyMM}", s.Tarih)),
+                       //s.Gun,
+                       Gün = s.GunTanim,
+                       GünGrup = s.GunGrup,
+                       NöbetGrubu = s.NobetGrupAdi,
+                       Yıl = s.Yil,
+                       Tarih = s.TarihAciklama,
+                       MazeretineYazilanlar = s.Mazeret }).Take(toplamUzunluk)));
+
+
+        var ayDagilim;
+        var tarihDagilim;
+        var nobetciEczaneler;
+
+        var gunDagilim = $(function table2() {
+                $("#gunDagilimi").pivotUI(_sonuclar,
+                    {
+                        rows: ["NöbetGrubu", "Eczane"],
+                        cols: ["GünGrup"],
+                        vals: ["NöbetGrubu"],
+                        aggregatorName: "Count",
+                        rendererName: "Heatmap"
+                    }
+                );
+            });
+
+        $('#pills-gun-tab').click(function () {
+            gunDagilim;
+        });
+
+        //ay dağılım
+        $('#pills-ay-tab').click(function () {
+            if (ayDagilim == null) {
+                ayDagilim = $(function table3() {
+                    $("#aylikDagilim").pivotUI(_sonuclar,
+                        {
+                            rows: ["NöbetGrubu", "Eczane"],
+                            cols: ["Yıl", "Ay"],
+                            vals: ["NöbetGrubu"],
+                            aggregatorName: "Count",
+                            rendererName: "Heatmap"
+                        }
+                    );
+                });
+            }
+            else {
+                ayDagilim;
+            }
+        });
+
+        //tarih dağılım
+        $('#pills-tarih-tab').click(function () {
+            if (tarihDagilim == null) {
+                tarihDagilim = $(function table3() {
+                    $("#gunlukDagilim").pivotUI(_sonuclar,
+                        {
+                            rows: ["NöbetGrubu", "Eczane"],
+                            cols: ["Yıl", "Ay", "Tarih"],
+                            vals: ["NöbetGrubu"],
+                            aggregatorName: "Count",
+                            rendererName: "Heatmap"
+                        }
+                    );
+                });
+            }
+            else {
+                tarihDagilim;
+            }
+        });
+
+        //nöbetçi Eczaneler
+        $('#pills-nobetci-tab').click(function () {
+            if (nobetciEczaneler == null) {
+                nobetciEczaneler = $(function table1() {
+                    $("#nobetciListesi").pivotUI(_sonuclar,
+                        {
+                            rows: ["Yıl", "Ay", "Tarih"],
+                            cols: ["NöbetGrubu"],
+                            vals: ["Eczane"],
+                            aggregatorName: "List Unique Values",
+                            rendererName: "Table",
+                            hideTotals: true,
+                            onRefresh: function (config) {
+                                $("#nobetciListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').hide();
+                            },
+                        }
+                    );
+                });
+            }
+            else {
+                nobetciEczaneler;
+            }
+        });
+
+    </script>
+}
+

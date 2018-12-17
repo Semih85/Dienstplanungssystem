@@ -1,0 +1,21 @@
+﻿@using GridMvc;
+@using GridMvc.Html;
+@using GridMvc.Sorting;
+@using WM.UI.Mvc.Controllers;
+
+@model Grid.Mvc.Ajax.GridExtensions.AjaxGrid<Footballer>
+@(
+        Html.Grid(Model).Named("FootballersGrid")
+            .Columns(columns =>
+            {
+                columns.Add(f => f.FirstName).Titled("First Name").SetWidth(100);
+                columns.Add(f => f.LastName).Titled("Last Name").SetWidth(100);
+                columns.Add(f => f.Age).Titled("Age").SetWidth(40);
+            })
+            .Filterable()
+            .Sortable()
+            .WithPaging(5))
+
+@*<script>
+    //alert('@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString()');
+</script>*@

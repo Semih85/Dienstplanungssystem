@@ -1,0 +1,123 @@
+﻿@model IEnumerable<NobetUstGrupKisitDetay>
+
+<h2>
+    @*Nöbet Üst Grup*@
+    Kısıtlar
+    @if (ViewBag.RolId < 3)
+    {
+        <a class="btn btn-outline-success ml-5" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+    }
+
+    <a class="btn btn-outline-primary pull-right mt-1" href="@Url.Action("VarsayilanKisitlar", null, new { area= "EczaneNobet" })"><span class="fa fa-check-square-o"></span> Varsayılan kısıtlar</a>
+</h2>
+<hr />
+<!-- #region ModelCoz form -->
+
+@using (Html.BeginForm("KisitlariGuncelle", "NobetUstGrupKisit"))
+{
+    <table class="table table-sm table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.KisitAdi)
+                </th>
+                <th>
+                    @Html.DisplayName("Açıklama")
+                </th>
+                @if (ViewBag.RolId < 3)
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.NobetUstGrupAdi)
+                    </th>
+                }
+                <th>
+                    @Html.DisplayName("Durum")
+                </th>
+                <th>
+                    @Html.DisplayName("Varsayılan Durum")
+                </th>
+                <th>
+                    @Html.DisplayName("Değer")
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+                var id = $"#{@item.Id}";
+                var chkBoxId = $"chk{@item.Id}";
+                var chkBoxId2 = $"chk2{@item.Id}";
+                var txtId = $"txt{@item.Id}";
+                var divId = $"div{item.Id}";
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KisitAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KisitAciklama)
+                    </td>
+                    @if (ViewBag.RolId < 3)
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetUstGrupAdi)
+                        </td>
+                    }
+
+                    <td>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                @*@Html.CheckBox("PasifMi", item.PasifMi, new { @class = "custom-control-input", @value = item.Id, id = $"{chkBoxId}" })*@
+                                <input class="custom-control-input" type="checkbox" name="PasifMi" checked="@item.PasifMi" value="@item.Id" id="@chkBoxId" />
+                                @if (item.PasifMi == true)
+                                {
+                                    <label class="custom-control-label text-danger font-weight-bold mr-3 mr-lg-2" for="@chkBoxId">Pasif</label>
+                                }
+                                else
+                                {
+                                    <label class="custom-control-label text-success font-weight-bold mr-3 mr-lg-2" for="@chkBoxId">Aktif</label>
+                                }
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                @Html.CheckBox("VarsayilanPasifMi", item.VarsayilanPasifMi, new { @class = "custom-control-input", @value = item.Id, id = $"chk2{id.Remove(0, 1)}" })
+                                @if (item.VarsayilanPasifMi == true)
+                                {
+                                    <label class="custom-control-label text-danger font-weight-bold mr-3 mr-lg-2" for="@chkBoxId2">Pasif</label>
+                                }
+                                else
+                                {
+                                    <label class="custom-control-label text-success font-weight-bold mr-3 mr-lg-2" for="@chkBoxId2">Aktif</label>
+                                }
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <div class="input-group input-group-sm">
+                                @Html.TextBox("SagTarafDegeri", item.SagTarafDegeri, new { @class = "form-control mr-2", type = "number", id = $"txt{id.Remove(0, 1)}", style = "width: 50px; text-align: center;" })
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    <button type="submit" title="Kısıtları Güncelle" class="btn btn-success pull-right">
+                        <i class="fa fa-save" aria-hidden="true"></i>
+                        Güncelle
+                    </button>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+}
+
+<!-- #endregion -->
