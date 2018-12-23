@@ -14,18 +14,20 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int NobetGrupId { get; set; }
         public int NobetGorevTipId { get; set; }
 
-        public double Pazar { get; set; }
-        public double Pazartesi { get; set; }
-        public double Sali { get; set; }
-        public double Carsamba { get; set; }
-        public double Persembe { get; set; }
-        public double Cuma { get; set; }
-        public double Cumartesi { get; set; }
-        public double DiniBayram { get; set; }
-        public double MilliBayram { get; set; }
-        public double ToplamHaftaIci { get; set; }
-        public double ToplamCumaCumartesi { get; set; }
-        public double ToplamBayram { get; set; }
-        public double Toplam { get; set; }
+        public int Pazar { get; set; }
+        public int Pazartesi { get; set; }
+        public int Sali { get; set; }
+        public int Carsamba { get; set; }
+        public int Persembe { get; set; }
+        public int Cuma { get; set; }
+        public int Cumartesi { get; set; }
+        public int DiniBayram { get; set; }
+        public int MilliBayram { get; set; }
+        public int ToplamHaftaIci { get; set; }
+        public int ToplamCumaCumartesi { get; set; }
+        public int ToplamBayram { get; set; }
+        public int Toplam { get; set; }
+        public int Arife { get; set; }
+        public int NobetGrupGorevTipId { get; set; }
     }
 }

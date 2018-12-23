@@ -21,10 +21,13 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void CokluDegistir(List<NobetGrupKural> NobetGrupKurallar);
 
         NobetGrupKuralDetay GetDetayById(int nobetGrupKuralId);
+        NobetGrupKuralDetay GetDetay(int nobetGrupGorevTipId, int nobetKuralId);
+
         List<NobetGrupKuralDetay> GetDetaylar();
         List<NobetGrupKuralDetay> GetDetaylar(List<int> nobetGrupIdList);
         List<NobetGrupKuralDetay> GetDetaylarBynobetUstGrupIdList(List<int> nobetUstGrupIdList);
         List<NobetGrupKuralDetay> GetDetaylarByNobetGrupGorevTipIdList(List<int> nobetGrupGorevTipIdList);
         List<NobetGrupKuralDetay> GetDetaylar(int nobetGrupGorevTipId, int nobetKuralId, List<int> nobetUstGrupIdList);
+        List<NobetGrupKuralDetay> GetDetaylar(List<int> nobetGrupGorevTipIdList, int nobetKuralId);
     }
 } 

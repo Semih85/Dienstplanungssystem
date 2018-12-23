@@ -14,6 +14,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int NobetGunKuralId { get; set; }
         public string NobetGunKuralAdi { get; set; }
         public int GunSayisi { get; set; }
+        public int GunGrupId { get; set; }
+        public string GunGrupAdi { get; set; }
         public int KumulatifGunSayisi { get; set; }
         public double OrtalamaNobetSayisi { get; set; }
         public double KumulatifOrtalamaNobetSayisi { get; set; }

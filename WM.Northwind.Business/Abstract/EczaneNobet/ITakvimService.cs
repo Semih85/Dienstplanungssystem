@@ -26,30 +26,31 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
 
         List<EczaneNobetIstatistik> GetEczaneKumulatifHedefler(int yilBaslangic, int yilBitis, int ayBaslangic, int ayBitis, List<int> nobetGrupIdList, int nobetGorevTipId);
 
-        List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(int yil, int ay, int nobetGrupId, int nobetGorevTipId);
-        List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(int yil, int ay, int nobetGorevTipId, List<int> nobetGrupIdList);
+        //List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(int yil, int ay, int nobetGrupId, int nobetGorevTipId);
+        //List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(int yil, int ay, int nobetGorevTipId, List<int> nobetGrupIdList);
         List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetGorevTipId, List<int> nobetGrupIdList);
         List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetGorevTipId, List<int> nobetGrupIdList, List<int> nobetGunKuralIdList);
         List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(DateTime baslangicTarihi, DateTime bitisTarihi, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler);
         List<EczaneNobetTarihAralikIkili> GetIkiliEczaneNobetTarihAralik(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetGorevTipId, List<int> nobetGrupIdList);
 
-        List<TakvimNobetGrup> GetTakvimNobetGruplar(int yilBaslangic, int yilBitis, int ayBaslangic, int ayBitis, int nobetGrupId, int nobetGorevTipId);
-        List<TakvimNobetGrup> GetTakvimNobetGruplar(int yil, int ay, int nobetGrupId, int nobetGorevTipId);
-        List<TakvimNobetGrup> GetTakvimNobetGruplar(int yil, int ay, List<int> nobetGrupIdList, int nobetGorevTipId);
-        List<TakvimNobetGrup> GetTakvimNobetGruplar(int yil, int ay, int nobetGorevTipId);
-        List<TakvimNobetGrup> GetTakvimNobetGruplar(int yil, List<int> nobetGrupIdList, int nobetGorevTipId);
+        //List<TakvimNobetGrup> GetTakvimNobetGruplar(int yilBaslangic, int yilBitis, int ayBaslangic, int ayBitis, int nobetGrupId, int nobetGorevTipId);
+        //List<TakvimNobetGrup> GetTakvimNobetGruplar(int yil, int ay, int nobetGrupId, int nobetGorevTipId);
+        //List<TakvimNobetGrup> GetTakvimNobetGruplar(int yil, int ay, List<int> nobetGrupIdList, int nobetGorevTipId);
+        //List<TakvimNobetGrup> GetTakvimNobetGruplar(int yil, int ay, int nobetGorevTipId);
+        //List<TakvimNobetGrup> GetTakvimNobetGruplar(int yil, List<int> nobetGrupIdList, int nobetGorevTipId);
+        //List<TakvimNobetGrup> GetTakvimNobetGruplarHaftaIci(DateTime baslangicTarihi, int ayFarki, int uzunluk, List<int> nobetGrupIdList, int nobetGorevTipId);
+        //List<TakvimNobetGrup> GetTakvimNobetGruplar(DateTime baslangicTarihi, int ayFarki, int uzunluk, List<int> nobetGrupIdList, int nobetGorevTipId, string gunGrup);
+
         List<TakvimNobetGrup> GetTakvimNobetGruplar(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetGrupIdList, int nobetGorevTipId);
-        List<TakvimNobetGrup> GetTakvimNobetGruplar(DateTime baslangicTarihi, int ayFarki, int uzunluk, List<int> nobetGrupIdList, int nobetGorevTipId, string gunGrup);
         List<TakvimNobetGrup> GetTakvimNobetGruplar(DateTime baslangicTarihi, DateTime bitisTarihi, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler);
         List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(DateTime baslangicTarihi, DateTime bitisTarihi, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler, List<int> nobetGunKuralIdList);
 
-        List<TakvimNobetGrup> GetTakvimNobetGruplarHaftaIci(DateTime baslangicTarihi, int ayFarki, int uzunluk, List<int> nobetGrupIdList, int nobetGorevTipId);
 
         List<TakvimNobetGrupPeriyot> GetTakvimNobetGruplar(DateTime baslangicTarihi, List<int> ayFarklari, int uzunluk, List<int> nobetGrupIdList, int nobetGorevTipId, string gunGrup);
 
         //List<TakvimNobetGrupPeriyot> GetTakvimNobetGruplarHaftaIci(DateTime baslangicTarihi, List<int> ayFarklari, int uzunluk, List<int> nobetGrupIdList, int nobetGorevTipId);
 
-        List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunDegerIstatistikler(int yil, List<int> nobetGrupIdList, int nobetGorevTipId);
+        //List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunDegerIstatistikler(int yil, List<int> nobetGrupIdList, int nobetGorevTipId);
         List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunDegerIstatistikler(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetGrupIdList, int nobetGorevTipId);
         List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunDegerIstatistikler(DateTime baslangicTarihi, DateTime bitisTarihi, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler);
 
@@ -67,7 +68,14 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         int AyFarkiHesapla(DateTime sonTarih, DateTime ilkTarih);
         List<AnahtarListe> AnahtarListeyiBuGuneTasi(List<int> nobetGrupIdListe, int nobetGorevTipId, DateTime nobetUstGrupBaslangicTarihi, List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay, List<EczaneNobetSonucListe2> anahtarListe,
             string gunGrubu);
-        List<AnahtarListe> AnahtarListeyiBuGuneTasi2(List<int> nobetGrupIdListe, int nobetGorevTipId, DateTime nobetUstGrupBaslangicTarihi, List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay, List<EczaneNobetSonucListe2> anahtarListe,
-            string gunGrubu, DateTime nobetBaslangicTarihi, DateTime nobetBitisTarihi);
+        List<AnahtarListe> AnahtarListeyiBuGuneTasi2(List<int> nobetGrupIdListe, 
+            int nobetGorevTipId, 
+            DateTime nobetUstGrupBaslangicTarihi, 
+            List<EczaneNobetGrupDetay> eczaneNobetGruplar, 
+            List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay, 
+            List<EczaneNobetSonucListe2> anahtarListe,
+            List<NobetUstGrupGunGrupDetay> nobetUstGrupGunGruplar,
+            DateTime nobetBaslangicTarihi, 
+            DateTime nobetBitisTarihi);
     }
 }

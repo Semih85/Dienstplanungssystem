@@ -234,12 +234,14 @@
     <Content Include="Content\datetimepicker\bootstrap-datetimepicker.css" />
     <Content Include="Content\datetimepicker\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\EMailMessage.html" />
+    <Content Include="Content\images\alanyaEczaciOdasiLogo.jpg" />
     <Content Include="Content\images\breakfast.jpg" />
     <Content Include="Content\images\carousel background.jpg" />
     <Content Include="Content\images\coloredVegatables.jpg" />
     <Content Include="Content\images\e0404d-delete-database-16.ico" />
     <Content Include="Content\images\favicon-16x16.png" />
     <Content Include="Content\images\favicon-32x32-transperent.png" />
+    <Content Include="Content\images\GiresunEczaciOdasiLogo.jpg" />
     <Content Include="Content\images\google-maps-person-icon-6.jpg" />
     <Content Include="Content\images\hemsireCizelgeleme2.jpg" />
     <Content Include="Content\images\icon.png" />

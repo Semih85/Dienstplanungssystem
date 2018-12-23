@@ -21,6 +21,7 @@ using WM.Core.Aspects.PostSharp.AutorizationAspects;
 using WM.Core.Aspects.PostSharp.ExceptionAspects;
 using WM.Northwind.Entities.Concrete.Authorization;
 using WM.Northwind.Business.Abstract.Authorization;
+using System.Globalization;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -83,6 +84,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [LogAspect(typeof(DatabaseLogger))]
         public void Insert(Eczane eczane)
         {
+            eczane.Adi.Trim().ToUpper(new CultureInfo("tr-TR"));
             _eczaneDal.Insert(eczane);
         }
 
@@ -91,6 +93,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [LogAspect(typeof(DatabaseLogger))]
         public void Update(Eczane eczane)
         {
+            eczane.Adi.Trim().ToUpper(new CultureInfo("tr-TR"));
             _eczaneDal.Update(eczane);
         }
 
@@ -118,15 +121,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
             else
             {//yetkili olduğu nöbet üst gruplar
-                //var nobetGruplar = _nobetGrupService.GetListByUser(user).Select(g => g.Id);
-                //var eczaneNobetGruplar = _eczaneNobetGrupService.GetList()
-                //    .Where(s => nobetGruplar.Contains(s.NobetGrupId)).ToList();
-                //.Where(s => s.NobetGrupId == 3).ToList();
-
                 var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(g => g.Id).ToArray();
 
                 eczaneler = GetList(nobetUstGruplar);
-                    //GetList().Where(e => eczaneNobetGruplar.Select(n => n.EczaneId).Contains(e.Id)).ToList();
             }
 
             return eczaneler;

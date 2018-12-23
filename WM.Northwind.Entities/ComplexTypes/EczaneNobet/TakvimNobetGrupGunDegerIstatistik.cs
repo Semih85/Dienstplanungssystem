@@ -13,6 +13,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         //public int Yil { get; set; }        
         public int NobetGrupId { get; set; }
         public int NobetGorevTipId { get; set; }
+        public int NobetGrupGorevTipId { get; set; }
         public int NobetGunKuralId { get; set; }
         public string NobetGunKuralAdi { get; set; }
 
@@ -35,7 +36,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         //: NobetGunKuralId == 9
         //? "Milli"
         //: "Diğer";
-
+        
+        public int TalepEdilenNobetciSayisi { get; set; }
         public int GunSayisi { get; set; }
         public string GunGrupAdi { get; set; }
         public int GunGrupId { get; set; }

@@ -55,9 +55,16 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _nobetGrupKuralDal.Update(nobetGrupKural);
         }
 
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public NobetGrupKuralDetay GetDetayById(int nobetGrupKuralId)
         {
             return _nobetGrupKuralDal.GetDetay(x => x.Id == nobetGrupKuralId);
+        }
+
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public NobetGrupKuralDetay GetDetay(int nobetGrupGorevTipId, int nobetKuralId)
+        {
+            return _nobetGrupKuralDal.GetDetay(x => x.NobetGrupGorevTipId == nobetGrupGorevTipId && x.NobetKuralId == nobetKuralId);
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
@@ -75,9 +82,16 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetGrupKuralDetay> GetDetaylar(int nobetGrupGorevTipId, int nobetKuralId, List<int> nobetUstGrupIdList)
         {
-            return _nobetGrupKuralDal.GetDetayList(x => (x.NobetGrupGorevTipId == nobetGrupGorevTipId || nobetGrupGorevTipId == 0) 
+            return _nobetGrupKuralDal.GetDetayList(x => (x.NobetGrupGorevTipId == nobetGrupGorevTipId || nobetGrupGorevTipId == 0)
             && (x.NobetKuralId == nobetKuralId || nobetKuralId == 0)
             && nobetUstGrupIdList.Contains(x.NobetUstGrupId));
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetGrupKuralDetay> GetDetaylar(List<int> nobetGrupGorevTipIdList, int nobetKuralId)
+        {
+            return _nobetGrupKuralDal.GetDetayList(x => nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId)
+            && (x.NobetKuralId == nobetKuralId));
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]

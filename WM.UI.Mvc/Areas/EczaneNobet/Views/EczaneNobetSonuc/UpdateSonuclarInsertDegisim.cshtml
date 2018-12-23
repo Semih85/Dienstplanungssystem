@@ -50,10 +50,10 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group mb-4">
             @Html.Label("Açıklama:", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold text-primary" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control", placeHolder = "Lütfen nöbet değişim nedenini kısaca giriniz..." } })
+                @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control", placeHolder = "Lütfen nöbet değişim nedenini kısaca yazınız..." } })
                 @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
             </div>
         </div>

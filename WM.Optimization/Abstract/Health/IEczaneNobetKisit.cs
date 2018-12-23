@@ -18,7 +18,7 @@ namespace WM.Optimization.Abstract.Health
         void HerAyPespeseGorev(KpHerAyPespeseGorev herAyPespeseGorevKisitParametreModel);
         void MazereteGorevYazma(KpMazereteGorevYazma mazereteGorevYazmaKisitParametreModel);
         void IstegiKarsila(KpIstegiKarsila istegiKarsilaKisitParametreModel);
-        void BayramPespeseFarkliTur(KpBayramPespeseFarkliTur bayramPespeseFarkliTurKisitParametreModel);
+        void PespeseFarkliTurNobetYaz(KpPespeseFarkliTurNobet bayramPespeseFarkliTurKisitParametreModel);
         void HerAyHaftaIciPespeseGorev(KpHerAyHaftaIciPespeseGorev herAyHaftaIciPespeseGorevKisitParametreModel);        
         void TarihAraligindaEnAz1NobetYaz(KpTarihAraligindaEnAz1NobetYaz tarihAraligindaEnAz1NobetYazKisitParametreModel);        
         void AyIcindeSadece1KezAyniGunNobetTutulsun(KpAyIcindeSadece1KezAyniGunNobet ayIcindeSadece1KezAyniGunNobetKisitParametreModel);
@@ -44,7 +44,9 @@ namespace WM.Optimization.Abstract.Health
             VariableCollection<EczaneNobetTarihAralik> _x);
         NobetUstGrupKisitDetay NobetUstGrupKisit(List<NobetUstGrupKisitDetay> nobetUstGrupKisitlar, string kisitAdi, int nobetUstGrupId);
 
+        void TalepleriTakvimeIsle(List<NobetGrupTalepDetay> nobetGrupTalepler, int varsayilanGunlukNobetciSayisi, List<TakvimNobetGrup> tarihler);
         double OrtalamaNobetSayisi(int gunlukNobetciSayisi, int gruptakiNobetciSayisi, int gunSayisi);
+        double OrtalamaNobetSayisi(int talepEdilenToplamNobetciSayisi, int gruptakiNobetciSayisi);
 
         int GetToplamGunKuralNobetSayisi(EczaneNobetGrupGunKuralIstatistikYatay eczaneNobetIstatistik, int nobetGunKuralId);
 
@@ -243,7 +245,7 @@ void HerAyPespeseGorev(Model model,
             VariableCollection<EczaneNobetTarihAralik> _x); 
      */
 /*
- void BayramPespeseFarkliTur(Model model,
+ void PespeseFarkliTurNobetYaz(Model model,
             List<TakvimNobetGrup> bayramlar,
             EczaneNobetGrupDetay eczaneNobetGrup,
             List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,

@@ -423,7 +423,7 @@
       };
     })(aggregatorTemplates);
     renderers = {
-      "Table": function(data, opts) {
+      "Tablo": function(data, opts) {
         return pivotTableRenderer(data, opts);
       },
       "Table Barchart": function(data, opts) {
@@ -457,7 +457,25 @@
           vs: "vs",
           by: "by"
         }
-      }
+        },
+      tr: {
+          aggregators: aggregators,
+          renderers: renderers,
+          localeStrings: {
+              renderError: "An error occurred rendering the PivotTable results.",
+              computeError: "An error occurred computing the PivotTable results.",
+              uiRenderError: "An error occurred rendering the PivotTable UI.",
+              selectAll: "Hepsini Sec",
+              selectNone: "Hepsini Kaldir",
+              tooMany: "(fazla uzun liste)",
+              filterResults: "Filtrele",
+              apply: "Uygula",
+              cancel: "Kapat",
+              totals: "Toplam",
+              vs: "vs",
+              by: "by"
+          }
+        }
     };
     mthNamesEn = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     dayNamesEn = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -1127,10 +1145,10 @@
     $.fn.pivot = function(input, inputOpts, locale) {
       var defaults, e, localeDefaults, localeStrings, opts, pivotData, result, x;
       if (locale == null) {
-        locale = "en";
+        locale = "tr";
       }
       if (locales[locale] == null) {
-        locale = "en";
+        locale = "tr";
       }
       defaults = {
         cols: [],
@@ -1148,7 +1166,7 @@
         derivedAttributes: {},
         renderer: pivotTableRenderer
       };
-      localeStrings = $.extend(true, {}, locales.en.localeStrings, locales[locale].localeStrings);
+      localeStrings = $.extend(true, {}, locales.tr.localeStrings, locales[locale].localeStrings);
       localeDefaults = {
         rendererOptions: {
           localeStrings: localeStrings
@@ -1191,10 +1209,10 @@
         overwrite = false;
       }
       if (locale == null) {
-        locale = "en";
+        locale = "tr";
       }
       if (locales[locale] == null) {
-        locale = "en";
+        locale = "tr";
       }
       defaults = {
         derivedAttributes: {},
@@ -1218,7 +1236,7 @@
         },
         sorters: {}
       };
-      localeStrings = $.extend(true, {}, locales.en.localeStrings, locales[locale].localeStrings);
+      localeStrings = $.extend(true, {}, locales.tr.localeStrings, locales[locale].localeStrings);
       localeDefaults = {
         rendererOptions: {
           localeStrings: localeStrings

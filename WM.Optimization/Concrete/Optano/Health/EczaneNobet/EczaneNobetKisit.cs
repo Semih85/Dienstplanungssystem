@@ -20,29 +20,14 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         /// <param name="p">KpTalebiKarsila</param>
         public virtual void TalebiKarsila(KpTalebiKarsila p)
         {
-            var gunlukNobetciSayisi = p.GunlukNobetciSayisi;
-
             foreach (var tarih in p.Tarihler)
             {
-                var kisitAdi = $"Talep: {gunlukNobetciSayisi}, Tarih: {tarih.Tarih}";
-
-                var talepFarkli = p.NobetGrupTalepler
-                        .Where(s => s.NobetGrupGorevTipId == p.NobetGrupGorevTip.Id
-                                 && s.TakvimId == tarih.TakvimId).SingleOrDefault();
-
-                if (talepFarkli != null)
-                {
-                    gunlukNobetciSayisi = talepFarkli.NobetciSayisi;
-                }
-                else
-                {
-                    gunlukNobetciSayisi = p.GunlukNobetciSayisi;
-                }
+                var kisitAdi = $"Talep: {tarih.TalepEdilenNobetciSayisi}, Tarih: {tarih.Tarih}";
 
                 var kararIndex = p.EczaneNobetTarihAralikTumu
                                             .Where(k => k.TakvimId == tarih.TakvimId).ToList();
 
-                var std = gunlukNobetciSayisi;
+                var std = tarih.TalepEdilenNobetciSayisi;
                 var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
                 var cns = Constraint.Equals(exp, std);
 
@@ -56,12 +41,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         /// <param name="p">KpTarihAraligiOrtalamaEnFazla</param>
         public virtual void TarihAraligiOrtalamaEnFazla(KpTarihAraligiOrtalamaEnFazla p)
         {
-            if (p.GunSayisi > 0 && !p.NobetUstGrupKisit.PasifMi)
+            if (!p.NobetUstGrupKisit.PasifMi && p.GunSayisi > 0)
             {
                 var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {p.EczaneNobetGrup.EczaneAdi}";
 
                 if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
-                    p.OrtalamaNobetSayisi += (int)p.NobetUstGrupKisit.SagTarafDegeri;
+                    p.OrtalamaNobetSayisi += p.NobetUstGrupKisit.SagTarafDegeri;
 
                 var kararIndex = p.EczaneNobetTarihAralik
                     .Where(e => p.Tarihler.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
@@ -80,7 +65,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         /// <param name="p">KpKumulatifToplamEnFazla</param>
         public virtual void KumulatifToplamEnFazla(KpKumulatifToplam p)
         {
-            if (!p.NobetUstGrupKisit.PasifMi)
+            if (!p.NobetUstGrupKisit.PasifMi && p.Tarihler.Count > 0)
             {
                 var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {p.EczaneNobetGrup.EczaneAdi}";
 
@@ -88,7 +73,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                    .Where(e => p.Tarihler.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
 
                 if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
-                    p.KumulatifOrtalamaGunKuralSayisi = (int)p.NobetUstGrupKisit.SagTarafDegeri;
+                    p.KumulatifOrtalamaGunKuralSayisi = p.NobetUstGrupKisit.SagTarafDegeri;
 
                 var std = p.KumulatifOrtalamaGunKuralSayisi;
                 var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i])) + p.ToplamNobetSayisi;
@@ -216,17 +201,17 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         /// Bayramlarda sırayla (dini ise milli ya da tersi) peş peşe nöbet yazılır.
         /// </summary>
         /// <param name="p">BayramPespeseFarkliTurKisitParametreModel</param>
-        public virtual void BayramPespeseFarkliTur(KpBayramPespeseFarkliTur p)
+        public virtual void PespeseFarkliTurNobetYaz(KpPespeseFarkliTurNobet p)
         {
             if (!p.NobetUstGrupKisit.PasifMi)
             {
-                var ilgiliTarihler = p.Tarihler.Where(w => w.NobetGunKuralId == p.SonBayram.NobetGunKuralId).ToList();
+                var ilgiliTarihler = p.Tarihler.Where(w => w.NobetGunKuralId == p.SonNobet.NobetGunKuralId).ToList();
 
                 var kisitAdi = $"her_eczaneye_son_tuttugu_bayram_nobetinden_farkli_bayram_nobeti_yaz, {p.EczaneNobetGrup}";
 
                 var kararIndex = p.EczaneNobetTarihAralik
                     .Where(e => ilgiliTarihler.Select(s => s.TakvimId).Contains(e.TakvimId)
-                             && e.NobetGorevTipId == p.SonBayram.NobetGorevTipId //sonradan ekledim.
+                             && e.NobetGorevTipId == p.SonNobet.NobetGorevTipId //sonradan ekledim.
                              ).ToList();
 
                 var std = 0;
@@ -475,7 +460,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         /// <param name="p">KpTarihAraligindaEnAz1NobetYaz</param>
         public virtual void TarihAraligindaEnAz1NobetYaz(KpTarihAraligindaEnAz1NobetYaz p)
         {
-            if (!p.NobetUstGrupKisit.PasifMi && p.GruptakiNobetciSayisi <= p.Tarihler.Count * p.GunlukNobetciSayisi)
+            var talepEdilenNobetciSayisi = p.Tarihler.Sum(s => s.TalepEdilenNobetciSayisi);
+
+            var gruptakiEczaneSayisi = p.GruptakiNobetciSayisi - p.IstisnaOlanNobetciSayisi;
+
+            if (!p.NobetUstGrupKisit.PasifMi && gruptakiEczaneSayisi <= talepEdilenNobetciSayisi)
             {
                 var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {p.EczaneNobetGrup.EczaneAdi}";
 
@@ -647,7 +636,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                         }
                     }
-                }               
+                }
             }
         }
 
@@ -1025,9 +1014,44 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
         #region yardımcı metotlar
 
+        public void TalepleriTakvimeIsle(List<NobetGrupTalepDetay> nobetGrupTalepler, int varsayilanGunlukNobetciSayisi, List<TakvimNobetGrup> tarihler)
+        {
+            if (nobetGrupTalepler.Count > 0)
+            {
+                foreach (var tarih in tarihler)
+                {
+                    var talepFarkli = nobetGrupTalepler
+                       .Where(s => s.NobetGrupGorevTipId == tarih.NobetGrupGorevTipId
+                                && s.TakvimId == tarih.TakvimId).SingleOrDefault();
+
+                    if (talepFarkli != null)
+                    {
+                        tarih.TalepEdilenNobetciSayisi = talepFarkli.NobetciSayisi;
+                    }
+                    else
+                    {
+                        tarih.TalepEdilenNobetciSayisi = varsayilanGunlukNobetciSayisi;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var tarih in tarihler)
+                {
+                    tarih.TalepEdilenNobetciSayisi = varsayilanGunlukNobetciSayisi;
+                }
+            }
+
+        }
+
         public virtual double OrtalamaNobetSayisi(int gunlukNobetciSayisi, int gruptakiNobetciSayisi, int gunSayisi)
         {
             return Math.Ceiling(((double)gunSayisi * gunlukNobetciSayisi) / gruptakiNobetciSayisi);
+        }
+
+        public virtual double OrtalamaNobetSayisi(int talepEdilenToplamNobetciSayisi, int gruptakiNobetciSayisi)
+        {
+            return Math.Ceiling(((double)talepEdilenToplamNobetciSayisi) / gruptakiNobetciSayisi);
         }
 
         public virtual NobetUstGrupKisitDetay NobetUstGrupKisit(List<NobetUstGrupKisitDetay> nobetUstGrupKisitlar, string kisitAdi, int nobetUstGrupId)
@@ -2754,7 +2778,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
     /// <param name="eczaneNobetTarihAralik"></param>
     /// <param name="sonBayramTuru"></param>
     /// <param name="_x"></param>
-    public virtual void BayramPespeseFarkliTur(Model model,
+    public virtual void PespeseFarkliTurNobetYaz(Model model,
         List<TakvimNobetGrup> bayramlar,
         EczaneNobetGrupDetay eczaneNobetGrup,
         List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,

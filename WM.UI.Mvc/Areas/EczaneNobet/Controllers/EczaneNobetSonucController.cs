@@ -946,7 +946,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar()
                 .Where(w => eczaneler.Select(s => s.Id).Contains(w.EczaneId))
                 .OrderBy(s => s.EczaneAdi).ThenBy(t => t.NobetGrupAdi)
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, ({s.NobetGrupAdi})" });
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" });
 
 
             var tarihler = _takvimService.GetList().Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()}" });
@@ -978,7 +978,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar()
                 .Where(w => eczaneler.Select(s => s.Id).Contains(w.EczaneId))
                 .OrderBy(s => s.EczaneAdi).ThenBy(t => t.NobetGrupAdi)
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, ({s.NobetGrupAdi})" });
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" });
 
             var tarihler = _takvimService.GetList().Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()}" });
             var nobetGorevTipler = _nobetGorevTipService.GetList()
@@ -1053,8 +1053,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 .Where(w => w.NobetGrupId == eczaneNobetSonucDetay.NobetGrupId
                 //eczaneler.Select(s => s.Id).Contains(w.EczaneId)
                 )
-                .OrderBy(s => s.EczaneAdi).ThenBy(t => t.NobetGrupAdi)
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, ({s.NobetGrupAdi})" });
+                .OrderBy(s => s.EczaneAdi).ThenBy(t => t.NobetGrupGorevTipAdi)
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" });
 
             var tarihler = _takvimService.GetList().Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()}" });
             var nobetGorevTipler = _nobetGorevTipService.GetList()
@@ -1079,7 +1079,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _eczaneNobetSonucService.Update(eczaneNobetSonuc);
                 return RedirectToAction("Index");
             }
-            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar().Select(s => new MyDrop { Id = s.Id, Value = $"E: {s.EczaneAdi}, NG: {s.NobetGrupAdi}" });
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar().Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" });
             var tarihler = _takvimService.GetList().Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()}" });
             ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar, "Id", "Value", eczaneNobetSonuc.EczaneNobetGrupId);
             ViewBag.TakvimId = new SelectList(tarihler, "Id", "Value", eczaneNobetSonuc.TakvimId);
@@ -1106,7 +1106,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 .Where(w => w.NobetGrupId == eczaneNobetSonucDetay.NobetGrupId
                 )
                 .OrderBy(s => s.EczaneAdi).ThenBy(t => t.NobetGrupAdi)
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, ({s.NobetGrupAdi})" });
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" });
 
             var tarihler = _takvimService.GetList().Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()}" });
             var nobetGorevTipler = _nobetGorevTipService.GetList()
@@ -1168,7 +1168,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("NobetDegistir");
             }
 
-            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar().Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupAdi}" });
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar().Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" });
             var tarihler = _takvimService.GetList().Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()}" });
 
             ViewBag.EczaneNobetGrupIdEski = new SelectList(eczaneNobetGruplar, "Id", "Value", eczaneNobetSonuc.EczaneNobetGrupId);

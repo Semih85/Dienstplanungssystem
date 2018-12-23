@@ -364,7 +364,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             //    .Where(s => !eczaneNobetMazeretNobettenDusenler.Select(f => f.EczaneId).Contains(s.EczaneId)).ToList();
 
             //nöbet yazılacak tarih aralığı(örn. Ocak ayının tüm günleri)
-            var tarihAralik = _takvimService.GetTakvimNobetGruplar(yilBitis, ayBitis, nobetGrupIdListe, nobetGorevTipId);
+            var tarihAralik = _takvimService.GetTakvimNobetGruplar(baslangicTarihi, bitisTarihi, nobetGrupIdListe, nobetGorevTipId);
 
             //var eczaneKumulatifHedefler = _takvimService
             //    .GetEczaneKumulatifHedeflerTumYillar(yilBaslangic, yilBitis, ayBaslangic, ayBitis, nobetGrupIdListe);
@@ -372,7 +372,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneKumulatifHedefler = _takvimService.GetEczaneKumulatifHedefler(yilBaslangic, yilBitis, ayBaslangic, ayBitis, nobetGrupIdListe, nobetGorevTipId)
                 .Where(w => eczaneNobetGruplar.Select(s => s.EczaneId).Contains(w.EczaneId)).ToList();
 
-            var eczaneNobetTarihAralik = _takvimService.GetEczaneNobetTarihAralik(yilBitis, ayBitis, nobetGorevTipId, nobetGrupIdListe)
+            var eczaneNobetTarihAralik = _takvimService.GetEczaneNobetTarihAralik(baslangicTarihi, bitisTarihi, nobetGorevTipId, nobetGrupIdListe)
                 .Where(w => eczaneNobetGruplar.Select(s => s.EczaneId).Contains(w.EczaneId)).ToList();
 
             var takvimNobetGrupGunDegerIstatistikler = _takvimService.GetTakvimNobetGrupGunDegerIstatistikler(nobetUstGrupBaslangicTarihi, bitisTarihi, nobetGrupIdListe, nobetGorevTipId);
@@ -466,7 +466,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 NobetGrupGunKurallar = _nobetGrupGunKuralService.GetAktifList(nobetGrupIdListe),
                 NobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe),
                 NobetGrupGorevTipler = _nobetGrupGorevTipService.GetList(nobetGorevTipId, nobetGrupIdListe),
-                NobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(nobetGrupIdListe),
+                NobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(nobetGrupIdListe, baslangicTarihi, bitisTarihi),
                 EczaneNobetGruplar = eczaneNobetGruplar,
                 NobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupId),
                 EczaneGrupNobetSonuclar = eczaneGrupNobetSonuclar,

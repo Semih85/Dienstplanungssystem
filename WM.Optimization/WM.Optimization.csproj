@@ -139,7 +139,7 @@
     <Compile Include="Entities\KisitParametre\KpHerAyPespeseGorev.cs" />
     <Compile Include="Entities\KisitParametre\KpMazereteGorevYazma.cs" />
     <Compile Include="Entities\KisitParametre\KpIstegiKarsila.cs" />
-    <Compile Include="Entities\KisitParametre\KpBayramPespeseFarkliTur.cs" />
+    <Compile Include="Entities\KisitParametre\KpPespeseFarkliTurNobet.cs" />
     <Compile Include="Entities\KisitParametre\KpHerAyHaftaIciPespeseGorev.cs" />
     <Compile Include="Entities\KisitParametre\KpAyIcindeSadece1KezAyniGunNobet.cs" />
     <Compile Include="Entities\KisitParametre\KpAyniGunSadece1NobetTuru.cs" />

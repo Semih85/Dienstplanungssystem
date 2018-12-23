@@ -32,13 +32,13 @@
                     @if (Request.IsAuthenticated)
                     {
                         <a class="nav-link" href="@Url.Action("Index", "NobetYaz",new { area = "EczaneNobet" })">
-                            <img class="img-fluid" src="~/Content/images/nobetciEczaneResim2.jpg" title="Nöbetçi Eczane Belirleme" />
+                            <img class="img-fluid" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme" title="Sisteme giriş yapmak için tıklayınız." style="height:50%; width:50%" />
                         </a>
                     }
                     else
                     {
                         <a class="nav-link" href="@Url.Action("Login", "Account",new { area = "" })">
-                            <img class="img-fluid" src="~/Content/images/nobetciEczaneResim2.jpg" title="Nöbetçi Eczane Belirleme" />
+                            <img class="img-fluid" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme" title="Sisteme giriş yapmak için tıklayınız." style="height:50%; width:50%" />
                         </a>
                     }
                 </div>
@@ -49,7 +49,8 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Hemşire Nöbet Çizelgeleme</h4>
-                    <img class="img-fluid" src="~/Content/images/hemsireCizelgeleme2.jpg" title="Hemşire Nöbet Çizelgeleme" style="height:300px;" />
+                    <img class="img-fluid" src="~/Content/images/hemsireCizelgeleme2.jpg" title="Hemşire Nöbet Çizelgeleme" style="height:66%; width:66%" />
+                    @*style="height:220px;"*@
                 </div>
             </div>
         </div>
@@ -112,7 +113,7 @@
         </div>
     </div>
 
-    <div class="row text-center ">
+    <div class="row text-center mb-3">
         <div class="col-md-4">
             <div class="card text-white bg-danger mb-3">
                 <div class="card-body">
@@ -141,22 +142,37 @@
         </div>
     </div>
 
-    <div class="row text-center " style="margin-top:5%">
+    <div class="row text-center mb-3">
         <div class="col-md-12">
             <div class="ref">Referanslarımız</div>
         </div>
 
-        <div class="col-md-6" style="margin-top:1%">
+        <div class="col-md-4" style="margin-top:1%">
             <a class="nav-link" target="_blank" href="https://www.antalyaeo.org.tr/tr">
-                <img class="img-fluid" src="~/Content/images/AeoLogo2.png" title="Antalya Eczacı Odası" />
+                <img class="img-fluid" src="~/Content/images/AeoLogo2.png" alt="Antalya Eczacı Odası" />
             </a>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <a class="nav-link" target="_blank" href="https://www.mersineczaciodasi.org.tr/">
-                <img class="img-fluid" src="~/Content/images/MeoLogo.png" title="Mersin Eczacı Odası" />
+                <img class="img-fluid" src="~/Content/images/MeoLogo.png" alt="Mersin Eczacı Odası" />
+            </a>
+        </div>
+
+        <div class="col-md-4">
+            <a class="nav-link" target="_blank" href="http://www.giresuneczaciodasi.org.tr/v2/">
+                <img class="img-fluid" src="~/Content/images/GiresunEczaciOdasiLogo.jpg" alt="Giresun Eczacı Odası" style="height:50%; width:50%" />
             </a>
         </div>
     </div>
+
+    <div class="row text-center">
+        <div class="col-md-6">
+            <a class="nav-link" target="_blank" href="http://www.alanyaeo.org.tr/tr">
+                <img class="img-fluid img-rounded" src="~/Content/images/alanyaEczaciOdasiLogo.jpg" alt="Alanya Eczacı Odası Temsilciliği" />
+            </a>
+        </div>
+    </div>
+
     <table width="135" border="0" cellpadding="2" cellspacing="0" title="Click to Verify - This site chose GeoTrust SSL for secure e-commerce and confidential communications.">
         <tr>
             <td width="135" align="center" valign="top">

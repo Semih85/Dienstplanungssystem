@@ -641,7 +641,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
                                 if (bayramlar.Select(s => s.NobetGunKuralId).Contains(sonBayramTuru) && !bayramPespeseFarkliTur.PasifMi)
                                 {
-                                    //BayramPespeseFarkliTur(model, bayramlar, eczaneNobetGrup, eczaneNobetTarihAralikEczaneBazli, sonBayramTuru, _x);
+                                    //PespeseFarkliTurNobetYaz(model, bayramlar, eczaneNobetGrup, eczaneNobetTarihAralikEczaneBazli, sonBayramTuru, _x);
                                 }
                                 else
                                 {

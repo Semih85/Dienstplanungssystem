@@ -282,48 +282,57 @@
                                                                         @Html.AntiForgeryToken()
                                                                         @Html.Hidden("Id", item.Id)
                                                                         @*@Html.Hidden("NobetUstGrupId", item.NobetUstGrupId)
-                                                    @Html.Hidden("KisitId", item.KisitId)*@
+                                                                            @Html.Hidden("KisitId", item.KisitId)*@
 
                                                                         <div class="custom-control custom-checkbox mb-2 mr-2">
-                                                                            @Html.CheckBox("PasifMi", item.PasifMi, new { @class = "custom-control-input", id = $"chk{id.Substring(3)}" })
 
                                                                             @{
                                                                                 var btnTip = "btn-success";
                                                                                 var labelYaziRengi = "text-success";
                                                                                 var labelYazi = "Aktif";
+                                                                                var labelYaziTersi = "";
                                                                             }
 
                                                                             @if (item.PasifMi == true)
                                                                             {
                                                                                 labelYazi = "Pasif";
                                                                                 labelYaziRengi = "text-danger";
+                                                                                labelYaziTersi = "Aktif";
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                labelYaziTersi = "Pasif";
                                                                             }
 
-                                                                            <label class="custom-control-label @labelYaziRengi font-weight-bold mr-2" for="@chkBoxId">@labelYazi</label>
+                                                                            @Html.CheckBox("PasifMi", item.PasifMi, new { @class = "custom-control-input", id = $"chk{id.Substring(3)}" })
+
+                                                                            <label class="custom-control-label @labelYaziRengi font-weight-bold mr-2" title="Kısıtı '@labelYaziTersi' yapmak için buraya tıklayıp 'Kaydet' butonuna basınız." for="@chkBoxId">@labelYazi</label>
 
                                                                         </div>
 
-                                                                        <label class="col-form-label mb-2" style="width:40px;" for="@txtId">Std: </label>
+                                                                        <label class="col-form-label mb-2" 
+                                                                               title="Her bir kısıt {ax + b '<=,=,=>' c} gibi bir denklem sisteminden oluşur. 
+                                                                               Eşitsizliğin sol tarafı, sağ taraf değerine (Std.) 'c' göre değer almaktadır." style="width:40px;" for="@txtId">Std: </label>
 
                                                                         @Html.TextBox("SagTarafDegeri", item.SagTarafDegeri, new { @class = "form-control mb-2 mr-4",
                                                                            type = "number",
                                                                            id = $"txt{id.Substring(3)}",
-                                                                           style = "width: 50px; text-align: center;" })
+                                                                           style = "width: 75px; text-align: center;" })
 
                                                                         if (item.PasifMi != item.VarsayilanPasifMi || item.SagTarafDegeri != item.SagTarafDegeriVarsayilan)
                                                                         {
                                                                             btnTip = "btn-warning";
                                                                         }
 
-                                                                        <button type="submit" title="Kısıtı Güncelle" class="btn @btnTip mb-2"> <i class="fa fa-save" aria-hidden="true"></i></button>
+                                                                        <button type="submit" title="Kısıtı Güncelle" class="btn @btnTip mb-2"> <i class="fa fa-save" aria-hidden="true"></i><span class="d-none d-md-inline"> Kaydet</span></button>
 
                                                                     }
                                                                     <!-- #endregion -->
                                                                     <!-- #region varsayılan durum -->
-                                                                    @if (item.VarsayilanPasifMi == true)
-                                                                    {
-                                                                        @*<i class="fa fa-check-square-o" aria-hidden="true"></i>*@
-                                                                        <div class="alert alert-warning fade show px-2 py-1 mb-0" role="alert">
+                                                                    <div class="alert alert-warning fade show px-2 py-1 mb-0" role="alert" title="Varsayılan Ayarlar">
+                                                                        @if (item.VarsayilanPasifMi == true)
+                                                                        {
+                                                                            @*<i class="fa fa-check-square-o" aria-hidden="true"></i>*@
                                                                             @*<i class="fa fa-warning"></i>*@
                                                                             <span class="text-sm">
                                                                                 Varsayılan
@@ -335,12 +344,11 @@
                                                                                     @item.SagTarafDegeriVarsayilan
                                                                                 </span>
                                                                             </span>
-                                                                        </div>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        @*<i class="fa fa-square-o text-secondary" aria-hidden="true"></i>*@
-                                                                        <div class="alert alert-warning fade show px-2 py-1 mb-0" role="alert">
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            @*<i class="fa fa-square-o text-secondary" aria-hidden="true"></i>*@
+
                                                                             @*<i class="fa fa-warning"></i>*@
                                                                             <span class="text-sm">
                                                                                 <span class="font-weight-bold text-success">
@@ -352,17 +360,21 @@
                                                                                 </span>
                                                                                 (Varsayılan)
                                                                             </span>
-                                                                        </div>
-                                                                    }
+                                                                        }
+                                                                    </div>                                                                  
                                                                     <!-- #endregion -->
                                                                     <!-- #region açıklama -->
                                                                     @*<a class="card-link" title="Kısıt Açıklaması" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
-                                                    Açıklama
-                                                </a>*@
+                                                                            Açıklama
+                                                                        </a>*@
 
                                                                     <!-- #endregion -->
                                                                 </div>
-
+                                                                @*<div class="card-footer">
+                                                                    <p class="card-subtitle">
+                                                                        Std: Sağ Taraf Değeri
+                                                                    </p>
+                                                                </div>*@
                                                             </div>
                                                         </div>
 
@@ -386,12 +398,13 @@
 
 @section Styles{
 
-
+    @Styles.Render("~/bundle/jqueryui/style")
 
 }
 
 @section Scripts{
     @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/queryui/scripts")
 
     <script>
 

@@ -12,7 +12,8 @@ namespace WM.Optimization.Entities.KisitParametre
         public int GruptakiNobetciSayisi { get; set; }
         public EczaneNobetGrupDetay EczaneNobetGrup { get; set; }
         public List<EczaneNobetTarihAralik> EczaneNobetTarihAralik { get; set; }
-        public int GunlukNobetciSayisi { get; internal set; }
+        //public int GunlukNobetciSayisi { get; internal set; }
+        public int IstisnaOlanNobetciSayisi { get; internal set; }
 
         public override OptanoKisitParametreModelBase<Model, EczaneNobetTarihAralik> Clone()
         {
