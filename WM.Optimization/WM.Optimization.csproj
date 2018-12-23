@@ -73,8 +73,8 @@
     <Reference Include="Microsoft.Solver.Foundation, Version=3.0.2.10889, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Solver.Foundation.3.1.0\lib\Microsoft.Solver.Foundation.dll</HintPath>
     </Reference>
-    <Reference Include="optano.modeling, Version=2.11.3.409, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OPTANO.Modeling.2.11.3.409\lib\net45\optano.modeling.dll</HintPath>
+    <Reference Include="optano.modeling, Version=2.12.1.423, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OPTANO.Modeling.2.12.1.423\lib\net45\optano.modeling.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -177,7 +177,6 @@
     <Folder Include="Concrete\GeneticAlgorithm\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="license.txt" />
     <Content Include="MipCL131WrapperCpp.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -188,6 +187,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MipCL162WrapperCpp.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MipCL172WrapperCpp.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
