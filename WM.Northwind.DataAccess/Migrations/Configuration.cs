@@ -94,7 +94,7 @@ namespace WM.Northwind.DataAccess.Migrations
             //    item.EczaneNobetGrupId = item.EczaneId;
             //}
             //context.SaveChanges(); 
-            #endregion
+            #endregion            
         }
 
         private static void VeriEkleGuncelleMaster(Concrete.EntityFramework.Contexts.EczaneNobetContext context)
@@ -1188,6 +1188,87 @@ namespace WM.Northwind.DataAccess.Migrations
             context.SaveChanges();
             #endregion
 
+            #region eczaneler - enlem, boylam ekle - osmaniye
+
+            var osmaniyeEnlemBoylamlar = new List<Eczane>()
+            {
+                #region osmaniye enlem boylam
+       
+new Eczane { Id =953,Enlem=37.083649,Boylam= 36.265817,Adres ="KAZIM KARABEKÝR MAH.6502 SK.9102", AdresTarifiKisa = "Kadýn Doðum Hastanesi Yaný", TelefonNo = "3288141474"},
+new Eczane { Id =932,Enlem=37.074959,Boylam= 36.250194,Adres ="RAHIME HATUN MAH. DR. SADIK AHMET CAD. NO:22/A MERKEZ/OSMANIYE", AdresTarifiKisa = "Cumhuriyet Meydaný Karþýsý", TelefonNo = "3288129400"},
+new Eczane { Id =918,Enlem=37.0675690,Boylam=36.2490990,Adres ="YEDÝOCAK MAH.DR.DEVLET BAHÇELÝ BUL.NO 70/B MERKEZ/OSMANIYE", AdresTarifiKisa = "Dr. Devlet Bahçeli bulvarý 3. Etap 17 nolu aile hekimliði karþýsý", TelefonNo = "3288142051"},
+new Eczane { Id =940,Enlem=37.080859,Boylam= 36.252531,Adres ="RIZAÝYE MAH.ÝSKENDER TÜRKMEN CAD.NO:106/A", AdresTarifiKisa = "Rýzaiye Mah.Ý.Türkmen Cad.Kadirli Yolu Üzeri BÝM Civarý", TelefonNo = "3284000086"},
+new Eczane { Id =903,Enlem=37.063517,Boylam= 36.235955,Adres ="ADNAN MENDERES MAH.19538 SK.NO:6/B", AdresTarifiKisa = "AVM OTOPARK ÇIKIÞI SAÐLIK OCAÐI KARÞISI", TelefonNo = "3288257013"},
+new Eczane { Id =951,Enlem=37.083783,Boylam= 36.265931,Adres ="KAZIM KARABEKÝR MH.6502 SK.NO:11/A", AdresTarifiKisa = "Kadýn Doðum Hastanesi Yaný", TelefonNo = "3288148333"},
+new Eczane { Id =926,Enlem=37.076427,Boylam= 36.246032,Adres ="ESENEVLER MH.KAYALAR SK.NO:8/B", AdresTarifiKisa = "Esenevler mahallesi kurtuluþ saðlýk ocaðý ilerisi Büyük PTT arkasý Eski vali konaðý karþýsý", TelefonNo = "3288125678"},
+new Eczane { Id =927,Enlem=37.076632,Boylam= 36.246031,Adres ="ESENEVLER MAHALLESÝ KAYALAR SOKAK NO:8/A", AdresTarifiKisa = "kurtuluþ saðlýk ocaðý yaný", TelefonNo = "3287862123"},
+new Eczane { Id =900,Enlem=37.063006,Boylam= 36.236542,Adres ="ADNAN MENDERES MAH. 19537 SK.NO:5/E", AdresTarifiKisa = "Park 328 AVM Arkasý, Metin Tamer Sitesi 11.Blok No:34", TelefonNo = "3288260390"},
+new Eczane { Id =912,Enlem=37.073745,Boylam= 36.235997,Adres ="YILDIRIM BEYAZIT MAH.14015 SK.NO:1/A", AdresTarifiKisa = "Musa Þahin bulvarý Gülbahçem sitesinden aþaðý 400 m ileride cuma pazarý giriþi sol köþe", TelefonNo = "3288133464"},
+new Eczane { Id =907,Enlem=37.062219,Boylam= 36.238711,Adres ="MEHMET AKIF ERSOY MAH. ATATÜRK CAD. NO:475 B-C MERKEZ/OSMANIYE", AdresTarifiKisa = "ÖZEL YENÝ HAYAT HASTANESÝ YANI", TelefonNo = "3288250055"},
+new Eczane { Id =938,Enlem=37.072128,Boylam= 36.252760,Adres ="HACI OSMANLI MH. DR. AHMET SADIK CD.DANIS APT. NO:86/A MERKEZ/OSMANIYE", AdresTarifiKisa = "Dr.Sadýk Ahmet Cd.Eski Vergi Dairesi Karþýsý", TelefonNo = "3288128405"},
+new Eczane { Id =936,Enlem=37.073538,Boylam= 36.251795,Adres ="ATATÜRK CAD. IS BANKASI KARSISI NO:179 MERKEZ/OSMANIYE", AdresTarifiKisa = "ATATÜRK CAD. IS BANKASI KARSISI", TelefonNo = "3288141617"},
+new Eczane { Id =954,Enlem=37.059333,Boylam= 36.246000,Adres ="MEHMET AKÝF ERSOY MAH.8507 (AZÝZ HÜDAÝ) SK.NO:58/A", AdresTarifiKisa = "", TelefonNo = "3284300020"},
+new Eczane { Id =937,Enlem=37.072714,Boylam= 36.252197,Adres ="ISTIKLAL MAH. DR. SADIK AHMET CAD. NO:99 MERKEZ/OSMANIYE", AdresTarifiKisa = "Dr.Sadýk Ahmet Cd.ÇINARLI KAHVE KARÞISI", TelefonNo = "3288143420"},
+new Eczane { Id =942,Enlem=37.082748,Boylam= 36.258156,Adres ="M. FEVZI ÇAKMAK MH. HOCA AHMET YESEVI CD. NO:67/c", AdresTarifiKisa = "Nahar Yolu Cumhuriyet Saðlýk Ocaðý Karþýsý", TelefonNo = "3288136722"},
+new Eczane { Id =934,Enlem=37.073472,Boylam= 36.250960,Adres ="ALIBEYLI MH. ATATÜRK CD. NO:186 MERKEZ/OSMANIYE", AdresTarifiKisa = "Atatürk Cad.ÇARÞI Ýþ Bankasý Civarý Vestel Bayii Yaný", TelefonNo = "3288143848"},
+new Eczane { Id =899,Enlem=37.059034,Boylam= 36.256193,Adres ="Karaboyunlu Mah.5550 Sk.No:31/A", AdresTarifiKisa = "KARABOYUNLU SAÐLIK OCAÐI KARÞISI", TelefonNo = "3288250065"},
+new Eczane { Id =950,Enlem=37.083597,Boylam= 36.266085,Adres ="KAZIM KARABEKÝR MH.6502 SK.NO:11/B", AdresTarifiKisa = "Eski Devlet Hastanesi Karþýsý", TelefonNo = "3288142180"},
+new Eczane { Id =919,Enlem=37.067596,Boylam= 36.249096,Adres ="YEDÝOCAK MAH.DR.DEVLET BAHÇELÝ BULVARI 3.ETAP DR.DEVLET BAHÇELÝ BULVARI 3.ETAP", AdresTarifiKisa = "DR.DEVLET BAHÇELÝ BULVARI 3.ETAP", TelefonNo = "3284020002"},
+new Eczane { Id =945,Enlem=37.081341,Boylam= 36.262527,Adres ="MARAÞAL FEVZÝ ÇAKMAK MH.7520 SK NO:4/A", AdresTarifiKisa = "ÝBN-Ý SÝNA Hastanesi Arkasý Acil Giriþi", TelefonNo = "3288141199"},
+new Eczane { Id =914,Enlem=37.071232,Boylam= 36.244700,Adres ="ALÝBEYLÝ MAHALLESÝ DR.DEVLET BAHÇELÝ BULVARI NO 27/B OSMANÝYE/MERKEZ", AdresTarifiKisa = "ÖZEL SEVGÝ HASTANESÝ KARÞISI", TelefonNo = "3288133453"},
+new Eczane { Id =925,Enlem=37.076404,Boylam= 36.246201,Adres ="ESENEVLER MH. KAYALAR SK. NO:13/E MERKEZ/ OSMANIYE", AdresTarifiKisa = "Ýstasyon Cad. PTT Arkasý Kurtuluþ Saðlýk Ocaðý Karþýsý", TelefonNo = "3288145516"},
+new Eczane { Id =922,Enlem=37.072431,Boylam= 36.245920,Adres ="ALIBEYLI MAH.KARAOGLANOGLU CAD. NO:17 MERKEZ/ OSMANIYE", AdresTarifiKisa = "Özel Park Hastanesi Karþýsý", TelefonNo = "3288147262"},
+new Eczane { Id =931,Enlem=37.073967,Boylam= 36.249472,Adres ="ALIBEYLI MAH.PALALI SÜLEYMAN CD. ZAFER CAMII YANI NO:23 MERKEZ/OSMANIYE", AdresTarifiKisa = "Palalý Süleyman Cd.No:23 Zafer Camii yaný", TelefonNo = "3288126535"},
+new Eczane { Id =910,Enlem=37.061515,Boylam= 36.239532,Adres ="MEHMET AKIF ERSOY MAH.8009 SKK.NO:8 MERKEZ/OSMANIYE", AdresTarifiKisa = "Özel Yeni Hayat Hastanesi Acil Çýkýþý", TelefonNo = "3288254004"},
+new Eczane { Id =901,Enlem=37.063068,Boylam= 36.236504,Adres ="ADNAN MENDERES MAH.19537 SK.no:5/A MERKEZ/OSMANIYE", AdresTarifiKisa = "Metin Tamer Sitesi Arkasý AVM Tarafý Saðlýk Ocaðý Karþýsý Saray Pastanesi Yanýndaki Sokak", TelefonNo = "3288258010"},
+new Eczane { Id =939,Enlem=37.074076,Boylam= 36.253939,Adres ="ISTIKLAL MAH. SEHT. MEHMET EROGLU CAD. NO:137 MERKEZ/OSMANIYE", AdresTarifiKisa = "Þehit Mehmet Eroðlu Cad. HALK BANKASI Karþýsý", TelefonNo = "3288146599"},
+new Eczane { Id =924,Enlem=37.0723410,Boylam=36.2461990,Adres ="ALÝBEYLÝ MAH.KARAOÐLANOÐLU SOK. 14/A", AdresTarifiKisa = "Özel Park Hastanesi Yaný", TelefonNo = "3288127070"},
+new Eczane { Id =898,Enlem=37.039324,Boylam= 36.227989,Adres ="FAKUÞAÐI MAH.45018 SK.NO:8/34 OSMANÝYE", AdresTarifiKisa = "", TelefonNo = "3288020099"},
+new Eczane { Id =928,Enlem=37.074496,Boylam= 36.247938,Adres ="ALIBEYLI MAH. S. MEHMET TATLI SK. CEREN IS HANI ZEMIN KAT NO:10 MERKEZ/OSMANIYE", AdresTarifiKisa = "Ziraat Bankasý Karþý Sokaðý", TelefonNo = "3288133666"},
+new Eczane { Id =933,Enlem=37.073140,Boylam= 36.250133,Adres ="YEDIOCAK MAH. ATATÜRK CD.NO:311 MERKEZ/OSMANIYE", AdresTarifiKisa = "Atatürk Cd. Kobaner Pasajý Yaný", TelefonNo = "3288141064"},
+new Eczane { Id =948,Enlem=37.083038,Boylam= 36.266513,Adres ="MARESAL FEVZI ÇAKMAK MAH. HASTANE KARSISI NO:581 MERKEZ/OSMANIYE", AdresTarifiKisa = "Kadýn Doðum Hastanesi Yaný", TelefonNo = "3288143598"},
+new Eczane { Id =913,Enlem=37.0710640,Boylam=36.2447360,Adres ="ALÝBEYLÝ MAH.DR.DEVLET BAHÇELÝ BULVARI 1.ETAP NO:27/A", AdresTarifiKisa = "ÖZEL SEVGÝ HASTANESÝ KARÞISI", TelefonNo = "3288123838"},
+new Eczane { Id =915,Enlem=37.070599,Boylam= 36.245437,Adres ="DR.DEVLET BAHÇELÝ BULVARI.DEMÝRPEN ÝNÞAAT APT.NO:33 B/B", AdresTarifiKisa = "Sevgi Hastanesi Karþýsý Dr.Devlet Bahçeli Bulvarý 1.Etap", TelefonNo = "3288137070"},
+new Eczane { Id =944,Enlem=37.083360,Boylam= 36.258149,Adres ="RIZAIYE MAH.HOCA AHMET YESEVI CAD.NO:79/B OSMANIYE", AdresTarifiKisa = "Nahar Yolu Cumhuriyet Saðlýk Ocaðý Yaný", TelefonNo = "3288132149"},
+new Eczane { Id =943,Enlem=37.083374,Boylam= 36.258133,Adres ="Mareþal Fevzi Çakmak mah.Hoca Ahmet Yesevi cd.No:44/B", AdresTarifiKisa = "Nahar yolu, cumhuriyet saðlýk ocaðý karþýsý", TelefonNo = "3288127666"},
+new Eczane { Id =909,Enlem=37.061855,Boylam= 36.238855,Adres ="M.AKIF ERSOY MH. 8010 SK. ÖZYURT SITESI B BLOK NO : 4", AdresTarifiKisa = "Yeni hayat hastanesi orta kapý karþýsý", TelefonNo = "3288251919"},
+new Eczane { Id =935,Enlem=37.073485,Boylam= 36.251060,Adres ="ISTIKLAL MAH. ATATÜRK CAD. NO:182 MERKEZ/OSMANIYE", AdresTarifiKisa = "Atatürk Cad. Eski Belediye ve ÇARÞI Ýþ Bankasý arasý", TelefonNo = "3288143601"},
+new Eczane { Id =930,Enlem=37.074911,Boylam= 36.248520,Adres ="CEVDET SUNAY CAD. NO:33 OSMANIYE", AdresTarifiKisa = "", TelefonNo = "3288143667"},
+new Eczane { Id =920,Enlem=37.072707,Boylam= 36.245708,Adres ="ALÝBEYLÝ MAH.KARAOÐLANOÐLU SK.ORHUN ÖTÜKEN ÝNÞ.APT.NO:19/A OSMANÝYE", AdresTarifiKisa = "Özel Park Hastanesi Karþýsý", TelefonNo = "3288143701"},
+new Eczane { Id =952,Enlem=37.083542,Boylam= 36.265977,Adres ="KAZIM KARABEKÝR MAH.6502 SK.", AdresTarifiKisa = "Kadýn Doðum Hastanesi Yaný", TelefonNo = "3288131513"},
+new Eczane { Id =897,Enlem=37.055776,Boylam= 36.189888,Adres ="Akyar Köyü Hastane Mevkii 111/2", AdresTarifiKisa = "BÜYÜK OSMANÝYE OTELÝ YANI OPET KIDIK PETROL ÝÇÝ", TelefonNo = "5415689788"},
+new Eczane { Id =929,Enlem=37.073829,Boylam= 36.247108,Adres ="ALIBEYLI MAH. SEHIT MEHMET SK. NO:4 MERKEZ/OSMANIYE", AdresTarifiKisa = "Ziraat Bankasý Karþý Sokaðý Toprakkale Garajý Yaný", TelefonNo = "3288149637"},
+new Eczane { Id =949,Enlem=37.083618,Boylam= 36.266187,Adres ="KAZIM KARABEKÝR MAH.6542 SK.NO:13/A OSMANÝYE", AdresTarifiKisa = "Kadýn Doðum Hastanesi Karþýsý", TelefonNo = "3288147164"},
+new Eczane { Id =947,Enlem=37.074039,Boylam= 36.250443,Adres ="ALIBEYLI MAH. CEVDET SUNAY CAD. NO:44/A MERKEZ/OSMANIYE", AdresTarifiKisa = "ÇARÞI POLÝS KARAKOLU ARKASI, AKBANK GÝRÝÞ KAPISI KARÞISI", TelefonNo = "3288124252"},
+new Eczane { Id =917,Enlem=37.067728,Boylam= 36.2489378,Adres ="YEDÝOCAK MAH.DR.DEVLET BAHÇELÝ BULVARI.NO:87-A/D MERKEZ OSMANÝYE", AdresTarifiKisa = "Devlet bahçeli bulvarý 3.etap", TelefonNo = "5063864196"},
+new Eczane { Id =902,Enlem=37.062298,Boylam= 36.233553,Adres ="ADNAN MENDERES MAH.19535 SK.ZÜMRÜT APT ZEMÝN KAT 3/A", AdresTarifiKisa = "Metin Tamer Sitesi Arkasý, AVM otopark çýkýþý tarafý, Sanayi Saðlýk Ocaðý karþýsý, Saray Pastanesi yanýndaki sokakta", TelefonNo = "3288256676"},
+new Eczane { Id =904,Enlem=37.063585,Boylam= 36.235971,Adres ="ADNAN MENDERES MAH.19538:SK NO:8/A", AdresTarifiKisa = "Metin tamer Sitesi Arkasý PARK 328 Otopark Çýkýþý", TelefonNo = "3288120331"},
+new Eczane { Id =908,Enlem=37.062033,Boylam= 36.238864,Adres ="Yeni Hayat Hastanesi Karþýsý M AKÝF ERSOY MAH.ATATÜRK CAD.8008 SK.NO.3", AdresTarifiKisa = "Yeni Hayat Hastanesi Karþýsý", TelefonNo = "3288255252"},
+new Eczane { Id =921,Enlem=37.072501,Boylam= 36.245900,Adres ="ALIBEYLI MH.KARAOLANOGLU CD. NO:17/C MERKEZ/OSMANIYE", AdresTarifiKisa = "Özel Park Hastanesi Yaný", TelefonNo = "3288147000"},
+new Eczane { Id =916,Enlem=37.071005,Boylam= 36.244900,Adres ="ALIBEYLI MAH. DR. DEVLET BAHÇELI BULV. NO: 29/B MERKEZ/ OSMANIYE", AdresTarifiKisa = "Sevgi Hastanesi Karþýsý, Devlet Bahçeli Bulvarý, Vatan Bilgisayar Yaný", TelefonNo = "3288136059"},
+new Eczane { Id =905,Enlem=37.063544,Boylam= 36.235848,Adres ="ADNAN MENDERES MAHALLESI 19538 SOKAK NO:10/B MERKEZ/ OSMANIYE", AdresTarifiKisa = "Metin tamer Sitesi Arkasý PARK 328 Otopark Çýkýþý", TelefonNo = "3288256618"},
+new Eczane { Id =906,Enlem=37.062447,Boylam= 36.238758,Adres ="RAUFBEY MH. ATATÜRK CD. SAFAEVLER SITESI B1 BLOK NO:7 MERKEZ/OSMANIYE", AdresTarifiKisa = "Yenihayat hastanesi karþýsý", TelefonNo = "3288251565"},
+new Eczane { Id =946,Enlem=37.080450,Boylam= 36.261678,Adres ="MAREÞAL FEVZÝ ÇAKMAK MAHALLESÝ MUSA ÞAHÝN BULVARI 499/B ZEMÝN KAT DAÝRE 1", AdresTarifiKisa = "ÝBN-Ý SÝNA Hastanesi Yaný", TelefonNo = "3288120200"},
+
+
+            	#endregion
+            };
+
+            foreach (var eczane in osmaniyeEnlemBoylamlar)
+            {
+                var result = context.Eczaneler.SingleOrDefault(w => w.Id == eczane.Id);
+
+                result.Boylam = eczane.Boylam;
+                result.Enlem = eczane.Enlem;
+                result.TelefonNo = eczane.TelefonNo;
+                result.Adres = eczane.Adres;
+                result.AdresTarifiKisa = eczane.AdresTarifiKisa;
+                result.AdresTarifi = eczane.AdresTarifi;
+
+                context.SaveChanges();
+            }
+
+            #endregion
 
             #region eczaneler - enlem, boylam ekle - alanya
 

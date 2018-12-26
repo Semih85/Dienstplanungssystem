@@ -41,5 +41,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 
         [Display(Name = "Nöbet Grubu")]
         public string EczaneNobetGrupAdi { get; set; }
+
+        public string NobetAltGrupAdi { get; set; }
     }
 }

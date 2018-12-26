@@ -21,9 +21,13 @@ namespace WM.UI.Mvc.App_Start
         {
             bundles.Add(new ScriptBundle("~/bundle/scripts").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/umd/popper.js",
-                        "~/Scripts/bootstrap.js"
+                        "~/Scripts/umd/popper.min.js",
+                        "~/Scripts/bootstrap.min.js"
                         ));
+
+            //alert
+            bundles.Add(new ScriptBundle("~/bundle/globalize/scripts").Include(
+                     "~/Scripts/globalize.js"));
 
             //Grid mvc
             bundles.Add(new ScriptBundle("~/bundle/gridmvc/scripts").Include(

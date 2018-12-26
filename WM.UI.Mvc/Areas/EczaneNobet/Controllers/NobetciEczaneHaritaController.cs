@@ -92,6 +92,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _enlem = 40.912811;
                 _boylam = 38.38953;
             }
+            else if (nobetUstGrupId == 5)
+            {
+                _enlem = 37.0651243;
+                _boylam = 36.2463125;
+            }
             var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(_tarih, nobetUstGrupId);
             var IPadres = Request.UserHostAddress;
             // var ekraninBulundugueczane = _eczaneService.GetList().Where(w=>w.IPadress == IPadres);
@@ -174,6 +179,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _enlem = 40.912811;
                 _boylam = 38.38953;
             }
+            else if (nobetUstGrupId == 5)
+            {
+                _enlem = 37.0651243;
+                _boylam = 36.2463125;
+            }
             var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(tarih, nobetUstGrupId);
             var IPadres = Request.UserHostAddress;
             // var ekraninBulundugueczane = _eczaneService.GetList().Where(w=>w.IPadress == IPadres);
@@ -209,7 +219,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     Boylam = boylam,
                     TelefonNo = telefonNo,
                     AdresTarifi = adresTarifi,
-                    AdresTarifiKisa = adresTarifiKisa
+                    AdresTarifiKisa = adresTarifiKisa,
+                    NobetAltGrupAdi = item.NobetAltGrupAdi
                 });
             }
 
@@ -247,7 +258,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _enlem = 40.912811;
                 _boylam = 38.38953;
             }
-            var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylar(nobetUstGrupId);
+            else if (nobetUstGrupId == 5)
+            {
+                _enlem = 37.0651243;
+                _boylam = 36.2463125;
+            }
+            var nobetciEczaneler = _eczaneNobetGrupService.GetDetaylar(nobetUstGrupId);
             var IPadres = Request.UserHostAddress;
             // var ekraninBulundugueczane = _eczaneService.GetList().Where(w=>w.IPadress == IPadres);
 
@@ -282,7 +298,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     Boylam = boylam,
                     TelefonNo = telefonNo,
                     AdresTarifi = adresTarifi,
-                    AdresTarifiKisa = adresTarifiKisa
+                    AdresTarifiKisa = adresTarifiKisa,
+                    NobetAltGrupAdi = item.NobetAltGrupAdi
                 });
             }
 

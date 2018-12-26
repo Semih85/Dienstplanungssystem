@@ -86,6 +86,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var kisitlar = _nobetUstGrupKisitService.GetDetaylar()
                 .Where(w => nobetUstGruplar.Contains(w.NobetUstGrupId))
                 .OrderBy(o => o.KisitAdi).ToList();
+
             //.ThenBy(o => o.NobetUstGrupId)
             //.ThenBy(r => r.KisitAdi);
 
@@ -123,40 +124,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 kisit.PasifMi = nobetUstGrupKisit.VarsayilanPasifMi;
                 kisit.SagTarafDegeri = nobetUstGrupKisit.SagTarafDegeriVarsayilan;
                 _nobetUstGrupKisitService.Update(kisit);
-            }
-
-            //foreach (var item in nobetUstGrupKisitlar.Where(w => w.PasifMi != w.VarsayilanPasifMi))
-            //{
-            //    var varsayilanDeger = item.VarsayilanPasifMi;
-            //    item.PasifMi = varsayilanDeger;
-            //    _nobetUstGrupKisitService.Update(item);
-            //}
-
-            //haftaIciToplamMaxHedefin sağ taraf değeri otomatik hesaplanmaktadır. 
-            //özel bir değer girilmesi istisnadır. o nedenle varsayılan 0 hali otomatik hesaplama içindir.
-            //var haftaIciToplamMaxHedefStd = nobetUstGrupKisitlar.Where(w => w.KisitId == 16).SingleOrDefault();
-
-            //if (haftaIciToplamMaxHedefStd.SagTarafDegeri > 0)
-            //{
-            //    haftaIciToplamMaxHedefStd.SagTarafDegeri = 0;
-            //    _nobetUstGrupKisitService.Update(haftaIciToplamMaxHedefStd);
-            //}
-
-            //var haftaIciToplamMinHedef = nobetUstGrupKisitlar.Where(w => w.KisitId == 17).SingleOrDefault();
-
-            //if (haftaIciToplamMinHedef.SagTarafDegeri > 0)
-            //{
-            //    haftaIciToplamMinHedef.SagTarafDegeri = 0;
-            //    _nobetUstGrupKisitService.Update(haftaIciToplamMinHedef);
-            //}
-
-            //var herAyEnFazlaGorev = nobetUstGrupKisitlar.Where(w => w.KisitId == 19).SingleOrDefault();
-
-            //if (herAyEnFazlaGorev.SagTarafDegeri > 0)
-            //{
-            //    herAyEnFazlaGorev.SagTarafDegeri = 1;
-            //    _nobetUstGrupKisitService.Update(herAyEnFazlaGorev);
-            //}
+            }           
 
             TempData["VarsayilanKistlarSonuc"] = true;
 
@@ -310,7 +278,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 TempData["KisitDuzenleSonuc1"] = kisit.KisitKategoriAdi;
                 TempData["KisitDuzenleSonuc2"] = kisit.KisitAdiGosterilen;
 
-                kisitOrj.PasifMi = nobetUstGrupKisit.PasifMi;
+                kisitOrj.PasifMi = !nobetUstGrupKisit.PasifMi;
                 kisitOrj.SagTarafDegeri = nobetUstGrupKisit.SagTarafDegeri;
 
                 _nobetUstGrupKisitService.Update(kisitOrj);

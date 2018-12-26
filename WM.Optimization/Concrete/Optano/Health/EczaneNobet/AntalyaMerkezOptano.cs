@@ -99,10 +99,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     model,
                     data.EczaneNobetTarihAralik,
                     "_x",
-                    null,
-                    h => data.LowerBound,
-                    h => data.UpperBound,
-                    a => VariableType.Binary);
+                    item => $"Nobet durumu {item.EczaneNobetGrupId}, {item.NobetGrupAdi}, {item.EczaneAdi}_{item.TakvimId}",
+                    item => 0,//data.LowerBound,
+                    item => 1,//data.UpperBound,
+                    item => VariableType.Binary);
 
             #endregion
 
@@ -1033,7 +1033,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var config = new Configuration
             {
                 NameHandling = NameHandlingStyle.UniqueLongNames,
-                ComputeRemovedVariables = true
+                ComputeRemovedVariables = true,
+                //Epsilon = 0
             };
             try
             {
@@ -1058,7 +1059,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     //var sure_02 = stopwatch.Elapsed;
 
-                    //var confilicts = solution.ConflictingSet;
+                    var confilicts = new ConflictingSet();
+                    confilicts = solution.ConflictingSet;
+                    var confilictsStr = confilicts == null ? "No conflict." : confilicts.ToString();
+
                     //ConstraintsUB = new IEnumerable<Constraint>();
                     //ConstraintsUB = confilicts.ConstraintsUB;
 
@@ -1071,6 +1075,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     {
                         // import the results back into the model 
                         model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
+
+                        //var solutionVariableValues = solution.VariableValues.Where(w => w.Value > 0).ToList();
+                        //var degiskenlerinAldigiDegerler = solution.VariableValues.GroupBy(s => s.Value).Select(s => new { ValueOfDecisionVariables = s.Key, NumberOfVariablesTheSameValue = s.Count() }).ToList();
+                        //var sonuclarDene = data.EczaneNobetTarihAralik.Where(s => _x[s].Value.IsAlmost(1) == true).Select(s => _x[s].Value).ToList();
+
                         var objective = solution.ObjectiveValues.Single();
                         var sure = sure_01 - sure_0; //solution.OverallWallTime;
                         var bestBound = solution.BestBound;
@@ -1091,9 +1100,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         };
 
                         //var sure_2 = stopwatch.Elapsed;
-
-                        var sonuclar = data.EczaneNobetTarihAralik.Where(s => _x[s].Value == 1).ToList();
-                        var sonuclar2 = data.EczaneNobetTarihAralik.Where(s => _x[s].Value != 1).ToList();
+                        var sonuclar = data.EczaneNobetTarihAralik.Where(s => _x[s].Value.IsAlmost(1) == true).ToList();
+                        //var sonuclar2 = data.EczaneNobetTarihAralik.Where(s => _x[s].Value.IsAlmost(0) == true).ToList();
 
                         var nobetGrupTarihler = data.EczaneNobetTarihAralik.Select(s => new { s.NobetGrupId, s.Tarih, s.NobetGorevTipId }).Distinct().ToList();
 

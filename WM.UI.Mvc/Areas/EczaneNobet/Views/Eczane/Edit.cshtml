@@ -145,13 +145,38 @@
 
 @section Scripts{
     @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
-    @Scripts.Render("~/bundle/validation/scripts")
+    @Scripts.Render("~/bundle/ajax")
+    @*@Scripts.Render("~/bundle/validation/scripts")*@
 
     <script>
-        $("#btnSubmitForm").click(function() {
-            $("#Enlem").text().replace(".", ",");
-            $("#Boylam").text().replace(".", ",");
+        //$("#btnSubmitForm").click(function () {
+        //    $("#Enlem").text().replace(".", ",");
+        //    $("#Boylam").text().replace(".", ",");
+        //});
+        $(function () {           
+            var bslStr = tarihDondur2($("#AcilisTarihi").val());
+            var bsl = new Date(bslStr);
+            $("#AcilisTarihi").datepicker("setDate", new Date(bsl));
         });
+
+        function tarihDondur2(metin) {
+
+            var tarih = metin.split(' ', 1)[0];
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2];
+            ay = tarihTanim[1];
+            gun = tarihTanim[0];
+
+            if (gun.length != 4) {
+                return yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
     </script>
 
 }

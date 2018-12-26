@@ -198,15 +198,15 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var haftaIciAnahtarListeTumEczaneler = _takvimService.AnahtarListeyiBuGuneTasi(nobetGrupIdListe, nobetGorevTipId, nobetUstGrupBaslangicTarihi, eczaneNobetGruplar, eczaneNobetGrupGunKuralIstatistikYatay, anahtarListe, "Hafta İçi");
 
-            var haftaIciAnahtarListeTumEczaneler2 = _takvimService.AnahtarListeyiBuGuneTasi2(nobetGrupIdListe, 
-                nobetGorevTipId, 
-                nobetUstGrupBaslangicTarihi, 
-                eczaneNobetGruplar, 
-                eczaneNobetGrupGunKuralIstatistikYatay, 
-                anahtarListe, 
-                nobetUstGrupGunGruplar,
-                baslangicTarihi, 
-                bitisTarihi);
+            //var haftaIciAnahtarListeTumEczaneler2 = _takvimService.AnahtarListeyiBuGuneTasi2(nobetGrupIdListe, 
+            //    nobetGorevTipId, 
+            //    nobetUstGrupBaslangicTarihi, 
+            //    eczaneNobetGruplar, 
+            //    eczaneNobetGrupGunKuralIstatistikYatay, 
+            //    anahtarListe, 
+            //    nobetUstGrupGunGruplar,
+            //    baslangicTarihi, 
+            //    bitisTarihi);
             ;
             //var sure_anahtarListe2 = stopwatch.Elapsed;
 

@@ -167,11 +167,12 @@
                                         <span class="font-weight-bold text-secondary mr-2 ">Çözüm</span>
                                         <div class="custom-control custom-radio custom-control-inline ml-3 ml-md-0">
                                             <input type="radio" id="cozumTercihOncelikli" name="CozumTercih" value=0 class="custom-control-input">
-                                            <label class="custom-control-label" for="cozumTercihOncelikli">Öncelikli</label>
+                                            <label class="custom-control-label" data-toggle="tooltip" data-placement="top" 
+                                                   title="Seçilen nöbet grupları yukarıdaki sıra ile çözülür. Her çözüm, önceki çözümleri dikkate alır. Örneğin, 1. ve 2. gruplar seçili ise; önce 1. grup çözülür sonra 2. grup 1.ye göre çözülür. Önceki çözümler sonradan değişmez." for="cozumTercihOncelikli">Öncelikli</label>
                                         </div>
                                         <div class="custom-control custom-radio custom-control-inline">
                                             <input type="radio" id="cozumTercihOnceliksiz" name="CozumTercih" value=1 class="custom-control-input">
-                                            <label class="custom-control-label" for="cozumTercihOnceliksiz">Önceliksiz</label>
+                                            <label class="custom-control-label" data-toggle="tooltip" data-placement="top" title="Seçilen nöbet grupları aynı zamanda çözülür. Örneğin, 1. ve 2. gruplar seçili ise her iki grubun birlikte mümkün olan ortak çözümü yapılır." for="cozumTercihOnceliksiz">Önceliksiz</label>
                                         </div>
                                         <div class="custom-control custom-checkbox" id="divSonrakiAylarRasgele" style="display:none;">
                                             @Html.CheckBox("SonrakiAylarRasgele", new { @class = "custom-control-input" })
@@ -1483,3 +1484,5 @@
 @*<hr />*@
 
 <!-- #endregion -->
+
+

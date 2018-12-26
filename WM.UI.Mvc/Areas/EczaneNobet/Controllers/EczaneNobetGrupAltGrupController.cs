@@ -54,7 +54,14 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
 
-            var eczaneNobetGrupAltGruplar = _eczaneNobetGrupAltGrupService.GetDetaylar(nobetUstGruplar);
+            var eczaneNobetGrupAltGruplar = _eczaneNobetGrupAltGrupService.GetDetaylar(nobetUstGruplar)
+                .OrderBy(o => o.NobetGorevTipAdi)
+                .OrderBy(o => o.NobetGrupAdi)
+                .OrderBy(o => o.NobetAltGrupAdi)
+                .ThenBy(o => o.EczaneAdi)
+                .ToList()
+                ;
+
             return View(eczaneNobetGrupAltGruplar);
         }
 

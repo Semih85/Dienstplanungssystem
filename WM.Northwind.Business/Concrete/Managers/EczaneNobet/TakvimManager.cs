@@ -379,8 +379,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                                                 .SingleOrDefault(w => w.NobetGrupGorevTipId == g.Id
                                                                                               && w.NobetGunKuralId == t.HaftaninGunu)?.GunGrupId)
                                                                               ),
-                                                  TalepEdilenNobetciSayisi = (g.Id == d?.NobetGrupGorevTipId && t.TakvimId == d?.TakvimId) 
-                                                  ? d.NobetciSayisi 
+                                                  TalepEdilenNobetciSayisi = (g.Id == d?.NobetGrupGorevTipId && t.TakvimId == d?.TakvimId)
+                                                  ? d.NobetciSayisi
                                                   : (int)k.Deger,
                                                   //bayramlar.Where(w => w.TakvimId == t.TakvimId
                                                   //                            && w.NobetGrupId == g.NobetGrupId
@@ -587,7 +587,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     GunGrupAdi = s.Key.GunGrupAdi,
                     GunGrupId = s.Key.GunGrupId,
                     GunSayisi = s.Count(),
-                    TalepEdilenNobetciSayisi = s.Sum(f => f.TalepEdilenNobetciSayisi)
+                    TalepEdilenNobetciSayisi = s.Sum(f => f.TalepEdilenNobetciSayisi),
+                    IstatistikBaslamaTarihi = s.Max(f => f.Tarih),
+                    IstatistikBitisTarihi = s.Min(f => f.Tarih)
                 }).ToList();
         }
 

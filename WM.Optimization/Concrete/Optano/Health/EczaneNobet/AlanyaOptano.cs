@@ -1321,8 +1321,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             CalismaSayisi = data.CalismaSayisi
                         };
 
-                        var sonuclar = data.EczaneNobetTarihAralik.Where(s => _x[s].Value == 1).ToList();
-                        var sonuclar2 = data.EczaneNobetTarihAralik.Where(s => _x[s].Value != 1).ToList();
+                        //var sonuclar = data.EczaneNobetTarihAralik.Where(s => _x[s].Value == 1).ToList();
+                        var sonuclar = data.EczaneNobetTarihAralik.Where(s => _x[s].Value.IsAlmost(1) == true).ToList();
+                        //var sonuclar2 = data.EczaneNobetTarihAralik.Where(s => _x[s].Value.IsAlmost(0) == true).ToList();
 
                         var nobetGrupTarihler = data.EczaneNobetTarihAralik.Select(s => new { s.NobetGrupId, s.Tarih, s.NobetGorevTipId }).Distinct().ToList();
 

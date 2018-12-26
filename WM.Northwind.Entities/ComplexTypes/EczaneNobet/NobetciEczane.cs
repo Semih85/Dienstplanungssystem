@@ -22,5 +22,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string AdresTarifiKisa { get; set; }
         public string NobetGorevTipAdi { get; set; }
         public string NobetGrupAdi { get; set; }
+        public string NobetAltGrupAdi { get; set; }
     }
 }

@@ -10,7 +10,7 @@
     //"varsayilandanFarkli",
     var tabId = "";
     var varsayilandanFarkliKisitSayisi = Model.Kisitlar.Where(w => w.PasifMi != w.VarsayilanPasifMi || w.SagTarafDegeri != w.SagTarafDegeriVarsayilan).Count();
-    var kisitKategoriler = Model.Kisitlar.Select(s => new { s.KisitKategoriId, s.KisitKategoriAdi }).Distinct().OrderBy(o => o.KisitKategoriAdi).ToList();
+    var kisitKategoriler = Model.Kisitlar.Select(s => new { s.KisitKategoriId, s.KisitKategoriAdi }).Distinct().OrderBy(o => o.KisitKategoriId).ToList();
     var ilkKisitKategorisi = kisitKategoriler.FirstOrDefault();
     var pasifKisitSayisi = Model.Kisitlar.Where(w => w.PasifMi == true).Count();
     var aktifKisitSayisi = Model.Kisitlar.Where(w => w.PasifMi == false).Count();
@@ -20,7 +20,7 @@
 
 <div class="well mb-2">
     <div class="form-inline">
-        <h4 class="mr-5">Kısıt Ayarla</h4>
+        <h4 class="mr-5">Kısıtlar</h4>
         @if (ViewBag.RolId < 3)
         {
             <div class="form-group mr-5 mb-2">
@@ -180,7 +180,8 @@
                                         <div class="card-header border-info bg-transparent p-1" id="@kisitKategorisiBaslik">
                                             <h5 class="mb-0">
                                                 <button class="btn btn-link" type="button" data-toggle="collapse" data-target="@kisitKategorisi" aria-expanded="true" aria-controls="@kisitKategorisi.Substring(1)">
-                                                    @kisitKategoriAdi<span class="badge badge-light ml-1">@kisitlar2.Count</span>
+                                                    @*<span class="badge badge-secondary" title="Kategori numarası">@kisitKategori.KisitKategoriId</span>*@ @kisitKategoriAdi
+                                                    <span class="badge badge-light ml-1" title="Bu kategorideki kısıt sayısı">@kisitlar2.Count</span>
                                                 </button>
                                             </h5>
                                         </div>
@@ -199,6 +200,7 @@
                                                         var txtId = $"txt{tabId}{item.Id}";
                                                         var divId = $"div{tabId}{item.Id}";
                                                         var formId = $"form{tabId}{item.Id}";
+                                                        var chkBoxLblId = $"lblChk{tabId}{item.Id}";
                                                         //var cardBorderColor = "border-dark";
 
                                                         //if (item.PasifMi != item.VarsayilanPasifMi)
@@ -214,6 +216,27 @@
                                                         //    cardBorderColor = "border-danger";
                                                         //}
 
+                                                        var btnTip = "btn-outline-success btn-sm";
+                                                        var labelYaziRengi = "text-primary";
+                                                        var labelYazi = "Aktif";
+                                                        var labelYaziTersi = "";
+                                                        var badgeTip = "badge badge-primary";
+                                                        var renk = "#007bff";
+                                                        var kisitNumarasi = $"K{item.KisitId}";
+
+                                                        if (item.PasifMi == true)
+                                                        {
+                                                            labelYazi = "Pasif";
+                                                            labelYaziRengi = "text-secondary";
+                                                            labelYaziTersi = "Aktif";
+                                                            renk = "#bbbbbb";
+                                                            badgeTip = "badge badge-secondary";
+                                                        }
+                                                        else
+                                                        {
+                                                            labelYaziTersi = "Pasif";
+                                                        }
+
                                                         var updateAjaxOptions = new AjaxOptions
                                                         {
                                                             AllowCache = false,
@@ -228,7 +251,8 @@
 
                                                             <div class="card mb-2 border-bottom">
                                                                 <div class="card-header p-2">
-                                                                    <span class="badge badge-light"><span>K</span>@item.KisitId</span>
+                                                                    @*<svg class="bd-placeholder-img rounded" width="24" height="24" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>@labelYazi kısıt</title><rect fill="@renk" width="100%" height="100%"></rect><text fill="@renk" dy=".3em" x="50%" y="50%">32x32</text></svg>*@
+                                                                    <span title="@kisitNumarasi kısıtı '@labelYazi.ToLower()'" class="@badgeTip">@kisitNumarasi</span>
                                                                     <span class="card-subtitle mt-0"><small class="text-muted">@kisitKategoriAdi</small></span>
                                                                     <a class="badge badge-info pull-right mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
                                                                         <span data-toggle="tooltip" data-placement="top" title="Kısıt Açıklaması">
@@ -284,50 +308,42 @@
                                                                         @*@Html.Hidden("NobetUstGrupId", item.NobetUstGrupId)
                                                                             @Html.Hidden("KisitId", item.KisitId)*@
 
-                                                                        <div class="custom-control custom-checkbox mb-2 mr-2">
+                                                                        <div class="custom-control custom-switch mb-2 mr-2">
 
-                                                                            @{
-                                                                                var btnTip = "btn-success";
-                                                                                var labelYaziRengi = "text-success";
-                                                                                var labelYazi = "Aktif";
-                                                                                var labelYaziTersi = "";
-                                                                            }
+                                                                            @Html.CheckBox("PasifMi", !item.PasifMi, new { @class = "custom-control-input", id = $"chk{id.Substring(3)}", onchange = "chekBoxDegistir(this);" })
 
-                                                                            @if (item.PasifMi == true)
-                                                                            {
-                                                                                labelYazi = "Pasif";
-                                                                                labelYaziRengi = "text-danger";
-                                                                                labelYaziTersi = "Aktif";
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                labelYaziTersi = "Pasif";
-                                                                            }
-
-                                                                            @Html.CheckBox("PasifMi", item.PasifMi, new { @class = "custom-control-input", id = $"chk{id.Substring(3)}" })
-
-                                                                            <label class="custom-control-label @labelYaziRengi font-weight-bold mr-2" title="Kısıtı '@labelYaziTersi' yapmak için buraya tıklayıp 'Kaydet' butonuna basınız." for="@chkBoxId">@labelYazi</label>
+                                                                            <label id="@chkBoxLblId" class="custom-control-label @labelYaziRengi font-weight-bold mr-2"
+                                                                                   title="Kısıt pasif mi? Durumu belirledikten sonra 'Kaydet' butonuna basınız." for="@chkBoxId">
+                                                                                @*Kısıtı '@labelYaziTersi' yapmak için buraya tıklayıp 'Kaydet' butonuna basınız.*@
+                                                                                @*<span class="d-none d-md-inline"> @labelYazi</span>*@
+                                                                                @labelYazi
+                                                                            </label>
 
                                                                         </div>
 
-                                                                        <label class="col-form-label mb-2" 
-                                                                               title="Her bir kısıt {ax + b '<=,=,=>' c} gibi bir denklem sisteminden oluşur. 
-                                                                               Eşitsizliğin sol tarafı, sağ taraf değerine (Std.) 'c' göre değer almaktadır." style="width:40px;" for="@txtId">Std: </label>
+                                                                        <label class="col-form-label mb-2"
+                                                                               title="Sağ taraf değeri (Std.) bu kısıtın alması beklenen değerdir.
+                                                                               Bu kısıt için varsayılan değer @item.SagTarafDegeriVarsayilan" style="width:40px;" for="@txtId">Std:</label>
 
-                                                                        @Html.TextBox("SagTarafDegeri", item.SagTarafDegeri, new { @class = "form-control mb-2 mr-4",
+                                                                        @Html.TextBox("SagTarafDegeri", item.SagTarafDegeri, new { @class = "form-control mb-2 mr-4 w-25",
                                                                            type = "number",
                                                                            id = $"txt{id.Substring(3)}",
-                                                                           style = "width: 75px; text-align: center;" })
+                                                                           style = "text-align: center;" })
 
                                                                         if (item.PasifMi != item.VarsayilanPasifMi || item.SagTarafDegeri != item.SagTarafDegeriVarsayilan)
                                                                         {
-                                                                            btnTip = "btn-warning";
+                                                                            btnTip = "btn-outline-warning btn-sm";
+                                                                        }
+                                                                        else if (item.PasifMi)
+                                                                        {
+                                                                            btnTip = "btn-outline-secondary btn-sm";
                                                                         }
 
                                                                         <button type="submit" title="Kısıtı Güncelle" class="btn @btnTip mb-2"> <i class="fa fa-save" aria-hidden="true"></i><span class="d-none d-md-inline"> Kaydet</span></button>
 
                                                                     }
                                                                     <!-- #endregion -->
+                                                                    <hr />
                                                                     <!-- #region varsayılan durum -->
                                                                     <div class="alert alert-warning fade show px-2 py-1 mb-0" role="alert" title="Varsayılan Ayarlar">
                                                                         @if (item.VarsayilanPasifMi == true)
@@ -335,13 +351,15 @@
                                                                             @*<i class="fa fa-check-square-o" aria-hidden="true"></i>*@
                                                                             @*<i class="fa fa-warning"></i>*@
                                                                             <span class="text-sm">
-                                                                                Varsayılan
-                                                                                <span class="font-weight-bold text-danger">
+                                                                                <span class="font-weight-bold">
                                                                                     Pasif
                                                                                 </span>
                                                                                 , Std:
                                                                                 <span class="font-weight-bold">
                                                                                     @item.SagTarafDegeriVarsayilan
+                                                                                </span>
+                                                                                <span class="badge badge-light">
+                                                                                    Varsayılan
                                                                                 </span>
                                                                             </span>
                                                                         }
@@ -351,17 +369,19 @@
 
                                                                             @*<i class="fa fa-warning"></i>*@
                                                                             <span class="text-sm">
-                                                                                <span class="font-weight-bold text-success">
+                                                                                <span class="font-weight-bold text-primary">
                                                                                     Aktif
                                                                                 </span>
                                                                                 , Std:
                                                                                 <span class="font-weight-bold">
                                                                                     @item.SagTarafDegeriVarsayilan
                                                                                 </span>
-                                                                                (Varsayılan)
+                                                                                <span class="badge badge-light">
+                                                                                    Varsayılan
+                                                                                </span>
                                                                             </span>
                                                                         }
-                                                                    </div>                                                                  
+                                                                    </div>
                                                                     <!-- #endregion -->
                                                                     <!-- #region açıklama -->
                                                                     @*<a class="card-link" title="Kısıt Açıklaması" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
@@ -371,10 +391,10 @@
                                                                     <!-- #endregion -->
                                                                 </div>
                                                                 @*<div class="card-footer">
-                                                                    <p class="card-subtitle">
-                                                                        Std: Sağ Taraf Değeri
-                                                                    </p>
-                                                                </div>*@
+                                                                        <p class="card-subtitle">
+                                                                            Std: Sağ Taraf Değeri
+                                                                        </p>
+                                                                    </div>*@
                                                             </div>
                                                         </div>
 
@@ -469,6 +489,30 @@
                     //    $('.kisitToplar').collapse('show');
                     //}
                 });
+
         });
+
+        function chekBoxDegistir(element) {
+            //alert(element.id)
+
+            var checkBoxLabelId = "lblChk" + element.id.substring(3);
+            //alert(checkBoxLabelId)
+
+            if (element.checked) {
+                //$('#' + checkBoxLabelId).attr("title", "Pasif yapmak için buraya tıklayıp 'Kaydet' butonuna basınız.");
+                $('#' + checkBoxLabelId).text("Aktif");
+                $('#' + checkBoxLabelId).removeClass("text-secondary");
+                $('#' + checkBoxLabelId).addClass("text-primary");
+                //element.val("Aktif")
+            }
+            else {
+                //$('#' + checkBoxLabelId).attr("title", "Aktif yapmak için buraya tıklayıp 'Kaydet' butonuna basınız.");
+                $('#' + checkBoxLabelId).text("Pasif");
+                $('#' + checkBoxLabelId).removeClass("text-primary");
+                $('#' + checkBoxLabelId).addClass("text-secondary");
+                //element.val("Pasif")
+            }
+            //element.checked = !element.checked;
+        }
     </script>
 }

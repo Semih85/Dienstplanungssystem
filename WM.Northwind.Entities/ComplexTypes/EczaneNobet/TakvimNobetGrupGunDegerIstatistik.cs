@@ -36,7 +36,9 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         //: NobetGunKuralId == 9
         //? "Milli"
         //: "Diğer";
-        
+        public DateTime IstatistikBaslamaTarihi { get; set; }
+        public DateTime IstatistikBitisTarihi { get; set; }
+
         public int TalepEdilenNobetciSayisi { get; set; }
         public int GunSayisi { get; set; }
         public string GunGrupAdi { get; set; }

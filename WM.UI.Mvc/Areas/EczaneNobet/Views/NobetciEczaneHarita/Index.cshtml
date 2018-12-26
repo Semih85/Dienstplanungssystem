@@ -368,6 +368,7 @@
                     tel: model.NobetciEczaneler[g].TelefonNo,
                     adres: model.NobetciEczaneler[g].Adres,
                     adresTarifi: model.NobetciEczaneler[g].AdresTarifiKisa,
+                    altGrupAdi: model.NobetciEczaneler[g].NobetAltGrupAdi
                 }
                 nobetciEczaneler.push(newElement)
             }
@@ -397,14 +398,24 @@
                         myInfoWindowContent = "<h6>" + model.NobetciEczaneler[f].Adi
                             + "<br/>"
                             + "<small class='text-danger'>" + model.NobetciEczaneler[f].NobetGorevTipAdi.substring(14) + '</small>'
+                            + "<br/>"
+                            + "<small class='text-secondary'>" + model.NobetciEczaneler[f].NobetAltGrupAdi + '</small>'
                             + '</h6>'
                     }
                     else {
                         myInfoWindowContent = "<h6>" + model.NobetciEczaneler[f].Adi
                             + "<br/>"
                             + "<small class='text-primary'>" + model.NobetciEczaneler[f].NobetGorevTipAdi.substring(14) + '</small>'
+                            + "<br/>"
+                            + "<small class='text-secondary'>" + model.NobetciEczaneler[f].NobetAltGrupAdi + '</small>'
                             + '</h6>'
                     }
+                }
+                else if (model.NobetciEczaneler[f].NobetUstGrupId == 5) {
+                    myInfoWindowContent = "<h6>" + model.NobetciEczaneler[f].Adi
+                        + "<br/>"
+                        + "<small class='text-danger'>" + model.NobetciEczaneler[f].NobetAltGrupAdi + '</small>'
+                        + '</h6>';                                        
                 }
                 else {
                     myInfoWindowContent = '<h6>'
