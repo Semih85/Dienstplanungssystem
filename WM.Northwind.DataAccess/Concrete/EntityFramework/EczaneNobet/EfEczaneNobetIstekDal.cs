@@ -15,6 +15,18 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
 {
     public class EfEczaneNobetIstekDal : EfEntityRepositoryBase<EczaneNobetIstek, EczaneNobetContext>, IEczaneNobetIstekDal
     {
+        public void CokluEkle(List<EczaneNobetIstek> eczaneNobetIstekler)
+        {
+            using (var context = new EczaneNobetContext())
+            {
+                foreach (var istek in eczaneNobetIstekler)
+                {
+                    context.EczaneNobetIstekler.Add(istek);
+                }
+                context.SaveChanges();
+            }
+        }
+
         public EczaneNobetIstekDetay GetDetay(Expression<Func<EczaneNobetIstekDetay, bool>> filter)
         {
             using (var ctx = new EczaneNobetContext())

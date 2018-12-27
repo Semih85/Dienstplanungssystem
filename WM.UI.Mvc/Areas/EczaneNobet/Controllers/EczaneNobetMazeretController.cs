@@ -13,6 +13,7 @@ using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Authorization;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
+using WM.UI.Mvc.Areas.EczaneNobet.Filters;
 using WM.UI.Mvc.Areas.EczaneNobet.Models;
 using WM.UI.Mvc.Models;
 
@@ -33,6 +34,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetGrupService _nobetGrupService;
         private IBayramService _bayramService;
         private INobetUstGrupService _nobetUstGrupService;
+        private INobetGrupGorevTipTakvimOzelGunService _nobetGrupGorevTipTakvimOzelGunService;
 
         public EczaneNobetMazeretController(IEczaneNobetMazeretService eczaneNobetMazeretService,
                                             IEczaneNobetIstekService eczaneNobetIstekService,
@@ -43,7 +45,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                             IUserService userService,
                                             INobetGrupService nobetGrupService,
                                             IBayramService bayramService,
-                                            INobetUstGrupService nobetUstGrupService)
+                                            INobetUstGrupService nobetUstGrupService,
+                                            INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService)
         {
             _eczaneNobetMazeretService = eczaneNobetMazeretService;
             _eczaneNobetIstekService = eczaneNobetIstekService;
@@ -55,6 +58,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _nobetGrupService = nobetGrupService;
             _bayramService = bayramService;
             _nobetUstGrupService = nobetUstGrupService;
+            _nobetGrupGorevTipTakvimOzelGunService = nobetGrupGorevTipTakvimOzelGunService;
         }
         #endregion
 
@@ -88,7 +92,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 .Where(w => nobetGruplar.Select(n => n.Id).Contains(w.NobetGrupId)
                    && (w.EczaneId == eczaneId || eczaneId == 0)
                    && (w.Tarih == MazeretTarihi || MazeretTarihi == null))
-                .OrderByDescending(o => o.Tarih).ThenBy(f => f.EczaneAdi);            
+                .OrderByDescending(o => o.Tarih).ThenBy(f => f.EczaneAdi);
 
             return PartialView(eczaneNobetMazeretler);
         }
@@ -176,7 +180,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 TakvimId = model.TakvimId,
                 Tarih = model.Tarih,
                 Yil = model.Yil,
-                NobetGorevTipAdi = model.NobetGorevTipAdi                
+                NobetGorevTipAdi = model.NobetGorevTipAdi
             };
 
             return myEczaneNobetMazeretIstekDetay;
@@ -199,7 +203,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                    .ThenBy(f => f.EczaneAdi)
                    .ToList();
 
-            var eczaneNobetIstekler = eczaneId == null 
+            var eczaneNobetIstekler = eczaneId == null
                 ? _eczaneNobetIstekService.GetDetaylar(nobetUstGrup.Id)
                   //.Where(w => eczaneId.Contains(w.EczaneId))
                   .OrderByDescending(o => o.Tarih)
@@ -216,7 +220,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             if (EczaneNobetMazeretIstekTipId == 0)
             {//istek ve mazeret
                 foreach (var item in eczaneNobetIstekler)
-                {                    
+                {
                     eczaneNobetMazeretlerVeIstekler.Add(ConvertEczaneNobetIstekDetayToEczaneNobetMazeretIstekDetay(item));
                 }
                 foreach (var item in eczaneNobetMazeretler)
@@ -361,7 +365,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var eczaneNobetGrup = _eczaneNobetGrupService.GetDetaylar(eczaneNobetMazeretCoklu.EczaneNobetGrupId);
 
-            var bayramlar = _bayramService.GetDetaylar(eczaneNobetMazeretCoklu.BaslangicTarihi, eczaneNobetMazeretCoklu.BitisTarihi, eczaneNobetGrup.Select(s => s.NobetGrupId).ToList(), 1)
+            var bayramlar = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(eczaneNobetMazeretCoklu.BaslangicTarihi, eczaneNobetMazeretCoklu.BitisTarihi, eczaneNobetGrup.Select(s => s.NobetGrupId).ToList(), 1)
                 .Where(w => eczaneNobetMazeretCoklu.HaftaninGunu.Contains(w.NobetGunKuralId)).ToList();
 
             var tarihAraligi = _takvimService.GetDetaylar(eczaneNobetMazeretCoklu.BaslangicTarihi, eczaneNobetMazeretCoklu.BitisTarihi);
@@ -371,8 +375,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 tarihAraligi = tarihAraligi.Where(w => eczaneNobetMazeretCoklu.HaftaninGunu.Contains(w.HaftaninGunu)
                                                     || bayramlar.Select(s => s.TakvimId).Contains(w.TakvimId)).ToList();
             }
-
-            var eczaneNobetMazeretler = new List<EczaneNobetMazeret>();
 
             var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
 
@@ -407,6 +409,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                 return View(eczaneNobetMazeretCoklu);
             }
+
+            var eczaneNobetMazeretler = new List<EczaneNobetMazeret>();
 
             foreach (var eczaneNobetGrupId in eczaneNobetMazeretCoklu.EczaneNobetGrupId)
             {
@@ -508,6 +512,164 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return View(eczaneNobetMazeretCoklu);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[HandleException]
+        public ActionResult CreatePartial([Bind(Include = "Id,EczaneNobetGrupId,MazeretId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama")] EczaneNobetMazeretCoklu eczaneNobetMazeretCoklu)
+        {
+            var user = _userService.GetByUserName(User.Identity.Name);
+            //var haftaninGunleri = Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>().ToList();
+            if (eczaneNobetMazeretCoklu.HaftaninGunu == null)
+            {
+                eczaneNobetMazeretCoklu.HaftaninGunu = new int[1] { 0 };
+            }
+
+            var haftaninGunu = eczaneNobetMazeretCoklu.HaftaninGunu;
+
+            var eczaneNobetGrup = _eczaneNobetGrupService.GetDetaylar(eczaneNobetMazeretCoklu.EczaneNobetGrupId);
+
+            var bayramlar = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(eczaneNobetMazeretCoklu.BaslangicTarihi, eczaneNobetMazeretCoklu.BitisTarihi, eczaneNobetGrup.Select(s => s.NobetGrupId).ToList(), 1)
+                .Where(w => eczaneNobetMazeretCoklu.HaftaninGunu.Contains(w.NobetGunKuralId)).ToList();
+
+            var tarihAraligi = _takvimService.GetDetaylar(eczaneNobetMazeretCoklu.BaslangicTarihi, eczaneNobetMazeretCoklu.BitisTarihi);
+
+            if (eczaneNobetMazeretCoklu.HaftaninGunu.Count() > 0)
+            {
+                tarihAraligi = tarihAraligi.Where(w => eczaneNobetMazeretCoklu.HaftaninGunu.Contains(w.HaftaninGunu)
+                                                    || bayramlar.Select(s => s.TakvimId).Contains(w.TakvimId)).ToList();
+            }
+
+            var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
+
+            var baslangicTarihi = _takvimService.GetByTarih(eczaneNobetMazeretCoklu.BaslangicTarihi);
+            var bitisTarihi = _takvimService.GetByTarih(eczaneNobetMazeretCoklu.BitisTarihi);
+
+            //seçilen tarih aralığı takvimde olmalıdır.
+            if (baslangicTarihi == null || bitisTarihi == null)
+            {
+                var minYil = _takvimService.GetList().Min(x => x.Tarih.Year);
+                var maxYil = _takvimService.GetList().Max(x => x.Tarih.Year);
+                ViewBag.minYil = minYil;
+                ViewBag.maxYil = maxYil;
+
+                ViewBag.Mesaj = $"Başlangıç-Bitiş tarih aralığı enaz {minYil} ila ençok {maxYil} arasında olmalıdır...";
+
+                return PartialView();
+            }
+
+            //Başlangıç tarihi Bitiş tarihinden büyük olamaz.
+            if (baslangicTarihi.Id > bitisTarihi.Id)
+            {
+                ViewBag.Mesaj2 = $"Başlangıç tarihi ({baslangicTarihi.Tarih}) Bitiş tarihinden ({bitisTarihi.Tarih}) büyük olamaz...";
+
+                return PartialView();
+            }
+
+            var eczaneNobetMazeretler = new List<EczaneNobetMazeret>();
+
+            foreach (var eczaneNobetGrupId in eczaneNobetMazeretCoklu.EczaneNobetGrupId)
+            {
+                foreach (var item in tarihAraligi)
+                {
+                    eczaneNobetMazeretler.Add(new EczaneNobetMazeret
+                    {
+                        MazeretId = eczaneNobetMazeretCoklu.MazeretId,
+                        EczaneNobetGrupId = eczaneNobetGrupId,// eczaneNobetMazeretCoklu.EczaneNobetGrupId,
+                        TakvimId = item.TakvimId,
+                        Aciklama = eczaneNobetMazeretCoklu.Aciklama,
+                    });
+                }
+            }
+
+            var eklenecekMazeretSayisi = eczaneNobetMazeretler.Count;
+
+            if (ModelState.IsValid && eklenecekMazeretSayisi > 0)
+            {
+                try
+                {
+                    _eczaneNobetMazeretService.CokluEkle(eczaneNobetMazeretler);
+                }
+                catch (DbUpdateException ex)
+                {
+                    var hata = ex.InnerException.ToString();
+
+                    string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+
+                    var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+
+                    if (dublicateRowHatasiMi)
+                    {
+                        //throw new Exception("<strong>Bir eczaneye aynı gün için iki mazeret kaydı eklenemez...</strong>");
+                        return PartialView("ErrorDublicateRowPartial");
+                    }
+
+                    //throw ex;
+                }
+                catch (Exception)
+                {
+                    return PartialView("ErrorPartial");
+                    //throw ex;
+                }
+
+                TempData["EklenenMazeretSayisi"] = eklenecekMazeretSayisi;
+
+                ViewBag.SecilenHaftaninGunuSayisi = eczaneNobetMazeretCoklu.HaftaninGunu.Count();
+                //return RedirectToAction("Index");
+                return PartialView();
+            }
+            else
+            {
+                //bayram ve hafta günleri kontrol
+                if (bayramlar.Count == 0)
+                {
+                    if (eczaneNobetMazeretCoklu.HaftaninGunu.Where(w => w == 8 && w == 9).Count() > 0)
+                    {
+                        ViewBag.MesajBayram = $"Girilen tarih aralığına uygun bayram bulunmamaktadır.";
+                    }
+                    else if (eczaneNobetMazeretCoklu.HaftaninGunu.Where(w => w == 8).Count() > 0)
+                    {
+                        ViewBag.MesajBayram = $"Girilen tarih aralığına uygun dini bayram bulunmamaktadır.";
+                    }
+                    else if (eczaneNobetMazeretCoklu.HaftaninGunu.Where(w => w == 9).Count() > 0)
+                    {
+                        ViewBag.MesajBayram = $"Girilen tarih aralığına uygun milli bayram bulunmamaktadır.";
+                    }
+                    else if (eczaneNobetMazeretCoklu.HaftaninGunu.Where(w => w <= 7).Count() > 0)
+                    {
+                        ViewBag.MesajBayram = $"Girilen tarih aralığına uygun hafta günü bulunmamaktadır.";
+                    }
+                }
+                else
+                {
+                    if (eczaneNobetMazeretCoklu.HaftaninGunu.Count() == 1)
+                    {
+                        ViewBag.MesajBayram = $"Seçilen hafta gününe uygun tarih aralığı bulunmamaktadır.";
+                    }
+                    else
+                    {
+                        ViewBag.MesajBayram = $"Seçilen hafta günlerine uygun tarih aralığı bulunmamaktadır.";
+                    }
+                }
+            }
+
+            return PartialView();
+        }
+
+        //protected override void OnException(ExceptionContext filterContext)
+        //{
+
+        //    filterContext.ExceptionHandled = true;
+
+        //    //if (filterContext.ExceptionHandled)
+        //    //{
+        //    //    return;
+        //    //}
+
+        //    filterContext.Result = new PartialViewResult
+        //    {//D:\Projects\WorkingModels\WM.UI.Mvc\Areas\EczaneNobet\Views\Shared\ErrorPartial.cshtml
+        //        ViewName = "~/Areas/EczaneNobet/Views/Shared/ErrorPartial.cshtml"
+        //    };
+        //}
         // GET: EczaneNobet/EczaneNobetMazeret/Edit/5
         public ActionResult Edit(int id)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private ITakvimService _takvimService;
         private IUserService _userService;
         private IEczaneGrupService _eczaneGrupService;
+        private INobetGrupGorevTipTakvimOzelGunService _nobetGrupGorevTipTakvimOzelGunService;
 
         public EczaneNobetIstekController(IEczaneNobetIstekService eczaneNobetIstekService,
                                           IEczaneNobetGrupService eczaneNobetGrupService,
@@ -30,7 +32,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                           IIstekService istekService,
                                           ITakvimService takvimService,
                                           IUserService userService,
-                                          IEczaneGrupService eczaneGrupService)
+                                          IEczaneGrupService eczaneGrupService,
+                                          INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService
+            )
         {
             _eczaneNobetIstekService = eczaneNobetIstekService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
@@ -39,6 +43,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _takvimService = takvimService;
             _userService = userService;
             _eczaneGrupService = eczaneGrupService;
+            _nobetGrupGorevTipTakvimOzelGunService = nobetGrupGorevTipTakvimOzelGunService;
         }
         #endregion
 
@@ -79,24 +84,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             var user = _userService.GetByUserName(User.Identity.Name);
 
-            //var yil = DateTime.Now.AddMonths(1).Year;
-            var bugun = DateTime.Today;
-            var tarihKriter = bugun.AddMonths(-3);
-
-            var tarihler = _takvimService.GetDetaylar(tarihKriter)
-                            .Select(s => new MyDrop
-                            {
-                                Id = s.TakvimId,
-                                Value = s.Tarih.ToLongDateString()
-                            });
-
-            var bugunTakvim = _takvimService.GetByTarih(DateTime.Today);
-
             var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
             ViewBag.EczaneNobetGrupId = new SelectList(_eczaneNobetGrupService.GetDetaylarByEczaneIdList(eczaneler)
                 .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" }).OrderBy(s => s.Value), "Id", "Value");
             ViewBag.IstekId = new SelectList(_istekService.GetList(), "Id", "Adi");
-            ViewBag.TakvimId = new SelectList(tarihler, "Id", "Value", bugunTakvim.Id);
+            ViewBag.HaftaninGunu = new SelectList(_takvimService.GetHaftaninGunleri(), "Id", "Value");
+            ViewBag.SecilenHaftaninGunuSayisi = 0;
+
             return View();
         }
 
@@ -105,40 +99,111 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EczaneNobetGrupId,IstekId,TakvimId,Aciklama")] EczaneNobetIstek eczaneNobetIstek)
+        public ActionResult Create([Bind(Include = "Id,EczaneNobetGrupId,IstekId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama")] EczaneNobetIstekCoklu eczaneNobetIstekCoklu)
         {
             var user = _userService.GetByUserName(User.Identity.Name);
-            var eczaneNobetGrup = _eczaneNobetGrupService.GetDetayById(eczaneNobetIstek.EczaneNobetGrupId);
-            var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
-            var tarihler = _takvimService.GetList()
-                //.Where(w => w.Tarih.Year < 2020//== yil
-                //                               //&& w.Tarih.Month == ay
-                //         )
-                .Select(s => new MyDrop { Id = s.Id, Value = s.Tarih.ToLongDateString() });
-            ViewBag.EczaneNobetGrupId = new SelectList(_eczaneNobetGrupService.GetDetaylarByEczaneIdList(eczaneler)
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" }).OrderBy(s => s.Value), "Id", "Value", eczaneNobetIstek.EczaneNobetGrupId);
-            ViewBag.IstekId = new SelectList(_istekService.GetList(), "Id", "Adi", eczaneNobetIstek.IstekId);
-            ViewBag.TakvimId = new SelectList(tarihler, "Id", "Value", eczaneNobetIstek.TakvimId);
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(eczaneNobetIstekCoklu.EczaneNobetGrupId);
+            var nobetUstGrupId = eczaneNobetGruplar.Select(s => s.NobetUstGrupId).Distinct().SingleOrDefault();
 
-            if (ModelState.IsValid)
+            var tarihler = _takvimService.GetList()
+                .Select(s => new MyDrop { Id = s.Id, Value = s.Tarih.ToLongDateString() });
+
+            if (eczaneNobetIstekCoklu.HaftaninGunu == null)
             {
-                var istekGirilenEczaneninEsOlduguEczaneler = _eczaneGrupService.GetDetaylarEczaneninEsOlduguEczaneler(eczaneNobetGrup.Id);
-                var istekGirilenTarihtekiEczaneler = _eczaneNobetIstekService.GetDetaylarByTakvimId(eczaneNobetIstek.TakvimId, eczaneNobetGrup.NobetUstGrupId);
+                eczaneNobetIstekCoklu.HaftaninGunu = new int[1] { 0 };
+            }
+
+            var haftaninGunu = eczaneNobetIstekCoklu.HaftaninGunu;
+
+            var bayramlar = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(eczaneNobetIstekCoklu.BaslangicTarihi, eczaneNobetIstekCoklu.BitisTarihi, eczaneNobetGruplar.Select(s => s.NobetGrupId).ToList(), 1)
+                .Where(w => eczaneNobetIstekCoklu.HaftaninGunu.Contains(w.NobetGunKuralId)).ToList();
+
+            var tarihAraligi = _takvimService.GetDetaylar(eczaneNobetIstekCoklu.BaslangicTarihi, eczaneNobetIstekCoklu.BitisTarihi);
+
+            if (eczaneNobetIstekCoklu.HaftaninGunu.Count() > 0)
+            {
+                tarihAraligi = tarihAraligi.Where(w => eczaneNobetIstekCoklu.HaftaninGunu.Contains(w.HaftaninGunu)
+                                                    || bayramlar.Select(s => s.TakvimId).Contains(w.TakvimId)).ToList();
+            }
+
+
+            var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
+
+            var baslangicTarihi = _takvimService.GetByTarih(eczaneNobetIstekCoklu.BaslangicTarihi);
+            var bitisTarihi = _takvimService.GetByTarih(eczaneNobetIstekCoklu.BitisTarihi);
+
+            ViewBag.EczaneNobetGrupId = new SelectList(_eczaneNobetGrupService.GetDetaylarByEczaneIdList(eczaneler)
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" }).OrderBy(s => s.Value), "Id", "Value", eczaneNobetIstekCoklu.EczaneNobetGrupId);
+            ViewBag.IstekId = new SelectList(_istekService.GetList(), "Id", "Adi", eczaneNobetIstekCoklu.IstekId);
+            ViewBag.HaftaninGunu = new SelectList(_takvimService.GetHaftaninGunleri(), "Id", "Value", eczaneNobetIstekCoklu.HaftaninGunu);
+            ViewBag.SecilenHaftaninGunuSayisi = eczaneNobetIstekCoklu.HaftaninGunu.Count();
+
+            //seçilen tarih aralığı takvimde olmalıdır.
+            if (baslangicTarihi == null || bitisTarihi == null)
+            {
+                var minYil = _takvimService.GetList().Min(x => x.Tarih.Year);
+                var maxYil = _takvimService.GetList().Max(x => x.Tarih.Year);
+                ViewBag.minYil = minYil;
+                ViewBag.maxYil = maxYil;
+
+                ViewBag.Mesaj = $"Başlangıç-Bitiş tarih aralığı enaz {minYil} ila ençok {maxYil} arasında olmalıdır...";
+
+                return View(eczaneNobetIstekCoklu);
+            }
+
+            //Başlangıç tarihi Bitiş tarihinden büyük olamaz.
+            if (baslangicTarihi.Id > bitisTarihi.Id)
+            {
+                ViewBag.Mesaj2 = $"Başlangıç tarihi ({baslangicTarihi.Tarih}) Bitiş tarihinden ({bitisTarihi.Tarih}) büyük olamaz...";
+
+                return View(eczaneNobetIstekCoklu);
+            }
+
+            var eczaneNobetIstekler = new List<EczaneNobetIstek>();
+
+            foreach (var eczaneNobetGrupId in eczaneNobetIstekCoklu.EczaneNobetGrupId)
+            {
+                foreach (var item in tarihAraligi)
+                {
+                    eczaneNobetIstekler.Add(new EczaneNobetIstek
+                    {
+                        IstekId = eczaneNobetIstekCoklu.IstekId,
+                        EczaneNobetGrupId = eczaneNobetGrupId,
+                        TakvimId = item.TakvimId,
+                        Aciklama = eczaneNobetIstekCoklu.Aciklama,
+                    });
+                }
+            }
+
+            var eklenecekIstekSayisi = eczaneNobetIstekler.Count;
+
+            if (ModelState.IsValid && eklenecekIstekSayisi > 0)
+            {
+                var istekGirilenEczaneninEsOlduguEczaneler = _eczaneGrupService.GetDetaylarEczaneninEsOlduguEczaneler(eczaneNobetGruplar.Select(s => s.Id).ToList());
+
+                var istekGirilenTarihtekiEczaneler = _eczaneNobetIstekService.GetDetaylarByNobetUstGrupId(eczaneNobetIstekCoklu.BaslangicTarihi, eczaneNobetIstekCoklu.BitisTarihi, nobetUstGrupId);
 
                 var istekGirilenTarihtekiEsgrupOlduguEczaneler = _eczaneNobetIstekService.GetDetaylar(istekGirilenTarihtekiEczaneler, istekGirilenEczaneninEsOlduguEczaneler);
 
-                var istekGirilenTarihtekiEsgrupOlduguEczaneSayisi = istekGirilenTarihtekiEsgrupOlduguEczaneler.Count;
+                var istekGirilenTarihtekiEsgrupOlduguEczanelerTumu = istekGirilenEczaneninEsOlduguEczaneler
+                    .Union(istekGirilenTarihtekiEsgrupOlduguEczaneler)
+                    .OrderBy(o => o.EczaneGrupTanimId)
+                    .ThenBy(o => o.EczaneAdi)
+                    .ToList();
+
+                var istekGirilenTarihtekiEsgrupOlduguEczaneSayisi = istekGirilenTarihtekiEsgrupOlduguEczanelerTumu.Count;
 
                 if (istekGirilenTarihtekiEsgrupOlduguEczaneSayisi > 0)
                 {
-                    ViewBag.IstekGirilenTarihtekiEsgrupOlduguEczaneler = istekGirilenTarihtekiEsgrupOlduguEczaneler;
-                    return View(eczaneNobetIstek);
+                    ViewBag.IstekGirilenTarihtekiEsgrupOlduguEczaneler = istekGirilenTarihtekiEsgrupOlduguEczanelerTumu;
+
+                    return View(eczaneNobetIstekCoklu);
                 }
                 else
                 {
                     try
                     {
-                        _eczaneNobetIstekService.Insert(eczaneNobetIstek);
+                        _eczaneNobetIstekService.CokluEkle(eczaneNobetIstekler);
                     }
                     catch (DbUpdateException ex)
                     {
@@ -160,9 +225,228 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         throw ex;
                     }
                 }
-                return RedirectToAction("Index");
+
+                TempData["EklenenIstekSayisi"] = eklenecekIstekSayisi;
+
+                return View(eczaneNobetIstekCoklu);
             }
-            return View(eczaneNobetIstek);
+            else
+            {
+                //bayram ve hafta günleri kontrol
+                if (bayramlar.Count == 0)
+                {
+                    if (eczaneNobetIstekCoklu.HaftaninGunu.Where(w => w == 8 && w == 9).Count() > 0)
+                    {
+                        ViewBag.MesajBayram = $"Girilen tarih aralığına uygun bayram bulunmamaktadır.";
+                    }
+                    else if (eczaneNobetIstekCoklu.HaftaninGunu.Where(w => w == 8).Count() > 0)
+                    {
+                        ViewBag.MesajBayram = $"Girilen tarih aralığına uygun dini bayram bulunmamaktadır.";
+                    }
+                    else if (eczaneNobetIstekCoklu.HaftaninGunu.Where(w => w == 9).Count() > 0)
+                    {
+                        ViewBag.MesajBayram = $"Girilen tarih aralığına uygun milli bayram bulunmamaktadır.";
+                    }
+                    else if (eczaneNobetIstekCoklu.HaftaninGunu.Where(w => w <= 7).Count() > 0)
+                    {
+                        ViewBag.MesajBayram = $"Girilen tarih aralığına uygun hafta günü bulunmamaktadır.";
+                    }
+                }
+                else
+                {
+                    if (eczaneNobetIstekCoklu.HaftaninGunu.Count() == 1)
+                    {
+                        ViewBag.MesajBayram = $"Seçilen hafta gününe uygun tarih aralığı bulunmamaktadır.";
+                    }
+                    else
+                    {
+                        ViewBag.MesajBayram = $"Seçilen hafta günlerine uygun tarih aralığı bulunmamaktadır.";
+                    }
+                }
+            }
+            return View(eczaneNobetIstekCoklu);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreatePartial([Bind(Include = "Id,EczaneNobetGrupId,IstekId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama")] EczaneNobetIstekCoklu eczaneNobetIstekCoklu)
+        {
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(eczaneNobetIstekCoklu.EczaneNobetGrupId);
+            var nobetUstGrupId = eczaneNobetGruplar.Select(s => s.NobetUstGrupId).Distinct().SingleOrDefault();
+
+            if (eczaneNobetIstekCoklu.HaftaninGunu == null)
+            {
+                eczaneNobetIstekCoklu.HaftaninGunu = new int[1] { 0 };
+            }
+
+            var haftaninGunu = eczaneNobetIstekCoklu.HaftaninGunu;
+
+            var bayramlar = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(eczaneNobetIstekCoklu.BaslangicTarihi, eczaneNobetIstekCoklu.BitisTarihi, eczaneNobetGruplar.Select(s => s.NobetGrupId).ToList(), 1)
+                .Where(w => eczaneNobetIstekCoklu.HaftaninGunu.Contains(w.NobetGunKuralId)).ToList();
+
+            var tarihAraligi = _takvimService.GetDetaylar(eczaneNobetIstekCoklu.BaslangicTarihi, eczaneNobetIstekCoklu.BitisTarihi);
+
+            if (eczaneNobetIstekCoklu.HaftaninGunu.Count() > 0)
+            {
+                tarihAraligi = tarihAraligi.Where(w => eczaneNobetIstekCoklu.HaftaninGunu.Contains(w.HaftaninGunu)
+                                                    || bayramlar.Select(s => s.TakvimId).Contains(w.TakvimId)).ToList();
+            }
+
+            var baslangicTarihi = _takvimService.GetByTarih(eczaneNobetIstekCoklu.BaslangicTarihi);
+            var bitisTarihi = _takvimService.GetByTarih(eczaneNobetIstekCoklu.BitisTarihi);
+
+            //seçilen tarih aralığı takvimde olmalıdır.
+            if (baslangicTarihi == null || bitisTarihi == null)
+            {
+                var minYil = _takvimService.GetList().Min(x => x.Tarih.Year);
+                var maxYil = _takvimService.GetList().Max(x => x.Tarih.Year);
+                ViewBag.minYil = minYil;
+                ViewBag.maxYil = maxYil;
+
+                ViewBag.Mesaj = $"Başlangıç-Bitiş tarih aralığı enaz {minYil} ila ençok {maxYil} arasında olmalıdır...";
+
+                return PartialView();
+            }
+
+            //Başlangıç tarihi Bitiş tarihinden büyük olamaz.
+            if (baslangicTarihi.Id > bitisTarihi.Id)
+            {
+                ViewBag.Mesaj2 = $"Başlangıç tarihi ({baslangicTarihi.Tarih}) Bitiş tarihinden ({bitisTarihi.Tarih}) büyük olamaz...";
+
+                return PartialView();
+            }
+
+            var eczaneNobetIstekler = new List<EczaneNobetIstek>();
+
+            foreach (var eczaneNobetGrupId in eczaneNobetIstekCoklu.EczaneNobetGrupId)
+            {
+                foreach (var item in tarihAraligi)
+                {
+                    eczaneNobetIstekler.Add(new EczaneNobetIstek
+                    {
+                        IstekId = eczaneNobetIstekCoklu.IstekId,
+                        EczaneNobetGrupId = eczaneNobetGrupId,
+                        TakvimId = item.TakvimId,
+                        Aciklama = eczaneNobetIstekCoklu.Aciklama,
+                    });
+                }
+            }
+
+            var eklenecekIstekSayisi = eczaneNobetIstekler.Count;
+
+            if (ModelState.IsValid && eklenecekIstekSayisi > 0)
+            {
+                var istekGirilmekIstenenEczaneler = eczaneNobetGruplar.Select(s => s.EczaneId).ToList();
+
+                var istekGirilenEczaneninEsOlduguEczaneler = _eczaneGrupService.GetDetaylarEczaneninEsOlduguEczaneler(eczaneNobetGruplar.Select(s => s.Id).ToList());
+
+                var eklenecekEczanelerinEsGrupTanimlari = istekGirilenEczaneninEsOlduguEczaneler.Select(s => new { s.EczaneGrupTanimId, s.EczaneGrupTanimAdi }).Distinct().ToList();
+
+                var eklenecekEczanelerdenAyniEsGruptaOlanlar = new List<EczaneGrupDetay>();
+
+                foreach (var eklenecekEczanelerinEsGrupTanim in eklenecekEczanelerinEsGrupTanimlari)
+                {
+                    var ayniGruptaOlanEklenmekIstenenEczaneler = (from a in istekGirilenEczaneninEsOlduguEczaneler
+                                                                  from b in istekGirilmekIstenenEczaneler
+                                                                  where a.EczaneId == b
+                                                                     && a.EczaneGrupTanimId == eklenecekEczanelerinEsGrupTanim.EczaneGrupTanimId
+                                                                  select a).ToList();
+
+                    if (ayniGruptaOlanEklenmekIstenenEczaneler.Count > 1)
+                    {
+                        eklenecekEczanelerdenAyniEsGruptaOlanlar.AddRange(ayniGruptaOlanEklenmekIstenenEczaneler);
+                    }
+                }
+
+                var istekGirilenTarihteNobetciOlanEczaneler = _eczaneNobetIstekService.GetDetaylarByNobetUstGrupId(eczaneNobetIstekCoklu.BaslangicTarihi, eczaneNobetIstekCoklu.BitisTarihi, nobetUstGrupId);
+
+                var istekGirilenTarihtekiEsgrupOlduguEczaneler = _eczaneNobetIstekService.GetDetaylar(istekGirilenTarihteNobetciOlanEczaneler, istekGirilenEczaneninEsOlduguEczaneler);
+
+                var istekGirilenTarihtekiEsgrupOlduguEczanelerTumu = istekGirilenTarihtekiEsgrupOlduguEczaneler
+                    .Union(eklenecekEczanelerdenAyniEsGruptaOlanlar)
+                    .OrderBy(o => o.EczaneGrupTanimAdi)
+                    .ThenBy(o => o.EczaneAdi)
+                    .ToList();
+
+                var istekGirilenTarihtekiEsgrupOlduguEczaneSayisi = istekGirilenTarihtekiEsgrupOlduguEczanelerTumu.Count;
+
+                if (istekGirilenTarihtekiEsgrupOlduguEczaneSayisi > 0)
+                {
+                    ViewBag.IstekGirilenTarihtekiEsgrupOlduguEczaneler = istekGirilenTarihtekiEsgrupOlduguEczanelerTumu;
+
+                    return PartialView();
+                }
+                else
+                {
+                    try
+                    {
+                        _eczaneNobetIstekService.CokluEkle(eczaneNobetIstekler);
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        var hata = ex.InnerException.ToString();
+
+                        string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+
+                        var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+
+                        if (dublicateRowHatasiMi)
+                        {
+                            //throw new Exception("<strong>Bir eczaneye aynı gün için iki istek kaydı eklenemez...</strong>");
+                            return PartialView("ErrorDublicateRowPartial");
+                        }
+
+                       // throw ex;
+                    }
+                    catch (Exception)
+                    {
+                        return PartialView("ErrorPartial");
+                        //throw ex;
+                    }
+                }
+
+                TempData["EklenenIstekSayisi"] = eklenecekIstekSayisi;
+
+                ViewBag.SecilenHaftaninGunuSayisi = eczaneNobetIstekCoklu.HaftaninGunu.Count();
+
+                return PartialView();
+            }
+            else
+            {
+                //bayram ve hafta günleri kontrol
+                if (bayramlar.Count == 0)
+                {
+                    if (eczaneNobetIstekCoklu.HaftaninGunu.Where(w => w == 8 && w == 9).Count() > 0)
+                    {
+                        ViewBag.MesajBayram = $"Girilen tarih aralığına uygun bayram bulunmamaktadır.";
+                    }
+                    else if (eczaneNobetIstekCoklu.HaftaninGunu.Where(w => w == 8).Count() > 0)
+                    {
+                        ViewBag.MesajBayram = $"Girilen tarih aralığına uygun dini bayram bulunmamaktadır.";
+                    }
+                    else if (eczaneNobetIstekCoklu.HaftaninGunu.Where(w => w == 9).Count() > 0)
+                    {
+                        ViewBag.MesajBayram = $"Girilen tarih aralığına uygun milli bayram bulunmamaktadır.";
+                    }
+                    else if (eczaneNobetIstekCoklu.HaftaninGunu.Where(w => w <= 7).Count() > 0)
+                    {
+                        ViewBag.MesajBayram = $"Girilen tarih aralığına uygun hafta günü bulunmamaktadır.";
+                    }
+                }
+                else
+                {
+                    if (eczaneNobetIstekCoklu.HaftaninGunu.Count() == 1)
+                    {
+                        ViewBag.MesajBayram = $"Seçilen hafta gününe uygun tarih aralığı bulunmamaktadır.";
+                    }
+                    else
+                    {
+                        ViewBag.MesajBayram = $"Seçilen hafta günlerine uygun tarih aralığı bulunmamaktadır.";
+                    }
+                }
+            }
+            return PartialView();
         }
 
         // GET: EczaneNobet/EczaneNobetIstek/Edit/5

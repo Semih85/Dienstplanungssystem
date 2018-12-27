@@ -24,6 +24,7 @@ namespace WM.Northwind.Business.DependencyResolvers.Ninject
             Bind<IValidator<EczaneNobetMazeret>>().To<EczaneNobetMazeretValidator>().InSingletonScope();
             Bind<IValidator<EczaneNobetIstek>>().To<EczaneNobetIstekValidator>().InSingletonScope();
             Bind<IValidator<EczaneNobetMazeretCoklu>>().To<EczaneNobetMazeretCokluValidator>().InSingletonScope();
+            Bind<IValidator<EczaneNobetIstekCoklu>>().To<EczaneNobetIstekCokluValidator>().InSingletonScope();
         }
     }
 }

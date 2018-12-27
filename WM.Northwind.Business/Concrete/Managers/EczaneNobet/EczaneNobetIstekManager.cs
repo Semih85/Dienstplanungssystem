@@ -4,10 +4,13 @@ using System.Linq;
 using WM.Core.Aspects.PostSharp.AutorizationAspects;
 using WM.Core.Aspects.PostSharp.CacheAspects;
 using WM.Core.Aspects.PostSharp.LogAspects;
+using WM.Core.Aspects.PostSharp.TranstionAspects;
+using WM.Core.Aspects.PostSharp.ValidationAspects;
 using WM.Core.CrossCuttingConcerns.Caching.Microsoft;
 using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 using WM.Northwind.Business.Abstract;
 using WM.Northwind.Business.Abstract.EczaneNobet;
+using WM.Northwind.Business.ValidationRules.FluentValidation;
 using WM.Northwind.DataAccess.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
@@ -36,6 +39,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _eczaneNobetIstekDal.GetDetay(x => x.Id == eczaneNobetIstekId);
         }
+
         public List<EczaneNobetIstek> GetByCategory(int ustGrupId)
         {
             throw new System.NotImplementedException();
@@ -95,6 +99,18 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetIstekDetay> GetDetaylarByNobetUstGrupId(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetUstGrupIdList)
+        {
+            return _eczaneNobetIstekDal.GetDetayList(x => (x.Tarih >= baslangicTarihi && x.Tarih <= bitisTarihi) && nobetUstGrupIdList.Contains(x.NobetUstGrupId));
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetIstekDetay> GetDetaylarByNobetUstGrupId(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId)
+        {
+            return _eczaneNobetIstekDal.GetDetayList(x => (x.Tarih >= baslangicTarihi && x.Tarih <= bitisTarihi) && nobetUstGrupId == x.NobetUstGrupId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetIstekDetay> GetDetaylarByTakvimId(int takvimId, int nobetUstGrupId)
         {
             return _eczaneNobetIstekDal.GetDetayList(x => x.TakvimId == takvimId && x.NobetUstGrupId == nobetUstGrupId);
@@ -129,9 +145,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _eczaneNobetIstekDal.Update(sonuc);
         }
 
-        //public List<EczaneNobetIstekListe> GetListeByNobetGrupIdList(int yil, int ay, List<int> nobetGrupIdList)
-        //{
-        //    return _eczaneNobetIstekDal.GetEczaneNobetIstekDetaylar(yil, ay, nobetGrupIdList);
-        //}
+        [TransactionScopeAspect]
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        [FluentValidationAspect(typeof(EczaneNobetIstekValidator))]
+        public void CokluEkle(List<EczaneNobetIstek> eczaneNobetIstekler)
+        {
+            _eczaneNobetIstekDal.CokluEkle(eczaneNobetIstekler);
+        }
+
     }
 }

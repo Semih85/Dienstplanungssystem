@@ -24,6 +24,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetIstekDetay> GetDetaylar(int yil, int ay, List<int> ecznaneIdList);
         List<EczaneNobetIstekDetay> GetDetaylarByNobetGrupIdList(int yil, int ay, List<int> nobetGrupIdList);
         List<EczaneNobetIstekDetay> GetDetaylarByNobetGrupIdList(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetGrupIdList);
+        List<EczaneNobetIstekDetay> GetDetaylarByNobetUstGrupId(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetUstGrupIdList);
+        List<EczaneNobetIstekDetay> GetDetaylarByNobetUstGrupId(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId);
 
         List<EczaneNobetIstekDetay> GetDetaylar(int yil, int ay);
         List<EczaneNobetIstekDetay> GetDetaylar(int yil, int ayBaslangic, int ayBitis, int nobetGrupId);
@@ -32,6 +34,6 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneGrupDetay> GetDetaylar(List<EczaneNobetIstekDetay> eczaneNobetIstekDetaylar, List<EczaneGrupDetay> eczaneGrupDetayalar);
 
         List<EczaneNobetIstekDetay> GetDetaylar();
-
+        void CokluEkle(List<EczaneNobetIstek> eczaneNobetIstekler);
     }
 }

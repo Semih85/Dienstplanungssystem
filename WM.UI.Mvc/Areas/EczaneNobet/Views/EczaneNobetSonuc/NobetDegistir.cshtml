@@ -1,9 +1,7 @@
 ﻿@model EczaneNobetDegisimSorgu
 
 @{
-                /**/
-
-                ViewBag.Title = "Nöbet Değiştir |  Nöbet Yaz";
+    ViewBag.Title = "Nöbet Değiştir |  Nöbet Yaz";
 }
 
 <!-- #region ajaxOptions -->
@@ -27,7 +25,7 @@
     @Html.ActionLink("Nöbet Değiştiren Eczaneler", "Index", "EczaneNobetDegisim")
 </p>
 
-@using (Ajax.BeginForm("SonuclarPartial", null, getAjaxOptions, new { @class = "form-inline" }))
+@using (Ajax.BeginForm(null, null, getAjaxOptions, new { @class = "form-inline" }))
 {
     @Html.AntiForgeryToken()
 

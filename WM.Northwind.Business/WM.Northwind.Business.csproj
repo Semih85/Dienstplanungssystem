@@ -239,6 +239,7 @@
     <Compile Include="ValidationRules\FluentValidation\EczaneNobetGrupCokluValidator.cs" />
     <Compile Include="ValidationRules\FluentValidation\EczaneNobetGrupValidator.cs" />
     <Compile Include="ValidationRules\FluentValidation\EczaneGrupValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidation\EczaneNobetIstekCokluValidator.cs" />
     <Compile Include="ValidationRules\FluentValidation\EczaneNobetMazeretCokluValidator.cs" />
     <Compile Include="ValidationRules\FluentValidation\EczaneNobetIstekValidator.cs" />
     <Compile Include="ValidationRules\FluentValidation\EczaneNobetMazeretValidator.cs" />

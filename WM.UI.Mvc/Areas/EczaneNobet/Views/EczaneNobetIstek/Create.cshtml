@@ -1,99 +1,44 @@
-﻿@model EczaneNobetIstek
+﻿@model EczaneNobetIstekCoklu
 
 @{
-    var esGruptakiEczanelerleCakismaDurumu = new List<EczaneGrupDetay>();
-    var esGruptakiCakisanEczane = new EczaneGrupDetay();
-
-    if (ViewBag.IstekGirilenTarihtekiEsgrupOlduguEczaneler != null)
-    {
-        esGruptakiEczanelerleCakismaDurumu = (List<EczaneGrupDetay>)ViewBag.IstekGirilenTarihtekiEsgrupOlduguEczaneler;
-    }
-
     ViewBag.Title = "Nöbet İstek Ekle | Nöbet Yaz";
 }
 
-<h4>Eczane Nöbet İstek Ekle</h4>
+<!-- #region ajaxOptions -->
+@{
+    var getAjaxOptions = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("CreatePartial"),
+        HttpMethod = "POST",
+        UpdateTargetId = "sonuclar",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "wait",
+    };
+}
+<!-- #endregion -->
+
+<h4>Eczane Nöbet <span class="text-primary">İstek</span> Ekle</h4>
+
 <hr />
 
-@if (esGruptakiEczanelerleCakismaDurumu.Count == 1)
-{
-    <div class="row">
-        <div class="col-10">
-            @{
-                esGruptakiCakisanEczane = @esGruptakiEczanelerleCakismaDurumu.FirstOrDefault();
-            }
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fa fa-warning"></i> Aşağıdaki istek girmeye çalıştığınız eczane
-                <span class="badge badge-light">@esGruptakiCakisanEczane.EczaneGrupTanimAdi </span> eş grubundaki
-                <span class="badge badge-light">@esGruptakiCakisanEczane.EczaneAdi </span> eczanesi ile
-                <span class="font-weight-bold">
-                    @if (@esGruptakiCakisanEczane.ArdisikNobetSayisi > 0)
-                    {
-                        <span class="badge badge-light">@DateTime.Today.AddDays(esGruptakiCakisanEczane.ArdisikNobetSayisi) tarihine kadar</span>
-                    }
-                    else
-                    {
-                        <span class="badge badge-light">seçtiğiniz tarih için</span>
-                    }
-                    çakışmaktadır.
-                </span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-    </div>
-}
-else if (esGruptakiEczanelerleCakismaDurumu.Count > 1)
-{
-    <div class="row">
-        <div class="col-10 mb-3">
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fa fa-warning"></i> İstek girmeye çalıştığınız eczane aynı eş grubunda olan aşağıdaki eczaneler <span class="badge badge-light">@esGruptakiEczanelerleCakismaDurumu.Count </span> ile
-                <span class="font-weight-bold">
-                    çakışmaktadır.
-                </span>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <ul class="list-group">
-                @foreach (var esGruptakiEczane in esGruptakiEczanelerleCakismaDurumu)
-                {
-                    <li class="list-group-item list-group-item-warning">
-                        <span class="badge badge-light">@esGruptakiEczane.EczaneGrupTanimAdi </span> eş grubundaki
-                        <span class="badge badge-light">@esGruptakiEczane.EczaneAdi </span> eczanesi ile
-                        <span class="font-weight-bold">
-                            @if (esGruptakiEczane.ArdisikNobetSayisi > 0)
-                            {
-                                <span class="badge badge-light">@DateTime.Today.AddDays(esGruptakiEczane.ArdisikNobetSayisi) tarihine kadar</span>
-                            }
-                            else
-                            {
-                                <span class="badge badge-light">seçtiğiniz tarih için</span>
-                            }
-                        </span>
-                    </li>
-                }
-            </ul>
-        </div>
-    </div>
-}
+<div class="container">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
+    @using (Ajax.BeginForm(null, null, getAjaxOptions, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="form-group">
             @*@Html.LabelFor(model => model.EczaneNobetGrupId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new { @class = "form-control selectpicker",
+               multiple = "true",
                data_live_search = "true",
                data_actions_box = "true",
-               title = "Eczane seçiniz..."
+               title = "Eczane seçiniz...",
+               data_selected_text_format = "count > 4"
            })
                 @Html.ValidationMessageFor(model => model.EczaneNobetGrupId, "", new { @class = "text-danger" })
             </div>
@@ -107,40 +52,156 @@ else if (esGruptakiEczanelerleCakismaDurumu.Count > 1)
             </div>
         </div>
 
+        <div class="form-row ml-2">
+            <div class="form-group" id="fromTarihAraligi" style="margin-left:8px;">
+                <div class="input-group input-daterange" style="width:350px;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text p-2">
+                            <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
+                            <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
+                        </span>
+                    </div>
+                    @Html.TextBox("BaslangicTarihi", null , new { @class = "form-control datepicker mr-2",
+                       //data_toggle = "tooltip",
+                       //data_placement = "top",
+                       //title = "Başlangıç Tarihi",
+                       autocomplete = "off",
+                       placeHolder = "Başlama Tarihi"
+                   })
+
+                    <div class="input-group-addon mr-2 mt-1 p-1">-</div>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text p-2">
+                            <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
+                            <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
+                        </span>
+                    </div>
+                    @Html.TextBox("BitisTarihi", null, new { @class = "form-control datepicker mr-3",
+                       //data_toggle = "tooltip",
+                       //data_placement = "top",
+                       //title = "Bitiş Tarihi",
+                       autocomplete = "off",
+                       placeHolder = "Bitiş Tarihi"
+                   })
+
+                </div>
+                @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         <div class="form-group">
-            @*@Html.LabelFor(model => model.TakvimId, "Tarih", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            @Html.LabelFor(model => model.HaftaninGunu, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TakvimId", null, htmlAttributes: new { @class = "form-control selectpicker",
-               data_live_search = "true",
-               data_actions_box = "true",
-               title = "Tarih seçiniz..."
-           })
-                @Html.ValidationMessageFor(model => model.TakvimId, "", new { @class = "text-danger" })
+                @Html.DropDownList("HaftaninGunu", null, htmlAttributes: new { @class = "form-control selectpicker", multiple = "true", data_actions_box = "true" })
+                @Html.ValidationMessageFor(model => model.HaftaninGunu, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Aciklama, "Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control", placeHolder = "İstek açıklaması giriniz..." })
                 @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Ekle" class="btn btn-primary" />
+                <input type="submit" value="Ekle" class="btn btn-primary" id="formSubmitButton" />
                 @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
             </div>
-        </div>
+        </div>        
+    }
+
+    <div class="spinner-border text-info ml-3" role="status" id="wait" style="display:none;">
+        <span class="sr-only">Loading...</span>
     </div>
-}
+
+    <div id="sonuclar">
+    </div>
+</div>
 
 @section Styles{
     @Styles.Render("~/bundle/bootstrap-select/style")
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
 }
 
 @section Scripts{
+    @Scripts.Render("~/bundle/ajax")
     @Scripts.Render("~/bundle/validation/scripts")
     @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+
+    <script>
+
+        var secilenHaftaninGunuSayisi;
+
+        $(document).ready(function () {
+            var secilenHaftaninGunuSayisi = @ViewBag.SecilenHaftaninGunuSayisi;
+
+            if (secilenHaftaninGunuSayisi == 0 || secilenHaftaninGunuSayisi == 9) {
+                $('#HaftaninGunu').selectpicker('selectAll');
+                secilenHaftaninGunuSayisi = $("#HaftaninGunu :selected").length;
+            }
+        });
+
+        $('#EczaneNobetGrupId').selectpicker();
+
+        $("#BitisTarihi").change(function () {
+
+            var baslangicStr = $("#BaslangicTarihi").val();
+            var baslangicArr = baslangicStr.split(".");
+            var baslangicDate = new Date(baslangicArr[0], baslangicArr[1], baslangicArr[2]);
+
+            var bitisStr = $("#BitisTarihi").val();
+            var bitisArr = bitisStr.split(".");
+            var bitisDate = new Date(bitisArr[0], bitisArr[1], bitisArr[2]);
+
+            if (baslangicDate > bitisDate) {
+                alert("Başlangıç tarihi (" + baslangicStr + ") bitiş tarihinden (" + bitisStr + ") büyük olamaz!!!.");
+                $("#BitisTarihi").val("");
+                $("#BitisTarihi").focus();
+            };
+        });
+
+        $("#formSubmitButton").click(function (e) {
+
+            var bitisTarihi = $('#BitisTarihi').val();
+            var baslangicTarihi = $('#BaslangicTarihi').val();
+
+            if (baslangicTarihi != "" && bitisTarihi != "") {
+                if (bitisTarihi < baslangicTarihi) {
+                    alert("Bitiş tarihi (" + bitisTarihi + ") başlangıç tarihinden (" + baslangicTarihi + ") küçük olamaz...")
+                    e.preventDefault();
+                    return false;
+                };
+            }
+
+            secilenEczaneSayisi = $("#EczaneNobetGrupId :selected").length;
+
+            if (secilenEczaneSayisi == 0) {
+                alert("Lütfen en az 1 eczane seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+            else if (secilenEczaneSayisi > 100) {
+                alert("En fazla 100 eczane seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+            secilenHaftaninGunuSayisi = $("#HaftaninGunu :selected").length;
+
+            if (secilenHaftaninGunuSayisi == 0) {
+                alert("Lütfen haftanin günlerini seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+        });
+
+        $('.input-daterange').datepicker();
+
+    </script>
 }

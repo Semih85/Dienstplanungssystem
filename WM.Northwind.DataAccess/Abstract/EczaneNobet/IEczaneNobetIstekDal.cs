@@ -11,11 +11,6 @@ namespace WM.Northwind.DataAccess.Abstract.EczaneNobet
 {
     public interface IEczaneNobetIstekDal : IEntityRepository<EczaneNobetIstek>, IEntityDetayRepository<EczaneNobetIstekDetay>
     {
-        //List<EczaneNobetIstekListe> GetEczaneNobetIstekListe(int yil, int ay, List<int> ecznaneIdList);
-        //List<EczaneNobetIstekListe> GetEczaneNobetIstekListe(int yil, int ay, int nobetGrupId);
-        //List<EczaneNobetIstekListe> GetEczaneNobetIstekListe(int yil, int ay);
-        //List<EczaneNobetIstekListe> GetEczaneNobetIstekListe(int yil, int ayBaslangic, int ayBitis, int nobetGrupId);
-
-        //List<EczaneNobetIstekDetay> GetEczaneNobetIstekDetaylar();
+        void CokluEkle(List<EczaneNobetIstek> eczaneNobetIstekler);
     }
 }

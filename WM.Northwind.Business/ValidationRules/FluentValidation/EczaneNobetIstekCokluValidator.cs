@@ -9,12 +9,12 @@ using WM.Northwind.Entities.Concrete.EczaneNobet;
 
 namespace WM.Northwind.Business.ValidationRules.FluentValidation
 {
-    public class EczaneNobetMazeretCokluValidator : AbstractValidator<EczaneNobetMazeretCoklu>
+    public class EczaneNobetIstekCokluValidator : AbstractValidator<EczaneNobetIstekCoklu>
     {
-        public EczaneNobetMazeretCokluValidator()
+        public EczaneNobetIstekCokluValidator()
         {
             RuleFor(p => p.EczaneNobetGrupId).NotNull();
-            RuleFor(p => p.MazeretId).NotEmpty();
+            RuleFor(p => p.IstekId).NotEmpty();
             //RuleFor(p => p.MazeretTurId).NotEmpty();
             RuleFor(p => p.BaslangicTarihi).NotEmpty().WithMessage("'Başlangıç tarihi' zorunludur.");
             RuleFor(p => p.BitisTarihi).NotEmpty().WithMessage("'Bitiş tarihi' zorunludur.");

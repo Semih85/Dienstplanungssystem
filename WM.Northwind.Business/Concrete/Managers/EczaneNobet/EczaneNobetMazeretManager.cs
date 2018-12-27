@@ -43,6 +43,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             _eczaneNobetMazeretDal.CokluEkle(eczaneNobetMazeretler);
         }
+
         public EczaneNobetMazeretDetay GetDetayById(int eczaneNobetMazeretId)
         {
             return _eczaneNobetMazeretDal.GetDetay(x => x.Id == eczaneNobetMazeretId);
