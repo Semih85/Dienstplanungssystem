@@ -1033,6 +1033,24 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return PartialView(sonuclar);
         }
 
+        //[ChildActionOnly]
+        //[HttpPost]
+        [ValidateAntiForgeryToken]
+        public PartialViewResult YeniNobetcininNobetleriPartial(int eczaneNobetGrupIdYeniNobetci)
+        {
+
+            var sonuclar = _eczaneNobetSonucService.GetDetaylarByEczaneNobetGrupId(eczaneNobetGrupIdYeniNobetci)
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()} ({s.NobetGorevTipAdi} {s.NobetGrupAdi})" }).ToList();
+
+            ViewBag.YeniEczaneAdi = _eczaneNobetGrupService.GetDetayById(eczaneNobetGrupIdYeniNobetci).EczaneAdi;
+
+            ViewBag.YeniNobetcininNobetSayisi = sonuclar.Count();
+
+            ViewBag.EczaneNobetSonucIdYeniNobetci = new SelectList(sonuclar, "Id", "Value");
+
+            return PartialView(sonuclar);
+        }
+
         // GET: EczaneNobet/EczaneNobetSonuc/Edit/5
         public ActionResult Edit(int id)
         {
@@ -1103,8 +1121,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar()
-                .Where(w => w.NobetGrupId == eczaneNobetSonucDetay.NobetGrupId
-                )
+                .Where(w => w.NobetGrupId == eczaneNobetSonucDetay.NobetGrupId)
                 .OrderBy(s => s.EczaneAdi).ThenBy(t => t.NobetGrupAdi)
                 .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" });
 
@@ -1114,7 +1131,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 .OrderBy(s => s.Id);
 
             ViewBag.EczaneNobetGrupIdEski = new SelectList(eczaneNobetGruplar, "Id", "Value", eczaneNobetSonuc.EczaneNobetGrupId);
-            ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar, "Id", "Value", eczaneNobetSonuc.EczaneNobetGrupId);
+            ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar.Where(w => w.Id != eczaneNobetSonuc.EczaneNobetGrupId).ToList(), "Id", "Value");
             ViewBag.TakvimId = new SelectList(tarihler, "Id", "Value", eczaneNobetSonuc.TakvimId);
             ViewBag.NobetGorevTipId = new SelectList(nobetGorevTipler, "Id", "Value");
 
@@ -1124,39 +1141,44 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [HttpPost]
         [HandleError]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateSonuclarInsertDegisim([Bind(Include = "Id,EczaneNobetGrupId,EczaneNobetSonucId,Aciklama")] EczaneNobetDegistir eczaneNobetDegistir)
+        public ActionResult UpdateSonuclarInsertDegisim([Bind(Include = "Id,EczaneNobetGrupId,EczaneNobetSonucId,EczaneNobetSonucIdYeniNobetci,KarsilikliNobetDegistir,Aciklama")] EczaneNobetDegistir eczaneNobetDegistir)
         {
             //eski nöbetçi
-            var eczaneNobetSonucEski = _eczaneNobetSonucService.GetById(eczaneNobetDegistir.EczaneNobetSonucId);
-            var eskiEczaneNobetGrupId = eczaneNobetSonucEski.EczaneNobetGrupId;
+            var user = _userService.GetByUserName(User.Identity.Name);
 
-            var eskiNobetci = _eczaneNobetGrupService.GetDetayById(eskiEczaneNobetGrupId);
+            #region ilk değişim
+
+            var eczaneNobetSonucEski = _eczaneNobetSonucService.GetById(eczaneNobetDegistir.EczaneNobetSonucId);
+            var eczaneNobetGrupIdEski = eczaneNobetSonucEski.EczaneNobetGrupId;
+
+            var eskiNobetci = _eczaneNobetGrupService.GetDetayById(eczaneNobetGrupIdEski);
 
             //yeni nöbetçi
-            var yeniEczaneNobetGrupId = eczaneNobetDegistir.EczaneNobetGrupId;
-            var yeniNobetci = _eczaneNobetGrupService.GetDetayById(yeniEczaneNobetGrupId);
+            var eczaneNobetGrupIdYeni = eczaneNobetDegistir.EczaneNobetGrupId;
+            var yeniNobetci = _eczaneNobetGrupService.GetDetayById(eczaneNobetGrupIdYeni);
+
+            //eczaneNobetSonuc.EczaneNobetGrupId = eczaneNobetGrupIdYeni;
 
             var eczaneNobetSonuc = new EczaneNobetSonuc
             {
                 Id = eczaneNobetDegistir.EczaneNobetSonucId,
-                EczaneNobetGrupId = yeniEczaneNobetGrupId,
+                EczaneNobetGrupId = eczaneNobetGrupIdYeni,
                 NobetGorevTipId = eczaneNobetSonucEski.NobetGorevTipId,
                 TakvimId = eczaneNobetSonucEski.TakvimId
             };
-
-            var user = _userService.GetByUserName(User.Identity.Name);
 
             //eski nöbetçiyi değişim tablosuna ekle
             var eczaneNobetDegisim = new EczaneNobetDegisim
             {
                 Aciklama = eczaneNobetDegistir.Aciklama,
-                EczaneNobetGrupId = eskiEczaneNobetGrupId,
+                EczaneNobetGrupId = eczaneNobetGrupIdEski,
                 EczaneNobetSonucId = eczaneNobetDegistir.EczaneNobetSonucId,
                 KayitTarihi = DateTime.Now,
                 UserId = user.Id
             };
+            #endregion            
 
-            var nobetDegisimTarihi = _takvimService.GetById(eczaneNobetSonucEski.TakvimId);
+            var nobetDegisimTarihi = _takvimService.GetById(eczaneNobetSonuc.TakvimId);
 
             TempData["EskiNobetci"] = eskiNobetci.EczaneAdi;
             TempData["YeniNobetci"] = yeniNobetci.EczaneAdi;
@@ -1164,7 +1186,49 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             if (ModelState.IsValid)
             {
-                _eczaneNobetSonucService.UpdateSonuclarInsertDegisim(eczaneNobetSonuc, eczaneNobetDegisim);
+                if (eczaneNobetDegistir.KarsilikliNobetDegistir && eczaneNobetDegistir.EczaneNobetSonucId > 0)
+                {
+                    #region 2. değişim
+
+                    var eczaneNobetSonucYeni = _eczaneNobetSonucService.GetById(eczaneNobetDegistir.EczaneNobetSonucIdYeniNobetci);
+
+                    var eczaneNobetSonuc2 = new EczaneNobetSonuc
+                    {
+                        Id = eczaneNobetDegistir.EczaneNobetSonucIdYeniNobetci,
+                        EczaneNobetGrupId = eczaneNobetGrupIdEski,
+                        NobetGorevTipId = eczaneNobetSonucYeni.NobetGorevTipId,
+                        TakvimId = eczaneNobetSonucYeni.TakvimId
+                    };                    
+
+                    var eczaneNobetDegisim2 = new EczaneNobetDegisim
+                    {
+                        Aciklama = eczaneNobetDegistir.Aciklama,
+                        EczaneNobetGrupId = eczaneNobetGrupIdYeni,
+                        EczaneNobetSonucId = eczaneNobetDegistir.EczaneNobetSonucIdYeniNobetci,
+                        KayitTarihi = DateTime.Now,
+                        UserId = user.Id
+                    };
+
+                    var nobetDegisimler = new List<NobetDegisim>
+                        {
+                            new NobetDegisim { EczaneNobetSonuc = eczaneNobetSonuc, EczaneNobetDegisim = eczaneNobetDegisim },
+                            new NobetDegisim { EczaneNobetSonuc = eczaneNobetSonuc2, EczaneNobetDegisim = eczaneNobetDegisim2 }
+                        };
+                    #endregion
+
+                    _eczaneNobetSonucService.UpdateSonuclarInsertDegisim(nobetDegisimler);
+
+                    var nobetDegisimTarihi2 = _takvimService.GetById(eczaneNobetSonuc2.TakvimId);
+
+                    TempData["EskiNobetci2"] = yeniNobetci.EczaneAdi;
+                    TempData["YeniNobetci2"] = eskiNobetci.EczaneAdi;
+                    TempData["NobetDegisimTarihi2"] = nobetDegisimTarihi2.Tarih;
+                }
+                else
+                {
+                    _eczaneNobetSonucService.UpdateSonuclarInsertDegisim(eczaneNobetSonuc, eczaneNobetDegisim);
+                }
+
                 return RedirectToAction("NobetDegistir");
             }
 

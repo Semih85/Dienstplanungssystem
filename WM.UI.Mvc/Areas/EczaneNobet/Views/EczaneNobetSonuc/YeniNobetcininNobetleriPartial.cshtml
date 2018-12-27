@@ -1,0 +1,30 @@
+﻿
+
+@if (ViewBag.YeniNobetcininNobetSayisi > 0)
+{  
+    <div class="form-horizontal" id="partialPageYeniNobetci">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <h6 class="ml-3"><span class="badge badge-primary">@ViewBag.YeniEczaneAdi</span> Eczanesinin Nöbetleri: </h6>
+            <div class="col-md-10">
+                @Html.DropDownList("EczaneNobetSonucIdYeniNobetci", null, htmlAttributes: new { @class = "form-control selectpicker",
+               data_live_search = "true",
+               data_dropup_auto = "false",
+               title = "Nöbet seçiniz..."
+           })
+            </div>
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="alert alert-info ml-3 col-md-5" role="alert">
+        <i class="fa fa-info-circle"></i> @ViewBag.YeniEczaneAdi eczanesinin hiç nöbeti bulunmamaktadır!
+    </div>
+    @Html.Hidden("EczaneNobetSonucId")
+}
+
+

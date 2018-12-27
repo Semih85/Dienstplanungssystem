@@ -44,6 +44,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetSonucDetay2> GetDetaylarUstGrupBaslamaTarihindenSonra(int nobetUstGrupId);
         List<EczaneNobetSonucDetay2> GetDetaylarUstGrupBaslamaTarihindenOnce(int nobetUstGrupId);
         List<EczaneNobetSonucDetay2> GetDetaylarGunluk(DateTime nobetTarihi, int nobetUstGrupId);
+        List<EczaneNobetSonucDetay2> GetDetaylarByEczaneNobetGrupId(int eczaneNobetGrupId);
 
         List<EczaneNobetSonucListe2> GetSonuclar();
         List<EczaneNobetSonucListe2> GetSonuclar(int nobetUstGrupId);
@@ -67,6 +68,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
 
         List<EczaneNobetIstatistikGunFarki> EczaneNobetIstatistikGunFarkiHesapla(int nobetUstGrupId);
         void UpdateSonuclarInsertDegisim(EczaneNobetSonuc eczaneNobetSonuc, EczaneNobetDegisim eczaneNobetDegisim);
+        void UpdateSonuclarInsertDegisim(List<NobetDegisim> nobetDegisimler);
 
         List<EczaneGrupDetay> OncekiAylardaAyniGunNobetTutanlar(DateTime baslangicTarihi, List<EczaneNobetSonucListe2> eczaneNobetSonuclarOncekiAylar, int indisId, int oncekiBakilacakAylar);//NobetUstGrupKisitDetay oncekiAylarAyniGunNobet);
     }

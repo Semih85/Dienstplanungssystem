@@ -110,6 +110,18 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _eczaneNobetDegisimService.Insert(eczaneNobetDegisim);
         }
 
+        [TransactionScopeAspect]
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public void UpdateSonuclarInsertDegisim(List<NobetDegisim> nobetDegisimler)
+        {
+            foreach (var nobetDegisim in nobetDegisimler)
+            {
+                Update(nobetDegisim.EczaneNobetSonuc);
+                _eczaneNobetDegisimService.Insert(nobetDegisim.EczaneNobetDegisim);
+            }
+        }
+
         public EczaneNobetSonuc GetById(int Id)
         {
             return _eczaneNobetSonucDal.Get(x => x.Id == Id);
@@ -146,6 +158,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<EczaneNobetSonucDetay2> GetDetaylar(int nobetUstGrupId)
         {
             return _eczaneNobetSonucDal.GetDetayList(w => w.NobetUstGrupId == nobetUstGrupId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        [LogAspect(typeof(DatabaseLogger))]
+        public List<EczaneNobetSonucDetay2> GetDetaylarByEczaneNobetGrupId(int eczaneNobetGrupId)
+        {
+            return _eczaneNobetSonucDal.GetDetayList(w => w.EczaneNobetGrupId == eczaneNobetGrupId);
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
