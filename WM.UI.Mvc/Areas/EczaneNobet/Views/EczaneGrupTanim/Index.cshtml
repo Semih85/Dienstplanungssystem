@@ -206,10 +206,16 @@
     </div>
 </div>
 
+
+@section Styles{
+    @Styles.Render("~/bundle/jqueryui/style")
+}
+
 @section Scripts{
     @*@Scripts.Render("~/bundle/scriptsDetailTable/script")*@
-
     @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/queryui/scripts")
+
     @Scripts.Render("~/bundle/bootstrap-select/scripts")
     @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
 
@@ -330,63 +336,7 @@
             // alert('aktifYapilacakEczaneGrupTanimlar :' + $("#aktifYapilacakEczaneGrupTanimlar").val());
             $("#ExpandedForAktif").val($("#expandedList").val());
             //alert('ExpandedForAktif :' + $("#ExpandedForAktif").val());
-        }
-
-
-                            //function getProductDetails(id, eczaneGruptanimTipId) {
-                    //    alert('getProductDetails:' + id)
-                    //    alert('eczaneGruptanimTipId:' + eczaneGruptanimTipId)
-
-                    //        $.ajax({
-                    //            type: "POST",
-                    //            url: "../../../EczaneNobet/EczaneGrupTanim/DurumDegistir",
-                    //            data: "{'id':" + id + ",'EczaneGruptanimTipId':" + eczaneGruptanimTipId +"}",
-                    //            contentType: "application/json; charset=utf-8",
-                    //            dataType: "json",
-
-                    //            success: function (data) {
-                    //                alert('111')
-                    //                var keywords = $('#search').val();
-                    //                alert('keywords:' + keywords)
-                    //                $.ajax({
-                    //                    type: "POST",
-                    //                    url: "../../../EczaneNobet/EczaneGrupTanim/SearchWithEczaneAdiPost",
-
-                    //                    data: "{'Keywords': '" + keywords + "' ,'EczaneGruptanimTipId':" + eczaneGruptanimTipId + "}",
-                    //                    contentType: "application/json; charset=utf-8",
-                    //                    dataType: "json",
-
-                    //                    success: function (data) {
-                    //                        alert('888')
-
-                    //                    },
-                    //                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    //                        addmsg("error", textStatus + " (" + errorThrown + ")");
-                    //                        alert(textStatus + " (" + errorThrown + ")");
-                    //                    }
-                    //                });
-                    //                alert('999')
-
-
-                    //                $.each(data, function (i, item) {
-
-                    //                    //var loop = data.length;
-
-                    //                    //alert('item.id:' + item.EczaneGrupTanimDetay.Id);
-
-                    //                    //alert('item.Kort_adi:' + item.Kort_adi );
-                    //                    //alert('item.Oyuncu1_adi:' + item.Oyuncu1_adi );
-
-                    //                });
-                    //                alert('success');
-                    //               // location.reload();
-                    //            },
-                    //            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    //                addmsg("error", textStatus + " (" + errorThrown + ")");
-                    //                alert(textStatus + " (" + errorThrown + ")");
-                    //            }
-                    //        });
-                    //    }
+        }                
 
     </script>
 }

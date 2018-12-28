@@ -27,5 +27,6 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         EczaneDetay GetDetayById(int eczaneId);
         List<EczaneDetay> GetDetaylar();
         List<EczaneDetay> GetDetaylar(int nobetUstGrupId);
+        List<EczaneDetay> GetDetaylar(List<int> nobetUstGrupIdList);
     }
 }

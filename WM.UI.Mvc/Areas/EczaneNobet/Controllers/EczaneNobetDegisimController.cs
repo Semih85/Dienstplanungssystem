@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -39,7 +40,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _eczaneNobetSonucService = eczaneNobetSonucService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _userNobetUstGrupService = userNobetUstGrupService;
-        } 
+        }
         #endregion
 
         // GET: EczaneNobet/EczaneNobetDegisim
@@ -92,7 +93,32 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
-                _eczaneNobetDegisimService.Insert(eczaneNobetDegisim);
+                try
+                {
+                    _eczaneNobetDegisimService.Insert(eczaneNobetDegisim);
+                }
+                catch (DbUpdateException ex)
+                {
+                    var hata = ex.InnerException.ToString();
+
+                    string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+
+                    var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+
+                    if (dublicateRowHatasiMi)
+                    {
+                        //throw new Exception("<strong>Bir eczaneye aynı gün için iki istek kaydı eklenemez...</strong>");
+                        return PartialView("ErrorDublicateRowPartial");
+                    }
+
+                    // throw ex;
+                }
+                catch (Exception)
+                {
+                    return PartialView("ErrorPartial");
+                    //throw ex;
+                }
+
                 return RedirectToAction("Index");
             }
 

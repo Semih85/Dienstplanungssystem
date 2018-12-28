@@ -36,34 +36,34 @@
                         @*<th id="hepsiniAcKapa" class="hoverEffforHeader collapsemForHeader">
 
                             </th>*@
-                        <th>
+                        <th style="width:1%">
                             <input class="" id="checkAll" type="checkbox" />
                         </th>
-                        <th>
+                        <th style="width:24%">
                             @Html.DisplayName("Eczane Grubu")
                         </th>
-                        <th title="Gruptaki eczanelerin ardışık nöbet tutamayacağı gün aralığı (örn. 0: aynı gün nöbet tutamaz.)">
+                        <th style="width:12%" title="Gruptaki eczanelerin ardışık nöbet tutamayacağı gün aralığı (örn. 0: aynı gün nöbet tutamaz.)">
                             @Html.DisplayNameFor(model => model.FirstOrDefault().EczaneGrupTanimDetay.ArdisikNobetSayisi)
                         </th>
-                        <th>
+                        <th style="width:14%">
                             @Html.DisplayNameFor(model => model.FirstOrDefault().EczaneGrupTanimDetay.EczaneGrupTanimTipAdi)
                         </th>
-                        <th>
+                        <th style="width:14%">
                             @Html.DisplayNameFor(model => model.FirstOrDefault().EczaneGrupTanimDetay.NobetGorevTipAdi)
                         </th>
-                        <th title="Gruptaki eczanelerin aynı gün nöbetçi olabilecekleri en fazla sayı.(örn. 1: aynı gün bu gruptan sadece 1 eczane nöbetçi olabilir.)">
+                        <th style="width:13%" title="Gruptaki eczanelerin aynı gün nöbetçi olabilecekleri en fazla sayı.(örn. 1: aynı gün bu gruptan sadece 1 eczane nöbetçi olabilir.)">
                             @Html.DisplayNameFor(model => model.FirstOrDefault().EczaneGrupTanimDetay.AyniGunNobetTutabilecekEczaneSayisi)
                         </th>
-                        <th>
+                        <th style="width:6%">
                             @Html.DisplayName("Kapalı mı")
                         </th>
-                        <th>
+                        <th style="width:6%">
                             @Html.DisplayName("Durumu")
                         </th>
-                        <th>
+                        <th style="width:10%">
                             işlem
                         </th>
-                        <th>
+                        <th style="width:5%">
                         </th>
                     </tr>
                 </thead>
@@ -78,7 +78,7 @@
                                        value="@item.EczaneGrupTanimDetay.Id" type="checkbox" />
                             </td>
                             <td>
-                                @item.EczaneGrupTanimDetay.Adi <span title="Gruptaki Eczane Sayısı" class="badge badge-info">@item.EczaneGrupTanimDetay.GruptakiEczaneSayisi</span>
+                                @item.EczaneGrupTanimDetay.Adi <span title="Gruptaki eczane sayısı" class="badge badge-info">@item.EczaneGrupTanimDetay.GruptakiEczaneSayisi</span>
                             </td>
                             <td>
                                 @item.EczaneGrupTanimDetay.ArdisikNobetSayisi
@@ -120,8 +120,8 @@
                                     <span class="fa fa-cog"></span>
                                 </button>
                                 <div class="collapse d-md-block" id="@target.Remove(0,1)">
-                                    <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
-                                    @*<a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>*@
+                                    <a class="btn btn-outline-primary py-0 btn-sm mr-2" title="Gruba eczane ekle" href="@Url.Action("Create2", "EczaneGrup", new { eczaneGrupTanimId = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-plus"></span></a>
+                                    <a class="btn btn-outline-success py-0 btn-sm mr-2" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
                                     <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
                                 </div>
                             </td>
@@ -199,7 +199,7 @@
                     $("<td id=\"" + eczaneGrupTanimDetayid + "\" ></td>")//sytle=\"width:150px\"
                         .addClass("expandm")
                         .addClass("hoverEff")
-                        .attr('title', "click for show/hide")
+                        .attr('title', "Grup detayları için tıklayınız.")
                 );
                 //Now get sub table from last column and add this to the next new added row
                 var table = $("table", this).parent().html();

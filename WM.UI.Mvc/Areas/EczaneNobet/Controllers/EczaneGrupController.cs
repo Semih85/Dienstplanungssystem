@@ -13,6 +13,7 @@ using WM.Northwind.Business.Abstract.Authorization;
 using WM.UI.Mvc.HtmlHelpers;
 using WM.UI.Mvc.Areas.EczaneNobet.Models;
 using System.Text.RegularExpressions;
+using System.Data.Entity.Infrastructure;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -288,6 +289,28 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return View();
         }
 
+        public ActionResult Create2(int eczaneGrupTanimId)
+        {
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var nobetUstGrupId = nobetUstGruplar.Select(s => s.Id).ToList();
+
+            var gruptakiEczaneler = _eczaneGrupService.GetDetaylarByEczaneGrupTanimId(eczaneGrupTanimId);
+
+            var eczaneler = _eczaneService.GetDetaylar(nobetUstGrupId)
+                .Where(w => w.KapanisTarihi == null
+                        && !gruptakiEczaneler.Select(s => s.EczaneId).Contains(w.Id))
+                .OrderBy(f => f.EczaneAdi)
+                .ToList();
+
+            var eczaneGrupTanimlar = _eczaneGrupTanimService.GetDetaylarAktifTanimList(eczaneGrupTanimId);
+
+            ViewBag.EczaneId = new SelectList(eczaneler.Select(s => new { s.Id, EczaneAdi = $"{s.EczaneAdi}" }), "Id", "EczaneAdi");
+            ViewBag.EczaneGrupTanimId = new SelectList(eczaneGrupTanimlar.Select(s => new { s.Id, EczaneGrupTanimAdi = $"{s.Adi} ({s.NobetGorevTipAdi})" }), "Id", "EczaneGrupTanimAdi", eczaneGrupTanimId);
+
+            return View("Create");
+        }
+
         public ActionResult CreateAjax()
         {
             var user = _userService.GetByUserName(User.Identity.Name);
@@ -328,10 +351,36 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 var eklenecekEczaneSayisi = eczaneGruplar.Count;
 
                 if (ModelState.IsValid && eklenecekEczaneSayisi > 0)
-                {
-                    _eczaneGrupService.CokluEkle(eczaneGruplar);
+                {                    
+                    try
+                    {
+                        _eczaneGrupService.CokluEkle(eczaneGruplar);
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        var hata = ex.InnerException.ToString();
+
+                        string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+
+                        var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+
+                        if (dublicateRowHatasiMi)
+                        {
+                            throw new Exception("<strong>Mükerrer kayıt eklenemez...</strong>");
+                            //return PartialView("ErrorDublicateRowPartial");
+                        }
+
+                        throw ex;
+                    }
+                    catch (Exception ex)
+                    {
+                        //return PartialView("ErrorPartial");
+                        throw ex;
+                    }
+
                     ViewBag.EklenenEczaneSayisi = eklenecekEczaneSayisi;
                     ViewBag.EklenenGrupAdi = _eczaneGrupTanimService.GetById(eczaneGrupCoklu.EczaneGrupTanimId).Adi;
+
                     return RedirectToAction("Index");
                 }
                 return RedirectToAction("Index");

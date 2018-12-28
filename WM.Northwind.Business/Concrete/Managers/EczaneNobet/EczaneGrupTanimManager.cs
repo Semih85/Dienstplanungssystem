@@ -75,6 +75,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneGrupTanim> GetAktifTanimList(int eczaneGrupTanimId)
+        {
+            return _eczaneGrupTanimDal.GetList(x => eczaneGrupTanimId == x.Id && (x.BitisTarihi == null && x.PasifMi == false));
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneGrupTanimDetay> GetDetaylar(List<int> nobetUstGrupIdList)
         {
             return _eczaneGrupTanimDal.GetDetayList(x => nobetUstGrupIdList.Contains(x.NobetUstGrupId));
@@ -84,6 +90,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<EczaneGrupTanimDetay> GetDetaylarAktifTanimList(List<int> eczaneGrupTanimIdList)
         {
             return _eczaneGrupTanimDal.GetDetayList(x => eczaneGrupTanimIdList.Contains(x.Id) && (x.BitisTarihi == null && x.PasifMi == false));
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneGrupTanimDetay> GetDetaylarAktifTanimList(int eczaneGrupTanimId)
+        {
+            return _eczaneGrupTanimDal.GetDetayList(x => eczaneGrupTanimId == x.Id && (x.BitisTarihi == null && x.PasifMi == false));
         }
     }
 }

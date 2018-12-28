@@ -31,6 +31,7 @@
 
         <div class="form-group mb-5">
             @*@Html.LabelFor(model => model.EczaneId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+
             <div class="col-md-10">
                 @Html.DropDownList("EczaneId", null, htmlAttributes: new { @class = "form-control selectpicker",
                        multiple = "true",
@@ -46,7 +47,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Ekle" id="submitEkle" class="btn btn-outline-primary" />
-                @Html.ActionLink("Eczane Grup Listesi", "Index", null, new { @class = "btn btn-outline-warning" })
+                @Html.ActionLink("Eczane Grup Listesi", "Index", "EczaneGrupTanim", null, new { @class = "btn btn-outline-warning" })
             </div>
         </div>
     </div>

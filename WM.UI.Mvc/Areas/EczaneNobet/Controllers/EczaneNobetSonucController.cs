@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -1038,8 +1039,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public PartialViewResult YeniNobetcininNobetleriPartial(int eczaneNobetGrupIdYeniNobetci)
         {
-
-            var sonuclar = _eczaneNobetSonucService.GetDetaylarByEczaneNobetGrupId(eczaneNobetGrupIdYeniNobetci)
+            var sonuclar = _eczaneNobetSonucService.GetDetaylarUstGrupBaslamaTarihindenSonraEczaneNobetGrupId(eczaneNobetGrupIdYeniNobetci)
+                .OrderByDescending(o => o.Tarih)
                 .Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()} ({s.NobetGorevTipAdi} {s.NobetGrupAdi})" }).ToList();
 
             ViewBag.YeniEczaneAdi = _eczaneNobetGrupService.GetDetayById(eczaneNobetGrupIdYeniNobetci).EczaneAdi;
@@ -1111,18 +1112,16 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            EczaneNobetSonucDetay2 eczaneNobetSonucDetay = _eczaneNobetSonucService.GetDetay2ById(eczaneNobetSonucId);
-            EczaneNobetSonuc eczaneNobetSonuc = _eczaneNobetSonucService.GetById(eczaneNobetSonucId);
-            var eczaneNobetDegitir = new EczaneNobetDegistir();
+            var eczaneNobetSonuc = _eczaneNobetSonucService.GetDetay2ById(eczaneNobetSonucId);
 
             if (eczaneNobetSonuc == null)
             {
                 return HttpNotFound();
             }
 
-            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar()
-                .Where(w => w.NobetGrupId == eczaneNobetSonucDetay.NobetGrupId)
-                .OrderBy(s => s.EczaneAdi).ThenBy(t => t.NobetGrupAdi)
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetAktifEczaneNobetGrup(eczaneNobetSonuc.NobetGrupId)
+                .OrderBy(s => s.EczaneAdi)
+                .ThenBy(t => t.NobetGrupAdi)
                 .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" });
 
             var tarihler = _takvimService.GetList().Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()}" });
@@ -1134,6 +1133,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar.Where(w => w.Id != eczaneNobetSonuc.EczaneNobetGrupId).ToList(), "Id", "Value");
             ViewBag.TakvimId = new SelectList(tarihler, "Id", "Value", eczaneNobetSonuc.TakvimId);
             ViewBag.NobetGorevTipId = new SelectList(nobetGorevTipler, "Id", "Value");
+
+            var eczaneNobetDegitir = new EczaneNobetDegistir();
 
             return View(eczaneNobetDegitir);
         }
@@ -1198,7 +1199,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         EczaneNobetGrupId = eczaneNobetGrupIdEski,
                         NobetGorevTipId = eczaneNobetSonucYeni.NobetGorevTipId,
                         TakvimId = eczaneNobetSonucYeni.TakvimId
-                    };                    
+                    };
 
                     var eczaneNobetDegisim2 = new EczaneNobetDegisim
                     {
@@ -1216,7 +1217,31 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         };
                     #endregion
 
-                    _eczaneNobetSonucService.UpdateSonuclarInsertDegisim(nobetDegisimler);
+                    try
+                    {
+                        _eczaneNobetSonucService.UpdateSonuclarInsertDegisim(nobetDegisimler);
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        var hata = ex.InnerException.ToString();
+
+                        string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+
+                        var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+
+                        if (dublicateRowHatasiMi)
+                        {
+                            throw new Exception("<strong>Mükerrer kayıt eklenemez...</strong>");
+                            //return PartialView("ErrorDublicateRowPartial");
+                        }
+
+                        // throw ex;
+                    }
+                    catch (Exception ex)
+                    {
+                        //return PartialView("ErrorPartial");
+                        throw ex;
+                    }
 
                     var nobetDegisimTarihi2 = _takvimService.GetById(eczaneNobetSonuc2.TakvimId);
 
@@ -1226,7 +1251,31 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 }
                 else
                 {
-                    _eczaneNobetSonucService.UpdateSonuclarInsertDegisim(eczaneNobetSonuc, eczaneNobetDegisim);
+                    try
+                    {
+                        _eczaneNobetSonucService.UpdateSonuclarInsertDegisim(eczaneNobetSonuc, eczaneNobetDegisim);
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        var hata = ex.InnerException.ToString();
+
+                        string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+
+                        var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+
+                        if (dublicateRowHatasiMi)
+                        {
+                            throw new Exception("<strong>Mükerrer kayıt eklenemez...</strong>");
+                            //return PartialView("ErrorDublicateRowPartial");
+                        }
+
+                        throw ex;
+                    }
+                    catch (Exception ex)
+                    {
+                        //return PartialView("ErrorPartial");
+                        throw ex;
+                    }
                 }
 
                 return RedirectToAction("NobetDegistir");

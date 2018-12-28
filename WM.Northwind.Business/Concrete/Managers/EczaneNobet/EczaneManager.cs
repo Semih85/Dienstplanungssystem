@@ -59,16 +59,19 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _eczaneDal.GetList();
         }
 
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<Eczane> GetList(int nobetUstGrupId)
         {
             return _eczaneDal.GetList(x => x.NobetUstGrupId == nobetUstGrupId);
         }
 
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<Eczane> GetList(int[] nobetUstGrupIds)
         {
-            return _eczaneDal.GetList(x => nobetUstGrupIds.Contains(x.NobetUstGrupId) );
+            return _eczaneDal.GetList(x => nobetUstGrupIds.Contains(x.NobetUstGrupId));
         }
 
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<Eczane> GetListByEczaneIds(int[] eczaneIds)
         {
             return _eczaneDal.GetList(x => eczaneIds.Contains(x.Id));
@@ -117,7 +120,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             {//yetkili olduğu eczaneler
                 var userEczaneler = _userEczaneService.GetListByUserId(user.Id);
                 eczaneler = GetList(userEczaneler.Select(s => s.EczaneId).ToArray());
-                    //.Where(x => userEczaneler.Select(s => s.EczaneId).Contains(x.Id)).ToList();
+                //.Where(x => userEczaneler.Select(s => s.EczaneId).Contains(x.Id)).ToList();
             }
             else
             {//yetkili olduğu nöbet üst gruplar
@@ -134,14 +137,22 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _eczaneDal.GetDetay(x => x.Id == eczaneId);
         }
 
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneDetay> GetDetaylar()
         {
             return _eczaneDal.GetDetayList();
         }
 
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneDetay> GetDetaylar(int nobetUstGrupId)
         {
             return _eczaneDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneDetay> GetDetaylar(List<int> nobetUstGrupIdList)
+        {
+            return _eczaneDal.GetDetayList(x => nobetUstGrupIdList.Contains(x.NobetUstGrupId));
         }
     }
 }

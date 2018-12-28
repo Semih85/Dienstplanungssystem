@@ -189,7 +189,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                          && x.EczaneGrupTanimPasifMi == false
                                                          && x.PasifMi == false
                                                          ));
-            
+
             return GetDetaylarEczaneneGrupTanimdakiler(eczaneGruplar.Select(s => s.EczaneGrupTanimId).ToList());
         }
 
@@ -213,7 +213,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                          && x.EczaneGrupTanimPasifMi == false
                                                          && x.PasifMi == false
                                                          ));
-
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
@@ -744,9 +743,19 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return bagliGruplar.Distinct().OrderBy(o => o).ToList();
         }
 
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneGrupDetay> GetDetaylarByEczaneGrupTanimId(List<int> eczaneGrupTanimIdList)
         {
             return _eczaneGrupDal.GetEczaneGrupDetaylar(x => eczaneGrupTanimIdList.Contains(x.EczaneGrupTanimId))
+                .Where(e => (e.EczaneGrupTanimBitisTarihi == null
+                          && e.EczaneGrupTanimPasifMi == false
+                          && e.PasifMi == false)).ToList();
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneGrupDetay> GetDetaylarByEczaneGrupTanimId(int eczaneGrupTanimId)
+        {
+            return _eczaneGrupDal.GetEczaneGrupDetaylar(x => eczaneGrupTanimId == x.EczaneGrupTanimId)
                 .Where(e => (e.EczaneGrupTanimBitisTarihi == null
                           && e.EczaneGrupTanimPasifMi == false
                           && e.PasifMi == false)).ToList();
