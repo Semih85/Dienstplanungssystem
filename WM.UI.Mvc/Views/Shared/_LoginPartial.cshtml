@@ -10,7 +10,7 @@
     </a>
     <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownLoginLink">
         <span class="dropdown-item-text">Merhaba, @User.Identity.Name</span>
-        <a class="dropdown-item" href="@Url.Action("Logout", "Account",new { area = "" })"><span class="fa fa-lg fa-sign-out"></span> Çıkış</a>
+        <a class="dropdown-item" href="@Url.Action("Logout", "Account",new { area = "" })"><span class="fa fa-sign-out"></span> Çıkış</a>
     </div>
 </li>
 
@@ -21,5 +21,5 @@
 else
 {
     //login ve register linklerini çıkar
-    <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account",new { area = "" })"><span class="fa fa-lg fa-sign-in"></span> Giriş</a> </li>
+    <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account",new { area = "" })"><span class="fa fa-sign-in"></span> Giriş</a> </li>
 }

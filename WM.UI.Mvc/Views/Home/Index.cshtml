@@ -1,19 +1,24 @@
 ﻿@*@addTagHelper "*,Microsoft.AspNetCore.Mvc.TagHelpers"
     @addTagHelper "*,Abc.Northwind.UI.Mvc"*@
+
+@{
+    ViewBag.Title = "Nöbet Yaz";
+}
+
 <style>
 
     .circle {
-        background: #007bff;
+        /*background: #007bff;*/
         width: 100px;
         line-height: 100px;
         display: inline-block;
-        color: #fff;
+        /*color: #fff;*/
         border-radius: 100%;
         font-size: xx-large
     }
 
     .seviye {
-        color: #007bff;
+        /*color: #007bff;*/
         font-size: x-large;
     }
 
@@ -23,174 +28,378 @@
     }
 </style>
 
-<div class="container">
-    <div class="row text-center mb-2">
-        <div class="col-md-12 mb-3">
-            <div class="ref" id="hizmetlerimiz">Hizmetlerimiz</div>
-        </div>
+<style>
+    .jumbotron {
+        background: url("../Content/images/digital_background4.jpg");
+        /*background-color: aliceblue;*/
+        background-size: cover;
+        /*height:100px;*/
+        /*height: 50%;*/
+    }
+</style>
 
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Nöbetçi Eczane Belirleme</h4>
-                    @if (Request.IsAuthenticated)
-                    {
-                        <a class="nav-link" href="@Url.Action("Index", "NobetYaz",new { area = "EczaneNobet" })">
-                            <img class="img-fluid" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme" title="Sisteme giriş yapmak için tıklayınız." style="height:50%; width:50%" />
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="nav-link" href="@Url.Action("Login", "Account",new { area = "" })">
-                            <img class="img-fluid" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme" title="Sisteme giriş yapmak için tıklayınız." style="height:50%; width:50%" />
-                        </a>
-                    }
-                </div>
-            </div>
-        </div>
+@section jumbotronMaster{
 
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Hemşire Nöbet Çizelgeleme</h4>
-                    <img class="img-fluid" src="~/Content/images/hemsireCizelgeleme2.jpg" title="Hemşire Nöbet Çizelgeleme" style="height:66%; width:66%" />
-                    @*style="height:220px;"*@
-                </div>
-            </div>
+    <div class="jumbotron jumbotron-fluid py-5 mt-5 mb-1">
+        <div class="container text-white">
+            <h1 class="display-4" id="jumbotronYazi">Nöbet Sistemi</h1>
+            <p class="lead">Nöbetlerinizi yazalım ve istatistikleri dinamik olarak gösterelim.</p>
+            <hr class="my-4 bg-info text-left w-50" align="left">
+            <p>Gelin birlikte matematiği hayatın içine taşıyalım.</p>
+            <a class="btn btn-outline-info btn-lg" href="@Url.Action("NobetYazDetay")" role="button">
+                <span class="fa fa-bars"></span> Detaylar
+            </a>
+            @*@if (Request.IsAuthenticated)
+                {
+                    <a class="btn btn-outline-info btn-lg" href="@Url.Action("Index", "NobetYaz",new { area = "EczaneNobet" })" role="button">
+                        <span class="fa fa-sign-in"></span> Hemen Başlayın
+                    </a>
+                }
+                else
+                {
+                    <a class="btn btn-outline-info btn-lg" href="@Url.Action("Login", "Account",new { area = "" })" role="button">
+                        <span class="fa fa-sign-in"></span> Hemen Başlayın
+                    </a>
+                }*@
         </div>
     </div>
+}
 
-    @*sayılar:*@
+<section class="mb-3">
 
-    <div class="row text-center mb-2">
-        <div class="col-md-3 mb-3">
+    <div class="container">
+
+        <div class="row mb-md-4">
+            @*<div class="col-md-12 ">
+                <h2 class="text-center">Nöbet Sistemi</h2>
+            </div>*@
+            <div class="col-12 text-center mb-2">
+                <h4>Bizimle <a class="card-link" href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })">irtibata <span class="fa fa-envelope"></span></a> geçin. Ücretsiz demo yapalım. Kararı siz verin.</h4>
+            </div>
+            <div class="col-lg-4 ">
+                <ul class="list-group list-group-flush text-left">
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Siz sadece kuralları <i class="fa fa-cogs text-danger" aria-hidden="true"></i> belirleyin. </li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Saniyeler içinde <i class="fa fa-hourglass-end text-danger" aria-hidden="true"></i> nöbetleriniz yazılsın.</li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> İstatistiklerin <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i> keyfini çıkarın.</li>
+                </ul>
+
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="success_img">
+                    <img class="img-fluid" src="~/Content/images/meeting-peoples-1080x625.png" alt="En iyi plan süresi" width="220" />
+                </div>
+
+            </div>
+
+            <div class="col-lg-4 mb-4 text-center">
+                @*<h3 class="text-success">Avantajları</h3>*@
+                @*<div class="success_img">
+                    <img class="img-fluid" src="~/Content/images/meeting-peoples-1080x625.png" alt="En iyi plan süresi" width="220" />
+                </div>*@
+
+                <ul class="list-group list-group-flush text-left">
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Eczaneleri haritada <i class="fa fa-map text-danger" aria-hidden="true"></i> görüntüleyin.</li>
+                    <li class="list-group-item">
+                        <i class="fa fa-check text-success" aria-hidden="true"></i> Tüm cihazlardan
+                        <i class="fa fa-mobile-phone text-danger" aria-hidden="true"></i>
+                        <i class="fa fa-tablet text-danger" aria-hidden="true"></i>
+                        ve 7/24 ulaşın.
+                    </li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Tüm veriler SSL <i class="fa fa-shield text-danger" aria-hidden="true"></i> ile güvende.</li>
+                    @*<li class="list-group-item">
+                        <a href="@Url.Action("NobetYazDetay")" target="_blank" role="button">
+                            <i class="fa fa-arrow-right text-primary" aria-hidden="true"></i> Nöbet sistemi tüm detaylar...
+                        </a>
+                    </li>*@
+                    @*<li class="list-group-item px-1"><i class="fa fa-check text-success" aria-hidden="true"></i> En iyi nöbet zamanlarına göre nöbetler yazılır.</li>*@
+                </ul>
+            </div>
+
+
+        </div>
+        <hr class="bg-info" />
+
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h5>Dijital <span class="text-danger">Nöbetçi Eczane</span> Ekranı</h5>
+                <p class="text-secondary "><i class="fa fa-commenting text-success" aria-hidden="true"></i> Dilerseniz nöbetçi eczaneleri, her eczanede bir ekran ile haritalı <i class="fa fa-map text-danger" aria-hidden="true"></i> olarak gösterelim.</p>
+            </div>
+
+            <div class="col-lg-8 text-center pr-0 mb-3">
+                <img class="img-thumbnail" src="~/Content/images/dijitalEkran.png" alt="İlk slayt">
+            </div>
+
+            <div class="col-lg-4 text-center">
+                @*<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="~/Content/images/dijitalEkran.png" alt="İlk slayt" height="600">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/1_Dijital_Ekran_Sunum_Klasik.jpg" alt="2. slayt" height="600">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/2_Dijital_Ekran_Sunum_Onerilen.jpg" alt="3. slayt" height="600">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/3_Dijital_Ekran_Sunum_Avantajlar.jpg" alt="4. slayt" height="600">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/4_Dijital_Ekran_Sunum_Teklif2.jpg" alt="5. slayt" height="600">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>*@
+                @*<h2 class="mb-3">Sistemin Avantajları</h2>*@
+
+                <ul class="list-group list-group-flush text-left">
+                    <li class="list-group-item pt-lg-0"><i class="fa fa-check text-success" aria-hidden="true"></i> Mini bilgisayar ile kablosuz bağlantı</li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Sıfır '0' israf (kağıt <i class="fa fa-plus text-info" aria-hidden="true"></i> toner <i class="fa fa-plus text-info" aria-hidden="true"></i> yazıcı)</li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Dijital görüntü içeriği</li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Yatay/dikey ekran kullanım avantajı</li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Otomatik çalışan sistem</li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Düşük arıza oranı</li>
+                    @*<li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Sessiz çalışma</li>*@
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Minimum elektrik tüketimi</li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Kolay yönetim arayüzü</li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> <span class="font-weight-bold">Anlık nöbet güncellemesi</span></li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+@*<section>
+        <div class="container">
+
+            <div class="row mb-2">
+                <div class="col-md-12 text-left">
+                    <h2 id="hizmetlerimiz">Hizmetlerimiz</h2>
+                </div>
+
+                <div class="col-md-4 mb-3 text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Nöbetçi Eczane Belirleme</h5>
+                            <a class="nav-link" href="#nobetSistemi">
+                                <img class="img-fluid" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme" title="Sistem detayları için tıklayınız." style="height:50%; width:50%" />
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3 text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Dijital Nöbetçi Eczane Tabelası</h5>
+                            <a class="nav-link" href="@Url.Action("DijitalTabela")" target="_blank">
+                                <img class="img-fluid" src="~/Content/images/dijitalEkranKucuk.jpg" alt="Dijital Nöbetçi Ekranı" style="height:78%; width:78%" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-3 text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Takas Takip Sistemi</h5>
+                            <a class="nav-link" href="http://takastakip.com/" target="_blank" role="button">
+                                <img class="img-fluid" src="~/Content/images/ph1.png" alt="Takas Takip Sistemi" style="height:43.5%; width:43.5%" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 text-right">
+                    <a class="btn btn-outline-primary" href="http://eniyiplan.com/" target="_blank" role="button">Tüm Faaliyetlerimiz...</a>
+                </div>
+            </div>
+        </div>
+    </section>*@
+
+<div class="container">
+    
+    <div class="row text-center mb-3">
+
+        <div class="col-md-3">
             <div style="display:none" id="odaSayisiSabit">3</div>
-            <div class="counter circle" id="odaSayisi">0</div>
-            <div class="seviye">Eczacı Odası</div>
+            <div class="counter circle bg-light font-weight-bold text-dark" id="odaSayisi">0</div>
+            <div class="seviye text-dark">Eczacı Odası</div>
         </div>
         <div class="col-md-3 mb-3">
             <div style="display:none" id="ustGrupSayisiSabit">26</div>
-            <div class="counter circle" id="ustGrupSayisi">0</div>
-            <div class="seviye">Nöbet Bölgesi</div>
+            <div class="counter circle bg-light font-weight-bold text-dark" id="ustGrupSayisi">0</div>
+            <div class="seviye text-dark">Nöbet Bölgesi</div>
         </div>
         <div class="col-md-3 mb-3">
             <div style="display:none" id="grupSayisiSabit">869</div>
-            <div class="counter circle" id="grupSayisi">0</div>
-            <div class="seviye">Eczane</div>
+            <div class="counter circle bg-light font-weight-bold text-dark" id="grupSayisi">0</div>
+            <div class="seviye text-dark">Eczane</div>
         </div>
         <div class="col-md-3 mb-3">
-            <div style="display:none" id="eczaneSayisiSabit">5000</div>
-            <div class="counter circle" id="eczaneSayisi">0</div>
-            <div class="seviye">Yazılan Nöbet</div>
+            <div style="display:none" id="eczaneSayisiSabit">5700</div>
+            <div class="counter circle bg-light font-weight-bold text-dark" id="eczaneSayisi">0</div>
+            <div id="nobetSistemi"></div>
+            <div class="seviye text-dark">Yazılan Nöbet</div>
         </div>
     </div>
-
-
-    <div class="row text-center">
-        <div class="col-md-12 mb-3">
-            <div class="ref" id="nobetSistemi">Nöbet Sistemi</div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card text-white bg-primary mb-3">
-                @*<img class="card-img-top" src="..." alt="Card image cap">*@
-                <div class="card-body">
-                    <h4 class="card-title">İstek</h4>
-                    <p class="card-text">Eczanelerin geçerli isteklerinin olduğu günlere nöbet yazılır. Örneğin Pazar günü için özel bir sıra takip edilebilir.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card bg-light mb-3">
-                <div class="card-body">
-                    <h4 class="card-title">Eş Durumu</h4>
-                    <p class="card-text">Farklı gruplardaki eşli eczanelere belirtilecek gün aralığında aynı anda nöbet yazılmaz.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-success mb-3">
-                <div class="card-body">
-                    <h4 class="card-title">Günlerin Dağılımı</h4>
-                    @*<p class="card-text">Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar ve dini/milli bayram günlerinin adaletli dağılımı sağlanır.</p>*@
-                    @*<p class="card-text">Pazartesi, Salı, Çarşamba, Perşembe, Cuma, Cumartesi, Pazar ve dini/milli bayram günlerinde ihtiyaç duyulan nöbetçi sayısına göre nöbetler yazılır. Nöbet gruplarına özel belirtilecek günler için eczanelere adaletli nöbet dağılımı sağlanır.</p>*@
-                    @*göre nöbetler yazılır. Nöbet gruplarına özel belirtilecek günler için eczanelere*@
-                    <p class="card-text">Haftanın herbir günü ve dini/milli bayram günlerinde ihtiyaç duyulan nöbetçi sayısına adaletli nöbet dağılımı sağlanır.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row text-center mb-3">
-        <div class="col-md-4">
-            <div class="card text-white bg-danger mb-3">
-                <div class="card-body">
-                    <h4 class="card-title">Mazeret</h4>
-                    <p class="card-text">Eczanelerin geçerli mazeretlerinin olduğu günlere nöbet yazılmaz.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-secondary mb-3">
-                <div class="card-body">
-                    <h4 class="card-title">Peşpeşe Nöbet</h4>
-                    <p class="card-text">Her eczanenin ay içinde peşpeşe günlerde nöbet tutması engellenir.</p>
-                    @* bir nöbet ya da eczane grubuna özel belirtilen değerlere göre  *@
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-white bg-info  mb-3">
-                <div class="card-body">
-                    <h4 class="card-title">Birlikte Nöbet</h4>
-                    @*<p class="card-text">Farklı gruplardaki aynı gün nöbet tutan eczanelerin uzun vadede sürekli birlikte nöbetçi olması engellenir.</p>*@
-                    <p class="card-text">Farklı gruplardaki eczanelerin sürekli aynı gün nöbet tutması engellenir.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row text-center my-3" id="referanlarimiz">
-        <div class="col-md-12">
-            <div class="ref">Referanslarımız</div>
-        </div>
-
-        <div class="col-md-4" style="margin-top:1%">
-            <a class="nav-link" target="_blank" href="https://www.antalyaeo.org.tr/tr">
-                <img class="img-fluid" src="~/Content/images/AeoLogo2.png" alt="Antalya Eczacı Odası" />
-            </a>
-        </div>
-        <div class="col-md-4">
-            <a class="nav-link" target="_blank" href="https://www.mersineczaciodasi.org.tr/">
-                <img class="img-fluid" src="~/Content/images/MeoLogo.png" alt="Mersin Eczacı Odası" />
-            </a>
-        </div>
-
-        <div class="col-md-4">
-            <a class="nav-link" target="_blank" href="http://www.giresuneczaciodasi.org.tr/v2/">
-                <img class="img-fluid" src="~/Content/images/GiresunEczaciOdasiLogo.jpg" alt="Giresun Eczacı Odası" style="height:50%; width:50%" />
-            </a>
-        </div>
-    </div>
-
-    <div class="row text-center">
-        <div class="col-md-6">
-            <a class="nav-link" target="_blank" href="http://www.alanyaeo.org.tr/tr">
-                <img class="img-fluid img-rounded" src="~/Content/images/alanyaEczaciOdasiLogo.jpg" alt="Alanya Eczacı Odası Temsilciliği" />
-            </a>
-        </div>
-    </div>
-
-    <table width="135" border="0" cellpadding="2" cellspacing="0" title="Click to Verify - This site chose GeoTrust SSL for secure e-commerce and confidential communications.">
-        <tr>
-            <td width="135" align="center" valign="top">
-                <script type="text/javascript" src="https://seal.geotrust.com/getgeotrustsslseal?host_name=www.nobetyaz.com&amp;size=S&amp;lang=en"></script><br />
-                <a href="http://www.geotrust.com/ssl/" target="_blank" style="color:#000000; text-decoration:none; font:bold 7px verdana,sans-serif; letter-spacing:.5px; text-align:center; margin:0px; padding:0px;"></a>
-            </td>
-        </tr>
-    </table>
 
 </div>
+
+@*<div class="row text-center mb-3">
+        <div class="col-md-12">
+            <h3 class="text-left text-primary">Hastaneler</h3>
+        </div>
+        <div class="col-md-3 offset-3 mb-3 p-1">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Ameliyathane Çizelgeleme</h4>
+                    <img class="img-fluid" src="~/Content/images/ameliyathane_cizelgeleme.jpg" alt="Ameliyathane Çizelgeleme" style="height:50%; width:50%" />
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-3 p-1">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Hemşire Nöbet Çizelgeleme</h4>
+                    <img class="img-fluid" src="~/Content/images/hemsireCizelgeleme2.jpg" alt="Hemşire Nöbet Çizelgeleme" style="height:75%; width:75%" />
+
+                </div>
+            </div>
+        </div>
+
+    </div>*@
+@*sayılar:*@
+
+@*class="pt-5"*@
+<section id="referanlarimiz">
+    <div class="container">
+        <hr class="bg-info" />
+
+        <div class="row text-center mt-4 mb-3">
+            <div class="col-md-12">
+                <h2>Referanslarımız</h2>
+            </div>
+
+            <div class="col-md-4" style="margin-top:1%">
+                <a class="nav-link" target="_blank" href="https://www.antalyaeo.org.tr/tr">
+                    <img class="img-fluid" src="~/Content/images/AeoLogo2.png" title="Antalya Eczacı Odası" alt="Antalya Eczacı Odası" style="height:75%; width:75%" />
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a class="nav-link" target="_blank" href="https://www.mersineczaciodasi.org.tr/">
+                    <img class="img-fluid" src="~/Content/images/MeoLogo.png" title="Mersin Eczacı Odası" alt="Mersin Eczacı Odası" style="height:75%; width:75%" />
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <a class="nav-link" target="_blank" href="http://www.giresuneczaciodasi.org.tr/v2/">
+                    <img class="img-fluid" src="~/Content/images/GiresunEczaciOdasiLogo.jpg" title="Giresun Eczacı Odası" alt="Giresun Eczacı Odası" style="height:50%; width:50%" />
+                </a>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col-md-12 text-center">
+                <a class="nav-link" target="_blank" href="http://www.alanyaeo.org.tr/tr">
+                    <img class="img-fluid img-rounded" src="~/Content/images/alanyaEczaciOdasiLogo.jpg" title="Alanya Eczacı Odası Temsilciliği" alt="Alanya Eczacı Odası Temsilciliği" style="height:50%; width:50%" />
+                </a>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<table width="135" border="0" cellpadding="2" cellspacing="0" title="Click to Verify - This site chose GeoTrust SSL for secure e-commerce and confidential communications.">
+    <tr>
+        <td width="135" align="center" valign="top">
+            <script type="text/javascript" src="https://seal.geotrust.com/getgeotrustsslseal?host_name=www.nobetyaz.com&amp;size=S&amp;lang=en"></script><br />
+            <a href="http://www.geotrust.com/ssl/" target="_blank" style="color:#000000; text-decoration:none; font:bold 7px verdana,sans-serif; letter-spacing:.5px; text-align:center; margin:0px; padding:0px;"></a>
+        </td>
+    </tr>
+</table>
+
+    </div>
+
+@*<div class="modal fade" tabindex="-1" id="aciklamaModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Dijital Nöbetçi Eczane Ekranı</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                                    <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100" src="~/Content/images/dijitalEkran.png" alt="İlk slayt" height="600">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="~/Content/images/1_Dijital_Ekran_Sunum_Klasik.jpg" alt="2. slayt" height="600">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="~/Content/images/2_Dijital_Ekran_Sunum_Onerilen.jpg" alt="3. slayt" height="600">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="~/Content/images/3_Dijital_Ekran_Sunum_Avantajlar.jpg" alt="4. slayt" height="600">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100" src="~/Content/images/4_Dijital_Ekran_Sunum_Teklif2.jpg" alt="5. slayt" height="600">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <p class="card-text">
+                        Bütünleşik sistem içinde nöbetçi eczanelerin harita üzerinde günlük ve dinamik gösterimleri.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>*@
 
 @*<div class="jumbotron">
         <h1 class="display-3">Merhaba!</h1>
@@ -202,33 +411,6 @@
         </p>
     </div>*@
 
-
-@*<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="d-block w-100" src="~/Content/images/img7.jpg" alt="First slide" height="600">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="~/Content/images/sld2.jpg" alt="Second slide" height="600">
-            </div>
-            <div class="carousel-item">
-                <img class="d-block w-100" src="~/Content/images/sld3.jpg" alt="Third slide" height="600">
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>*@
 
 @section scripts{
 

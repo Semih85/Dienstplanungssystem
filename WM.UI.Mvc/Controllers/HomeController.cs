@@ -40,8 +40,17 @@ namespace WM.UI.Mvc.Controllers
             return View();
         }
 
-
         public ActionResult Contact()
+        {
+            return View();
+        }
+
+        public ActionResult DijitalTabela()
+        {
+            return View();
+        }
+
+        public ActionResult NobetYazDetay()
         {
             return View();
         }

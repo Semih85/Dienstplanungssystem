@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    var containerPadding = "";
 }
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@
     <meta name="description" content="Siz uğraşmayın, Nöbet Yaz'sın.">
     <meta name="author" content="">
     <meta name="keywords" content="Nöbetçi Eczane, Hemşire Nöbeti, Çizelgeleme, Akademik çözümler">
-    <title>Nöbet Yaz</title>
+    <title>@ViewBag.Title</title>
     <!-- Bootstrap, font-awasome, Site CSS -->
 
     @Styles.Render("~/bundle/style")
@@ -36,19 +37,25 @@
             <ul class="navbar-nav mr-auto">
 
                 @*<li class="nav-item active">
-            <a class="nav-link" href="/"><i class="fa fa-home fa-lg" aria-hidden="true"></i> <span class="sr-only">(current)</span></a>
-        </li>*@
+                        <a class="nav-link" href="/"><i class="fa fa-home fa-lg" aria-hidden="true"></i> <span class="sr-only">(current)</span></a>
+                    </li>*@
 
                 @* İletişim *@
                 <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("NobetYazDetay")">Detaylar</a>
+                </li>
+                <li class="nav-item" id="navItemReferans">
                     <a class="nav-link" href="#referanlarimiz">Referanslarmız</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://eniyiplan.com/" target="_blank" role="button">Faaliyetlerimiz</a>
                 </li>
             </ul>
             <ul class="navbar-nav float-md-right">
                 <li class="nav-item">
-                    <a class="nav-link" href="~/Content/images/Brosur.pdf"><span class="fa fa-file fa-lg"></span> Broşür</a>
+                    <a class="nav-link" href="~/Content/images/Brosur.pdf" target="_blank"><span class="fa fa-file-o"></span> Broşür</a>
                 </li>
-                <li class="nav-item"> <a class="nav-link" href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })"><span class="fa fa-envelope fa-lg"></span> İletişim</a> </li>
+                <li class="nav-item"> <a class="nav-link" href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })"><span class="fa fa-envelope-open-o"></span> İletişim</a> </li>
                 @Html.Partial("_LoginPartial")
             </ul>
 
@@ -62,7 +69,14 @@
 
     <!-- Body -->
 
-    <div class="container-fluid mt-5 pt-5">
+    @RenderSection("jumbotronMaster", false)
+
+    @if (!IsSectionDefined("jumbotronMaster"))
+    {
+        containerPadding = "mt-5";
+    }
+
+    <div class="container-fluid pt-4 @containerPadding">
 
         @if (IsSectionDefined("SolTaraf"))
         {
@@ -95,7 +109,6 @@
             </div>
         }
     </div>
-
     <!-- Footer #bee5eb #f5f5f5-->
     @*<footer class="footer fixed-bottom bg-dark">
             <div class="container-fluid">
