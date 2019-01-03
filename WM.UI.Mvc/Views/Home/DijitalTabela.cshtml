@@ -16,8 +16,12 @@
 
     <div class="jumbotron jumbotron-fluid py-5 mt-5 mb-2">
         <div class="container text-white">
-            <h1 class="display-4">Dijital nöbetçi eczane tabelası</h1>
-            <p class="lead">Nöbetlerinizi yazalım ve sonuçları her eczanede harita üzerinde, günlük ve dinamik olarak gösterelim.</p>
+            <h1 class="display-4">Online <i class="fa fa-rss text-info" aria-hidden="true"></i> Nöbetçi Eczane Tabelası</h1>
+            <p class="lead">
+                <i class="fa fa-commenting text-success" aria-hidden="true"></i>
+                Dilerseniz <strong class="text-danger">nöbetçi eczaneleri</strong> kağıt <i class="fa fa-file text-danger" aria-hidden="true"></i> yerine, her eczanede bir
+                <span class="font-weight-bold"> ekran üzerinden harita <i class="fa fa-map text-danger" aria-hidden="true"></i> ile gösterelim. </span>
+            </p>
         </div>
     </div>
 }
@@ -25,6 +29,14 @@
 <div class="row">
     @*<div class="col-12">
             <p>Siz de böyle bir sistem kullanmak istemez misiniz?</p>
+        </div>*@
+    @*<div class="col-12 text-center">
+            <h5>Online <span class="text-danger">Nöbetçi Eczane</span> Tabelası</h5>
+            <p>
+                <i class="fa fa-commenting text-success" aria-hidden="true"></i>
+                Dilerseniz <strong class="text-danger">nöbetçi eczaneleri</strong>, kağıt <i class="fa fa-file text-danger" aria-hidden="true"></i> yerine her eczanede bir
+                <span class="font-weight-bold"> ekran üzerinden harita <i class="fa fa-map text-danger" aria-hidden="true"></i> ile gösterelim. </span>
+            </p>
         </div>*@
 
     <div class="col-lg-8 text-center mb-3">
@@ -66,34 +78,38 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>*@
-        <h2 class="mb-3">Sistemin Avantajları</h2>
+
+
+        @*<h2 class="mb-3">Sistemin Avantajları</h2>*@
 
         <ul class="list-group list-group-flush text-left">
-            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Mini bilgisayar ile kablosuz bağlantı</li>
-            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> 0 israf (kağıt <i class="fa fa-plus" aria-hidden="true"></i> toner <i class="fa fa-plus" aria-hidden="true"></i> yazıcı)</li>
-            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Dijital görüntü içeriği</li>
-            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Yatay/dikey ekran kullanım avantajı</li>
-            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Otomatik çalışan sistem</li>
-            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Düşük arıza oranı</li>
-            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Sessiz çalışma</li>
-            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Minimum elektrik sarfiyatı</li>
-            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Kolay yönetim arayüzü</li>
-            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> <span class="font-weight-bold">Anlık nöbet güncellemesi</span></li>
+            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> <span class="font-weight-bold">Kağıt, yazıcı ve tonerden kurtulun.</span></li>
+            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> <span class="font-weight-bold">Nöbetler online <i class="fa fa-rss text-info" aria-hidden="true"></i> güncellensin.</span></li>
+            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Mini bilgisayar ile bağlanın.</li>
+            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> <strong>Minimum elektrik tüketimi.</strong></li>
+            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Ekranı yatay/dikey olarak kullanın.</li>
+            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> <strong>Otomatik çalışan sistem.</strong></li>
+            @*<li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Dijital görüntü içeriği</li>
+                <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Düşük arıza oranı</li>
+                <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Sessiz çalışma</li>*@
+            <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Kolay yönetim arayüzü.</li>
         </ul>
     </div>
 
 </div>
 
-@*@section scripts{
 
-    <script>
-        $(document).ready(function () {
 
-            $('#jumbotronYazi').text("Dijital nöbetçi eczane tabelası");
+    @*@section scripts{
 
-        });
+        <script>
+            $(document).ready(function () {
 
-    </script>
+                $('#jumbotronYazi').text("Dijital nöbetçi eczane tabelası");
 
-}*@
+            });
+
+        </script>
+
+        }*@
 

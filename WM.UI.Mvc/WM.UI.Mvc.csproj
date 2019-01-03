@@ -281,6 +281,7 @@
     <Content Include="Content\images\pin-308802_960_720.png" />
     <Content Include="Content\images\pm.png" />
     <Content Include="Content\images\preloader1.gif" />
+    <Content Include="Content\images\qr-code_Semih_Nobetyaz_Vcard.png" />
     <Content Include="Content\images\saatArkaPlan.png" />
     <Content Include="Content\images\schedule1.png" />
     <Content Include="Content\images\smile.jpg" />
@@ -289,6 +290,8 @@
     <Content Include="Content\images\squarespace-logo-symbol-black.gif" />
     <Content Include="Content\images\3-min-countdown-animated.gif" />
     <Content Include="Content\images\MeoLogo.png" />
+    <Content Include="Content\images\sudoku.jpg" />
+    <Content Include="Content\images\sudoku2.png" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\images\ui-icons_777620_256x240.png" />
@@ -1218,6 +1221,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\DijitalTabela.cshtml" />
     <Content Include="Views\Home\NobetYazDetay.cshtml" />
+    <Content Include="Views\Home\EczaneNobetSistemi.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

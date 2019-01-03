@@ -767,6 +767,9 @@
                     //PivotSonuclar
                     $.each(dagilimlar.PivotSonuclar, function (index, n) {
                         dagilimlarPivot.push({
+                            EczaneNobetGrupId: n.EczaneNobetGrupId,
+                            EczaneId: n.EczaneId,
+                            ["NöbetGrupGörevTipId"]: n.NobetGrupGorevTipId,
                             ["Yıl-Ay"]: n.Yıl_Ay,
                             ["Yıl"]: n.Yil,
                             Ay: n.Ay,
@@ -1307,7 +1310,7 @@
                         $("#gunDagilimGrafik").pivotUI(dagilimlarPivot,
                             {
                                 rows: ["Gün Grup"],
-                                cols: ["Eczane"], //, "GunDeger", "GunTanim" "Görev Tipi", 
+                                cols: ["NöbetGrupGörevTipId", "Eczane"], //, "GunDeger", "GunTanim" "Görev Tipi", 
                                 vals: ["Nöbet Grubu"],
                                 aggregatorName: "Count",
                                 rendererName: "Stacked Bar Chart",
@@ -1341,7 +1344,7 @@
                         $("#gunDagilimGrafik").pivotUI(dagilimlarPivot,
                             {
                                 rows: ["Gün Grup"],
-                                cols: ["Eczane"], //, "GunDeger", "GunTanim"
+                                cols: ["NöbetGrupGörevTipId", "Eczane"], //, "GunDeger", "GunTanim"
                                 vals: ["Nöbet Grubu"],
                                 aggregatorName: "Count",
                                 rendererName: "Stacked Bar Chart",

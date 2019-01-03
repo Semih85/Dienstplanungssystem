@@ -430,6 +430,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                    MazeretTuru = (m?.TakvimId == s.TakvimId && m?.EczaneNobetGrupId == s.EczaneNobetGrupId) ? m.MazeretTuru : null,
                                                    NobetGorevTipAdi = s.NobetGorevTipAdi,
                                                    NobetGorevTipId = s.NobetGorevTipId,
+                                                   NobetGrupGorevTipId = s.NobetGrupGorevTipId,
                                                    NobetAltGrupId = s.NobetAltGrupId,
                                                    NobetAltGrupAdi = s.NobetAltGrupAdi
                                                }).ToList();

@@ -1,0 +1,199 @@
+﻿
+@{
+    ViewBag.Title = "Eczane Nöbet Sistemi";
+    ViewBag.MetaDescription = "Nöbetçi eczane belirleme sistemi.";
+    ViewBag.MetaKeywords = "eczane nöbet sistemi, online nobetçi eczane tabelası";
+}
+
+<style>
+    .jumbotron {
+        background-image: url("../Content/images/digital_background4.jpg");
+        /*background-color: aliceblue;*/
+        background-size: cover;
+        /*height:100px;*/
+    }
+</style>
+
+@section jumbotronMaster{
+
+    <div class="jumbotron jumbotron-fluid py-5 mt-5 mb-2">
+        <div class="container text-white">
+            <h1 class="display-4">Eczane Nöbet Sistemi</h1>
+            <p class="lead">
+                <i class="fa fa-commenting text-success" aria-hidden="true"></i>
+                Nöbetlerinizi yazalım ve sonuçları harita <i class="fa fa-map text-danger" aria-hidden="true"></i> ile gösterelim.
+            </p>
+            <hr class="my-4 bg-info text-left w-50" align="left">
+            <p>Sizin için en doğru kararı en kısa sürede veren sistemimizle tanışın.</p>
+        </div>
+    </div>
+}
+
+<div class="container">
+
+    <div class="row mb-2">
+        <div class="col-lg-8 text-center mb-2 mt-2">
+            <h4>Ücretsiz demo için bize <a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> yazın. Hemen başlayalım.</h4>
+        </div>
+        <div class="col-lg-4 text-center mb-2">
+            <div class="alert alert-success fade show px-0" role="alert">
+                @*alert-dismissible*@
+                @*WhatsApp ve Telefon Destek Hattı<br />*@
+                <i class="fa fa-question-circle"></i> Yardım
+                <i class="fa fa-phone"></i>
+                <a href="Tel:+905452710985" class="alert-link" style="text-decoration:none;">(0)545 - 271 09 85</a>
+                @*<span>(+90) 545 271 09 85</span>*@
+                @*<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        @*<div class="col-12">
+                <p>Siz de böyle bir sistem kullanmak istemez misiniz?</p>
+            </div>*@
+        @*<div class="col-12 mb-3 text-center">
+
+                <p class="mb-2">
+                    <i class="fa fa-commenting text-success" aria-hidden="true"></i>
+                    Sizin için <strong>en doğru kararı en kısa sürede veren</strong> sistemimizle tanışın.
+                </p>
+            </div>*@
+        @*<div class="col-12 text-center mb-2">
+                <h4>Ücretsiz demo için bize <a class="card-link" href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })"><span class="fa fa-envelope"></span></a> yazın. Hemen başlayalım.</h4>
+            </div>*@
+
+        <div class="col-lg-12">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    <strong>Eczane nöbet sisteminde </strong> her bir eczanenin hangi gün, diğer hangi eczanelerle ve hangi görev tipinde nöbetçi olacağı belirlenmektedir.
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    Belirleyeceğiniz <strong>kurallar</strong> ile <strong>saniyeler içinde</strong> nöbetler yazılır.
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    Çok sayıda <strong>istatistik</strong> ile birlikte sonuçlar <strong>haritada</strong> gösterilir.
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="col-lg-8 text-center mb-3">
+            @*<img class="img-thumbnail" src="~/Content/images/dijitalEkran.png" alt="İlk slayt">*@
+        </div>
+
+
+    </div>
+    <hr class="bg-info mb-5" />
+
+    <div class="row">
+        @*<div class="col-12">
+                <p>Siz de böyle bir sistem kullanmak istemez misiniz?</p>
+            </div>*@
+        <div class="col-12 mb-3 text-center">
+            <h3 class="mb-3">Online <span class="text-danger">Nöbetçi Eczane</span> Tabelası</h3>
+            <p>
+                <i class="fa fa-commenting text-success" aria-hidden="true"></i>
+                Dilerseniz <strong>nöbetçi eczaneleri</strong> her eczanede, kağıt <i class="fa fa-file text-info" aria-hidden="true"></i> yerine bir
+                <span class="font-weight-bold"> ekran üzerinden harita <i class="fa fa-map text-danger" aria-hidden="true"></i> ile gösterelim. </span>
+            </p>
+        </div>
+
+        <div class="col-lg-8 text-center mb-3">
+            <img class="img-thumbnail" src="~/Content/images/dijitalEkran.png" alt="İlk slayt">
+        </div>
+
+        <div class="col-lg-4 text-center">
+            @*<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="~/Content/images/dijitalEkran.png" alt="İlk slayt" height="600">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/1_Dijital_Ekran_Sunum_Klasik.jpg" alt="2. slayt" height="600">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/2_Dijital_Ekran_Sunum_Onerilen.jpg" alt="3. slayt" height="600">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/3_Dijital_Ekran_Sunum_Avantajlar.jpg" alt="4. slayt" height="600">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/4_Dijital_Ekran_Sunum_Teklif2.jpg" alt="5. slayt" height="600">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>*@
+
+
+            @*<h2 class="mb-3">Sistemin Avantajları</h2>*@
+
+            <ul class="list-group list-group-flush text-left">
+                <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> <span class="font-weight-bold">Kağıt, yazıcı ve tonerden kurtulun.</span></li>
+                <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> <span class="font-weight-bold">Nöbetler online <i class="fa fa-rss text-info" aria-hidden="true"></i> güncellensin.</span></li>
+                <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Mini bilgisayar ile bağlanın.</li>
+                <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> <strong>Minimum elektrik tüketimi.</strong></li>
+                <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Ekranı yatay/dikey olarak kullanın.</li>
+                <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> <strong>Otomatik çalışan sistem.</strong></li>
+                @*<li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Dijital görüntü içeriği</li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Düşük arıza oranı</li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Sessiz çalışma</li>*@
+                <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Kolay yönetim arayüzü.</li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+
+@*<hr class="bg-info mb-5" />
+
+    <div class="row">
+        <div class="col-md-4 mb-3 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Takas Takip Sistemi</h5>
+                    <p>
+                        Eczanelere özel takas
+                    </p>
+                    <a class="nav-link" href="http://takastakip.com/" target="_blank" role="button">
+                        <img class="img-fluid" src="~/Content/images/ph1.png" alt="Takas Takip Sistemi" style="height:43.5%; width:43.5%" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+@section scripts{
+
+    <script>
+        $(document).ready(function () {
+
+            //$('#jumbotronYazi').text("Dijital nöbetçi eczane tabelası");
+            $('#navItemReferans').hide();
+
+        });
+
+    </script>
+
+}
+

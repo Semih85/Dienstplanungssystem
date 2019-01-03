@@ -16,23 +16,37 @@ namespace WM.UI.Mvc
             routes.MapMvcAttributeRoutes();
 
             routes.MapRoute(
-                name: "giris",
-                url: "Giris",
+                name: "Login",
+                url: "giris",
                 defaults: new { controller = "Account", action = "Login" },
                 namespaces: new string[] { "WM.UI.Mvc.Controllers" }
             );
 
             routes.MapRoute(
-                name: "iletisim",
-                url: "Iletisim",
+                name: "Contact",
+                url: "iletisim",
                 defaults: new { controller = "Home", action = "Contact" },
                 namespaces: new string[] { "WM.UI.Mvc.Controllers" }
             );
 
             routes.MapRoute(
-                name: "anasayfa",
-                url: "AnaSayfa",
-                defaults: new { controller = "Home", action = "Index"},
+                name: "NobetYazDetay",
+                url: "nobet-sistemi-detaylar",
+                defaults: new { controller = "Home", action = "NobetYazDetay" },
+                namespaces: new string[] { "WM.UI.Mvc.Controllers" }
+            );
+
+            routes.MapRoute(
+                name: "EczaneNobetSistemi",
+                url: "eczane-nobet-sistemi",
+                defaults: new { controller = "Home", action = "EczaneNobetSistemi" },
+                namespaces: new string[] { "WM.UI.Mvc.Controllers" }
+            );
+
+            routes.MapRoute(
+                name: "Anasayfa",
+                url: "anaSayfa",
+                defaults: new { controller = "Home", action = "Index" },
                 namespaces: new string[] { "WM.UI.Mvc.Controllers" }
             );
 

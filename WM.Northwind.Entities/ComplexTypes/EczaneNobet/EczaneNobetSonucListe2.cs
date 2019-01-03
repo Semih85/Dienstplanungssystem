@@ -71,6 +71,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string Mevsim => GetMevsim(Ay);
 
         public string SonucTuru { get; set; }
+        public int NobetGrupGorevTipId { get; set; }
 
         string GetEczaneSonuc(int mazeretId, int istekId, string eczaneAdi)
         {

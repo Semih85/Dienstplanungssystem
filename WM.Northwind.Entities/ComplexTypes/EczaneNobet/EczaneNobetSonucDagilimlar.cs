@@ -24,6 +24,9 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string Tarih2 { get; set; }
         public string MazereteNobet { get; set; }
         public int NobetTipId { get; set; }
+        public int EczaneNobetGrupId { get; set; }
+        public int NobetGrupGorevTipId { get; set; }
+        public int EczaneId { get; set; }
         public string NobetTipi { get; set; }
         public string EczaneSonucAdi { get; set; }
         public string AyIkili { get; set; }

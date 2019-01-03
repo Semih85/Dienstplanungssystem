@@ -8,15 +8,25 @@
 <head>
     <!-- Required meta tags -->
     @*<link rel="icon" href="~/Content/images/logo-nobetyaz.png" sizes="16x16">*@
-    <link rel="icon" type="image/png" href="~/Content/images/favicon-32x32-transperent.png" sizes="32x32" />
     @*<link rel="icon" href="../Content/images/icon.png" type="image/x-icon">*@
     @*<link rel="icon" href="../Content/images/schedule1.png" type="image/x-icon">*@
     @*<link rel="icon" href="~/Content/images/logo3.jpg" type="image/x-icon">*@
+
+    <link rel="icon" type="image/x-icon" href="~/Content/images/favicon-32x32-transperent.png" sizes="32x32" />
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Siz uğraşmayın, Nöbet Yaz'sın.">
-    <meta name="author" content="">
-    <meta name="keywords" content="Nöbetçi Eczane, Hemşire Nöbeti, Çizelgeleme, Akademik çözümler">
+        
+    @if (ViewBag.MetaDescription != null)
+    {
+        <meta name="description" content="@ViewBag.MetaDescription" />
+    }
+
+    @if (ViewBag.MetaKeywords != null)
+    {
+        <meta name="keywords" content="@ViewBag.MetaKeywords" />
+    }
+
     <title>@ViewBag.Title</title>
     <!-- Bootstrap, font-awasome, Site CSS -->
 
@@ -29,7 +39,10 @@
     <!-- Navbar -->
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top mb-5" style="background-color: #e3f2fd;" id="navbarAnaSayfa">
-        <a class="navbar-brand" href="/"> Nöbet Yaz</a>
+        <a class="navbar-brand" href="/"> <i class="fa fa-home fa-lg" title="Ana Sayfa" aria-hidden="true"></i>@*Nöbet Sistemi*@</a>
+        <ul class="navbar-nav">
+            <li class="nav-item d-md-none"> <a class="nav-link" href="whatsapp://send?text=@Request.Url" data-action="share/whatsapp/share"><span class="fa fa-whatsapp fa-lg"></span> Paylaş</a></li>
+        </ul>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -41,21 +54,35 @@
                     </li>*@
 
                 @* İletişim *@
+                @if (Request.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "NobetYaz", new { area="EczaneNobet"})">Nöbet Yaz</a>
+                    </li>
+                }
+
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("NobetYazDetay")">Detaylar</a>
+                    <a class="nav-link" href="@Url.Action("NobetYazDetay","Home")">Detaylar</a>
                 </li>
                 <li class="nav-item" id="navItemReferans">
                     <a class="nav-link" href="#referanlarimiz">Referanslarmız</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="http://eniyiplan.com/" target="_blank" role="button">Faaliyetlerimiz</a>
                 </li>
+
             </ul>
             <ul class="navbar-nav float-md-right">
+                @*<li class="nav-item">
+                        <a class="nav-link" href="~/Content/images/Brosur.pdf" target="_blank"><span class="fa fa-file-o"></span> Broşür</a>
+                    </li>*@
+                @*href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })">*@
                 <li class="nav-item">
-                    <a class="nav-link" href="~/Content/images/Brosur.pdf" target="_blank"><span class="fa fa-file-o"></span> Broşür</a>
+                    <a class="nav-link" href="@Url.RouteUrl("Contact")">
+                        <span class="fa fa-envelope-open-o"></span> İletişim
+                    </a>
                 </li>
-                <li class="nav-item"> <a class="nav-link" href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })"><span class="fa fa-envelope-open-o"></span> İletişim</a> </li>
                 @Html.Partial("_LoginPartial")
             </ul>
 
