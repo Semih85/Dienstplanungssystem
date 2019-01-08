@@ -45,7 +45,7 @@
     <div class="jumbotron jumbotron-fluid py-4 py-lg-5 mt-5 mb-0 mb-md-2 mb-lg-3">
         <div class="container text-white">
             <h1 class="display-4" style="font-size:300%" id="jumbotronYazi">Nöbet Sistemi</h1>
-            <p class="lead text-capitalize">"Nöbet" hakkında her şey bu sistemde</p>
+            <p class="lead text-capitalize">"Nöbet" hakkında her şey @*bu sistemde*@</p>
             @*Nöbetlerinizi yazalım ve istatistikleri dinamik olarak gösterelim.*@
             <hr class="my-lg-4 my-3 bg-info text-left w-50" align="left">
             @*<p>Gelin birlikte matematiği hayatın içine taşıyalım</p>*@
@@ -230,23 +230,24 @@
                 </div>*@
 
             <div class="col-md-6 mb-3 text-center">
-                <div class="card border-primary">
+                <div class="card border-primary bg-light">
                     <div class="card-body">
                         <a class="h4 card-link text-primary text-center" href="@Url.Action("EczaneNobetSistemi")"><span class="fa fa-hand-o-right"></span> Eczane Nöbet Sistemi</a>
                         <br />
                         @*<h4 class="card-title"><span class="text-danger">Eczane</span> Nöbet Sistemi</h4>*@
-
-                        <img class="img-fluid mt-2" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme"  style="height:50%; width:50%" />
+                        <a title="Nöbetçi Eczaneleri Görmek için Tıklayınız." target="_blank" href="@Url.Action("NobetciEczaneler","NobetciEczaneHarita", new { area ="EczaneNobet" })">
+                            <img class="img-thumbnail mt-2" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme" style="height:50%; width:50%" />
+                        </a>                       
 
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6 mb-3 text-center">
-                <div class="card border-primary">
+                <div class="card border-primary bg-light">
                     <div class="card-body">
-                        <h4 class="card-title"><span class="text-primary">Hemşire</span>  Nöbet Sistemi</h4>
-                        <img class="img-fluid" src="~/Content/images/hemsireCizelgeleme2.jpg" alt="Hemşire Nöbet Çizelgeleme" style="height:66%; width:66%" />
+                        <h4 class="card-title">Hemşire Nöbet Sistemi</h4>
+                        <img class="img-thumbnail" src="~/Content/images/hemsireCizelgeleme2.jpg" alt="Hemşire Nöbet Çizelgeleme" style="height:65%; width:65%" />
                         <div id="referanlarimiz"></div>
 
                     </div>

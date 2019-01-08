@@ -718,6 +718,7 @@
     <Content Include="Areas\EczaneNobet\Views\Shared\ErrorDublicateRowPartial.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\Shared\ErrorPartial.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\IndexSiiyahBeyaz.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetciEczaneHarita\NobetciEczaneler.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1077,6 +1078,7 @@
     <Compile Include="Areas\EczaneNobet\Models\KisitPartialViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\NobetAltGrupViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\NobetciEcanelerEkraniViewModel.cs" />
+    <Compile Include="Areas\EczaneNobet\Models\NobetciEczanelerViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\NobetciEczaneHaritaViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\NobetGrupBeklenenGunFarki.cs" />
     <Compile Include="Areas\EczaneNobet\Models\PivotSonuclarParams.cs" />

@@ -421,6 +421,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
             #endregion
 
             context.MapRoute(
+                name: "NobetciEczaneler",
+                url: "nobetci-eczaneler",
+                defaults: new { controller = "NobetciEczaneHarita", action = "NobetciEczaneler" }
+            );
+
+            context.MapRoute(
                 "EczaneNobet_default",
                 "EczaneNobet/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }

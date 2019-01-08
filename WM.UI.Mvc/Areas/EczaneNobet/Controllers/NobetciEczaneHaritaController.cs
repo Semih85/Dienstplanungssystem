@@ -20,10 +20,8 @@ using QRCoder;
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
     [HandleError]
-    [Authorize]
     public class NobetciEczaneHaritaController : Controller
     {
-        
         #region ctor
         private IEczaneService _eczaneService;
         private IUserService _userService;
@@ -45,6 +43,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
         #endregion
         // GET: EczaneNobet/Eczane        
+        [Authorize]
         public ActionResult Index(DateTime? tarih)
         {
             var user = _userService.GetByUserName(User.Identity.Name);
@@ -58,7 +57,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 gun = _tarih.Day;
                 ay = _tarih.Month;
-                yil = _tarih.Year;            
+                yil = _tarih.Year;
             }
             else
             {
@@ -72,7 +71,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             double _enlem = 0;
             double _boylam = 0;
 
-            if(nobetUstGrupId == 1)
+            if (nobetUstGrupId == 1)
             {
                 _enlem = 36.5446673;
                 _boylam = 31.9817022;
@@ -100,7 +99,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(_tarih, nobetUstGrupId);
             var IPadres = Request.UserHostAddress;
             // var ekraninBulundugueczane = _eczaneService.GetList().Where(w=>w.IPadress == IPadres);
-           
+
             var model = new NobetciEczaneHaritaViewModel
             {
                 NobetciEczaneler = new List<NobetciEczane>(),
@@ -139,6 +138,32 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return View(model);
         }
 
+        public ActionResult NobetciEczaneler()
+        {
+            var nobetUstGruplar = _nobetUstGrupService.GetDetaylar()
+                .Where(w => w.Id < 5);
+
+            ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar.Select(s => new { s.Id, s.Adi }), "Id", "Adi");
+
+            var model = new NobetciEczanelerViewModel
+            {
+                NobetTarihi = DateTime.Today,
+                NobetUstGrupId = 1
+            };
+
+            return View(model);
+        }
+
+        public JsonResult NobetciEczaneListesi(DateTime? tarih, int nobetUstGrupId)
+        {
+            var model = GetNobetciler(tarih, nobetUstGrupId);
+
+            var jsonResult = Json(model, JsonRequestBehavior.AllowGet);
+
+            return jsonResult;
+        }
+
+        [Authorize]
         public JsonResult GetNobetciler(DateTime tarih)
         {
             var user = _userService.GetByUserName(User.Identity.Name);
@@ -149,7 +174,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             if (tarih == null)
             {
-                tarih =_tarih;
+                tarih = _tarih;
             }
             else
             {
@@ -226,6 +251,100 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var jsonResult = Json(model, JsonRequestBehavior.AllowGet);
             return jsonResult;
+        }
+
+        public NobetciEczaneHaritaViewModel GetNobetciler(DateTime? tarih, int nobetUstGrupId)
+        {
+            var _tarih = DateTime.Today;
+
+            if (tarih != null)
+            {
+                _tarih = (DateTime)tarih;
+            }
+
+            //ay = 8;
+            //gun = 30;
+            double _enlem = 0;
+            double _boylam = 0;
+
+            if (nobetUstGrupId == 0)
+            {
+                //38.84574110292016%2C35.3869628281249
+                //38.657041,34.2558455
+                //38.84574110292016
+                _enlem = 38.84574110292016;// 39.4093233; 
+                _boylam = 35.3869628281249; //34.9375269;
+            }
+            else if (nobetUstGrupId == 1)
+            {
+                _enlem = 36.5446673;
+                _boylam = 31.9817022;
+            }
+            else if (nobetUstGrupId == 2)
+            {
+                _enlem = 36.8980543;
+                _boylam = 30.6480645;
+            }
+            else if (nobetUstGrupId == 3)
+            {
+                _enlem = 36.805533;
+                _boylam = 34.626287;
+            }
+            else if (nobetUstGrupId == 4)
+            {
+                _enlem = 40.912811;
+                _boylam = 38.38953;
+            }
+            else if (nobetUstGrupId == 5)
+            {
+                _enlem = 37.0651243;
+                _boylam = 36.2463125;
+            }
+            var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(_tarih, nobetUstGrupId)
+                .Where(w => w.NobetUstGrupId < 5);
+
+            var IPadres = Request.UserHostAddress;
+            // var ekraninBulundugueczane = _eczaneService.GetList().Where(w=>w.IPadress == IPadres);
+
+            var model = new NobetciEczaneHaritaViewModel
+            {
+                NobetciEczaneler = new List<NobetciEczane>(),
+                Enlem = _enlem,
+                Boylam = _boylam,
+                Tarih = _tarih
+            };
+
+            foreach (var item in nobetciEczaneler)
+            {
+                var eczane = _eczaneService.GetById(item.EczaneId);
+
+                var adres = eczane.Adres;
+                var enlem = eczane.Enlem;
+                var boylam = eczane.Boylam;
+                var telefonNo = eczane.TelefonNo;
+                var adresTarifi = eczane.AdresTarifi;
+                var adresTarifiKisa = eczane.AdresTarifiKisa;
+
+                model.NobetciEczaneler.Add(new NobetciEczane
+                {
+                    EczaneId = item.EczaneId,
+                    NobetUstGrupId = item.NobetUstGrupId,
+                    Adi = item.EczaneAdi,
+                    NobetGorevTipAdi = item.NobetGorevTipAdi,
+                    NobetGrupAdi = item.NobetGrupAdi,
+                    Adres = adres,
+                    Enlem = enlem,
+                    Boylam = boylam,
+                    TelefonNo = telefonNo,
+                    AdresTarifi = adresTarifi,
+                    AdresTarifiKisa = adresTarifiKisa,
+                    NobetAltGrupAdi = item.NobetAltGrupAdi
+                });
+            }
+
+            //var jsonResult = Json(model, JsonRequestBehavior.AllowGet);
+
+            return model;
         }
 
         public JsonResult GetTumEczaneler()
@@ -331,6 +450,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         }
         // GET: EczaneNobet/Eczane/Details/5
+        [Authorize]
         public ActionResult Details(int id)
         {
             if (id < 1)

@@ -204,7 +204,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [LogAspect(typeof(DatabaseLogger))]
         public List<EczaneNobetSonucDetay2> GetDetaylarGunluk(DateTime nobetTarihi, int nobetUstGrupId)
         {
-            var sonuclar = _eczaneNobetSonucDal.GetDetayList(x => x.Tarih == nobetTarihi && x.NobetUstGrupId == nobetUstGrupId);
+            var sonuclar = _eczaneNobetSonucDal.GetDetayList(x => x.Tarih == nobetTarihi
+            && (x.NobetUstGrupId == nobetUstGrupId || nobetUstGrupId == 0));
 
             return sonuclar;
             //sonuclar.Count == 0
