@@ -60,5 +60,10 @@ namespace WM.UI.Mvc.Controllers
             return View();
         }
 
+        public ActionResult EczaneNobetSistemiDetay()
+        {
+            return View();
+        }
+
     }
 }

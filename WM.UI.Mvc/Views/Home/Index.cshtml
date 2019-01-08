@@ -42,12 +42,14 @@
 
 @section jumbotronMaster{
 
-    <div class="jumbotron jumbotron-fluid py-5 mt-5 mb-0 mb-md-2 mb-lg-3">
+    <div class="jumbotron jumbotron-fluid py-4 py-lg-5 mt-5 mb-0 mb-md-2 mb-lg-3">
         <div class="container text-white">
-            <h1 class="display-4" id="jumbotronYazi">Nöbet Sistemi</h1>
-            <p class="lead">Nöbetlerinizi yazalım ve istatistikleri dinamik olarak gösterelim.</p>
-            <hr class="my-4 bg-info text-left w-50" align="left">
-            <p>Gelin birlikte matematiği hayatın içine taşıyalım.</p>
+            <h1 class="display-4" style="font-size:300%" id="jumbotronYazi">Nöbet Sistemi</h1>
+            <p class="lead text-capitalize">"Nöbet" hakkında her şey bu sistemde</p>
+            @*Nöbetlerinizi yazalım ve istatistikleri dinamik olarak gösterelim.*@
+            <hr class="my-lg-4 my-3 bg-info text-left w-50" align="left">
+            @*<p>Gelin birlikte matematiği hayatın içine taşıyalım</p>*@
+            <p>Siz uğraşmayın! Zamanınız size kalsın.</p>
             <a class="btn btn-outline-info btn-lg" href="@Url.Action("NobetYazDetay")" role="button">
                 <span class="fa fa-bars"></span> Detaylar
             </a>
@@ -74,7 +76,7 @@
         <div class="row mb-md-0">
 
             <div class="col-lg-8 text-center mb-2 mt-2">
-                <h4>Ücretsiz demo için bize <a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> yazın. Hemen başlayalım.</h4>
+                <h4>Ücretsiz demo için bize <a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> ulaşın. Hemen başlayalım.</h4>
             </div>
 
             <div class="col-lg-4 text-center mb-2">
@@ -95,19 +97,23 @@
 
         <div class="row mb-md-4 mb-lg-5">
 
-            <div class="col-lg-4 ">
+            <div class="col-lg-4">
                 <ul class="list-group list-group-flush text-left">
-                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Siz sadece kuralları <i class="fa fa-cogs text-danger" aria-hidden="true"></i> belirleyin. </li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Siz sadece kurallarınızı <i class="fa fa-cogs text-danger" aria-hidden="true"></i> belirleyin.</li>
                     <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Saniyeler içinde <i class="fa fa-hourglass-end text-danger" aria-hidden="true"></i> nöbetleriniz yazılsın.</li>
                     <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> İstatistiklerin <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i> keyfini çıkarın.</li>
                 </ul>
 
             </div>
-            <div class="col-md-4 text-center">
+            <div class="col-md-4 mb-4 text-center">
                 <div class="success_img">
                     <img class="img-fluid" src="~/Content/images/meeting-peoples-1080x625.png" alt="En iyi plan süresi" width="220" />
                     <br />
-                    <span class="font-weight-bold">Siz uğraşmayın! Zamanınız size kalsın.</span>
+                    <span class="font-weight-bold">
+                        Matematik
+                        @*<i class="fa fa-calendar-check-o text-danger" aria-hidden="true"></i>*@ hayatın içinde güzel
+                        <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
+                    </span>
                 </div>
 
             </div>
@@ -127,6 +133,7 @@
                         ve 7/24 ulaşın.
                     </li>
                     <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Tüm veriler SSL <i class="fa fa-shield text-danger" aria-hidden="true"></i> ile güvende.</li>
+                    @*<li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Gelin matematik can verelim.</li>*@
 
                     @*<li class="list-group-item">
                             <a href="@Url.Action("NobetYazDetay")" target="_blank" role="button">
@@ -217,28 +224,30 @@
 <section>
     <div class="container">
 
-        <div class="row mb-2 pt-4">
+        <div class="row mb-3 pt-4">
             @*<div class="col-md-12 mb-3 text-center">
                     <h3 id="hizmetlerimiz">Hizmetlerimiz</h3>
                 </div>*@
 
             <div class="col-md-6 mb-3 text-center">
-                <div class="card">
+                <div class="card border-primary">
                     <div class="card-body">
-                        <h5 class="card-title">Eczane Nöbet Sistemi</h5>
-                        <a class="nav-link" href="@Url.Action("EczaneNobetSistemi", "Home")">
-                            <img class="img-fluid" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme" title="Sistem detayları için tıklayınız." style="height:50%; width:50%" />
-                        </a>
+                        <a class="h4 card-link text-primary text-center" href="@Url.Action("EczaneNobetSistemi")"><span class="fa fa-hand-o-right"></span> Eczane Nöbet Sistemi</a>
+                        <br />
+                        @*<h4 class="card-title"><span class="text-danger">Eczane</span> Nöbet Sistemi</h4>*@
+
+                        <img class="img-fluid mt-2" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme"  style="height:50%; width:50%" />
 
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6 mb-3 text-center">
-                <div class="card">
+                <div class="card border-primary">
                     <div class="card-body">
-                        <h5 class="card-title">Hemşire Nöbet Sistemi</h5>
+                        <h4 class="card-title"><span class="text-primary">Hemşire</span>  Nöbet Sistemi</h4>
                         <img class="img-fluid" src="~/Content/images/hemsireCizelgeleme2.jpg" alt="Hemşire Nöbet Çizelgeleme" style="height:66%; width:66%" />
+                        <div id="referanlarimiz"></div>
 
                     </div>
                 </div>
@@ -270,6 +279,7 @@
                 </div>*@
         </div>
     </div>
+
 </section>
 
 @*<section>
@@ -320,34 +330,7 @@
         </div>
     </section>*@
 
-<div class="container">
 
-    <div class="row text-center mb-3">
-
-        <div class="col-md-3">
-            <div style="display:none" id="odaSayisiSabit">3</div>
-            <div class="counter circle bg-light font-weight-bold text-dark" id="odaSayisi">0</div>
-            <div class="seviye text-dark">Eczacı Odası</div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <div style="display:none" id="ustGrupSayisiSabit">26</div>
-            <div class="counter circle bg-light font-weight-bold text-dark" id="ustGrupSayisi">0</div>
-            <div class="seviye text-dark">Nöbet Bölgesi</div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <div style="display:none" id="grupSayisiSabit">869</div>
-            <div class="counter circle bg-light font-weight-bold text-dark" id="grupSayisi">0</div>
-            <div class="seviye text-dark">Eczane</div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <div style="display:none" id="eczaneSayisiSabit">5700</div>
-            <div class="counter circle bg-light font-weight-bold text-dark" id="eczaneSayisi">0</div>
-            <div id="nobetSistemi"></div>
-            <div class="seviye text-dark">Yazılan Nöbet</div>
-        </div>
-    </div>
-
-</div>
 
 @*<div class="row text-center mb-3">
         <div class="col-md-12">
@@ -377,14 +360,38 @@
 @*sayılar:*@
 
 @*class="pt-5"*@
-<section id="referanlarimiz">
+<section>
     <div class="container">
-        <hr class="bg-info" />
+        <hr class="bg-info mt-4" />
 
-        <div class="row text-center mt-4 mb-3">
-            <div class="col-md-12">
+        <div class="row text-center mb-3">
+            <div class="col-md-12 mb-3">
                 <h2>Referanslarımız</h2>
             </div>
+            <div class="col-md-3">
+                <div style="display:none" id="odaSayisiSabit">3</div>
+                <div class="counter circle bg-light font-weight-bold text-dark" id="odaSayisi">0</div>
+                <div class="seviye text-dark">Eczacı Odası</div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div style="display:none" id="ustGrupSayisiSabit">26</div>
+                <div class="counter circle bg-light font-weight-bold text-dark" id="ustGrupSayisi">0</div>
+                <div class="seviye text-dark">Nöbet Bölgesi</div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div style="display:none" id="grupSayisiSabit">880</div>
+                <div class="counter circle bg-light font-weight-bold text-dark" id="grupSayisi">0</div>
+                <div class="seviye text-dark">Eczane</div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div style="display:none" id="eczaneSayisiSabit">5700</div>
+                <div class="counter circle bg-light font-weight-bold text-dark" id="eczaneSayisi">0</div>
+                <div id="nobetSistemi"></div>
+                <div class="seviye text-dark">Yazılan Nöbet</div>
+            </div>
+        </div>
+
+        <div class="row text-center mt-4 mb-3">
 
             <div class="col-md-4" style="margin-top:1%">
                 <a class="nav-link" target="_blank" href="https://www.antalyaeo.org.tr/tr">
@@ -425,7 +432,6 @@
     </tr>
 </table>
 
-    </div>
 
 @*<div class="modal fade" tabindex="-1" id="aciklamaModal" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -568,7 +574,9 @@
                     50//100
                 );
             }
-
+            else {
+                document.getElementById("grupSayisi").innerText = intgrupSayim + "+";
+            }
         }
 
         function eczaneSayisiSaydir() {

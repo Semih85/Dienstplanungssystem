@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Nöbet Yaz Detaylar";
-    ViewBag.MetaDescription = "Nöbetçi Sistemi - Detaylar.";
+    ViewBag.MetaDescription = "Nöbetçi Sistemi - Detaylar";
     ViewBag.MetaKeywords = "nöbet sistemi";
 }
 
@@ -16,12 +16,12 @@
 
 @section jumbotronMaster{
 
-    <div class="jumbotron jumbotron-fluid pt-4 pb-3 mt-5 mb-1">
+    <div class="jumbotron jumbotron-fluid py-3 py-lg-5 mt-5 mb-lg-2 mb-1">
         <div class="container text-white">
-            <h1 class="display-4" id="jumbotronYazi">Zamanınız size kalsın</h1>
+            <h1 class="display-4 mt-3 mt-lg-0" style="font-size:300%" id="jumbotronYazi">Zaman Size Kalsın</h1>
             @*<p class="lead">Detaylar</p>*@
-            <hr class="my-4 bg-info text-left w-50" align="left">
-            <p>
+            @*<hr class="my-4 bg-info text-left w-50" align="left">*@
+            <p class="lead">
                 Nöbet Sistemi Detaylar
                 @*Siz uğraşmayın! Zamanınız size kalsın.*@
             </p>
@@ -56,19 +56,41 @@
         <div class="row ">
 
             <div class="col-lg-8 mb-2">
-                <div class="row">
+                <div class="row mb-3">
 
-                    <div class="col-lg-12 ">
+                    <div class="col-md-2 text-center pt-lg-2 mb-2 d-md-none">
+                        <img class="img-fluid" src="~/Content/images/takvim_planlama.png" style="width:35%" />
+                        <br />
+                        <span class="font-weight-bold">Planlama</span>
+                    </div>
+
+                    <div class="col-md-2 text-center pt-lg-2 mb-2 d-none d-md-block">
+                        <img class="img-fluid" src="~/Content/images/takvim_planlama.png" />
+                        <br />
+                        <span class="font-weight-bold">Planlama</span>
+                    </div>
+
+                    <div class="col-md-10 ">
                         <p class="text-justify">
                             @*<img src="~/Content/images/nobetYazResimZorluk.jpg" width="100" />*@
-                            Nöbet yazmak <strong>sanıldığı kadar kolay olmayan</strong> bir problemdir.
-                            Genellikle nöbet yazan kişiler bu durumun farkındadır.
+                            Nöbet yazmak <strong>sanıldığı kadar kolay olmayan</strong> ve çok bileşenli bir problemdir.
+                            @*Genellikle nöbet yazan kişiler bu durumun farkındadır.*@
                             @*<strong class="text-danger">Nöbet listeleri binbir emek, zaman ve fazlaca zihin yorgunluğu harcanarak hazırlanmaktadır. </strong>*@
-                            Her listede gözetilmesi gereken çok sayıda <strong>hassas kurallar</strong> vardır.
+                            Her listede gözetilmesi gereken çok sayıda <strong>nöbet kuralları</strong> vardır.
                             Çünkü her bir nöbetçinin diğer hangi nöbetçilerle, hangi gün ve hangi görev tipinde (gece, gündüz nöbeti vb.) nöbet yazılacağına karar verilir.
                             Problemin yapısı gereği <strong class="text-danger">binlerce kombinasyon olduğundan</strong>
                             <strong>elle çözüm bulmak bir yana yazılım ile dahi çözüm bulmak oldukça zordur</strong>.
                         </p>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="text-center mb-2 pr-3 d-md-none">
+                        <img class="img-fluid" src="~/Content/images/istatistik.jpg" style="width:50%" />
+                        <br />
+                        <span class="font-weight-bold">İstatistik</span>
+                    </div>
+                    <div class="col-md-9">
                         @*<p class="text-justify">
                                 Bu yapıya;
                                 <strong>pazar, bayram ve hafta içi günlerinin kendi içinde adaletli dağılması, </strong>
@@ -83,72 +105,36 @@
                             Diğer taraftan nöbetlerin <strong>istatistik olarak takip zorunluluğu</strong> vardır.
                             Her nöbet periyodunda gruba yeni katılan ya da gruptan ayrılan nöbetçiler olabilmektedir. Süreç fazlasıyla dinamiktir.
                             Excel gibi programlar kullanılarak takip edilmeye çalışılan bu listeler, <strong>zamanla içinden çıkılmaz</strong> bir hale dönüşmektedir.
-                            <strong>Konuyu biraz daha somutlaştıracak olursak</strong>, gerçek hayatta karşımıza çıkabilecek bazı kurallara birlikte bakalım;
                         </p>
 
                     </div>
-                </div>
-
-                <div class="row mb-2">
-
-                    <div class="col-lg-6 mb-0">
-
-                        <ol class="pb-0 mb-0">
-                            <li>Bir ya da birden çok nöbet grubu olsun.</li>
-                            @*<li>Toplam nöbetçi sayısı 60 olsun.</li>
-                                <li>20'şerli olacak şekilde 3 ayrı nöbet grubu (A, B ve C) olsun.</li>*@
-                            <li>Nöbetçiler bir gruptan diğerine geçebilsin.</li>
-                            <li>Gruplara yeni nöbetçiler eklenebilsin.</li>
-                            <li>Nöbetçiler gruplardan çıkabilsin.</li>
-                            <li>Nöbet değişimleri yapılabilsin.</li>
-                            @*<li>Her gruptan günlük 1 nöbetçi olsun.</li>*@
-                            <li>Günlük nöbetçi ihtiyacı değişken olsun.</li>
-                            <li>Pazar, hafta içi ve bayram özel takip edilsin.</li>
-                            @*<li>Nöbetçilerin pazar, bayram ve hafta içi nöbetleri arasındaki farklar en az olsun.</li>*@
-                            <li>Hafta içi de olabildiğince eşit dağılsın.</li>
-                            <li>Her bayram nöbeti öncekinden farklı tipte olsun.</li>
-                        </ol>
-                    </div>
-
-                    <div class="col-lg-6">
-
-                        <ol start="10" class="pt-0">
-                            <li>Nöbetçilerin geçerli istekleri karşılanabilsin.</li>
-                            <li>
-                                Geçerli mazeretler dikkate alınsın.
-
-                                @*<small class="text-danger">Bu sistemde aylık ortalama 1000 mazeret girilmektedir.</small>*@
-                            </li>
-                            <li>
-                                Herhangi iki nöbetçi sürekli aynı gün nöbet tutmasın.
-                                @*Örneğin 30 nöbetçi takip edilsin. <small class="text-danger">Bu durumda <mark>C(30,2) = 435</mark> kadar nöbet ikilisinin takibi gerekecektir.</small>*@
-                            </li>
-
-                            <li>
-                                Nöbetçilerden bazıları birbiri ile aynı gün nöbet tutamasın.
-                                @*<small class="text-danger">Bu sistemde sadece bir ilde yaklaşık 1500 nöbet ikilisi vardır.</small>*@
-                            </li>
-                            <li>Nöbet gruplarının alt grupları da olabilsin.</li>
-                            @*<li>Bir nöbet grubunun bir başka gruptaki alt gruplar ile bağımlı nöbetleri olsun.</li>*@
-                            <li>Her nöbetçinin peş peşe nöbetleri grubun büyüklüğü oranında belli bir sayıdan önce yazılmasın.</li>
-                            @*<li>Bir ayda 2 nöbet yazılacak olursa bu 2 nöbet arasında en az 5 gün olsun.</li>*@
-                        </ol>
-
+                    <div class="col-md-3 text-center mb-2 pr-3 d-none d-md-inline">
+                        <img class="img-fluid" src="~/Content/images/istatistik.jpg" />
+                        <br />
+                        <span class="font-weight-bold d-none d-md-inline">İstatistik</span>
                     </div>
                 </div>
 
-                <div class="row ">
+                <div class="row mb-3">
+                    <div class="col-md-2 text-center mb-2 d-md-none">
+                        <img class="img-fluid" src="~/Content/images/puko.png" style="width:50%" />
+                        <br />
+                        <span class="font-weight-bold">Uygulama</span>
+                    </div>
 
-                    <div class="col-lg-12">
+                    <div class="col-md-2 text-center mb-2 d-none d-md-block">
+                        <img class="img-fluid" src="~/Content/images/puko.png" />
+                        <br />
+                        <span class="font-weight-bold">Uygulama</span>
+                    </div>
+                    <div class="col-md-10">
                         <p class="text-justify">
                             @*Bu kurallar her nöbet için değişkenlik gösterecektir.*@
-                            Bu kurallar altında
-                            <strong>olağanüstü bir gayret ile</strong> manuel olarak nöbet yazdığımızı düşünelim.
-                            Fakat tam bu sırada bazı nöbetçiler gelse ve geçerli yeni bir mazeret söyleseler.
-                            Bu durum henüz mürekkebi dahi kurumamış nöbet listesinin iptal olması anlamına gelecektir.
-                            Ayrıca, nöbet yazılan periyotlar uzun bile olsa bu döngü çok geçmeden tekrar sizi bulacaktır.
+                            Elle nöbet yazılırken en çok istenen kurallar bile <strong>gözden kaçabilmektedir</strong>.
+                            Bir başka handikap ise <strong>sonradan çıkan mazeretlerin</strong> kurallar ihlal edilmeden göz önünde bulundurulmasıdır.
+                            @*Ayrıca, nöbet yazılan periyotlar uzun bile olsa bu döngü çok geçmeden tekrar sizi bulacaktır.*@
                             Bu yönüyle <strong class="text-danger">nöbet yazma süreci fazlasıyla zaman, emek ve zihin yorgunluğu oluşturmaktadır.</strong>
-                            Bir de olası bir hatada gelecek itirazlar dikkate alındığında oldukça zor bir iş olduğu gün gibi açıktır.
+                            Bir de olası bir hatada gelecek itirazlar dikkate alındığında <strong>nöbet sisteminin varlığı önem kazanmaktadır.</strong>
                             @*Yukarıdaki örneklere gerçek hayattaki ihtiyaca göre çok daha farklı kombinasyonlar da eklenebilecektir.*@
                         </p>
 
@@ -166,25 +152,64 @@
                             </p>*@
                     </div>
                 </div>
+                <hr class="mb-4 bg-info">
+
+                <div class="row mb-2">
+                    
+                    <div class="col-12 text-center">
+                        <h5>Bazı nöbet kuralları</h5>
+
+                    </div>
+                    
+                    <div class="col-lg-6 mb-0">
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">1</span> Bir ya da birden çok nöbet grubu olsun.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">2</span> Nöbetçiler bir gruptan diğerine geçebilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">3</span> Gruplara yeni nöbetçiler eklenebilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">4</span> Nöbetçiler gruplardan çıkabilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">5</span> Nöbet değişimleri yapılabilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">6</span> Günlük nöbetçi ihtiyacı değişken olsun.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">7</span> Pazar, hafta içi ve bayram özel takip edilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">8</span> Hafta içi de olabildiğince eşit dağılsın.</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="col-lg-6">
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">9</span> Her bayram nöbeti öncekinden farklı tipte olsun.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">10</span> Geçerli istekler karşılanabilsin. </li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">11</span> Geçerli mazeretler dikkate alınsın.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">12</span> Herhangi iki nöbetçi sürekli aynı gün nöbet tutmasın.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">13</span> Nöbetçilerden bazıları birbiri ile aynı gün nöbet tutamasın.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">14</span> Nöbet gruplarının alt grupları da olabilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">15</span> Peş peşe günlerde yazılan nöbetler grubun büyüklüğü ile orantılı olsun.</li>
+                        </ul>
+
+                    </div>
+                </div>
             </div>
 
             <div class="col-lg-4 mb-3">
-                <h5 class="text-center">Bu nedenle;</h5>
+                <h5 class="text-center">Nöbet Sisteminde</h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Siz sadece kuralları <i class="fa fa-cogs text-danger" aria-hidden="true"></i> belirleyin. </li>
                     <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Saniyeler içinde <i class="fa fa-hourglass-end text-danger" aria-hidden="true"></i> nöbetleriniz yazılsın.</li>
                     <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> İstatistiklerin <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i> keyfini çıkarın.</li>
                     <li class="list-group-item text-center border-bottom-0">
                         <strong>Siz uğraşmayın! Zamanınız size kalsın.</strong>
-                        @*<strong>Hepsi bu kadar <i class="fa fa-smile-o" aria-hidden="true"></i></strong>*@
                     </li>
 
                 </ul>
                 <div class="text-center mb-3">
-                    <img class="img-thumbnail" src="~/Content/images/ai_picture.jpg" alt="nöbet yaz" width="330" />
+                    <a class="h5 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemi")"><span class="fa fa-hand-o-right"></span> Eczane Nöbet Sistemi</a>
+
+                    <img class="img-thumbnail mt-3" src="~/Content/images/ai_picture.jpg" alt="nöbet yaz" width="330" />
                 </div>
                 <div class="text-center mb-3">
-                    <h5>Ücretsiz demo için bize <a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> yazın. Hemen başlayalım.</h5>
+                    <h5>Ücretsiz demo için bize <a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> ulaşın. Hemen başlayalım.</h5>
                 </div>
 
                 <div class="alert alert-success fade show text-center px-0" role="alert">
@@ -195,8 +220,8 @@
                     <a href="Tel:+905452710985" class="alert-link" style="text-decoration:none;">(0)545 - 271 09 85</a>
                     @*<span>(+90) 545 271 09 85</span>*@
                     @*<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>*@
+                <span aria-hidden="true">&times;</span>
+            </button>*@
                 </div>
 
             </div>

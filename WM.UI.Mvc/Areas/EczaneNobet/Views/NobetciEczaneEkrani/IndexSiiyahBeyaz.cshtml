@@ -6,8 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    @*<link rel="icon" href="~/Content/images/logo-nobetyaz.png" type="image/x-icon">*@
-    <link rel="icon" type="image/png" href="~/Content/images/favicon-32x32-transperent.png" sizes="32x32" />
+    <link rel="icon" href="~/Content/images/logo-nobetyaz.png" type="image/x-icon">
     <title>Nöbetçi Eczane Ekranı | Nöbet Yaz</title>
 
     <!-- Bootstrap, font-awasome, Site CSS -->
@@ -35,8 +34,8 @@
             }
 
             .kucukEczane {
-                /*height: 130px;
-                font-size: smaller;*/
+                height: 130px;
+                font-size: smaller;
             }
         }
 
@@ -59,7 +58,7 @@
             }
 
             .kucukEczane {
-                /*height: 110px;*/
+                height: 110px;
             }
         }
 
@@ -82,7 +81,7 @@
             }
 
             .kucukEczane {
-                /*height: 106px;*/
+                height: 106px;
             }
         }
 
@@ -108,7 +107,7 @@
             }
 
             .kucukEczane {
-                /*height: 135px;*/ /*123px;*/
+                height: 135px; /*123px;*/
                 font-size: small;
             }
         }
@@ -141,46 +140,46 @@
         /*// Extra x-large devices (large desktops, 1400px and up)*/
         @@media (min-width: 1400px) {
             .network {
-                /*height: 1000px;*/
+                height: 1000px;
             }
 
             .harita {
-                height: 550px;
+                height: 585px;
             }
 
             .basliklar {
-                /*height: 95px;*/
+                height: 95px;
             }
 
             .buyukEczane {
-                /*height: 395px;
-                font-size: x-large;*/
+                height: 395px;
+                font-size: x-large;
             }
 
             .kucukEczane {
-                /*height: 195px;
-                font-size: large;*/
+                height: 195px;
+                font-size: large;
             }
         }
 
         #eczaneSolSutun {
-            /*background-color:aliceblue;
+            background-color: #000000;
             border-style: initial;
             border: double;
             border-color: #023e96;
             text-align: center;
-            color: black;
-            align-items: center;*/
+            color: white;
+            align-items: center;
         }
 
         #eczaneSagSutun {
-            /*background-color: aliceblue;
+            background-color: #000000;
             border-style: initial;
             border: double;
             border-color: #023e96;
             text-align: center;
-            color: black;
-            align-items: center;*/
+            color: white;
+            align-items: center;
         }
 
         .eczaneHucre {
@@ -195,42 +194,41 @@
         }
 
         html, body {
-            /*position: fixed;*/
-            /*top: 0;
+            position: fixed;
+            top: 0;
             bottom: 0;
             left: 0;
-            right: 0;*/
+            right: 0;
         }
 
         .eczaneBuyukHucre {
-            /*background-color: #000000;
-            height: 325px;
-
+            /*background-color: #000000;*/
             border-style: initial;
             border: double;
             border-color: #023e96;
             text-align: center;
             color: white;
             font-size: x-large;
+            /*height: 325px;*/
             margin-right: -15px;
-            margin-left: -15px;*/
+            margin-left: -15px;
         }
 
         .buyukHarita {
             display: none;
             /*height: 430px;*/
-            /*display: -ms-flexbox;
+            display: -ms-flexbox;
             display: flex;
             -ms-flex-wrap: wrap;
-            flex-wrap: wrap;*/
-            /*margin-right: -15px;
-            margin-left: -15px;*/
-            /*background-color: aliceblue*/
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+            background-color: #000000
         }
 
         #labelTarih {
-            color: black;
-            /*background-color: aliceblue;*/
+            color: white;
+            background-color: black;
             font-size: 22px;
             border-color: #023e96;
             text-align: center;
@@ -238,8 +236,8 @@
         }
 
         #labelBaslik {
-            color: black;
-            /*background-color: aliceblue;*/
+            color: white;
+            background-color: black;
             font-size: 35px;
             border-color: #023e96;
             border: double;
@@ -251,10 +249,9 @@
 
         #labelMesafe {
             color: black;
-            background-color: aliceblue;
+            background-color: white;
             font-size: 20px;
             margin-top: -30px;
-            margin-left: -15px;
             border-color: #023e96;
             border: double;
             border-style: initial;
@@ -263,15 +260,15 @@
         }
 
         #labelSaat {
-            /*color: black;*/
-            /*background-color: aliceblue;*/
-            /*font-size: 50px;*/
-            /*border-color: #023e96;
+            color: #023e96;
+            background-color: black;
+            font-size: 50px;
+            border-color: #023e96;
             font-weight: 600;
-            text-align: center;*/
-            /*background-image: url('../../../../Content/images/saatArkaPlan.png');*/
+            text-align: center;
+            background-image: url('../../../../Content/images/saatArkaPlan.png');
             /*no-repeat center center fixed*/
-            /*background-repeat: no-repeat;*/
+            background-repeat: no-repeat;
             /*background:fixed*/
         }
 
@@ -283,204 +280,47 @@
 
 
 <body>
-
+        
     @if (Model.NobetciEcanelerEkraniTipId == 1)
     {
-        <div class="container-fluid pb-0 pt-3">
-
-            <!-- başlık -->
-            <div class="row">
-                <div class="col">
-                    <div class="card-group">
-
-                        <div class="card text-center" style="color:#595959">
-                            <div class="card-body pb-0 pt-2">
-                                <p id="lbl_tarih" class="card-text h5 mb-0"></p>
-                            </div>
-                        </div>
-                        <div class="card text-center" style="color:#595959">
-                            <div class="card-body py-1">
-                                <h2 class="card-title mb-0">Nöbetçi Eczaneler</h2>
-                            </div>
-                        </div>
-                        <div class="card text-center" style="color:#595959">
-                            <div class="card-body py-1">
-                                <h2 id="labelSaat" class="card-title mb-0"></h2>
-                            </div>
-                        </div>
-                    </div>
+        <div class="container-fluid"> @* network *@
+            <div id="ustRow" class="row basliklar">
+                <div id="labelBaslik" class="col-lg-3">
+                    Nöbetçi Eczaneler
                 </div>
-            </div>
-
-            <!-- harita -->
-            <div class="row">
-                <div class="col">
-                    <div class="card " style="height:590px">
-                        <div id="map0" class="card-body "></div>
-                        <div id="map1" class="card-body "></div>
-                        <div id="map2" class="card-body "></div>
-                        <div id="map3" class="card-body "></div>
-                        <div id="map4" class="card-body "></div>
-                        <div id="map5" class="card-body "></div>
-                        <div id="map6" class="card-body "></div>
-                        <div id="map7" class="card-body "></div>
-                        <div id="map8" class="card-body "></div>
-                        <div id="map9" class="card-body "></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col-4">
-                    <div id="divMyLetterImage" style="height:5px; width:5px; margin-top:-100px; margin-left:6px; ">
-
-                    </div>
-                </div>
-
-                <div class="col-6"></div>
-
-                <div id="labelMesafe" class="col-2 pr-0">
-                    <label class="fa fa-car" id="lbl_mesafe0"></label>
-                    <label class="fa fa-car" id="lbl_mesafe1"></label>
-                    <label class="fa fa-car" id="lbl_mesafe2"></label>
-                    <label class="fa fa-car" id="lbl_mesafe3"></label>
-                    <label class="fa fa-car" id="lbl_mesafe4"></label>
-                    <label class="fa fa-car" id="lbl_mesafe5"></label>
-                    <label class="fa fa-car" id="lbl_mesafe6"></label>
-                    <label class="fa fa-car" id="lbl_mesafe7"></label>
-                    <label class="fa fa-car" id="lbl_mesafe8"></label>
-                    <label class="fa fa-car" id="lbl_mesafe9"></label>
-                </div>
-            </div>
-
-            <!-- eczane kartlar -->
-
-            <div class="row">
-                <div class="col">
-
-                    <div class="card-group">
-                        <div class="card" style="color:#595959">
-                            <div id="div_1" class="card-body py-lg-1"></div>
-                        </div>
-                        <div class="card" style="color:#595959">
-                            <div id="div_2" class="card-body py-lg-1"></div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-
-                    <div class="card-group">
-                        <div class="card" style="color:#595959">
-                            <div id="div_3" class="card-body py-lg-1"></div>
-                        </div>
-                        <div class="card" style="color:#595959">
-                            <div id="div_4" class="card-body py-lg-1"></div>
-                        </div>
-                        <div class="card" style="color:#595959">
-                            <div id="div_5" class="card-body py-lg-1"></div>
-                        </div>
-                        <div class="card" style="color:#595959">
-                            <div id="div_6" class="card-body py-lg-1"></div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-
-                    <div class="card-group">
-                        <div class="card" style="color:#595959">
-                            <div id="div_7" class="card-body py-lg-1"></div>
-                        </div>
-                        <div class="card" style="color:#595959">
-                            <div id="div_8" class="card-body py-lg-1"></div>
-                        </div>
-                        <div class="card" style="color:#595959">
-                            <div id="div_9" class="card-body py-lg-1"></div>
-                        </div>
-                        <div class="card" style="color:#595959">
-                            <div id="div_10" class="card-body py-lg-1"></div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    }
-    else if (Model.NobetciEcanelerEkraniTipId == 2)
-    {
-        @*<div class="container-fluid">
-            @* network 
-
-            <div id="ustRow" class="row basliklar bg-light">
-                <div id="labelBaslik" class="col-lg-3 pt-lg-3">
-                    <h2>Nöbetçi Eczaneler</h2>
-                </div>
-                <div id="labelTarih" class="col-lg-6 pt-lg-4 text-center">
+                <div id="labelTarih" class="col-lg-5">
                     <label id="lbl_tarih"></label>
                 </div>
-                <div id="labelSaat" class="col-lg-3 pt-lg-2 h2">
-
+                <div id="labelSaat" class="col-lg-4">
+                    @*<label id="lbl_saat"></label>*@
                 </div>
-
-
-                @*<div id="labelBaslik" class="col-lg-3 pt-lg-3">
-                        <h2>Nöbetçi Eczaneler</h2>
-                    </div>
-                    <div id="labelTarih" class="col-lg-6 pt-lg-4 text-center">
-                        <label id="lbl_tarih"></label>
-                    </div>
-                    <div id="labelSaat" class="col-lg-3 pt-lg-2 h2">
-                        <label id="lbl_saat"></label>
-                    </div>
             </div>
-
             <div class="row">
-
-                <div class="col-lg-6 px-1">
-
+                <div id="eczaneSolSutun" class="col-lg-3 ">
+                    <div class="eczaneHucre kucukEczane" id="div_1"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_2"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_3"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_4"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_5"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div id="map0" class="buyukHarita harita"></div>
+                    <div id="map1" class="buyukHarita harita"></div>
+                    <div id="map2" class="buyukHarita harita"></div>
+                    <div id="map3" class="buyukHarita harita"></div>
+                    <div id="map4" class="buyukHarita harita"></div>
+                    <div id="map5" class="buyukHarita harita"></div>
+                    <div id="map6" class="buyukHarita harita"></div>
+                    <div id="map7" class="buyukHarita harita"></div>
+                    <div id="map8" class="buyukHarita harita"></div>
+                    <div id="map9" class="buyukHarita harita"></div>
                     <div class="row">
-                        <div class="col">
-                            <div id="div_100" class="eczaneBuyukHucre buyukEczane bg-light mb-0">
-                                @* <img style="width:60px;height:60px" src="~/Content/images/NobetciEczaneLogoUfaks.png" />
-                            </div>
+                        <div id="divMyLetterImage" style="height:5px; width:5px; margin-top:-100px; margin-left:-10px" class="col-4">
+
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <div id="map0" class="buyukHarita harita"></div>
-                            <div id="map1" class="buyukHarita harita"></div>
-                            <div id="map2" class="buyukHarita harita"></div>
-                            <div id="map3" class="buyukHarita harita"></div>
-                            <div id="map4" class="buyukHarita harita"></div>
-                            <div id="map5" class="buyukHarita harita"></div>
-                            <div id="map6" class="buyukHarita harita"></div>
-                            <div id="map7" class="buyukHarita harita"></div>
-                            <div id="map8" class="buyukHarita harita"></div>
-                            <div id="map9" class="buyukHarita harita"></div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-
-                        <div class="col-4">
-                            <div id="divMyLetterImage" style="height:5px; width:5px; margin-top:-95px; ">
-
-                            </div>
-                        </div>
-
-                        <div class="col-6"></div>
-
-                        <div id="labelMesafe" class="col-2 pr-0">
-                            <label class="fa fa-car" id="lbl_mesafe0"></label>
+                        <div class="col-5"></div>
+                        <div id="labelMesafe" class="col-3">
+                            <label class="fa fa-car" id="lbl_mesafe0"> </label>
                             <label class="fa fa-car" id="lbl_mesafe1"></label>
                             <label class="fa fa-car" id="lbl_mesafe2"></label>
                             <label class="fa fa-car" id="lbl_mesafe3"></label>
@@ -492,30 +332,19 @@
                             <label class="fa fa-car" id="lbl_mesafe9"></label>
                         </div>
                     </div>
-
-                </div>
-
-                <div class="col-lg-6 px-1">
-                    <div class="row">
-                        <div id="eczaneSolSutun" class="col-lg-6 px-0">
-                            <div class="eczaneHucre kucukEczane alert alert-light mb-0" id="div_1"></div>
-                            <div class="eczaneHucre kucukEczane alert alert-light mb-0" id="div_2"></div>
-                            <div class="eczaneHucre kucukEczane alert alert-light mb-0" id="div_3"></div>
-                            <div class="eczaneHucre kucukEczane alert alert-light mb-0" id="div_4"></div>
-                            <div class="eczaneHucre kucukEczane alert alert-light mb-0" id="div_5"></div>
-                        </div>
-
-                        <div id="eczaneSagSutun" class="col-lg-6 px-0">
-                            <div class="eczaneHucre kucukEczane alert alert-light mb-0" id="div_6"></div>
-                            <div class="eczaneHucre kucukEczane alert alert-light mb-0" id="div_7"></div>
-                            <div class="eczaneHucre kucukEczane alert alert-light mb-0" id="div_8"></div>
-                            <div class="eczaneHucre kucukEczane alert alert-light mb-0" id="div_9"></div>
-                            <div class="eczaneHucre kucukEczane alert alert-light mb-0" id="div_10"></div>
-                        </div>
+                    <div id="div_100" class="eczaneBuyukHucre buyukEczane">
+                        @* <img style="width:60px;height:60px" src="~/Content/images/NobetciEczaneLogoUfaks.png" />*@
                     </div>
                 </div>
+                <div id="eczaneSagSutun" class="col-lg-3">
+                    <div class="eczaneHucre kucukEczane" id="div_6"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_7"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_8"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_9"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_10"></div>
+                </div>
             </div>
-        </div>*@
+        </div>
     }
     else
     {
@@ -564,8 +393,8 @@
                     @*Harita burada*@
                 </div>
             </div>
-            <div class="row" style="color:black; background-color:aliceblue; font-size:30px;">
-                <div style="color:black; background-color:aliceblue; font-size:30px;" class="col-lg-3">
+            <div class="row" style="color:white; background-color:black; font-size:30px;">
+                <div style="color:white; background-color:black; font-size:30px;" class="col-lg-3">
                     <label id="lbl_tarih"></label>
 
                 </div>
@@ -633,7 +462,7 @@
         var map3 = new google.maps.Map(mapCanvas3, mapOptions);
         var map4 = new google.maps.Map(mapCanvas4, mapOptions);
         var map5 = new google.maps.Map(mapCanvas5, mapOptions);
-        var map6 = new google.maps.Map(mapCanvas6, mapOptions);
+        var map6 = new google.maps.Map(mapCanvas6, mapOptions2);
         var map7 = new google.maps.Map(mapCanvas7, mapOptions);
         var map8 = new google.maps.Map(mapCanvas8, mapOptions);
         var map9 = new google.maps.Map(mapCanvas9, mapOptions);
@@ -649,6 +478,7 @@
         var directionsService7 = new google.maps.DirectionsService;
         var directionsService8 = new google.maps.DirectionsService;
         var directionsService9 = new google.maps.DirectionsService;
+
 
         var directionsDisplay = new google.maps.DirectionsRenderer
             ({
@@ -728,60 +558,17 @@
         }
         eczaneleriKutularaDoldur()
 
-        function adresTagOlustur(adres, renk) {
-
-            if (adres.length != 0) {
-                return "<h9 style = 'color:" + renk + "'>" + adres + "</h9>";
-            }
-            else {
-                return "";
-            }
-        }
-
-        function adresTarifiTagOlustur(adresTarif, renk) {
-
-            if (adresTarif.length != 0) {
-                return "</br > <h9 style = 'color:" + renk + "'>" + adresTarif + "</h9>";
-            }
-            else {
-                return "";
-            }
-        }
-
-        function telefonTagOlustur(telefonNumarasi) {
-
-            if (telefonNumarasi.length != 0) {
-                return "</br > <h5> 0 "
-                    + telefonNumarasi.substr(0, 3) + " "
-                    + telefonNumarasi.substr(3, 3) + " "
-                    + telefonNumarasi.substr(6, 2) + " "
-                    + telefonNumarasi.substr(8, 2)
-                    + "</h5 > ";
-            }
-            else {
-                return "";
-            }
-        }
-
         //div leri doldurur
         function eczaneleriKutularaDoldur() {
+            jQuery.each(nobetciEczaneler, function (i, val) {
 
-            console.log("eczaneleriKutularaDoldur")
-            $.each(nobetciEczaneler, function (i, val) {
-
-                //console.log('nobetciEczane i: ' + i)
                 var adi = nobetciEczaneler[i].adi
                 var tel = nobetciEczaneler[i].tel
                 var adres = nobetciEczaneler[i].adres
-                var adresTarifi = "";
-
-                if (nobetciEczaneler[i].adresTarifi != null) {
-                    adresTarifi = nobetciEczaneler[i].adresTarifi
-                } 
-
+                var adresTarifi = nobetciEczaneler[i].adresTarifi
                 var intNumberOfi = parseInt(i);
                 intNumberOfi = intNumberOfi + 1;
-                //console.log('div i: ' + intNumberOfi.toString())
+                //alert('i: ' + intNumberOfi.toString())
 
                 //var img = $('<img />',
                 //    {
@@ -793,27 +580,34 @@
                 //    .appendTo($("#div_" + intNumberOfi));
 
                // alert(tel.length)
-                $("#div_" + intNumberOfi).append("<h5> "
-                    + adi + " ECZANESİ </h5>" 
-                    + adresTagOlustur(adres, "black") 
-                    + adresTarifiTagOlustur(adresTarifi, "red") 
-                    + telefonTagOlustur(tel)
+                if(tel!=null)
+                    $("#div_" + intNumberOfi).append("<h5> " + adi + " Eczanesi </h5>" +
+                    "<h9 style=\"color:white\">" + adres + "</h9>" +
+                        "</br ><h9 style=\"color:red\">" + adresTarifi + "</h9>"
+                    +
+                   "</br ><h5>0 " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2) + "</h5>"
+
+                   // "</br >0" + tel
                 );
-                
+                else
+                    $("#div_" + intNumberOfi).append("<h5> " + adi + " Eczanesi  </h5>" +
+                        "<h9 style=\"color:white\">" + adres + "</h9>" +
+                        "</br ><h9 style=\"color:red\">" + adresTarifi + "</h9>"
+                        +
+                        //  "</br ><h4>0 " + tel.substr(0, 3) + " " + tel.substr(4, 3) + " " + tel.substr(7, 2) + " " + tel.substr(9, 2) + "</h4>"
+
+                        "</br ><h5>0" + tel + + "</h5>"
+                    );
+                // $("p").append("<strong>Hello</strong>");
+                // Will stop running after "three"
+                //return (val !== "three");
             });
         }
         function eczaneleriKutularaBosalt() {
-
-            console.log("eczaneleriKutularaBosalt " + nobetciEczaneler.length)
-
             jQuery.each(nobetciEczaneler, function (i, val) {
-
                 var intNumberOfi = parseInt(i);
                 intNumberOfi = intNumberOfi + 1;
                 $("#div_" + intNumberOfi).empty()
-
-                //console.log(intNumberOfi)
-
             });
         }
         //sol menü renkleri ayarlar
@@ -821,18 +615,12 @@
             // alert('changeColor counter' + counter)
             for (var k = 1; k < 11; k++) {
                 if (k == counter) {
-                    $("#div_" + k).removeClass('alert-light');
-                    $("#div_" + k).addClass('alert-primary');
-                    //$("#div_" + k).css('color', 'white');
-                    //$("#div_" + k).css('background-color', '');
-                    //$("#div_" + k).css('background-color', '#023e96');
+                    $("#div_" + k).css('background-color', '');
+                    $("#div_" + k).css('background-color', '#023e96');
                 }
                 else {
-                    $("#div_" + k).removeClass('alert-primary');
-                    $("#div_" + k).addClass('alert-light');
-                    //$("#div_" + k).css('color', 'black');
-                    //$("#div_" + k).css('background-color', '');
-                    //$("#div_" + k).css('background-color', 'aliceblue');
+                    $("#div_" + k).css('background-color', '');
+                    $("#div_" + k).css('background-color', '#000000');
                 }
                 var adi = nobetciEczaneler[counter - 1].adi
                 var tel = nobetciEczaneler[counter - 1].tel
@@ -852,18 +640,20 @@
                // alert(tel.length)
                 if (tel != null)
                 $("#div_100").html("<span>" +
-                            "<h2> " + "<img style=\"width: 40px; height: 40px\"  src=\"../../../../Content/images/NobetciEczaneLogoUfaks.png\" />" + "<span class='ml-2'>" + adi + " ECZANESİ" + "</span>"+ "</h2>" +
-                            "<h4> " + adres + "</h4>" +
-                            "<h3 style=\"color:red\">  " + adresTarifi + "</h3>" +
-                            "<h3>0 " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2) + "</h4>" +
-                        "</span> ");
+                    "<img style=\"width: 40px; height: 40px\"  src=\"../../../../Content/images/NobetciEczaneLogoUfaks.png\" />"
+                    + "</h2> " + adi + " Eczanesi  </h2>" +
+                    "<h4> " + adres + "</h4>" +
+                    "<h3 style=\"color:red\">  " + adresTarifi + "</h3>" +
+                    "<h3>0 " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2) + "</h4>" +
+                        "</span > ");
                 else
                     $("#div_100").html("<span>" +
-                            "<h2> " + "<img style=\"width: 40px; height: 40px\"  src=\"../../../../Content/images/NobetciEczaneLogoUfaks.png\" />" + adi + " ECZANESİ  </h2>" +
-                            "<h4> " + adres + "</h4>" +
-                            "<h3 style=\"color:red\">  " + adresTarifi + "</h3>" +
-                            "<h3>0 " + tel + "</h3>" +
-                        "</span> ");
+                        "<img style=\"width: 40px; height: 40px\"  src=\"../../../../Content/images/NobetciEczaneLogoUfaks.png\" />"
+                        + " </h2> " + adi + " Eczanesi </h2>" +
+                        "<h4> " + adres + "</h4>" +
+                        "<h3 style=\"color:red\">  " + adresTarifi + "</h3>" +
+                        "<h3>0 " + tel + "</h3>" +
+                        "</span > ");
                 //var img = $('<img />',
                 //    {
                 //        id: 'elogo',
@@ -873,10 +663,10 @@
                 //    })
                 //    .appendTo($("div_100"));
                 $("#div_100").css({
-                    //'background-color': 'aliceblue',
-                    //'color': 'black',
-                    //'font-size': '35px',
-                    //'text-align': 'center',
+                    'background-color': '#000000',
+                    'color': 'white',
+                    'font-size': '35px',
+                    ' text-align': 'center',
                 });
 
             }
@@ -919,6 +709,8 @@
 
         //banttanYayinla()
 
+
+
         //alert(model.NobetciEczaneler[1].Adi)
         //nöbetçi eczanelerin markerları oluşturulur
         //bu kullanılmıyor
@@ -946,8 +738,7 @@
                 changeColor(counter)
                 //alert('nobetciEczaneler[0].koordinatx: ' + nobetciEczaneler[0].koordinatx)
 
-                //alert('nobetciEczaneler[counter-1].koordinatx: ' + nobetciEczaneler[counter-1].koordinatx)
-
+               //alert('nobetciEczaneler[counter-1].koordinatx: ' + nobetciEczaneler[counter-1].koordinatx)
                 //Gidilecek Yer:
                 var locationOfDestination = {
                     adi: nobetciEczaneler[counter - 1].adi,
@@ -957,7 +748,6 @@
                     adres: nobetciEczaneler[counter - 1].adres
                 }
                 //alert('newStartLat')
-                //alert('locationOfDestination.adi ' + locationOfDestination.adi)
                 var newStartLat = locationOfCurrentPharmacy.koordinatx;
                 var newStartLng = locationOfCurrentPharmacy.koordinaty;
                 var newEndLat = locationOfDestination.koordinatx;
@@ -985,7 +775,6 @@
             };
             changeQRCode(counter)
 
-            console.log('counter: ' + counter)
 
             if (counter == 1)
                 calculateAndDisplayRoute(directionsService, directionsDisplay, startOptions, endOptions); /* Request next message  */
@@ -1008,68 +797,43 @@
             else if (counter == 10)
                 calculateAndDisplayRoute(directionsService9, directionsDisplay9, startOptions, endOptions); /* Request next message  */
 
-            if (mesafeCounter == 10) {//mesafeler hesaplandıktan sonra
-                //alert('mesafeCounter=1')
+
+            if (mesafeCounter == 10) {//mesafeler hesaplandıktam sonra
+                //alert('mesafeCounter')
                 nobetciEczaneler = []
                 //alert('quicksort')
-
-                function compare(a, b) {
-                    if (a.mesafe < b.mesafe)
-                        return -1;
-                    if (a.mesafe > b.mesafe)
-                        return 1;
-                    return 0;
+                var mesafelerNewArray = new Array()
+                for (var c = 0; c < mesafeler.length; c++) {
+                    //alert('mesafeler[c].mesafem: ' + mesafeler[c].mesafe)
+                    mesafelerNewArray.push(mesafeler[c].mesafe)
                 }
+                //quickSort
+                mesafelerNewArray = quickSort(mesafelerNewArray, 0, mesafelerNewArray.length - 1);
 
-                mesafeler.sort(compare);
-
-                $.each(mesafeler, function (key, value) {
-                    value.Index = key
-                });
-
-                console.log('mesafeler')
-                for (var d = 0; d < mesafeler.length; d++) {
-                    console.log(' adi: ' + mesafeler[d].adi)
-                    //console.log(' koordinatx: ' + mesafeler[d].koordinatx)
-                    //console.log(' koordinaty: ' + mesafeler[d].koordinaty)
-                    //console.log(' tel: ' + mesafeler[d].tel)
-                    //console.log(' adres: ' + mesafeler[d].adres)
-                    //console.log(' adresTarifi: ' + mesafeler[d].adresTarifi)
-                    console.log(' mesafe: ' + mesafeler[d].mesafe)
-                    console.log(' oldIndex: ' + mesafeler[d].oldIndex)
-                    console.log(' Index: ' + mesafeler[d].Index)
-                }
-
-                for (var e = 0; e < mesafeler.length; e++) {
-
-                        var nobetciEczane = {
-                            adi: mesafeler[e].adi,
-                            koordinatx: mesafeler[e].koordinatx,
-                            koordinaty: mesafeler[e].koordinaty,
-                            tel: mesafeler[e].tel,
-                            adres: mesafeler[e].adres,
-                            adresTarifi: mesafeler[e].adresTarifi,
-                            oldIndex: mesafeler[e].Index
-                        }
-                        nobetciEczaneler.push(nobetciEczane)
-                }
-
-                //for (var d = 0; d < nobetciEczaneler.length; d++) {
-                //    console.log(' nobetciEczaneler[d].adi: ' + nobetciEczaneler[d].adi)
-                //    //console.log(' nobetciEczaneler[d].koordinatx: ' + nobetciEczaneler[d].koordinatx)
-                //    //console.log(' nobetciEczaneler[d].koordinaty: ' + nobetciEczaneler[d].koordinaty)
-                //    //console.log(' nobetciEczaneler[d].tel: ' + nobetciEczaneler[d].tel)
-                //    //console.log(' nobetciEczaneler[d].adres: ' + nobetciEczaneler[d].adres)
-                //    //console.log(' nobetciEczaneler[d].adresTarifi: ' + nobetciEczaneler[d].adresTarifi)
-                //    console.log(' nobetciEczaneler[d].oldIndex: ' + nobetciEczaneler[d].oldIndex)
+                //for (var b = 0; b < mesafelerNewArray.length; b++) {
+                //    alert('mesafelerNewArray[b]: ' + mesafelerNewArray[b])
                 //}
-
-                console.log("eczaneleriKutularaBosaltOncesi " + nobetciEczaneler.length)
+                for (var d = 0; d < mesafelerNewArray.length; d++) {
+                    for (var e = 0; e < mesafeler.length; e++) {
+                        if (mesafelerNewArray[d] == mesafeler[e].mesafe) {
+                            var newElemente = {
+                                adi: model.NobetciEczaneler[e].Adi,
+                                koordinatx: model.NobetciEczaneler[e].Enlem,
+                                koordinaty: model.NobetciEczaneler[e].Boylam,
+                                tel: model.NobetciEczaneler[e].TelefonNo,
+                                adres: model.NobetciEczaneler[e].Adres,
+                                adresTarifi: model.NobetciEczaneler[e].AdresTarifiKisa,
+                                oldIndex: mesafeler[e].Index
+                            }
+                            nobetciEczaneler.push(newElemente)
+                        }
+                    }
+                }
+                //for (var d = 0; d < nobetciEczaneler.length; d++) {
+                //    alert(' nobetciEczaneler[d].adi: ' + nobetciEczaneler[d].adi)
+                //}
                 eczaneleriKutularaBosalt()
                 eczaneleriKutularaDoldur()
-                console.log('bantta girmeden önce counter: ' + counter)
-                console.log("banttanYayinla")
-                counter = 1;
                 banttanYayinla()
                 //kutular tamam, maplarin sırası değişmeli!!
             }
@@ -1083,9 +847,9 @@
                 );
             }
         }
-
         function banttanYayinla() {
             // generateQRCode(newEndLat + "," + newEndLng)
+            //alert("banttanYayinla")
 
             if (counter > 10)
                 counter = 1;
@@ -1094,38 +858,20 @@
             changeQRCode(counter)
 
             var indexFromCounter = counter - 1;
-            console.log('banttaki indexFromCounter: ' + indexFromCounter)
 
-            $.each(mesafeler, function (key, value) {
-
-                var sayac = key;
-
+            for (var sayac = 0; sayac < 10; sayac++) {
                 if (sayac == indexFromCounter) {
-                    console.log("sayac " + sayac)
-                    console.log("#map" + mesafeler[sayac].oldIndex)
-
-                    $("#map" + mesafeler[sayac].oldIndex).css('display', 'block')
-                    $("#lbl_mesafe" + mesafeler[sayac].oldIndex).css('display', 'block');
+                    $("#map" + nobetciEczaneler[sayac].oldIndex).css('display', 'block')
+                    $("#lbl_mesafe" + nobetciEczaneler[sayac].oldIndex).css('display', 'block');
                 }
                 else {
-                    $("#map" + mesafeler[sayac].oldIndex).css('display', 'none')
-                    $("#lbl_mesafe" + mesafeler[sayac].oldIndex).css('display', 'none');
+                    $("#map" + nobetciEczaneler[sayac].oldIndex).css('display', 'none')
+                    $("#lbl_mesafe" + nobetciEczaneler[sayac].oldIndex).css('display', 'none');
                 }
-            });
+            }
 
-            //for (var sayac = 0; sayac < 10; sayac++) {
-            //    if (sayac == indexFromCounter) {
-            //        $("#map" + sayac).css('display', 'block')
-            //        $("#lbl_mesafe" + sayac).css('display', 'block');
-            //    }
-            //    else {
-            //        $("#map" + sayac).css('display', 'none')
-            //        $("#lbl_mesafe" + sayac).css('display', 'none');
-            //    }
-            //}
-
-            //console.log('banttaki durum counter: ' + counter)
             counter++;
+            //alert('counter: ' + counter)
             setTimeout(
                 banttanYayinla,//(directionsService, directionsDisplay), /* Request next message  */
                 5000 /* ..after ms seconds */
@@ -1147,28 +893,18 @@
                     //alert('OK')
                     mydirectionsDisplay.setDirections(result);
                     var mesafem = mesafeHesapla(startOptions.coordinates, endOptions.coordinates)
-                    var indexFromCounter = counter - 2; //-2
-                    console.log('indexFromCounter: ' + indexFromCounter)
+                    var indexFromCounter = counter - 2;
                     if (mesafeCounter < 10) {
                         var newElement = {
                             adi: model.NobetciEczaneler[mesafeCounter].Adi,
-                            koordinatx: model.NobetciEczaneler[mesafeCounter].Enlem,
-                            koordinaty: model.NobetciEczaneler[mesafeCounter].Boylam,
-                            tel: model.NobetciEczaneler[mesafeCounter].TelefonNo,
-                            adres: model.NobetciEczaneler[mesafeCounter].Adres,
-                            adresTarifi: model.NobetciEczaneler[mesafeCounter].AdresTarifiKisa,
                             mesafe: parseInt(mesafem.toFixed(0)),
-                            //Index: indexFromCounter,
-                            oldIndex: indexFromCounter,
+                            Index: indexFromCounter
                         }
                         $("#lbl_mesafe" + mesafeCounter).text(" " + mesafem.toFixed(0) + "m.");
                         mesafeler.push(newElement)
                     }
                     mesafeCounter++;
-                    console.log('mesafeCounter: ' + mesafeCounter)
-                    //if (mesafeCounter == 11) {
-                    //    alert("mesafeCounter= 11")
-                    //}
+                    //alert('mesafeCounter: ' + mesafeCounter)
                 }
                 else {
                     //window.alert('Directions request failed due to ' + status);
@@ -1176,7 +912,7 @@
                     $("#lbl_mesafe0").css('background-color', '#ff0000');
                 }
 
-                //console.log(result, status);
+                console.log(result, status);
             });
 
             var indexFromCounter = counter - 1;
@@ -1293,9 +1029,9 @@
             var saat = today.getHours();
 
             if (parseInt(saat) >= 8)
-                $('#lbl_tarih').text(getDate() + ' 18:00 - ' + getTomorrow() + ' 08:00'); //tarihleri arası nöbet listesi
+                $('#lbl_tarih').text(getDate() + ' 18:00 - ' + getTomorrow() + ' 08:00 tarihleri arası nöbet listesi');
             else
-                $('#lbl_tarih').text(getYesterday() + ' 18:00 - ' + getDate() + ' 08:00'); //tarihleri arası nöbet listesi
+                $('#lbl_tarih').text(getYesterday() + ' 18:00 - ' + getDate() + ' 08:00 tarihleri arası nöbet listesi');
 
             return distance;
         }
@@ -1422,15 +1158,9 @@
                 }
             });
         }
-
-
         function quickSort(items, left, right) {
 
-            //console.log("quickSort")
-
             var index;
-
-            //console.log(items.length)
 
             if (items.length > 1) {
 

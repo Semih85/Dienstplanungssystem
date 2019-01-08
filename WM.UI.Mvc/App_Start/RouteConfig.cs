@@ -44,6 +44,20 @@ namespace WM.UI.Mvc
             );
 
             routes.MapRoute(
+                name: "EczaneNobetSistemiDetaylar",
+                url: "eczane-nobet-sistemi-arayuzleri",
+                defaults: new { controller = "Home", action = "EczaneNobetSistemiDetaylar" },
+                namespaces: new string[] { "WM.UI.Mvc.Controllers" }
+            );
+
+            routes.MapRoute(
+                name: "DijitalTabela",
+                url: "online-nobetci-eczane-tabela-sistemi",
+                defaults: new { controller = "Home", action = "DijitalTabela" },
+                namespaces: new string[] { "WM.UI.Mvc.Controllers" }
+            );            
+
+            routes.MapRoute(
                 name: "Anasayfa",
                 url: "anaSayfa",
                 defaults: new { controller = "Home", action = "Index" },

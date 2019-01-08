@@ -50,30 +50,44 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
             var nobetUstGrupId = nobetUstGruplar.FirstOrDefault();
             //var nobetUstGrupId = 3;
-            int gun = DateTime.Today.Day;
-            int ay = DateTime.Today.Month;
-            int yil = DateTime.Today.Year;
             //ay = 10;
             //gun = 10;
+
             var gosterilecekTarih = DateTime.Today;
 
             var eczaneId = 69;
 
-            if (nobetUstGrupId != 2 || nobetUstGrupId != 3
-                //nobetUstGrupId == 1
-                )
-            {
-                nobetUstGrupId = 3;
-            }
+            //if (nobetUstGrupId != 2 || nobetUstGrupId != 3
+            //    //nobetUstGrupId == 1
+            //    )
+            //{
+            //    nobetUstGrupId = 3;
+            //}
 
-            if (nobetUstGrupId == 3)
+            if (nobetUstGrupId == 1)
+            {
+                eczaneId = 37;
+            }
+            else if (nobetUstGrupId == 2)
+            {
+                eczaneId = 69;
+            }
+            else if (nobetUstGrupId == 3)
             {
                 eczaneId = 600;
             }
-            //else if (nobetUstGrupId == 4)
-            //{
-            //    eczaneId = 857;
-            //}
+            else if (nobetUstGrupId == 4)
+            {
+                eczaneId = 857;
+            }
+            else if (nobetUstGrupId == 5)
+            {
+                eczaneId = 917;
+            }
+            else
+            {
+                eczaneId = 69;
+            }
 
             var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(gosterilecekTarih, nobetUstGrupId);
 

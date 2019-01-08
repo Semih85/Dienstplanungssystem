@@ -253,6 +253,22 @@
     <Content Include="Content\images\dijitalEkran.png" />
     <Content Include="Content\images\dijitalEkranKucuk.jpg" />
     <Content Include="Content\images\e0404d-delete-database-16.ico" />
+    <Content Include="Content\images\EczaneNobetSistemi\1_mazeretler.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\2_istekler.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\3_nobetYaz.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\3_nobetYazMersin.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\3_nobetYazMersin2.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\4_gunDagilimi.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\4_gunDagilimi3.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\5_gunFarklari.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\6_eczaneGrupEkrani-2.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\6_eczaneGrupEkrani.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\7_harita.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\arayuz-design.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\copKamyonu.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\digitalEkran.png" />
+    <Content Include="Content\images\EczaneNobetSistemi\DijitalEkran_Sistem.jpg" />
+    <Content Include="Content\images\EczaneNobetSistemi\nobetciEczanelerHarita.png" />
     <Content Include="Content\images\ekran.png" />
     <Content Include="Content\images\eniyiplansuresi.png" />
     <Content Include="Content\images\favicon-16x16.png" />
@@ -263,6 +279,7 @@
     <Content Include="Content\images\icon.png" />
     <Content Include="Content\images\Icons8-Windows-8-Data-Clear-Filters.ico" />
     <Content Include="Content\images\Icons8-Windows-8-Data-Empty-Filter.ico" />
+    <Content Include="Content\images\istatistik.jpg" />
     <Content Include="Content\images\istatistik_aylik.jpg" />
     <Content Include="Content\images\kahve rahatlığı.jpg" />
     <Content Include="Content\images\logo-nobetyaz.png" />
@@ -281,6 +298,7 @@
     <Content Include="Content\images\pin-308802_960_720.png" />
     <Content Include="Content\images\pm.png" />
     <Content Include="Content\images\preloader1.gif" />
+    <Content Include="Content\images\puko.png" />
     <Content Include="Content\images\qr-code_Semih_Nobetyaz_Vcard.png" />
     <Content Include="Content\images\saatArkaPlan.png" />
     <Content Include="Content\images\schedule1.png" />
@@ -292,6 +310,7 @@
     <Content Include="Content\images\MeoLogo.png" />
     <Content Include="Content\images\sudoku.jpg" />
     <Content Include="Content\images\sudoku2.png" />
+    <Content Include="Content\images\takvim_planlama.png" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\images\ui-icons_777620_256x240.png" />
@@ -698,6 +717,7 @@
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetMazeret\CreatePartial.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\Shared\ErrorDublicateRowPartial.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\Shared\ErrorPartial.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\IndexSiiyahBeyaz.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1222,6 +1242,7 @@
     <Content Include="Views\Home\DijitalTabela.cshtml" />
     <Content Include="Views\Home\NobetYazDetay.cshtml" />
     <Content Include="Views\Home\EczaneNobetSistemi.cshtml" />
+    <Content Include="Views\Home\EczaneNobetSistemiDetay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

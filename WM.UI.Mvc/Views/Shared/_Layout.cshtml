@@ -16,7 +16,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
+
     @if (ViewBag.MetaDescription != null)
     {
         <meta name="description" content="@ViewBag.MetaDescription" />
@@ -37,60 +37,72 @@
 <body>
 
     <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top mb-5" id="navbarAnaSayfa">
+        <div class="container">
+            <a class="navbar-brand" href="/"> <i class="fa fa-home fa-lg" title="Ana Sayfa" aria-hidden="true"></i>@*Nöbet Sistemi*@</a>
+            <ul class="navbar-nav">
+                <li class="nav-item d-md-none"> <a class="nav-link" href="whatsapp://send?text=@Request.Url" data-action="share/whatsapp/share"><span class="fa fa-whatsapp fa-lg"></span> Paylaş</a></li>
+            </ul>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor03">
+                <ul class="navbar-nav mr-auto">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top mb-5" style="background-color: #e3f2fd;" id="navbarAnaSayfa">
-        <a class="navbar-brand" href="/"> <i class="fa fa-home fa-lg" title="Ana Sayfa" aria-hidden="true"></i>@*Nöbet Sistemi*@</a>
-        <ul class="navbar-nav">
-            <li class="nav-item d-md-none"> <a class="nav-link" href="whatsapp://send?text=@Request.Url" data-action="share/whatsapp/share"><span class="fa fa-whatsapp fa-lg"></span> Paylaş</a></li>
-        </ul>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarColor03">
-            <ul class="navbar-nav mr-auto">
+                    @*<li class="nav-item active">
+                            <a class="nav-link" href="/"><i class="fa fa-home fa-lg" aria-hidden="true"></i> <span class="sr-only">(current)</span></a>
+                        </li>*@
 
-                @*<li class="nav-item active">
-                        <a class="nav-link" href="/"><i class="fa fa-home fa-lg" aria-hidden="true"></i> <span class="sr-only">(current)</span></a>
-                    </li>*@
+                    @* İletişim *@
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "NobetYaz", new { area="EczaneNobet"})">Nöbet Yaz</a>
+                        </li>
+                    }
 
-                @* İletişim *@
-                @if (Request.IsAuthenticated)
-                {
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index", "NobetYaz", new { area="EczaneNobet"})">Nöbet Yaz</a>
+                        <a class="nav-link" href="@Url.Action("NobetYazDetay","Home")">Detaylar</a>
                     </li>
-                }
+                    @*<li class="nav-item" id="navItemReferans">
+                            <a class="nav-link" href="#referanlarimiz">Referanslarmız</a>
+                        </li>*@
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Ürünlerimiz
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="@Url.Action("EczaneNobetSistemi","Home")">Eczane Nöbet Sistemi</a>
+                            @*<a class="dropdown-item" href="@Url.Action("EczaneNobetSistemiDetay","Home")">Eczane Nöbet Sistemi Detaylar</a>*@
+                            @*<a class="dropdown-item" href="@Url.Action("HemsireNobetYazDetay","Home")">Hemşire Nöbet Sistemi</a>*@
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="@Url.Action("DijitalTabela","Home")">Online Eczane Nöbet Tabelası</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://eniyiplan.com/" target="_blank" role="button">Faaliyetlerimiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.RouteUrl("Contact")">
+                            @*<span class="fa fa-envelope-open-o"></span>*@ İletişim
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav float-md-right">
+                    @*<li class="nav-item">
+                            <a class="nav-link" href="~/Content/images/Brosur.pdf" target="_blank"><span class="fa fa-file-o"></span> Broşür</a>
+                        </li>*@
+                    @*href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })">*@
 
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("NobetYazDetay","Home")">Detaylar</a>
-                </li>
-                <li class="nav-item" id="navItemReferans">
-                    <a class="nav-link" href="#referanlarimiz">Referanslarmız</a>
-                </li>
+                    @Html.Partial("_LoginPartial")
+                </ul>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="http://eniyiplan.com/" target="_blank" role="button">Faaliyetlerimiz</a>
-                </li>
+                @*<form class="form-inline">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Ara" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> <span class="fa fa-search"></span> </button>
+                    </form>*@
 
-            </ul>
-            <ul class="navbar-nav float-md-right">
-                @*<li class="nav-item">
-                        <a class="nav-link" href="~/Content/images/Brosur.pdf" target="_blank"><span class="fa fa-file-o"></span> Broşür</a>
-                    </li>*@
-                @*href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })">*@
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.RouteUrl("Contact")">
-                        <span class="fa fa-envelope-open-o"></span> İletişim
-                    </a>
-                </li>
-                @Html.Partial("_LoginPartial")
-            </ul>
-
-            @*<form class="form-inline">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Ara" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> <span class="fa fa-search"></span> </button>
-                </form>*@
-
+            </div>
         </div>
     </nav>
 

@@ -60,11 +60,12 @@
                         <th style="width:6%">
                             @Html.DisplayName("Durumu")
                         </th>
-                        <th style="width:10%">
+                        <th style="width:7%">
                             işlem
                         </th>
-                        <th style="width:5%">
-                        </th>
+                        <th style="width:0%"></th>
+                        <th style="width:0%"></th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -126,7 +127,7 @@
                                 </div>
                             </td>
                             <td>
-                                @{Html.RenderPartial("EczaneGrupDetayPartial", item.EczaneGrupDetaylar);}                                
+                                @{Html.RenderPartial("EczaneGrupDetayPartial", item.EczaneGrupDetaylar);}
                             </td>
                         </tr>
                     }
