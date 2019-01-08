@@ -101,7 +101,11 @@
                 <ul class="list-group list-group-flush text-left">
                     <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Siz sadece kurallarınızı <i class="fa fa-cogs text-danger" aria-hidden="true"></i> belirleyin.</li>
                     <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Saniyeler içinde <i class="fa fa-hourglass-end text-danger" aria-hidden="true"></i> nöbetleriniz yazılsın.</li>
-                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> İstatistiklerin <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i> keyfini çıkarın.</li>
+                    <li class="list-group-item">
+                        <i class="fa fa-check text-success" aria-hidden="true"></i>
+                        İstatistiklerin
+                        <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i> keyfini çıkarın.
+                    </li>
                 </ul>
 
             </div>
@@ -232,12 +236,12 @@
             <div class="col-md-6 mb-3 text-center">
                 <div class="card border-primary bg-light">
                     <div class="card-body">
-                        <a class="h4 card-link text-primary text-center" href="@Url.Action("EczaneNobetSistemi")"><span class="fa fa-hand-o-right"></span> Eczane Nöbet Sistemi</a>
+                        <a class="h4 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemi")"><span class="fa fa-hand-o-right"></span> Eczane Nöbet Sistemi</a>
                         <br />
                         @*<h4 class="card-title"><span class="text-danger">Eczane</span> Nöbet Sistemi</h4>*@
-                        <a title="Nöbetçi Eczaneleri Görmek için Tıklayınız." target="_blank" href="@Url.Action("NobetciEczaneler","NobetciEczaneHarita", new { area ="EczaneNobet" })">
+                        <a title="Nöbetçi Eczaneleri Görmek için Tıklayınız." target="_blank" href="@Url.RouteUrl("NobetciEczaneler")">
                             <img class="img-thumbnail mt-2" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme" style="height:50%; width:50%" />
-                        </a>                       
+                        </a>
 
                     </div>
                 </div>

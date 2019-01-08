@@ -44,9 +44,9 @@ namespace WM.UI.Mvc
             );
 
             routes.MapRoute(
-                name: "EczaneNobetSistemiDetaylar",
-                url: "eczane-nobet-sistemi-arayuzleri",
-                defaults: new { controller = "Home", action = "EczaneNobetSistemiDetaylar" },
+                name: "EczaneNobetSistemiDetay",
+                url: "eczane-nobet-sistemi-arayuzler",
+                defaults: new { controller = "Home", action = "EczaneNobetSistemiDetay" },
                 namespaces: new string[] { "WM.UI.Mvc.Controllers" }
             );
 
