@@ -18,7 +18,7 @@
 
     <div class="jumbotron jumbotron-fluid pt-4 pb-2 py-lg-5 mt-5 mb-lg-2 mb-1">
         <div class="container text-white">
-            <h1 class="display-4" style="font-size:300%">
+            <h1 class="display-4" style="font-size:250%">
                 <small class="text-danger bg-light" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">&nbsp;E&nbsp;</small> Nöbet Sistemi
             </h1>
             <p class="lead">
@@ -35,28 +35,9 @@
 <div class="container">
 
     <div class="row mb-3">
-        <div class="col-lg-8 text-center mt-2">
-            <h4>Ücretsiz demo için bize <a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> ulaşın. Hemen başlayalım.</h4>
-        </div>
-        <div class="col-lg-4 text-center ">
-            <div class="alert alert-success fade show px-0" role="alert">
-                @*alert-dismissible*@
-                @*WhatsApp ve Telefon Destek Hattı<br />*@
-                <i class="fa fa-question-circle"></i> Yardım
-                <i class="fa fa-phone"></i>
-                <a href="Tel:+905452710985" class="alert-link" style="text-decoration:none;">(0)545 - 271 09 85</a>
-                @*<span>(+90) 545 271 09 85</span>*@
-                @*<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>*@
-            </div>
-        </div>
-    </div>
-
-    <div class="row mb-3">
 
         <div class="col-12">
-            <div class="alert alert-info fade show" role="alert">
+            <div class="alert alert-info fade show font-weight-bold" role="alert">
                 <i class="fa fa-info-circle" aria-hidden="true"></i> Eczanelere nöbet yazımının
                 <a class="card-link" href="@Url.RouteUrl("NobetYazDetay")" target="_blank">klasik nöbet sistemlerinden </a>
                 farklı zorlukları vardır.
@@ -96,7 +77,7 @@
             <img class="img-fluid my-2" src="~/Content/images/EczaneNobetSistemi/arayuz-design.jpg" alt="Nöbetçi Eczaneler" />
         </div>
 
-        <div class="col-lg-4 mb-3">
+        <div class="col-lg-4 ">
 
             <ul class="list-group list-group-flush">
 
@@ -138,6 +119,25 @@
         </div>
     </div>
 
+
+    <div class="row mb-2">
+        <div class="col-lg-8 text-center mt-2">
+            <h4>Ücretsiz demo için bize <a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> ulaşın. Hemen başlayalım.</h4>
+        </div>
+        <div class="col-lg-4 text-center ">
+            <div class="alert alert-success fade show px-0" role="alert">
+                @*alert-dismissible*@
+                @*WhatsApp ve Telefon Destek Hattı<br />*@
+                <i class="fa fa-question-circle"></i> Yardım
+                <i class="fa fa-phone"></i>
+                <a href="Tel:+905452710985" class="alert-link" style="text-decoration:none;">(0)545 - 271 09 85</a>
+                @*<span>(+90) 545 271 09 85</span>*@
+                @*<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+            </div>
+        </div>
+    </div>
 
     @*<div class="row">
             <div class="col text-center">

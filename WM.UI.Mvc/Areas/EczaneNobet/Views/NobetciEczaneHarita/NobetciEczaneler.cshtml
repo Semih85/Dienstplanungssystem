@@ -203,35 +203,49 @@
 }
 <div class="container">
     <div class="row">
-        <div class="col">
+        <div class="col text-center">
 
-            <div class="form-inline mb-3">
-                <div class="form-group">
+            <form class="form-inline mb-3">
+                <div class="form-group mr-2 mr-lg-5 ">
+
+                    <a class="h5 my-2 card-link text-primary text-center" target="_blank" href="@Url.RouteUrl("EczaneNobetSistemi")">
+                        <span class="text-danger font-weight-bold" data-toggle="tooltip" data-placement="top" title="Eczaneler" style="border:solid; border-width:medium">&nbsp;E&nbsp;</span> Nöbet Sistemi
+                        @*<span class="fa fa-hand-o-up"></span> Eczane Nöbet Sistemi*@
+                    </a>
+                </div>
+
+                <div class="form-group mr-lg-5">
+                    @*@Html.LabelFor(model => model.NobetUstGrupId, "Eczacı Odası", htmlAttributes: new { @class = "control-label mr-2" })*@
+
+                    @*<strong class="mr-2 ">Eczacı Odası</strong>*@
                     @Html.DropDownList("NobetUstGrupId", null, htmlAttributes: new { @class = "form-control selectpicker mr-4",
-                   data_width = "auto",
-                   mobile = "true",
-                   data_live_search = "true",
-                   title = "Oda Seçiniz..."
-               }
-               //,optionLabel:"---Tümü---"
-               )
+                       data_width = "auto",
+                       mobile = "true",
+                       data_live_search = "true",
+                       title = "Oda Seçiniz..."
+                       }
+                       //,optionLabel:"---Tümü---"
+                       )
                     @Html.ValidationMessageFor(model => model.NobetUstGrupId, "", new { @class = "text-danger" })
 
                 </div>
-                <div class="input-group mr-2">
-                    <strong class="mr-2 mt-2">Nöbet Tarihi</strong>
-                    <div class="mr-3" data-toggle="tooltip" data-placement="top" title="Değiştirmek İçin Tıklayınız !">
-                        @Html.TextBoxFor(model => model.NobetTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "NobetTarihi", style = "width:98px;" })
-                        @Html.ValidationMessageFor(model => model.NobetTarihi, "", new { @class = "text-danger" })
-                    </div>
+                <div class="form-group text-center">
+                    @*<strong class="mr-2 mt-0">Nöbet Tarihi</strong>*@
+                    @*<label for="NobetTarihi" class="sr-only">Password</label>*@
+                    @*@Html.LabelFor(model => model.NobetTarihi, "Tarih", htmlAttributes: new { @class = "control-label mr-2" })*@
+                                        
+                    @Html.TextBoxFor(model => model.NobetTarihi, new { @class = "form-control datepicker text-center", title = "Tarihi Değiştirmek İçin Tıklayınız !", autocomplete = "off", placeHolder = "NobetTarihi", style = "width:110px;" })
+                    @Html.ValidationMessageFor(model => model.NobetTarihi, "", new { @class = "text-danger" })
                     <span class="mt-2" id="labelSaat" style="display:none">
                         <label id="lbl_saat"></label>
                     </span>
                 </div>
-                <h5 class="mt-2">
-                    <span class="text-danger font-weight-bold" data-toggle="tooltip" data-placement="top" title="Eczaneler" style="border:solid; border-width:medium">&nbsp;E&nbsp;</span> Nöbetçi Eczaneler
-                </h5>
-            </div>
+                @*<h5 class="mt-2 mr-5">
+                        <span class="text-danger font-weight-bold" data-toggle="tooltip" data-placement="top" title="Eczaneler" style="border:solid; border-width:medium">&nbsp;E&nbsp;</span> Nöbetçi Eczaneler
+                    </h5>*@
+
+
+            </form>
 
         </div>
 

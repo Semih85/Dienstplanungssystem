@@ -18,7 +18,7 @@
 
     <div class="jumbotron jumbotron-fluid py-3 py-lg-5 mt-5 mb-lg-2 mb-1">
         <div class="container text-white">
-            <h1 class="display-4 mt-3 mt-lg-0" style="font-size:300%" id="jumbotronYazi">Zaman Size Kalsın</h1>
+            <h1 class="display-4 mt-3 mt-lg-0" style="font-size:250%" id="jumbotronYazi">Zaman Size Kalsın</h1>
             @*<p class="lead">Detaylar</p>*@
             @*<hr class="my-4 bg-info text-left w-50" align="left">*@
             <p class="lead">
@@ -56,15 +56,15 @@
         <div class="row ">
 
             <div class="col-lg-8 mb-2">
-                <div class="row mb-3">
+                <div class="row mb-lg-2 ">
 
-                    <div class="col-md-2 text-center pt-lg-2 mb-2 d-md-none">
-                        <img class="img-fluid" src="~/Content/images/takvim_planlama.png" style="width:35%" />
+                    <div class="col-md-2 text-center pt-lg-2 mb-3 d-md-none">
+                        <img class="img-fluid" src="~/Content/images/takvim_planlama.png" style="width:30%" />
                         <br />
                         <span class="font-weight-bold">Planlama</span>
                     </div>
 
-                    <div class="col-md-2 text-center pt-lg-2 mb-2 d-none d-md-block">
+                    <div class="col-md-2 text-center pt-lg-2 mb-3 d-none d-md-block">
                         <img class="img-fluid" src="~/Content/images/takvim_planlama.png" />
                         <br />
                         <span class="font-weight-bold">Planlama</span>
@@ -76,17 +76,18 @@
                             Nöbet yazmak <strong>sanıldığı kadar kolay olmayan</strong> ve çok bileşenli bir problemdir.
                             @*Genellikle nöbet yazan kişiler bu durumun farkındadır.*@
                             @*<strong class="text-danger">Nöbet listeleri binbir emek, zaman ve fazlaca zihin yorgunluğu harcanarak hazırlanmaktadır. </strong>*@
-                            Her listede gözetilmesi gereken çok sayıda <strong>nöbet kuralları</strong> vardır.
-                            Çünkü her bir nöbetçinin diğer hangi nöbetçilerle, hangi gün ve hangi görev tipinde (gece, gündüz nöbeti vb.) nöbet yazılacağına karar verilir.
-                            Problemin yapısı gereği <strong class="text-danger">binlerce kombinasyon olduğundan</strong>
-                            <strong>elle çözüm bulmak bir yana yazılım ile dahi çözüm bulmak oldukça zordur</strong>.
+                            Bu problemde -en yalın haliyle- hangi periyotta hangi nöbetçilere görev yazılacağına karar verilir.
+                            Ancak ihtiyaca göre, çok sayıda <strong>nöbet kuralları</strong> probleme ilave olmaktadır.
+                            Problemin yapısı gereği <strong class="text-danger">binlerce kombinasyon olduğundan </strong>
+                            çözümü <strong>elle bulmak bir yana yazılım ile dahi oldukça zordur</strong>.
+                            @*Bu süreç her bir nöbet periyodu sonunda tekrar ele alınır.*@
                         </p>
                     </div>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="text-center mb-2 pr-3 d-md-none">
-                        <img class="img-fluid" src="~/Content/images/istatistik.jpg" style="width:50%" />
+                <div class="row mb-lg-3 mb-2">
+                    <div class="text-center mb-3 pr-3 d-md-none">
+                        <img class="img-fluid" src="~/Content/images/istatistik.jpg" style="width:40%" />
                         <br />
                         <span class="font-weight-bold">İstatistik</span>
                     </div>
@@ -116,13 +117,13 @@
                 </div>
 
                 <div class="row mb-3">
-                    <div class="col-md-2 text-center mb-2 d-md-none">
-                        <img class="img-fluid" src="~/Content/images/puko.png" style="width:50%" />
+                    <div class="col-md-2 text-center mb-3 d-md-none">
+                        <img class="img-fluid" src="~/Content/images/puko.png" style="width:40%" />
                         <br />
                         <span class="font-weight-bold">Uygulama</span>
                     </div>
 
-                    <div class="col-md-2 text-center mb-2 d-none d-md-block">
+                    <div class="col-md-2 text-center mb-3 d-none d-md-block">
                         <img class="img-fluid" src="~/Content/images/puko.png" />
                         <br />
                         <span class="font-weight-bold">Uygulama</span>
@@ -134,7 +135,7 @@
                             Bir başka handikap ise <strong>sonradan çıkan mazeretlerin</strong> kurallar ihlal edilmeden göz önünde bulundurulmasıdır.
                             @*Ayrıca, nöbet yazılan periyotlar uzun bile olsa bu döngü çok geçmeden tekrar sizi bulacaktır.*@
                             Bu yönüyle <strong class="text-danger">nöbet yazma süreci fazlasıyla zaman, emek ve zihin yorgunluğu oluşturmaktadır.</strong>
-                            Bir de olası bir hatada gelecek itirazlar dikkate alındığında <strong>nöbet sisteminin varlığı önem kazanmaktadır.</strong>
+                            Bir de olası bir hatada gelecek itirazlar dikkate alındığında <strong>"Nöbet Sistemi"nin varlığı önem kazanmaktadır.</strong>
                             @*Yukarıdaki örneklere gerçek hayattaki ihtiyaca göre çok daha farklı kombinasyonlar da eklenebilecektir.*@
                         </p>
 
@@ -165,9 +166,10 @@
 
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">1</span> Bir ya da birden çok nöbet grubu olsun.</li>
-                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">2</span> Nöbetçiler bir gruptan diğerine geçebilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">2</span> Nöbetçiler grup değiştirebilsin.</li>
                             <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">3</span> Gruplara yeni nöbetçiler eklenebilsin.</li>
                             <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">4</span> Nöbetçiler gruplardan çıkabilsin.</li>
+                            @*<li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">2</span> Farklı tiplerde görevler olabilsin.</li>*@
                             <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">5</span> Nöbet değişimleri yapılabilsin.</li>
                             <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">6</span> Günlük nöbetçi ihtiyacı değişken olsun.</li>
                             <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">7</span> Pazar, hafta içi ve bayram özel takip edilsin.</li>
@@ -184,7 +186,7 @@
                             <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">11</span> Geçerli mazeretler dikkate alınsın.</li>
                             <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">12</span> Herhangi iki nöbetçi sürekli aynı gün nöbet tutmasın.</li>
                             <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">13</span> Nöbetçilerden bazıları birbiri ile aynı gün nöbet tutamasın.</li>
-                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">14</span> Nöbet gruplarının alt grupları da olabilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">14</span> Nöbet alt grupları da olabilsin.</li>
                             <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">15</span> Peş peşe günlerde yazılan nöbetler grubun büyüklüğü ile orantılı olsun.</li>
                         </ul>
 
