@@ -20,6 +20,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.BaslangicTarihi).HasColumnName("BaslangicTarihi");
             this.Property(t => t.BitisTarihi).HasColumnName("BitisTarihi");
             this.Property(t => t.Aciklama).HasColumnName("Aciklama");
+            this.Property(t => t.Enlem).HasColumnName("Enlem");
+            this.Property(t => t.Boylam).HasColumnName("Boylam");
             // Properties 
 
             this.Property(t => t.Id)

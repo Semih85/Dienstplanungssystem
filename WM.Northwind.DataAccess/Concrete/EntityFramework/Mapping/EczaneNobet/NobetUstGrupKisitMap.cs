@@ -26,6 +26,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.SagTarafDegeriVarsayilan).HasColumnName("SagTarafDegeriVarsayilan");
             this.Property(t => t.PasifMi).HasColumnName("PasifMi");
             this.Property(t => t.VarsayilanPasifMi).HasColumnName("VarsayilanPasifMi");
+            this.Property(t => t.Aciklama).HasColumnName("Aciklama");
             #endregion
 
             #region properties
@@ -35,6 +36,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.PasifMi).IsRequired();
             this.Property(t => t.VarsayilanPasifMi).IsRequired();
             this.Property(t => t.SagTarafDegeri).IsRequired();
+            this.Property(t => t.Aciklama).HasMaxLength(200);
+
             this.Property(t => t.NobetUstGrupId)
                 .IsRequired()
                 .HasColumnAnnotation("Index",

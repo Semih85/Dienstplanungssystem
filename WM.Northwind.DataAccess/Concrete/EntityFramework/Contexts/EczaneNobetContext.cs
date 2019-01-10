@@ -98,6 +98,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<NobetAltGrup> NobetAltGruplar { get; set; }
         public DbSet<Takvim> Takvimler { get; set; }
         public DbSet<EczaneGorevTip> EczaneGorevTipler { get;  set; }
+        public DbSet<NobetDurumTip> NobetDurumTipler { get;  set; }
+        public DbSet<NobetDurum> NobetDurumlar { get;  set; }
+
         #endregion
 
         #region Mapping
@@ -116,6 +119,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new MenuMap());
             modelBuilder.Configurations.Add(new MenuAltMap());
             #endregion
+
             modelBuilder.Configurations.Add(new UserEczaneOdaMap());
             modelBuilder.Configurations.Add(new UserNobetUstGrupMap());
             modelBuilder.Configurations.Add(new UserEczaneMap());
@@ -179,7 +183,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new EczaneNobetFeragatMap());
             modelBuilder.Configurations.Add(new EczaneNobetDegisimMap());
             modelBuilder.Configurations.Add(new EczaneNobetSonucEskiMap());
-            
+            modelBuilder.Configurations.Add(new NobetDurumTipMap());
+            modelBuilder.Configurations.Add(new NobetDurumMap());
+
             #endregion
         }
         #endregion

@@ -17,6 +17,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public double SagTarafDegeriVarsayilan { get; set; }
         public bool PasifMi { get; set; }
         public bool VarsayilanPasifMi { get; set; }
+        public string Aciklama { get; set; }
 
         public virtual Kisit Kisit { get; set; }
         public virtual NobetUstGrup NobetUstGrup { get; set; }
