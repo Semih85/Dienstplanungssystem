@@ -34,6 +34,18 @@
                 @Html.DropDownList("NobetOzelGunId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.NobetOzelGunId, "", new { @class = "text-danger" })
             </div>
+
+        </div>
+
+        <div class="form-row mx-2">
+            <div class="form-group col-md-5">
+                @Html.LabelFor(model => model.AgirlikDegeri, "Puan Değeri", null)
+                @Html.TextBox("AgirlikDegeri", null , new { @class = "form-control mr-2 pl-3",
+                                   placeHolder = "Puan değerini giriniz.."
+                               })
+                @Html.ValidationMessageFor(model => model.AgirlikDegeri, "", new { @class = "text-danger" })
+            </div>
+
         </div>
 
         <div class="form-group">
@@ -60,6 +72,7 @@
             @Html.DropDownList("NobetGunKuralId", null, htmlAttributes: new { @class = "form-control selectpicker", disabled = true, title = "Farklı görünmesi istenen haftanın günü" })
             @Html.ValidationMessageFor(model => model.NobetGunKuralId, "", new { @class = "text-danger" })
         </div>
+        <hr />
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -113,6 +126,15 @@
                 $('.selectpicker').selectpicker('refresh');
             }
         });
-        
+
+        $(function () {
+            //ready
+
+            if ($("#AgirlikDegeri").val() != null || $("#AgirlikDegeri").val() != 0) {
+                $("#AgirlikDegeri").val(1)
+            }
+
+        });
+
     </script>
 }

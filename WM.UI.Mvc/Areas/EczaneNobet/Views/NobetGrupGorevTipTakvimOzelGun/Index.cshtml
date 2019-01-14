@@ -68,6 +68,9 @@
                 <th style="width:12%">
                     @Html.DisplayName("Tarih")
                 </th>
+                <th style="width:4%">
+                    @Html.DisplayName("Puan")
+                </th>
                 <th style="width:10%"></th>
             </tr>
         </thead>
@@ -111,6 +114,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Tarih)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AgirlikDegeri)
                     </td>
                     <td>
                         @{

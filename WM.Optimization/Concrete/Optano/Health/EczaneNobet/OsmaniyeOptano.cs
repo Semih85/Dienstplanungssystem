@@ -459,13 +459,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     var kpHerAyHaftaIciPespeseGorev = new KpHerAyHaftaIciPespeseGorev
                     {
                         Model = model,
-                        //Tarihler = tarihler,
                         HaftaIciGunleri = haftaIciGunleri,
                         HaftaIciOrtamalaNobetSayisi = haftaIciOrtamalaNobetSayisi,
                         EczaneNobetGrup = eczaneNobetGrup,
                         EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
-                        PespeseNobetSayisiAltLimit = gruptakiEczaneSayisi * 0.6, //altLimit,
+                        PespeseNobetSayisiAltLimit = gruptakiEczaneSayisi * 0.6,// / gunlukNobetciSayisi, //altLimit,
                         NobetUstGrupKisit = haftaIciPespeseGorevEnAz,
+                        //GunlukNobetciSayisi = gunlukNobetciSayisi,
                         KararDegiskeni = _x
                     };
                     HerAyHaftaIciPespeseGorev(kpHerAyHaftaIciPespeseGorev);

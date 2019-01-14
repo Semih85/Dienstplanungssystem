@@ -43,7 +43,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Kisit> Kisitlar { get; set; }
         public DbSet<KisitKategori> KisitKategoriler { get; set; }
         public DbSet<NobetUstGrupKisit> NobetUstGrupKisitlar { get; set; }
-        public DbSet<EczaneNobetFeragat> EczaneNobetFeragatlar { get; set; }        
+        public DbSet<EczaneNobetFeragat> EczaneNobetFeragatlar { get; set; }
         public DbSet<EczaneNobetDegisim> EczaneNobetDegisimler { get; set; }
 
         public DbSet<Sehir> Sehirler { get; set; }
@@ -61,7 +61,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<NobetUstGrupGunGrup> NobetUstGrupGunGruplar { get; set; }
         public DbSet<NobetGrupGorevTipTakvimOzelGun> NobetGrupGorevTipTakvimOzelGunler { get; set; }
         public DbSet<NobetOzelGun> NobetOzelGunler { get; set; }
-        
+
 
         #region Eczane Nöbet
         public DbSet<NobetKural> NobetKurallar { get; set; }
@@ -87,7 +87,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<EczaneNobetSonucDemo> EczaneNobetSonucDemolar { get; set; }
         public DbSet<NobetSonucDemoTip> NobetSonucDemoTipler { get; set; }
         public DbSet<AyniGunTutulanNobet> AyniGunTutulanNobetler { get; set; }
-        
+
         public DbSet<EczaneOda> EczaneOdalar { get; set; }
         public DbSet<Istek> Istekler { get; set; }
         public DbSet<Mazeret> Mazeretler { get; set; }
@@ -97,9 +97,11 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<NobetGrup> NobetGruplar { get; set; }
         public DbSet<NobetAltGrup> NobetAltGruplar { get; set; }
         public DbSet<Takvim> Takvimler { get; set; }
-        public DbSet<EczaneGorevTip> EczaneGorevTipler { get;  set; }
-        public DbSet<NobetDurumTip> NobetDurumTipler { get;  set; }
-        public DbSet<NobetDurum> NobetDurumlar { get;  set; }
+        public DbSet<EczaneGorevTip> EczaneGorevTipler { get; set; }
+        public DbSet<NobetDurumTip> NobetDurumTipler { get; set; }
+        public DbSet<NobetDurum> NobetDurumlar { get; set; }
+        public DbSet<KalibrasyonTip> KalibrasyonTipler { get; set; }
+        public DbSet<Kalibrasyon> Kalibrasyonlar { get; set; }
 
         #endregion
 
@@ -123,11 +125,11 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new UserEczaneOdaMap());
             modelBuilder.Configurations.Add(new UserNobetUstGrupMap());
             modelBuilder.Configurations.Add(new UserEczaneMap());
-            
+
             modelBuilder.Configurations.Add(new SehirMap());
             modelBuilder.Configurations.Add(new IlceMap());
             modelBuilder.Configurations.Add(new EczaneIlceMap());
-            
+
             modelBuilder.Configurations.Add(new GorevTipMap());
             modelBuilder.Configurations.Add(new NobetGorevTipMap());
             modelBuilder.Configurations.Add(new NobetGrupGorevTipMap());
@@ -140,7 +142,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new NobetUstGrupGunGrupMap());
             modelBuilder.Configurations.Add(new NobetGrupGorevTipTakvimOzelGunMap());
             modelBuilder.Configurations.Add(new NobetOzelGunMap());
-            
+
 
             #region Eczane Nöbet
             modelBuilder.Configurations.Add(new BayramMap());
@@ -173,7 +175,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new NobetUstGrupMap());
             modelBuilder.Configurations.Add(new NobetGrupMap());
             modelBuilder.Configurations.Add(new NobetAltGrupMap());
-            modelBuilder.Configurations.Add(new TakvimMap()); 
+            modelBuilder.Configurations.Add(new TakvimMap());
             modelBuilder.Configurations.Add(new EczaneGorevTipMap());
 
             modelBuilder.Configurations.Add(new EczaneGrupTanimTipMap());
@@ -185,6 +187,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new EczaneNobetSonucEskiMap());
             modelBuilder.Configurations.Add(new NobetDurumTipMap());
             modelBuilder.Configurations.Add(new NobetDurumMap());
+            modelBuilder.Configurations.Add(new KalibrasyonTipMap());
+            modelBuilder.Configurations.Add(new KalibrasyonMap());
 
             #endregion
         }

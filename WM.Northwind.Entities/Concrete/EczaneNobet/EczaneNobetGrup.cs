@@ -16,14 +16,14 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public int NobetGrupGorevTipId { get; set; }
 
         [DataType(DataType.DateTime)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]        
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Başlangıç Tarihi")]
         public DateTime BaslangicTarihi { get; set; }
         //Bitiş tarihi null ise, bu eczane o grupta aktiftir.
         [Display(Name = "Bitiş Tarihi")]
         public DateTime? BitisTarihi { get; set; }
         [Display(Name = "Açıklama")]
-        public string Aciklama { get; set; }                        
+        public string Aciklama { get; set; }
 
         public virtual Eczane Eczane { get; set; }
         //public virtual NobetGrup NobetGrup { get; set; }
@@ -39,6 +39,8 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
 
         public virtual List<EczaneNobetMazeret> EczaneNobetMazeretler { get; set; }
         public virtual List<EczaneNobetIstek> EczaneNobetIstekler { get; set; }
-        public virtual List<EczaneNobetDegisim> EczaneNobetDegisimler { get; set; }        
+        public virtual List<EczaneNobetDegisim> EczaneNobetDegisimler { get; set; }
+        public virtual List<Kalibrasyon> Kalibrasyonlar { get; set; }        
+
     }
 }

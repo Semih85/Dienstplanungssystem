@@ -23,6 +23,11 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int EczaneNobetGrupId { get; set; }
         public int NobetUstGrupId { get; set; }
         public int NobetAltGrupId { get; set; }
+        public int NobetDurumId { get; set; }
+        public int NobetDurumTipId { get; set; }
+        public string NobetDurumAdi { get; set; }
+        public string NobetDurumTipAdi { get; set; }
+
         public string NobetAltGrupAdi { get; set; }
 
         public int NobetGrupId { get; set; }

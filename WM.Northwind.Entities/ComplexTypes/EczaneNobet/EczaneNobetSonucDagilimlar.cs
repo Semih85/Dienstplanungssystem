@@ -30,6 +30,11 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string NobetTipi { get; set; }
         public string EczaneSonucAdi { get; set; }
         public string AyIkili { get; set; }
-        public string Mevsim { get; set; }        
+        public string Mevsim { get; set; }
+
+        //public int NobetDurumId { get; set; }
+        //public int NobetDurumTipId { get; set; }
+        public string NobetDurumAdi { get; set; }
+        public string NobetDurumTipAdi { get; set; }
     }
 }

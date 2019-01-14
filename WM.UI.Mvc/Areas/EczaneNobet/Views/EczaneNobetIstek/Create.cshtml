@@ -180,6 +180,15 @@
 
             secilenEczaneSayisi = $("#EczaneNobetGrupId :selected").length;
 
+            var basTarihi = new Date(baslangicTarihi);
+            var bitTarihi = new Date(bitisTarihi);
+
+            var secilenGunSayisi = new Date(bitTarihi - basTarihi);
+
+            days = secilenGunSayisi / 1000 / 60 / 60 / 24;
+
+            return confirm(secilenEczaneSayisi + ' eczaneye ' + parseInt(Math.round(days) + 1) + ' günlük istek eklensin mi?');
+
             if (secilenEczaneSayisi == 0) {
                 alert("Lütfen en az 1 eczane seçiniz...")
                 e.preventDefault();

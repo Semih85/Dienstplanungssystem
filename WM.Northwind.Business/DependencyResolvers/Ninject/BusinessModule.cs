@@ -212,6 +212,12 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<INobetUstGrupGunGrupService>().To<NobetUstGrupGunGrupManager>().InSingletonScope();
             Bind<INobetUstGrupGunGrupDal>().To<EfNobetUstGrupGunGrupDal>();
 
+            Bind<INobetDurumService>().To<NobetDurumManager>().InSingletonScope();
+            Bind<INobetDurumDal>().To<EfNobetDurumDal>();
+
+            Bind<INobetDurumTipService>().To<NobetDurumTipManager>().InSingletonScope();
+            Bind<INobetDurumTipDal>().To<EfNobetDurumTipDal>();
+
             #endregion
 
             #region Optimization

@@ -25,6 +25,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         [Required]
         public int NobetOzelGunId { get; set; }
         public bool FarkliGunGosterilsinMi { get; set; }//true ise NobetGunKuralId, değilse -normalde- NobetGrupGorevTipGunKuralId
+        public double AgirlikDegeri { get; set; }
 
     }
 }

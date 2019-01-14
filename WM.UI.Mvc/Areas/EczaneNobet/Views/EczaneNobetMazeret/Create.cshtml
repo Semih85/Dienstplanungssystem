@@ -109,7 +109,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Ekle" id="formSubmitButton" class="btn btn-primary" />
+                <input type="submit" value="Ekle" id="formSubmitButton" class="btn btn-primary"  />
                 @Html.ActionLink("Eczane Nöbet Mazeret Listesine Dön", "Index", null, new { @class = "btn btn-warning" })
             </div>
         </div>
@@ -148,7 +148,7 @@
         });
 
         $('#EczaneNobetGrupId').selectpicker();
-
+            
         $("#BitisTarihi").change(function () {
 
             var baslangicStr = $("#BaslangicTarihi").val();
@@ -167,7 +167,7 @@
         });
 
         $("#formSubmitButton").click(function (e) {
-
+            
             var bitisTarihi = $('#BitisTarihi').val();
             var baslangicTarihi = $('#BaslangicTarihi').val();
 
@@ -191,6 +191,15 @@
                 e.preventDefault();
                 return false;
             };
+
+            var basTarihi = new Date(baslangicTarihi);
+            var bitTarihi = new Date(bitisTarihi);
+
+            var secilenGunSayisi = new Date(bitTarihi - basTarihi); 
+
+            days = secilenGunSayisi / 1000 / 60 / 60 / 24;
+
+            return confirm(secilenEczaneSayisi + ' eczaneye ' + parseInt(Math.round(days) + 1) + ' günlük mazeret eklensin mi?');
 
             secilenHaftaninGunuSayisi = $("#HaftaninGunu :selected").length;
 

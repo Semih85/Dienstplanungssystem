@@ -54,6 +54,8 @@
     <Compile Include="ComplexTypes\EczaneNobet\AyniGunNobetTutmayacakEczane.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\AyniGunTutulanNobetDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetIstekCoklu.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\KalibrasyonDetay.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\KalibrasyonTipDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\NobetDegisim.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetGrupAltGrupCoklu.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\NobetDurumDetay.cs" />
@@ -189,6 +191,8 @@
     <Compile Include="Concrete\EczaneNobet\EczaneNobetSonucPlanlanan.cs" />
     <Compile Include="Concrete\EczaneNobet\GorevTip.cs" />
     <Compile Include="Concrete\EczaneNobet\GunGrup.cs" />
+    <Compile Include="Concrete\EczaneNobet\Kalibrasyon.cs" />
+    <Compile Include="Concrete\EczaneNobet\KalibrasyonTip.cs" />
     <Compile Include="Concrete\EczaneNobet\Kisit.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetGrupAltGrup.cs" />
     <Compile Include="Concrete\EczaneNobet\KisitKategori.cs" />

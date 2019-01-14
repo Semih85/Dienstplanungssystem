@@ -18,6 +18,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
     [HandleError]
     public class NobetGrupGorevTipTakvimOzelGunController : Controller
     {
+        #region ctor
         private INobetGrupGorevTipTakvimOzelGunService _nobetGrupGorevTipTakvimOzelGunService;
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
         private INobetGrupGorevTipGunKuralService _nobetGrupGorevTipGunKuralService;
@@ -45,13 +46,16 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _nobetGunKuralService = nobetGunKuralService;
             _nobetGrupGorevTipGunKuralService = nobetGrupGorevTipGunKuralService;
         }
+        #endregion
         // GET: EczaneNobet/NobetGrupGorevTipTakvimOzelGun
         public ActionResult Index()
         {
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
 
-            var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGruplar);
+            var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGruplar)
+                .OrderBy(o => o.NobetGorevTipAdi)
+                .ThenBy(o => o.Tarih);
 
             return View(nobetGrupGorevTipTakvimOzelGunler);
         }
@@ -107,7 +111,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Tarih,NobetGunKuralId,NobetGrupGorevTipGunKuralId,FarkliGunGosterilsinMi,NobetOzelGunId")] TakvimOzelGunCoklu takvimOzelGunCoklu)
+        public ActionResult Create([Bind(Include = "Id,Tarih,NobetGunKuralId,NobetGrupGorevTipGunKuralId,FarkliGunGosterilsinMi,NobetOzelGunId,AgirlikDegeri")] TakvimOzelGunCoklu takvimOzelGunCoklu)
         {
             if (ModelState.IsValid)
             {
@@ -125,7 +129,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         : takvimOzelGunCoklu.NobetGunKuralId,
                         NobetGrupGorevTipGunKuralId = nobetGrupGorevTipGunKuralId,
                         NobetOzelGunId = takvimOzelGunCoklu.NobetOzelGunId,
-                        FarkliGunGosterilsinMi = takvimOzelGunCoklu.FarkliGunGosterilsinMi
+                        FarkliGunGosterilsinMi = takvimOzelGunCoklu.FarkliGunGosterilsinMi,
+                        AgirlikDegeri = takvimOzelGunCoklu.AgirlikDegeri
                     });
                 }
 
@@ -190,7 +195,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //.Where(w => w.Id <= 7)
             var nobetGrunKurallar = nobetGrupGorevTipGunKurallarTumu
                 .Select(s => new { s.NobetGunKuralId, s.NobetGunKuralAdi })
-                .Distinct() 
+                .Distinct()
                 .OrderBy(o => o.NobetGunKuralId)
                 .ToList();
 
@@ -207,7 +212,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TakvimId,NobetGunKuralId,NobetGrupGorevTipGunKuralId,FarkliGunGosterilsinMi,NobetOzelGunId")] NobetGrupGorevTipTakvimOzelGun nobetGrupGorevTipTakvimOzelGun)
+        public ActionResult Edit([Bind(Include = "Id,TakvimId,NobetGunKuralId,NobetGrupGorevTipGunKuralId,FarkliGunGosterilsinMi,NobetOzelGunId,AgirlikDegeri")] NobetGrupGorevTipTakvimOzelGun nobetGrupGorevTipTakvimOzelGun)
         {
             if (ModelState.IsValid)
             {

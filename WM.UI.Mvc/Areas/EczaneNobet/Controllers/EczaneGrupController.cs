@@ -381,7 +381,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     ViewBag.EklenenEczaneSayisi = eklenecekEczaneSayisi;
                     ViewBag.EklenenGrupAdi = _eczaneGrupTanimService.GetById(eczaneGrupCoklu.EczaneGrupTanimId).Adi;
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index","EczaneGrupTanim");
                 }
                 return RedirectToAction("Index");
 
@@ -441,7 +441,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             if (ModelState.IsValid)
             {
                 _eczaneGrupService.Update(eczaneGrup);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "EczaneGrupTanim");
+                //return RedirectToAction("Index");
             }
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);

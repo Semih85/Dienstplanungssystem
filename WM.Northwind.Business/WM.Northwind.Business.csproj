@@ -83,6 +83,8 @@
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetOrtakService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucPlanlananService.cs" />
     <Compile Include="Abstract\EczaneNobet\IGunGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IKalibrasyonService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IKalibrasyonTipService.cs" />
     <Compile Include="Abstract\EczaneNobet\IKisitKategoriService.cs" />
     <Compile Include="Abstract\EczaneNobet\IKisitService.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetDurumService.cs" />
@@ -168,6 +170,8 @@
     <Compile Include="Concrete\Managers\EczaneNobet\GorevTipManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\GunDegerManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\GunGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\KalibrasyonManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\KalibrasyonTipManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\KisitKategoriManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\KisitManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\MazeretTurManager.cs" />

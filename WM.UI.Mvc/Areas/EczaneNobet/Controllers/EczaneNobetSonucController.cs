@@ -385,7 +385,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         NobetAltGrubu = s.NobetAltGrupAdi,
                         EczaneId = s.EczaneId,
                         EczaneNobetGrupId = s.EczaneNobetGrupId,
-                        NobetGrupGorevTipId = s.NobetGrupGorevTipId
+                        NobetGrupGorevTipId = s.NobetGrupGorevTipId,
+                        NobetDurumAdi = s.NobetDurumAdi,
+                        NobetDurumTipAdi = s.NobetDurumTipAdi
                     }).ToList(),
                 GunFarklariTumSonuclar = gunFarklari,
                 GunFarklariFrekanslar = gunFarkiFrekanslar,

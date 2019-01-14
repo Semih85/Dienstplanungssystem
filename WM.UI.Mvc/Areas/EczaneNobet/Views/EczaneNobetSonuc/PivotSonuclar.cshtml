@@ -116,6 +116,12 @@
                         Aynı Gün <span class="d-none d-md-inline">Nöbet</span>
                     </a>
                 </li>
+
+                @*<li class="nav-item">
+                        <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-ayniGuneYazilanlar-tab" data-toggle="pill" href="#pills-ayniGuneYazilanlar" role="tab" aria-controls="pills-ayniGuneYazilanlar" aria-selected="true">
+                            Aynı Gün <span class="d-none d-md-inline">Nöbet</span>
+                        </a>
+                    </li>*@
             </ul>
         </div>
 
@@ -726,7 +732,7 @@
         var pivotAlanlariGosterGunOzetGrafik = false;
         var pivotAlanlariGosterGunDagilim = false;
         var pivotAlanlariGosterGunDagilimGrafikler = false;
-        
+
         //function getJsonDagilimlarTekli(url) {
         //    $.ajax({
         //        dataType: "json",
@@ -787,7 +793,11 @@
                             //["Nöbet Tip"]: n.NobetTipId,
                             ["Mazeret/İstek"]: n.NobetTipi,
                             ["Eczane Sonuç"]: n.EczaneSonucAdi,
-                            ["Alt Grup Adı"]: n.NobetAltGrubu
+                            ["Alt Grup Adı"]: n.NobetAltGrubu,
+
+                            ["Nöbet Durumu"]: n.NobetDurumAdi,
+                            ["Nöbet Durum Tipi"]: n.NobetDurumTipAdi,
+                            ["Sayı"]: 1
                         });
                     });
 
@@ -1061,7 +1071,7 @@
                         rows: ["Yıl-Ay", "Tarih", "Gün Grup"],
                         cols: ["Görev Tipi"],
                         vals: ["Eczane"],
-                        aggregatorName: "List Unique Values",
+                        aggregatorName: "Benzersiz Degerleri Listele",
                         //aggregators: {
                         //    "liste": $.pivotUtilities.aggregators.count
                         //},
@@ -1070,7 +1080,7 @@
                         //    "Tablo": $.pivotUtilities.renderers['Table']
                         //},
                         onRefresh: function (config) {
-                            $("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();                            
+                            $("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
                             //alert(0)
                             if (pivotAlanlariGosterNobetciListesi == false) {
                                 $("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
@@ -1097,50 +1107,55 @@
                             //    //}
                             //});
                         }
-                    });
+                    }
+                        //   , false, "fr"
+                    );
                 }
                 else {
-                    nobetciEczaneler = $("#nobetciEczaneListesi").pivotUI(dagilimlarPivot, {
-                        rows: ["Yıl-Ay", "Tarih", "Gün Grup"],
-                        cols: ["Nöbet Grubu"],
-                        vals: ["Eczane"],
-                        aggregatorName: "List Unique Values",
-                        //aggregators: {
-                        //    "liste": $.pivotUtilities.aggregators.count
-                        //},
-                        //rendererName: "Table",
-                        //renderers: {
-                        //    "Tablo": $.pivotUtilities.renderers['Table']
-                        //},
-                        onRefresh: function (config) {
-                            $("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();                            
+                    nobetciEczaneler = $("#nobetciEczaneListesi").pivotUI(dagilimlarPivot,
+                        {
+                            rows: ["Yıl-Ay", "Tarih", "Gün Grup"],
+                            cols: ["Nöbet Grubu"],
+                            vals: ["Eczane"],
+                            aggregatorName: "Benzersiz Degerleri Listele",
+                            //aggregators: {
+                            //    "liste": $.pivotUtilities.aggregators.count
+                            //},
+                            //rendererName: "Table",
+                            //renderers: {
+                            //    "Tablo": $.pivotUtilities.renderers['Table']
+                            //},
+                            onRefresh: function (config) {
+                                $("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
 
-                            if (pivotAlanlariGosterNobetciListesi == false) {
-                                $("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
-                                $("#nobetciEczaneListesi").parent().find('.pvtAxisContainer').hide();
-                                $("#nobetciEczaneListesi").parent().find('.pvtAttrDropdown').hide();
-                                $("#nobetciEczaneListesi").parent().find('.pvtRenderer').hide();
-                                $("#nobetciEczaneListesi").parent().find('.pvtVals').hide();
-                            }
-                            else {
-                                $("#nobetciEczaneListesi").parent().find('.pvtAggregator').show();
-                                $("#nobetciEczaneListesi").parent().find('.pvtAxisContainer').show();
-                                $("#nobetciEczaneListesi").parent().find('.pvtAttrDropdown').show();
-                                $("#nobetciEczaneListesi").parent().find('.pvtRenderer').show();
-                                $("#nobetciEczaneListesi").parent().find('.pvtVals').show();
-                            }
+                                if (pivotAlanlariGosterNobetciListesi == false) {
+                                    $("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+                                    $("#nobetciEczaneListesi").parent().find('.pvtAxisContainer').hide();
+                                    $("#nobetciEczaneListesi").parent().find('.pvtAttrDropdown').hide();
+                                    $("#nobetciEczaneListesi").parent().find('.pvtRenderer').hide();
+                                    $("#nobetciEczaneListesi").parent().find('.pvtVals').hide();
+                                }
+                                else {
+                                    $("#nobetciEczaneListesi").parent().find('.pvtAggregator').show();
+                                    $("#nobetciEczaneListesi").parent().find('.pvtAxisContainer').show();
+                                    $("#nobetciEczaneListesi").parent().find('.pvtAttrDropdown').show();
+                                    $("#nobetciEczaneListesi").parent().find('.pvtRenderer').show();
+                                    $("#nobetciEczaneListesi").parent().find('.pvtVals').show();
+                                }
 
-                            //$('#nobetciEczaneListesi .pvtAttrDropdown option').each(function () {
-                            //    //$(this).hide();
-                            //    if ($(this).val() != "Eczane") {
-                            //        $(this).remove();
-                            //    }
-                            //    //else {
-                            //    //    $(this).text("Liste");
-                            //    //}
-                            //});
+                                //$('#nobetciEczaneListesi .pvtAttrDropdown option').each(function () {
+                                //    //$(this).hide();
+                                //    if ($(this).val() != "Eczane") {
+                                //        $(this).remove();
+                                //    }
+                                //    //else {
+                                //    //    $(this).text("Liste");
+                                //    //}
+                                //});
+                            }
                         }
-                    });
+                        //   , false, "fr"
+                    );
                 }
             }
             else {
@@ -1173,8 +1188,8 @@
                             rows: ["Gün Grup"],
                             cols: ["Nöbet Grubu"], //, "GunDeger", "GunTanim"
                             vals: ["Nöbet Sayısı Farkı"],
-                            aggregatorName: "Sum",
-                            rendererName: "Stacked Bar Chart",
+                            aggregatorName: "Topla",
+                            rendererName: "Yigilmis Sutun Grafik",
                             renderers: $.extend(
                                 $.pivotUtilities.renderers,
                                 $.pivotUtilities.c3_renderers
@@ -1228,9 +1243,9 @@
                             {
                                 rows: ["Eczane"],
                                 cols: ["Görev Tipi", "Gün Grup"], //, "GunDeger", "GunTanim"
-                                vals: ["Nöbet Grubu"],
-                                aggregatorName: "Count",
-                                rendererName: "Heatmap",
+                                vals: ["Eczane"],
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi",
                                 onRefresh: function (config) {
                                     //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
                                     //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
@@ -1256,11 +1271,11 @@
                     gunDagilim = $(function table2() {
                         $("#gunDegerDagilim").pivotUI(dagilimlarPivot,
                             {
-                                rows: ["Nöbet Grubu", "Eczane"],
+                                rows: ["Eczane", "Eczane"],
                                 cols: ["Gün Grup"], //, "GunDeger", "GunTanim"
                                 vals: ["Nöbet Grubu"],
-                                aggregatorName: "Count",
-                                rendererName: "Heatmap",
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi",
                                 onRefresh: function (config) {
                                     //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
                                     //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
@@ -1310,10 +1325,10 @@
                         $("#gunDagilimGrafik").pivotUI(dagilimlarPivot,
                             {
                                 rows: ["Gün Grup"],
-                                cols: ["NöbetGrupGörevTipId", "Eczane"], //, "GunDeger", "GunTanim" "Görev Tipi", 
-                                vals: ["Nöbet Grubu"],
-                                aggregatorName: "Count",
-                                rendererName: "Stacked Bar Chart",
+                                cols: ["NöbetGrupGörevTipId", "Eczane"], //, "GunDeger", "GunTanim" "Görev Tipi",
+                                vals: ["Eczane"],
+                                aggregatorName: "Say",
+                                rendererName: "Yigilmis Sutun Grafik",
                                 renderers: $.extend(
                                     $.pivotUtilities.renderers,
                                     $.pivotUtilities.c3_renderers
@@ -1345,9 +1360,9 @@
                             {
                                 rows: ["Gün Grup"],
                                 cols: ["NöbetGrupGörevTipId", "Eczane"], //, "GunDeger", "GunTanim"
-                                vals: ["Nöbet Grubu"],
-                                aggregatorName: "Count",
-                                rendererName: "Stacked Bar Chart",
+                                vals: ["Eczane"],
+                                aggregatorName: "Say",
+                                rendererName: "Yigilmis Sutun Grafik",
                                 renderers: $.extend(
                                     $.pivotUtilities.renderers,
                                     $.pivotUtilities.c3_renderers
@@ -1403,8 +1418,8 @@
                                 rows: ["Görev Tipi", "Eczane"],
                                 cols: ["Yıl-Ay"],
                                 vals: ["Nöbet Grubu"],
-                                aggregatorName: "Count",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1416,8 +1431,8 @@
                                 rows: ["Nöbet Grubu", "Eczane"],
                                 cols: ["Yıl-Ay"],
                                 vals: ["Nöbet Grubu"],
-                                aggregatorName: "Count",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1452,8 +1467,8 @@
                                 rows: ["Görev Tipi", "Eczane"],
                                 cols: ["Yıl", "Mevsim"],
                                 vals: ["Nöbet Grubu"],
-                                aggregatorName: "Count",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1465,8 +1480,8 @@
                                 rows: ["Nöbet Grubu", "Eczane"],
                                 cols: ["Yıl", "Gün Grup", "Ay İkili"],
                                 vals: ["Nöbet Grubu"],
-                                aggregatorName: "Count",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1478,8 +1493,8 @@
                                 rows: ["Nöbet Grubu", "Eczane"],
                                 cols: ["Yıl", "Mevsim"],
                                 vals: ["Nöbet Grubu"],
-                                aggregatorName: "Count",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1514,8 +1529,8 @@
                                 rows: ["Görev Tipi", "Eczane"],
                                 cols: ["Yıl-Ay", "Tarih"],
                                 vals: ["Nöbet Grubu"],
-                                aggregatorName: "Count",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1527,8 +1542,8 @@
                                 rows: ["Nöbet Grubu", "Eczane"],
                                 cols: ["Yıl-Ay", "Tarih"],
                                 vals: ["Nöbet Grubu"],
-                                aggregatorName: "Count",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1634,8 +1649,8 @@
                                 rows: ["Gün Grup"],
                                 cols: ["Görev Tipi"],
                                 vals: ["Gün Farkı"],
-                                aggregatorName: "Maximum",
-                                rendererName: "Bar Chart",
+                                aggregatorName: "En Fazla",
+                                rendererName: "Sutun Grafik",
                                 renderers: $.extend(
                                     $.pivotUtilities.renderers,
                                     $.pivotUtilities.c3_renderers
@@ -1650,8 +1665,8 @@
                                 rows: ["Gün Grup"],
                                 cols: ["Nöbet Grubu"],
                                 vals: ["Gün Farkı"],
-                                aggregatorName: "Maximum",
-                                rendererName: "Bar Chart",
+                                aggregatorName: "En Fazla",
+                                rendererName: "Sutun Grafik",
                                 renderers: $.extend(
                                     $.pivotUtilities.renderers,
                                     $.pivotUtilities.c3_renderers
@@ -1689,8 +1704,8 @@
                                 rows: ["Nöbet Grubu", "Görev Tipi"],
                                 cols: ["Gün Grup"],
                                 vals: ["Gün Farkı"],
-                                aggregatorName: "Maximum",
-                                rendererName: "Heatmap",
+                                aggregatorName: "En Fazla",
+                                rendererName: "Sicaklik Haritasi",
                                 //renderers: $.extend(
                                 //    $.pivotUtilities.renderers,
                                 //    $.pivotUtilities.c3_renderers
@@ -1705,8 +1720,8 @@
                                 rows: ["Nöbet Grubu"],
                                 cols: ["Gün Grup"],
                                 vals: ["Gün Farkı"],
-                                aggregatorName: "Maximum",
-                                rendererName: "Heatmap",
+                                aggregatorName: "En Fazla",
+                                rendererName: "Sicaklik Haritasi",
                                 //renderers: $.extend(
                                 //    $.pivotUtilities.renderers,
                                 //    $.pivotUtilities.c3_renderers
@@ -1746,8 +1761,8 @@
                                 rows: ["Görev Tipi", "Gün Grup", "Nöbet Grubu"],
                                 cols: ["Gün Farkı"],
                                 vals: ["Eczane Sayısı"],
-                                aggregatorName: "Integer Sum",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Topla (Tamsayi)",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1759,8 +1774,8 @@
                                 rows: ["Gün Grup", "Nöbet Grubu"],
                                 cols: ["Gün Farkı"],
                                 vals: ["Eczane Sayısı"],
-                                aggregatorName: "Integer Sum",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Topla (Tamsayi)",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1796,8 +1811,8 @@
                                 rows: ["Görev Tipi", "Nöbet Grubu", "Gün Grup", "Index"],
                                 cols: ["N1Yıl", "N1Ay"],
                                 vals: ["Gün Farkı"],
-                                aggregatorName: "Count",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1809,8 +1824,8 @@
                                 rows: ["Nöbet Grubu", "Gün Grup", "Index"],
                                 cols: ["N1Yıl", "N1Ay"],
                                 vals: ["Gün Farkı"],
-                                aggregatorName: "Count",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1847,8 +1862,8 @@
                                 rows: ["Görev Tipi", "Nöbet Grubu", "Nöbet1", "Nöbet2", "Index", "Eczane"],
                                 cols: ["Gün Grup"],
                                 vals: ["Gün Farkı"],
-                                aggregatorName: "Integer Sum",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Topla (Tamsayi)",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1860,8 +1875,8 @@
                                 rows: ["Nöbet Grubu", "Nöbet1", "Nöbet2", "Index", "Eczane"],
                                 cols: ["Gün Grup"],
                                 vals: ["Gün Farkı"],
-                                aggregatorName: "Integer Sum",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Topla (Tamsayi)",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1897,8 +1912,8 @@
                                 rows: ["Görev Tipi", "Nöbet Grubu", "Nöbet2", "Nöbet1", "Index", "Eczane"],
                                 cols: ["Gün Grup"],
                                 vals: ["Gün Farkı"],
-                                aggregatorName: "Integer Sum",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Topla (Tamsayi)",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1910,8 +1925,8 @@
                                 rows: ["Nöbet Grubu", "Nöbet2", "Nöbet1", "Index", "Eczane"],
                                 cols: ["Gün Grup"],
                                 vals: ["Gün Farkı"],
-                                aggregatorName: "Integer Sum",
-                                rendererName: "Heatmap"
+                                aggregatorName: "Topla (Tamsayi)",
+                                rendererName: "Sicaklik Haritasi"
                             }
                         );
                     });
@@ -1987,8 +2002,8 @@
                             rows: ["Gün Grup"],
                             cols: ["BorçluGünSayısı"],
                             vals: ["BorçluGünSayısı"],
-                            aggregatorName: "Count", //"Count as Fraction of Total"
-                            rendererName: "Bar Chart",
+                            aggregatorName: "Say", //"Count as Fraction of Total"
+                            rendererName: "Sutun Grafik",
                             renderers: $.extend(
                                 $.pivotUtilities.renderers,
                                 $.pivotUtilities.c3_renderers
@@ -2027,8 +2042,8 @@
                             rows: ["Nöbet Grubu"],
                             cols: ["Gün Grup", "BorçluGünSayısı"],
                             vals: ["BorçluGünSayısı"],
-                            aggregatorName: "Count",
-                            rendererName: "Heatmap",
+                            aggregatorName: "Say",
+                            rendererName: "Sicaklik Haritasi",
                             renderers: $.extend(
                                 $.pivotUtilities.renderers,
                                 $.pivotUtilities.c3_renderers
@@ -2066,8 +2081,8 @@
                             rows: ["Gün Grup", "Nöbet Grubu", "AnahtarSıra", "AnahtarTarih", "Eczane", "SonNöbetTarihi", "NöbetSayısı"],
                             //cols: ["Gün Grup"],
                             vals: ["BorçluGünSayısı"],
-                            aggregatorName: "Integer Sum",
-                            rendererName: "Heatmap"
+                            aggregatorName: "Topla (Tamsayi)",
+                            rendererName: "Sicaklik Haritasi"
                         }
                     );
                 });
@@ -2145,8 +2160,8 @@
                             rows: ["Grup", "G1Eczane"],
                             cols: ["AltGrup"],
                             vals: ["AltGrup"],
-                            aggregatorName: "Count",
-                            rendererName: "Heatmap"
+                            aggregatorName: "Say",
+                            rendererName: "Sicaklik Haritasi"
                         }
                     );
                 });
@@ -2180,8 +2195,8 @@
                             rows: ["Grup", "G1Eczane"],
                             cols: ["Gün Grup", "AltGrup"],
                             vals: ["AltGrup"],
-                            aggregatorName: "Count",
-                            rendererName: "Heatmap"
+                            aggregatorName: "Say",
+                            rendererName: "Sicaklik Haritasi"
                         }
                     );
                 });
@@ -2214,8 +2229,8 @@
                             rows: ["Grup", "G1Eczane", "Gün Grup", "Tarih"],
                             cols: ["AltGrup"],
                             vals: ["AltGrup"],
-                            aggregatorName: "Count",
-                            rendererName: "Heatmap"
+                            aggregatorName: "Say",
+                            rendererName: "Sicaklik Haritasi"
                         }
                     );
                 });
@@ -2278,8 +2293,8 @@
                             rows: ["AynıGünNöbetSayısı"],
                             cols: ["Grup"],
                             vals: ["AynıGünNöbetSayısı"],
-                            aggregatorName: "Count",
-                            rendererName: "Bar Chart",
+                            aggregatorName: "Say",
+                            rendererName: "Sutun Grafik",
                             renderers: $.extend(
                                 $.pivotUtilities.renderers,
                                 $.pivotUtilities.c3_renderers
@@ -2315,8 +2330,8 @@
                             rows: ["Grup"],
                             cols: ["AynıGünNöbetSayısı"],
                             vals: ["AynıGünNöbetSayısı"],
-                            aggregatorName: "Count",
-                            rendererName: "Heatmap",
+                            aggregatorName: "Say",
+                            rendererName: "Sicaklik Haritasi",
                             //renderers: $.extend(
                             //    $.pivotUtilities.renderers,
                             //    $.pivotUtilities.c3_renderers
