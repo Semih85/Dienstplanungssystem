@@ -74,12 +74,12 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
 
             this.HasRequired(t => t.KalibrasyonTip)
                         .WithMany(et => et.Kalibrasyonlar)
-                        .HasForeignKey(t =>t.KalibrasyonTipId)
+                        .HasForeignKey(t => t.KalibrasyonTipId)
                         .WillCascadeOnDelete(false);
 
             this.HasRequired(t => t.NobetUstGrupGunGrup)
                         .WithMany(et => et.Kalibrasyonlar)
-                        .HasForeignKey(t => t.KalibrasyonTipId)
+                        .HasForeignKey(t => t.NobetUstGrupGunGrupId)
                         .WillCascadeOnDelete(false);
 
             #endregion

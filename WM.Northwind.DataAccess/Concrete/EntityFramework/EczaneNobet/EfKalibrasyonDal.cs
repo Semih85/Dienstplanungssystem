@@ -33,8 +33,13 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrupId,
                         KalibrasyonTipId = s.KalibrasyonTipId,
                         KalibrasyonTipAdi = s.KalibrasyonTip.Adi,
-
+                        GunGrupAdi = s.NobetUstGrupGunGrup.GunGrup.Adi,
+                        GunGrupId = s.NobetUstGrupGunGrup.GunGrupId,
+                        NobetUstGrupAdi = s.NobetUstGrupGunGrup.NobetUstGrup.Adi,
+                        NobetUstGrupGunGrupId = s.NobetUstGrupGunGrupId,
+                        NobetUstGrupId = s.NobetUstGrupGunGrup.NobetUstGrupId
                     }).SingleOrDefault(filter);
+                //return new KalibrasyonDetay();
             }
         }
         public List<KalibrasyonDetay> GetDetayList(Expression<Func<KalibrasyonDetay, bool>> filter = null)
@@ -55,12 +60,18 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrupId,
                         KalibrasyonTipId = s.KalibrasyonTipId,
                         KalibrasyonTipAdi = s.KalibrasyonTip.Adi,
-
+                        GunGrupAdi = s.NobetUstGrupGunGrup.GunGrup.Adi,
+                        GunGrupId = s.NobetUstGrupGunGrup.GunGrupId,
+                        NobetUstGrupAdi = s.NobetUstGrupGunGrup.NobetUstGrup.Adi,
+                        NobetUstGrupGunGrupId = s.NobetUstGrupGunGrupId,
+                        NobetUstGrupId = s.NobetUstGrupGunGrup.NobetUstGrupId
                     });
 
                 return filter == null
                     ? liste.ToList()
                     : liste.Where(filter).ToList();
+
+                //return new List<KalibrasyonDetay>();
             }
         }
 

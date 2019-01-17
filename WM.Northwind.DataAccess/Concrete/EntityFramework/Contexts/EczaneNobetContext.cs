@@ -72,7 +72,6 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
 
         public DbSet<Bayram> Bayramlar { get; set; }
         public DbSet<BayramTur> BayramTurler { get; set; }
-        //public DbSet<GunDeger> GunDegerler { get; set; }
         public DbSet<Eczane> Eczaneler { get; set; }
         public DbSet<EczaneGrupTanim> EczaneGrupTanimlar { get; set; }
         public DbSet<EczaneGrup> EczaneGruplar { get; set; }
@@ -151,7 +150,6 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new NobetGrupKuralMap());
             modelBuilder.Configurations.Add(new NobetGrupGunKuralMap());
             modelBuilder.Configurations.Add(new BayramTurMap());
-            //modelBuilder.Configurations.Add(new GunDegerMap());
             modelBuilder.Configurations.Add(new EczaneMap());
             modelBuilder.Configurations.Add(new EczaneGrupTanimMap());
             modelBuilder.Configurations.Add(new EczaneGrupMap());

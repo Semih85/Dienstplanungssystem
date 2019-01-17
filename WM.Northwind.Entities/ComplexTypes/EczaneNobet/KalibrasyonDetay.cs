@@ -17,6 +17,9 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int NobetGrupGorevTipId { get; set; }
         public int NobetGrupId { get; set; }
         public int KalibrasyonTipId { get; set; }
+        public int NobetUstGrupGunGrupId { get; set; }
+        public int GunGrupId { get; set; }
+        public int NobetUstGrupId { get; set; }
 
         public double Deger { get; set; }
 
@@ -25,6 +28,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string NobetGrupAdi { get; set; }
         public string NobetGorevTipAdi { get; set; }
         public string KalibrasyonTipAdi { get; set; }
-
+        public string GunGrupAdi { get; set; }
+        public string NobetUstGrupAdi { get; set; }
     }
 }

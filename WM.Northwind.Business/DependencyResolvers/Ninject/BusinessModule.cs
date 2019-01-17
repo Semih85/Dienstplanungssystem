@@ -205,9 +205,9 @@ namespace WM.BLL.DependencyResolvers.Ninject
 
             Bind<INobetGrupGorevTipGunKuralService>().To<NobetGrupGorevTipGunKuralManager>().InSingletonScope();
             Bind<INobetGrupGorevTipGunKuralDal>().To<EfNobetGrupGorevTipGunKuralDal>();
-            
+
             Bind<INobetOzelGunService>().To<NobetOzelGunManager>().InSingletonScope();
-            Bind<INobetOzelGunDal>().To<EfNobetOzelGunDal>();            
+            Bind<INobetOzelGunDal>().To<EfNobetOzelGunDal>();
 
             Bind<INobetUstGrupGunGrupService>().To<NobetUstGrupGunGrupManager>().InSingletonScope();
             Bind<INobetUstGrupGunGrupDal>().To<EfNobetUstGrupGunGrupDal>();
@@ -218,6 +218,11 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<INobetDurumTipService>().To<NobetDurumTipManager>().InSingletonScope();
             Bind<INobetDurumTipDal>().To<EfNobetDurumTipDal>();
 
+            Bind<IKalibrasyonService>().To<KalibrasyonManager>().InSingletonScope();
+            Bind<IKalibrasyonDal>().To<EfKalibrasyonDal>();
+
+            Bind<IKalibrasyonTipService>().To<KalibrasyonTipManager>().InSingletonScope();
+            Bind<IKalibrasyonTipDal>().To<EfKalibrasyonTipDal>();
             #endregion
 
             #region Optimization
@@ -225,7 +230,7 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IEczaneNobetOptimizationService>().To<EczaneNobetOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetOptimization>().To<EczaneNobetOptano>().InSingletonScope();
             Bind<IEczaneNobetKisit>().To<EczaneNobetKisit>().InSingletonScope();
-                        
+
             Bind<IAlanyaOptimizationService>().To<AlanyaOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetAlanyaOptimization>().To<AlanyaOptanoEski>().InSingletonScope();
 
@@ -234,7 +239,7 @@ namespace WM.BLL.DependencyResolvers.Ninject
 
             Bind<IAntalyaMerkezOptimizationService>().To<AntalyaMerkezOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetAntalyaMerkezOptimization>().To<AntalyaMerkezOptano>().InSingletonScope();
-            
+
             //Bind<IMersinMerkezOptimizationService>().To<MersinMerkezOptimizationManagerV1>().InSingletonScope();
             //Bind<IEczaneNobetMersinMerkezOptimization>().To<HpMersinMerkezOptano>().InSingletonScope();
 
@@ -262,7 +267,7 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IEczaneNobetTekGrupOptimization>().To<EczaneNobetTekGrupOptano>().InSingletonScope();
             Bind<IEczaneNobetTekGrupAltOptimization>().To<EczaneNobetTekGrupAltOptano>().InSingletonScope();
             Bind<IEczaneNobetCokGrupOptimization>().To<EczaneNobetCokGrupOptano>().InSingletonScope();
-            Bind<IEczaneNobetCokGrupAltOptimization>().To<EczaneNobetCokGrupAltOptano>().InSingletonScope(); 
+            Bind<IEczaneNobetCokGrupAltOptimization>().To<EczaneNobetCokGrupAltOptano>().InSingletonScope();
             #endregion
             #endregion
 

@@ -31,6 +31,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string EczaneSonucAdi { get; set; }
         public string AyIkili { get; set; }
         public string Mevsim { get; set; }
+        public double KalibrasyonDeger { get; set; }
 
         //public int NobetDurumId { get; set; }
         //public int NobetDurumTipId { get; set; }

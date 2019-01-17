@@ -10,6 +10,7 @@ namespace WM.Optimization.Entities.KisitParametre
         public List<TakvimNobetGrup> Tarihler { get; set; }
         public int GunSayisi { get; set; }
         public double OrtalamaNobetSayisi { get; set; }
+        public string GunKuralAdi { get; set; }
         public EczaneNobetGrupDetay EczaneNobetGrup { get; set; }
         public List<EczaneNobetTarihAralik> EczaneNobetTarihAralik { get; set; }
         public NobetUstGrupKisitDetay NobetUstGrupKisit { get; set; }

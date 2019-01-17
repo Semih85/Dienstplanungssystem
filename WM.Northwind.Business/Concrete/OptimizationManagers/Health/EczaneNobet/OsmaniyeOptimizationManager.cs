@@ -34,6 +34,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private INobetUstGrupKisitService _nobetUstGrupKisitService;
         private ITakvimService _takvimService;
         private IEczaneNobetMuafiyetService _eczaneNobetMuafiyetService;
+        private IKalibrasyonService _kalibrasyonService;
 
         public OsmaniyeOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -54,7 +55,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     ITakvimService takvimService,
                     IEczaneNobetSonucService eczaneNobetSonucService,
                     IEczaneNobetMuafiyetService eczaneNobetMuafiyetService,
-                    IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrupService
+                    IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrupService,
+                    IKalibrasyonService kalibrasyonService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -76,6 +78,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _takvimService = takvimService;
             _eczaneNobetMuafiyetService = eczaneNobetMuafiyetService;
             _eczaneNobetGrupAltGrupService = eczaneNobetGrupAltGrupService;
+            _kalibrasyonService = kalibrasyonService;
         }
         #endregion
 
@@ -270,14 +273,15 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetTarihAralik1 = _takvimService.GetEczaneNobetTarihAralik(baslangicTarihi, bitisTarihi, nobetGrupGorevTip1)
                 .Where(w => eczaneNobetGruplarGorevTip1.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
 
-            nobetGorevTipId = 2;
-            var nobetGrupGorevTip2 = nobetGrupGorevTipler.Where(w => w.NobetGorevTipId == nobetGorevTipId).ToList();
-            var noberGunKurallar = nobetGrupGorevTipGunKurallar.Where(w => nobetGrupGorevTip2.Select(s => s.Id).Contains(w.NobetGrupGorevTipId)).Select(s => s.NobetGunKuralId).ToList();
+            //nobetGorevTipId = 2;
+            //var nobetGrupGorevTip2 = nobetGrupGorevTipler.Where(w => w.NobetGorevTipId == nobetGorevTipId).ToList();
+            //var noberGunKurallar = nobetGrupGorevTipGunKurallar.Where(w => nobetGrupGorevTip2.Select(s => s.Id).Contains(w.NobetGrupGorevTipId)).Select(s => s.NobetGunKuralId).ToList();
 
-            var eczaneNobetTarihAralik2 = _takvimService.GetEczaneNobetTarihAralik(baslangicTarihi, bitisTarihi, nobetGrupGorevTip2, noberGunKurallar)
-                .Where(w => eczaneNobetGruplarGorevTip2.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
+            //var eczaneNobetTarihAralik2 = _takvimService.GetEczaneNobetTarihAralik(baslangicTarihi, bitisTarihi, nobetGrupGorevTip2, noberGunKurallar)
+            //    .Where(w => eczaneNobetGruplarGorevTip2.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
 
-            var eczaneNobetTarihAralik = eczaneNobetTarihAralik1.Union(eczaneNobetTarihAralik2).ToList();
+            var eczaneNobetTarihAralik = eczaneNobetTarihAralik1;
+                //.Union(eczaneNobetTarihAralik2).ToList();
 
             var eczaneNobetIstekler = _eczaneNobetIstekService.GetDetaylarByNobetGrupIdList(baslangicTarihi, bitisTarihi, nobetGrupIdListe)
                 .Where(w => eczaneNobetGruplarTumu.Select(s => s.EczaneId).Contains(w.EczaneId)).ToList();
@@ -484,7 +488,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneNobetGrupGunKuralIstatistikler = enSonNobetler,
                 TakvimNobetGrupGunDegerIstatistikler = takvimNobetGrupGunDegerIstatistikler,
                 EczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatay,
-                EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar
+                EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
+                Kalibrasyon = _kalibrasyonService.GetDetaylar()
             };
 
             return osmaniyeDataModel;

@@ -22,10 +22,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             foreach (var tarih in p.Tarihler)
             {
-                var kisitAdi = $"Talep: {tarih.TalepEdilenNobetciSayisi}, Tarih: {tarih.Tarih}";
+                var kisitAdi = $"K0_Talep, {p.NobetGrupGorevTip.NobetGrupAdi}, {p.NobetGrupGorevTip.NobetGorevTipAdi}, Nöbetçi Sayısı: {tarih.TalepEdilenNobetciSayisi}, {tarih.Tarih.ToShortDateString()}";
 
                 var kararIndex = p.EczaneNobetTarihAralikTumu
-                                            .Where(k => k.TakvimId == tarih.TakvimId).ToList();
+                    .Where(k => k.TakvimId == tarih.TakvimId).ToList();
 
                 var std = tarih.TalepEdilenNobetciSayisi;
                 var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
@@ -43,7 +43,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             if (!p.NobetUstGrupKisit.PasifMi && p.GunSayisi > 0)
             {
-                var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {p.EczaneNobetGrup.EczaneAdi}";
+                var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {p.GunKuralAdi}, {p.EczaneNobetGrup.NobetGrupAdi}, {p.EczaneNobetGrup.NobetGorevTipAdi}, {p.EczaneNobetGrup.EczaneAdi}";
 
                 if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
                     p.OrtalamaNobetSayisi += p.NobetUstGrupKisit.SagTarafDegeri;
@@ -67,7 +67,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             if (!p.NobetUstGrupKisit.PasifMi && p.Tarihler.Count > 0)
             {
-                var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {p.EczaneNobetGrup.EczaneAdi}";
+                var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId}, {(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}-{p.GunKuralAdi}, {p.EczaneNobetGrup.NobetGrupAdi}, {p.EczaneNobetGrup.NobetGorevTipAdi}, {p.EczaneNobetGrup.EczaneAdi}";
 
                 var kararIndex = p.EczaneNobetTarihAralik
                                    .Where(e => p.Tarihler.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
@@ -107,7 +107,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 if (tarihAralik.Count > 0)
                 {
-                    var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {p.EczaneNobetGrup.EczaneAdi}";
+                    var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {p.EczaneNobetGrup.NobetGrupAdi}, {p.EczaneNobetGrup.NobetGorevTipAdi}, {p.EczaneNobetGrup.EczaneAdi}" +
+                        $" to {p.NobetYazilabilecekIlkTarih.ToShortDateString()}";
 
                     var kararIndex = p.EczaneNobetTarihAralik
                                        .Where(e => tarihAralik.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
@@ -135,7 +136,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 if (p.PespeseNobetSayisiAltLimit >= gunSayisi)
                 {
-                    var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}_1, {p.EczaneNobetGrup.EczaneAdi}";
+                    var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {p.EczaneNobetGrup.NobetGrupAdi}, {p.EczaneNobetGrup.NobetGorevTipAdi}, {p.NobetUstGrupKisit.KisitAdi}_1, {p.EczaneNobetGrup.EczaneAdi}";
 
                     var std = p.HaftaIciOrtamalaNobetSayisi;
                     var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
@@ -149,7 +150,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     foreach (var tarih in haftaiciPespeseGunler)
                     {
-                        var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {p.EczaneNobetGrup.EczaneAdi}";
+                        var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({p.NobetUstGrupKisit.KisitAdi}): {p.EczaneNobetGrup.NobetGrupAdi}, {p.EczaneNobetGrup.NobetGorevTipAdi}, {p.EczaneNobetGrup.EczaneAdi}, {tarih.Tarih.ToShortDateString()}";
 
                         var altLimit = tarih.Tarih;
                         var ustLimit = tarih.Tarih.AddDays(p.PespeseNobetSayisiAltLimit);
@@ -175,14 +176,17 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             if (!p.NobetUstGrupKisit.PasifMi)
             {
-                var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {p.EczaneNobetGrup.EczaneAdi}";
-
                 var tarihler2 = p.Tarihler.Take(p.Tarihler.Count - p.PespeseNobetSayisi).ToList();
 
                 foreach (var tarih in tarihler2)
                 {
                     var altLimit = tarih.Tarih;
                     var ustLimit = tarih.Tarih.AddDays(p.PespeseNobetSayisi);
+
+                    var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {p.EczaneNobetGrup.NobetGrupAdi}, {p.EczaneNobetGrup.NobetGorevTipAdi}, {p.EczaneNobetGrup.EczaneAdi}, " +
+                        $"{p.PespeseNobetSayisi} gün (" +
+                        $"{altLimit.ToShortDateString()}" +
+                        $" - {ustLimit.ToShortDateString()})";
 
                     var kararIndex = p.EczaneNobetTarihAralik
                                        .Where(e => (e.Tarih >= altLimit && e.Tarih <= ustLimit)).ToList();
@@ -202,12 +206,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         /// </summary>
         /// <param name="p">BayramPespeseFarkliTurKisitParametreModel</param>
         public virtual void PespeseFarkliTurNobetYaz(KpPespeseFarkliTurNobet p)
-        {
+        {//her_eczaneye_son_tuttugu_bayram_nobetinden_farkli_bayram_nobeti_yaz
             if (!p.NobetUstGrupKisit.PasifMi)
             {
                 var ilgiliTarihler = p.Tarihler.Where(w => w.NobetGunKuralId == p.SonNobet.NobetGunKuralId).ToList();
 
-                var kisitAdi = $"her_eczaneye_son_tuttugu_bayram_nobetinden_farkli_bayram_nobeti_yaz, {p.EczaneNobetGrup}";
+                var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {p.EczaneNobetGrup.NobetGrupAdi}, {p.EczaneNobetGrup.NobetGorevTipAdi}_{p.EczaneNobetGrup.EczaneAdi}";
 
                 var kararIndex = p.EczaneNobetTarihAralik
                     .Where(e => ilgiliTarihler.Select(s => s.TakvimId).Contains(e.TakvimId)
@@ -313,8 +317,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             if (ardisikNobetSayisi == 0)
                             {
                                 foreach (var tarih in tarihAraligi)
-                                {
-                                    var kisitAdi = $"ayni_es_gruptaki_eczaneler_ayni_gun_birlikte_nobet_tutmasin, {tarih.TakvimId}";
+                                {//ayni_es_gruptaki_eczaneler_ayni_gun_birlikte_nobet_tutmasin_
+                                    var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {eczaneGrupTanim.EczaneGrupTanimAdi}, {tarih.Tarih.ToShortDateString()}";
 
                                     var kararIndex = kararIndexMaster
                                         .Where(e => e.TakvimId == tarih.TakvimId)
@@ -334,8 +338,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                 if (gruptakiEczanelerinNobetTarihleri.Count > 0)
                                 {//farklı nöbet gruplardaki eşler ile aynı gün nöbet tutmamak için - öncelikli çözüm
                                     foreach (var tarih in gruptakiEczanelerinNobetTarihleri)
-                                    {
-                                        var kisitAdi = $"ayni_es_gruptaki_eczaneler_ayni_gun_birlikte_nobet_tutmasin_oncelikli_cozum, {tarih.TakvimId}";
+                                    {//ayni_es_gruptaki_eczaneler_ayni_gun_birlikte_nobet_tutmasin_oncelikli_cozum_
+                                        var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {eczaneGrupTanim.EczaneGrupTanimAdi}, {tarih.Tarih.ToShortDateString()}";
 
                                         var kararIndex = kararIndexMaster
                                             .Where(e => e.TakvimId == tarih.TakvimId)
@@ -355,8 +359,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                 var tarihler = tarihAraligi.Take(tarihAraligi.Count() - ardisikNobetSayisi).ToList();
 
                                 foreach (var tarih in tarihler)
-                                {
-                                    var kisitAdi = $"ayni_es_gruptaki_eczaneler_ayni_gunlerde_birlikte_nobet_tutmasin, {tarih.TakvimId}";
+                                {//ayni_es_gruptaki_eczaneler_ayni_gunlerde_birlikte_nobet_tutmasin
+                                    var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {eczaneGrupTanim.EczaneGrupTanimAdi}, {tarih.Tarih.ToShortDateString()}";
 
                                     var kararIndex = kararIndexMaster
                                         .Where(e => (e.Tarih >= tarih.Tarih && e.Tarih <= tarih.Tarih.AddDays(ardisikNobetSayisi)))
@@ -373,8 +377,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                 if (gruptakiEczanelerinNobetTarihleri.Count > 0)
                                 {//farklı nöbet gruplardaki eşler ile aynı gün aralığında nöbet tutmamak için - öncelikli çözüm
                                     foreach (var tarih in gruptakiEczanelerinNobetTarihleri)
-                                    {
-                                        var kisitAdi = $"ayni_es_gruptaki_eczaneler_ayni_gunlerde_birlikte_nobet_tutmasin_oncelikli_cozum, {tarih.TakvimId}";
+                                    {//ayni_es_gruptaki_eczaneler_ayni_gunlerde_birlikte_nobet_tutmasin_oncelikli_cozum
+                                        var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {eczaneGrupTanim.EczaneGrupTanimAdi}, {tarih.Tarih.ToShortDateString()}";
 
                                         var kararIndex = kararIndexMaster
                                             .Where(e => (e.Tarih >= tarih.Tarih.AddDays(-ardisikNobetSayisi) && e.Tarih <= tarih.Tarih.AddDays(ardisikNobetSayisi)))
@@ -407,7 +411,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             {
                 foreach (var eczaneNobetMazeret in p.EczaneNobetMazeretler)
                 {
-                    var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {eczaneNobetMazeret.EczaneAdi}, {eczaneNobetMazeret.Tarih}, {eczaneNobetMazeret.MazeretAdi}";
+                    var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {eczaneNobetMazeret.NobetGrupAdi}, {eczaneNobetMazeret.NobetGorevTipAdi}, {eczaneNobetMazeret.EczaneAdi}, {eczaneNobetMazeret.Tarih.ToShortDateString()}, {eczaneNobetMazeret.MazeretAdi}";
 
                     var kararIndex = p.EczaneNobetTarihAralik
                         .Where(e => e.EczaneNobetGrupId == eczaneNobetMazeret.EczaneNobetGrupId
@@ -431,7 +435,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             {
                 foreach (var eczaneNobetIstek in p.EczaneNobetIstekler)
                 {
-                    var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {eczaneNobetIstek.EczaneAdi}, {eczaneNobetIstek.Tarih}, {eczaneNobetIstek.IstekAdi}";
+                    var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {eczaneNobetIstek.NobetGrupAdi}, {eczaneNobetIstek.NobetGorevTipAdi}, {eczaneNobetIstek.EczaneAdi}, {eczaneNobetIstek.Tarih.ToShortDateString()}," + $" {eczaneNobetIstek.IstekAdi}"
+                        ;
 
                     var kararIndex = p.EczaneNobetTarihAralik
                         .Where(e => e.EczaneNobetGrupId == eczaneNobetIstek.EczaneNobetGrupId
@@ -466,7 +471,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             if (!p.NobetUstGrupKisit.PasifMi && gruptakiEczaneSayisi <= talepEdilenNobetciSayisi)
             {
-                var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {p.EczaneNobetGrup.EczaneAdi}";
+                var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {p.EczaneNobetGrup.EczaneAdi}";
 
                 var kararIndex = p.EczaneNobetTarihAralik
                                         .Where(e => p.Tarihler.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
@@ -493,7 +498,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             if (!p.NobetUstGrupKisit.PasifMi)
             {
-                var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}"; //, {eczaneNobetGrup.EczaneAdi}";
+                var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}):"; //, {eczaneNobetGrup.EczaneAdi}";
 
                 var tarihAraligi = p.Tarihler.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
 
@@ -549,7 +554,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 foreach (var eczaneNobetGrup in p.EczaneNobetGruplar)
                 {
-                    var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {eczaneNobetGrup.EczaneAdi}";
+                    var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {eczaneNobetGrup.EczaneAdi}";
 
                     foreach (var tarih in tarihAraligi)
                     {
@@ -576,7 +581,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             if (!p.NobetUstGrupKisit.PasifMi)
             {
-                var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}"; //, {eczaneNobetGrup.EczaneAdi}";
+                var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}):"; //, {eczaneNobetGrup.EczaneAdi}";
 
                 var tarihAraligi = p.Tarihler.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
 
@@ -683,7 +688,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     })
                     .Distinct().ToList();
 
-                var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}";
+                var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId}, {(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}";
 
                 foreach (var eczaneGrupTanim in eczaneGrupTanimlar)
                 {
@@ -722,7 +727,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 {
                     var nobetTutamazGunler = p.EczaneNobetTutamazGunler.Where(w => w.EczaneNobetGrupId == eczaneNobetGrup).ToList();
 
-                    var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}, {eczaneNobetGrup}";
+                    var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {eczaneNobetGrup}";
 
                     var kararIndex = p.EczaneNobetTarihAralik
                         .Where(e => e.EczaneNobetGrupId == eczaneNobetGrup
@@ -740,7 +745,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             if (!p.NobetUstGrupKisit.PasifMi)
             {
-                var kisitAdi = $"{p.NobetUstGrupKisit.KisitAdi}"; //, {eczaneNobetGrup.EczaneAdi}";
+                var kisitAdi = $"{(p.NobetUstGrupKisit.KisitKategoriAdi == "A Genel" ? p.NobetUstGrupKisit.KisitKategoriAdi.Substring(2) : p.NobetUstGrupKisit.KisitKategoriAdi) }, {p.NobetUstGrupKisit.KisitAdiGosterilen}"; //, {eczaneNobetGrup.EczaneAdi}";
 
                 var tarihAraligi = p.Tarihler.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
 

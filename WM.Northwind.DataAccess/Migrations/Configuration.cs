@@ -34,6 +34,12 @@ namespace WM.Northwind.DataAccess.Migrations
 
         private static void VeriEkleGuncelle(Concrete.EntityFramework.Contexts.EczaneNobetContext context)
         {
+            //foreach (var item in context.Kalibrasyonlar)
+            //{
+            //    item.KalibrasyonTipId = 1;
+            //}
+            //context.SaveChanges();
+
             #region örnek
             //var kisitKategoriler = new List<KisitKategori>()
             //                {
@@ -94,7 +100,7 @@ namespace WM.Northwind.DataAccess.Migrations
             //    item.EczaneNobetGrupId = item.EczaneId;
             //}
             //context.SaveChanges(); 
-            #endregion            
+            #endregion
         }
 
         private static void VeriEkleGuncelleMaster(Concrete.EntityFramework.Contexts.EczaneNobetContext context)

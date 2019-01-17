@@ -13,8 +13,9 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public DateTime Tarih { get; set; }
         public int TakvimId { get; set; }
         //public int Yil { get; set; }
-        //public int Ay { get; set; }
+        public int Ay => Tarih.Month;
         //public int Gun { get; set; }
+        public string AyIkili => GetIkiliAylar(Ay);
         public int NobetGunKuralId { get; set; }
         public string NobetGunKuralAdi { get; set; }
         public int GunGrupId { get; set; }
@@ -33,5 +34,33 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int NobetGorevTipId { get; set; }
         public string NobetGorevTipAdi { get; set; }
         public int HaftaninGunu { get; set; }
+
+        string GetIkiliAylar(int ay)
+        {
+            if (ay <= 2)
+            {
+                return "1-2";
+            }
+            else if (ay <= 4)
+            {
+                return "3-4";
+            }
+            else if (ay <= 6)
+            {
+                return "5-6";
+            }
+            else if (ay <= 8)
+            {
+                return "7-8";
+            }
+            else if (ay <= 10)
+            {
+                return "9-10";
+            }
+            else
+            {
+                return "11-12";
+            }
+        }
     }
 }

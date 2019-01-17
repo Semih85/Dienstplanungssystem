@@ -10,10 +10,10 @@
         <div class="alert alert-danger">
             <b> Üzgünüz, işleminiz esnasında bir hata oluştu. <i class="fa fa-frown-o" aria-hidden="true"></i></b>
         </div>
-        <hr />
+        @*<hr />*@
         <div>
             <b>Hata: </b>@Html.Raw(Model.Exception.Message)
-            <br />
+            <hr />
             <b>Action: </b> @Model.ActionName
             <br />
             <b>Controller: </b> @Model.ControllerName
@@ -22,13 +22,13 @@
                 <br />
                 <b>InnerException: </b> @Model.Exception.InnerException
             }
-            @if (@Model.Exception.StackTrace != null)
+            @*@if (@Model.Exception.StackTrace != null)
             {
                 <br />
                 <b>StackTrace: </b>
                 <br />
                 <pre class="alert-light">@Model.Exception.StackTrace </pre>
-            }
+            }*@
             @*<pre> @Model.Exception.InnerException</pre>*@
         </div>
     </div>

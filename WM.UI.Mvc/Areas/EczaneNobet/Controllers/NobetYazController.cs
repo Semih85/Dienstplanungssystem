@@ -8,6 +8,7 @@ using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Business.Abstract.Optimization.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
+using WM.UI.Mvc.Areas.EczaneNobet.Filters;
 using WM.UI.Mvc.Areas.EczaneNobet.Models;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
@@ -68,6 +69,25 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _eczaneNobetSonucService = eczaneNobetSonucService;
         }
         #endregion
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            if (filterContext.Exception.Message.StartsWith("Aşağıdaki"))
+            {
+                var model = new HandleErrorInfo(filterContext.Exception, "NobetYaz", "ModelCoz");
+
+                filterContext.Result = new ViewResult
+                {
+                    ViewName = "ErrorModelCoz",
+                    ViewData = new ViewDataDictionary<HandleErrorInfo>(model),
+                };
+                filterContext.ExceptionHandled = true;
+            }
+            else
+            {
+                base.OnException(filterContext);
+            }
+        }
 
         // GET: Index
         public ActionResult Index()
@@ -142,7 +162,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         [HttpPost]
-        [HandleError]
+        //[HandleError(View= "ErrorModelCoz")]
+        //[HandleException]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult ModelCoz(NobetYazViewModel eczaneNobetViewModel)
@@ -159,7 +180,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var eczaneNobetModelCoz = new EczaneNobetModelCoz
             {
                 BuAyVeSonrasi = eczaneNobetViewModel.BuAyVeSonrasi,
-                NobetGrupGorevTipler = nobetGrupGorevTipler, 
+                NobetGrupGorevTipler = nobetGrupGorevTipler,
                 NobetGrupId = nobetGrupIdList, //eczaneNobetViewModel.NobetGrupId,
                 NobetUstGrupId = eczaneNobetViewModel.NobetUstGrupId,
                 RolId = eczaneNobetViewModel.RolId,
@@ -310,7 +331,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                            Id = g.NobetGrupGorevTipId,
                                            Value = $"{g.NobetGrupGorevTipId} {g.NobetGrupAdi} ({g.EczaneSayisi}), G:{e.Id}"
                                        }).ToList();
-                }     
+                }
             }
             else
             {
@@ -333,7 +354,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                            Value = $"{g.NobetGrupGorevTipId} {g.NobetGrupAdi} ({g.EczaneSayisi})"
                                        })
                                    .OrderBy(o => o.Id).ToList();
-                }                
+                }
             }
 
             ViewBag.NobetGrupGorevTipId = new SelectList(nobetGruplarDDL, "Id", "Value");

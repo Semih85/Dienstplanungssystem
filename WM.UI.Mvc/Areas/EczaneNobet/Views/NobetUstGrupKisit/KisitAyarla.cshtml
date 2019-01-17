@@ -253,13 +253,23 @@
                                                                 <div class="card-header p-2">
                                                                     @*<svg class="bd-placeholder-img rounded" width="24" height="24" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 32x32"><title>@labelYazi kısıt</title><rect fill="@renk" width="100%" height="100%"></rect><text fill="@renk" dy=".3em" x="50%" y="50%">32x32</text></svg>*@
                                                                     <span title="@kisitNumarasi kısıtı '@labelYazi.ToLower()'" class="@badgeTip">@kisitNumarasi</span>
-                                                                    <span class="card-subtitle mt-0"><small class="text-muted">@kisitKategoriAdi</small></span>
-                                                                    <a class="badge badge-info pull-right mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
+                                                                    <span class="card-subtitle mt-0 mr-2 mr-lg-0"><small class="text-muted">@kisitKategoriAdi</small></span>
+                                                                    @if (kisitTuru == "varsayilandanFarkli")
+                                                                    {
+                                                                        <a class="badge badge-warning mr-2 mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
+                                                                            <span data-toggle="tooltip" data-placement="top" title="Varsayılana Dön">
+                                                                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                                                                                @*<span class="d-none d-lg-inline"> Varsayılan</span>*@
+                                                                            </span>
+                                                                        </a>
+                                                                    }
+
+                                                                    @*<a class="badge badge-info pull-right mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
                                                                         <span data-toggle="tooltip" data-placement="top" title="Kısıt Açıklaması">
                                                                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                                                                             <span class="d-none d-md-inline"> Açıklama</span>
                                                                         </span>
-                                                                    </a>
+                                                                    </a>*@
                                                                 </div>
                                                                 <div class="card-body border-bottom text-center py-3">
                                                                     <div class="collapse" id="@id.Substring(1)">

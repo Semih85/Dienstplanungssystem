@@ -32,6 +32,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IEczaneService _eczaneService;
         private IEczaneNobetGrupAltGrupService _eczaneNobetGrupAltGrupService;
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
+        private IKalibrasyonService _kalibrasyonService;
 
         public EczaneNobetSonucController(ITakvimService takvimService,
                                           IEczaneNobetGrupService eczaneNobetGrupService,
@@ -45,7 +46,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                           IEczaneService eczaneService,
                                           IEczaneNobetOrtakService eczaneNobetOrtakService,
                                           IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrupService,
-                                          IAyniGunTutulanNobetService ayniGunTutulanNobetService
+                                          IAyniGunTutulanNobetService ayniGunTutulanNobetService,
+                                          IKalibrasyonService kalibrasyonService
                                           )
         {
             _takvimService = takvimService;
@@ -62,6 +64,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _eczaneNobetOrtakService = eczaneNobetOrtakService;
             _eczaneNobetGrupAltGrupService = eczaneNobetGrupAltGrupService;
             _ayniGunTutulanNobetService = ayniGunTutulanNobetService;
+            _kalibrasyonService = kalibrasyonService;
         }
         #endregion
 
@@ -387,7 +390,18 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         EczaneNobetGrupId = s.EczaneNobetGrupId,
                         NobetGrupGorevTipId = s.NobetGrupGorevTipId,
                         NobetDurumAdi = s.NobetDurumAdi,
-                        NobetDurumTipAdi = s.NobetDurumTipAdi
+                        NobetDurumTipAdi = s.NobetDurumTipAdi,
+                        KalibrasyonDeger = _kalibrasyonService.GetDetaylar()
+                            .Where(w => w.EczaneNobetGrupId == s.EczaneNobetGrupId
+                            && w.GunGrupId == s.GunGrupId
+                            && w.KalibrasyonTipId == 7
+                            ).SingleOrDefault() == null 
+                            ? 0
+                            : _kalibrasyonService.GetDetaylar()
+                            .Where(w => w.EczaneNobetGrupId == s.EczaneNobetGrupId
+                            && w.GunGrupId == s.GunGrupId
+                            && w.KalibrasyonTipId == 7
+                            ).SingleOrDefault().Deger
                     }).ToList(),
                 GunFarklariTumSonuclar = gunFarklari,
                 GunFarklariFrekanslar = gunFarkiFrekanslar,

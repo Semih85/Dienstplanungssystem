@@ -14,6 +14,7 @@ namespace WM.Optimization.Entities.KisitParametre
         public double KumulatifOrtalamaGunKuralSayisi { get; set; }
         public int ToplamNobetSayisi { get; set; }
         public bool EnAzMi { get; set; }
+        public string GunKuralAdi { get; set; }
 
         public override OptanoKisitParametreModelBase<Model, EczaneNobetTarihAralik> Clone()
         {

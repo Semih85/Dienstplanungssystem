@@ -26,6 +26,7 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public int CalismaSayisi { get; set; }
         public int NobetGrupSayisi { get; set; }
         public int IncelenenEczaneSayisi { get; set; }
+        public string Celiskiler { get; set; }
         //public int NobetYazilamayanEczaneSayisi { get; set; }
     }
 }

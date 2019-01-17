@@ -450,9 +450,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         private List<EczaneNobetSonucListe2> EczaneNobetSonucOsmaniye(List<EczaneNobetSonucListe2> eczaneNobetSonuclar, List<NobetDurumDetay> nobetDurumDetaylar)
-        {
-
-            var tarihler = eczaneNobetSonuclar.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
+        {            
+            var tarihler = eczaneNobetSonuclar
+                .Where(w => w.Tarih >= w.NobetUstGrupBaslamaTarihi)
+                .Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
 
             var sonuclar = new List<EczaneNobetSonucListe2>();
 
@@ -510,6 +511,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     sonuclar.Add(sonuc);
                 }
             }
+
+            var anahtarSonuclar = eczaneNobetSonuclar
+                .Where(w => w.Tarih < w.NobetUstGrupBaslamaTarihi)
+                .ToList();
+
+            sonuclar.AddRange(anahtarSonuclar);
 
             return sonuclar;
         }
