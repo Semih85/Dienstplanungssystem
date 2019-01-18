@@ -750,6 +750,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         NobetGrupAdi = e.NobetGrupAdi,
                         NobetGrupId = e.NobetGrupId,
                         NobetGorevTipId = t.NobetGorevTipId,
+                        NobetGrupGorevTipId = t.NobetGrupGorevTipId,
                         EczaneNobetGrupId = e.Id,
                         GunGrupId = t.GunGrupId,
                         GunGrupAdi = t.GunGrupAdi,

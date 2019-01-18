@@ -311,6 +311,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 var eczaneGrupTanimId = 10000 + eczaneNobetGrup.Id;
 
+                var bakilanEczaneGrupTanimAdi = $"{bakilanEczane.NobetGrupAdi}, {bakilanEczane.EczaneAdi} - {bakilanEczane.AyniGunNobetSayisiEnBuyuk} aynı gün nöbetler";
+
                 if (takipEdilecekEczaneler.Count > 0)
                 {
                     //ikiFarkliIkiliEczaneler.AddRange(takipEdilecekEczaneler);
@@ -320,7 +322,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         EczaneId = eczaneNobetGrup.EczaneId,
                         ArdisikNobetSayisi = 0,
                         NobetUstGrupId = nobetUstGrupId,
-                        EczaneGrupTanimAdi = $"{bakilanEczane.AyniGunNobetSayisiEnBuyuk} farklı olan aynı gün nöbetler",
+                        EczaneGrupTanimAdi = bakilanEczaneGrupTanimAdi,
                         EczaneGrupTanimTipAdi = "Tüm eczanelerle aynı gün nöbet",
                         EczaneGrupTanimTipId = -10, //-2,
                         NobetGrupId = eczaneNobetGrup.NobetGrupId,
@@ -361,7 +363,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                             EczaneId = 0,//takipEdilecekEczane.Id,
                             ArdisikNobetSayisi = 0,
                             NobetUstGrupId = nobetUstGrupId,
-                            EczaneGrupTanimAdi = $"{bakilanEczane.AyniGunNobetSayisiEnBuyuk} farklı olan aynı gün nöbetler",
+                            EczaneGrupTanimAdi = bakilanEczaneGrupTanimAdi,
                             EczaneGrupTanimTipAdi = "Tüm eczanelerle aynı gün nöbet",
                             EczaneGrupTanimTipId = -10, //-2,
                             NobetGrupId = nobetGrupId,

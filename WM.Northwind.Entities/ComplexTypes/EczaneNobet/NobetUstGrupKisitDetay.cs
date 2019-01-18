@@ -10,8 +10,8 @@ using WM.Northwind.Entities.Concrete.EczaneNobet;
 
 namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 {
-    public class NobetUstGrupKisitDetay: IComplexType
- { 
+    public class NobetUstGrupKisitDetay : IComplexType
+    {
         public int Id { get; set; }
         public int NobetUstGrupId { get; set; }
         public int KisitId { get; set; }
@@ -31,6 +31,9 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string KisitAciklama { get; set; }
         [Display(Name = "Kısıt Kategori")]
         public string KisitKategoriAdi { get; set; }
+        public string KisitKategorisi => $"{(KisitKategoriAdi == "A Genel" ? KisitKategoriAdi.Substring(2) : KisitKategoriAdi)}";
+        public string KisitTanim => $"K{KisitId} ({KisitKategorisi}, {KisitAdiGosterilen}):";
+
         public int KisitKategoriId { get; set; }
-    } 
-} 
+    }
+}

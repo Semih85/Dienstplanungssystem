@@ -1983,6 +1983,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                             var altGruptakiEczaneler = eczaneNobetGrupAltGruplar
                                 .Where(w => birlikteNobetTutulanNobetAltGrupIdListe.Contains(w.NobetAltGrupId)).ToList();
 
+                            var bakilanEczaneGrupTanimAdi = $"{eczane.NobetGrupAdi}, {eczane.EczaneAdi} - {gunGrup.GunGrup} aynı gün nöbetler";
                             //bakılan eczane
                             eczaneGruplar.Add(new EczaneGrupDetay
                             {
@@ -1990,7 +1991,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 EczaneId = eczane.EczaneId,
                                 ArdisikNobetSayisi = 0,
                                 NobetUstGrupId = eczane.NobetUstGrupId,
-                                EczaneGrupTanimAdi = $"{gunGrup} aynı gün nöbetler",
+                                EczaneGrupTanimAdi = bakilanEczaneGrupTanimAdi,
                                 EczaneGrupTanimTipAdi = $"Alt gruplarla aynı gün nöbet {gunGrup.GunGrup}",
                                 EczaneGrupTanimTipId = gunGrup.GunGrupId,
                                 NobetGrupId = eczane.NobetGrupId,
@@ -2010,7 +2011,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                     EczaneId = item.EczaneId,
                                     ArdisikNobetSayisi = 0,
                                     NobetUstGrupId = eczane.NobetUstGrupId,
-                                    EczaneGrupTanimAdi = $"{gunGrup} aynı gün nöbetler",
+                                    EczaneGrupTanimAdi = bakilanEczaneGrupTanimAdi,
                                     EczaneGrupTanimTipAdi = $"Alt gruplarla aynı gün nöbet {gunGrup.GunGrup}",
                                     EczaneGrupTanimTipId = gunGrup.GunGrupId,
                                     NobetGrupId = item.NobetGrupId,
@@ -2174,6 +2175,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                             var altGruptakiEczaneler = eczaneNobetGrupAltGruplar
                                 .Where(w => birlikteNobetTutulanNobetAltGrupIdListe.Contains(w.NobetAltGrupId)).ToList();
 
+                            var bakilanEczaneGrupTanimAdi = $"{eczane.NobetGrupAdi}, {eczane.EczaneAdi} - {gunGrup.GunGrup} aynı gün nöbetler";
                             //bakılan eczane
                             eczaneGruplar.Add(new EczaneGrupDetay
                             {
@@ -2181,7 +2183,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 EczaneId = eczane.EczaneId,
                                 ArdisikNobetSayisi = 0,
                                 NobetUstGrupId = eczane.NobetUstGrupId,
-                                EczaneGrupTanimAdi = $"{gunGrup} aynı gün nöbetler",
+                                EczaneGrupTanimAdi = bakilanEczaneGrupTanimAdi,
                                 EczaneGrupTanimTipAdi = $"Alt gruplarla aynı gün nöbet {gunGrup.GunGrup}",
                                 EczaneGrupTanimTipId = gunGrup.GunGrupId,
                                 NobetGrupId = eczane.NobetGrupId,
@@ -2201,7 +2203,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                     EczaneId = item.EczaneId,
                                     ArdisikNobetSayisi = 0,
                                     NobetUstGrupId = eczane.NobetUstGrupId,
-                                    EczaneGrupTanimAdi = $"{gunGrup} aynı gün nöbetler",
+                                    EczaneGrupTanimAdi = bakilanEczaneGrupTanimAdi,
                                     EczaneGrupTanimTipAdi = $"Alt gruplarla aynı gün nöbet {gunGrup.GunGrup}",
                                     EczaneGrupTanimTipId = gunGrup.GunGrupId,
                                     NobetGrupId = item.NobetGrupId,
@@ -2321,6 +2323,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                             var altGruptakiEczaneler = eczaneNobetGrupAltGruplar
                                 .Where(w => birlikteNobetTutulanNobetAltGrupIdListe.Contains(w.NobetAltGrupId)).ToList();
 
+                            var bakilanEczaneGrupTanimAdi = $"{eczane.NobetGrupAdi}, {eczane.EczaneAdi} - {gunGrup.GunGrup} aynı gün nöbetler";
                             //bakılan eczane
                             eczaneGruplar.Add(new EczaneGrupDetay
                             {
@@ -2328,7 +2331,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 EczaneId = eczane.EczaneId,
                                 ArdisikNobetSayisi = 0,
                                 NobetUstGrupId = eczane.NobetUstGrupId,
-                                EczaneGrupTanimAdi = $"{gunGrup} aynı gün nöbetler",
+                                EczaneGrupTanimAdi = bakilanEczaneGrupTanimAdi,
                                 EczaneGrupTanimTipAdi = $"Alt gruplarla aynı gün nöbet {gunGrup.GunGrup}",
                                 EczaneGrupTanimTipId = gunGrup.GunGrupId,
                                 NobetGrupId = eczane.NobetGrupId,
@@ -2348,7 +2351,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                     EczaneId = item.EczaneId,
                                     ArdisikNobetSayisi = 0,
                                     NobetUstGrupId = eczane.NobetUstGrupId,
-                                    EczaneGrupTanimAdi = $"{gunGrup} aynı gün nöbetler",
+                                    EczaneGrupTanimAdi = bakilanEczaneGrupTanimAdi,
                                     EczaneGrupTanimTipAdi = $"Alt gruplarla aynı gün nöbet {gunGrup.GunGrup}",
                                     EczaneGrupTanimTipId = gunGrup.GunGrupId,
                                     NobetGrupId = item.NobetGrupId,

@@ -12,6 +12,7 @@ namespace WM.Optimization.Entities.KisitParametre
         public List<TakvimNobetGrup> Tarihler { get; set; }
         public List<EczaneNobetTarihAralik> EczaneNobetTarihAralik { get; set; }
         public DateTime NobetYazilabilecekIlkTarih { get; set; }
+        public DateTime SonNobetTarihi { get; set; }
         public EczaneNobetGrupDetay EczaneNobetGrup { get; set; }
         public NobetUstGrupKisitDetay NobetUstGrupKisit { get; set; }
 
