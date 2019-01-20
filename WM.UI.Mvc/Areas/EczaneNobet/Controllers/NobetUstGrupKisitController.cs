@@ -154,7 +154,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => new { s.Id, s.Adi });
 
-            ViewBag.KisitId = new SelectList(_kisitService.GetList(), "Id", "Adi");
+            ViewBag.KisitId = new SelectList(_kisitService.GetDetaylar(), "Id", "KisitAdi");
             ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar, "Id", "Adi");
 
             var nobetUstGrupKisit = new NobetUstGrupKisit
@@ -182,7 +182,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => new { s.Id, s.Adi });
 
-            ViewBag.KisitId = new SelectList(_kisitService.GetList(), "Id", "Adi", nobetUstGrupKisit.KisitId);
+            ViewBag.KisitId = new SelectList(_kisitService.GetDetaylar(), "Id", "KisitAdi", nobetUstGrupKisit.KisitId);
             ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar, "Id", "Adi", nobetUstGrupKisit.NobetUstGrupId);
             return View(nobetUstGrupKisit);
         }
@@ -206,7 +206,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var rolId = rolIdler.FirstOrDefault();
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => new { s.Id, s.Adi });
             ViewBag.RolId = rolId;
-            ViewBag.KisitId = new SelectList(_kisitService.GetList(), "Id", "Adi", nobetUstGrupKisit.KisitId);
+            ViewBag.KisitId = new SelectList(_kisitService.GetDetaylar(), "Id", "KisitAdi", nobetUstGrupKisit.KisitId);
             ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar, "Id", "Adi", nobetUstGrupKisit.NobetUstGrupId);
             return View(nobetUstGrupKisit);
         }
@@ -253,7 +253,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
                 //return RedirectToAction("KisitAyarla");
             }
-            ViewBag.KisitId = new SelectList(_kisitService.GetList(), "Id", "Adi", nobetUstGrupKisit.KisitId);
+            ViewBag.KisitId = new SelectList(_kisitService.GetDetaylar(), "Id", "KisitAdi", nobetUstGrupKisit.KisitId);
             ViewBag.NobetUstGrupId = new SelectList(_nobetUstGrupService.GetDetaylar(kisit.NobetUstGrupId).Select(s => new { s.Id, s.Adi }), "Id", "Adi", nobetUstGrupKisit.NobetUstGrupId);
             return View(nobetUstGrupKisit);
         }

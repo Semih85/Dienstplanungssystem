@@ -32,7 +32,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         [Display(Name = "Kısıt Kategori")]
         public string KisitKategoriAdi { get; set; }
         public string KisitKategorisi => $"{(KisitKategoriAdi == "A Genel" ? KisitKategoriAdi.Substring(2) : KisitKategoriAdi)}";
-        public string KisitTanim => $"K{KisitId} ({KisitKategorisi}, {KisitAdiGosterilen}):";
+        public string KisitTanim => $"K{KisitId} ({KisitKategorisi}, {KisitAdiGosterilen}) &raquo;";
 
         public int KisitKategoriId { get; set; }
     }

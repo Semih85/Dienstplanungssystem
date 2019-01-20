@@ -1,0 +1,50 @@
+﻿@model NobetDurumDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>NobetDurum</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetDurumTipAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetDurumTipAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetAltGrupAdi1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetAltGrupAdi1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetAltGrupAdi2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetAltGrupAdi2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetAltGrupAdi3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetAltGrupAdi3)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

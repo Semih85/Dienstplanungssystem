@@ -58,6 +58,11 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                         @foreach (var menuAlt in Model.MenuAltlar.Where(s => s.MenuId == menu.Id))
                         {
+                            //if (!((User.Identity.Name == "semih" || User.Identity.Name == "mustafatopalecz@hotmail.com") && menuAlt.LinkText == "Nöbet Durumları"))
+                            //{
+                            //    continue;
+                            //}
+
                             if (menuAlt.LinkText == "Dijital Harita Ekranı")
                             {
                                 <div class="dropdown-divider"></div>

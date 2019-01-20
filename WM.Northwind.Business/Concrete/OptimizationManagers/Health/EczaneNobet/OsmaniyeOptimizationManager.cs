@@ -489,7 +489,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 TakvimNobetGrupGunDegerIstatistikler = takvimNobetGrupGunDegerIstatistikler,
                 EczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatay,
                 EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
-                Kalibrasyon = _kalibrasyonService.GetDetaylar()
+                Kalibrasyonlar = _kalibrasyonService.GetKalibrasyonlarYatay(nobetUstGrupId)
             };
 
             return osmaniyeDataModel;

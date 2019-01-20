@@ -17,7 +17,10 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void Insert(Kalibrasyon kalibrasyon);
         void Update(Kalibrasyon kalibrasyon);
         void Delete(int kalibrasyonId);
-                        KalibrasyonDetay GetDetayById(int kalibrasyonId);
-        List <KalibrasyonDetay> GetDetaylar();
+        KalibrasyonDetay GetDetayById(int kalibrasyonId);
+        List<KalibrasyonDetay> GetDetaylar();
+        List<KalibrasyonDetay> GetDetaylar(int nobetUstGrupId);
+        KalibrasyonDetay GetDetay(int eczaneNobetGrupId, int gunGrupId, int kalibrasyonTipId);
+        List<KalibrasyonYatay> GetKalibrasyonlarYatay(int nobetUstGrupId);
     }
 }

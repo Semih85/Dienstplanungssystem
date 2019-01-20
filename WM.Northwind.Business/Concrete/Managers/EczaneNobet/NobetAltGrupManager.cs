@@ -23,6 +23,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             _nobetAltGrupDal = nobetAltGrupDal;
         }
+
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int nobetAltGrupId)
         {
@@ -33,21 +34,25 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetAltGrupDal.Get(x => x.Id == nobetAltGrupId);
         }
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetAltGrup> GetList()
         {
             return _nobetAltGrupDal.GetList();
         }
+
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(NobetAltGrup nobetAltGrup)
         {
             _nobetAltGrupDal.Insert(nobetAltGrup);
         }
+
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetAltGrup nobetAltGrup)
         {
             _nobetAltGrupDal.Update(nobetAltGrup);
         }
+
         public NobetAltGrupDetay GetDetayById(int nobetAltGrupId)
         {
             return _nobetAltGrupDal.GetDetay(x => x.Id == nobetAltGrupId);
@@ -63,6 +68,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<NobetAltGrupDetay> GetDetaylar(int nobetUstGrupId)
         {
             return _nobetAltGrupDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetAltGrupDetay> GetDetaylarByNobetUstGrup(List<int> nobetUstGrupIdList)
+        {
+            return _nobetAltGrupDal.GetDetayList(x => nobetUstGrupIdList.Contains(x.NobetUstGrupId));
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]

@@ -19,5 +19,6 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void Delete(int nobetDurumId);
         NobetDurumDetay GetDetayById(int nobetDurumId);
         List<NobetDurumDetay> GetDetaylar();
+        List<NobetDurumDetay> GetDetaylar(List<int> nobetUstGruplar);
     }
 }

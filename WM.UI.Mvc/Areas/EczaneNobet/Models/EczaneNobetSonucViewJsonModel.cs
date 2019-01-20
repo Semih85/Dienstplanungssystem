@@ -18,5 +18,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Models
         public DateTime? BitisTarihi { get; internal set; }
         public List<NobetGrupGunDagilim> GunDagilimiMaxMin { get; internal set; }
         public int NobetUstGrupId { get; internal set; }
+        public List<KalibrasyonDetay> KalibrasyonluToplamlar { get; internal set; }
     }
 }

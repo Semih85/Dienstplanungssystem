@@ -69,6 +69,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var toplamMaxHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamMaxHedef", data.NobetUstGrupId);
             var haftaIciToplamMaxHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "haftaIciToplamMaxHedef", data.NobetUstGrupId);
             var toplamCumaCumartesiMaxHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamCumaCumartesiMaxHedef", data.NobetUstGrupId);
+            var toplamCumartesiPazarMaxHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamCumartesiPazarMaxHedef", data.NobetUstGrupId);
             var toplamCumaMaxHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamCumaMaxHedef", data.NobetUstGrupId);
             var toplamCumartesiMaxHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamCumartesiMaxHedef", data.NobetUstGrupId);
 
@@ -102,18 +103,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var herAyEnFazlaIlgiliKisit = new NobetUstGrupKisitDetay();
 
             #endregion
-
-            //var eczanelerinIkiliIstatistigi = data.Kalibrasyon
-            //                                    .Where(w => w.GunGrupId == 4
-            //                                             && w.KalibrasyonTipAdi == "1-2"
-            //                                        )
-            //                                    .Select(s => new
-            //                                    {
-            //                                        s.EczaneAdi,
-            //                                        s.EczaneNobetGrupId,
-            //                                        s.Deger
-            //                                    }).ToList();
-            ;
+            
             #region Karar Değişkenleri
             _x = new VariableCollection<EczaneNobetTarihAralik>(
                     model,
@@ -128,49 +118,57 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #region Amaç Fonksiyonu
 
+            var toplamKalibrasyon = data.Kalibrasyonlar
+                .Where(w => w.KalibrasyonTipId == 7);
+
+            var enKucukKalibrasyonDegeriCumartesi = toplamKalibrasyon
+                .Min(m => m.KalibrasyonToplamCumartesi);
+
+            var enKucukKalibrasyonDegeriPazar = toplamKalibrasyon
+                .Min(m => m.KalibrasyonToplamPazar);
+
+            var enKucukKalibrasyonDegeriHaftaIci = toplamKalibrasyon
+                .Min(m => m.KalibrasyonToplamHaftaIci);
+
+            ;
+
+            //ilk yazılan nöbet öncelikli olsun...
             var amac = new Objective(Expression.Sum(
                 (from i in data.EczaneNobetTarihAralik
                  from p in data.EczaneNobetGrupGunKuralIstatistikYatay
                  where i.EczaneNobetGrupId == p.EczaneNobetGrupId
                  select (_x[i]
-                        //ilk yazılan nöbet öncelikli olsun:
+                        //bayram
                         + _x[i] * Convert.ToInt32(i.BayramMi)
-                                * (bayramCevrim + bayramCevrim / Math.Sqrt((i.Tarih - p.SonNobetTarihiBayram).TotalDays))
-
-                        //tümü
+                                * (bayramCevrim + bayramCevrim / Math.Sqrt((i.Tarih - p.SonNobetTarihiBayram).TotalDays)
+                                )
+                        //cumartesi
                         + _x[i] * Convert.ToInt32(i.CumartesiGunuMu)
-                                * (
-                                cumartesiCevrim + cumartesiCevrim * data.Kalibrasyon
+                                * (cumartesiCevrim + cumartesiCevrim * data.Kalibrasyonlar
                                                 .Where(w => w.EczaneNobetGrupId == i.EczaneNobetGrupId
-                                                && w.GunGrupId == 4
-                                                && w.KalibrasyonTipAdi == i.AyIkili
-                                                ).Sum(s => s.Deger == 0 ? 0.5 : s.Deger)
+                                                         && w.KalibrasyonTipAdi == i.AyIkili
+                                                         ).Sum(s => (s.KalibrasyonToplamCumartesi - enKucukKalibrasyonDegeriCumartesi) 
+                                                                  +  s.KalibrasyonCumartesi / s.KalibrasyonToplamCumartesi)
                                     / Math.Sqrt((i.Tarih - p.SonNobetTarihiCumartesi).TotalDays * Math.Ceiling((double)i.Tarih.Day / 7))
                                 )
-
-                        //+ (i.NobetGorevTipId == 1
-                        //    ? _x[i] * Convert.ToInt32(i.CumartesiGunuMu)
-                        //        * (cumartesiCevrim + cumartesiCevrim / Math.Sqrt((i.Tarih - p.SonNobetTarihiCumartesi).TotalDays * Math.Ceiling((double)i.Tarih.Day / 7)))
-                        //    : _x[i]
-                        //   )
-
-                        //+ (i.NobetGorevTipId == 2
-                        // ? _x[i] * Convert.ToInt32(i.CumartesiGunuMu)
-                        //     * (cumartesiCevrim2 + cumartesiCevrim2 / Math.Sqrt((i.Tarih - p.SonNobetTarihiCumartesi).TotalDays * Math.Ceiling((double)i.Tarih.Day / 7)))
-                        // : _x[i]
-                        //)
-
+                        //pazar
                         + _x[i] * Convert.ToInt32(i.PazarGunuMu)
-                                * (pazarCevrim + pazarCevrim * data.Kalibrasyon
-                                                .Where(w => w.EczaneNobetGrupId == i.EczaneNobetGrupId
-                                                && w.GunGrupId == 1
-                                                && w.KalibrasyonTipAdi == i.AyIkili
-                                                ).Sum(s => s.Deger == 0 ? 0.5 : s.Deger)
+                                * (pazarCevrim + pazarCevrim * data.Kalibrasyonlar
+                                         .Where(w => w.EczaneNobetGrupId == i.EczaneNobetGrupId
+                                                  && w.KalibrasyonTipAdi == i.AyIkili
+                                                  ).Sum(s => (s.KalibrasyonToplamPazar - enKucukKalibrasyonDegeriPazar) 
+                                                            + s.KalibrasyonPazar / s.KalibrasyonToplamPazar)
                                     / Math.Sqrt((i.Tarih - p.SonNobetTarihiPazar).TotalDays * Math.Ceiling((double)i.Tarih.Day / 7)))
-
+                        //hafta içi
                         + _x[i] * Convert.ToInt32(i.HaftaIciMi) //* Math.Pow(p.NobetGorevTipId, 10)
                                                                 //* (haftaIciCevrim + haftaIciCevrim / Math.Sqrt((i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays * i.Tarih.Day)
-                                * (haftaIciCevrim + haftaIciCevrim / Math.Sqrt(
+                                * (haftaIciCevrim + haftaIciCevrim 
+                                                    //* data.Kalibrasyonlar
+                                                    //     .Where(w => w.EczaneNobetGrupId == i.EczaneNobetGrupId
+                                                    //              && w.KalibrasyonTipAdi == i.AyIkili
+                                                    //              ).Sum(s => s.KalibrasyonToplamHaftaIci - enKucukKalibrasyonDegeriHaftaIci 
+                                                    //                       + s.KalibrasyonHaftaIci / s.KalibrasyonToplamHaftaIci)
+                                / Math.Sqrt(
                                     //(  i.EczaneAdi == "borçlu eczane" //BADE
                                     //? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + 15 
                                     //: (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays)
@@ -258,6 +256,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var pazarGunleri = tarihler.Where(w => w.GunGrupId == 1).OrderBy(o => o.Tarih).ToList();
                 var cumaGunleri = tarihler.Where(w => w.NobetGunKuralId == 6).OrderBy(o => o.Tarih).ToList();
                 var cumaVeCumartesiGunleri = tarihler.Where(w => w.NobetGunKuralId == 6 || w.NobetGunKuralId == 7).OrderBy(o => o.Tarih).ToList();
+                var cumartesiVePazarGunleri = tarihler.Where(w => w.NobetGunKuralId == 1 || w.NobetGunKuralId == 7).OrderBy(o => o.Tarih).ToList();
                 var bayramlar = tarihler.Where(w => w.GunGrupId == 2).OrderBy(o => o.Tarih).ToList();
                 var haftaIciGunleri = tarihler.Where(w => w.GunGrupId == 3).OrderBy(o => o.Tarih).ToList();
                 var cumartesiGunleri = tarihler.Where(w => w.GunGrupId == 4).OrderBy(o => o.Tarih).ToList();
@@ -487,7 +486,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         HaftaIciOrtamalaNobetSayisi = haftaIciOrtamalaNobetSayisi,
                         EczaneNobetGrup = eczaneNobetGrup,
                         EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
-                        PespeseNobetSayisiAltLimit = gruptakiEczaneSayisi * 0.6,// / gunlukNobetciSayisi, //altLimit,
+                        PespeseNobetSayisiAltLimit = gruptakiEczaneSayisi * 0.3,// / gunlukNobetciSayisi, //altLimit,
                         NobetUstGrupKisit = haftaIciPespeseGorevEnAz,
                         KararDegiskeni = _x
                     };
@@ -564,7 +563,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     ortalamaEnFazlaTumTarihAraligi.GunSayisi = gunSayisi;
                     ortalamaEnFazlaTumTarihAraligi.OrtalamaNobetSayisi = ortalamaNobetSayisi;
                     ortalamaEnFazlaTumTarihAraligi.NobetUstGrupKisit = herAyEnFazlaGorev;
-                    ortalamaEnFazlaTumTarihAraligi.GunKuralAdi = "Tüm tarihler";
+                    //ortalamaEnFazlaTumTarihAraligi.GunKuralAdi = "Tüm tarihler";
 
                     TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaTumTarihAraligi);
 
@@ -573,7 +572,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     ortalamaEnFazlaHaftaIici.GunSayisi = haftaIciSayisi;
                     ortalamaEnFazlaHaftaIici.OrtalamaNobetSayisi = haftaIciOrtamalaNobetSayisi;
                     ortalamaEnFazlaHaftaIici.NobetUstGrupKisit = herAyEnFazlaHaftaIci;
-                    ortalamaEnFazlaHaftaIici.GunKuralAdi = "Hafta içi";
+                    //ortalamaEnFazlaHaftaIici.GunKuralAdi = "Hafta içi";
 
                     TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaHaftaIici);
 
@@ -582,7 +581,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     ortalamaEnFazlaBayram.GunSayisi = bayramSayisi;
                     ortalamaEnFazlaBayram.OrtalamaNobetSayisi = bayramOrtalamaNobetSayisi;
                     ortalamaEnFazlaBayram.NobetUstGrupKisit = herAyEnFazla1Bayram;
-                    ortalamaEnFazlaBayram.GunKuralAdi = "Bayram";
+                    //ortalamaEnFazlaBayram.GunKuralAdi = "Bayram";
 
                     TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaBayram);
 
@@ -879,6 +878,18 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazlaCumaVeCumartesi.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiCuma + eczaneNobetIstatistik.NobetSayisiCumartesi;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaCumaVeCumartesi);
+
+                    #endregion
+
+                    #region Toplam cumartesi ve pazar max hedefler
+
+                    var kpKumulatifToplamEnFazlaCumartesiVePazar = (KpKumulatifToplam)kpKumulatifToplam.Clone();
+
+                    kpKumulatifToplamEnFazlaCumartesiVePazar.Tarihler = cumartesiVePazarGunleri;
+                    kpKumulatifToplamEnFazlaCumartesiVePazar.NobetUstGrupKisit = toplamCumartesiPazarMaxHedef;
+                    kpKumulatifToplamEnFazlaCumartesiVePazar.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiPazar + eczaneNobetIstatistik.NobetSayisiCumartesi;
+
+                    KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaCumartesiVePazar);
 
                     #endregion
 

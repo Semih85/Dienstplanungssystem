@@ -30,5 +30,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string KalibrasyonTipAdi { get; set; }
         public string GunGrupAdi { get; set; }
         public string NobetUstGrupAdi { get; set; }
+
+        public string Durum { get; set; }
     }
 }

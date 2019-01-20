@@ -138,5 +138,9 @@ namespace WM.UI.Mvc.Models
         public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.GunGrup> GunGrups { get; set; }
 
         public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.AyniGunTutulanNobet> AyniGunTutulanNobets { get; set; }
+
+        public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.NobetDurum> NobetDurums { get; set; }
+
+        public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.NobetDurumTip> NobetDurumTips { get; set; }
     }
 }
