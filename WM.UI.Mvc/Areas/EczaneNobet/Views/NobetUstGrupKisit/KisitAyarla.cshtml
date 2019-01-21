@@ -20,7 +20,7 @@
 
 <div class="well mb-2">
     <div class="form-inline">
-        <h4 class="mr-5">Kısıtlar</h4>
+        <h4 class="mr-5">Nöbet Ayarları</h4>
         @if (ViewBag.RolId < 3)
         {
             <div class="form-group mr-5 mb-2">
@@ -34,13 +34,13 @@
                     <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" data-toggle="tooltip" data-placement="top" title="Temizle" id="btnSilKisitAra" />
                 </span>
             </div>
-            <input type="text" id="myInput" class="form-control" placeholder="Kısıt ara.." aria-label="Ara.." aria-describedby="kisitAra">
+            <input type="text" id="myInput" class="form-control" placeholder="Kural ara.." aria-label="Ara.." aria-describedby="kisitAra">
         </div>
         <a class="btn btn-warning ml-5 mb-2" href="@Url.Action("VarsayilanKisitlar", null, new { area= "EczaneNobet" })" onclick="return confirm('Varsayılan ayarlara dönmek istediğinizden emin misiniz?');">
             <span class="fa fa-refresh"></span> Varsayılan Ayarlara Dön
         </a>
     </div>
-    <small id="araHelp" class="form-text text-muted">Değeri değişebilen kısıtları filtrelemek <a href="#" id="degisebilenKisitlar" class="alert-link">tıklayınız.</a></small>
+    <small id="araHelp" class="form-text text-muted">Değeri değişebilen kuralları filtrelemek <a href="#" id="degisebilenKisitlar" class="alert-link">tıklayınız.</a></small>
 </div>
 
 @if (TempData["KisitDuzenleSonuc1"] != null)
@@ -88,13 +88,13 @@
             }
             <li class="nav-item">
                 <a class="nav-link @aktifTabDurum" id="pills-aktif-tab" data-toggle="pill" href="#pills-aktif" role="tab" aria-controls="pills-aktif" aria-selected="true">
-                    Aktif
+                    Genel
                     <span class="badge badge-light">@aktifKisitSayisi</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="pills-pasif-tab" data-toggle="pill" href="#pills-pasif" role="tab" aria-controls="pills-pasif" aria-selected="false">
-                    Pasif
+                    Gelişmiş
                     <span class="badge badge-light">@pasifKisitSayisi</span>
                 </a>
             </li>
@@ -256,20 +256,20 @@
                                                                     <span class="card-subtitle mt-0 mr-2 mr-lg-0"><small class="text-muted">@kisitKategoriAdi</small></span>
                                                                     @if (kisitTuru == "varsayilandanFarkli")
                                                                     {
-                                                                        <a class="badge badge-warning mr-2 mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
+                                                                        @*<a class="badge badge-warning mr-2 mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
                                                                             <span data-toggle="tooltip" data-placement="top" title="Varsayılana Dön">
                                                                                 <i class="fa fa-refresh" aria-hidden="true"></i>
-                                                                                @*<span class="d-none d-lg-inline"> Varsayılan</span>*@
+                                                                                <span class="d-none d-lg-inline"> Varsayılan</span>
                                                                             </span>
-                                                                        </a>
+                                                                        </a>*@
                                                                     }
 
-                                                                    @*<a class="badge badge-info pull-right mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
-                                                                        <span data-toggle="tooltip" data-placement="top" title="Kısıt Açıklaması">
+                                                                    <a class="badge badge-info pull-right mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
+                                                                        <span data-toggle="tooltip" data-placement="top" title="Kural Açıklaması">
                                                                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                                                                             <span class="d-none d-md-inline"> Açıklama</span>
                                                                         </span>
-                                                                    </a>*@
+                                                                    </a>
                                                                 </div>
                                                                 <div class="card-body border-bottom text-center py-3">
                                                                     <div class="collapse" id="@id.Substring(1)">
@@ -323,7 +323,7 @@
                                                                             @Html.CheckBox("PasifMi", !item.PasifMi, new { @class = "custom-control-input", id = $"chk{id.Substring(3)}", onchange = "chekBoxDegistir(this);" })
 
                                                                             <label id="@chkBoxLblId" class="custom-control-label @labelYaziRengi font-weight-bold mr-2"
-                                                                                   title="Kısıt pasif mi? Durumu belirledikten sonra 'Kaydet' butonuna basınız." for="@chkBoxId">
+                                                                                   title="Kural pasif mi? Durumu belirledikten sonra 'Kaydet' butonuna basınız." for="@chkBoxId">
                                                                                 @*Kısıtı '@labelYaziTersi' yapmak için buraya tıklayıp 'Kaydet' butonuna basınız.*@
                                                                                 @*<span class="d-none d-md-inline"> @labelYazi</span>*@
                                                                                 @labelYazi
@@ -332,8 +332,8 @@
                                                                         </div>
 
                                                                         <label class="col-form-label mb-2"
-                                                                               title="Sağ taraf değeri (Std.) bu kısıtın alması beklenen değerdir.
-                                                                               Bu kısıt için varsayılan değer @item.SagTarafDegeriVarsayilan" style="width:40px;" for="@txtId">Std:</label>
+                                                                               title="Bu kuralın alması beklenen sayı.
+                                                                               Varsayılanı: @item.SagTarafDegeriVarsayilan" style="width:50px;" for="@txtId">Değer:</label>
 
                                                                         @Html.TextBox("SagTarafDegeri", item.SagTarafDegeri, new { @class = "form-control mb-2 mr-4 w-25",
                                                                            type = "number",
@@ -349,7 +349,7 @@
                                                                             btnTip = "btn-outline-secondary btn-sm";
                                                                         }
 
-                                                                        <button type="submit" title="Kısıtı Güncelle" class="btn @btnTip mb-2"> <i class="fa fa-save" aria-hidden="true"></i><span class="d-none d-md-inline"> Kaydet</span></button>
+                                                                        <button type="submit" title="Kuralı Güncelle" class="btn @btnTip mb-2"> <i class="fa fa-save" aria-hidden="true"></i><span class="d-none d-md-inline"> Kaydet</span></button>
 
                                                                     }
                                                                     <!-- #endregion -->

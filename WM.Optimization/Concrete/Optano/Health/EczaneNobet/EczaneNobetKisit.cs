@@ -54,7 +54,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
                     $" [Std. {p.OrtalamaNobetSayisi}" +
-                    $"{(p.GunKuralAdi == null ? "" : $"- {p.GunKuralAdi}")}]" 
+                    $"{(p.GunKuralAdi == null ? "" : $"- {p.GunKuralAdi}")}]"
                     ;
 
                 var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
@@ -95,8 +95,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, p.EczaneNobetGrup.EczaneAdi);
 
-                var std = p.KumulatifOrtalamaGunKuralSayisi;
-                var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i])) + p.ToplamNobetSayisi;
+                var fark = p.KumulatifOrtalamaGunKuralSayisi - p.ToplamNobetSayisi;
+
+                var std = fark < 0 ? 0 : fark;
+                var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
                 var cns = Constraint.LessThanOrEqual(exp, std);
 
                 if (p.EnAzMi)

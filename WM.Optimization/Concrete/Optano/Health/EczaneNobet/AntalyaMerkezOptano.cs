@@ -473,7 +473,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     ortalamaEnFazlaTumTarihAraligi.GunSayisi = gunSayisi;
                     ortalamaEnFazlaTumTarihAraligi.OrtalamaNobetSayisi = ortalamaNobetSayisi;
                     ortalamaEnFazlaTumTarihAraligi.NobetUstGrupKisit = herAyEnFazlaGorev;
-                    ortalamaEnFazlaTumTarihAraligi.GunKuralAdi = "Tüm tarihler";
 
                     TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaTumTarihAraligi);
 
@@ -482,7 +481,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     ortalamaEnFazlaHaftaIici.GunSayisi = haftaIciSayisi;
                     ortalamaEnFazlaHaftaIici.OrtalamaNobetSayisi = haftaIciOrtamalaNobetSayisi;
                     ortalamaEnFazlaHaftaIici.NobetUstGrupKisit = herAyEnFazlaHaftaIci;
-                    ortalamaEnFazlaHaftaIici.GunKuralAdi = "Hafta içi";
 
                     TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaHaftaIici);
 
@@ -491,7 +489,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     ortalamaEnFazlaBayram.GunSayisi = bayramSayisi;
                     ortalamaEnFazlaBayram.OrtalamaNobetSayisi = bayramOrtalamaNobetSayisi;
                     ortalamaEnFazlaBayram.NobetUstGrupKisit = herAyEnFazla1Bayram;
-                    ortalamaEnFazlaBayram.GunKuralAdi = "Bayram";
 
                     TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaBayram);
 
