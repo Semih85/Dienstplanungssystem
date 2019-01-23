@@ -234,7 +234,12 @@
                             <div class="tab-pane fade" id="pills-mevsim" role="tabpanel" aria-labelledby="pills-mevsim-tab">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 pt-3">
-                                        <h5>Mevsimsel Nöbet Dağılımı</h5>
+                                        <h5>
+                                            <span class="mr-4">Mevsimsel Nöbet Dağılımı</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterMevsimDagilim">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
                                         <div id="mevsimDagilim">
                                         </div>
                                     </div>
@@ -786,6 +791,7 @@
         var pivotAlanlariGosterGunDagilim = false;
         var pivotAlanlariGosterGunDagilimGrafikler = false;
         var pivotAlanlariGosterAyDagilimGrafikler = false;
+        var pivotAlanlariGosterMevsimDagilim = false;
         var pivotAlanlariGosterKalibrasyonluDetayli = false;
         var pivotAlanlariGosterNobetDurumlari = false;
 
@@ -1147,6 +1153,19 @@
                 pivotAlanlariGosterAyDagilimGrafikler = true;
             }
             ayDagilimlar();
+        });
+
+        $('#btnAlanlariGizleGosterMevsimDagilim').click(function () {
+            //alert(pivotAlanlariGosterNobetciListesi)
+            if (pivotAlanlariGosterMevsimDagilim) {
+                pivotAlanlariGosterMevsimDagilim = false;
+                $('#btnAlanlariGizleGosterMevsimDagilim').text("Alanları Göster")
+            }
+            else {
+                $('#btnAlanlariGizleGosterMevsimDagilim').text("Alanları Gizle")
+                pivotAlanlariGosterMevsimDagilim = true;
+            }
+            mevsimDagilimlar();
         });
 
         $('#btnAlanlariGizleGosterKalibrasyonluDetayli').click(function () {
@@ -1679,7 +1698,24 @@
                                 cols: ["Yıl", "Mevsim"],
                                 vals: ["Nöbet Grubu"],
                                 aggregatorName: "Say",
-                                rendererName: "Sicaklik Haritasi"
+                                rendererName: "Sicaklik Haritasi",
+                                onRefresh: function (config) {
+                                    //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                    //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                    if (pivotAlanlariGosterMevsimDagilim == false) {
+                                        $("#mevsimDagilim").parent().find('.pvtAxisContainer').hide();
+                                        $("#mevsimDagilim").parent().find('.pvtAttrDropdown').hide();
+                                        $("#mevsimDagilim").parent().find('.pvtRenderer').hide();
+                                        $("#mevsimDagilim").parent().find('.pvtVals').hide();
+                                    }
+                                    else {
+                                        $("#mevsimDagilim").parent().find('.pvtAxisContainer').show();
+                                        $("#mevsimDagilim").parent().find('.pvtAttrDropdown').show();
+                                        $("#mevsimDagilim").parent().find('.pvtRenderer').show();
+                                        $("#mevsimDagilim").parent().find('.pvtVals').show();
+                                    }
+                                }
                             }
                         );
                     });
@@ -1692,7 +1728,24 @@
                                 cols: ["Yıl", "Gün Grup", "Ay İkili"],
                                 vals: ["Nöbet Grubu"],
                                 aggregatorName: "Say",
-                                rendererName: "Sicaklik Haritasi"
+                                rendererName: "Sicaklik Haritasi",
+                                onRefresh: function (config) {
+                                    //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                    //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                    if (pivotAlanlariGosterMevsimDagilim == false) {
+                                        $("#mevsimDagilim").parent().find('.pvtAxisContainer').hide();
+                                        $("#mevsimDagilim").parent().find('.pvtAttrDropdown').hide();
+                                        $("#mevsimDagilim").parent().find('.pvtRenderer').hide();
+                                        $("#mevsimDagilim").parent().find('.pvtVals').hide();
+                                    }
+                                    else {
+                                        $("#mevsimDagilim").parent().find('.pvtAxisContainer').show();
+                                        $("#mevsimDagilim").parent().find('.pvtAttrDropdown').show();
+                                        $("#mevsimDagilim").parent().find('.pvtRenderer').show();
+                                        $("#mevsimDagilim").parent().find('.pvtVals').show();
+                                    }
+                                }
                             }
                         );
                     });
@@ -1702,10 +1755,27 @@
                         $("#mevsimDagilim").pivotUI(dagilimlarPivot,
                             {
                                 rows: ["Nöbet Grubu", "Eczane"],
-                                cols: ["Yıl", "Mevsim"],
+                                cols: ["Gün Grup", "Mevsim"],
                                 vals: ["Nöbet Grubu"],
                                 aggregatorName: "Say",
-                                rendererName: "Sicaklik Haritasi"
+                                rendererName: "Sicaklik Haritasi",
+                                onRefresh: function (config) {
+                                    //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                    //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                    if (pivotAlanlariGosterMevsimDagilim == false) {
+                                        $("#mevsimDagilim").parent().find('.pvtAxisContainer').hide();
+                                        $("#mevsimDagilim").parent().find('.pvtAttrDropdown').hide();
+                                        $("#mevsimDagilim").parent().find('.pvtRenderer').hide();
+                                        $("#mevsimDagilim").parent().find('.pvtVals').hide();
+                                    }
+                                    else {
+                                        $("#mevsimDagilim").parent().find('.pvtAxisContainer').show();
+                                        $("#mevsimDagilim").parent().find('.pvtAttrDropdown').show();
+                                        $("#mevsimDagilim").parent().find('.pvtRenderer').show();
+                                        $("#mevsimDagilim").parent().find('.pvtVals').show();
+                                    }
+                                }
                             }
                         );
                     });

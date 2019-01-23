@@ -127,43 +127,68 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             {//
                 var eczaneNobetGruplarSirali = eczaneNobetGruplar.OrderBy(o => o.Id).ToList();
 
-                foreach (var eczaneNobetGrup1 in eczaneNobetGruplarSirali)
+                var altGruplar = eczaneNobetGruplarSirali
+                    .Select(s => new { s.NobetAltGrupAdi, s.NobetAltGrupId })
+                    .Distinct()
+                    .OrderBy(o => o.NobetAltGrupId).ToList();
+
+                foreach (var altGrup in altGruplar)
                 {
-                    var eczaneNobetGruplarSirali2 = eczaneNobetGruplarSirali.Where(w => w.Id > eczaneNobetGrup1.Id).ToList();
+                    var eczaneNobetGruplar1 = eczaneNobetGruplarSirali
+                        .Where(w => w.NobetAltGrupId == altGrup.NobetAltGrupId).ToList();
 
-                    foreach (var eczaneNobetGrup2 in eczaneNobetGruplarSirali2)
+                    foreach (var eczaneNobetGrup1 in eczaneNobetGruplar1)
                     {
-                        var ikiliEczane = new AyniGunTutulanNobet
-                        {
-                            EczaneNobetGrupId1 = eczaneNobetGrup1.Id,
-                            EczaneNobetGrupId2 = eczaneNobetGrup2.Id,
-                            EnSonAyniGunNobetTakvimId = 1
-                        };
+                        var eczaneNobetGruplar2 = eczaneNobetGruplar
+                            .Where(w => w.NobetAltGrupId > eczaneNobetGrup1.NobetAltGrupId).ToList();
 
-                        try
+                        if (altGrup.NobetAltGrupAdi.StartsWith("B"))
                         {
-                            _ayniGunTutulanNobetDal.Insert(ikiliEczane);
+                            eczaneNobetGruplar2 = eczaneNobetGruplar2.Where(w => !w.NobetAltGrupAdi.StartsWith("B")).ToList();
                         }
-                        catch (DbUpdateException ex)
+                        else if (altGrup.NobetAltGrupAdi.StartsWith("D"))
                         {
-                            var hata = ex.InnerException.ToString();
+                            eczaneNobetGruplar2 = eczaneNobetGruplar2.Where(w => !w.NobetAltGrupAdi.StartsWith("D")).ToList();
+                        }
+                        //else if (altGrup.NobetAltGrupAdi.StartsWith("A"))
+                        //{
+                        //    eczaneNobetGruplar2 = eczaneNobetGruplar2.Where(w => w.NobetAltGrupAdi != altGrup.NobetAltGrupAdi).ToList();
+                        //}
 
-                            string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
-
-                            var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
-
-                            if (dublicateRowHatasiMi)
+                        foreach (var eczaneNobetGrup2 in eczaneNobetGruplar2)
+                        {
+                            var ikiliEczane = new AyniGunTutulanNobet
                             {
-                                throw new Exception($"<strong>{eczaneNobetGrup1.EczaneAdi} ve {eczaneNobetGrup2.EczaneAdi} eczane ikilisi zaten kayıtlıdır. Mükerrer kayır eklenemez...</strong>");
+                                EczaneNobetGrupId1 = eczaneNobetGrup1.Id,
+                                EczaneNobetGrupId2 = eczaneNobetGrup2.Id,
+                                EnSonAyniGunNobetTakvimId = 1
+                            };
+
+                            try
+                            {
+                                _ayniGunTutulanNobetDal.Insert(ikiliEczane);
+                            }
+                            catch (DbUpdateException ex)
+                            {
+                                var hata = ex.InnerException.ToString();
+
+                                string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+
+                                var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+
+                                if (dublicateRowHatasiMi)
+                                {
+                                    throw new Exception($"<strong>{eczaneNobetGrup1.EczaneAdi} ve {eczaneNobetGrup2.EczaneAdi} eczane ikilisi zaten kayıtlıdır. Mükerrer kayır eklenemez...</strong>");
+                                }
+
+                                throw ex;
+                            }
+                            catch (Exception ex)
+                            {
+                                throw ex;
                             }
 
-                            throw ex;
                         }
-                        catch (Exception ex)
-                        {
-                            throw ex;
-                        }
-
                     }
                 }
             }

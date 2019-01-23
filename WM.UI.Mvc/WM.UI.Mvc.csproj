@@ -278,6 +278,11 @@
     <Content Include="Content\images\logo-nobetyaz.png" />
     <Content Include="Content\images\logo2.jpg" />
     <Content Include="Content\images\logo3.jpg" />
+    <Content Include="Content\images\logoAlanya.png" />
+    <Content Include="Content\images\logoAntalya.png" />
+    <Content Include="Content\images\logoGiresun.jpg" />
+    <Content Include="Content\images\logoMersin.png" />
+    <Content Include="Content\images\logoOsmaniye.png" />
     <Content Include="Content\images\meeting-peoples-1080x625.png" />
     <Content Include="Content\images\NobetciEczaneLogo2.png" />
     <Content Include="Content\images\NobetciEczaneLogoUfak.png" />
@@ -565,7 +570,7 @@
     <Content Include="Content\toastr.less" />
     <Content Include="Areas\EczaneNobet\Views\NobetGrupKural\EditCoklu.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\Ekran\Index.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Index.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Index2.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\BilgiEkrani.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Ekran2.cshtml" />
     <Content Include="Content\bootstrapDatePicker\bootstrap-datepicker3.standalone.css.map" />
@@ -714,7 +719,7 @@
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetMazeret\CreatePartial.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\Shared\ErrorDublicateRowPartial.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\Shared\ErrorPartial.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\IndexSiiyahBeyaz.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Index.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetciEczaneHarita\NobetciEczaneler.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\Shared\ErrorModelCoz.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetDurum\Create.cshtml" />

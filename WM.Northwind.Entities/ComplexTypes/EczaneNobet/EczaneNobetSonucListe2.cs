@@ -126,23 +126,23 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         {
             if (ay <= 2)
             {
-                return "Kış";
+                return "4 Kış";
             }
             else if (ay <= 5)
             {
-                return "İlkbahar";
+                return "1 İlkbahar";
             }
             else if (ay <= 8)
             {
-                return "Yaz";
+                return "2 Yaz";
             }
             else if (ay <= 11)
             {
-                return "Sonbahar";
+                return "3 Sonbahar";
             }
             else
             {
-                return "Kış";
+                return "4 Kış";
             }
         }
     }

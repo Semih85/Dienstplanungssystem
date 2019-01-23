@@ -140,8 +140,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public ActionResult NobetciEczaneler()
         {
-            var nobetUstGruplar = _nobetUstGrupService.GetDetaylar()
-                .Where(w => w.Id < 5);
+            var nobetUstGruplar = _nobetUstGrupService.GetDetaylar();
 
             ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar.Select(s => new { s.Id, s.Adi }), "Id", "Adi");
 
@@ -164,7 +163,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         [Authorize]
-        public JsonResult GetNobetciler(DateTime tarih)
+        public JsonResult GetNobetcilerByTarih(DateTime tarih)
         {
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
@@ -300,8 +299,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _enlem = 37.0651243;
                 _boylam = 36.2463125;
             }
-            var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(_tarih, nobetUstGrupId)
-                .Where(w => w.NobetUstGrupId < 5);
+            var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(_tarih, nobetUstGrupId);
 
             var IPadres = Request.UserHostAddress;
             // var ekraninBulundugueczane = _eczaneService.GetList().Where(w=>w.IPadress == IPadres);

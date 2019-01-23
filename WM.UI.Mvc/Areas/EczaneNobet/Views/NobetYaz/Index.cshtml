@@ -62,7 +62,6 @@
                             }
 
                             <!-- #endregion -->
-
                             <!-- #region Model çöz formu -->
                             @using (Html.BeginForm("ModelCoz", null, FormMethod.Post, new { @class = "form my-2", id = "formModelCoz" }))
                             {
@@ -167,7 +166,7 @@
                                         <span class="font-weight-bold text-secondary mr-2 ">Çözüm</span>
                                         <div class="custom-control custom-radio custom-control-inline ml-3 ml-md-0">
                                             <input type="radio" id="cozumTercihOncelikli" name="CozumTercih" value=0 class="custom-control-input">
-                                            <label class="custom-control-label" data-toggle="tooltip" data-placement="top" 
+                                            <label class="custom-control-label" data-toggle="tooltip" data-placement="top"
                                                    title="Seçilen nöbet grupları yukarıdaki sıra ile çözülür. Her çözüm, önceki çözümleri dikkate alır. Örneğin, 1. ve 2. gruplar seçili ise; önce 1. grup çözülür sonra 2. grup 1.ye göre çözülür. Önceki çözümler sonradan değişmez." for="cozumTercihOncelikli">Öncelikli</label>
                                         </div>
                                         <div class="custom-control custom-radio custom-control-inline">
@@ -791,7 +790,7 @@
             window.chartColors.blue,
             window.chartColors.purple
         ];
-        
+
         var bgColorsGiresun = [
             window.chartColors.hos,
             window.chartColors.hos2
@@ -1104,7 +1103,7 @@
             // document.getElementById("div_searching").style.visibility = "visible";//sayfa yüklenirken tablo gizlenir
             document.getElementById("loading").style.visibility = "hidden";//gif gizlenir
             document.getElementById("loading").style.display = "none";//gif yer kaplamasın
-        }    
+        }
         function tarihDondur2(metin) {
 
             var tarih = metin.split(' ', 1)[0];
@@ -1485,5 +1484,3 @@
 @*<hr />*@
 
 <!-- #endregion -->
-
-

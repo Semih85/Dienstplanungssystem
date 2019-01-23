@@ -35,6 +35,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private ITakvimService _takvimService;
         private IEczaneNobetMuafiyetService _eczaneNobetMuafiyetService;
         private IKalibrasyonService _kalibrasyonService;
+        private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
+        private INobetDurumService _nobetDurumService;
 
         public OsmaniyeOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -56,7 +58,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     IEczaneNobetSonucService eczaneNobetSonucService,
                     IEczaneNobetMuafiyetService eczaneNobetMuafiyetService,
                     IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrupService,
-                    IKalibrasyonService kalibrasyonService
+                    IKalibrasyonService kalibrasyonService,
+                    IAyniGunTutulanNobetService ayniGunTutulanNobetService,
+                    INobetDurumService nobetDurumService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -79,6 +83,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _eczaneNobetMuafiyetService = eczaneNobetMuafiyetService;
             _eczaneNobetGrupAltGrupService = eczaneNobetGrupAltGrupService;
             _kalibrasyonService = kalibrasyonService;
+            _ayniGunTutulanNobetService = ayniGunTutulanNobetService;
+            _nobetDurumService = nobetDurumService;
         }
         #endregion
 
@@ -305,6 +311,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             #endregion
 
+            var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetGrupIdListe);
+
             var osmaniyeDataModel = new OsmaniyeDataModel()
             {
                 Yil = eczaneNobetDataModelParametre.YilBaslangic,
@@ -340,7 +348,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 TakvimNobetGrupGunDegerIstatistikler = takvimNobetGrupGunDegerIstatistikler,
                 EczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatay,
                 EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
-                Kalibrasyonlar = _kalibrasyonService.GetKalibrasyonlarYatay(nobetUstGrupId)
+                Kalibrasyonlar = _kalibrasyonService.GetKalibrasyonlarYatay(nobetUstGrupId),
+                IkiliEczaneler = ikiliEczaneler,
+                NobetDurumlar = _nobetDurumService.GetDetaylar(nobetUstGrupId)
             };
 
             return osmaniyeDataModel;

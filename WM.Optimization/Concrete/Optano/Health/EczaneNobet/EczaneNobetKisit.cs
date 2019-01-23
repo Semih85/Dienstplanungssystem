@@ -336,7 +336,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             {
                             }
 
-                            var kontrolEdilecekGruptakiEczaneler = new string[] { "ÇOTANAK", "PINAR" };
+                            var kontrolEdilecekGruptakiEczaneler = new string[] { "EBRU"};
 
                             if (eczaneGruplar.Where(w => kontrolEdilecekGruptakiEczaneler.Contains(w.EczaneAdi)).Count() > 0)
                             {
@@ -496,8 +496,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             }
         }
 
-        #region Mazeret ve istekler
-
         /// <summary>
         /// Mazeret girilen tarihlere nöbet yazılır.
         /// </summary>
@@ -564,8 +562,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 }
             }
         }
-
-        #endregion
 
         #endregion
 

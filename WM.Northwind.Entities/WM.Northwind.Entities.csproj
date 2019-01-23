@@ -57,6 +57,7 @@
     <Compile Include="ComplexTypes\EczaneNobet\KalibrasyonYatay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\KalibrasyonDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\KalibrasyonTipDetay.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\NobetAltGrupNobetDurum.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\NobetDegisim.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetGrupAltGrupCoklu.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\NobetDurumDetay.cs" />

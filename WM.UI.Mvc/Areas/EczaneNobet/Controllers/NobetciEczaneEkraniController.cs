@@ -49,7 +49,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
             var nobetUstGrupId = nobetUstGruplar.FirstOrDefault();
-            //var nobetUstGrupId = 3;
+            nobetUstGrupId = 3;
             //ay = 10;
             //gun = 10;
 
