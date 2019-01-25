@@ -406,6 +406,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                    Ay = s.Tarih.Month,
                                                    EczaneNobetGrupId = s.EczaneNobetGrupId,
                                                    EczaneNobetGrupBaslamaTarihi = s.EczaneNobetGrupBaslamaTarihi,
+                                                   EczaneNobetGrupBitisTarihi = s.EczaneNobetGrupBitisTarihi,
                                                    EczaneId = s.EczaneId,
                                                    EczaneAdi = s.EczaneAdi,
                                                    NobetGrupId = s.NobetGrupId,

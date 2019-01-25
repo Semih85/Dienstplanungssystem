@@ -25,6 +25,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public DateTime? BitisTarihi { get; set; }
         [Display(Name = "Eczane Oda Id")]
         public int EczaneOdaId { get; set; }
-        
+
+        public double Enlem { get; set; }
+        public double Boylam { get; set; }
     }
 }

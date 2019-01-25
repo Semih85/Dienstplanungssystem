@@ -368,6 +368,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var model = new EczaneNobetSonucViewJsonModel
             {
                 PivotSonuclar = sonuclar
+                //.Where(w => w.EczaneNobetGrupBitisTarihi == null)
                     .Select(s => new EczaneNobetSonucDagilimlar
                     {
                         Yıl_Ay = s.Yıl_Ay,
@@ -392,7 +393,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         NobetGrupGorevTipId = s.NobetGrupGorevTipId,
                         NobetDurumAdi = s.NobetDurumAdi,
                         NobetDurumTipAdi = s.NobetDurumTipAdi,
-                        KalibrasyonDeger = KalibrasyonDegeriToplam(nobetUstGrup.Id, s.EczaneNobetGrupId, s.GunGrupId, 7)
+                        KalibrasyonDeger = KalibrasyonDegeriToplam(nobetUstGrup.Id, s.EczaneNobetGrupId, s.GunGrupId, 7),
+                        EczaneNobetGrupBitisTarihi = s.EczaneNobetGrupBitisTarihi
                     }).ToList(),
                 KalibrasyonluToplamlar = KalibrasyonlaSonuclariBirlestir(nobetUstGrup.Id),
                 GunFarklariTumSonuclar = gunFarklari,

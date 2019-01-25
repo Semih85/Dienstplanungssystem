@@ -23,6 +23,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IMersinMerkezOptimizationServiceV2 _mersinMerkezOptimizationServiceV2;
         private IGiresunOptimizationService _giresunOptimizationService;
         private IOsmaniyeOptimizationService _osmaniyeOptimizationService;
+        private IBartinOptimizationService _bartinOptimizationService;
+
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
         private INobetGrupService _nobetGrupService;
@@ -39,6 +41,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                   IMersinMerkezOptimizationServiceV2 mersinMerkezOptimizationServiceV2,
                                   IGiresunOptimizationService giresunOptimizationService,
                                   IOsmaniyeOptimizationService osmaniyeOptimizationService,
+                                  IBartinOptimizationService bartinOptimizationService,
+
                                   IEczaneNobetGrupService eczaneNobetGrupService,
                                   INobetGrupGorevTipService nobetGrupGorevTipService,
                                   INobetGrupService nobetGrupService,
@@ -56,6 +60,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _mersinMerkezOptimizationServiceV2 = mersinMerkezOptimizationServiceV2;
             _giresunOptimizationService = giresunOptimizationService;
             _osmaniyeOptimizationService = osmaniyeOptimizationService;
+            _bartinOptimizationService = bartinOptimizationService;
 
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _nobetGrupGorevTipService = nobetGrupGorevTipService;
@@ -210,6 +215,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     break;
                 case 5:
                     sonucModel = _osmaniyeOptimizationService.ModelCoz(eczaneNobetModelCoz);
+                    break;
+                case 6:
+                    sonucModel = _bartinOptimizationService.ModelCoz(eczaneNobetModelCoz);
                     break;
                 default:
                     return RedirectToAction("Index");

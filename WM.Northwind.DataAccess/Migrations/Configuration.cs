@@ -4,6 +4,7 @@ namespace WM.Northwind.DataAccess.Migrations
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Data.Entity.SqlServer;
     using System.Linq;
     using WM.Northwind.Entities.Concrete.Authorization;
     using WM.Northwind.Entities.Concrete.EczaneNobet;
@@ -101,6 +102,8 @@ namespace WM.Northwind.DataAccess.Migrations
             //}
             //context.SaveChanges(); 
             #endregion
+
+            
         }
 
         private static void VeriEkleGuncelleMaster(Concrete.EntityFramework.Contexts.EczaneNobetContext context)
@@ -4590,6 +4593,357 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
     }
 
 }
+
+#region yeni üst grup ekleme paketi - bartýn
+
+/*
+var baslamaTarihi = new DateTime(2019, 4, 1);
+
+#region eczane odalar
+var eczaneOdalar = new List<EczaneOda>()
+                        {
+                            new EczaneOda(){ Adi="Zonguldak", Adres="Mithatpaþa Mahallesi Aziziye Caddesi No:123 Kat :4 Zonguldak", TelefonNo="3722538973", MailAdresi="zonguldakeczaciodasi@gmail.com", WebSitesi ="https://www.zeo.org.tr/3"}
+                        };
+
+context.EczaneOdalar.AddOrUpdate(s => new { s.Adi }, eczaneOdalar.ToArray());
+            context.SaveChanges();
+            #endregion
+            var odaId = 5;
+
+#region nöbet üst gruplar
+var nobetUstGruplar = new List<NobetUstGrup>() {
+                            new NobetUstGrup(){Adi = "Bartýn",Aciklama = "Bartýn Merkez",EczaneOdaId = odaId, BaslangicTarihi=baslamaTarihi},
+                        };
+
+context.NobetUstGruplar.AddOrUpdate(s => new { s.Adi }, nobetUstGruplar.ToArray());
+            context.SaveChanges();
+            #endregion
+
+            var nobetUstGrupId = 6;
+//var nobetGrupGorevTipId = 28;
+
+#region eczaneler
+
+var eczaneler = new List<Eczane>()
+                                    {
+                                        #region bartýn
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="ALTIN", Enlem = 41.632848, Boylam=32.3374781, Adres ="HÜKÜMET CAD. NO:43", TelefonNo= "3782271734" , MailAdresi= "sa_baykal@hotmail.com", AcilisTarihi = new DateTime(2004,10,4)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="AÞIYAN", Enlem = 41.632799, Boylam=32.340986, Adres ="BARTIN ILI MERKEZ ILÇE ORTA MAH.HENDEKYANI CAD.NO:22", TelefonNo= "3782284850" , MailAdresi= "asiyanyorulmaz@gmail.com", AcilisTarihi = new DateTime(1998,3,19)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="AYDIN", Enlem = 41.630638, Boylam=32.346240, Adres ="DEMÝRCÝLER MAH. ÞEFKAT GÖKBAYRAK SOKAK NO:1", TelefonNo= "3782282550" , MailAdresi= "aydineczanesi74@hotmail.com", AcilisTarihi = new DateTime(2013,8,6)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="BARTIN", Enlem = 41.630947, Boylam=32.347873, Adres ="BARTIN ILI MERKEZ ILÇE TUNA MAHALLESI ATES DEGIRMENISOK.NO:34/A", TelefonNo= "3782282112" , MailAdresi= "bartinecz@gmail.com", AcilisTarihi = new DateTime(2006,9,7)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="BÝLGÝN", Enlem = 41.631507, Boylam=32.324954, Adres ="BARTIN ILI GÖLBUCAGI MAH.107.CAD NO.86/1", TelefonNo= "3782271032" , MailAdresi= "bilginecz@hotmail.com", AcilisTarihi = new DateTime(2004,3,11)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="BÜYÜK", Enlem = 41.630566, Boylam=32.336807, Adres ="BARTIN ILI MERKEZ ILÇE KEMERKÖPRÜ MAH.DAVUT FIRINCIOGLU CAD. NO:60/E", TelefonNo= "3782280036" , MailAdresi= "sevingunce@hotmail.com", AcilisTarihi = new DateTime(2001,8,23)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="CANAN", Enlem = 41.632729, Boylam=32.337494, Adres ="BARTIN ILI MERKEZ ILÇE HÜKÜMET CAD.NO:45", TelefonNo= "3782271641" , MailAdresi= "cananecz@ttmail.com", AcilisTarihi = new DateTime(1973,4,9)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="ÇOLPAK", Enlem = 41.626556, Boylam=32.312942, Adres ="ALADAG MAHALLESI 40. SOKAK NO:28 MERKEZ/BARTIN", TelefonNo= "3782278545" , MailAdresi= "nursencolpak@yahoo.com", AcilisTarihi = new DateTime(2011,1,6)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="DENÝZ", Enlem = 41.626547, Boylam=32.326661, Adres ="KEMERKÖPRÜ MAH. ÇATMACA SOKAK CEYLAN PLAZA APT. NO:23", TelefonNo= "3782271991" , MailAdresi= "eczdenizyildirim@gmail.com", AcilisTarihi = new DateTime(2015,8,19)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="DORUK", Enlem = 41.641149, Boylam=32.344781, Adres ="BARTIN ILI MERKEZ ORDUYERI MAHALLESI 190.CAD.NO:25", TelefonNo= "3782270206" , MailAdresi= "eczdoruk@ttmail.com", AcilisTarihi = new DateTime(1993,6,21)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="ELÝF", Enlem = 41.626759, Boylam=32.323341, Adres ="KEMERKÖPRÜ MAH. BÜLENT ECEVÝT BULVARI NO:107/A", TelefonNo= "3782270919" , MailAdresi= "elifbatum4@gmail.com", AcilisTarihi = new DateTime(2015,10,22)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="EZGÝ", Enlem = 41.635070, Boylam=32.335625, Adres ="BARTIN ILI MERKEZ ILÇE KIRTEPE MAH.ARIFLER SOK. NO:13/D", TelefonNo= "3782280545" , MailAdresi= "eczzsanli@hotmail.com", AcilisTarihi = new DateTime(2005,6,16)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="FEZA", Enlem = 41.627686, Boylam=32.352912, Adres ="BARTIN ILI MERKEZ ILÇE TUNA MAH.HENDEKYANI CAD.NO:19/A", TelefonNo= "3782273191" , MailAdresi= "yildizoptikbartin@hotmail.com", AcilisTarihi = new DateTime(1988,3,16)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="GÖZDE", Enlem = 41.634405, Boylam=32.336616, Adres ="BARTIN ILI MERKEZ ILÇE YUKARIÇARSI CAD.NO:32", TelefonNo= "3782271673" , MailAdresi= "gozdeecz@hotmail.com", AcilisTarihi = new DateTime(1979,6,18)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="GÜL", Enlem = 41.641125, Boylam=32.345024, Adres ="ORDUYERÝ MAH. FATÝH SULTAN MEHMET CAD. NO:44/3", TelefonNo= "3782270020" , MailAdresi= "atilgan.aysegul@hotmail.com", AcilisTarihi = new DateTime(2015,12,10)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="GÜVEN", Enlem = 41.633841, Boylam=32.337481, Adres ="BARTIN ILI MERKEZ ILÇE KIRTEPE MAH.NO:31", TelefonNo= "3782274834" , MailAdresi= "kemikinsaat@hotmail.com", AcilisTarihi = new DateTime(1985,8,16)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="HAKAN", Enlem = 41.627651, Boylam=32.352804, Adres ="TUNA MAH. HENDEKYANI CAD. NO:223/13", TelefonNo= "3782287070" , MailAdresi= "hakan-eczanesi@ttmail.com", AcilisTarihi = new DateTime(1993,9,17)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="KUTLAR", Enlem = 41.629509, Boylam=32.349007, Adres ="BARTIN ILI MERKEZ ILÇE TUNA MAH.HENDEKYANI CAD.NO:200/C", TelefonNo= "3782276053" , MailAdresi= "kutlareczane@hotmail.com", AcilisTarihi = new DateTime(1991,11,29)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="KUZEY", Enlem = 41.624325, Boylam=32.336161, Adres ="KEMERKÖPRÜ MAH. SITMAYANI CAD. NO:69/13", TelefonNo= "3782271655" , MailAdresi= "dorukersoy55@hotmail.com", AcilisTarihi = new DateTime(2016,3,16)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="MERT", Enlem = 41.630257, Boylam=32.335941, Adres ="BARTIN ILI MERKEZ ILÇE KEMERKÖPRÜ MAH. 152. SOKAK NO:7", TelefonNo= "3782273580" , MailAdresi= "yezdanmertdoganay@hotmail.com", AcilisTarihi = new DateTime(1991,12,23)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="MÜGE", Enlem = 41.629330, Boylam=32.337305, Adres ="BARTIN ILI KEMERKÖPRÜ CAD.NO:28", TelefonNo= "3782278628" , MailAdresi= "muge.eczanesi@yandex.com", AcilisTarihi = new DateTime(1994,3,8)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="NUR ACAR", Enlem = 41.632495, Boylam=32.325064, Adres ="GÖLBUCAÐI MAH. 107.CAD. 56/A", TelefonNo= "3782949639" , MailAdresi= "nuracareczanesi@hotmail.com", AcilisTarihi = new DateTime(2007,10,11)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="ÖZBAKAN", Enlem = 41.6321631, Boylam=32.3378451, Adres ="BARTIN ILI KEMERKÖPRÜ MAH.ÞADIRVAN CAD.8/2", TelefonNo= "3782279222" , MailAdresi= "hakanozbakan@hotmail.com", AcilisTarihi = new DateTime(2004,10,4)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="ÖZDAÐ", Enlem = 41.6216068, Boylam=32.3414581, Adres ="KARAKÖY MAH.KADIOÐLU SOK.60/11", TelefonNo= "5389493981" , MailAdresi= "ozdagenis@gmail.com", AcilisTarihi = new DateTime(2018,5,2)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="PINAR", Enlem = 41.627022, Boylam=32.353993, Adres ="BARTIN ILI MERKEZ ILÇE TUNA MAH.KANLIIRMAK CAD.NO:188/A", TelefonNo= "3782272322" , MailAdresi= "aozardic@hotmail.com", AcilisTarihi = new DateTime(1976,8,24)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="SAKAOÐLU", Enlem = 41.624567, Boylam=32.336297, Adres ="BARTIN ILI MERKEZ ILÇE KEMERKÖPRÜ MAH.YUKARI SOK. NO:73/A", TelefonNo= "3782283838" , MailAdresi= "cevatsakaoglu@hotmail.com", AcilisTarihi = new DateTime(2010,10,7)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="SERAP", Enlem = 41.640941, Boylam=32.344367, Adres ="BARTIN ILI MERKEZ ILÇE ORDUYERI MAH.ORDUYERI CAD.NO:28/A", TelefonNo= "3782278485" , MailAdresi= "eczsrpctnkl74@hotmail.com", AcilisTarihi = new DateTime(2004,9,24)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="SEVÝNÇ", Enlem = 41.635068, Boylam=32.335775, Adres ="BARTIN ILI MERKEZ ILÇE KIRTEPE MAH.CUMHURIYET MEYDANI NO:13/A-B-C", TelefonNo= "3782275088" , MailAdresi= "sevinc_cati@mynet.com", AcilisTarihi = new DateTime(1991,12,23)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="ÞADIRVAN", Enlem = 41.6319624, Boylam=32.3379346, Adres ="BARTIN ÝLÝ MERKEZ ÝLÇESÝ KEMERKÖPRÜ MAH.ÞADIRVAN CAD.NO:14/1 ", TelefonNo= "5350825881" , MailAdresi= "zeynep8kaya@gmail.com", AcilisTarihi = new DateTime(2017,10,4)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="TUNA", Enlem = 41.631462, Boylam=32.336600, Adres ="BARTIN ILI MERKEZ ILÇE KEMERKÖPRÜ MAH.DAVUT FIRINCIOGLU CAD.NO:2", TelefonNo= "3782273128" , MailAdresi= "haticeilknur1955@gmail.com", AcilisTarihi = new DateTime(1982,12,15)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="ÜMÝT", Enlem = 41.628464, Boylam=32.335497, Adres ="BARTIN ILI KEMERKÖPRÜ MAH.ESKI HASTANE CAD.NO:7/D", TelefonNo= "3782285581" , MailAdresi= "filizkavukcu@hotmail.com", AcilisTarihi = new DateTime(2008,1,24)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="ÜNAL", Enlem = 41.630621, Boylam=32.337398, Adres ="KEMERKÖPRÜ MAH. ÞADIRVAN CAD.NO:64/A", TelefonNo= "3782285814" , MailAdresi= "eczhekrem@hotmail.com", AcilisTarihi = new DateTime(2012,9,13)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="YALI", Enlem = 41.637315, Boylam=32.333291, Adres ="KIRTEPE MAH. 168. CAD. GÜMRÜK SOKAK NO:1/B", TelefonNo= "3782288880" , MailAdresi= "emelunalan@hotmail.com", AcilisTarihi = new DateTime(2012,11,8)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="YASEMÝN", Enlem = 41.640560, Boylam=32.343564, Adres ="ORDUYERÝ MAH. FATÝH SULTAN MEHMET CAD. NO:2/C", TelefonNo= "3782280077" , MailAdresi= "yasemincandemir@ymail.com", AcilisTarihi = new DateTime(2014,8,7)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="YAÞAM", Enlem = 41.627458, Boylam=32.349705, Adres ="BARTIN ILI MERKEZ ILÇE TUNA MAH.TÜRBE SOK.NO.10/B", TelefonNo= "3782270091" , MailAdresi= "e.b.okur@hotmail.com", AcilisTarihi = new DateTime(2001,3,1)},
+ new Eczane { NobetUstGrupId =nobetUstGrupId, Adi ="YEDÝTEPE", Enlem = 41.636699, Boylam=32.334288, Adres ="KIRTEPE MAH..GUMRUK SOK. GÜNEY AKRABAOÐLU St. C BLOK No:19/2 BARTIN", TelefonNo= "3782279994" , MailAdresi= "seco7tepe@hotmail.com", AcilisTarihi = new DateTime(2009,5,27)},
+
+                                        #endregion
+                                    };
+
+context.Eczaneler.AddOrUpdate(s => new { s.Adi, s.AcilisTarihi }, eczaneler.ToArray());
+            context.SaveChanges();
+            #endregion
+
+            #region nöbet gruplar
+
+            var nobetGruplar = new List<NobetGrup>() {
+                                        new NobetGrup()
+                                        {
+                                            Adi = "Bartýn",
+                                            BaslamaTarihi = baslamaTarihi,
+                                            NobetUstGrupId = nobetUstGrupId
+                                        }
+                                    };
+
+context.NobetGruplar.AddOrUpdate(s => new { s.Adi }, nobetGruplar.ToArray());
+            context.SaveChanges();
+            #endregion
+
+            #region users
+            var vUser = new List<User>()
+                                                    {
+                                    new User(){ Email="odaZonguldak@nobetyaz.com", FirstName="Oda Zonguldak", LastName="Oda Zonguldak", Password="odaZonguldak5", UserName="odaZonguldak"},
+                                    new User(){ Email="ustGrupBartin@nobetyaz.com", FirstName="ustgrup", LastName="Oda", Password="ustGrup6", UserName="ustGrupBartin"},
+                                    new User(){ Email="eczonurazman@hotmail.com", FirstName="Onur AZMAN", LastName="AZMAN", Password="zeoonur1", UserName="eczonurazman@hotmail.com"}
+                                                    };
+
+context.Users.AddOrUpdate(s => new { s.Email }, vUser.ToArray());
+            context.SaveChanges();
+            #endregion
+
+            #region user roles
+
+            var sonEklenenKullanici1 = context.Users.Where(w => w.Email == "odaZonguldak@nobetyaz.com").FirstOrDefault();
+var sonEklenenKullanici2 = context.Users.Where(w => w.Email == "ustGrupBartin@nobetyaz.com").FirstOrDefault();
+var sonEklenenKullanici3 = context.Users.Where(w => w.Email == "eczonurazman@hotmail.com").FirstOrDefault();
+
+var vuserRole = new List<UserRole>()
+                                                    {
+                                                        new UserRole(){ RoleId=2, UserId=sonEklenenKullanici1.Id },
+                                                        new UserRole(){ RoleId=3, UserId=sonEklenenKullanici2.Id },
+                                                        new UserRole(){ RoleId=3, UserId=sonEklenenKullanici3.Id }
+                                                    };
+
+context.UserRoles.AddOrUpdate(s => new { s.RoleId, s.UserId }, vuserRole.ToArray());
+            context.SaveChanges();
+            #endregion
+
+
+            #region nöbet grup görev tipler
+            var nobetGrupGorevTipler = new List<NobetGrupGorevTip>()
+                                                    {
+                                            new NobetGrupGorevTip(){ NobetGrupId=30, NobetGorevTipId=1}
+                                                    };
+
+context.NobetGrupGorevTipler.AddOrUpdate(s => new { s.NobetGrupId, s.NobetGorevTipId }, nobetGrupGorevTipler.ToArray());
+            context.SaveChanges();
+            #endregion
+
+            #region nöbet grup kurallar
+
+            var sonNobetGrubu = context.NobetGrupKurallar.ToList().LastOrDefault();
+
+var nobetGrupKurallar = new List<NobetGrupKural>()
+                                            {
+                                            #region Bartýn
+                                            new NobetGrupKural(){ NobetGrupGorevTipId=28, NobetKuralId=1, BaslangicTarihi=baslamaTarihi, Deger=4},
+                                            //new NobetGrupKural(){ NobetGrupGorevTipId=28, NobetKuralId=2, BaslangicTarihi=baslamaTarihi, Deger=5},
+                                            new NobetGrupKural(){ NobetGrupGorevTipId=28, NobetKuralId=3, BaslangicTarihi=baslamaTarihi, Deger=1}, 
+                                            #endregion
+
+                                            };
+
+context.NobetGrupKurallar.AddOrUpdate(s => new { s.NobetGrupGorevTipId, s.NobetKuralId, s.BaslangicTarihi }, nobetGrupKurallar.ToArray());
+            context.SaveChanges();
+            #endregion
+
+            #region nöbet üst grup gün gruplar
+
+            var nobetUstGrupGunGruplar = new List<NobetUstGrupGunGrup>()
+                                                    {
+                                                        //giresun
+                                                        new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 1 },
+                                                        new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 2 },
+                                                        new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 3 },
+                                                        new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 4 },
+                                                    };
+
+context.NobetUstGrupGunGruplar.AddOrUpdate(s => new { s.NobetUstGrupId, s.GunGrupId }, nobetUstGrupGunGruplar.ToArray());
+            context.SaveChanges();
+            #endregion
+
+            #region nöbet grup gün kurallar
+
+            var NobetGrupGorevTipGunKuralListe = context.NobetGrupGorevTipGunKurallar
+                .Where(w => w.NobetGrupGorevTipId == 24) //antalya 11. grup
+                .ToList();
+
+var nobetGrupGorevTipGunKurallar = new List<NobetGrupGorevTipGunKural>();
+
+            foreach (var nobetGrupGunKural in NobetGrupGorevTipGunKuralListe)
+            {
+                var nobetGrupGorevTipGunKural = new NobetGrupGorevTipGunKural()
+                {
+                    NobetGrupGorevTipId = 28,
+                    NobetGunKuralId = nobetGrupGunKural.NobetGunKuralId,
+                    BaslangicTarihi = baslamaTarihi,
+                    NobetUstGrupGunGrupId = GetNobetUstGrupGunGrupId(nobetUstGrupId, nobetGrupGunKural.NobetGunKuralId)
+                };
+
+nobetGrupGorevTipGunKurallar.Add(nobetGrupGorevTipGunKural);
+            }
+
+            context.NobetGrupGorevTipGunKurallar.AddOrUpdate(s => new { s.NobetGrupGorevTipId, s.NobetGunKuralId, s.NobetUstGrupGunGrupId }, nobetGrupGorevTipGunKurallar.ToArray());
+            context.SaveChanges();
+
+            int GetNobetUstGrupGunGrupId(int pnobetUstGrupId, int nobetGunKuralId)
+{
+    int nobetUstGrupGunGrupId = 0;
+
+    if (nobetGunKuralId == 1)
+    {//pazar
+        var nobetUstGrupGunGrup = context.NobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == pnobetUstGrupId && x.GunGrupId == 1);
+        nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
+    }
+    else if (nobetGunKuralId > 1 && nobetGunKuralId < 7)
+    {//hafta içi
+        var nobetUstGrupGunGrup = context.NobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == pnobetUstGrupId && x.GunGrupId == 3);
+        nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
+    }
+    else if (nobetGunKuralId == 7)
+    {
+        if (pnobetUstGrupId == 3 || pnobetUstGrupId == 5 || pnobetUstGrupId == 6)
+        {//cumartesi, varsa
+            var nobetUstGrupGunGrup = context.NobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == pnobetUstGrupId && x.GunGrupId == 4);
+            nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
+        }
+        else
+        {//hafta içi
+            var nobetUstGrupGunGrup = context.NobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == pnobetUstGrupId && x.GunGrupId == 3);
+            nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
+        }
+    }
+    else
+    {//bayram
+        var nobetUstGrupGunGrup = context.NobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == pnobetUstGrupId && x.GunGrupId == 2);
+        nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
+    }
+
+    return nobetUstGrupGunGrupId;
+}
+#endregion
+
+#region nöbet grup görev tip takvim özel Günler
+
+var bayramlar2 = context.NobetGrupGorevTipTakvimOzelGunler
+    .Where(w => w.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrupId == 4
+    && w.NobetOzelGunId != 10 //arife
+                              //&& !(((int)w.Takvim.Tarih.DayOfWeek + 1 == 1 || (int)w.Takvim.Tarih.DayOfWeek + 1 == 6) && w.NobetOzelGunId == 9)
+    && !(((int)SqlFunctions.DatePart("weekday", w.Takvim.Tarih) == 1 || (int)SqlFunctions.DatePart("weekday", w.Takvim.Tarih) == 7) && w.NobetGunKuralId == 9)
+    )
+    .ToList();
+
+var nobetGrupGorevTipTakvimOzelGunler = new List<NobetGrupGorevTipTakvimOzelGun>();
+
+            foreach (var bayram in bayramlar2)
+            {
+                var nobetGrupGorevTipGunKural = context.NobetGrupGorevTipGunKurallar.SingleOrDefault(w => w.NobetGunKuralId == bayram.NobetGunKuralId && w.NobetGrupGorevTipId == 28);
+
+var nobetGrupGorevTipTakvimOzelGun = new NobetGrupGorevTipTakvimOzelGun()
+{
+    TakvimId = bayram.TakvimId,
+    NobetGunKuralId = nobetGrupGorevTipGunKural.NobetGunKuralId,
+    NobetGrupGorevTipGunKuralId = nobetGrupGorevTipGunKural.Id,
+    NobetOzelGunId = bayram.NobetOzelGunId
+};
+
+nobetGrupGorevTipTakvimOzelGunler.Add(nobetGrupGorevTipTakvimOzelGun);
+            }
+
+            context.NobetGrupGorevTipTakvimOzelGunler.AddOrUpdate(s => new { s.TakvimId, s.NobetGunKuralId, s.NobetOzelGunId, s.NobetGrupGorevTipGunKuralId }, nobetGrupGorevTipTakvimOzelGunler.ToArray());
+            context.SaveChanges();
+            #endregion
+
+            #region user eczane odalar
+            var userEczaneOdalar = new List<UserEczaneOda>()
+                                                    {
+                                                        new UserEczaneOda(){ EczaneOdaId = odaId, UserId=sonEklenenKullanici1.Id }
+                                                    };
+
+context.UserEczaneOdalar.AddOrUpdate(s => new { s.EczaneOdaId, s.UserId }, userEczaneOdalar.ToArray());
+            context.SaveChanges();
+            #endregion
+
+            #region user nobet üst gruplar
+            var userNobetUstGruplar = new List<UserNobetUstGrup>()
+                                                    {
+                                                        new UserNobetUstGrup(){  NobetUstGrupId=nobetUstGrupId, UserId=sonEklenenKullanici2.Id },
+                                                        new UserNobetUstGrup(){  NobetUstGrupId=nobetUstGrupId, UserId=sonEklenenKullanici3.Id },
+                                                    };
+
+context.UserNobetUstGruplar.AddOrUpdate(s => new { s.NobetUstGrupId, s.UserId }, userNobetUstGruplar.ToArray());
+            context.SaveChanges();
+            #endregion
+
+
+            #region eczane nöbet gruplar
+            var bartinEczaneler = context.Eczaneler.Where(w => w.NobetUstGrupId == nobetUstGrupId).ToList();
+
+var eczaneNobetGruplar = new List<EczaneNobetGrup>();
+
+            foreach (var eczane in bartinEczaneler)
+            {
+                eczaneNobetGruplar.Add(new EczaneNobetGrup()
+{
+    EczaneId = eczane.Id,
+                    NobetGrupGorevTipId = 28,
+                    BaslangicTarihi = baslamaTarihi,
+                    Aciklama = "-"
+                });
+            }
+
+            context.EczaneNobetGruplar.AddOrUpdate(s => new { s.EczaneId, s.NobetGrupGorevTipId }, eczaneNobetGruplar.ToArray());
+            context.SaveChanges();
+            #endregion
+
+
+            #region talepler
+            var ozelTalepTarihleri = context.Takvimler
+                .Where(w => SqlFunctions.DatePart("weekday", w.Tarih) == 7
+                        && (w.Tarih.Year >= 2019 && w.Tarih.Month >= 4)).ToList();
+
+var talepler = new List<NobetGrupTalep>();
+
+            foreach (var tarih in ozelTalepTarihleri)
+            {
+                talepler.Add(new NobetGrupTalep()
+{
+    NobetciSayisi = 2,
+                    NobetGrupGorevTipId = 28,
+                    TakvimId = tarih.Id
+                });
+            }
+
+            context.NobetGrupTalepler.AddOrUpdate(s => new { s.TakvimId, s.NobetGrupGorevTipId }, talepler.ToArray());
+            context.SaveChanges();
+            #endregion
+
+
+            #region nöbet üst grup kýsýtlar
+
+            var nobetUstGrupKisitlar = context.NobetUstGrupKisitlar
+                .Where(w => w.NobetUstGrupId == 4)
+                .ToList();
+
+var kisitlar = new List<NobetUstGrupKisit>();
+
+            foreach (var nobetUstGrupKisit in nobetUstGrupKisitlar)
+            {
+                var nobetUstGrupKisit2 = new NobetUstGrupKisit()
+                {
+                    KisitId = nobetUstGrupKisit.KisitId,
+                    NobetUstGrupId = nobetUstGrupId,
+                    SagTarafDegeri = nobetUstGrupKisit.SagTarafDegeri,
+                    SagTarafDegeriVarsayilan = nobetUstGrupKisit.SagTarafDegeriVarsayilan,
+                    PasifMi = nobetUstGrupKisit.PasifMi,
+                    VarsayilanPasifMi = nobetUstGrupKisit.VarsayilanPasifMi
+                };
+
+kisitlar.Add(nobetUstGrupKisit2);
+            }
+
+            context.NobetUstGrupKisitlar.AddOrUpdate(s => new { s.NobetUstGrupId, s.KisitId }, kisitlar.ToArray());
+            context.SaveChanges();
+            #endregion
+    */
+            #endregion
 
 #region yeni üst grup ekleme paketi - Osmaniye
 /*

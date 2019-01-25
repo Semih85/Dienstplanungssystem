@@ -32,6 +32,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string AyIkili { get; set; }
         public string Mevsim { get; set; }
         public double KalibrasyonDeger { get; set; }
+        public DateTime? EczaneNobetGrupBitisTarihi { get; set; }
+        public string EczaneKapanmaTarihi => String.Format("{0:yyyy MM dd}", EczaneNobetGrupBitisTarihi);
 
         //public int NobetDurumId { get; set; }
         //public int NobetDurumTipId { get; set; }

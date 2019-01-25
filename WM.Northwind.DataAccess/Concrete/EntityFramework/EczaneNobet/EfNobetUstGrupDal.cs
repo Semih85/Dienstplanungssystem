@@ -28,7 +28,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                             EczaneOdaAdi = x.EczaneOda.Adi,
                             EczaneOdaId = x.EczaneOdaId,
                             BaslangicTarihi = x.BaslangicTarihi,
-                            BitisTarihi = x.BitisTarihi
+                            BitisTarihi = x.BitisTarihi,
+                            Enlem = x.Enlem,
+                            Boylam = x.Boylam
                         }).SingleOrDefault(filter);
             }
         }
@@ -46,7 +48,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                             EczaneOdaAdi = x.EczaneOda.Adi,
                             EczaneOdaId = x.EczaneOdaId,
                             BaslangicTarihi = x.BaslangicTarihi,
-                            BitisTarihi = x.BitisTarihi
+                            BitisTarihi = x.BitisTarihi,
+                            Enlem = x.Enlem,
+                            Boylam = x.Boylam
                         });
 
                 return filter == null

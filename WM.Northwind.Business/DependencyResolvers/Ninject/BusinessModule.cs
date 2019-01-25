@@ -255,6 +255,9 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IOsmaniyeOptimizationService>().To<OsmaniyeOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetOsmaniyeOptimization>().To<OsmaniyeOptano>().InSingletonScope();
 
+            Bind<IBartinOptimizationService>().To<BartinOptimizationManager>().InSingletonScope();
+            Bind<IEczaneNobetBartinOptimization>().To<BartinOptano>().InSingletonScope();
+
 
             Bind<ITransportService>().To<TransportManager>().InSingletonScope();
             Bind<ITransportOptimization>().To<TransportOptano>();

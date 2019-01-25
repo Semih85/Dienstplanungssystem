@@ -640,23 +640,72 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var gunGruplar = eczaneNobetSonuclar.Select(s => s.GunGrup).Distinct().OrderBy(o => o).ToList();
             var gunFarki = new List<EczaneNobetIstatistikGunFarki>();
 
+            var eczanelerTumu = eczaneNobetSonuclar.Select(s => s.EczaneNobetGrupId).Distinct().ToList();
+
+            foreach (var eczane in eczanelerTumu)
+            {
+                var liste = eczaneNobetSonuclar.Where(w => w.EczaneNobetGrupId == eczane).OrderBy(o => o.Tarih).ToList();
+
+                int index = 0;
+
+                foreach (var l1 in liste.Take(liste.Count() - 1))
+                {
+                    index++;
+
+                    foreach (var l2 in liste.Where(w => w.Tarih > l1.Tarih).Take(1))
+                    {
+                        gunFarki.Add(new EczaneNobetIstatistikGunFarki
+                        {
+                            EczaneId = l2.EczaneId,
+                            EczaneNobetGrupId = l2.EczaneNobetGrupId,
+                            NobetGrupId = l2.NobetGrupId,
+                            NobetGorevTipId = l2.NobetGorevTipId,
+                            NobetGorevTipAdi = l2.NobetGorevTipAdi,
+                            EczaneAdi = l2.EczaneAdi,
+                            NobetGrupAdi = l2.NobetGrubu,
+                            GunGrup = "Tümü",
+                            Index = index,
+                            Nobet1Tarih = l1.Tarih,
+                            //Nobet1Tanim = String.Format("{0:dd MMM yyyy, ddd}", l1.Tarih),
+                            Nobet1 = String.Format("{0:yyyy MM dd, ddd}", l1.Tarih),
+                            Nobet1Gun = String.Format("{0:ddd.}", l1.Tarih),
+                            //Nobet1 = long.Parse(l1.Tarih.ToString("yyyyMMdd")),
+                            Nobet1Yil = l1.Tarih.Year,
+                            Nobet1Ay = l1.Tarih.Month,
+                            Nobet2Tarih = l2.Tarih,
+                            Nobet2 = String.Format("{0:yyyy MM dd, ddd}", l2.Tarih),
+                            Nobet2Gun = String.Format("{0:ddd.}", l2.Tarih),
+                            //Nobet2 = long.Parse(l2.Tarih.ToString("yyyyMMdd")),
+                            Nobet2Yil = l2.Tarih.Year,
+                            Nobet2Ay = l2.Tarih.Month,
+                            GunFarki = (int)(l2.Tarih - l1.Tarih).TotalDays,
+                            NobetSonucDemoTipId = l2.NobetSonucDemoTipId
+                        });
+                    }
+                }
+            }
+
+
             foreach (var g in gunGruplar)
             {
-                var sonuclar = eczaneNobetSonuclar.Where(w => w.GunGrup == g).Distinct().ToList();
-                var eczaneler = sonuclar.Select(s => s.EczaneNobetGrupId).Distinct().ToList();
+                var sonuclarByGunGrup = eczaneNobetSonuclar.Where(w => w.GunGrup == g).Distinct().ToList();
+                var eczaneler = sonuclarByGunGrup.Select(s => s.EczaneNobetGrupId).Distinct().ToList();
 
-                foreach (var e in eczaneler)
+                foreach (var eczane in eczaneler)
                 {
-                    var liste = sonuclar.Where(w => w.EczaneNobetGrupId == e).OrderBy(o => o.Tarih).ToList();
+                    var liste = sonuclarByGunGrup.Where(w => w.EczaneNobetGrupId == eczane).OrderBy(o => o.Tarih).ToList();
 
-                    if (liste.Count > 1)
-                    {
+                    //if (liste.Count > 1)
+                    //{
 
-                    }
+                    //}
+
                     int index = 0;
+
                     foreach (var l1 in liste.Take(liste.Count() - 1))
                     {
                         index++;
+
                         foreach (var l2 in liste.Where(w => w.Tarih > l1.Tarih).Take(1))
                         {
                             gunFarki.Add(new EczaneNobetIstatistikGunFarki
