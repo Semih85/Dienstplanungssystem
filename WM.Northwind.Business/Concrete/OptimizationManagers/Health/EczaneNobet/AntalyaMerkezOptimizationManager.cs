@@ -173,6 +173,10 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 .Where(w => !eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneNobetGrupId).Contains(w.Id)).ToList();
             //var sure_eczaneNobetGruplar = stopwatch.Elapsed;
 
+            //var planlananSonuclar = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetUstGrupId);
+
+            //_takvimService.SiraliNobetYaz(planlananSonuclar, nobetGrupGorevTipler, eczaneNobetGruplar, baslangicTarihi, bitisTarihi);
+
             var eczaneNobetSonuclarCozulenGruplar = eczaneNobetSonuclar
                 .Where(w => eczaneNobetGruplar.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
             //var sure_eczaneNobetSonuclarCozulenGrup = stopwatch.Elapsed;

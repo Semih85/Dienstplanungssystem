@@ -53,6 +53,7 @@
     <Compile Include="ComplexTypes\CategoryNbProduct.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\AyniGunNobetTutmayacakEczane.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\AyniGunTutulanNobetDetay.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetCozumAnaharListeGecis.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetIstekCoklu.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\KalibrasyonYatay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\KalibrasyonDetay.cs" />

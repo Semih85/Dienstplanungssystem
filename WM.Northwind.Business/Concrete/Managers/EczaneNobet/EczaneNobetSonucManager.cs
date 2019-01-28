@@ -399,6 +399,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                from i in istekler
                                                     .Where(w => w.EczaneNobetGrupId == s.EczaneNobetGrupId
                                                                         && w.TakvimId == s.TakvimId).DefaultIfEmpty()
+                                               let nobetGrupGorevTipGunKural = nobetGrupGorevTipGunKurallar.SingleOrDefault(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
+                                                    && w.NobetGunKuralId == (int)s.Tarih.DayOfWeek + 1)
                                                select new EczaneNobetSonucListe2
                                                {
                                                    Id = s.Id,
@@ -419,20 +421,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                         : (int)s.Tarih.DayOfWeek + 1,
                                                    GunTanim = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
                                                         ? b.NobetGunKuralAdi
-                                                        : (nobetGrupGorevTipGunKurallar.SingleOrDefault(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
-                                                                      && w.NobetGunKuralId == (int)s.Tarih.DayOfWeek + 1).NobetGunKuralAdi ?? "Tanımsız gün kuralı"),
+                                                        : (nobetGrupGorevTipGunKural == null ? "Tanımsız gün kuralı" : nobetGrupGorevTipGunKural.NobetGunKuralAdi),
                                                    //culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),
                                                    GunGrup = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
                                                         ? b.GunGrupAdi
-                                                        : (nobetGrupGorevTipGunKurallar.SingleOrDefault(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
-                                                                      && w.NobetGunKuralId == (int)s.Tarih.DayOfWeek + 1).GunGrupAdi ?? "Tanımsız gün grubu"),
+                                                        : (nobetGrupGorevTipGunKural == null ? "Tanımsız gün grubu" : nobetGrupGorevTipGunKural.GunGrupAdi),
                                                    GunGrupId = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
                                                         ? b.GunGrupId
-                                                        : (nobetGrupGorevTipGunKurallar.SingleOrDefault(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
-                                                                      && w.NobetGunKuralId == (int)s.Tarih.DayOfWeek + 1) == null
-                                                                      ? 0
-                                                                      : nobetGrupGorevTipGunKurallar.SingleOrDefault(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
-                                                                      && w.NobetGunKuralId == (int)s.Tarih.DayOfWeek + 1).GunGrupId),
+                                                        : (nobetGrupGorevTipGunKural == null ? 0 : nobetGrupGorevTipGunKural.GunGrupId),
                                                    Gun = s.Tarih.Day,
                                                    Tarih = s.Tarih,
                                                    TakvimId = s.TakvimId,

@@ -1,8 +1,8 @@
 ﻿
 @{
     ViewBag.Title = "Eczane Nöbet Sistemi";
-    ViewBag.MetaDescription = "Nöbetçi eczane belirleme sistemi";
-    ViewBag.MetaKeywords = "eczane nöbet sistemi, online nobetçi eczane tabelası";
+    ViewBag.MetaDescription = "Nöbetçi Eczane Sistemi ile adaletli ve en hızlı şekilde eczanelere nöbet yazabilir, sonuçları çok sayıda görsel istatistik ile kolayca takip edebilirsiniz.";
+    ViewBag.MetaKeywords = "Eczane Nöbet Sistemi, Online Nöbetçi Eczane Ekranı";
 }
 
 <style>
@@ -16,18 +16,19 @@
 
 @section jumbotronMaster{
 
-    <div class="jumbotron jumbotron-fluid pt-4 pb-2 py-lg-5 mt-5 mb-lg-2 mb-1">
+    <div class="jumbotron jumbotron-fluid py-3 py-lg-5 mt-5 mb-lg-2 mb-1">
         <div class="container text-white">
-            <h1 class="display-4" style="font-size:250%">
-                <small class="text-danger bg-light" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">&nbsp;E&nbsp;</small> Nöbet Sistemi
+            <h1 class="display-4 mt-3 mt-lg-0 font-weight-bolder" style="font-size:250%;" id="jumbotronYazi">
+                <small class="text-danger bg-white font-weight-bolder" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">&nbsp;E&nbsp;</small>
+                <span class="font-weight-bold">Nöbet Sistemi</span>
             </h1>
+            @*<p class="lead">Detaylar</p>*@
+            @*<hr class="my-4 bg-info text-left w-50" align="left">*@
             <p class="lead">
                 <i class="fa fa-commenting text-success" aria-hidden="true"></i>
-                Sizin için en doğru kararı en kısa sürede veren sistemi siz de kullanın
-                @*Nöbet Sisteminin Tüm Avantajlarından Yararlanın*@
+                Sizin için en doğru kararı en kısa sürede veren sistemi siz de kullanın!
+                @*Siz uğraşmayın! Zamanınız size kalsın.*@
             </p>
-            @*<hr class="my-4 bg-info w-50" align="left">*@
-            @*Sizin için en doğru kararı en kısa sürede veren sistemi siz de kullanın*@
         </div>
     </div>
 }
@@ -37,14 +38,14 @@
     <div class="row mb-3">
 
         <div class="col-12">
-            <div class="alert alert-info fade show font-weight-bold" role="alert">
+            <div class="alert alert-info fade show" role="alert">
                 <i class="fa fa-info-circle" aria-hidden="true"></i> Eczanelere nöbet yazımının
                 <a class="card-link" href="@Url.RouteUrl("NobetYazDetay")" target="_blank">klasik nöbet sistemlerinden </a>
-                farklı zorlukları vardır.
+                farklı <strong>zorlukları vardır</strong>.
             </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-5">
 
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
@@ -71,10 +72,10 @@
 
         </div>
 
-        <div class="col-lg-2 text-center pt-3 pt-lg-4 mb-3">
-            <a class="h5 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemiDetay")"><span class="fa fa-hand-o-right"></span> Sistem Arayüzleri</a>
+        <div class="col-lg-3 text-center pt-3 pt-lg-4 mb-3">
+            @*<a class="h5 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemiDetay")"><span class="fa fa-hand-o-right"></span> Sistem Arayüzleri</a>*@
 
-            <img class="img-fluid my-2" src="~/Content/images/EczaneNobetSistemi/arayuz-design.jpg" alt="Nöbetçi Eczaneler" />
+            <img class="img-fluid img-thumbnail my-2" src="~/Content/images/EczaneNobetSistemi/arayuz-design.jpg" alt="Nöbetçi Eczaneler" />
         </div>
 
         <div class="col-lg-4 ">
@@ -169,29 +170,31 @@
                     </div>
                 </div>
             </div>*@
-        <div class="col-md-8 mb-3 text-center">
+        @*<div class="col-md-8 mb-3 text-center">
 
-            <div class="alert alert-warning fade show" role="alert">
+                <div class="alert alert-warning fade show" role="alert">
 
-                <h6>
-                    @*<i class="fa fa-hand-o-right" aria-hidden="true"></i>*@
-                    <i class="fa fa-rss text-info" aria-hidden="true"></i>
-                    <span class="font-weight-bold">
-                        Online Nöbetçi Eczane Tabela
-                        Sistemine
-                        @*<a class="card-link" href="@Url.RouteUrl("DijitalTabela")">ONET sistemimize</a>*@
-                        bir göz atın.
-                    </span>
-                </h6>
-            </div>
+                    <h6>
+                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                        <i class="fa fa-rss text-info" aria-hidden="true"></i>
+                        <span class="font-weight-bold">
+                            ONEE
+                            Sistemine
+                            <a class="card-link" href="@Url.RouteUrl("DijitalTabela")">ONET sistemimize</a>
+                            bir göz atın.
+                        </span>
+                    </h6>
+                </div>
 
-        </div>
+            </div>*@
 
-        <div class="col-md-4 mb-3 text-center">
+        <div class="col-md-4 offset-lg-4 mb-3 text-center">
             <div class="card border-primary">
                 <div class="card-body bg-secondary">
                     @*<h5 class="card-title"><span class="text-danger">Online Nöbetçi Tabelası</span></h5>*@
-                    <a class="h5 card-link text-white text-center" href="@Url.RouteUrl("DijitalTabela")"><span class="fa fa-hand-o-right"></span> Online Nöbetçi Tabelası</a>
+                    <a class="h5 card-link text-white text-center" href="@Url.RouteUrl("DijitalTabela")">
+                        <i class="fa fa-rss text-info" aria-hidden="true"></i> ONEE Sistemine bir göz atın.
+                    </a>
 
                     <img class="img-fluid mt-2" src="~/Content/images/EczaneNobetSistemi/digitalEkran.png" alt="Dijital Nöbetçi Ekranı" />
                     @*<a class="card-link" href="@Url.RouteUrl("DijitalTabela")">

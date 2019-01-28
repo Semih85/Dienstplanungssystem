@@ -3,8 +3,10 @@
 
 @{
     ViewBag.Title = "Nöbet Sistemi";
-    ViewBag.MetaDescription = "Siz uğraşmayın! Zamanınız size kalsın.";
-    ViewBag.MetaKeywords = "Nöbetçi Eczane, Hemşire Nöbeti, Çizelgeleme, Akademik çözümler";
+    ViewBag.MetaDescription = "Nöbetçi Eczane Sistemi, Online Eczane Ekranı ve Hemşire Nöbet Sistemi gibi bir çok alanda en iyi çözümler Nöbet Sistemi'nde.";
+    //Nöbet sistemi ile siz sadece nöbet kurallarını belirledikten sonra, adaletli ve en hızlı şekilde nöbet yazabilir, çok sayıda istatistik sayesinde sonuçları kolayca takip edebilirsiniz.
+
+    ViewBag.MetaKeywords = "Nöbetçi Eczane, Nöbetçi Eczane Belirleme, Nöbet Sistemi, Eczane Nöbet Sistemi, Hemşire Nöbet Sistemi, Çizelgeleme, Nöbet Çizelgeleme, Nöbetçi Eczane Belirleme";
 }
 
 <style>
@@ -44,7 +46,7 @@
 
     <div class="jumbotron jumbotron-fluid py-4 py-lg-5 mt-5 mb-0 mb-md-2 mb-lg-3">
         <div class="container text-white">
-            <h1 class="display-4" style="font-size:300%" id="jumbotronYazi">Nöbet Sistemi</h1>
+            <h1 class="display-4 font-weight-bold" style="font-size:300%;" id="jumbotronYazi">Nöbet Sistemi</h1>
             <p class="lead text-capitalize">"Nöbet" hakkında her şey @*bu sistemde*@</p>
             @*Nöbetlerinizi yazalım ve istatistikleri dinamik olarak gösterelim.*@
             <hr class="my-lg-4 my-3 bg-info text-left w-50" align="left">
@@ -53,6 +55,7 @@
             <a class="btn btn-outline-info btn-lg" href="@Url.Action("NobetYazDetay")" role="button">
                 <span class="fa fa-bars"></span> Detaylar
             </a>
+            @* color:#FFC300; *@
             @*@if (Request.IsAuthenticated)
                 {
                     <a class="btn btn-outline-info btn-lg" href="@Url.Action("Index", "NobetYaz",new { area = "EczaneNobet" })" role="button">
@@ -236,25 +239,31 @@
                     <h3 id="hizmetlerimiz">Hizmetlerimiz</h3>
                 </div>*@
 
-            <div class="col-md-6 mb-3 text-center">
+            <div class="col-md-6 mb-3">
                 <div class="card border-primary bg-light">
-                    <div class="card-body">
-                        <a class="h4 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemi")"><span class="fa fa-hand-o-right"></span> Eczane Nöbet Sistemi</a>
-                        <br />
+                    <div class="card-header">
+                        <a class="h4 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemi")">
+                            <small class="text-danger bg-white font-weight-bolder" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">&nbsp;E&nbsp;</small> Nöbet Sistemi
+                        </a>
+                    </div>
+                    <div class="card-body text-center">
                         @*<h4 class="card-title"><span class="text-danger">Eczane</span> Nöbet Sistemi</h4>*@
                         <a title="Nöbetçi Eczaneleri Görmek için Tıklayınız." target="_blank" href="@Url.RouteUrl("NobetciEczaneler")">
-                            <img class="img-thumbnail mt-3" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme" style="height:50%; width:50%" />
+                            <img class="img-thumbnail" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme" style="height:40%; width:40%" />
                         </a>
 
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-6 mb-3 text-center">
+            <div class="col-md-6 mb-3">
                 <div class="card border-primary bg-light">
-                    <div class="card-body">
-                        <h4 class="card-title">Hemşire Nöbet Sistemi</h4>
-                        <img class="img-thumbnail mt-1" src="~/Content/images/hemsireCizelgeleme2.jpg" alt="Hemşire Nöbet Çizelgeleme" style="height:65.5%; width:65.5%" />
+                    <div class="card-header">
+                        <span class="h4"> Hemşire Nöbet Sistemi</span>
+                    </div>
+                    <div class="card-body text-center">
+
+                        <img class="img-thumbnail" src="~/Content/images/hemsireCizelgeleme2.jpg" alt="Hemşire Nöbet Çizelgeleme" style="height:52%; width:52%" />
                         <div id="referanlarimiz"></div>
 
                     </div>

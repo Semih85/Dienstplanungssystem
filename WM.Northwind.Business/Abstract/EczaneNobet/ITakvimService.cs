@@ -68,14 +68,21 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         int AyFarkiHesapla(DateTime sonTarih, DateTime ilkTarih);
         List<AnahtarListe> AnahtarListeyiBuGuneTasi(List<int> nobetGrupIdListe, int nobetGorevTipId, DateTime nobetUstGrupBaslangicTarihi, List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay, List<EczaneNobetSonucListe2> anahtarListe,
             string gunGrubu);
-        List<AnahtarListe> AnahtarListeyiBuGuneTasi2(List<int> nobetGrupIdListe, 
-            int nobetGorevTipId, 
-            DateTime nobetUstGrupBaslangicTarihi, 
-            List<EczaneNobetGrupDetay> eczaneNobetGruplar, 
-            List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay, 
-            List<EczaneNobetSonucListe2> anahtarListe,
-            List<NobetUstGrupGunGrupDetay> nobetUstGrupGunGruplar,
-            DateTime nobetBaslangicTarihi, 
+
+        void SiraliNobetYaz(List<EczaneNobetSonucListe2> eczaneNobetSonuclar,
+            List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,
+            List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
+            DateTime nobetBaslangicTarihi,
             DateTime nobetBitisTarihi);
+
+        //List<AnahtarListe> AnahtarListeyiBuGuneTasi2(List<int> nobetGrupIdListe, 
+        //    int nobetGorevTipId, 
+        //    DateTime nobetUstGrupBaslangicTarihi, 
+        //    List<EczaneNobetGrupDetay> eczaneNobetGruplar, 
+        //    List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay, 
+        //    List<EczaneNobetSonucListe2> anahtarListe,
+        //    List<NobetUstGrupGunGrupDetay> nobetUstGrupGunGruplar,
+        //    DateTime nobetBaslangicTarihi, 
+        //    DateTime nobetBitisTarihi);
     }
 }

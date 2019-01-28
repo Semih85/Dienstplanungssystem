@@ -293,11 +293,11 @@
                                                 </button>
                                             </h5>
                                             @*<div class="alert alert-info alert-dismissible fade show" role="alert">
-                                                <i class="fa fa-info-circle" aria-hidden="true"></i> Bu istatistikte eski ve yeni nöbetlerin <strong>2'şer aylık dönemdeki dağılımı gösterilmektedir!!!</strong>
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>*@
+                                                    <i class="fa fa-info-circle" aria-hidden="true"></i> Bu istatistikte eski ve yeni nöbetlerin <strong>2'şer aylık dönemdeki dağılımı gösterilmektedir!!!</strong>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>*@
                                             <div id="kalibrasyonluDetayli">
                                             </div>
                                         </div>
@@ -314,11 +314,11 @@
                                                 </button>
                                             </h5>
                                             @*<div class="alert alert-info alert-dismissible fade show" role="alert">
-                                                <i class="fa fa-info-circle" aria-hidden="true"></i> Bu istatistikte <strong>nöbet durumlarının dağılımı gösterilmektedir!!!</strong>
-                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>*@
+                                                    <i class="fa fa-info-circle" aria-hidden="true"></i> Bu istatistikte <strong>nöbet durumlarının dağılımı gösterilmektedir!!!</strong>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>*@
                                             <div id="nobetDurumlar">
                                             </div>
                                         </div>
@@ -1199,6 +1199,53 @@
             nobetDurumTabloOlustur();
         });
 
+        var tpl = $.pivotUtilities.aggregatorTemplates;
+
+        var sum = tpl.sum;
+        var numberFormat = $.pivotUtilities.numberFormat;
+        var intFormat = numberFormat({ digitsAfterDecimal: 0 });
+
+        var pivotAggregators = {
+            //"Nöbet #": function () { return tpl.count()() }
+            //"Average": function () { return tpl.average()(["Age"]) }
+            "Say": $.pivotUtilities.aggregators['Say'],
+            "Benzersiz Değerleri Say": $.pivotUtilities.aggregators['Benzersiz Degerleri Say'],
+            "Benzersiz Değerleri Listele": $.pivotUtilities.aggregators['Benzersiz Degerleri Listele'],
+            "Topla": $.pivotUtilities.aggregators['Topla'],
+            "Topla (Tamsayı)": $.pivotUtilities.aggregators['Topla (Tamsayi)'],
+            "Ortalama": $.pivotUtilities.aggregators['Ortalama'],
+            "En Az": $.pivotUtilities.aggregators['En Az'],
+            "En Fazla": $.pivotUtilities.aggregators['En Fazla'],
+            "Örneklem Varyansı": $.pivotUtilities.aggregators['Orneklem Varyansi'],
+            "Örneklem Standart Sapması": $.pivotUtilities.aggregators['Orneklem Standart Sapmasi'],
+            "İlk": $.pivotUtilities.aggregators['Ilk'],
+            "Son": $.pivotUtilities.aggregators['Son'],
+            "Genel Toplam % (Topla)": $.pivotUtilities.aggregators['Genel Toplam % (Topla)'],
+            "Satır Toplam % (Topla)": $.pivotUtilities.aggregators['Satir Toplam % (Topla)'],
+            "Sütun Toplam % (Topla)": $.pivotUtilities.aggregators['Sutun Toplam % (Topla)'],
+            "Genel Toplam % (Say)": $.pivotUtilities.aggregators['Genel Toplam % (Say)'],
+            "Satır Toplam % (Say)": $.pivotUtilities.aggregators['Satir Toplam % (Say)'],
+            "Sütun Toplam % (Say)": $.pivotUtilities.aggregators['Sutun Toplam % (Say)'],
+        };
+
+        var pivotRenderers = {
+            "Tablo": $.pivotUtilities.renderers['Tablo'],
+            "Tablo Çubuk Grafik": $.pivotUtilities.renderers['Tablo Cubuk Grafik'],
+            "Sıcaklık Haritası": $.pivotUtilities.renderers['Sicaklik Haritasi'],
+            "Sıcaklık Haritası (Satır)": $.pivotUtilities.renderers['Satir Sicaklik Haritasi'],
+            "Sıcaklık Haritası (Sütun)": $.pivotUtilities.renderers['Sutun Sicaklik Haritasi'],
+        };
+
+        var pivotRenderersGrafik = {
+            "Çubuk Grafik": $.pivotUtilities.c3_renderers['Cubuk Grafik'],
+            "Yığılmış Çubuk Grafik": $.pivotUtilities.c3_renderers['Yigilmis Cubuk Grafik'],
+            "Sütun Grafik": $.pivotUtilities.c3_renderers['Sutun Grafik'],
+            "Yığılmış Sütun Grafik": $.pivotUtilities.c3_renderers['Yigilmis Sutun Grafik'],
+            "Çizgi Grafik": $.pivotUtilities.c3_renderers['Cizgi Grafik'],
+            "Yüzey Grafik": $.pivotUtilities.c3_renderers['Yuzey Grafik'],
+            "Dağılım Grafiği": $.pivotUtilities.c3_renderers['Dagilim Grafigi'],
+        };
+
         //nöbetçi eczane listesi
         var nobetciEczaneler;
         const nobetciListesi = () => {
@@ -1211,20 +1258,16 @@
 
                 if (nobetUstGrupId == 4) {
                     pivotCols = ["Görev Tipi"];
-                }              
+                }
 
                 nobetciEczaneler = $("#nobetciEczaneListesi").pivotUI(dagilimlarPivot, {
                     rows: ["Yıl-Ay", "Tarih", "Gün Grup"],
                     cols: pivotCols,
                     vals: ["Eczane"],
-                    aggregatorName: "Benzersiz Degerleri Listele",
-                    //aggregators: {
-                    //    "liste": $.pivotUtilities.aggregators.count
-                    //},
+                    aggregatorName: "Benzersiz Değerleri Listele",
+                    aggregators: pivotAggregators,
                     //rendererName: "Table",
-                    //renderers: {
-                    //    "Tablo": $.pivotUtilities.renderers['Table']
-                    //},
+                    renderers: pivotRenderers,
                     onRefresh: function (config) {
                         $("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
                         //alert(0)
@@ -1286,16 +1329,12 @@
                 var pivotCols = ["Gün Grup"];
 
                 if (nobetUstGrupId == 4) {
-
                     pivotRows = ["Eczane"];
                     pivotCols = ["Görev Tipi", "Gün Grup"];
-
                 }
                 else if (nobetUstGrupId == 5) {
-
                     pivotRows = ["Eczane"];
                     pivotCols = ["Gün Grup"];
-
                 }
 
                 gunDagilim = $(function table2() {
@@ -1305,7 +1344,9 @@
                             cols: pivotCols, //, "GunDeger", "GunTanim"
                             vals: ["Eczane"],
                             aggregatorName: "Say",
-                            rendererName: "Sicaklik Haritasi",
+                            aggregators: pivotAggregators,
+                            renderers: pivotRenderers,
+                            rendererName: "Sıcaklık Haritası",
                             onRefresh: function (config) {
                                 //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
                                 //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
@@ -1345,6 +1386,73 @@
             }
         });
 
+        //gün dağılım grafik
+        var gunGrafik2;
+        function gunDagilimGrafikler() {
+            if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
+
+                var pivotRows = ["Gün Grup"];
+                var pivotCols = ["NöbetGrupGörevTipId", "Eczane"];
+
+                if (nobetUstGrupId == 5 // osmaniye
+                    || nobetUstGrupId == 6//bartın
+                ) {
+                    pivotCols = ["Eczane"];
+                }
+
+                gunGrafik2 = $(function table2() {
+                    $("#gunDagilimGrafik").pivotUI(dagilimlarPivot,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols, //, "GunDeger", "GunTanim"
+                            vals: ["Eczane"],
+                            aggregatorName: "Say",
+                            aggregators: pivotAggregators,
+                            rendererName: "Yığılmış Sütun Grafik",
+                            renderers: $.extend(
+                                pivotRenderers,
+                                pivotRenderersGrafik
+                            ),
+                            onRefresh: function (config) {
+                                //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                if (pivotAlanlariGosterGunDagilimGrafikler == false) {
+                                    $("#gunDagilimGrafik").parent().find('.pvtAxisContainer').hide();
+                                    $("#gunDagilimGrafik").parent().find('.pvtAttrDropdown').hide();
+                                    $("#gunDagilimGrafik").parent().find('.pvtRenderer').hide();
+                                    $("#gunDagilimGrafik").parent().find('.pvtVals').hide();
+                                }
+                                else {
+                                    $("#gunDagilimGrafik").parent().find('.pvtAxisContainer').show();
+                                    $("#gunDagilimGrafik").parent().find('.pvtAttrDropdown').show();
+                                    $("#gunDagilimGrafik").parent().find('.pvtRenderer').show();
+                                    $("#gunDagilimGrafik").parent().find('.pvtVals').show();
+                                }
+                            }
+                        }
+                    );
+                });
+
+            }
+            else {
+                var mesaj = 'Gün dağılımı listesi';
+                var divId = 'divUyariGunDegerDagilim';
+                var parentDivId = 'gunDagilimGrafik';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Gün dağılımı listesi yok.');
+            }
+        }
+        $('#pills-gunDagilimGrafik-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (gunGrafik2 != null) {
+                gunGrafik2;
+            }
+            else {
+                gunDagilimGrafikler();
+            }
+        });
+
         //gün dağılım grafik - özet grafik - max min
         var gunGrafik;
         function gunGrafikOlustur() {
@@ -1355,11 +1463,12 @@
                             rows: ["Gün Grup"],
                             cols: ["Nöbet Grubu"], //, "GunDeger", "GunTanim"
                             vals: ["Nöbet Sayısı Farkı"],
-                            aggregatorName: "Topla",
-                            rendererName: "Yigilmis Sutun Grafik",
+                            aggregatorName: "Topla (Tamsayı)",
+                            aggregators: pivotAggregators,
+                            rendererName: "Yığılmış Sütun Grafik",
                             renderers: $.extend(
-                                $.pivotUtilities.renderers,
-                                $.pivotUtilities.c3_renderers
+                                pivotRenderers,
+                                pivotRenderersGrafik
                             ),
                             onRefresh: function (config) {
                                 //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
@@ -1400,191 +1509,51 @@
             }
         });
 
-        //gün dağılım grafik
-        var gunGrafik2;
-        function gunDagilimGrafikler() {
-            if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
-                if (nobetUstGrupId == 4) {
-                    gunGrafik2 = $(function table2() {
-                        $("#gunDagilimGrafik").pivotUI(dagilimlarPivot,
-                            {
-                                rows: ["Gün Grup"],
-                                cols: ["NöbetGrupGörevTipId", "Eczane"], //, "GunDeger", "GunTanim" "Görev Tipi",
-                                vals: ["Eczane"],
-                                aggregatorName: "Say",
-                                rendererName: "Yigilmis Sutun Grafik",
-                                renderers: $.extend(
-                                    $.pivotUtilities.renderers,
-                                    $.pivotUtilities.c3_renderers
-                                ),
-                                onRefresh: function (config) {
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
-
-                                    if (pivotAlanlariGosterGunDagilimGrafikler == false) {
-                                        $("#gunDagilimGrafik").parent().find('.pvtAxisContainer').hide();
-                                        $("#gunDagilimGrafik").parent().find('.pvtAttrDropdown').hide();
-                                        $("#gunDagilimGrafik").parent().find('.pvtRenderer').hide();
-                                        $("#gunDagilimGrafik").parent().find('.pvtVals').hide();
-                                    }
-                                    else {
-                                        $("#gunDagilimGrafik").parent().find('.pvtAxisContainer').show();
-                                        $("#gunDagilimGrafik").parent().find('.pvtAttrDropdown').show();
-                                        $("#gunDagilimGrafik").parent().find('.pvtRenderer').show();
-                                        $("#gunDagilimGrafik").parent().find('.pvtVals').show();
-                                    }
-                                }
-                            }
-                        );
-                    });
-                }
-                else {
-                    gunGrafik2 = $(function table2() {
-                        $("#gunDagilimGrafik").pivotUI(dagilimlarPivot,
-                            {
-                                rows: ["Gün Grup"],
-                                cols: ["NöbetGrupGörevTipId", "Eczane"], //, "GunDeger", "GunTanim"
-                                vals: ["Eczane"],
-                                aggregatorName: "Say",
-                                rendererName: "Yigilmis Sutun Grafik",
-                                renderers: $.extend(
-                                    $.pivotUtilities.renderers,
-                                    $.pivotUtilities.c3_renderers
-                                ),
-                                onRefresh: function (config) {
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
-
-                                    if (pivotAlanlariGosterGunDagilimGrafikler == false) {
-                                        $("#gunDagilimGrafik").parent().find('.pvtAxisContainer').hide();
-                                        $("#gunDagilimGrafik").parent().find('.pvtAttrDropdown').hide();
-                                        $("#gunDagilimGrafik").parent().find('.pvtRenderer').hide();
-                                        $("#gunDagilimGrafik").parent().find('.pvtVals').hide();
-                                    }
-                                    else {
-                                        $("#gunDagilimGrafik").parent().find('.pvtAxisContainer').show();
-                                        $("#gunDagilimGrafik").parent().find('.pvtAttrDropdown').show();
-                                        $("#gunDagilimGrafik").parent().find('.pvtRenderer').show();
-                                        $("#gunDagilimGrafik").parent().find('.pvtVals').show();
-                                    }
-                                }
-                            }
-                        );
-                    });
-                }
-            }
-            else {
-                var mesaj = 'Gün dağılımı listesi';
-                var divId = 'divUyariGunDegerDagilim';
-                var parentDivId = 'gunDagilimGrafik';
-                uyariDivOlustur(mesaj, divId, parentDivId);
-                //alert('Gün dağılımı listesi yok.');
-            }
-        }
-        $('#pills-gunDagilimGrafik-tab').click(function () {
-            $('#btnExceleAktar').hide();
-            if (gunGrafik2 != null) {
-                gunGrafik2;
-            }
-            else {
-                gunDagilimGrafikler();
-            }
-        });
-
         //ay dağılım
         var ayDagilim;
         function ayDagilimlar() {
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
-                if (nobetUstGrupId == 4) {
-                    ayDagilim = $(function table3() {
-                        $("#aylikDagilim").pivotUI(dagilimlarPivot,
-                            {
-                                rows: ["Görev Tipi", "Eczane"],
-                                cols: ["Yıl-Ay"],
-                                vals: ["Nöbet Grubu"],
-                                aggregatorName: "Say",
-                                rendererName: "Sicaklik Haritasi",
-                                onRefresh: function (config) {
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
 
-                                    if (pivotAlanlariGosterAyDagilimGrafikler == false) {
-                                        $("#aylikDagilim").parent().find('.pvtAxisContainer').hide();
-                                        $("#aylikDagilim").parent().find('.pvtAttrDropdown').hide();
-                                        $("#aylikDagilim").parent().find('.pvtRenderer').hide();
-                                        $("#aylikDagilim").parent().find('.pvtVals').hide();
-                                    }
-                                    else {
-                                        $("#aylikDagilim").parent().find('.pvtAxisContainer').show();
-                                        $("#aylikDagilim").parent().find('.pvtAttrDropdown').show();
-                                        $("#aylikDagilim").parent().find('.pvtRenderer').show();
-                                        $("#aylikDagilim").parent().find('.pvtVals').show();
-                                    }
-                                }
-                            }
-                        );
-                    });
+                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotCols = ["Yıl-Ay"];
+
+                if (nobetUstGrupId == 4) {
+                    pivotRows = ["Görev Tipi", "Eczane"];
                 }
                 else if (nobetUstGrupId == 5) {
-                    ayDagilim = $(function table3() {
-                        $("#aylikDagilim").pivotUI(dagilimlarPivot,
-                            {
-                                rows: ["Eczane"],
-                                cols: ["Yıl-Ay"],
-                                vals: ["Nöbet Grubu"],
-                                aggregatorName: "Say",
-                                rendererName: "Sicaklik Haritasi",
-                                onRefresh: function (config) {
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+                    pivotRows = ["Eczane"];
+                }
 
-                                    if (pivotAlanlariGosterAyDagilimGrafikler == false) {
-                                        $("#aylikDagilim").parent().find('.pvtAxisContainer').hide();
-                                        $("#aylikDagilim").parent().find('.pvtAttrDropdown').hide();
-                                        $("#aylikDagilim").parent().find('.pvtRenderer').hide();
-                                        $("#aylikDagilim").parent().find('.pvtVals').hide();
-                                    }
-                                    else {
-                                        $("#aylikDagilim").parent().find('.pvtAxisContainer').show();
-                                        $("#aylikDagilim").parent().find('.pvtAttrDropdown').show();
-                                        $("#aylikDagilim").parent().find('.pvtRenderer').show();
-                                        $("#aylikDagilim").parent().find('.pvtVals').show();
-                                    }
+                ayDagilim = $(function table3() {
+                    $("#aylikDagilim").pivotUI(dagilimlarPivot,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols,
+                            vals: ["Nöbet Grubu"],
+                            aggregatorName: "Say",
+                            rendererName: "Sıcaklık Haritası",
+                            renderers: pivotRenderers,
+                            onRefresh: function (config) {
+                                //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                if (pivotAlanlariGosterAyDagilimGrafikler == false) {
+                                    $("#aylikDagilim").parent().find('.pvtAxisContainer').hide();
+                                    $("#aylikDagilim").parent().find('.pvtAttrDropdown').hide();
+                                    $("#aylikDagilim").parent().find('.pvtRenderer').hide();
+                                    $("#aylikDagilim").parent().find('.pvtVals').hide();
+                                }
+                                else {
+                                    $("#aylikDagilim").parent().find('.pvtAxisContainer').show();
+                                    $("#aylikDagilim").parent().find('.pvtAttrDropdown').show();
+                                    $("#aylikDagilim").parent().find('.pvtRenderer').show();
+                                    $("#aylikDagilim").parent().find('.pvtVals').show();
                                 }
                             }
-                        );
-                    });
-                }
-                else {
-                    ayDagilim = $(function table3() {
-                        $("#aylikDagilim").pivotUI(dagilimlarPivot,
-                            {
-                                rows: ["Nöbet Grubu", "Eczane"],
-                                cols: ["Yıl-Ay"],
-                                vals: ["Nöbet Grubu"],
-                                aggregatorName: "Say",
-                                rendererName: "Sicaklik Haritasi",
-                                onRefresh: function (config) {
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+                        }
+                    );
+                });
 
-                                    if (pivotAlanlariGosterAyDagilimGrafikler == false) {
-                                        $("#aylikDagilim").parent().find('.pvtAxisContainer').hide();
-                                        $("#aylikDagilim").parent().find('.pvtAttrDropdown').hide();
-                                        $("#aylikDagilim").parent().find('.pvtRenderer').hide();
-                                        $("#aylikDagilim").parent().find('.pvtVals').hide();
-                                    }
-                                    else {
-                                        $("#aylikDagilim").parent().find('.pvtAxisContainer').show();
-                                        $("#aylikDagilim").parent().find('.pvtAttrDropdown').show();
-                                        $("#aylikDagilim").parent().find('.pvtRenderer').show();
-                                        $("#aylikDagilim").parent().find('.pvtVals').show();
-                                    }
-                                }
-                            }
-                        );
-                    });
-                }
             }
             else {
                 var mesaj = 'Ay dağılımı listesi';
@@ -1767,7 +1736,7 @@
             }
         });
 
-        //kalibrasyonlu nöbet dağılımı 
+        //kalibrasyonlu nöbet dağılımı
         var kalibrasyonluNobetDagilim;
         function kalibrasyonluNobetDagilimlar() {
             if (kalibrasyonEslemeliNobetler.length > 0) {
@@ -1782,7 +1751,7 @@
                             renderers: $.extend(
                                 $.pivotUtilities.renderers,
                                 $.pivotUtilities.c3_renderers
-                            ),                            
+                            ),
                             onRefresh: function (config) {
                                 $("#kalibrasyonluDetayli").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
                                 //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
@@ -1825,34 +1794,34 @@
         var nobetDurumDagilim;
         function nobetDurumTabloOlustur() {
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
-                    nobetDurumDagilim = $(function table3() {
-                        $("#nobetDurumlar").pivotUI(dagilimlarPivot,
-                            {
-                                rows: ["Alt Grup Adı", "Eczane"],
-                                cols: ["Nöbet Durum Tipi"],
-                                vals: ["Nöbet Grubu"],
-                                aggregatorName: "Satir Toplam % (Say)",
-                                rendererName: "Sicaklik Haritasi",
-                                onRefresh: function (config) {
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+                nobetDurumDagilim = $(function table3() {
+                    $("#nobetDurumlar").pivotUI(dagilimlarPivot,
+                        {
+                            rows: ["Alt Grup Adı", "Eczane"],
+                            cols: ["Nöbet Durum Tipi"],
+                            vals: ["Nöbet Grubu"],
+                            aggregatorName: "Satir Toplam % (Say)",
+                            rendererName: "Sicaklik Haritasi",
+                            onRefresh: function (config) {
+                                //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
 
-                                    if (pivotAlanlariGosterNobetDurumlari == false) {
-                                        $("#nobetDurumlar").parent().find('.pvtAxisContainer').hide();
-                                        $("#nobetDurumlar").parent().find('.pvtAttrDropdown').hide();
-                                        $("#nobetDurumlar").parent().find('.pvtRenderer').hide();
-                                        $("#nobetDurumlar").parent().find('.pvtVals').hide();
-                                    }
-                                    else {
-                                        $("#nobetDurumlar").parent().find('.pvtAxisContainer').show();
-                                        $("#nobetDurumlar").parent().find('.pvtAttrDropdown').show();
-                                        $("#nobetDurumlar").parent().find('.pvtRenderer').show();
-                                        $("#nobetDurumlar").parent().find('.pvtVals').show();
-                                    }
+                                if (pivotAlanlariGosterNobetDurumlari == false) {
+                                    $("#nobetDurumlar").parent().find('.pvtAxisContainer').hide();
+                                    $("#nobetDurumlar").parent().find('.pvtAttrDropdown').hide();
+                                    $("#nobetDurumlar").parent().find('.pvtRenderer').hide();
+                                    $("#nobetDurumlar").parent().find('.pvtVals').hide();
+                                }
+                                else {
+                                    $("#nobetDurumlar").parent().find('.pvtAxisContainer').show();
+                                    $("#nobetDurumlar").parent().find('.pvtAttrDropdown').show();
+                                    $("#nobetDurumlar").parent().find('.pvtRenderer').show();
+                                    $("#nobetDurumlar").parent().find('.pvtVals').show();
                                 }
                             }
-                        );
-                    });                
+                        }
+                    );
+                });
             }
             else {
                 var mesaj = 'Nöbet durum listesi';

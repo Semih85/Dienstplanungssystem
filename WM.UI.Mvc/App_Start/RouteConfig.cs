@@ -52,7 +52,7 @@ namespace WM.UI.Mvc
 
             routes.MapRoute(
                 name: "DijitalTabela",
-                url: "online-nobetci-eczane-tabela-sistemi",
+                url: "online-eczane-ekrani",
                 defaults: new { controller = "Home", action = "DijitalTabela" },
                 namespaces: new string[] { "WM.UI.Mvc.Controllers" }
             );            

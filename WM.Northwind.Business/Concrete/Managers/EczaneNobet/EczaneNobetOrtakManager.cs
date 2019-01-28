@@ -2467,5 +2467,57 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                        }).ToList();
             return eczaneNobetSonuclar;
         }
+
+        public List<AnahtarListe> AnahtarListeyiBuGuneTasi2(List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,
+            DateTime nobetUstGrupBaslangicTarihi,
+            List<TakvimNobetGrup> takvimNobetGruplar,
+            List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
+            List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatayTumu,
+            List<EczaneNobetSonucListe2> anahtarListeTumu,
+            List<NobetUstGrupGunGrupDetay> nobetUstGrupGunGruplar,
+            DateTime nobetBaslangicTarihi,
+            DateTime nobetBitisTarihi)
+        {
+            var anahtarListeTumEczanelerHepsi = new List<AnahtarListe>();
+
+            foreach (var nobetUstGrupGunGrup in nobetUstGrupGunGruplar)
+            {
+                var ilgiliTarihler = takvimNobetGruplar;
+
+                foreach (var nobetGrupGorevTip in nobetGrupGorevTipler)
+                {
+                    var tarihler = ilgiliTarihler
+                        .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id)
+                        .ToList();
+
+                    var eczaneNobetGruplar = eczaneNobetGruplarTumu
+                        .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+
+                    var anahtarListeGunGrup = anahtarListeTumu
+                        .Where(w => w.GunGrup == nobetUstGrupGunGrup.GunGrupAdi
+                                 && w.NobetGrupId == nobetGrupGorevTip.Id).ToList();
+
+                    var anahtarListeTumEczaneler = (from s in eczaneNobetGruplar
+                                                    from b in anahtarListeGunGrup
+                                                        .Where(w => w.EczaneNobetGrupId == s.Id).DefaultIfEmpty()
+                                                    select new AnahtarListe
+                                                    {
+                                                        EczaneNobetGrupId = s.Id,
+                                                        EczaneAdi = s.EczaneAdi,
+                                                        NobetGrupAdi = s.NobetGrupAdi,
+                                                        NobetGrupId = s.NobetGrupId,
+                                                        Tarih = (b?.EczaneNobetGrupId == s.Id) ? b.Tarih : s.BaslangicTarihi, //AnahtarListe
+                                                        NobetUstGrupBaslamaTarihi = nobetUstGrupBaslangicTarihi
+                                                    })
+                                                    .OrderBy(o => o.Tarih)
+                                                    .ToList();
+
+                    var gruptakiEczaneSayisi = anahtarListeTumEczaneler.Count;
+
+                }
+            }
+
+            return anahtarListeTumEczanelerHepsi;
+        }
     }
 }

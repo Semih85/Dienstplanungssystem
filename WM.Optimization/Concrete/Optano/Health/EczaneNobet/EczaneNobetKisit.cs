@@ -510,8 +510,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 foreach (var ikiliEczane in p.IkiliEczaneler)
                 {
-                    var kararIndexOnce = p.EczaneNobetTarihAralik
-                             .Where(e => (e.EczaneNobetGrupId == ikiliEczane.EczaneNobetGrupId1 || e.EczaneNobetGrupId == ikiliEczane.EczaneNobetGrupId2)).ToList();
+                    var kararIndexIkiliEczaneler = p.EczaneNobetTarihAralik
+                             .Where(e => e.EczaneNobetGrupId == ikiliEczane.EczaneNobetGrupId1 || e.EczaneNobetGrupId == ikiliEczane.EczaneNobetGrupId2).ToList();
 
                     foreach (var tarih in tarihAraligi.Take(p.Tarihler.Count - 1))
                     {
@@ -519,10 +519,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                         foreach (var tarih2 in tarihler2)
                         {
-                            var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({p.NobetUstGrupKisit.KisitKategorisi}, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {ikiliEczane.EczaneAdi1}-{ikiliEczane.EczaneAdi2}, {tarih.Tarih.ToShortDateString()}-{tarih2.Tarih.ToShortDateString()}";
+                            var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
+                                             $" [Std. 3]";
 
-                            var kararIndex = kararIndexOnce
-                                    .Where(e => (e.TakvimId == tarih.TakvimId || e.TakvimId == tarih2.TakvimId)).ToList();
+                            var ikiliEczaneler = $"{ikiliEczane.EczaneAdi1}-{ikiliEczane.EczaneAdi2}";
+                            var ikiliTarihler = $"{tarih.Tarih.ToShortDateString()}-{tarih2.Tarih.ToShortDateString()}";
+
+                            var kisitAdi = IsimleriBirlestir(kisitTanim, ikiliEczaneler, ikiliTarihler);
+
+                            var kararIndex = kararIndexIkiliEczaneler
+                                    .Where(e => e.TakvimId == tarih.TakvimId || e.TakvimId == tarih2.TakvimId).ToList();
 
                             #region kontrol
                             var kontrol = false;
@@ -792,7 +798,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 p.Model.AddConstraint(cns, kisitAdi);
             }
-        }    
+        }
 
         /// <summary>
         /// Cumartesi günü 5 farklı bölgeden nöbet dağılımı olsun. (Giresun)

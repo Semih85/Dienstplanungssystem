@@ -20,7 +20,11 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         EczaneNobetSonucDetay2 GetDetayById(int eczaneNobetSonucPlanlananId);
         List<EczaneNobetSonucDetay2> GetDetaylar();
         List<EczaneNobetSonucDetay2> GetDetaylar(int nobetUstGrupId);
+        List<EczaneNobetSonucDetay2> GetDetaylar(int nobetUstGrupId, int gunGrupId, int alinacakEczaneSayisi);
         List<EczaneNobetSonucListe2> SiraliNobetYaz(int nobetUstGrupId);
+
+        List<EczaneNobetSonucListe2> GetSonuclar(int nobetUstGrupId);
+        List<EczaneNobetSonucListe2> GetSonuclar(int nobetUstGrupId, int gunGrupId, int alinacakEczaneSayisi);
         void CokluSil(int[] ids);
         void CokluEkle(List<EczaneNobetCozum> eczaneNobetCozumler);
     }

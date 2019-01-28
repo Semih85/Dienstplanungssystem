@@ -103,7 +103,7 @@ namespace WM.Northwind.DataAccess.Migrations
             //context.SaveChanges(); 
             #endregion
 
-            
+
         }
 
         private static void VeriEkleGuncelleMaster(Concrete.EntityFramework.Contexts.EczaneNobetContext context)
@@ -4943,7 +4943,7 @@ kisitlar.Add(nobetUstGrupKisit2);
             context.SaveChanges();
             #endregion
     */
-            #endregion
+#endregion
 
 #region yeni üst grup ekleme paketi - Osmaniye
 /*

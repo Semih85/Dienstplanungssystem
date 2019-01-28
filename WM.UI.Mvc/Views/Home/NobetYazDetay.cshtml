@@ -18,7 +18,7 @@
 
     <div class="jumbotron jumbotron-fluid py-3 py-lg-5 mt-5 mb-lg-2 mb-1">
         <div class="container text-white">
-            <h1 class="display-4 mt-3 mt-lg-0" style="font-size:250%" id="jumbotronYazi">Zaman Size Kalsın</h1>
+            <h1 class="display-4 mt-3 mt-lg-0 font-weight-bold" style="font-size:250%; " id="jumbotronYazi">Zaman Size Kalsın</h1>
             @*<p class="lead">Detaylar</p>*@
             @*<hr class="my-4 bg-info text-left w-50" align="left">*@
             <p class="lead">
@@ -73,13 +73,14 @@
                     <div class="col-md-10 ">
                         <p class="text-justify">
                             @*<img src="~/Content/images/nobetYazResimZorluk.jpg" width="100" />*@
+                            @* Diğer taraftan *@
                             Nöbet yazmak <strong>sanıldığı kadar kolay olmayan</strong> ve çok bileşenli bir problemdir.
                             @*Genellikle nöbet yazan kişiler bu durumun farkındadır.*@
                             @*<strong class="text-danger">Nöbet listeleri binbir emek, zaman ve fazlaca zihin yorgunluğu harcanarak hazırlanmaktadır. </strong>*@
                             Bu problemde -en yalın haliyle- hangi periyotta hangi nöbetçilere görev yazılacağına karar verilir.
                             Ancak ihtiyaca göre, çok sayıda <strong>nöbet kuralları</strong> probleme ilave olmaktadır.
                             Problemin yapısı gereği <strong class="text-danger">binlerce kombinasyon olduğundan </strong>
-                            çözümü <strong>elle bulmak bir yana yazılım ile dahi oldukça zordur</strong>.
+                            çözümü <strong>elle bulmak bir yana yazılım ile dahi bulmak oldukça zordur</strong>.
                             @*Bu süreç her bir nöbet periyodu sonunda tekrar ele alınır.*@
                         </p>
                     </div>
@@ -103,7 +104,7 @@
                                 <strong>Elle çözüm bulmak bir yana yazılım ile dahi çözüm bulmak oldukça zordur</strong>.
                             </p>*@
                         <p class="text-justify">
-                            Diğer taraftan nöbetlerin <strong>istatistik olarak takip zorunluluğu</strong> vardır.
+                            Nöbetlerin <strong>istatistik olarak takip zorunluluğu</strong> vardır.
                             Her nöbet periyodunda gruba yeni katılan ya da gruptan ayrılan nöbetçiler olabilmektedir. Süreç fazlasıyla dinamiktir.
                             Excel gibi programlar kullanılarak takip edilmeye çalışılan bu listeler, <strong>zamanla içinden çıkılmaz</strong> bir hale dönüşmektedir.
                         </p>
@@ -156,12 +157,11 @@
                 <hr class="mb-4 bg-info">
 
                 <div class="row mb-2">
-                    
+
                     <div class="col-12 text-center">
                         <h5>Bazı nöbet kuralları</h5>
-
                     </div>
-                    
+
                     <div class="col-lg-6 mb-0">
 
                         <ul class="list-group list-group-flush">
@@ -206,7 +206,11 @@
 
                 </ul>
                 <div class="text-center mb-3">
-                    <a class="h5 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemi")"><span class="fa fa-hand-o-right"></span> Eczane Nöbet Sistemi</a>
+                    <a class="h5 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemi")">
+                        <span class="fa fa-hand-o-right"></span>
+                        <small class="text-danger bg-white font-weight-bolder" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">&nbsp;E&nbsp;</small>
+                        Nöbet Sistemi
+                    </a>
 
                     <img class="img-thumbnail mt-3" src="~/Content/images/ai_picture.jpg" alt="nöbet yaz" width="330" />
                 </div>
@@ -222,8 +226,8 @@
                     <a href="Tel:+905452710985" class="alert-link" style="text-decoration:none;">(0)545 - 271 09 85</a>
                     @*<span>(+90) 545 271 09 85</span>*@
                     @*<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>*@
+                            <span aria-hidden="true">&times;</span>
+                        </button>*@
                 </div>
 
             </div>
