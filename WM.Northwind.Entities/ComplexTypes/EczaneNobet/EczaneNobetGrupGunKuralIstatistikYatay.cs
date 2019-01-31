@@ -35,12 +35,16 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int NobetSayisiMilliBayram { get; set; }
         public int NobetSayisiBayram { get; set; }
         public int NobetSayisiArife { get; set; }
+        public int NobetSayisi1Ocak { get; set; }
         
         public DateTime SonNobetTarihi { get; set; }
         public DateTime SonNobetTarihiHaftaIci { get; set; }
         public DateTime SonNobetTarihiPazar { get; set; }
         public DateTime SonNobetTarihiCumartesi { get; set; }
         public DateTime SonNobetTarihiBayram { get; set; }
-        public DateTime SonNobetTarihiArife { get; set; }        
+        public DateTime SonNobetTarihiArife { get; set; }
+        public DateTime SonNobetTarihiDiniBayram { get; set; }
+        public DateTime SonNobetTarihiMilliBayram { get; set; }
+        public DateTime SonNobetTarihi1Ocak { get; set; }
     }
 }

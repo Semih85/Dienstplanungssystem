@@ -765,6 +765,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         CumartesiGunuMu = t.NobetGunKuralId == 7 ? true : false,
                         PazarGunuMu = t.NobetGunKuralId == 1 ? true : false,
                         BayramMi = t.GunGrupId == 2 ? true : false,
+                        DiniBayramMi = t.NobetGunKuralId == 8 ? true : false,
+                        MilliBayramMi = t.NobetGunKuralId == 9 ? true : false,
+                        YilbasiMi = t.NobetGunKuralId == 12 ? true : false,
                         ArifeMi = t.NobetGunKuralId == 10 ? true : false,
                         HaftaIciMi = t.GunGrupId == 3 ? true : false
                         //Yil = t.Yil,

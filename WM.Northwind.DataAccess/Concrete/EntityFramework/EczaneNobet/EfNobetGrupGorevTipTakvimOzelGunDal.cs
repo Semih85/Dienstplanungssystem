@@ -46,7 +46,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                     {
                         TakvimId = s.TakvimId,
                         NobetGrupGorevTipGunKuralAdi = s.NobetGrupGorevTipGunKural.NobetGunKural.Adi,
-                        NobetGunKuralId = s.NobetGunKuralId,
+                        NobetGunKuralId = s.NobetGrupGorevTipGunKural.NobetGunKuralId,
                         NobetGunKuralAdi = s.NobetGunKural.Adi,
                         NobetGrupGorevTipGunKuralId = s.NobetGrupGorevTipGunKuralId,
                         NobetOzelGunAdi = s.NobetOzelGun.Adi,
@@ -76,7 +76,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                     {
                         TakvimId = s.TakvimId,
                         NobetGrupGorevTipGunKuralAdi = s.NobetGrupGorevTipGunKural.NobetGunKural.Adi,
-                        NobetGunKuralId = s.NobetGunKuralId,
+                        NobetGunKuralId = s.NobetGrupGorevTipGunKural.NobetGunKuralId,
                         NobetGunKuralAdi = s.NobetGunKural.Adi,
                         NobetGrupGorevTipGunKuralId = s.NobetGrupGorevTipGunKuralId,
                         NobetOzelGunAdi = s.NobetOzelGun.Adi,

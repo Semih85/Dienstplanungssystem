@@ -316,10 +316,20 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var eczaneNobetSonuclarTumu = _eczaneNobetSonucService.GetSonuclar(nobetUstGrup.Id);
 
-            var sonuclar = eczaneNobetSonuclarTumu
-                .Where(w => w.Tarih >= nobetUstGrup.BaslangicTarihi)
-                //anahtar listedeki sonuçları görmek için üstteki satırı kapat
-                .ToList();
+            var sonuclar = new List<EczaneNobetSonucListe2>();
+
+            //sonuclar = eczaneNobetSonuclarTumu
+            //        //.Where(w => w.Tarih >= nobetUstGrup.BaslangicTarihi)
+            //        //anahtar listedeki sonuçları görmek için üstteki satırı kapat
+            //        .ToList();
+
+            if (nobetUstGrup.Id != 6)
+            {
+                sonuclar = sonuclar
+                    .Where(w => w.Tarih >= nobetUstGrup.BaslangicTarihi)
+                    //anahtar listedeki sonuçları görmek için üstteki satırı kapat
+                    .ToList();
+            }
 
             var anahtarListeTumu = eczaneNobetSonuclarTumu
                 .Where(w => w.Tarih < nobetUstGrup.BaslangicTarihi).ToList();

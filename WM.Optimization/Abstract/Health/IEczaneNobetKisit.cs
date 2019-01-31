@@ -21,14 +21,14 @@ namespace WM.Optimization.Abstract.Health
         void PespeseFarkliTurNobetYaz(KpPespeseFarkliTurNobet bayramPespeseFarkliTurKisitParametreModel);
         void HerAyHaftaIciPespeseGorev(KpHerAyHaftaIciPespeseGorev herAyHaftaIciPespeseGorevKisitParametreModel);        
         void TarihAraligindaEnAz1NobetYaz(KpTarihAraligindaEnAz1NobetYaz tarihAraligindaEnAz1NobetYazKisitParametreModel);        
-        void AyIcindeSadece1KezAyniGunNobetTutulsun(KpAyIcindeSadece1KezAyniGunNobet ayIcindeSadece1KezAyniGunNobetKisitParametreModel);
         void BirEczaneyeAyniGunSadece1GorevYaz(KpAyniGunSadece1NobetTuru ayniGunSadece1NobetTuruKisitParametreModel);
         void NobetGorevTipineGoreDagilimYap(KpGorevTipineGorevDagilim kisitParametreModel);        
         void IstenenEczanelerinNobetGunleriniKisitla(KpIstenenEczanelerinNobetGunleriniKisitla kpIstenenEczanelerinNobetGunleriniKisitla);
+        void AyIcindeSadece1KezAyniGunNobetTutulsun(KpAyIcindeSadece1KezAyniGunNobet ayIcindeSadece1KezAyniGunNobetKisitParametreModel);
 
         void AyIcindeSadece1KezAyniGunNobetTutulsunGiresunAltGrup(KpAyIcindeSadece1KezAyniGunNobetGiresunAltGrup p);
 
-        void AyIcindeSadece1KezAyniGunNobetTutulsunDegiskenDonusumlu(KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
+        void AyIcindeSadece1KezAyniGunNobetTutulsun(KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
 
         void AltGruplarlaSiraliNobetTutulsun(Model model,
             List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,

@@ -420,7 +420,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                         ? b.NobetGunKuralId
                                                         : (int)s.Tarih.DayOfWeek + 1,
                                                    GunTanim = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
-                                                        ? b.NobetGunKuralAdi
+                                                        ? b.NobetGrupGorevTipGunKuralAdi
                                                         : (nobetGrupGorevTipGunKural == null ? "Tanımsız gün kuralı" : nobetGrupGorevTipGunKural.NobetGunKuralAdi),
                                                    //culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),
                                                    GunGrup = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
@@ -577,7 +577,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 .OrderBy(o => o.NobetGorevTipId)
                 .ThenBy(t => t.NobetGunKuralId).ToList();
 
-            var varsayilanBaslangicNobetTarihi = new DateTime(2012, 1, 1);
+            var varsayilanBaslangicNobetTarihi = new DateTime(2008, 1, 15);
 
             foreach (var nobetGunKural in sonucuOlanGunler)
             {
@@ -636,6 +636,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             //var eczaneNobetGruplar = eczaneNobetGrupGunKuralIstatistik.Select(s => s.EczaneNobetGrupId).Distinct().ToList();
             //var nobetAltGruplar = eczaneNobetGrupGunKuralIstatistik.Select(s => s.NobetAltGrupId).Distinct().ToList();
             //var NobetGorevTiler = eczaneNobetGrupGunKuralIstatistik.Select(s => s.NobetGorevTipId).Distinct().ToList();
+            //var nobetGunKurallar = eczaneNobetGrupGunKuralIstatistik.Select(w => w.NobetGunKuralId).Distinct().ToList();
+            //var eczane = eczaneNobetGrupGunKuralIstatistik.Where(w => w.NobetGunKuralId == 12).ToList();
+            //var eczane2 = eczane.Where(w => w.EczaneAdi == "TUNA").ToList();
+
             ;
             var nobetUstGrupId = eczaneNobetGrupGunKuralIstatistik.Select(s => s.NobetUstGrupId).Distinct().SingleOrDefault();
 
@@ -697,8 +701,19 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                    NobetSayisiPersembe = s.Where(w => w.NobetGunKuralId == 5).Sum(f => f.NobetSayisiGercek),
                    NobetSayisiCuma = s.Where(w => w.NobetGunKuralId == 6).Sum(f => f.NobetSayisiGercek),
                    NobetSayisiDiniBayram = s.Where(w => w.NobetGunKuralId == 8).Sum(f => f.NobetSayisiGercek),
-                   NobetSayisiMilliBayram = s.Where(w => w.NobetGunKuralId == 9).Sum(f => f.NobetSayisiGercek)
+                   SonNobetTarihiDiniBayram = s.Where(w => w.NobetGunKuralId == 8).Sum(f => f.NobetSayisi) > 0
+                       ? s.Where(w => w.NobetGunKuralId == 8).Max(f => f.SonNobetTarihi)
+                       : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
 
+                   NobetSayisiMilliBayram = s.Where(w => w.NobetGunKuralId == 9).Sum(f => f.NobetSayisiGercek),
+                   SonNobetTarihiMilliBayram = s.Where(w => w.NobetGunKuralId == 9).Sum(f => f.NobetSayisi) > 0
+                       ? s.Where(w => w.NobetGunKuralId == 9).Max(f => f.SonNobetTarihi)
+                       : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
+
+                   NobetSayisi1Ocak = s.Where(w => w.NobetGunKuralId == 12).Sum(f => f.NobetSayisiGercek),
+                   SonNobetTarihi1Ocak = s.Where(w => w.NobetGunKuralId == 12).Sum(f => f.NobetSayisi) > 0
+                       ? s.Where(w => w.NobetGunKuralId == 12).Max(f => f.SonNobetTarihi)
+                       : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
                }).ToList();
 
             //var eczane = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.EczaneAdi == "ALYA").ToList();

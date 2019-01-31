@@ -14,6 +14,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
     {
         #region core kısıtlar
 
+        #region talep
+
         /// <summary>
         /// Her gün talep edilen kadar eczaneye nöbet yazılır.
         /// </summary>
@@ -40,6 +42,51 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 p.Model.AddConstraint(cns, kisitAdi);
             }
         }
+
+        #endregion
+
+        #region en az
+
+        /// <summary>
+        /// Her eczaneye istenen tarih aralığında en az 1 nöbet yazılır.
+        /// </summary>
+        /// <param name="p">KpTarihAraligindaEnAz1NobetYaz</param>
+        public virtual void TarihAraligindaEnAz1NobetYaz(KpTarihAraligindaEnAz1NobetYaz p)
+        {
+            var talepEdilenNobetciSayisi = p.Tarihler.Sum(s => s.TalepEdilenNobetciSayisi);
+
+            var gruptakiEczaneSayisi = p.GruptakiNobetciSayisi - p.IstisnaOlanNobetciSayisi;
+
+            if (!p.NobetUstGrupKisit.PasifMi && gruptakiEczaneSayisi <= talepEdilenNobetciSayisi)
+            {
+                var kararIndex = p.EczaneNobetTarihAralik
+                                        .Where(e => p.Tarihler.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
+
+                var enAzNobetSayisi = 1;
+
+                if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
+                    enAzNobetSayisi = (int)p.NobetUstGrupKisit.SagTarafDegeri;
+
+                var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
+                    $" [Std. {enAzNobetSayisi}"
+                    ;
+
+                var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
+
+                var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, p.EczaneNobetGrup.EczaneAdi);
+
+                var std = enAzNobetSayisi;
+                var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                var cns = Constraint.GreaterThanOrEqual(exp, std);
+                //var isTriviallyFeasible = cns.IsTriviallyFeasible();
+
+                p.Model.AddConstraint(cns, kisitAdi);
+            }
+        } 
+
+        #endregion
+
+        #region en fazla
 
         /// <summary>
         /// Her eczaneye istenen tarih aralığında en fazla nöbet grubunun ortalaması kadar nöbet yazılır.
@@ -108,7 +155,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 p.Model.AddConstraint(cns, kisitAdi);
             }
-        }
+        } 
+
+        #endregion
 
         #region peş peşe nöbetler
 
@@ -499,6 +548,47 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         }
 
         /// <summary>
+        /// Birden fazla nöbet türü yazılan günlerde 1 eczaneye sadece 1 tür nöbet yazılır.
+        /// </summary>
+        /// <param name="p">AyniGunSadece1NobetTuruKisitParametreModel</param>
+        public virtual void BirEczaneyeAyniGunSadece1GorevYaz(KpAyniGunSadece1NobetTuru p)
+        {
+            if (!p.NobetUstGrupKisit.PasifMi)
+            {
+                var tarihAraligi = p.Tarihler.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
+
+                foreach (var eczaneNobetGrup in p.EczaneNobetGruplar)
+                {
+                    foreach (var tarih in tarihAraligi)
+                    {
+                        var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
+                             + $"tarih: {tarih.Tarih.ToShortDateString()}"
+                             + $"]";
+
+                        var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(eczaneNobetGrup);
+
+                        var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, eczaneNobetGrup.EczaneAdi);
+
+                        var kararIndex = p.EczaneNobetTarihAralik
+                            .Where(e => e.TakvimId == tarih.TakvimId
+                                     && e.EczaneId == eczaneNobetGrup.EczaneId).ToList();
+
+                        var std = 1;
+                        var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                        var cns = Constraint.LessThanOrEqual(exp, std);
+                        cns.LowerBound = 0;
+
+                        p.Model.AddConstraint(cns, kisitAdi);
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region ay içinde sadece 1 kez aynı gün nöbet tutulsun
+
+        /// <summary>
         /// Eczane ikilileri tarih aralığı içinde sadece 1 kez aynı gün nöbet tutsun
         /// </summary>
         /// <param name="p">AyIcindeSadece1KezAyniGunNobetKisitParametreModel</param>
@@ -556,40 +646,72 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             }
         }
 
-
         /// <summary>
-        /// Birden fazla nöbet türü yazılan günlerde 1 eczaneye sadece 1 tür nöbet yazılır.
+        /// Eczane ikilileri tarih aralığı içinde sadece 1 kez aynı gün nöbet tutsun (değişken dönüşümlü)
         /// </summary>
-        /// <param name="p">AyniGunSadece1NobetTuruKisitParametreModel</param>
-        public virtual void BirEczaneyeAyniGunSadece1GorevYaz(KpAyniGunSadece1NobetTuru p)
+        /// <param name="p"></param>
+        public virtual void AyIcindeSadece1KezAyniGunNobetTutulsun(KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu p)
         {
             if (!p.NobetUstGrupKisit.PasifMi)
             {
                 var tarihAraligi = p.Tarihler.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
 
-                foreach (var eczaneNobetGrup in p.EczaneNobetGruplar)
+                foreach (var ikiliEczane in p.IkiliEczaneler)
                 {
-                    foreach (var tarih in tarihAraligi)
+                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
+                         $" [Std. 1]";
+
+                    var ikiliEczaneler = $"{ikiliEczane.EczaneAdi1}-{ikiliEczane.EczaneAdi2}";
+
+                    var kisitAdi1 = IsimleriBirlestir(kisitTanim, ikiliEczaneler);
+
+                    var kararIndexIkiliEczane = p.EczaneNobetTarihAralik
+                             .Where(e => (e.EczaneNobetGrupId == ikiliEczane.EczaneNobetGrupId1 || e.EczaneNobetGrupId == ikiliEczane.EczaneNobetGrupId2)).ToList();
+
+                    var kararIndex3 = p.EczaneNobetTarihAralikIkiliEczaneler
+                                .Where(e => e.AyniGunTutulanNobetId == ikiliEczane.Id).ToList();
+
+                    foreach (var tarih in p.Tarihler)
                     {
-                        var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
-                             + $"tarih: {tarih.Tarih.ToShortDateString()}"
-                             + $"]";
+    
+                        var ikiliTarihler = $"{tarih.Tarih.ToShortDateString()}";
 
-                        var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(eczaneNobetGrup);
+                        var kisitAdi = IsimleriBirlestir(kisitTanim, ikiliEczaneler, ikiliTarihler);
 
-                        var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, eczaneNobetGrup.EczaneAdi);
+                        var kararIndex = kararIndexIkiliEczane
+                                .Where(e => e.TakvimId == tarih.TakvimId).ToList();
 
-                        var kararIndex = p.EczaneNobetTarihAralik
-                            .Where(e => e.TakvimId == tarih.TakvimId
-                                     && e.EczaneId == eczaneNobetGrup.EczaneId).ToList();
+                        var kararIndex2 = kararIndex3
+                                .Where(e => e.TakvimId == tarih.TakvimId).FirstOrDefault();
 
-                        var std = 1;
-                        var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
-                        var cns = Constraint.LessThanOrEqual(exp, std);
-                        cns.LowerBound = 0;
+                        #region kontrol
+                        //var ss = new string[] { "AYDOĞAN", "SARE" };
+                        //var sayi = kararIndex.Where(w => w.EczaneAdi == "AYDOĞAN" || w.EczaneAdi == "NİSA").Count();
 
-                        p.Model.AddConstraint(cns, kisitAdi);
+                        //if (sayi == 4)
+                        //{
+                        //} 
+                        #endregion
+
+                        var std1 = 2 - 2 * (1 - p.KararDegiskeniIkiliEczaneler[kararIndex2]);
+                        var exp1 = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                        var cnsBuyuktur = Constraint.GreaterThanOrEqual(exp1, std1);
+                        p.Model.AddConstraint(cnsBuyuktur, kisitAdi);
+                        cnsBuyuktur.LowerBound = 0;
+
+                        var std2 = 1 + 2 * p.KararDegiskeniIkiliEczaneler[kararIndex2];
+                        var exp2 = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                        var cnsKucuktur = Constraint.LessThanOrEqual(exp2, std2);
+                        p.Model.AddConstraint(cnsKucuktur, kisitAdi);
+                        cnsKucuktur.LowerBound = 0;
                     }
+
+                    var std3 = 1;
+                    var exp3 = Expression.Sum(kararIndex3.Select(i => p.KararDegiskeniIkiliEczaneler[i]));
+                    var cns = Constraint.LessThanOrEqual(exp3, std3);
+
+                    cns.LowerBound = 0;
+                    p.Model.AddConstraint(cns, kisitAdi1);
                 }
             }
         }
@@ -770,37 +892,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         #endregion
 
         /// <summary>
-        /// Her eczaneye istenen tarih aralığında en az 1 nöbet yazılır.
-        /// </summary>
-        /// <param name="p">KpTarihAraligindaEnAz1NobetYaz</param>
-        public virtual void TarihAraligindaEnAz1NobetYaz(KpTarihAraligindaEnAz1NobetYaz p)
-        {
-            var talepEdilenNobetciSayisi = p.Tarihler.Sum(s => s.TalepEdilenNobetciSayisi);
-
-            var gruptakiEczaneSayisi = p.GruptakiNobetciSayisi - p.IstisnaOlanNobetciSayisi;
-
-            if (!p.NobetUstGrupKisit.PasifMi && gruptakiEczaneSayisi <= talepEdilenNobetciSayisi)
-            {
-                var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({p.NobetUstGrupKisit.KisitKategorisi}, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {p.EczaneNobetGrup.EczaneAdi}";
-
-                var kararIndex = p.EczaneNobetTarihAralik
-                                        .Where(e => p.Tarihler.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
-
-                var enAzNobetSayisi = 1;
-
-                if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
-                    enAzNobetSayisi = (int)p.NobetUstGrupKisit.SagTarafDegeri;
-
-                var std = enAzNobetSayisi;
-                var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
-                var cns = Constraint.GreaterThanOrEqual(exp, std);
-                //var isTriviallyFeasible = cns.IsTriviallyFeasible();
-
-                p.Model.AddConstraint(cns, kisitAdi);
-            }
-        }
-
-        /// <summary>
         /// Cumartesi günü 5 farklı bölgeden nöbet dağılımı olsun. (Giresun)
         /// </summary>
         /// <param name="p">KpGorevTipineGorevDagilim</param>
@@ -864,62 +955,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                         p.Model.AddConstraint(cns, kisitAdi);
                     }
-                }
-            }
-        }
-
-        public virtual void AyIcindeSadece1KezAyniGunNobetTutulsunDegiskenDonusumlu(KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu p)
-        {
-            if (!p.NobetUstGrupKisit.PasifMi)
-            {
-                var kisitAdi = $"{p.NobetUstGrupKisit.KisitKategorisi}, {p.NobetUstGrupKisit.KisitAdiGosterilen}"; //, {eczaneNobetGrup.EczaneAdi}";
-
-                var tarihAraligi = p.Tarihler.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
-
-                foreach (var ikiliEczane in p.IkiliEczaneler)
-                {
-                    var kararIndexIkiliEczane = p.EczaneNobetTarihAralik
-                             .Where(e => (e.EczaneNobetGrupId == ikiliEczane.EczaneNobetGrupId1 || e.EczaneNobetGrupId == ikiliEczane.EczaneNobetGrupId2)).ToList();
-
-                    var kararIndex3 = p.EczaneNobetTarihAralikIkiliEczaneler
-                                .Where(e => e.AyniGunTutulanNobetId == ikiliEczane.Id).ToList();
-
-                    foreach (var tarih in p.Tarihler)
-                    {
-                        var kararIndex = kararIndexIkiliEczane
-                                .Where(e => e.TakvimId == tarih.TakvimId).ToList();
-
-                        var kararIndex2 = kararIndex3
-                                .Where(e => e.TakvimId == tarih.TakvimId).FirstOrDefault();
-
-                        #region kontrol
-                        //var ss = new string[] { "AYDOĞAN", "SARE" };
-                        //var sayi = kararIndex.Where(w => w.EczaneAdi == "AYDOĞAN" || w.EczaneAdi == "NİSA").Count();
-
-                        //if (sayi == 4)
-                        //{
-                        //} 
-                        #endregion
-
-                        var std1 = 2 - 2 * (1 - p.KararDegiskeniIkiliEczaneler[kararIndex2]);
-                        var exp1 = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
-                        var cnsBuyuktur = Constraint.GreaterThanOrEqual(exp1, std1);
-                        p.Model.AddConstraint(cnsBuyuktur, kisitAdi);
-                        cnsBuyuktur.LowerBound = 0;
-
-                        var std2 = 1 + 2 * p.KararDegiskeniIkiliEczaneler[kararIndex2];
-                        var exp2 = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
-                        var cnsKucuktur = Constraint.LessThanOrEqual(exp2, std2);
-                        p.Model.AddConstraint(cnsKucuktur, kisitAdi);
-                        cnsKucuktur.LowerBound = 0;
-                    }
-
-                    var std3 = 1;
-                    var exp3 = Expression.Sum(kararIndex3.Select(i => p.KararDegiskeniIkiliEczaneler[i]));
-                    var cns = Constraint.LessThanOrEqual(exp3, std3);
-
-                    cns.LowerBound = 0;
-                    p.Model.AddConstraint(cns, kisitAdi);
                 }
             }
         }

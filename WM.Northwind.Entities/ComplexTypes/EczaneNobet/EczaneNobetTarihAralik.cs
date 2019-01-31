@@ -36,6 +36,9 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int NobetGorevTipId { get; set; }
         public string NobetGorevTipAdi { get; set; }
         public int HaftaninGunu { get; set; }
+        public bool DiniBayramMi { get; set; }
+        public bool MilliBayramMi { get; set; }
+        public bool YilbasiMi { get; set; }
 
         string GetIkiliAylar(int ay)
         {

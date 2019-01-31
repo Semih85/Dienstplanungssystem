@@ -378,7 +378,7 @@
                                     <div class="col-sm-12 col-md-12">
                                         <h5>Gün Farkları Grafiği</h5>
                                         <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                            <strong>Aşağıdaki diğer (enk., ort., std.sap. vb.) alanları seçerek istediğiniz türde sonuçları inceleyebilirsiniz!!!</strong>
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i> Aşağıdaki diğer (enk., ort., std.sap. vb.) alanları seçerek <strong>istediğiniz türde</strong> sonuçları inceleyebilirsiniz!!!
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -394,7 +394,7 @@
                                     <div class="col-sm-12 col-md-12">
                                         <h5>Gün Farkı Özet Dağılımı</h5>
                                         <div class="alert alert-info alert-dismissible fade show" role="alert">
-                                            <strong>Aşağıdaki diğer (enk., ort., std.sap. vb.) alanları seçerek istediğiniz türde sonuçları inceleyebilirsiniz!!!</strong>
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i> Aşağıdaki diğer (enk., ort., std.sap. vb.) alanları seçerek <strong>istediğiniz türde</strong> sonuçları inceleyebilirsiniz!!!
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -1327,14 +1327,16 @@
 
                 var pivotRows = ["Nöbet Grubu", "Eczane"];
                 var pivotCols = ["Gün Grup"];
+                var pivotRendererName = "Sıcaklık Haritası";
 
                 if (nobetUstGrupId == 4) {
                     pivotRows = ["Eczane"];
                     pivotCols = ["Görev Tipi", "Gün Grup"];
                 }
-                else if (nobetUstGrupId == 5) {
+                else if (nobetUstGrupId == 5 || nobetUstGrupId == 6) {
                     pivotRows = ["Eczane"];
                     pivotCols = ["Gün Grup"];
+                    pivotRendererName = "Sıcaklık Haritası (Sütun)"
                 }
 
                 gunDagilim = $(function table2() {
@@ -1346,7 +1348,7 @@
                             aggregatorName: "Say",
                             aggregators: pivotAggregators,
                             renderers: pivotRenderers,
-                            rendererName: "Sıcaklık Haritası",
+                            rendererName: pivotRendererName,
                             onRefresh: function (config) {
                                 //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
                                 //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
@@ -1531,6 +1533,7 @@
                             cols: pivotCols,
                             vals: ["Nöbet Grubu"],
                             aggregatorName: "Say",
+                            aggregators: pivotAggregators,
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
@@ -1577,96 +1580,49 @@
         var mevsimDagilim;
         function mevsimDagilimlar() {
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
+
+                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotCols = ["Gün Grup", "Mevsim"];
+
                 if (nobetUstGrupId == 4) {
-                    mevsimDagilim = $(function table3() {
-                        $("#mevsimDagilim").pivotUI(dagilimlarPivot,
-                            {
-                                rows: ["Görev Tipi", "Eczane"],
-                                cols: ["Yıl", "Mevsim"],
-                                vals: ["Nöbet Grubu"],
-                                aggregatorName: "Say",
-                                rendererName: "Sicaklik Haritasi",
-                                onRefresh: function (config) {
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+                    pivotRows = ["Görev Tipi", "Eczane"];
+                    //pivotCols = ["Gün Grup", "Mevsim"];
+                }
+                else if (nobetUstGrupId == 5) {
+                    pivotRows = ["Nöbet Grubu", "Eczane"];
+                }
 
-                                    if (pivotAlanlariGosterMevsimDagilim == false) {
-                                        $("#mevsimDagilim").parent().find('.pvtAxisContainer').hide();
-                                        $("#mevsimDagilim").parent().find('.pvtAttrDropdown').hide();
-                                        $("#mevsimDagilim").parent().find('.pvtRenderer').hide();
-                                        $("#mevsimDagilim").parent().find('.pvtVals').hide();
-                                    }
-                                    else {
-                                        $("#mevsimDagilim").parent().find('.pvtAxisContainer').show();
-                                        $("#mevsimDagilim").parent().find('.pvtAttrDropdown').show();
-                                        $("#mevsimDagilim").parent().find('.pvtRenderer').show();
-                                        $("#mevsimDagilim").parent().find('.pvtVals').show();
-                                    }
+                mevsimDagilim = $(function table3() {
+                    $("#mevsimDagilim").pivotUI(dagilimlarPivot,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols,
+                            vals: ["Eczane"],
+                            aggregatorName: "Say",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası",
+                            renderers: pivotRenderers,
+                            onRefresh: function (config) {
+                                //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                if (pivotAlanlariGosterMevsimDagilim == false) {
+                                    $("#mevsimDagilim").parent().find('.pvtAxisContainer').hide();
+                                    $("#mevsimDagilim").parent().find('.pvtAttrDropdown').hide();
+                                    $("#mevsimDagilim").parent().find('.pvtRenderer').hide();
+                                    $("#mevsimDagilim").parent().find('.pvtVals').hide();
+                                }
+                                else {
+                                    $("#mevsimDagilim").parent().find('.pvtAxisContainer').show();
+                                    $("#mevsimDagilim").parent().find('.pvtAttrDropdown').show();
+                                    $("#mevsimDagilim").parent().find('.pvtRenderer').show();
+                                    $("#mevsimDagilim").parent().find('.pvtVals').show();
                                 }
                             }
-                        );
-                    });
-                }
-                if (nobetUstGrupId == 5) {
-                    mevsimDagilim = $(function table3() {
-                        $("#mevsimDagilim").pivotUI(dagilimlarPivot,
-                            {
-                                rows: ["Nöbet Grubu", "Eczane"],
-                                cols: ["Yıl", "Gün Grup", "Ay İkili"],
-                                vals: ["Nöbet Grubu"],
-                                aggregatorName: "Say",
-                                rendererName: "Sicaklik Haritasi",
-                                onRefresh: function (config) {
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+                        }
+                    );
+                });
 
-                                    if (pivotAlanlariGosterMevsimDagilim == false) {
-                                        $("#mevsimDagilim").parent().find('.pvtAxisContainer').hide();
-                                        $("#mevsimDagilim").parent().find('.pvtAttrDropdown').hide();
-                                        $("#mevsimDagilim").parent().find('.pvtRenderer').hide();
-                                        $("#mevsimDagilim").parent().find('.pvtVals').hide();
-                                    }
-                                    else {
-                                        $("#mevsimDagilim").parent().find('.pvtAxisContainer').show();
-                                        $("#mevsimDagilim").parent().find('.pvtAttrDropdown').show();
-                                        $("#mevsimDagilim").parent().find('.pvtRenderer').show();
-                                        $("#mevsimDagilim").parent().find('.pvtVals').show();
-                                    }
-                                }
-                            }
-                        );
-                    });
-                }
-                else {
-                    mevsimDagilim = $(function table3() {
-                        $("#mevsimDagilim").pivotUI(dagilimlarPivot,
-                            {
-                                rows: ["Nöbet Grubu", "Eczane"],
-                                cols: ["Gün Grup", "Mevsim"],
-                                vals: ["Nöbet Grubu"],
-                                aggregatorName: "Say",
-                                rendererName: "Sicaklik Haritasi",
-                                onRefresh: function (config) {
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                    //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
-
-                                    if (pivotAlanlariGosterMevsimDagilim == false) {
-                                        $("#mevsimDagilim").parent().find('.pvtAxisContainer').hide();
-                                        $("#mevsimDagilim").parent().find('.pvtAttrDropdown').hide();
-                                        $("#mevsimDagilim").parent().find('.pvtRenderer').hide();
-                                        $("#mevsimDagilim").parent().find('.pvtVals').hide();
-                                    }
-                                    else {
-                                        $("#mevsimDagilim").parent().find('.pvtAxisContainer').show();
-                                        $("#mevsimDagilim").parent().find('.pvtAttrDropdown').show();
-                                        $("#mevsimDagilim").parent().find('.pvtRenderer').show();
-                                        $("#mevsimDagilim").parent().find('.pvtVals').show();
-                                    }
-                                }
-                            }
-                        );
-                    });
-                }
             }
             else {
                 var mesaj = 'Mevsim dağılımı listesi';
@@ -1690,32 +1646,32 @@
         var tarihDagilim;
         function tarihDagilimlar() {
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
+
+                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotCols = ["Yıl-Ay", "Tarih"];
+
                 if (nobetUstGrupId == 4) {
-                    tarihDagilim = $(function table4() {
-                        $("#gunlukDagilim").pivotUI(dagilimlarPivot,
-                            {
-                                rows: ["Görev Tipi", "Eczane"],
-                                cols: ["Yıl-Ay", "Tarih"],
-                                vals: ["Nöbet Grubu"],
-                                aggregatorName: "Say",
-                                rendererName: "Sicaklik Haritasi"
-                            }
-                        );
-                    });
+                    pivotRows = ["Görev Tipi", "Eczane"];
+                    //pivotCols = ["Gün Grup", "Mevsim"];
                 }
-                else {
-                    tarihDagilim = $(function table4() {
-                        $("#gunlukDagilim").pivotUI(dagilimlarPivot,
-                            {
-                                rows: ["Nöbet Grubu", "Eczane"],
-                                cols: ["Yıl-Ay", "Tarih"],
-                                vals: ["Nöbet Grubu"],
-                                aggregatorName: "Say",
-                                rendererName: "Sicaklik Haritasi"
-                            }
-                        );
-                    });
-                }
+                //else if (nobetUstGrupId == 5) {
+                //    pivotRows = ["Nöbet Grubu", "Eczane"];
+                //}
+
+                tarihDagilim = $(function table4() {
+                    $("#gunlukDagilim").pivotUI(dagilimlarPivot,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols,
+                            vals: ["Nöbet Grubu"],
+                            aggregatorName: "Say",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası",
+                            renderers: pivotRenderers,
+                        }
+                    );
+                });
+
             }
             else {
                 $('#tarihVeriSinirUyari').hide();
@@ -1746,11 +1702,12 @@
                             rows: ["EczaneAdi"],
                             cols: ["GunGrupAdi", "Durum", "KalibrasyonTipAdi"],
                             vals: ["Deger"],
-                            aggregatorName: "Topla (Tamsayi)",
-                            rendererName: "Sutun Sicaklik Haritasi",
+                            aggregatorName: "Topla (Tamsayı)",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası (Sütun)",
                             renderers: $.extend(
-                                $.pivotUtilities.renderers,
-                                $.pivotUtilities.c3_renderers
+                                pivotRenderers,
+                                pivotRenderersGrafik
                             ),
                             onRefresh: function (config) {
                                 $("#kalibrasyonluDetayli").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
@@ -1798,10 +1755,12 @@
                     $("#nobetDurumlar").pivotUI(dagilimlarPivot,
                         {
                             rows: ["Alt Grup Adı", "Eczane"],
-                            cols: ["Nöbet Durum Tipi"],
+                            cols: ["Gün Grup", "Nöbet Durum Tipi"],
                             vals: ["Nöbet Grubu"],
-                            aggregatorName: "Satir Toplam % (Say)",
-                            rendererName: "Sicaklik Haritasi",
+                            aggregatorName: "Satır Toplam % (Say)",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası",
+                            renderers: pivotRenderers,
                             onRefresh: function (config) {
                                 //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
                                 //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
@@ -1914,38 +1873,33 @@
         function gunFarkiGrafik() {
             if (gunFarklariFrekanslar != null && gunFarklariFrekanslar.length > 0) {
                 //alert(1)
+                var pivotRows = ["Gün Grup"];
+                var pivotCols = ["Nöbet Grubu"];
+
                 if (nobetUstGrupId == 4) {
-                    gunFarkiGrafikVeri = $(function table5() {
-                        $("#gunFarkiGrafik").pivotUI(gunFarklariFrekanslar,
-                            {
-                                rows: ["Gün Grup"],
-                                cols: ["Görev Tipi"],
-                                vals: ["Gün Farkı"],
-                                aggregatorName: "En Fazla",
-                                rendererName: "Sutun Grafik",
-                                renderers: $.extend(
-                                    $.pivotUtilities.renderers,
-                                    $.pivotUtilities.c3_renderers
-                                )
-                            });
-                    });
+                    pivotRows = ["Görev Tipi"];
+                    //pivotCols = ["Gün Grup", "Mevsim"];
                 }
-                else {
-                    gunFarkiGrafikVeri = $(function table5() {
-                        $("#gunFarkiGrafik").pivotUI(gunFarklariFrekanslar,
-                            {
-                                rows: ["Gün Grup"],
-                                cols: ["Nöbet Grubu"],
-                                vals: ["Gün Farkı"],
-                                aggregatorName: "En Fazla",
-                                rendererName: "Sutun Grafik",
-                                renderers: $.extend(
-                                    $.pivotUtilities.renderers,
-                                    $.pivotUtilities.c3_renderers
-                                )
-                            });
-                    });
-                }
+                //else if (nobetUstGrupId == 5) {
+                //    pivotRows = ["Nöbet Grubu", "Eczane"];
+                //}
+
+                gunFarkiGrafikVeri = $(function table5() {
+                    $("#gunFarkiGrafik").pivotUI(gunFarklariFrekanslar,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols,
+                            vals: ["Gün Farkı"],
+                            aggregatorName: "En Fazla",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sütun Grafik",
+                            renderers: $.extend(
+                                pivotRenderers,
+                                pivotRenderersGrafik
+                            ),
+                        });
+                });
+
             }
             else {
                 var mesaj = 'Gün farkı özet listesi';
@@ -1969,38 +1923,30 @@
         function gunFarkiOzet() {
             if (gunFarklariFrekanslar != null && gunFarklariFrekanslar.length > 0) {
 
+                var pivotRows = ["Nöbet Grubu"];
+                var pivotCols = ["Gün Grup"];
+
                 if (nobetUstGrupId == 4) {
-                    gunFarkiOzetListesi = $(function table1() {
-                        $("#gunFarkiOzet").pivotUI(gunFarklariFrekanslar,
-                            {
-                                rows: ["Nöbet Grubu", "Görev Tipi"],
-                                cols: ["Gün Grup"],
-                                vals: ["Gün Farkı"],
-                                aggregatorName: "En Fazla",
-                                rendererName: "Sicaklik Haritasi",
-                                //renderers: $.extend(
-                                //    $.pivotUtilities.renderers,
-                                //    $.pivotUtilities.c3_renderers
-                                //)
-                            });
-                    });
+                    pivotRows = ["Görev Tipi"];
+                    //pivotCols = ["Gün Grup", "Mevsim"];
                 }
-                else {
-                    gunFarkiOzetListesi = $(function table1() {
-                        $("#gunFarkiOzet").pivotUI(gunFarklariFrekanslar,
-                            {
-                                rows: ["Nöbet Grubu"],
-                                cols: ["Gün Grup"],
-                                vals: ["Gün Farkı"],
-                                aggregatorName: "En Fazla",
-                                rendererName: "Sicaklik Haritasi",
-                                //renderers: $.extend(
-                                //    $.pivotUtilities.renderers,
-                                //    $.pivotUtilities.c3_renderers
-                                //)
-                            });
-                    });
-                }
+                //else if (nobetUstGrupId == 5) {
+                //    pivotRows = ["Nöbet Grubu", "Eczane"];
+                //}
+
+                gunFarkiOzetListesi = $(function table1() {
+                    $("#gunFarkiOzet").pivotUI(gunFarklariFrekanslar,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols,
+                            vals: ["Gün Farkı"],
+                            aggregatorName: "En Fazla",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası",
+                            renderers: pivotRenderers
+                        });
+                });
+
             }
             else {
                 var mesaj = 'Gün farkı özet listesi';
@@ -2633,14 +2579,14 @@
         //eş grupla aynı gün tutulan nöbetler
         function AyniGunNobetTutanEsGruplar() {
             if (esGrubaAyniGunYazilanNobetler.length > 0) {
-
+                //Aynı Gün Nöbet Tutan 
                 var tablo = "<table id='gridT' class=\"table table-hover table-striped table-bordered table-sm text-left\">";
                 tablo += "<thead class=\"thead-light\">" +
                     "<tr>" +
                     "<th>Grup Tipi</th>" +
                     "<th>Grup Adı</th>" +
                     "<th>Nöbet Tarihi</th>" +
-                    "<th>Aynı Gün Nöbet Tutan Eczane Sayısı</th>" +
+                    "<th>Eczane Sayısı</th>" +
                     "</tr>" +
                     "</thead>" +
                     "<tbody>";

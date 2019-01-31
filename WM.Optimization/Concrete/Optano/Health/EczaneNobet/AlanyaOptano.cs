@@ -18,7 +18,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
     {
         //Karar değişkeni model çalıştıktan sonra değer aldığından burada tanımlandı
         private VariableCollection<EczaneNobetTarihAralik> _x { get; set; }
-        //private VariableCollection<EczaneNobetTarihAralikIkili> _y { get; set; }
+        private VariableCollection<EczaneNobetTarihAralikIkili> _y { get; set; }
 
         private Model Model(AlanyaDataModelV2 data)
         {
@@ -73,11 +73,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var toplamCumartesiPazarMaxHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamCumartesiPazarMaxHedef", data.NobetUstGrupId);
             var toplamCumaMaxHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamCumaMaxHedef", data.NobetUstGrupId);
             var toplamCumartesiMaxHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamCumartesiMaxHedef", data.NobetUstGrupId);
+            var toplamPazarMaxHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamPazarMaxHedef", data.NobetUstGrupId);
 
             var toplamMinHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamMinHedef", data.NobetUstGrupId);
             var haftaIciToplamMinHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "haftaIciToplamMinHedef", data.NobetUstGrupId);
             var toplamCumaCumartesiMinHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamCumaCumartesiMinHedef", data.NobetUstGrupId);
             var toplamCumartesiMinHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamCumartesiMinHedef", data.NobetUstGrupId);
+            var toplamPazarMinHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamPazarMinHedef", data.NobetUstGrupId);
             var bayramToplamMinHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "bayramToplamMinHedef", data.NobetUstGrupId);
 
             #endregion
@@ -109,14 +111,14 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     h => data.UpperBound,
                     a => VariableType.Binary);
 
-            //_y = new VariableCollection<EczaneNobetTarihAralikIkili>(
-            //        model,
-            //        data.EczaneNobetTarihAralikIkiliEczaneler,
-            //        "_y",
-            //        null,
-            //        h => data.LowerBound,
-            //        h => data.UpperBound,
-            //        a => VariableType.Binary);
+            _y = new VariableCollection<EczaneNobetTarihAralikIkili>(
+                    model,
+                    data.EczaneNobetTarihAralikIkiliEczaneler,
+                    "_y",
+                    t => $"{t.EczaneNobetGrupId1},{t.EczaneNobetGrupId2},{t.TakvimId}, {t.EczaneAdi1}, {t.EczaneAdi2}, {t.Tarih.ToShortDateString()}",
+                    h => data.LowerBound,
+                    h => data.UpperBound,
+                    a => VariableType.Binary);
             #endregion
 
             #region Amaç Fonksiyonu
@@ -817,6 +819,18 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #endregion
 
+                    #region Toplam Pazar Max Hedef
+
+                    var kpKumulatifToplamEnFazlaPazar = (KpKumulatifToplam)kpKumulatifToplam.Clone();
+
+                    kpKumulatifToplamEnFazlaPazar.Tarihler = pazarGunleri;
+                    kpKumulatifToplamEnFazlaPazar.NobetUstGrupKisit = toplamPazarMaxHedef;
+                    kpKumulatifToplamEnFazlaPazar.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiPazar;
+
+                    KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaPazar);
+
+                    #endregion
+
                     #endregion
 
                     #region en az
@@ -884,6 +898,18 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnAzCumartesi.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiCumartesi;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnAzCumartesi);
+
+                    #endregion
+
+                    #region Kümülatif pazar en az
+
+                    var kpKumulatifToplamEnAzPazar = (KpKumulatifToplam)kpKumulatifToplam.Clone();
+
+                    kpKumulatifToplamEnAzPazar.Tarihler = pazarGunleri;
+                    kpKumulatifToplamEnAzPazar.NobetUstGrupKisit = toplamPazarMinHedef;
+                    kpKumulatifToplamEnAzPazar.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiPazar;
+
+                    KumulatifToplamEnFazla(kpKumulatifToplamEnAzPazar);
 
                     #endregion
 
@@ -1178,8 +1204,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #region Yılda en fazla aynı gün 3'ten fazla nöbet tutulmasın
 
-            #region yil içinde en fazla 3 kez aynı gün nöbet tutulsun
-
             //if (data.CalismaSayisi == 5) sonIkiAydakiGrup = false;
 
             //if (!yildaEncokUcKezGrup.PasifMi)
@@ -1217,66 +1241,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             //    }
 
             //}
-            #endregion
-
-            #region ay içinde en fazla bir kez aynı gün nöbet tutulsun
-
-            //ay içinde iki kez nöbet tutan eczane çiftleri oluştuğunda bu çiftler kısıt olacak şekilde yeniden çözüm yapılıyor.  (recursive)
-            //Yeni modelde bu çiftlerin herhangi iki gündeki toplamları 3'ten küçük olma kısıtı eklenince sadece 1 kez çift olmaları sağlanıyor.
-
-            //if (data.CalismaSayisi == 5)
-            //    ayIcindeAyniGunNobet.PasifMi = true;
-
-            if (false && !ayIcindeAyniGunNobet.PasifMi)
-            {
-                foreach (var g in data.AyIcindeAyniGunNobetTutanEczaneler.Select(s => s.Id).Distinct().ToList())
-                {
-                    var ikiliEczaneler = data.AyIcindeAyniGunNobetTutanEczaneler
-                                                    .Where(w => w.Id == g)
-                                                    .Select(s => new { s.EczaneNobetGrupId, s.EczaneAdi }).ToList();
-
-                    var nobetTutulanGunler = data.EczaneNobetSonuclarAyIci
-                        .Where(w => ikiliEczaneler.Select(s => s.EczaneNobetGrupId).Contains(w.EczaneNobetGrupId)
-                                 //&& w.Tarih.Month == data.Ay
-                                 )
-                        .Select(s => new { s.TakvimId, s.Tarih })
-                        .Distinct().ToList();
-
-                    var tarihAralik = data.TarihAraligi
-                        .Select(s => new { s.TakvimId, s.Tarih })
-                        .Distinct()
-                        .Where(w => nobetTutulanGunler.Select(s => s.TakvimId).Contains(w.TakvimId))
-                        .ToList();
-
-                    var eczaneNobetTarihAralikIkiliEczaneler = data.EczaneNobetTarihAralik.Where(e => ikiliEczaneler.Select(s => s.EczaneNobetGrupId).Contains(e.EczaneNobetGrupId)).ToList();
-
-                    //var gg = new EczaneNobetGrupDetay()
-                    //{
-                    //    EczaneAdi = g.ToString()
-                    //};
-
-                    //HerAyPespeseGorev(model, data.EczaneNobetTarihAralik, herAyPespeseGorev, tarihlerTekListe, 2, gg, _x);
-
-                    //foreach (var tarih in tarihAralik)
-                    //{
-                    var kisitAdi = $"ay_icinde_diger_gruptaki_eczaneler_ile_en_fazla_bir_kez_nobet_tutulsun, {g}";
-
-                    var kararIndex = eczaneNobetTarihAralikIkiliEczaneler
-                                  .Where(e => tarihAralik.Select(s => s.TakvimId).Contains(e.TakvimId)
-                                           ).ToList();
-                    var std = 3;
-                    var exp = Expression.Sum(kararIndex.Select(i => _x[i]));
-                    var cns = Constraint.LessThanOrEqual(exp, std);
-                    cns.LowerBound = 0;
-                    //var isTriviallyFeasible = cns.IsTriviallyFeasible();
-
-                    model.AddConstraint(cns, kisitAdi);
-                    //}
-                }
-            }
-            #endregion
-
-            #endregion
+            #endregion            
 
             #endregion
 
