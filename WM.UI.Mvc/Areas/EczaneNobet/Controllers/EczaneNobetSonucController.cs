@@ -323,9 +323,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //        //anahtar listedeki sonuçları görmek için üstteki satırı kapat
             //        .ToList();
 
-            if (nobetUstGrup.Id != 6)
+            var eskiVeriGosterilsinMi = true;
+
+            if (eskiVeriGosterilsinMi && nobetUstGrup.Id == 6)
             {
-                sonuclar = sonuclar
+                sonuclar = eczaneNobetSonuclarTumu;
+            }
+            else
+            {
+                sonuclar = eczaneNobetSonuclarTumu
                     .Where(w => w.Tarih >= nobetUstGrup.BaslangicTarihi)
                     //anahtar listedeki sonuçları görmek için üstteki satırı kapat
                     .ToList();
