@@ -16,7 +16,7 @@ using WM.Optimization.Abstract.Health;
 
 namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 {
-    public class AlanyaOptimizationManagerV2 : IAlanyaOptimizationServiceV2
+    public class AlanyaOptimizationManager : IAlanyaOptimizationService
     {
         #region ctor
         private IEczaneGrupService _eczaneGrupService;
@@ -39,7 +39,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private IEczaneNobetMuafiyetService _eczaneNobetMuafiyetService;
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
 
-        public AlanyaOptimizationManagerV2(
+        public AlanyaOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
                     IEczaneGrupTanimService eczaneGrupTanimService,
                     IEczaneNobetAlanyaOptimizationV2 eczaneNobetAlanyaOptimization,
@@ -88,7 +88,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         /// </summary>
         /// <param name="data"></param>
         //[TransactionScopeAspect]
-        public EczaneNobetSonucModel EczaneNobetCozAktifiGuncelle(AlanyaDataModelV2 data)
+        public EczaneNobetSonucModel EczaneNobetCozAktifiGuncelle(AlanyaDataModel data)
         {
             //var mevcutSonuclar = _eczaneNobetSonucAktifService.GetSonuclar2(data.NobetUstGrupId);
             var yeniSonuclar = _eczaneNobetAlanyaOptimization.Solve(data);
@@ -102,7 +102,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             return yeniSonuclar;
         }
 
-        public EczaneNobetSonucModel EczaneNobetCozAktifiGuncelleIteratif(AlanyaDataModelV2 data)
+        public EczaneNobetSonucModel EczaneNobetCozAktifiGuncelleIteratif(AlanyaDataModel data)
         {
             var mevcutSonuclar = _eczaneNobetSonucAktifService.GetSonuclar2(data.NobetUstGrupId);
             var guncellenecekSonuclar = mevcutSonuclar
@@ -171,7 +171,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             return yeniSonuclar;
         }
 
-        public EczaneNobetSonucModel EczaneNobetCozSonuclaraEkle(AlanyaDataModelV2 data)
+        public EczaneNobetSonucModel EczaneNobetCozSonuclaraEkle(AlanyaDataModel data)
         {
             var yeniSonuclar = _eczaneNobetAlanyaOptimization.Solve(data);
             _eczaneNobetSonucService.CokluEkle(yeniSonuclar.ResultModel);
@@ -184,7 +184,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
         }
 
-        public EczaneNobetSonucModel EczaneNobetCozSonuclaraEkleYalin(AlanyaDataModelV2 data)
+        public EczaneNobetSonucModel EczaneNobetCozSonuclaraEkleYalin(AlanyaDataModel data)
         {
             var yeniSonuclar = _eczaneNobetAlanyaOptimization.Solve(data);
             _eczaneNobetSonucService.CokluEkle(yeniSonuclar.ResultModel);
@@ -261,7 +261,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             return oncekiAy;
         }
 
-        private AlanyaDataModelV2 EczaneNobetDataModel(EczaneNobetDataModelParametre eczaneNobetDataModelParametre)
+        private AlanyaDataModel EczaneNobetDataModel(EczaneNobetDataModelParametre eczaneNobetDataModelParametre)
         {
             #region parametreler
             var nobetUstGrupId = eczaneNobetDataModelParametre.NobetUstGrupId;
@@ -279,6 +279,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 throw new Exception($"</strong>Nöbet başlangıç tarihi ({baslangicTarihi.ToShortDateString()}) üst grup başlama tarihinden ({nobetUstGrupBaslangicTarihi.ToShortDateString()}) küçük olamaz.");
 
             var nobetGruplar = _nobetGrupService.GetDetaylar(nobetGrupIdListe).OrderBy(s => s.Id).ToList();
+
             var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar(nobetUstGrupId); //nobetGrupIdListe
 
             var eczaneNobetMazeretNobettenDusenler = new List<EczaneNobetMazeretSayilari>();
@@ -437,7 +438,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             #endregion
 
-            var alanyaDataModel = new AlanyaDataModelV2()
+            var alanyaDataModel = new AlanyaDataModel()
             {
                 Yil = eczaneNobetDataModelParametre.YilBitis,
                 Ay = eczaneNobetDataModelParametre.AyBitis,
@@ -483,8 +484,10 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 IkiliEczaneler = ikiliEczaneler
             };
 
+            _eczaneNobetOrtakService.KurallariKontrolEt(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);
+
             return alanyaDataModel;
-        }
+        }        
 
         [LogAspect(typeof(DatabaseLogger))]
         [SecuredOperation(Roles = "Admin,Oda,Üst Grup")]

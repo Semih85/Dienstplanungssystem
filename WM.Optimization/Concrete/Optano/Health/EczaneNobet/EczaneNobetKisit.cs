@@ -1691,12 +1691,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             foreach (var kisit in celisikKurallarTekListe)
             {
                 celiskiler += $"<li class='list-group-item list-group-item-action py-1'>{kisit}</li>";
-                //if (celisikKurallarTekListe.FirstOrDefault() == kisit)
-                //    celiskiler += $"<li class='list-group-item'>{kisit}</li>";
-                //else if (celisikKurallarTekListe.LastOrDefault() == kisit)
-                //    celiskiler += $"<br/> {kisit}";
-                //else
-                //    celiskiler += $"<br/> {kisit},";
             }
             celiskiler += "</ul>";
             celiskiler += $"*{celisikKurallarTekListe.Count}";

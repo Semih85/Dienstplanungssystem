@@ -2733,5 +2733,57 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 }
             }
         }
+
+
+        #region kısıt kontrol
+
+        public void KurallariKontrolEt(int nobetUstGrupId, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetSonuclarYatay)
+        {
+            //var herAyEnaz1Gorev = _nobetUstGrupKisitService.GetDetay("herAyEnaz1Gorev", nobetUstGrupId);
+            var herAyEnaz1HaftaIciGorev = _nobetUstGrupKisitService.GetDetay("herAyEnaz1HaftaIciGorev", nobetUstGrupId);
+
+            //var toplamMaxHedef = _nobetUstGrupKisitService.GetDetay("toplamMaxHedef", nobetUstGrupId);
+            var haftaIciToplamMaxHedef = _nobetUstGrupKisitService.GetDetay("haftaIciToplamMaxHedef", nobetUstGrupId);
+
+            var eczaneler = new List<string>();
+
+            if (!herAyEnaz1HaftaIciGorev.PasifMi && !haftaIciToplamMaxHedef.PasifMi)
+            {
+                foreach (var eczaneNobetSonuc in eczaneNobetSonuclarYatay.OrderBy(o => o.NobetGrupAdi).ThenBy(o => o.EczaneAdi).ToList())
+                {
+                    if (haftaIciToplamMaxHedef.SagTarafDegeri <= eczaneNobetSonuc.NobetSayisiHaftaIci)
+                    {
+                        eczaneler.Add($"{eczaneNobetSonuc.NobetGrupAdi} {eczaneNobetSonuc.EczaneAdi} eczanesinin toplam hafta içi nöbet sayısı {eczaneNobetSonuc.NobetSayisiHaftaIci}");
+                    }
+                }
+
+                var ihlalMesaj = $"<strong> {herAyEnaz1HaftaIciGorev.KisitTanim} std. [{herAyEnaz1HaftaIciGorev.SagTarafDegeri}]</strong> ile " +
+                        $"<strong>{haftaIciToplamMaxHedef.KisitTanim}</strong> kuralları aktif olduğunda aşağıdaki eczaneler için; " +
+                        //std. [{haftaIciToplamMaxHedef.SagTarafDegeri}]
+                        $"kümülatif en fazla yazılabilecek hafta içi nöbet sayısı ({haftaIciToplamMaxHedef.SagTarafDegeri}) küçük ya da eşit olamaz. " +
+                        $"<span class='badge badge-info'>{eczaneler.Count}</span>";
+
+                var celiskiler = "<ul class='list-group list-group-flush mt-2 mb-3'>";
+
+                foreach (var eczane in eczaneler)
+                {
+                    celiskiler += $"<li class='list-group-item list-group-item-action py-1'>{eczane}</li>";
+                }
+                celiskiler += "</ul>";
+
+                ihlalMesaj += celiskiler;
+
+                throw new Exception(ihlalMesaj);
+            }
+
+            //if ((!herAyEnaz1Gorev.PasifMi || !herAyEnaz1HaftaIciGorev.PasifMi) && !toplamMaxHedef.PasifMi)
+            //{
+            //    if (toplamMaxHedef.SagTarafDegeri < 1)
+            //    {
+
+            //    }
+            //}
+        }
+        #endregion
     }
 }

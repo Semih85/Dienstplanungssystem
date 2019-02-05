@@ -19,7 +19,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
         //Karar değişkeni model çalıştıktan sonra değer aldığından burada tanımlandı
         private VariableCollection<EczaneNobetTarihAralik> _x { get; set; }
 
-        private Model Model(AlanyaDataModel data)
+        private Model Model(AlanyaDataModelEski data)
         {
             var model = new Model() { Name = "Alanya Eczane Nöbet" };
 
@@ -876,7 +876,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
             return model;
         }
 
-        public EczaneNobetSonucModel Solve(AlanyaDataModel data)
+        public EczaneNobetSonucModel Solve(AlanyaDataModelEski data)
         {
             EczaneNobetSonucModel Results;
 
@@ -1064,7 +1064,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
             public double EnCokNobetTutulanNobetSayisi { get; set; }
         }
 
-        private NobetGunKuralDetay GetNobetGunKural(int gunKuralId, AlanyaDataModel data, int nobetGrupId, int gruptakiNobetciSayisi, int cozulenAydakiNobetSayisi)
+        private NobetGunKuralDetay GetNobetGunKural(int gunKuralId, AlanyaDataModelEski data, int nobetGrupId, int gruptakiNobetciSayisi, int cozulenAydakiNobetSayisi)
         {
             var r = new Random();
 

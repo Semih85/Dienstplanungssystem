@@ -13,7 +13,7 @@ using WM.Optimization.Abstract.Health;
 
 namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet.Eski
 {
-    public class AlanyaOptimizationManager : IAlanyaOptimizationService
+    public class AlanyaOptimizationManagerEski : IAlanyaOptimizationServiceEski
     {
         #region ctor
         //private List<EczaneCiftGrup> UcAylikCiftGrupluEczanelerKumulatif;
@@ -36,7 +36,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private ITakvimService _takvimService;
         private List<int> sonUcAydaPazarGunuNobetTutanEczaneler;
 
-        public AlanyaOptimizationManager(
+        public AlanyaOptimizationManagerEski(
             IEczaneGrupService eczaneGrupService,
             IEczaneGrupTanimService eczaneGrupTanimService,
             IEczaneNobetAlanyaOptimization eczaneNobetAlanyaOptimization,
@@ -84,7 +84,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         /// Eczane Nöbet Çok Grup Data Model için
         /// </summary>
         /// <param name="data"></param>
-        public void EczaneNobetCozAktifiGuncelle(AlanyaDataModel data)
+        public void EczaneNobetCozAktifiGuncelle(AlanyaDataModelEski data)
         {
             var aktifSonuclar = _eczaneNobetSonucAktifService.GetSonuclar2(data.NobetUstGrupId);
             var guncellenecekSonuclar = aktifSonuclar.Where(x => data.NobetGruplar.Select(s => s.Id).Contains(x.NobetGrupId));
@@ -228,7 +228,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             }
         }
 
-        private AlanyaDataModel EczaneNobetDataModel(EczaneNobetDataModelParametre eczaneNobetDataModelParametre)
+        private AlanyaDataModelEski EczaneNobetDataModel(EczaneNobetDataModelParametre eczaneNobetDataModelParametre)
         {
             #region parametreler
             var nobetUstGrupId = eczaneNobetDataModelParametre.NobetUstGrupId;
@@ -328,7 +328,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             #endregion
 
-            var alanyaDataModel = new AlanyaDataModel()
+            var alanyaDataModel = new AlanyaDataModelEski()
             {
                 Yil = yilBitis,
                 Ay = ayBitis,

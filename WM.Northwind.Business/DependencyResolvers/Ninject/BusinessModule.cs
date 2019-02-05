@@ -231,10 +231,10 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IEczaneNobetOptimization>().To<EczaneNobetOptano>().InSingletonScope();
             Bind<IEczaneNobetKisit>().To<EczaneNobetKisit>().InSingletonScope();
 
-            Bind<IAlanyaOptimizationService>().To<AlanyaOptimizationManager>().InSingletonScope();
+            Bind<IAlanyaOptimizationServiceEski>().To<AlanyaOptimizationManagerEski>().InSingletonScope();
             Bind<IEczaneNobetAlanyaOptimization>().To<AlanyaOptanoEski>().InSingletonScope();
 
-            Bind<IAlanyaOptimizationServiceV2>().To<AlanyaOptimizationManagerV2>().InSingletonScope();
+            Bind<IAlanyaOptimizationService>().To<AlanyaOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetAlanyaOptimizationV2>().To<AlanyaOptano>().InSingletonScope();
 
             Bind<IAntalyaMerkezOptimizationService>().To<AntalyaMerkezOptimizationManager>().InSingletonScope();

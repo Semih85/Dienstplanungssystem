@@ -20,7 +20,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         private VariableCollection<EczaneNobetTarihAralik> _x { get; set; }
         private VariableCollection<EczaneNobetTarihAralikIkili> _y { get; set; }
 
-        private Model Model(AlanyaDataModelV2 data)
+        private Model Model(AlanyaDataModel data)
         {
             var model = new Model() { Name = "Alanya Eczane Nöbet" };
 
@@ -1257,7 +1257,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             return model;
         }
 
-        public EczaneNobetSonucModel Solve(AlanyaDataModelV2 data)
+        public EczaneNobetSonucModel Solve(AlanyaDataModel data)
         {
             var results = new EczaneNobetSonucModel();
             var calismaSayisiEnFazla = 3;
@@ -1325,10 +1325,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                         var sonuclar = data.EczaneNobetTarihAralik.Where(s => _x[s].Value.IsAlmost(1) == true).ToList();
 
-                        var nobetGorevTipId = 1;
+                        //var nobetGorevTipId = 1;
 
                         var nobetGrupTarihler1 = data.EczaneNobetTarihAralik
-                             .Where(w => w.NobetGorevTipId == nobetGorevTipId)
+                             //.Where(w => w.NobetGorevTipId == nobetGorevTipId)
                              .Select(s => new
                              {
                                  s.NobetGrupId,
@@ -1355,8 +1355,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             throw new Exception("Talebi karşılanmayan günler var");
                         }
 
-                        foreach (var r in sonuclar //data.EczaneNobetTarihAralik.Where(s => _x[s].Value == 1)
-                            )
+                        foreach (var r in sonuclar)
                         {
                             results.ResultModel.Add(new EczaneNobetCozum()
                             {

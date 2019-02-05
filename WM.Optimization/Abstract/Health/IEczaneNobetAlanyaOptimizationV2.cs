@@ -11,6 +11,6 @@ namespace WM.Optimization.Abstract.Health
 {
     public interface IEczaneNobetAlanyaOptimizationV2 : IOptimization, IEczaneNobetKisit
     {
-        EczaneNobetSonucModel Solve(AlanyaDataModelV2 data);
+        EczaneNobetSonucModel Solve(AlanyaDataModel data);
     }
 }

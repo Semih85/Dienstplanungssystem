@@ -11,9 +11,9 @@ using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 namespace WM.Northwind.Business.Abstract.Optimization.EczaneNobet
 {
     public interface IAlanyaOptimizationService
-    {   
-        void EczaneNobetCozAktifiGuncelle(AlanyaDataModel data);
-        void ModelCoz(EczaneNobetModelCoz eczaneNobetModelCoz);
+    {
+        EczaneNobetSonucModel EczaneNobetCozAktifiGuncelle(AlanyaDataModel data);
+        EczaneNobetSonucModel ModelCoz(EczaneNobetModelCoz eczaneNobetModelCoz);
         void Kesinlestir(int nobetUstGrupId);
     }
 }

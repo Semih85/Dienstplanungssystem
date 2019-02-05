@@ -18,7 +18,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
     public class NobetYazController : Controller
     {
         #region ctor
-        private IAlanyaOptimizationServiceV2 _alanyaOptimizationService;
+        private IAlanyaOptimizationService _alanyaOptimizationService;
         private IAntalyaMerkezOptimizationService _antalyaMerkezOptimizationService;
         private IMersinMerkezOptimizationServiceV2 _mersinMerkezOptimizationServiceV2;
         private IGiresunOptimizationService _giresunOptimizationService;
@@ -39,7 +39,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IEczaneNobetMazeretService _eczaneNobetMazeretService;
         private IKalibrasyonService _kalibrasyonService;
 
-        public NobetYazController(IAlanyaOptimizationServiceV2 alanyaOptimizationService,
+        public NobetYazController(IAlanyaOptimizationService alanyaOptimizationService,
                                   IAntalyaMerkezOptimizationService antalyaMerkezOptimizationService,
                                   IMersinMerkezOptimizationServiceV2 mersinMerkezOptimizationServiceV2,
                                   IGiresunOptimizationService giresunOptimizationService,
