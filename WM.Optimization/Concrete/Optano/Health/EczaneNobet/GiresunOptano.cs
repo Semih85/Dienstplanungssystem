@@ -127,11 +127,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #region tur çevrim katsayıları
 
-            int bayramCevrim = 8000;
-            //int arifeCevrim = 5000;
-            int cumartesiCevrim = 900;
-            int pazarCevrim = 1000;
-            int haftaIciCevrim = 500;
+            //int bayramCevrim = 8000;
+            ////int arifeCevrim = 5000;
+            //int cumartesiCevrim = 900;
+            //int pazarCevrim = 1000;
+            //int haftaIciCevrim = 500;
             #endregion
 
             #region özel tur takibi yapılacak günler
