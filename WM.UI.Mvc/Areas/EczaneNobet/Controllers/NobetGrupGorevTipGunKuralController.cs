@@ -93,7 +93,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create([Bind(Include = "Id,NobetGrupGorevTipId,NobetGunKuralId,NobetUstGrupGunGrupId,BaslangicTarihi,BitisTarihi")] NobetGrupGorevTipGunKural nobetGrupGorevTipGunKural)
+        public ActionResult Create([Bind(Include = "Id,NobetGrupGorevTipId,NobetGunKuralId,NobetUstGrupGunGrupId,BaslangicTarihi,BitisTarihi,NobetciSayisi")] NobetGrupGorevTipGunKural nobetGrupGorevTipGunKural)
         {
             if (ModelState.IsValid)
             {
@@ -116,7 +116,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/NobetGrupGorevTipGunKural/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Edit(int id)
         {
             if (id < 1)
@@ -147,8 +147,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "Id,NobetGrupGorevTipId,NobetGunKuralId,NobetUstGrupGunGrupId,BaslangicTarihi,BitisTarihi")] NobetGrupGorevTipGunKural nobetGrupGorevTipGunKural)
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
+        public ActionResult Edit([Bind(Include = "Id,NobetGrupGorevTipId,NobetGunKuralId,NobetUstGrupGunGrupId,BaslangicTarihi,BitisTarihi,NobetciSayisi")] NobetGrupGorevTipGunKural nobetGrupGorevTipGunKural)
         {
             if (ModelState.IsValid)
             {

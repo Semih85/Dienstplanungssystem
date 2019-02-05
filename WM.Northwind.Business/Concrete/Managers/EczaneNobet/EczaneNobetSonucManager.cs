@@ -714,6 +714,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                    SonNobetTarihi1Ocak = s.Where(w => w.NobetGunKuralId == 12).Sum(f => f.NobetSayisi) > 0
                        ? s.Where(w => w.NobetGunKuralId == 12).Max(f => f.SonNobetTarihi)
                        : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
+
+                   NobetSayisiYilSonu = s.Where(w => w.NobetGunKuralId == 11).Sum(f => f.NobetSayisiGercek),
+                   SonNobetTarihiYilSonu = s.Where(w => w.NobetGunKuralId == 11).Sum(f => f.NobetSayisi) > 0
+                       ? s.Where(w => w.NobetGunKuralId == 11).Max(f => f.SonNobetTarihi)
+                       : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
                }).ToList();
 
             //var eczane = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.EczaneAdi == "ALYA").ToList();
@@ -816,9 +821,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             //{
             var oncekiBakilacakAySayisi = -oncekiBakilacakAylar;
 
-            if (!(oncekiBakilacakAySayisi >= -6 && oncekiBakilacakAySayisi < 0))
+            if (!(oncekiBakilacakAySayisi >= -8 && oncekiBakilacakAySayisi < 0))
             {
-                throw new Exception("Geriye dönük aynı gün nöbet tutanlar en az 0 en fazla 6 ay engellenebilir");
+                throw new Exception("Geriye dönük aynı gün nöbet tutanlar en az 0 en fazla 8 ay engellenebilir");
             }
 
             var oncekiAylardaBakilacakSonuclar = eczaneNobetSonuclarOncekiAylar.Where(w => w.Tarih >= baslangicTarihi.AddMonths(oncekiBakilacakAySayisi)).ToList();
@@ -837,7 +842,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             {
                 var gunlukSonuclar = oncekiAylardaBakilacakSonuclar.Where(w => w.TakvimId == tarih.TakvimId).ToList();
 
-                foreach (var sonuc in gunlukSonuclar)
+                if (gunlukSonuclar.Count > 1)
+                {
+                    foreach (var sonuc in gunlukSonuclar)
                 {
                     oncekiAylardaAyniGunNobetTutanEczaneGruplar
                         .Add(new EczaneGrupDetay
@@ -856,6 +863,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                             AyniGunNobetTutabilecekEczaneSayisi = 1
                             //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
                         });
+                }
                 }
             }
             //}

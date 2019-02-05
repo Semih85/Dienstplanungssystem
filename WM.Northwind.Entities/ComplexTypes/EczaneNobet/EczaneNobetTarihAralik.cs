@@ -25,9 +25,12 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public bool BayramMi { get; set; }
         public bool HaftaIciMi { get; set; }
         public bool ArifeMi { get; set; }
+        public double AmacFonksiyonKatsayi { get; set; }
+        public string Tarih2 => String.Format("{0:yy MM dd}", Tarih);
 
         public int NobetGrupGorevTipId { get; set; }
         
+        public int NobetUstGrupId { get; set; }
         public int EczaneId { get; set; }
         public int NobetGrupId { get; set; }
         public string EczaneAdi { get; set; }
@@ -39,6 +42,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public bool DiniBayramMi { get; set; }
         public bool MilliBayramMi { get; set; }
         public bool YilbasiMi { get; set; }
+        public bool YilSonuMu { get; set; }
+        public int TalepEdilenNobetciSayisi { get; set; }
 
         string GetIkiliAylar(int ay)
         {

@@ -888,8 +888,8 @@
                     //gün farkı frekanslar
                     $.each(dagilimlar.GunFarklariFrekanslar, function (index, n) {
                         gunFarklariFrekanslar.push({
-                            ["Hafta Farkı"]: Math.round(n.GunFarki / 7) + 1,
-                            ["Ay Farkı"]: Math.round(n.GunFarki / 30) + 1,
+                            ["Hafta Farkı"]: n.HaftaFarki,
+                            ["Ay Farkı"]: n.AyFarki,
                             ["Gün Farkı"]: n.GunFarki,
                             Eczane: n.EczaneAdi,
                             ["Gün Grup"]: n.GunGrup,
@@ -904,8 +904,8 @@
                     //gün farkı tüm sonuçlar
                     $.each(dagilimlar.GunFarklariTumSonuclar, function (index, s) {
                         gunFarklariTumSonuclar.push({
-                            ["Hafta Farkı"]: Math.round(s.GunFarki / 7) + 1,
-                            ["Ay Farkı"]: Math.round(s.GunFarki/30) + 1,
+                            ["Hafta Farkı"]: s.HaftaFarki,
+                            ["Ay Farkı"]: s.AyFarki,
                             ["Gün Farkı"]: s.GunFarki,
                             Index: s.Index,
                             Nöbet1: s.Nobet1,

@@ -728,6 +728,7 @@
     <Content Include="Scripts\d3\LICENSE" />
     <Content Include="Scripts\d3\CHANGES.md" />
     <Content Include="Scripts\d3\API.md" />
+    <Content Include="Areas\EczaneNobet\Views\NobetYaz\AmacFonksiyonKatsayi.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1102,6 +1103,7 @@
     <Compile Include="Areas\EczaneNobet\Models\NobetciEczanelerViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\NobetciEczaneHaritaViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\NobetGrupBeklenenGunFarki.cs" />
+    <Compile Include="Areas\EczaneNobet\Models\AmacFonksiyonKatsayiViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\PivotSonuclarParams.cs" />
     <Compile Include="Areas\EczaneNobet\Models\EczaneGrupViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\EczaneNobetMazeretIndexViewModel.cs" />

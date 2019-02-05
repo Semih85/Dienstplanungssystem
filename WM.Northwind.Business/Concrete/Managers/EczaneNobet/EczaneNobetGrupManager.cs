@@ -163,6 +163,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             && (bitisTarihi >= x.BaslangicTarihi && (bitisTarihi <= x.BitisTarihi || x.BitisTarihi == null)));
         }
 
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetGrupDetay> GetDetaylarNobetUstGrupId(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId)
+        {
+            return _eczaneNobetGrupDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId
+            && (bitisTarihi >= x.BaslangicTarihi && (bitisTarihi <= x.BitisTarihi || x.BitisTarihi == null)));
+        }
+
         [FluentValidationAspect(typeof(EczaneNobetGrupValidator))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         [LogAspect(typeof(DatabaseLogger))]

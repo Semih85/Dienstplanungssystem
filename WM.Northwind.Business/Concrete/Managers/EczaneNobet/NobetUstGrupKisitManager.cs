@@ -94,7 +94,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetUstGrupKisitDal.GetDetay(x => x.KisitAdi == kisitAdi
                                                     && x.NobetUstGrupId == nobetUstGrupId)
-                                                    ?? throw new Exception($"{nobetUstGrupId} üst grubuna {kisitAdi} kısıtı tanımlı değil.");
+                                                    ?? new NobetUstGrupKisitDetay()
+                                                    //throw new Exception($"{nobetUstGrupId} üst grubuna {kisitAdi} kısıtı tanımlı değil.")
+                                                    ;
         }
 
         public int GetDegisenKisitlar(int nobetUstGrupId)

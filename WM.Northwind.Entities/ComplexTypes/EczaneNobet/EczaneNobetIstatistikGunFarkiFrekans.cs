@@ -21,5 +21,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string GunGrup { get; set; }
         public int GunFarki { get; set; }
         public int FrekanstakiEczaneSayisi { get; set; }
+        public int AyFarki => (int)Math.Ceiling((double)GunFarki / 30);
+        public int HaftaFarki => (int)Math.Ceiling((double)GunFarki / 7);
     }
 }

@@ -323,7 +323,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //        //anahtar listedeki sonuçları görmek için üstteki satırı kapat
             //        .ToList();
 
-            var eskiVeriGosterilsinMi = true;
+            var eskiVeriGosterilsinMi = false;
 
             if (eskiVeriGosterilsinMi && nobetUstGrup.Id == 6)
             {

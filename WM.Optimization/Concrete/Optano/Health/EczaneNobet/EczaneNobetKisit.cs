@@ -82,7 +82,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 p.Model.AddConstraint(cns, kisitAdi);
             }
-        } 
+        }
 
         #endregion
 
@@ -155,7 +155,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 p.Model.AddConstraint(cns, kisitAdi);
             }
-        } 
+        }
 
         #endregion
 
@@ -203,14 +203,14 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         /// <param name="p">KpHerAyHaftaIciPespeseGorev</param>
         public virtual void HerAyHaftaIciPespeseGorev(KpHerAyHaftaIciPespeseGorev p)
         {
-            if (!p.NobetUstGrupKisit.PasifMi && p.HaftaIciOrtamalaNobetSayisi > 1)
+            if (!p.NobetUstGrupKisit.PasifMi && p.OrtamalaNobetSayisi > 1)
             {
-                var gunSayisi = p.HaftaIciGunleri.Count;
+                var gunSayisi = p.Tarihler.Count;
 
-                var talepEdilenNobetciSayisi = p.HaftaIciGunleri.Sum(s => s.TalepEdilenNobetciSayisi);
+                var talepEdilenNobetciSayisi = p.Tarihler.Sum(s => s.TalepEdilenNobetciSayisi);
 
                 var kararIndex = p.EczaneNobetTarihAralik
-                        .Where(e => p.HaftaIciGunleri.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
+                        .Where(e => p.Tarihler.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
 
                 if (p.PespeseNobetSayisiAltLimit >= talepEdilenNobetciSayisi)
                 {
@@ -220,7 +220,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, p.EczaneNobetGrup.EczaneAdi);
 
-                    var std = p.HaftaIciOrtamalaNobetSayisi;
+                    var std = p.OrtamalaNobetSayisi;
                     var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
                     var cns = Constraint.LessThanOrEqual(exp, std);
                     cns.LowerBound = 0;
@@ -235,32 +235,59 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         atlanacakGunSayisi = 0;
                     }
 
-                    var haftaiciPespeseGunler = p.HaftaIciGunleri.Take(atlanacakGunSayisi).ToList();
+                    //var pespeseGunlerdenKalanlar = p.Tarihler.Skip(atlanacakGunSayisi).ToList();
 
-                    foreach (var tarih in haftaiciPespeseGunler)
+                    //var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
+                    //         + $"{p.PespeseNobetSayisiAltLimit} gün ("
+                    //         + $"{pespeseGunlerdenKalanlar.Count})"
+                    //         + $"{(p.GunKuralAdi == null ? "" : $"- {p.GunKuralAdi}")}]";
+
+                    //var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
+
+                    //var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, p.EczaneNobetGrup.EczaneAdi);
+
+                    //var kararIndex2 = kararIndex
+                    //    .Where(e => pespeseGunlerdenKalanlar.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
+
+                    //var std = 1;
+                    //var exp = Expression.Sum(kararIndex2.Select(i => p.KararDegiskeni[i]));
+                    //var cns = Constraint.LessThanOrEqual(exp, std);
+                    //cns.LowerBound = 0;
+                    //p.Model.AddConstraint(cns, kisitAdi);
+
+                    var pespeseGunler = p.Tarihler.Take(atlanacakGunSayisi).ToList();
+
+                    var indis = (int)Math.Ceiling(p.PespeseNobetSayisiAltLimit) - 1;
+
+                    foreach (var tarih in pespeseGunler)
                     {
                         var altLimit = tarih.Tarih;
 
-                        var ustLimit = tarih.Tarih.AddDays(p.PespeseNobetSayisiAltLimit);
+                        var ustLimit = p.Tarihler[indis].Tarih;
+                        //tarih.Tarih.AddDays(p.PespeseNobetSayisiAltLimit);
+                        //+28 pazar günü gibi birşey olmalı
+                        indis++;
 
-                        var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
-                              + $"{p.PespeseNobetSayisiAltLimit} gün ("
-                              + $"{altLimit.ToShortDateString()} - {ustLimit.ToShortDateString()})"
-                              + $"]";
+                        var kisitTanim2 = $"{p.NobetUstGrupKisit.KisitTanim} ["
+                          + $"{p.PespeseNobetSayisiAltLimit} gün ("
+                          + $"{altLimit.ToShortDateString()} - {ustLimit.ToShortDateString()})"
+                          + $"{(p.GunKuralAdi == null ? "" : $"- {p.GunKuralAdi}")}]";
 
-                        var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
+                        var nobetGrupBilgisi2 = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
 
-                        var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, p.EczaneNobetGrup.EczaneAdi);
+                        var kisitAdi2 = IsimleriBirlestir(kisitTanim2, nobetGrupBilgisi2, p.EczaneNobetGrup.EczaneAdi);
 
-                        var kararIndex2 = kararIndex
+                        var kararIndex3 = kararIndex
                             .Where(e => e.Tarih >= altLimit && e.Tarih <= ustLimit).ToList();
 
-                        var std = 1;
-                        var exp = Expression.Sum(kararIndex2.Select(i => p.KararDegiskeni[i]));
-                        var cns = Constraint.LessThanOrEqual(exp, std);
-                        cns.LowerBound = 0;
-                        p.Model.AddConstraint(cns, kisitAdi);
+                        var std2 = 1;
+                        var exp2 = Expression.Sum(kararIndex3.Select(i => p.KararDegiskeni[i]));
+                        var cns2 = Constraint.LessThanOrEqual(exp2, std2);
+                        cns2.LowerBound = 0;
+                        p.Model.AddConstraint(cns2, kisitAdi2);
                     }
+
+
                 }
             }
         }
@@ -673,7 +700,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     foreach (var tarih in p.Tarihler)
                     {
-    
+
                         var ikiliTarihler = $"{tarih.Tarih.ToShortDateString()}";
 
                         var kisitAdi = IsimleriBirlestir(kisitTanim, ikiliEczaneler, ikiliTarihler);

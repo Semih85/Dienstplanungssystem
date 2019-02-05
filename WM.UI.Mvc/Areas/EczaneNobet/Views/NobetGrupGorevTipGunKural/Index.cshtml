@@ -55,9 +55,12 @@
                 <th>
                     @Html.DisplayName("Gün Grubu")
                 </th>
+                <th>
+                    @Html.DisplayName("Nöbetçi Sayısı")
+                </th>
                 @*<th>
-                        @Html.DisplayNameFor(model => model.BitisTarihi)
-                    </th>*@
+            @Html.DisplayNameFor(model => model.BitisTarihi)
+        </th>*@
                 <th></th>
             </tr>
         </thead>
@@ -76,6 +79,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.GunGrupAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetciSayisi)
                     </td>
                     @*<td>
                             @Html.DisplayFor(modelItem => item.BitisTarihi)

@@ -81,10 +81,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #region tur çevrim katsayıları
 
-            int bayramCevrim = 8000;
-            int arifeCevrim = 5000;
-            int pazarCevrim = 1000;
-            int haftaIciCevrim = 500;
+            //int bayramCevrim = 8000;
+            //int arifeCevrim = 5000;
+            //int pazarCevrim = 1000;
+            //int haftaIciCevrim = 500;
             #endregion
 
             //özel tur takibi yapılacak günler
@@ -110,59 +110,64 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             #endregion
 
             #region Amaç Fonksiyonu
+            var amac = new Objective(Expression
+                .Sum(from i in data.EczaneNobetTarihAralik
+                     select (_x[i] * i.AmacFonksiyonKatsayi)),
+                     "Sum of all item-values: ",
+                     ObjectiveSense.Minimize);
 
-            var amac = new Objective(Expression.Sum(
-                (from i in data.EczaneNobetTarihAralik
-                 from p in data.EczaneNobetGrupGunKuralIstatistikYatay
-                 where i.EczaneNobetGrupId == p.EczaneNobetGrupId
-                    && i.NobetGorevTipId == p.NobetGorevTipId
-                 select (_x[i]
-                        //ilk yazılan nöbet öncelikli olsun:
-                        + _x[i] * Convert.ToInt32(i.BayramMi) * (bayramCevrim + bayramCevrim / Math.Sqrt((i.Tarih - p.SonNobetTarihiBayram).TotalDays))
-                        + _x[i] * Convert.ToInt32(i.ArifeMi) * (arifeCevrim + arifeCevrim / Math.Sqrt((i.Tarih - p.SonNobetTarihiArife).TotalDays))
-                        + _x[i] * Convert.ToInt32(i.PazarGunuMu) * (pazarCevrim + pazarCevrim / Math.Sqrt((i.Tarih - p.SonNobetTarihiPazar).TotalDays * Math.Ceiling((double)i.Tarih.Day / 7)))
-                        + _x[i] * Convert.ToInt32(i.HaftaIciMi)
-                                * (haftaIciCevrim + haftaIciCevrim / Math.Sqrt(
-                                    //(  i.EczaneAdi == "borçlu eczane" //BADE
-                                    //? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + 15 
-                                    //: (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays)
-                                    nobetBorcOdeme.PasifMi == false
-                                    ? (p.BorcluNobetSayisiHaftaIci >= 0 //-5
-                                        ?
-                 #region Manuel borç düzeltme
-                                              //(i.EczaneAdi == "SERPİL"
-                                              //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + 7
-                                              // : i.EczaneAdi == "ELİFSU"
-                                              //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
-                                              // : i.EczaneAdi == "KÖYÜM"
-                                              //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + 8
-                                              // : i.EczaneAdi == "DOLUNAY"
-                                              //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
-                                              // : i.EczaneAdi == "SUN"
-                                              //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
-                                              // : i.EczaneAdi == "TATLICAN"
-                                              //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
-                                              // : i.EczaneAdi == "TEZCAN"
-                                              //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
-                                              // : i.EczaneAdi == "YEŞİLIRMAK"
-                                              //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
-                                              //    : (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
-                                              //  ) 
-                 #endregion
-                                              (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
-                                        : ((i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci < 1
-                                            ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays
-                                            : (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci)
-                                      ) * i.Tarih.Day
-                                    : (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays * i.Tarih.Day
-                                    )
-                                    * (pespeseHaftaIciAyniGunNobet.PasifMi == false
-                                    ? (i.Tarih.DayOfWeek == p.SonNobetTarihiHaftaIci.DayOfWeek ? 1 : 0.2)
-                                    : 1)//aynı gün peşpeşe gelmesin
-                                )
-                        ))),
-                        "Sum of all item-values: ",
-                        ObjectiveSense.Minimize);
+            //var amac = new Objective(Expression.Sum(
+            //    (from i in data.EczaneNobetTarihAralik
+            //     from p in data.EczaneNobetGrupGunKuralIstatistikYatay
+            //     where i.EczaneNobetGrupId == p.EczaneNobetGrupId
+            //        && i.NobetGorevTipId == p.NobetGorevTipId
+            //     select (_x[i]
+            //            //ilk yazılan nöbet öncelikli olsun:
+            //            + _x[i] * Convert.ToInt32(i.BayramMi) * (bayramCevrim + bayramCevrim / Math.Sqrt((i.Tarih - p.SonNobetTarihiBayram).TotalDays))
+            //            + _x[i] * Convert.ToInt32(i.ArifeMi) * (arifeCevrim + arifeCevrim / Math.Sqrt((i.Tarih - p.SonNobetTarihiArife).TotalDays))
+            //            + _x[i] * Convert.ToInt32(i.PazarGunuMu) * (pazarCevrim + pazarCevrim / Math.Sqrt((i.Tarih - p.SonNobetTarihiPazar).TotalDays * Math.Ceiling((double)i.Tarih.Day / 7)))
+            //            + _x[i] * Convert.ToInt32(i.HaftaIciMi)
+            //                    * (haftaIciCevrim + haftaIciCevrim / Math.Sqrt(
+            //                        //(  i.EczaneAdi == "borçlu eczane" //BADE
+            //                        //? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + 15 
+            //                        //: (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays)
+            //                        nobetBorcOdeme.PasifMi == false
+            //                        ? (p.BorcluNobetSayisiHaftaIci >= 0 //-5
+            //                            ?
+            //     #region Manuel borç düzeltme
+            //                                  //(i.EczaneAdi == "SERPİL"
+            //                                  //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + 7
+            //                                  // : i.EczaneAdi == "ELİFSU"
+            //                                  //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
+            //                                  // : i.EczaneAdi == "KÖYÜM"
+            //                                  //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + 8
+            //                                  // : i.EczaneAdi == "DOLUNAY"
+            //                                  //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
+            //                                  // : i.EczaneAdi == "SUN"
+            //                                  //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
+            //                                  // : i.EczaneAdi == "TATLICAN"
+            //                                  //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
+            //                                  // : i.EczaneAdi == "TEZCAN"
+            //                                  //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
+            //                                  // : i.EczaneAdi == "YEŞİLIRMAK"
+            //                                  //    ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
+            //                                  //    : (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
+            //                                  //  ) 
+            //     #endregion
+            //                                  (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci
+            //                            : ((i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci < 1
+            //                                ? (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays
+            //                                : (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays + p.BorcluNobetSayisiHaftaIci)
+            //                          ) * i.Tarih.Day
+            //                        : (i.Tarih - p.SonNobetTarihiHaftaIci).TotalDays * i.Tarih.Day
+            //                        )
+            //                        * (pespeseHaftaIciAyniGunNobet.PasifMi == false
+            //                        ? (i.Tarih.DayOfWeek == p.SonNobetTarihiHaftaIci.DayOfWeek ? 1 : 0.2)
+            //                        : 1)//aynı gün peşpeşe gelmesin
+            //                    )
+            //            ))),
+            //            "Sum of all item-values: ",
+            //            ObjectiveSense.Minimize);
             model.AddObjective(amac);
 
             //var sure_kd_amacFonksiyonu = stopwatch.Elapsed;
@@ -401,18 +406,18 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     };
                     HerAyPespeseGorev(kpHerAyPespeseGorev);
 
-                    var kpHerAyHaftaIciPespeseGorev = new KpHerAyHaftaIciPespeseGorev
+                    var kpHerAyPespeseGorevHaftaIci = new KpHerAyHaftaIciPespeseGorev
                     {
                         Model = model,
-                        HaftaIciGunleri = haftaIciGunleri,
-                        HaftaIciOrtamalaNobetSayisi = haftaIciOrtamalaNobetSayisi,
+                        Tarihler = haftaIciGunleri,
+                        OrtamalaNobetSayisi = haftaIciOrtamalaNobetSayisi,
                         EczaneNobetGrup = eczaneNobetGrup,
                         EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
                         PespeseNobetSayisiAltLimit = gruptakiEczaneSayisi * 0.6, //altLimit,
                         NobetUstGrupKisit = haftaIciPespeseGorevEnAz,
                         KararDegiskeni = _x
                     };
-                    HerAyHaftaIciPespeseGorev(kpHerAyHaftaIciPespeseGorev);
+                    HerAyHaftaIciPespeseGorev(kpHerAyPespeseGorevHaftaIci);
 
                     #endregion
 
@@ -1153,23 +1158,24 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         var nobetGorevTipId = 1;
 
                         var nobetGrupTarihler1 = data.EczaneNobetTarihAralik
-                            .Where(w => w.NobetGorevTipId == nobetGorevTipId)
-                            .Select(s => new
-                            {
-                                s.NobetGrupId,
-                                s.Tarih,
-                                s.NobetGorevTipId,
-                                Talep = data.NobetGrupTalepler
-                                 .Where(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
-                                         && w.TakvimId == s.TakvimId).SingleOrDefault() == null
-                                ? (int)data.NobetGrupKurallar
-                                    .Where(k => k.NobetKuralId == 3
-                                             && k.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
-                                    .Select(k => k.Deger).SingleOrDefault()
-                                : data.NobetGrupTalepler
-                                 .Where(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
-                                         && w.TakvimId == s.TakvimId).SingleOrDefault().NobetciSayisi
-                            }).Distinct().ToList();
+                             .Where(w => w.NobetGorevTipId == nobetGorevTipId)
+                             .Select(s => new
+                             {
+                                 s.NobetGrupId,
+                                 s.Tarih,
+                                 s.NobetGorevTipId,
+                                 Talep = s.TalepEdilenNobetciSayisi
+                                 //data.NobetGrupTalepler
+                                 // .Where(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
+                                 //         && w.TakvimId == s.TakvimId).SingleOrDefault() == null
+                                 //? (int)data.NobetGrupKurallar
+                                 //    .Where(k => k.NobetKuralId == 3
+                                 //             && k.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
+                                 //    .Select(k => k.Deger).SingleOrDefault()
+                                 //: data.NobetGrupTalepler
+                                 // .Where(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
+                                 //         && w.TakvimId == s.TakvimId).SingleOrDefault().NobetciSayisi
+                             }).Distinct().ToList();
 
                         var toplamArz = sonuclar.Count;
                         var toplamTalep = nobetGrupTarihler1.Sum(s => s.Talep);

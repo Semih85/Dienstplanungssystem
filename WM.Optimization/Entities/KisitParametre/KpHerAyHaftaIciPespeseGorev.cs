@@ -8,9 +8,10 @@ namespace WM.Optimization.Entities.KisitParametre
     public class KpHerAyHaftaIciPespeseGorev : OptanoKisitParametreModelBase<Model, EczaneNobetTarihAralik>
     {
         //public List<TakvimNobetGrup> Tarihler { get; set; }
-        public List<TakvimNobetGrup> HaftaIciGunleri { get; set; }
-        public double HaftaIciOrtamalaNobetSayisi { get; set; }
+        public List<TakvimNobetGrup> Tarihler { get; set; }
+        public double OrtamalaNobetSayisi { get; set; }
         //public int GunlukNobetciSayisi { get; set; }
+        public string GunKuralAdi { get; set; }
         public EczaneNobetGrupDetay EczaneNobetGrup { get; set; }
         public List<EczaneNobetTarihAralik> EczaneNobetTarihAralik { get; set; }
         public double PespeseNobetSayisiAltLimit { get; set; }

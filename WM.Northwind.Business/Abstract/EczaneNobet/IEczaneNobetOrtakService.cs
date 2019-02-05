@@ -65,5 +65,11 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
             int indisId,
             List<int> ayniGunNobetTutmasiTakipEdilecekAltGruplar,
             List<int> altGrubuOlanNobetGruplar);
+
+        List<EczaneNobetTarihAralik> AmacFonksiyonuKatsayisiBelirle(List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
+            List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay,
+            //NobetUstGrupKisitDetay nobetBorcOdeme,
+            //NobetUstGrupKisitDetay pespeseHaftaIciAyniGunNobet,
+            List<KalibrasyonYatay> kalibrasyonDetaylar = null);
     }
 }
