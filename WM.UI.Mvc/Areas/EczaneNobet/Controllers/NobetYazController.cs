@@ -86,7 +86,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         protected override void OnException(ExceptionContext filterContext)
         {
-            if (filterContext.Exception.Message.StartsWith("Aşağıdaki"))
+            if (filterContext.Exception.Message.StartsWith("Aşağıdaki") || filterContext.Exception.Message.StartsWith("Kural kontol"))
             {
                 var model = new HandleErrorInfo(filterContext.Exception, "NobetYaz", "ModelCoz");
 

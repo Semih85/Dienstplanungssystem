@@ -484,10 +484,11 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 IkiliEczaneler = ikiliEczaneler
             };
 
-            _eczaneNobetOrtakService.KurallariKontrolEt(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);
+            _eczaneNobetOrtakService.KurallariKontrolEtHaftaIciEnAzEnCok(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);
+            _eczaneNobetOrtakService.KurallariKontrolEtMazeretIstek(nobetUstGrupId, eczaneNobetMazeretler, eczaneNobetIstekler);
 
             return alanyaDataModel;
-        }        
+        }
 
         [LogAspect(typeof(DatabaseLogger))]
         [SecuredOperation(Roles = "Admin,Oda,Üst Grup")]

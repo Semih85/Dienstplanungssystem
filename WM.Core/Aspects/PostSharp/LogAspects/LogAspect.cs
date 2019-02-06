@@ -47,7 +47,6 @@ namespace WM.Core.Aspects.PostSharp.LogAspects
 
             try
             {
-
                 t += 1;
 
                 var logParameters = args.Method.GetParameters().Select((t, i) => new LogParameter

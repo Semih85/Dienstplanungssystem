@@ -24,7 +24,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Filters
                     ViewName = "Error"
                 };
             }
-
         }
     }
 }

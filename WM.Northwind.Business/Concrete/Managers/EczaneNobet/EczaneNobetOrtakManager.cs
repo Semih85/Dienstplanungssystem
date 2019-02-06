@@ -2598,7 +2598,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var milliBayramTakipEdilsinMi = GunGrubuTakipDurumu(nobetUstGrupId, takipEdilecekNobetUstGruplarMilliBayramlar);
             var yilbasiTakipEdilsinMi = GunGrubuTakipDurumu(nobetUstGrupId, takipEdilecekNobetUstGruplarYilbasi);
             var yilSonuTakipEdilsinMi = GunGrubuTakipDurumu(nobetUstGrupId, takipEdilecekNobetUstGruplarYilSonu);
-            
+
             var arifeTakipEdilsinMi = GunGrubuTakipDurumu(nobetUstGrupId, takipEdilecekNobetUstGruplarArifeGunleri);
 
             var pazarTakipEdilsinMi = GunGrubuTakipDurumu(nobetUstGrupId, takipEdilecekNobetUstGruplarPazarGunleri);
@@ -2737,13 +2737,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
         #region kısıt kontrol
 
-        public void KurallariKontrolEt(int nobetUstGrupId, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetSonuclarYatay)
+        public void KurallariKontrolEtHaftaIciEnAzEnCok(int nobetUstGrupId, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetSonuclarYatay)
         {
-            //var herAyEnaz1Gorev = _nobetUstGrupKisitService.GetDetay("herAyEnaz1Gorev", nobetUstGrupId);
             var herAyEnaz1HaftaIciGorev = _nobetUstGrupKisitService.GetDetay("herAyEnaz1HaftaIciGorev", nobetUstGrupId);
-
-            //var toplamMaxHedef = _nobetUstGrupKisitService.GetDetay("toplamMaxHedef", nobetUstGrupId);
             var haftaIciToplamMaxHedef = _nobetUstGrupKisitService.GetDetay("haftaIciToplamMaxHedef", nobetUstGrupId);
+
+            //var herAyEnaz1Gorev = _nobetUstGrupKisitService.GetDetay("herAyEnaz1Gorev", nobetUstGrupId);
+            //var toplamMaxHedef = _nobetUstGrupKisitService.GetDetay("toplamMaxHedef", nobetUstGrupId);
 
             var eczaneler = new List<string>();
 
@@ -2751,17 +2751,26 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             {
                 foreach (var eczaneNobetSonuc in eczaneNobetSonuclarYatay.OrderBy(o => o.NobetGrupAdi).ThenBy(o => o.EczaneAdi).ToList())
                 {
-                    if (haftaIciToplamMaxHedef.SagTarafDegeri <= eczaneNobetSonuc.NobetSayisiHaftaIci)
+                    var enAzNobetSayisi = eczaneNobetSonuc.NobetSayisiHaftaIci + herAyEnaz1HaftaIciGorev.SagTarafDegeri;
+
+                    if (haftaIciToplamMaxHedef.SagTarafDegeri < enAzNobetSayisi)
                     {
-                        eczaneler.Add($"{eczaneNobetSonuc.NobetGrupAdi} {eczaneNobetSonuc.EczaneAdi} eczanesinin toplam hafta içi nöbet sayısı {eczaneNobetSonuc.NobetSayisiHaftaIci}");
+                        eczaneler.Add($"{eczaneNobetSonuc.NobetGrupAdi} {eczaneNobetSonuc.EczaneAdi} eczanesinin toplam hafta içi nöbet sayısı <span class='badge badge-info'>{eczaneNobetSonuc.NobetSayisiHaftaIci}</span>");
                     }
                 }
 
-                var ihlalMesaj = $"<strong> {herAyEnaz1HaftaIciGorev.KisitTanim} std. [{herAyEnaz1HaftaIciGorev.SagTarafDegeri}]</strong> ile " +
-                        $"<strong>{haftaIciToplamMaxHedef.KisitTanim}</strong> kuralları aktif olduğunda aşağıdaki eczaneler için; " +
-                        //std. [{haftaIciToplamMaxHedef.SagTarafDegeri}]
-                        $"kümülatif en fazla yazılabilecek hafta içi nöbet sayısı ({haftaIciToplamMaxHedef.SagTarafDegeri}) küçük ya da eşit olamaz. " +
-                        $"<span class='badge badge-info'>{eczaneler.Count}</span>";
+                var ilgiliEczaneSayisi = eczaneler.Count;
+
+                var kuralIhlalMesaj = $"Kural kontol! "
+                        + $"Aşağıdaki açıklamalara göre "
+                        + $"<a href=\"/EczaneNobet/NobetUstGrupKisit/KisitAyarla\" class=\"card-link\" target=\"_blank\">nöbet ayarlarında</a> "
+                        + $"bazı değişiklikler yaparak <strong>tekrar çözmelisiniz..</strong>"
+                        + "<hr /> "
+                        + $"<p><strong> {herAyEnaz1HaftaIciGorev.KisitTanim} std. [{herAyEnaz1HaftaIciGorev.SagTarafDegeri}]</strong> ile "
+                        + $"<strong>{haftaIciToplamMaxHedef.KisitTanim} std. [{haftaIciToplamMaxHedef.SagTarafDegeri}]</strong> kuralları aktif olduğunda aşağıdaki eczaneler için; "
+                        + $"kümülatif en fazla yazılabilecek hafta içi nöbet sayısı <span class='badge badge-danger'>{haftaIciToplamMaxHedef.SagTarafDegeri}</span> değerinden daha küçük olamaz. "//ya da eşit 
+                                                                                                                                                                                                   //+ "<br /> "
+                        + $"İlgili eczaneler <span class='badge badge-light'>{ilgiliEczaneSayisi}</span></p>";
 
                 var celiskiler = "<ul class='list-group list-group-flush mt-2 mb-3'>";
 
@@ -2771,19 +2780,82 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 }
                 celiskiler += "</ul>";
 
-                ihlalMesaj += celiskiler;
+                kuralIhlalMesaj += celiskiler;
 
-                throw new Exception(ihlalMesaj);
+                if (ilgiliEczaneSayisi > 0)
+                {
+                    throw new Exception(kuralIhlalMesaj);
+                }
             }
-
-            //if ((!herAyEnaz1Gorev.PasifMi || !herAyEnaz1HaftaIciGorev.PasifMi) && !toplamMaxHedef.PasifMi)
-            //{
-            //    if (toplamMaxHedef.SagTarafDegeri < 1)
-            //    {
-
-            //    }
-            //}
         }
+
+        public void KurallariKontrolEtMazeretIstek(int nobetUstGrupId, List<EczaneNobetMazeretDetay> eczaneNobetMazeretler, List<EczaneNobetIstekDetay> eczaneNobetIstekler)
+        {
+            var mazeret = _nobetUstGrupKisitService.GetDetay("mazeret", nobetUstGrupId);
+            var istek = _nobetUstGrupKisitService.GetDetay("istek", nobetUstGrupId);
+
+            var eczaneler = new List<string>();
+
+            if (!mazeret.PasifMi && !istek.PasifMi)
+            {
+                var mazeretler = eczaneNobetMazeretler.Select(w => new { w.TakvimId, w.Tarih, w.NobetGrupAdi, w.EczaneAdi, w.EczaneNobetGrupId, w.EczaneId, Tip = "mazeret" }).Distinct().ToList();
+                var istekler = eczaneNobetIstekler.Select(w => new { w.TakvimId, w.Tarih, w.NobetGrupAdi, w.EczaneAdi, w.EczaneNobetGrupId, w.EczaneId, Tip = "istek" }).Distinct().ToList();
+                var istekVeMazeretler = istekler.Union(mazeretler).ToList();
+
+                var ayniGunMazeretveIstekGirilenEczaneler = istekVeMazeretler
+                    .GroupBy(g => new
+                    {
+                        g.NobetGrupAdi,
+                        g.EczaneId,
+                        g.EczaneAdi,
+                        g.TakvimId,
+                        g.Tarih
+                    })
+                    .Select(s => new
+                    {
+                        s.Key.NobetGrupAdi,
+                        s.Key.EczaneAdi,
+                        s.Key.EczaneId,
+                        s.Key.Tarih,
+                        s.Key.TakvimId,
+                        Sayi = s.Count()
+                    })
+                    .Where(w => w.Sayi > 1).ToList();
+
+                foreach (var eczaneNobetSonuc in ayniGunMazeretveIstekGirilenEczaneler.OrderBy(o => o.NobetGrupAdi).ThenBy(o => o.EczaneAdi).ToList())
+                {
+                    eczaneler.Add($"{eczaneNobetSonuc.NobetGrupAdi} {eczaneNobetSonuc.EczaneAdi} eczanesi <span class='badge badge-info'>{eczaneNobetSonuc.Tarih.ToShortDateString()}</span> tarihi");
+                }
+
+                var ilgiliEczaneSayisi = eczaneler.Count;
+
+                var kuralIhlalMesaj = $"Kural kontol! "
+                        + $"Aşağıdaki açıklamalara göre "
+                        + $"<a href=\"/EczaneNobet/NobetUstGrupKisit/KisitAyarla\" class=\"card-link\" target=\"_blank\">nöbet ayarlarında</a> "
+                        + $"bazı değişiklikler yaparak <strong>tekrar çözmelisiniz..</strong>"
+                        + "<hr /> "
+                        + $"<p><strong>K{mazeret.KisitId} ({mazeret.KisitAdiGosterilen})</strong> ile "
+                        + $"<strong>K{istek.KisitId} ({istek.KisitAdi})</strong> kuralları aktif olduğunda <strong>bir eczane için aynı güne hem mazeret hem de istek girilemez.</strong> "
+                        + $"Lütfen aşağıdaki "
+                        + $"eczane ve tarihleri <span class='badge badge-light'>{ilgiliEczaneSayisi}</span> kontrol ediniz.</p>";
+
+                var celiskiler = "<ul class='list-group list-group-flush mt-2 mb-3'>";
+
+                foreach (var eczane in eczaneler)
+                {
+                    celiskiler += $"<li class='list-group-item list-group-item-action py-1'>{eczane}</li>";
+                }
+                celiskiler += "</ul>";
+
+                kuralIhlalMesaj += celiskiler;
+
+                if (ilgiliEczaneSayisi > 0)
+                {
+                    throw new Exception(kuralIhlalMesaj);
+                }
+            }
+        }
+
         #endregion
     }
 }
