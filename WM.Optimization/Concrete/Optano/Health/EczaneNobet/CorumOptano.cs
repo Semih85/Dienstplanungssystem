@@ -14,14 +14,14 @@ using WM.Optimization.Entities.KisitParametre;
 
 namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 {
-    public class BartinOptano : EczaneNobetKisit, IEczaneNobetBartinOptimization
+    public class CorumOptano : EczaneNobetKisit, IEczaneNobetCorumOptimization
     {
         //Karar değişkeni model çalıştıktan sonra değer aldığından burada tanımlandı
         private VariableCollection<EczaneNobetTarihAralik> _x { get; set; }
 
-        private Model Model(BartinDataModel data)
+        private Model Model(CorumDataModel data)
         {
-            var model = new Model() { Name = "Bartin Eczane Nöbet" };
+            var model = new Model() { Name = "Corum Eczane Nöbet" };
 
             #region Veriler
 
@@ -1317,7 +1317,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             return model;
         }
 
-        public EczaneNobetSonucModel Solve(BartinDataModel data)
+        public EczaneNobetSonucModel Solve(CorumDataModel data)
         {
             var results = new EczaneNobetSonucModel();
             var calismaSayisiEnFazla = 3;

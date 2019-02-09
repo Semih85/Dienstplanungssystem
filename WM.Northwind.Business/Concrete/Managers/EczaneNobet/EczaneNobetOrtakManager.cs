@@ -2527,27 +2527,40 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay,
             List<KalibrasyonYatay> kalibrasyonDetaylar = null)
         {
+            //bartın, 1 ocak, milli bayram, dini bayram öncelik sırası
             int bayramCevrimDini = 8000;
             int bayramCevrimMilli = 8000;
             int yilbasiCevrim = 7000;
             int yilSonuCevrim = 7000;
+
             int arifeCevrim = 5000;
             int cumartesiCevrim = 900;
             int pazarCevrim = 1000;
             int haftaIciCevrim = 500;
             var manuelSayi = 0;
             double amacFonksiyonKatsayi = 1;
+
             var nobetUstGrupId = eczaneNobetTarihAralik.Select(s => s.NobetUstGrupId).Distinct().FirstOrDefault();
             var ilkTarih = eczaneNobetTarihAralik.Min(s => s.Tarih).AddDays(-1);
 
             var nobetBorcOdeme = _nobetUstGrupKisitService.GetDetay("nobetBorcOdeme", nobetUstGrupId);
             var pespeseHaftaIciAyniGunNobet = _nobetUstGrupKisitService.GetDetay("pespeseHaftaIciAyniGunNobet", nobetUstGrupId);
 
-            var takipEdilecekNobetUstGruplarDiniBayram = new int[1] {
-                6//bartın
+            var takipEdilecekNobetUstGruplarDiniBayram = new int[6] {
+                2,//antalya
+                3,//mersin
+                4,//giresun
+                6,//bartın
+                7,//iskenderun
+                8,//çorum
             };
-            var takipEdilecekNobetUstGruplarMilliBayramlar = new int[1] {
-                6//bartın
+            var takipEdilecekNobetUstGruplarMilliBayramlar = new int[6] {
+                2,//antalya
+                3,//mersin
+                4,//giresun
+                6,//bartın
+                7,//iskenderun
+                8,//çorum
             };
             var takipEdilecekNobetUstGruplarYilbasi = new int[1] {
                 6//bartın
@@ -2555,27 +2568,33 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var takipEdilecekNobetUstGruplarYilSonu = new int[1] {
                 6//bartın
             };
-            var takipEdilecekNobetUstGruplarPazarGunleri = new int[6] {
+            var takipEdilecekNobetUstGruplarPazarGunleri = new int[8] {
                 1,//alanya
                 2,//antalya
                 3,//mersin
                 4,//giresun
                 5,//osmaniye
-                6 //bartın
+                6,//bartın
+                7,//iskenderun
+                8,//çorum
             };
-            var takipEdilecekNobetUstGruplarCumartesiGunleri = new int[4] {
+            var takipEdilecekNobetUstGruplarCumartesiGunleri = new int[6] {
                 3,//mersin
                 4,//giresun
                 5,//osmaniye
-                6 //bartın
+                6,//bartın
+                7,//iskenderun
+                8,//çorum
             };
-            var takipEdilecekNobetUstGruplarHaftaIciGunleri = new int[6] {
+            var takipEdilecekNobetUstGruplarHaftaIciGunleri = new int[8] {
                 1,//alanya
                 2,//antalya
                 3,//mersin
                 4,//giresun
                 5,//osmaniye
-                6 //bartın
+                6,//bartın
+                7,//iskenderun
+                8,//çorum
             };
             var takipEdilecekNobetUstGruplarArifeGunleri = new int[1] {
                 2//antalya
@@ -2605,6 +2624,15 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var cumartesiTakipEdilsinMi = GunGrubuTakipDurumu(nobetUstGrupId, takipEdilecekNobetUstGruplarCumartesiGunleri);
             var haftaIciTakipEdilsinMi = GunGrubuTakipDurumu(nobetUstGrupId, takipEdilecekNobetUstGruplarHaftaIciGunleri);
 
+            var sonNobetTarihiEnKucukHaftaIci = eczaneNobetGrupGunKuralIstatistikYatay.Min(s => s.SonNobetTarihiHaftaIci);
+            var sonNobetTarihiEnKucukPazar = eczaneNobetGrupGunKuralIstatistikYatay.Min(s => s.SonNobetTarihiPazar);
+            var sonNobetTarihiEnKucukCumartesi = eczaneNobetGrupGunKuralIstatistikYatay.Min(s => s.SonNobetTarihiCumartesi);
+            var sonNobetTarihiEnKucukArife = eczaneNobetGrupGunKuralIstatistikYatay.Min(s => s.SonNobetTarihiArife);
+            var sonNobetTarihiEnKucukDini = eczaneNobetGrupGunKuralIstatistikYatay.Min(s => s.SonNobetTarihiDiniBayram);
+            var sonNobetTarihiEnKucukMilli = eczaneNobetGrupGunKuralIstatistikYatay.Min(s => s.SonNobetTarihiMilliBayram);
+            var sonNobetTarihiEnKucukYilbasi = eczaneNobetGrupGunKuralIstatistikYatay.Min(s => s.SonNobetTarihi1Ocak);
+            var sonNobetTarihiEnKucukYilSonu = eczaneNobetGrupGunKuralIstatistikYatay.Min(s => s.SonNobetTarihiYilSonu);
+
             foreach (var eczaneNobetTarih in eczaneNobetTarihAralik)
             {
                 var eczaneIstatistik = eczaneNobetGrupGunKuralIstatistikYatay.SingleOrDefault(w => w.EczaneNobetGrupId == eczaneNobetTarih.EczaneNobetGrupId);
@@ -2615,25 +2643,41 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                  && w.KalibrasyonTipAdi == eczaneNobetTarih.AyIkili).ToList()
                     : new List<KalibrasyonYatay>();
 
+                var kontrol = true;
+
+                if (kontrol)
+                {
+                    var kontrolEdilecekEczaneler = new string[] {
+                        //"ŞADIRVAN", //23.4.2008
+                        "ÖZDAĞ",    //01.5.2008
+                        "CANAN"     //19.5.2008
+                    };
+
+                    if (kontrolEdilecekEczaneler.Contains(eczaneNobetTarih.EczaneAdi) && eczaneNobetTarih.MilliBayramMi)
+                    {
+
+                    }
+                }
+
                 if (eczaneNobetTarih.DiniBayramMi && diniBayramTakipEdilsinMi)
                 {
-                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(bayramCevrimDini, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiDiniBayram);
+                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(bayramCevrimDini, sonNobetTarihiEnKucukDini, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiDiniBayram, tipAdi: "dini");
                 }
                 else if (eczaneNobetTarih.MilliBayramMi && milliBayramTakipEdilsinMi)
                 {
-                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(bayramCevrimMilli, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiMilliBayram);
+                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(bayramCevrimMilli, sonNobetTarihiEnKucukMilli, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiMilliBayram, tipAdi:"milli");
                 }
                 else if (eczaneNobetTarih.YilbasiMi && yilbasiTakipEdilsinMi)
                 {
-                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(yilbasiCevrim, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihi1Ocak);
+                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(yilbasiCevrim, sonNobetTarihiEnKucukYilbasi, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihi1Ocak);
                 }
                 else if (eczaneNobetTarih.YilSonuMu && yilSonuTakipEdilsinMi)
                 {
-                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(yilSonuCevrim, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiYilSonu);
+                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(yilSonuCevrim, sonNobetTarihiEnKucukYilSonu, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiYilSonu);
                 }
                 else if (eczaneNobetTarih.ArifeMi && arifeTakipEdilsinMi)
                 {
-                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(arifeCevrim, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiArife);
+                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(arifeCevrim, sonNobetTarihiEnKucukArife, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiArife);
                 }
                 else if (eczaneNobetTarih.CumartesiGunuMu && cumartesiTakipEdilsinMi)
                 {
@@ -2643,7 +2687,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                     + s.KalibrasyonCumartesi / s.KalibrasyonToplamCumartesi)
                         : 1;
 
-                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(cumartesiCevrim, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiCumartesi, ozelKatsayi: 7, mevsimKatsayisi: kalibrasyonDegeriCumartesi);
+                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(cumartesiCevrim, sonNobetTarihiEnKucukCumartesi, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiCumartesi, ozelKatsayi: 7, mevsimKatsayisi: kalibrasyonDegeriCumartesi);
                 }
                 else if (eczaneNobetTarih.PazarGunuMu && pazarTakipEdilsinMi)
                 {
@@ -2653,7 +2697,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                      + s.KalibrasyonPazar / s.KalibrasyonToplamPazar)
                         : 1;
 
-                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(pazarCevrim, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiPazar, ozelKatsayi: 7, mevsimKatsayisi: kalibrasyonDegeriPazar);
+                    amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(pazarCevrim, sonNobetTarihiEnKucukPazar, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiPazar, ozelKatsayi: 7, mevsimKatsayisi: kalibrasyonDegeriPazar);
                 }
                 else if (eczaneNobetTarih.HaftaIciMi && haftaIciTakipEdilsinMi)
                 {
@@ -2666,7 +2710,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                             manuelSayi = 7;
                         }
 
-                        amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(haftaIciCevrim, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiHaftaIci, 1, manuelSayi, eczaneIstatistik.BorcluNobetSayisiHaftaIci);
+                        amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(haftaIciCevrim, sonNobetTarihiEnKucukHaftaIci, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiHaftaIci, 1, manuelSayi, eczaneIstatistik.BorcluNobetSayisiHaftaIci);
                     }
                 }
 
@@ -2688,14 +2732,20 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
         }
 
-        private double GetAmacFonksiyonKatsayisi(int cevrimKatSayisi, DateTime ilkTarih, DateTime bakilanTarihi, DateTime sonNobetTarihi, double ozelKatsayi = 1, int manuelSayi = 0, int borcluNobetSayisi = 0, bool farkliGunMuOlsun = false, double mevsimKatsayisi = 1)
+        private double GetAmacFonksiyonKatsayisi(int cevrimKatSayisi, DateTime sonNobetTarihiEnKucuk, DateTime ilkTarih, DateTime bakilanTarih, DateTime sonNobetTarihi, double ozelKatsayi = 1,
+            int manuelSayi = 0, int borcluNobetSayisi = 0, bool farkliGunMuOlsun = false, double mevsimKatsayisi = 1, string tipAdi = "")
         {
-            var ilkTarihtenSonrakiGecenGunSayisi = (bakilanTarihi - ilkTarih).TotalDays;
+            var ilkTarihtenSonrakiGecenGunSayisi = (bakilanTarih - ilkTarih).TotalDays;
 
+            var enKucukSonNobettenIlkTariheKadarGecenGunSayisi = (ilkTarih - sonNobetTarihiEnKucuk).TotalDays;
+            var enKucukSonNobettenIlkTariheKadarKatsayşi = Math.Sqrt(enKucukSonNobettenIlkTariheKadarGecenGunSayisi) * 100 - cevrimKatSayisi;
+
+
+    
             //var ayFarki = (int)Math.Ceiling(ilkTarihtenSonrakiGecenGunSayisi / 30);
 
-            var sonNobetTarihindenUstGrupBaslamaTarihineKadarGecenGunSayisi = (bakilanTarihi - sonNobetTarihi).TotalDays;
-            var sonNobetTarihindenSonraGecenGunSayisi = (bakilanTarihi - sonNobetTarihi).TotalDays;
+            //var sonNobetTarihindenUstGrupBaslamaTarihineKadarGecenGunSayisi = (bakilanTarih - sonNobetTarihi).TotalDays;
+            var sonNobetTarihindenSonraGecenGunSayisi = (bakilanTarih - sonNobetTarihi).TotalDays;
 
             //negatif olmamalı
             var karekokuAlinacakGunFarki = sonNobetTarihindenSonraGecenGunSayisi > 0 ? sonNobetTarihindenSonraGecenGunSayisi : 1;
@@ -2705,6 +2755,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             var gunFarkiKarekokIcinde = Math.Sqrt(karekokuAlinacakGunFarki);
 
+            var fark2 = cevrimKatSayisi + (cevrimKatSayisi * mevsimKatsayisi) / gunFarkiKarekokIcinde + manuelSayi;
             var fark = cevrimKatSayisi + (cevrimKatSayisi * mevsimKatsayisi) / gunFarkiKarekokIcinde + manuelSayi;
 
             var farkBoclu = fark + borcluNobetSayisi;
@@ -2714,22 +2765,30 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 fark = farkBoclu;
             }
 
+            var toplamFark = fark + ilkTarihtenSonrakiGecenGunSayisi;
+
+            if (tipAdi == "dini" || tipAdi == "milli")
+            {
+                toplamFark = toplamFark * 100 - 800000;
+                //toplamFark = toplamFark * 100;
+            }
+
             if (ozelKatsayi > 1)
             {
                 var haftaSonuIndis = Math.Ceiling(ilkTarihtenSonrakiGecenGunSayisi / ozelKatsayi);
 
-                return fark + ilkTarihtenSonrakiGecenGunSayisi;
+                return toplamFark;
             }
             else
             {
                 if (farkliGunMuOlsun
-                    && bakilanTarihi.DayOfWeek == sonNobetTarihi.DayOfWeek)
+                    && bakilanTarih.DayOfWeek == sonNobetTarihi.DayOfWeek)
                 {
-                    return fark + ilkTarihtenSonrakiGecenGunSayisi * 0.2;
+                    return toplamFark * 0.2;
                 }
                 else
                 {
-                    return fark + ilkTarihtenSonrakiGecenGunSayisi;
+                    return toplamFark;
                 }
             }
         }

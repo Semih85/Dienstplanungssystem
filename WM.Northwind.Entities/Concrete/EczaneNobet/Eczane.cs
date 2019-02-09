@@ -10,6 +10,16 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
 {
     public class Eczane : Iletisim, IEntity
     {
+        public Eczane()
+        {
+
+        }
+
+        public Eczane(int nobetUstGrupId)
+        {
+            NobetUstGrupId = nobetUstGrupId;
+        }
+
         public int Id { get; set; }
         [Required]
         [Display(Name = "Adı")]
@@ -35,5 +45,8 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public virtual List<EczaneIlce> EczaneIlceler { get; set; }
         public virtual List<EczaneGorevTip> EczaneGorevTipler { get; set; }
         public virtual NobetUstGrup NobetUstGrup { get; set; }
+        public virtual List<EczaneUzaklikMatris> EczaneUzaklikMatrislerFrom { get; set; }
+        public virtual List<EczaneUzaklikMatris> EczaneUzaklikMatrislerTo { get; set; }
+
     }
 }

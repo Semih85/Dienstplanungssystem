@@ -96,6 +96,8 @@
     <Compile Include="Abstract\Education\University\IProctorAssignmentOpt.cs" />
     <Compile Include="Abstract\Health\IEczaneNobetAlanyaOptimizationV2.cs" />
     <Compile Include="Abstract\Health\IEczaneNobetBartinOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetCorumOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetIskenderunOptimization.cs" />
     <Compile Include="Abstract\Health\IEczaneNobetOsmaniyeOptimization.cs" />
     <Compile Include="Abstract\Health\IEczaneNobetGiresunOptimization.cs" />
     <Compile Include="Abstract\Health\IEczaneNobetMersinMerkezOptimizationV2.cs" />
@@ -117,10 +119,12 @@
     <Compile Include="Concrete\IbmCplex\Samples\BlendCplex.cs" />
     <Compile Include="Concrete\MicrosoftSolverFoundation\Examples\SimpleSamples.cs" />
     <Compile Include="Concrete\MicrosoftSolverFoundation\Examples\Taha\BoyaUretim.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\CorumOptano.cs" />
     <Compile Include="Concrete\Optano\Health\EczaneNobet\EczaneNobetKisit.cs" />
     <Compile Include="Concrete\Optano\Health\EczaneNobet\AlanyaOptano.cs" />
     <Compile Include="Concrete\Optano\Health\EczaneNobet\Eski\GiresunOptanoEski.cs" />
     <Compile Include="Concrete\Optano\Health\EczaneNobet\BartinOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\IskenderunOptano.cs" />
     <Compile Include="Concrete\Optano\Health\EczaneNobet\OsmaniyeOptano.cs" />
     <Compile Include="Concrete\Optano\Health\EczaneNobet\GiresunOptano.cs" />
     <Compile Include="Concrete\Optano\Health\EczaneNobet\HedefProgramlama\HpMersinMerkezOptanoV2.cs" />

@@ -101,6 +101,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<NobetDurum> NobetDurumlar { get; set; }
         public DbSet<KalibrasyonTip> KalibrasyonTipler { get; set; }
         public DbSet<Kalibrasyon> Kalibrasyonlar { get; set; }
+        public DbSet<EczaneUzaklikMatris> EczaneUzaklikMatrisler { get; set; }
 
         #endregion
 
@@ -187,6 +188,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new NobetDurumMap());
             modelBuilder.Configurations.Add(new KalibrasyonTipMap());
             modelBuilder.Configurations.Add(new KalibrasyonMap());
+            modelBuilder.Configurations.Add(new EczaneUzaklikMatrisMap());
 
             #endregion
         }

@@ -167,13 +167,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         /// <param name="p">KpPesPeseGorevEnAz</param>
         public virtual void PesPeseGorevEnAz(KpPesPeseGorevEnAz p)
         {
+
             if (!p.NobetUstGrupKisit.PasifMi && p.NobetSayisi > 0
+                //&& (p.NobetUstGrupKisit.NobetUstGrupId == 6 bartın 
+                //&& p.EczaneNobetGrup.EczaneAdi != "BÜYÜK")
                 //enSonNobetTarihi >= nobetUstGrupBaslamaTarihi
                 )
             {
                 var tarihAralik = p.Tarihler
-                  .Where(w => w.Tarih <= p.NobetYazilabilecekIlkTarih)
-                  .ToList();
+                      .Where(w => w.Tarih <= p.NobetYazilabilecekIlkTarih)
+                      .ToList();
 
                 if (tarihAralik.Count > 0)
                 {

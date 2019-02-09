@@ -65,6 +65,7 @@
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetMuafiyetDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucDemoDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucPlanlananDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneUzaklikMatrisDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IGorevTipDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IGunDegerDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IGunGrupDal.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetMuafiyetDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSonucDemoDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSonucPlanlananDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneUzaklikMatrisDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfGorevTipDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfGunDegerDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfGunGrupDal.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetGrupAltGrupMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSonucEskiMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSonucPlanlananMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneUzaklikMatrisMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\GorevTipMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\GunGrupMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\KalibrasyonMap.cs" />

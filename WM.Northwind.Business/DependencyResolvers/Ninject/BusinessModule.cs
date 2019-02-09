@@ -223,6 +223,9 @@ namespace WM.BLL.DependencyResolvers.Ninject
 
             Bind<IKalibrasyonTipService>().To<KalibrasyonTipManager>().InSingletonScope();
             Bind<IKalibrasyonTipDal>().To<EfKalibrasyonTipDal>();
+
+            Bind<IEczaneUzaklikMatrisService>().To<EczaneUzaklikMatrisManager>().InSingletonScope();
+            Bind<IEczaneUzaklikMatrisDal>().To<EfEczaneUzaklikMatrisDal>();
             #endregion
 
             #region Optimization
@@ -240,12 +243,6 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IAntalyaMerkezOptimizationService>().To<AntalyaMerkezOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetAntalyaMerkezOptimization>().To<AntalyaMerkezOptano>().InSingletonScope();
 
-            //Bind<IMersinMerkezOptimizationService>().To<MersinMerkezOptimizationManagerV1>().InSingletonScope();
-            //Bind<IEczaneNobetMersinMerkezOptimization>().To<HpMersinMerkezOptano>().InSingletonScope();
-
-            //Bind<IMersinMerkezOptimizationServiceV2>().To<MersinMerkezOptimizationManagerV2>().InSingletonScope();
-            //Bind<IEczaneNobetMersinMerkezOptimizationV2>().To<HpMersinMerkezOptanoV2>().InSingletonScope();
-
             Bind<IMersinMerkezOptimizationServiceV2>().To<MersinMerkezOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetMersinMerkezOptimizationV2>().To<MersinMerkezOptano>().InSingletonScope();
 
@@ -258,6 +255,11 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IBartinOptimizationService>().To<BartinOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetBartinOptimization>().To<BartinOptano>().InSingletonScope();
 
+            Bind<ICorumOptimizationService>().To<CorumOptimizationManager>().InSingletonScope();
+            Bind<IEczaneNobetCorumOptimization>().To<CorumOptano>().InSingletonScope();
+
+            Bind<IIskenderunOptimizationService>().To<IskenderunOptimizationManager>().InSingletonScope();
+            Bind<IEczaneNobetIskenderunOptimization>().To<IskenderunOptano>().InSingletonScope();
 
             Bind<ITransportService>().To<TransportManager>().InSingletonScope();
             Bind<ITransportOptimization>().To<TransportOptano>();

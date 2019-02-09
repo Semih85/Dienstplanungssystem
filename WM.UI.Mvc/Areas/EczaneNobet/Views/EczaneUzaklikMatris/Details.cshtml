@@ -1,0 +1,42 @@
+﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.EczaneUzaklikMatris
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EczaneUzaklikMatris</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneIdFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneIdFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneIdTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneIdTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mesafe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mesafe)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

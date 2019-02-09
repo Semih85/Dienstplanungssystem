@@ -337,6 +337,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipIdList);
 
+            //var nobetGrupGorevTipTakvimOzelGunDetaylar = new List<NobetGrupGorevTipTakvimOzelGunDetay>();
+
+            //if (bayramlar.Count > 0)
+            //{
+            //    nobetGrupGorevTipTakvimOzelGunDetaylar = bayramlar;
+            //}
             //var cc = nobetGrupGorevTipGunKurallar
             //    .Where(w => w.NobetGunKuralId == 9).SingleOrDefault();
 

@@ -192,6 +192,52 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     }
                 }
             }
+            else if (nobetUstGrupId == 6)
+            {//bartın 
+                var eczaneNobetGruplar1 = eczaneNobetGruplar.OrderBy(o => o.Id).ToList();
+
+                foreach (var eczaneNobetGrup1 in eczaneNobetGruplar1)
+                {
+                    var eczaneNobetGruplar2 = eczaneNobetGruplar
+                        .Where(w => w.Id > eczaneNobetGrup1.Id).ToList();
+
+                    foreach (var eczaneNobetGrup2 in eczaneNobetGruplar2)
+                    {
+                        var ikiliEczane = new AyniGunTutulanNobet
+                        {
+                            EczaneNobetGrupId1 = eczaneNobetGrup1.Id,
+                            EczaneNobetGrupId2 = eczaneNobetGrup2.Id,
+                            EnSonAyniGunNobetTakvimId = 1
+                        };
+
+                        try
+                        {
+                            _ayniGunTutulanNobetDal.Insert(ikiliEczane);
+                        }
+                        catch (DbUpdateException ex)
+                        {
+                            var hata = ex.InnerException.ToString();
+
+                            string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+
+                            var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+
+                            if (dublicateRowHatasiMi)
+                            {
+                                throw new Exception($"<strong>{eczaneNobetGrup1.EczaneAdi} ve {eczaneNobetGrup2.EczaneAdi} eczane ikilisi zaten kayıtlıdır. Mükerrer kayır eklenemez...</strong>");
+                            }
+
+                            throw ex;
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+
+                    }
+                }
+
+            }
             else
             {
                 var nobetGruplari = nobetGruplar

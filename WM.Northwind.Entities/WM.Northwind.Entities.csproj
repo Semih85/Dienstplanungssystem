@@ -55,6 +55,7 @@
     <Compile Include="ComplexTypes\EczaneNobet\AyniGunTutulanNobetDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetCozumAnaharListeGecis.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetIstekCoklu.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\EczaneUzaklikMatrisDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\KalibrasyonYatay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\KalibrasyonDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\KalibrasyonTipDetay.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Concrete\EczaneNobet\EczaneIlce.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetSonucEski.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetSonucPlanlanan.cs" />
+    <Compile Include="Concrete\EczaneNobet\EczaneUzaklikMatris.cs" />
     <Compile Include="Concrete\EczaneNobet\GorevTip.cs" />
     <Compile Include="Concrete\EczaneNobet\GunGrup.cs" />
     <Compile Include="Concrete\EczaneNobet\Kalibrasyon.cs" />
@@ -249,6 +251,8 @@
     <Compile Include="Concrete\Optimization\EczaneNobet\AlanyaDataModelEski.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\AlanyaDataModel.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\BartinDataModel.cs" />
+    <Compile Include="Concrete\Optimization\EczaneNobet\CorumDataModel.cs" />
+    <Compile Include="Concrete\Optimization\EczaneNobet\IskenderunDataModel.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\OsmaniyeDataModel.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\GiresunDataModel.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\MersinMerkezDataModelV2.cs" />

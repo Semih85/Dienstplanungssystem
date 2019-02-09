@@ -82,6 +82,7 @@
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetMuafiyetService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetOrtakService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucPlanlananService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneUzaklikMatrisService.cs" />
     <Compile Include="Abstract\EczaneNobet\IGunGrupService.cs" />
     <Compile Include="Abstract\EczaneNobet\IKalibrasyonService.cs" />
     <Compile Include="Abstract\EczaneNobet\IKalibrasyonTipService.cs" />
@@ -97,6 +98,8 @@
     <Compile Include="Abstract\EczaneNobet\INobetUstGrupKisitService.cs" />
     <Compile Include="Abstract\Optimization\EczaneNobet\IAlanyaOptimizationService.cs" />
     <Compile Include="Abstract\Optimization\EczaneNobet\IBartinOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IIskenderunOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\ICorumOptimizationService.cs" />
     <Compile Include="Abstract\Optimization\EczaneNobet\IOsmaniyeOptimizationService.cs" />
     <Compile Include="Abstract\Optimization\EczaneNobet\IGiresunOptimizationService.cs" />
     <Compile Include="Abstract\Optimization\EczaneNobet\IMersinMerkezOptimizationServiceV2.cs" />
@@ -168,6 +171,7 @@
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSonucDemoManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetOrtakManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSonucPlanlananManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneUzaklikMatrisManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\GorevTipManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\GunDegerManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\GunGrupManager.cs" />
@@ -226,6 +230,8 @@
     <Compile Include="Concrete\Managers\Transport\FabrikaManager.cs" />
     <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\AlanyaOptimizationManager.cs" />
     <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\BartinOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\CorumOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\IskenderunOptimizationManager.cs" />
     <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\OsmaniyeOptimizationManager.cs" />
     <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\GiresunOptimizationManager.cs" />
     <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\Eski\MersinMerkezOptimizationManagerV2.cs" />
