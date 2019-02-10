@@ -16,6 +16,7 @@ using WM.UI.Mvc.Areas.EczaneNobet.Models;
 using WM.UI.Mvc.Models;
 using System.IO;
 using QRCoder;
+using WM.Northwind.Entities.Concrete.Authorization;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -46,16 +47,31 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/Eczane        
         public ActionResult Index()
         {
+            var eczaneId = Convert.ToInt32(RouteData.Values["eczaneId"]);
+            //var name = (string)RouteData.Values["name"];
+            //var password = (string)RouteData.Values["password"];
+
             var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
-            var nobetUstGrupId = nobetUstGruplar.FirstOrDefault();
-            nobetUstGrupId = 3;
+
+            //if (User.Identity.Name == "" && name != null && password != null)
+            //{
+            //    user = _userService.GetByUserNameAndPassword(name, password);
+            //}
+            //else
+            //{
+            //    user = _userService.GetByUserName(User.Identity.Name);
+            //}
+
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
+            int nobetUstGrupId = 0;
+            
+            //nobetUstGrupId = 3;
             //ay = 10;
             //gun = 10;
 
             var gosterilecekTarih = DateTime.Today;
 
-            var eczaneId = 69;
+            //eczaneId = 69;
 
             //if (nobetUstGrupId != 2 || nobetUstGrupId != 3
             //    //nobetUstGrupId == 1
@@ -63,37 +79,43 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //{
             //    nobetUstGrupId = 3;
             //}
+            if (eczaneId == 0)
+            {
+                //nobetUstGrupId = nobetUstGruplar.FirstOrDefault();
 
-            if (nobetUstGrupId == 1)
-            {
-                eczaneId = 37;
+                if (nobetUstGrupId == 1)
+                {
+                    eczaneId = 37;
+                }
+                else if (nobetUstGrupId == 2)
+                {
+                    eczaneId = 69;
+                }
+                else if (nobetUstGrupId == 3)
+                {
+                    eczaneId = 600;
+                }
+                else if (nobetUstGrupId == 4)
+                {
+                    eczaneId = 857;
+                }
+                else if (nobetUstGrupId == 5)
+                {
+                    eczaneId = 917;
+                }
+                else
+                {
+                    eczaneId = 69;
+                }
             }
-            else if (nobetUstGrupId == 2)
-            {
-                eczaneId = 69;
-            }
-            else if (nobetUstGrupId == 3)
-            {
-                eczaneId = 600;
-            }
-            else if (nobetUstGrupId == 4)
-            {
-                eczaneId = 857;
-            }
-            else if (nobetUstGrupId == 5)
-            {
-                eczaneId = 917;
-            }
-            else
-            {
-                eczaneId = 69;
-            }
-
-            var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(gosterilecekTarih, nobetUstGrupId);
 
             var IPadres = Request.UserHostAddress;
             // var ekraninBulundugueczane = _eczaneService.GetList().Where(w=>w.IPadress == IPadres);
             var ekraninBulundugueczane = _eczaneService.GetById(eczaneId);
+
+            nobetUstGrupId = ekraninBulundugueczane.NobetUstGrupId;
+
+            var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(gosterilecekTarih, nobetUstGrupId);
 
             var model = new NobetciEcanelerEkraniViewModel
             {

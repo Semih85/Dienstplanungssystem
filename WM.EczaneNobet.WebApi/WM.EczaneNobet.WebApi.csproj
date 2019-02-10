@@ -136,7 +136,9 @@
   <ItemGroup>
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\EczaneNobetMazeretlerController.cs" />
     <Compile Include="Controllers\EczaneNobetSonuclarController.cs" />
+    <Compile Include="Controllers\EkranlarController.cs" />
     <Compile Include="Controllers\NobetGruplarController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

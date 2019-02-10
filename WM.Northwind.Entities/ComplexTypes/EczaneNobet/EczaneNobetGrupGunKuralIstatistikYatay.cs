@@ -12,6 +12,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
     public class EczaneNobetGrupGunKuralIstatistikYatay : IComplexType
     {
         public int EczaneNobetGrupId { get; set; }
+        //public int NobetGrupGorevTipId { get; set; }
         public int EczaneId { get; set; }
         public string EczaneAdi { get; set; }
         public string NobetGrupAdi { get; set; }

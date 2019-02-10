@@ -83,5 +83,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _nobetGrupGorevTipGunKuralDal.GetDetayList(x => nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId));
         }
 
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetGrupGorevTipGunKuralDetay> GetDetaylarByNobetGrupGorevTipId(int nobetGrupGorevTipId)
+        {
+            return _nobetGrupGorevTipGunKuralDal.GetDetayList(x => x.NobetGrupGorevTipId == nobetGrupGorevTipId);
+        }
+
     }
 }

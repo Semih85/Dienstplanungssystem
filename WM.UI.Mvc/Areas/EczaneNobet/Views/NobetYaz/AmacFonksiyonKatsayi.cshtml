@@ -61,8 +61,14 @@
 
 </div>
 
+
 <div class="row mt-3">
     <div class="col-sm-12">
+
+        <div class="spinner-border text-info ml-3" role="status" id="LoadingImage" style="display:none;">
+            <span class="sr-only">Loading...</span>
+        </div>
+
         <div id="amacFonkKatsayilar">
             @* Pivot tablo *@
         </div>
@@ -154,7 +160,7 @@
         });
 
         function getJsonDagilimlar(url, t1, t2) {
-
+            $("#LoadingImage").show();
             $.ajax({
                 dataType: "json",
                 url: url,
@@ -164,7 +170,7 @@
                 },
                 type: "get",
                 success: function (data) {
-
+                    $("#LoadingImage").hide();
                     dagilimlar = JSON.parse(JSON.stringify(data));
                     //alert(data.length);
 
@@ -201,6 +207,7 @@
                     //veriyiGizleLoadingGifiGoster();
                 },
                 error: function (data) {
+                    $("#LoadingImage").hide();
                     alert('Hata. Veri okunamadı!');
                 },
             });

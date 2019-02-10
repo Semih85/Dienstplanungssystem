@@ -246,7 +246,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
             );
 
             #endregion
-            
+
             #region listeler
 
             context.MapRoute(
@@ -421,9 +421,28 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
             #endregion
 
             context.MapRoute(
+                name: "AmacFonksiyonKatsayi",
+                url: "eczane-nobet-yaz/katsayilar",
+                defaults: new { controller = "NobetYaz", action = "AmacFonksiyonKatsayi" }
+            );
+
+            context.MapRoute(
                 name: "NobetciEczaneler",
                 url: "nobetci-eczaneler",
                 defaults: new { controller = "NobetciEczaneHarita", action = "NobetciEczaneler" }
+            );
+
+            context.MapRoute(
+                name: "NobetciEczaneEkrani",
+                url: "onee/{eczaneId}",///{name}/{password}",
+                defaults: new
+                {
+                    controller = "NobetciEczaneEkrani",
+                    action = "Index",
+                    eczaneId = UrlParameter.Optional,
+                    //name = UrlParameter.Optional,
+                    //password = UrlParameter.Optional
+                }
             );
 
             context.MapRoute(

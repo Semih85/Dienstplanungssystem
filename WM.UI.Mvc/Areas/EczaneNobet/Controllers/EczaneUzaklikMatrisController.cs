@@ -81,7 +81,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     AdresTarifiKisa = adresTarifiKisa
                 });
             }
+
             SetUzakliklarKusUcusu(model);
+
             return View(model);
         }
         double DegreesToRadians(double degrees)

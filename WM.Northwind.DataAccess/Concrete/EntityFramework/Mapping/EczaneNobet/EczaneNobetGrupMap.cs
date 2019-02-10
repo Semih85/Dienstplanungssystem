@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
@@ -36,6 +37,39 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.Aciklama)
                 .IsRequired()
                 .HasMaxLength(200);
+
+            this.Property(t => t.EczaneId)
+            .IsRequired()
+            .HasColumnAnnotation("Index",
+                new IndexAnnotation(
+                    new IndexAttribute("UN_EczaneNobetGruplar")
+                    {
+                                    //IsClustered = true,
+                                    IsUnique = true,
+                        Order = 1
+                    }));
+
+            this.Property(t => t.NobetGrupGorevTipId)
+               .IsRequired()
+               .HasColumnAnnotation("Index",
+                   new IndexAnnotation(
+                       new IndexAttribute("UN_EczaneNobetGruplar")
+                       {
+                           //IsClustered = true,
+                           IsUnique = true,
+                           Order = 2
+                       }));
+
+            this.Property(t => t.BaslangicTarihi)
+               .IsRequired()
+               .HasColumnAnnotation("Index",
+                   new IndexAnnotation(
+                       new IndexAttribute("UN_EczaneNobetGruplar")
+                       {
+                           //IsClustered = true,
+                           IsUnique = true,
+                           Order = 3
+                       }));
 
             // Relationship
             this.HasRequired(t => t.Eczane)

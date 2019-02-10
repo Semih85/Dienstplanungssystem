@@ -173,11 +173,11 @@ namespace WM.UI.Mvc.Controllers
                 // Roles.AddUserToRole(Model.User.Email, "Members");
                 var subject = "Nöbet Yaz kayıt";
 
-                var body = 
-                    $"<p>" + 
+                var body =
+                    $"<p>" +
                         $"Merhaba, Sayın {Model.User.FirstName} {Model.User.LastName.ToUpper()}." +
                     $"</p>" +
-                    $"<p>" +                        
+                    $"<p>" +
                         $"Bu mesaj, <b>nobetyaz.com</b> sitesine yapmış olduğunuz üyelik hakkında bilgilendirme amacıyla gönderilmiştir. " +
                         $"<br/>" +
                         $"<strong>Siteye giriş yapmak için lütfen aşağıdaki linki tıklayınız.</strong>" +
@@ -192,7 +192,7 @@ namespace WM.UI.Mvc.Controllers
                                 $":" +
                             $"</td>" +
                             $"<td>" +
-                                $"{Model.User.UserName}" +                                
+                                $"{Model.User.UserName}" +
                             $"</td>" +
                         $"</tr>" +
                         $"<tr>" +
@@ -206,7 +206,7 @@ namespace WM.UI.Mvc.Controllers
                                 $"{Model.User.Password}" +
                             $"</td>" +
                         $"</tr>" +
-                    $"</table>" 
+                    $"</table>"
                     ;
 
                 var toEmail = "ozdamar85@gmail.com";//;Model.User.Email;
