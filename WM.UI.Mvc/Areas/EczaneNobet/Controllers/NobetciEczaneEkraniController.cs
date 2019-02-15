@@ -51,18 +51,20 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //var name = (string)RouteData.Values["name"];
             //var password = (string)RouteData.Values["password"];
 
-            var user = _userService.GetByUserName(User.Identity.Name);
+            var user = new User();// _userService.GetByUserName(User.Identity.Name);
 
-            //if (User.Identity.Name == "" && name != null && password != null)
-            //{
-            //    user = _userService.GetByUserNameAndPassword(name, password);
-            //}
-            //else
-            //{
-            //    user = _userService.GetByUserName(User.Identity.Name);
-            //}
+            if (User.Identity.Name == "" 
+                //&& name != null && password != null
+                )
+            {
+                //user = _userService.GetByUserNameAndPassword(name, password);
+            }
+            else
+            {
+                //user = _userService.GetByUserName(User.Identity.Name);
+            }
 
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
             int nobetUstGrupId = 0;
             
             //nobetUstGrupId = 3;

@@ -10,16 +10,36 @@ namespace WM.EczaneNobet.WebApi.Controllers
 {
     public class EkranlarController : ApiController
     {
+        static EkranTakipDetay Ekran(int cihazId)
+        {
+            return MyClass.EkranListe.SingleOrDefault(x => x.CihazId == cihazId);
+        }
+
         [Route("ekranlar/{cihazId:int:min(1)}")]
         [HttpGet]
-        public EkranTakipDetay Get(int cihazId) 
+        public EkranTakipDetay Get(int cihazId)
         {
-            var cihazListesi = new List<EkranTakipDetay>
-            {
-                new EkranTakipDetay { CihazId = 1, CihazUrl = "https://nobetyaz.com/onee/954", TasarimDegisimTarihi = new DateTime(2019, 2, 10, 1, 1, 1), Durum = true }
-            };
+            return Ekran(cihazId);
+        }
 
-            return cihazListesi.SingleOrDefault(x => x.CihazId == cihazId);
+        [Route("cihaz-durum-guncelle/{cihazId:int:min(1)}/{cihazDurumId:int:min(0)}")]
+        [HttpPost]
+        public void CihazDurumGuncelle(int cihazId, int cihazDurumId)
+        {
+            Ekran(cihazId).CihazDurumId = cihazDurumId;
+        }
+    }
+
+    static class MyClass
+    {
+        public static List<EkranTakipDetay> EkranListe { get; set; }
+
+        static MyClass()
+        {
+            EkranListe = new List<EkranTakipDetay>
+            {
+                new EkranTakipDetay { CihazId = 1, CihazUrl = "https://nobetyaz.com/onee/954", CihazDurumId = 1 }
+            };
         }
     }
 }

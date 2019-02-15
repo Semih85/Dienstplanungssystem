@@ -268,6 +268,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
             );
 
             context.MapRoute(
+                name: "EczaneGrup",
+                url: "eczane-grup",
+                defaults: new { controller = "EczaneGrup", action = "Index" }
+            );
+
+            context.MapRoute(
                 name: "EczaneNobetSonuc",
                 url: "eczane-nobet-istatistikler",
                 defaults: new { controller = "EczaneNobetSonuc", action = "PivotSonuclar" }

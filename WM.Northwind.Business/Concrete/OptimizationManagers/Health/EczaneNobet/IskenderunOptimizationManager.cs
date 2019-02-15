@@ -165,18 +165,18 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 ).ToList();
 
             var nobetGorevTipId = 1;
-            if (!nobetGorevTipler.Contains(nobetGorevTipId))
-                nobetGorevTipId = 0;
+            //if (!nobetGorevTipler.Contains(nobetGorevTipId))
+            //    nobetGorevTipId = 0;
 
-            var eczaneNobetGruplarGorevTip1 = eczaneNobetGruplarTumu
-                .Where(w => w.NobetGorevTipId == nobetGorevTipId).ToList();
+            //var eczaneNobetGruplarGorevTip1 = eczaneNobetGruplarTumu
+            //    .Where(w => w.NobetGorevTipId == nobetGorevTipId).ToList();
 
-            nobetGorevTipId = 2;
-            if (!nobetGorevTipler.Contains(nobetGorevTipId))
-                nobetGorevTipId = 0;
+            //nobetGorevTipId = 2;
+            //if (!nobetGorevTipler.Contains(nobetGorevTipId))
+            //    nobetGorevTipId = 0;
 
-            var eczaneNobetGruplarGorevTip2 = eczaneNobetGruplarTumu
-                .Where(w => w.NobetGorevTipId == nobetGorevTipId).ToList();
+            //var eczaneNobetGruplarGorevTip2 = eczaneNobetGruplarTumu
+            //    .Where(w => w.NobetGorevTipId == nobetGorevTipId).ToList();
 
             var eczaneNobetSonuclarOncekiAylar = eczaneNobetSonuclar
                 .Where(w => w.Tarih >= nobetUstGrupBaslangicTarihi
@@ -265,20 +265,18 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             //    .Where(w => eczaneNobetGruplar.Select(s => s.EczaneId).Contains(w.EczaneId)).ToList();
             var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarAktifList(nobetGrupGorevTipler.Select(s => s.Id).ToList());
 
-            nobetGorevTipId = 1;
-            var nobetGrupGorevTip1 = nobetGrupGorevTipler.Where(w => w.NobetGorevTipId == nobetGorevTipId).ToList();
+            var eczaneNobetTarihAralikTumu = new List<EczaneNobetTarihAralik>();
 
-            var eczaneNobetTarihAralik1 = _takvimService.GetEczaneNobetTarihAralik(baslangicTarihi, bitisTarihi, nobetGrupGorevTip1)
-                .Where(w => eczaneNobetGruplarGorevTip1.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
+            foreach (var nobetGrupGorevTip in nobetGrupGorevTipler)
+            {
+                nobetGorevTipId = nobetGrupGorevTip.NobetGorevTipId;
+                var nobetGrupGorevTip1 = nobetGrupGorevTipler.Where(w => w.NobetGorevTipId == nobetGorevTipId).ToList();
 
-            nobetGorevTipId = 2;
-            var nobetGrupGorevTip2 = nobetGrupGorevTipler.Where(w => w.NobetGorevTipId == nobetGorevTipId).ToList();
-            var noberGunKurallar = nobetGrupGorevTipGunKurallar.Where(w => nobetGrupGorevTip2.Select(s => s.Id).Contains(w.NobetGrupGorevTipId)).Select(s => s.NobetGunKuralId).ToList();
+                var eczaneNobetTarihAralik1 = _takvimService.GetEczaneNobetTarihAralik(baslangicTarihi, bitisTarihi, nobetGrupGorevTip1)
+                    .Where(w => eczaneNobetGruplarTumu.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
 
-            var eczaneNobetTarihAralik2 = _takvimService.GetEczaneNobetTarihAralik(baslangicTarihi, bitisTarihi, nobetGrupGorevTip2, noberGunKurallar)
-                .Where(w => eczaneNobetGruplarGorevTip2.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
-
-            var eczaneNobetTarihAralikTumu = eczaneNobetTarihAralik1.Union(eczaneNobetTarihAralik2).ToList();
+                eczaneNobetTarihAralikTumu.AddRange(eczaneNobetTarihAralik1);
+            }
 
             var eczaneNobetTarihAralik = _eczaneNobetOrtakService.AmacFonksiyonuKatsayisiBelirle(eczaneNobetTarihAralikTumu, eczaneNobetGrupGunKuralIstatistikYatay);
 
@@ -305,7 +303,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             if (!altGruplarlaAyniGunNobetTutma.PasifMi)
             {
                 eczaneNobetSonuclarAltGruplaAyniGun = eczaneNobetSonuclar
-                        .Where(w => eczaneNobetGruplarGorevTip1.Select(s => s.NobetGorevTipId).Contains(w.NobetGorevTipId)).ToList();
+                        .Where(w => eczaneNobetGruplarTumu.Select(s => s.NobetGorevTipId).Contains(w.NobetGorevTipId)).ToList();
             }
 
             #endregion

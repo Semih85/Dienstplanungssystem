@@ -15,5 +15,6 @@ namespace WM.Northwind.Business.Abstract.Optimization.EczaneNobet
         EczaneNobetSonucModel EczaneNobetCozAktifiGuncelle(MersinMerkezDataModelV2 data);
         EczaneNobetSonucModel ModelCoz(EczaneNobetModelCoz eczaneNobetModelCoz);
         void Kesinlestir(int nobetUstGrupId);
+        void ModeliKapat();
     }
 }

@@ -135,7 +135,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
                     $" [Std. {p.KumulatifOrtalamaGunKuralSayisi}" +
-                    $"{(p.GunKuralAdi == null ? "" : $"- {p.GunKuralAdi}")}]"
+                    $"{(p.GunKuralAdi == null ? "" : $" - {p.GunKuralAdi}")}]"
                     ;
 
                 var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
@@ -182,7 +182,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 {
                     var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
                               //+ $"{p.PespeseNobetSayisiAltLimit} gün ("
-                              + $"{p.SonNobetTarihi.ToShortDateString()} - {p.NobetYazilabilecekIlkTarih.ToShortDateString()}"
+                              + $"Farklı ay ("
+                              + $"{p.SonNobetTarihi.ToShortDateString()} - {p.NobetYazilabilecekIlkTarih.ToShortDateString()} ({(int)(p.NobetYazilabilecekIlkTarih - p.SonNobetTarihi).TotalDays} gün)"
                               + $"]";
 
                     var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
@@ -272,7 +273,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         indis++;
 
                         var kisitTanim2 = $"{p.NobetUstGrupKisit.KisitTanim} ["
-                          + $"{p.PespeseNobetSayisiAltLimit} gün ("
+                          + $"{(int)p.PespeseNobetSayisiAltLimit} gün ("
                           + $"{altLimit.ToShortDateString()} - {ustLimit.ToShortDateString()})"
                           + $"{(p.GunKuralAdi == null ? "" : $"- {p.GunKuralAdi}")}]";
 
@@ -522,7 +523,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                     var ustLimit = tarih.Tarih.AddDays(ardisikNobetSayisi);
 
                                     var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
-                                       + $"{altLimit.ToShortDateString()} - {ustLimit.ToShortDateString()}"
+                                       + $"{altLimit.ToShortDateString()} - {ustLimit.ToShortDateString()} ({(int)(ustLimit - altLimit).TotalDays} gün)"
                                        + $"]";
 
                                     var nobetGrupBilgisi = eczaneGrupTanim.EczaneGrupTanimAdi;
@@ -551,7 +552,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                         var ustLimit = tarih.Tarih.AddDays(ardisikNobetSayisi);
 
                                         var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} [Öncelikli çözüm "
-                                           + $"{altLimit.ToShortDateString()} - {ustLimit.ToShortDateString()}"
+                                           + $"{altLimit.ToShortDateString()} - {ustLimit.ToShortDateString()} ({(int)(ustLimit - altLimit).TotalDays} gün)"
                                            + $"]";
 
                                         var nobetGrupBilgisi = eczaneGrupTanim.EczaneGrupTanimAdi;
@@ -1689,7 +1690,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 celisikKurallar.Add(conflictUb.Name);
             }
 
-            var celisikKurallarTekListe = celisikKurallar.Distinct().ToList();
+            var celisikKurallarTekListe = celisikKurallar.Distinct().OrderBy(o => o).ToList();
 
             foreach (var kisit in celisikKurallarTekListe)
             {

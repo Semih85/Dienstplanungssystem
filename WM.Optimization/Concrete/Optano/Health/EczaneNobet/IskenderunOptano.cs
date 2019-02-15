@@ -250,7 +250,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #region Gece nöbetçileri
 
-            var nobetGorevTipId = 1;
+            var nobetGorevTipId = 7;
             var nobetGrupGorevTip = data.NobetGrupGorevTipler.Where(w => w.NobetGorevTipId == nobetGorevTipId).SingleOrDefault();
 
             if (nobetGrupGorevTip != null)
@@ -1943,7 +1943,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         public EczaneNobetSonucModel Solve(IskenderunDataModel data)
         {
             var results = new EczaneNobetSonucModel();
-            var calismaSayisiEnFazla = 3;
+            var calismaSayisiEnFazla = 1;
 
             var config = new Configuration
             {
@@ -2006,10 +2006,17 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                         var sonuclar = data.EczaneNobetTarihAralik.Where(s => _x[s].Value.IsAlmost(1) == true).ToList();
 
-                        var nobetGorevTipId = 1;
+                        var nobetGorevTipler = data.NobetGrupGorevTipler
+                            .Select(s => new
+                            {
+                                s.NobetGorevTipId,
+                                s.NobetGorevTipAdi
+                            }).Distinct().ToList();
+
+                        //var nobetGorevTipId = 1;
 
                         var nobetGrupTarihler1 = data.EczaneNobetTarihAralik
-                            .Where(w => w.NobetGorevTipId == nobetGorevTipId)
+                            .Where(w => nobetGorevTipler.Select(s=>s.NobetGorevTipId).Contains(w.NobetGorevTipId))
                             .Select(s => new
                             {
                                 s.NobetGrupId,
@@ -2028,30 +2035,30 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                 //         && w.TakvimId == s.TakvimId).SingleOrDefault().NobetciSayisi
                             }).Distinct().ToList();
 
-                        nobetGorevTipId = 2;
+                        //nobetGorevTipId = 2;
 
-                        var nobetGrupTarihler2 = data.EczaneNobetTarihAralik
-                            .Where(w => w.NobetGorevTipId == nobetGorevTipId)
-                            .Select(s => new
-                            {
-                                s.NobetGrupId,
-                                s.Tarih,
-                                s.NobetGorevTipId,
-                                Talep = s.TalepEdilenNobetciSayisi
-                                //data.NobetGrupTalepler
-                                // .Where(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
-                                //         && w.TakvimId == s.TakvimId).SingleOrDefault() == null
-                                //? (int)data.NobetGrupKurallar
-                                //    .Where(k => k.NobetKuralId == 3
-                                //             && k.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
-                                //    .Select(k => k.Deger).SingleOrDefault()
-                                //: data.NobetGrupTalepler
-                                // .Where(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
-                                //         && w.TakvimId == s.TakvimId).SingleOrDefault().NobetciSayisi
-                            }).Distinct().ToList();
+                        //var nobetGrupTarihler2 = data.EczaneNobetTarihAralik
+                        //    .Where(w => w.NobetGorevTipId == nobetGorevTipId)
+                        //    .Select(s => new
+                        //    {
+                        //        s.NobetGrupId,
+                        //        s.Tarih,
+                        //        s.NobetGorevTipId,
+                        //        Talep = s.TalepEdilenNobetciSayisi
+                        //        //data.NobetGrupTalepler
+                        //        // .Where(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
+                        //        //         && w.TakvimId == s.TakvimId).SingleOrDefault() == null
+                        //        //? (int)data.NobetGrupKurallar
+                        //        //    .Where(k => k.NobetKuralId == 3
+                        //        //             && k.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
+                        //        //    .Select(k => k.Deger).SingleOrDefault()
+                        //        //: data.NobetGrupTalepler
+                        //        // .Where(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
+                        //        //         && w.TakvimId == s.TakvimId).SingleOrDefault().NobetciSayisi
+                        //    }).Distinct().ToList();
 
                         var toplamArz = sonuclar.Count;
-                        var toplamTalep = nobetGrupTarihler1.Sum(s => s.Talep) + nobetGrupTarihler2.Sum(s => s.Talep);
+                        var toplamTalep = nobetGrupTarihler1.Sum(s => s.Talep);// + nobetGrupTarihler2.Sum(s => s.Talep);
 
                         if (toplamArz != toplamTalep)
                         {

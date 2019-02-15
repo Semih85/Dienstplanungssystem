@@ -448,7 +448,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         NobetUstGrupKisit = haftaIciPespeseGorevEnAz,
                         KararDegiskeni = _x
                     };
-                    HerAyHaftaIciPespeseGorev(kpHerAyPespeseGorevHaftaIci); 
+                    HerAyHaftaIciPespeseGorev(kpHerAyPespeseGorevHaftaIci);
 
                     #endregion
 
@@ -1296,7 +1296,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     {
                         //data.CalismaSayisi++;
 
-                        if (data.CalismaSayisi == calismaSayisiEnFazla + 1)
+                        if (data.CalismaSayisi == calismaSayisiEnFazla //+ 1
+                            )
                         {
                             results.Celiskiler = CeliskileriEkle(solution);
                         }
@@ -1412,7 +1413,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     //      + "<br/> "
                     //      +
 
-                    var celiskiler = results.Celiskiler.Split('*');
+                    var celiskiler = new string[1000];
+
+                    if (results.Celiskiler != null)
+                    {
+                        celiskiler = results.Celiskiler.Split('*');
+                    }
 
                     mesaj = "Aşağıdaki açıklamalara göre <a href=\"/EczaneNobet/NobetUstGrupKisit/KisitAyarla\" class=\"card-link\" target=\"_blank\">nöbet ayarlarında</a> bazı değişiklikler yaparak <strong>tekrar çözmelisiniz..</strong>"
                           + "<hr /> "

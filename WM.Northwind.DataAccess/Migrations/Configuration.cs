@@ -5045,7 +5045,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
                 eczane.NobetUstGrupId = b.NobetUstGrupId;
             }
 
-            b.EczaneNobetContext.Eczaneler.AddOrUpdate(s => new { s.Adi, s.AcilisTarihi }, b.Eczaneler.ToArray());
+            b.EczaneNobetContext.Eczaneler.AddOrUpdate(s => new { s.Adi, s.AcilisTarihi, s.NobetUstGrupId }, b.Eczaneler.ToArray());
             b.EczaneNobetContext.SaveChanges();
 
             #endregion

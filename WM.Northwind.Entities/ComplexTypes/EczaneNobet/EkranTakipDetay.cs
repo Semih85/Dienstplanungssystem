@@ -13,7 +13,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
     {
         public int CihazId { get; set; }
         public string CihazUrl { get; set; }
-        public DateTime TasarimDegisimTarihi { get; set; }
-        public bool Durum { get; set; }
+        //public DateTime TasarimDegisimTarihi { get; set; }
+        //public bool Durum { get; set; }
+        public int CihazDurumId { get; set; }
     }
 }

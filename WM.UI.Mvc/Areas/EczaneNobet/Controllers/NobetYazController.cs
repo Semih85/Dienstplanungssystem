@@ -235,10 +235,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 case 6:
                     sonucModel = _bartinOptimizationService.ModelCoz(eczaneNobetModelCoz);
                     break;
-                case 7:
-                    sonucModel = _iskenderunOptimizationService.ModelCoz(eczaneNobetModelCoz);
+                case 7://zonguldak
+                    //sonucModel = _iskenderunOptimizationService.ModelCoz(eczaneNobetModelCoz);
                     break;
                 case 8:
+                    sonucModel = _iskenderunOptimizationService.ModelCoz(eczaneNobetModelCoz);
+                    break;
+                case 9:
                     sonucModel = _corumOptimizationService.ModelCoz(eczaneNobetModelCoz);
                     break;
                 default:
@@ -278,6 +281,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
             return RedirectToAction("PivotSonuclar", "EczaneNobetSonucAktif", routeValues);
+        }
+
+        public void ModeliKapat()
+        {
+            _mersinMerkezOptimizationServiceV2.ModeliKapat();
         }
 
         [ChildActionOnly]

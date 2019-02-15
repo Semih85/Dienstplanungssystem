@@ -195,7 +195,7 @@
         }
 
         html, body {
-            position: fixed;
+            /*position: fixed;*/
             top: 0;
             bottom: 0;
             left: 0;
@@ -283,7 +283,7 @@
 <body>
 
 
-    <div class="container-fluid">
+    <div class="container-fluid" id="ddd">
         @* network *@
         <div id="ustRow" class="row basliklar">
             <div id="labelBaslik" class="col-lg-3">
@@ -334,7 +334,41 @@
         @Scripts.Render("~/bundle/scriptsDetailTable/script")
     }
     <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=geometry"></script>
+
     <script>
+
+        $(document).ready(function () {
+            //alert(1)
+            //launchIntoFullscreen();
+            //var elem = document.getElementById("ddd");
+            //var elem = $("body");
+            //openFullscreen();
+            //alert(2)
+            function openFullscreen() {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.mozRequestFullScreen) { /* Firefox */
+                    elem.mozRequestFullScreen();
+                } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                    elem.msRequestFullscreen();
+                }
+            }
+
+            //launchIntoFullscreen(document.documentElement);
+            //function launchIntoFullscreen(element) {
+            //    if (element.requestFullscreen) {
+            //        element.requestFullscreen();
+            //    } else if (element.mozRequestFullScreen) {
+            //        element.mozRequestFullScreen();
+            //    } else if (element.webkitRequestFullscreen) {
+            //        element.webkitRequestFullscreen();
+            //    } else if (element.msRequestFullscreen) {
+            //        element.msRequestFullscreen();
+            //    }
+            //}
+        });
 
     //$(document).ready(function () {
     function myMap() {
@@ -1030,7 +1064,7 @@
             var temp = items[firstIndex];
             items[firstIndex] = items[secondIndex];
             items[secondIndex] = temp;
-        }
+        }        
     }
     //});
     </script>

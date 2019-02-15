@@ -564,6 +564,11 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             }
             return sonuclar;
         }
+
+        public void ModeliKapat()
+        {
+            _eczaneNobetMersinMerkezOptimizationV2.ModeliKapat();
+        }
     }
 }
 

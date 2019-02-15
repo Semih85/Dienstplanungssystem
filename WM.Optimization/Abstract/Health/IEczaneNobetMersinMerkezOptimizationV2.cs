@@ -12,5 +12,6 @@ namespace WM.Optimization.Abstract.Health
     public interface IEczaneNobetMersinMerkezOptimizationV2 : IOptimization
     {
         EczaneNobetSonucModel Solve(MersinMerkezDataModelV2 data);
+        void ModeliKapat();
     }
 }

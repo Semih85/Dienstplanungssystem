@@ -19,6 +19,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int KumulatifGunSayisi { get; set; }
         public double OrtalamaNobetSayisi { get; set; }
         public double KumulatifOrtalamaNobetSayisi { get; set; }
+        public DateTime? KapanmaTarihi { get; set; }
         public List<TakvimNobetGrup> TakvimNobetGruplar { get; set; }
     }
 }

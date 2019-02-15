@@ -392,7 +392,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                           : (int)k.Deger != nobetGrupGorevTipGunKural?.NobetciSayisi
                                                             ? (int)nobetGrupGorevTipGunKural?.NobetciSayisi
                                                             : (int)k.Deger,
-                                                  Tarih = t.Tarih
+                                                  Tarih = t.Tarih,
+                                                  NobetGunKuralKapanmaTarihi = nobetGrupGorevTipGunKural.BitisTarihi
                                               })
                                               .Where(w => w.GunGrupAdi != null)
                                               .ToList();
@@ -601,7 +602,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     g.NobetGunKuralAdi,
                     g.NobetGorevTipId,
                     g.GunGrupAdi,
-                    g.GunGrupId
+                    g.GunGrupId,
+                    g.NobetGunKuralKapanmaTarihi
                 })
                 .Select(s => new TakvimNobetGrupGunDegerIstatistik
                 {
@@ -615,7 +617,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     GunSayisi = s.Count(),
                     TalepEdilenNobetciSayisi = s.Sum(f => f.TalepEdilenNobetciSayisi),
                     IstatistikBaslamaTarihi = s.Max(f => f.Tarih),
-                    IstatistikBitisTarihi = s.Min(f => f.Tarih)
+                    IstatistikBitisTarihi = s.Min(f => f.Tarih),
+                    NobetGunKuralKapanmaTarihi = s.Key.NobetGunKuralKapanmaTarihi
                 }).ToList();
         }
 

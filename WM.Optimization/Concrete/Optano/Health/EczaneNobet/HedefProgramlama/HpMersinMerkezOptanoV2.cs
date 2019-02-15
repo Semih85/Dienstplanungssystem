@@ -40,6 +40,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.HedefProgramlama
         #endregion
         #endregion
 
+        private CplexSolverConfiguration _solverConfig;
+        private CplexSolver _solver;
+
+        public HpMersinMerkezOptanoV2()
+        {
+            _solverConfig = new CplexSolverConfiguration() { ComputeIIS = true };
+
+            _solver = new CplexSolver(_solverConfig);
+        }
+
         private Model Model(MersinMerkezDataModelV2 data)
         {
             var model = new Model() { Name = "Mersin Merkez Eczane Nöbet" };
@@ -2446,6 +2456,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.HedefProgramlama
                 }
             }
             return Results;
+        }
+
+        public void ModeliKapat()
+        {
+            _solver.Abort();
         }
 
         private void GetEczaneGunHedef(EczaneNobetIstatistik hedef, out double maxArz, out double minArz, int gunDeger)

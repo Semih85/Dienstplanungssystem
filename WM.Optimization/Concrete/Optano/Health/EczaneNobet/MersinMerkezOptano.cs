@@ -2,12 +2,15 @@
 using OPTANO.Modeling.Optimization;
 using OPTANO.Modeling.Optimization.Configuration;
 using OPTANO.Modeling.Optimization.Enums;
+using OPTANO.Modeling.Optimization.Exporter;
 using OPTANO.Modeling.Optimization.Solver;
 using OPTANO.Modeling.Optimization.Solver.Cplex128;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Health;
@@ -22,17 +25,19 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         private VariableCollection<EczaneNobetTarihAralik> _x { get; set; }
         private VariableCollection<EczaneNobetAltGrupTarihAralik> y { get; set; }
         #endregion
+        private CplexSolverConfiguration _solverConfig;
+        private CplexSolver _solver;
+        private Model model;
+        private Configuration _configuration;
 
         private Model Model(MersinMerkezDataModelV2 data)
         {
-            var model = new Model() { Name = "Mersin Merkez Eczane Nöbet" };
-
             #region veriler
 
             #region kısıtlar
 
-            var herAyPespeseGorev = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyPespeseGorev", data.NobetUstGrupId);
-            var farkliAyPespeseGorev = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "farkliAyPespeseGorev", data.NobetUstGrupId);
+            var herAyPespeseGorev = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyPespeseGorev", data.NobetUstGrupId);//K1
+            var farkliAyPespeseGorev = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "farkliAyPespeseGorev", data.NobetUstGrupId);//K18
             var pazarPespeseGorevEnAz = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "pazarPespeseGorevEnAz", data.NobetUstGrupId);
 
             var herAyEnFazlaGorev = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyEnFazlaGorev", data.NobetUstGrupId);
@@ -41,7 +46,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var haftaIciPespeseGorevEnAz = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "haftaIciPespeseGorevEnAz", data.NobetUstGrupId);
             var cumartesiPespeseGorevEnAz = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "cumartesiPespeseGorevEnAz", data.NobetUstGrupId);
 
-            var gunKumulatifToplamEnFazla = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "gunKumulatifToplamEnFazla", data.NobetUstGrupId);
+            var gunKumulatifToplamEnFazla = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "gunKumulatifToplamEnFazla", data.NobetUstGrupId);//K34
             var herAyEnFazla1HaftaIciGunler = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyEnFazla1HaftaIciGunler", data.NobetUstGrupId);
 
             var herAyEnFazla1Pazar = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyEnFazla1Pazar", data.NobetUstGrupId);
@@ -257,7 +262,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 #region peş peşe görev en az nöbet zamanı
                 //hafta içi
                 var farkliAyPespeseGorevAraligi = (gruptakiEczaneSayisi / gunlukNobetciSayisi * 1.2);
-                var altLimit = farkliAyPespeseGorevAraligi * 0.7666; //0.95
+                var altLimit = farkliAyPespeseGorevAraligi * 0.7666 - 10; //0.95
                 var ustLimit = farkliAyPespeseGorevAraligi + farkliAyPespeseGorevAraligi * 0.6667; //77;
                 var ustLimitKontrol = ustLimit * 0.95; //0.81 
                 //pazar
@@ -326,6 +331,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         OrtalamaNobetSayisi = OrtalamaNobetSayisi(tarihler2.Sum(s => s.TalepEdilenNobetciSayisi), gruptakiEczaneSayisi),
                         KumulatifGunSayisi = item.GunSayisi,
                         KumulatifOrtalamaNobetSayisi = OrtalamaNobetSayisi(item.TalepEdilenNobetciSayisi, gruptakiEczaneSayisi),
+                        //KapanmaTarihi = item.ta
                         //OrtalamaNobetSayisi(gunlukNobetciSayisi, gruptakiEczaneSayisi, item.GunSayisi)
                     });
                 }
@@ -458,7 +464,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         OrtamalaNobetSayisi = haftaIciOrtamalaNobetSayisi,
                         EczaneNobetGrup = eczaneNobetGrup,
                         EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
-                        PespeseNobetSayisiAltLimit = gruptakiEczaneSayisi * 0.6, //altLimit,
+                        PespeseNobetSayisiAltLimit = gruptakiEczaneSayisi * 0.5, //altLimit, 0.6//14.02.2019
                         NobetUstGrupKisit = haftaIciPespeseGorevEnAz,
                         KararDegiskeni = _x
                     };
@@ -510,7 +516,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     pesPeseGorevEnAzHaftaIci.NobetSayisi = eczaneNobetIstatistik.NobetSayisiHaftaIci;
                     pesPeseGorevEnAzHaftaIci.NobetUstGrupKisit = haftaIciPespeseGorevEnAz;
-                    pesPeseGorevEnAzHaftaIci.Tarihler = haftaIciGunleri;
+                    pesPeseGorevEnAzHaftaIci.Tarihler = tarihler;
                     pesPeseGorevEnAzHaftaIci.NobetYazilabilecekIlkTarih = yazilabilecekIlkHaftaIciTarihi;
                     pesPeseGorevEnAzHaftaIci.SonNobetTarihi = eczaneNobetIstatistik.SonNobetTarihiHaftaIci;
 
@@ -585,6 +591,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     }
                     foreach (var gunKural in nobetGunKuralIstatistikler)
                     {//gun kural bazlı
+
+                        //if (gunKural.NobetGunKuralKapanmaTarihi != null)
+                        //{
+                        //    continue;
+                        //}
+
                         if (kontrol && gunKural.NobetGunKuralAdi == "Cuma")
                         {
                         }
@@ -1573,9 +1585,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         public EczaneNobetSonucModel Solve(MersinMerkezDataModelV2 data)
         {
             var results = new EczaneNobetSonucModel();
-            var calismaSayisiEnFazla = 1;
+            var calismaSayisiEnFazla = 0;
 
-            var config = new Configuration
+            calismaSayisiEnFazla += 3;
+
+            _configuration = new Configuration
             {
                 NameHandling = NameHandlingStyle.Manual,
                 ComputeRemovedVariables = true
@@ -1583,20 +1597,36 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             try
             {
-                using (var scope = new ModelScope(config))
+                using (var scope = new ModelScope(_configuration))
                 {
-                    var model = Model(data);
+                    model = new Model() { Name = "Mersin Merkez Eczane Nöbet" };
+
+                    model = Model(data);
+
+                    //model.Name = "Mersin Merkez Eczane Nöbet";
+
+                    _solverConfig = new CplexSolverConfiguration() { ComputeIIS = true };
+
+                    _solver = new CplexSolver(_solverConfig);
 
                     // Get a solver instance, change your solver
-                    var solverConfig = new CplexSolverConfiguration() { ComputeIIS = true };
-
-                    var solver = new CplexSolver(solverConfig);
 
                     //solver.Abort();
                     //solver.Configuration.TimeLimit = 1;
 
+                    //var yol = @"C:\temp\testmodel.mps";
+                    //var mpsStream = new StreamWriter(yol);
+                    //var mpsExporter = new MPSExporter(mpsStream.BaseStream);
+                    //mpsExporter.Write(model);
+                    //mpsStream.Close();
+
+                    //var lpStream = new StreamWriter(@"C:\temp\testmodel.lp");
+                    //var lpExporter = new LPExporter(lpStream.BaseStream);
+                    //lpExporter.Write(model);
+                    //lpStream.Close();
+
                     // solve the model
-                    var solution = solver.Solve(model);
+                    var solution = _solver.Solve(model);
 
                     //Assert.IsTrue(solution.ConflictingSet.ConstraintsLB.Contains(brokenConstraint1));
                     //Assert.IsTrue(solution.ConflictingSet.ConstraintsLB.Contains(brokenConstraint2));
@@ -1687,6 +1717,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             {
                 data.CalismaSayisi++;
 
+                //if (ex.Message.Contains("Make sure"))
+                //{
+
+                //}
                 if (data.CalismaSayisi <= calismaSayisiEnFazla)//10
                 {
                     results = Solve(data);
@@ -1898,6 +1932,21 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             };
 
             return nobetGunKuralDetay;
+        }
+
+        public void ModeliKapat()
+        {
+            _solver.Abort();
+
+            var field = typeof(ModelScope).GetRuntimeProperties().Single(rp => rp.Name == "Current");
+            ModelScope reflectedScope = (ModelScope)field.GetValue(null);
+            if (reflectedScope != null)
+            {
+                // dispose registered ModelScope
+                reflectedScope.Dispose();
+            }
+            // create a new ModelScope, it will register with ModelScope.Current itself
+            //var scope = new ModelScope(scopeSettings);
         }
 
     }

@@ -352,7 +352,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-success" id="btnModalClickSubmit">Evet</button>
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-outline-danger"
+                        @*onclick="return confirm('Çözüm iptal edilecek. Emin misiniz?');"*@ 
+                        id="btnModeliKapat" data-dismiss="modal">
+                    İptal
+                </button>
             </div>
         </div>
     </div>
@@ -1198,6 +1202,29 @@
             else {
                 return "";
             }
+        }
+
+        $("#btnModeliKapat").click(function (e) {
+            @*var urlDagilimlar = '@Url.Action("ModeliKapat")';
+            modeliSonlandir(urlDagilimlar)*@
+        });
+
+        function modeliSonlandir(url) {
+            $.ajax({
+                //dataType: "json",
+                url: url,
+                type: "get",
+                success: function (data) {
+                    //alert("Çözüm İptal Edildi")
+                },
+                complete: function (data) {
+                    alert("Çözüm İptal Edildi")
+                    location.reload();
+                },
+                error: function (data) {
+                    alert('Hata. Model kapatılamadı!');
+                },
+            });
         }
 
         $("#btnModalClickSubmit").click(function (e) {
