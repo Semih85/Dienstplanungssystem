@@ -420,7 +420,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                         ? b.NobetGunKuralId
                                                         : (int)s.Tarih.DayOfWeek + 1,
                                                    GunTanim = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
-                                                        ? b.NobetGrupGorevTipGunKuralAdi
+                                                        ? b.NobetGunKuralAdi
                                                         : (nobetGrupGorevTipGunKural == null ? "Tanımsız gün kuralı" : nobetGrupGorevTipGunKural.NobetGunKuralAdi),
                                                    //culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),
                                                    GunGrup = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)

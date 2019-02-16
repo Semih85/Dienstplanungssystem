@@ -41,60 +41,80 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
         {
             using (var ctx = new EczaneNobetContext())
             {
-                return ctx.NobetGrupGorevTipTakvimOzelGunler
-                    .Select(s => new NobetGrupGorevTipTakvimOzelGunDetay
-                    {
-                        TakvimId = s.TakvimId,
-                        NobetGrupGorevTipGunKuralAdi = s.NobetGrupGorevTipGunKural.NobetGunKural.Adi,
-                        NobetGunKuralId = s.NobetGrupGorevTipGunKural.NobetGunKuralId,
-                        NobetGunKuralAdi = s.NobetGunKural.Adi,
-                        NobetGrupGorevTipGunKuralId = s.NobetGrupGorevTipGunKuralId,
-                        NobetOzelGunAdi = s.NobetOzelGun.Adi,
-                        NobetOzelGunId = s.NobetOzelGunId,
-                        Tarih = s.Takvim.Tarih,
-                        NobetUstGrupGunGrupId = s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrupId,
-                        GunGrupAdi = s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrup.GunGrup.Adi,
-                        GunGrupId = s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrup.GunGrup.Id,
-                        NobetUstGrupId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
-                        NobetGrupGorevTipId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTipId,
-                        NobetGorevTipId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGorevTipId,
-                        NobetGorevTipAdi = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGorevTip.Adi,
-                        NobetGrupId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrupId,
-                        NobetGrupAdi = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrup.Adi,
-                        Id = s.Id,
-                        FarkliGunGosterilsinMi = s.FarkliGunGosterilsinMi,
-                        AgirlikDegeri = s.AgirlikDegeri
-                    }).SingleOrDefault(filter);
+                return (from s in ctx.NobetGrupGorevTipTakvimOzelGunler
+                        let nobetGrupGorevTipGunKural = ctx.NobetGrupGorevTipGunKurallar
+                                 .FirstOrDefault(x => x.NobetGrupGorevTipId == s.NobetGrupGorevTipGunKural.NobetGrupGorevTipId && x.NobetGunKuralId == s.NobetGunKuralId).NobetUstGrupGunGrup
+                        select (new NobetGrupGorevTipTakvimOzelGunDetay
+                        {
+                            TakvimId = s.TakvimId,
+                            NobetGrupGorevTipGunKuralAdi = s.NobetGrupGorevTipGunKural.NobetGunKural.Adi,
+                            NobetGunKuralIdGrup = s.NobetGrupGorevTipGunKural.NobetGunKuralId,
+                            NobetGunKuralAdiGrup = s.NobetGrupGorevTipGunKural.NobetGunKural.Adi,
+                            NobetGunKuralIdFarkli = s.NobetGunKuralId,
+                            NobetGunKuralAdiFarkli = s.NobetGunKural.Adi,
+                            NobetGrupGorevTipGunKuralId = s.NobetGrupGorevTipGunKuralId,
+                            NobetOzelGunAdi = s.NobetOzelGun.Adi,
+                            NobetOzelGunId = s.NobetOzelGunId,
+                            Tarih = s.Takvim.Tarih,
+                            NobetUstGrupGunGrupId = s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrupId,
+                            //GunGrupAdi = s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrup.GunGrup.Adi,
+                            //GunGrupId = s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrup.GunGrup.Id,
+                            GunGrupAdi = s.FarkliGunGosterilsinMi == true
+                                     ? nobetGrupGorevTipGunKural.GunGrup.Adi
+                                     : s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrup.GunGrup.Adi,
+                            GunGrupId = s.FarkliGunGosterilsinMi == true
+                                     ? nobetGrupGorevTipGunKural.GunGrupId
+                                     : s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrup.GunGrupId,
+                            NobetUstGrupId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
+                            NobetGrupGorevTipId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTipId,
+                            NobetGorevTipId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGorevTipId,
+                            NobetGorevTipAdi = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGorevTip.Adi,
+                            NobetGrupId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrupId,
+                            NobetGrupAdi = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrup.Adi,
+                            Id = s.Id,
+                            FarkliGunGosterilsinMi = s.FarkliGunGosterilsinMi,
+                            AgirlikDegeri = s.AgirlikDegeri
+                        })).SingleOrDefault(filter);
             }
         }
         public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetayList(Expression<Func<NobetGrupGorevTipTakvimOzelGunDetay, bool>> filter = null)
         {
             using (var ctx = new EczaneNobetContext())
             {
-                var liste = ctx.NobetGrupGorevTipTakvimOzelGunler
-                    .Select(s => new NobetGrupGorevTipTakvimOzelGunDetay
-                    {
-                        TakvimId = s.TakvimId,
-                        NobetGrupGorevTipGunKuralAdi = s.NobetGrupGorevTipGunKural.NobetGunKural.Adi,
-                        NobetGunKuralId = s.NobetGrupGorevTipGunKural.NobetGunKuralId,
-                        NobetGunKuralAdi = s.NobetGunKural.Adi,
-                        NobetGrupGorevTipGunKuralId = s.NobetGrupGorevTipGunKuralId,
-                        NobetOzelGunAdi = s.NobetOzelGun.Adi,
-                        NobetOzelGunId = s.NobetOzelGunId,
-                        Tarih = s.Takvim.Tarih,
-                        NobetUstGrupGunGrupId = s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrupId,
-                        GunGrupAdi = s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrup.GunGrup.Adi,
-                        GunGrupId = s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrup.GunGrup.Id,
-                        NobetUstGrupId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
-                        NobetGrupGorevTipId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTipId,
-                        NobetGorevTipId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGorevTipId,
-                        NobetGorevTipAdi = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGorevTip.Adi,
-                        NobetGrupId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrupId,
-                        NobetGrupAdi = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrup.Adi,
-                        Id = s.Id,
-                        FarkliGunGosterilsinMi = s.FarkliGunGosterilsinMi,
-                        AgirlikDegeri = s.AgirlikDegeri
-                    });
+                var liste = from s in ctx.NobetGrupGorevTipTakvimOzelGunler
+                            let nobetGrupGorevTipGunKural = ctx.NobetGrupGorevTipGunKurallar
+                                .FirstOrDefault(x => x.NobetGrupGorevTipId == s.NobetGrupGorevTipGunKural.NobetGrupGorevTipId && x.NobetGunKuralId == s.NobetGunKuralId).NobetUstGrupGunGrup
+                            select (new NobetGrupGorevTipTakvimOzelGunDetay
+                            {
+                                TakvimId = s.TakvimId,
+                                NobetGrupGorevTipGunKuralAdi = s.NobetGrupGorevTipGunKural.NobetGunKural.Adi,
+                                NobetGunKuralIdGrup = s.NobetGrupGorevTipGunKural.NobetGunKuralId,
+                                NobetGunKuralAdiGrup = s.NobetGrupGorevTipGunKural.NobetGunKural.Adi,
+                                NobetGunKuralIdFarkli = s.NobetGunKuralId,
+                                NobetGunKuralAdiFarkli = s.NobetGunKural.Adi,
+                                NobetGrupGorevTipGunKuralId = s.NobetGrupGorevTipGunKuralId,
+                                NobetOzelGunAdi = s.NobetOzelGun.Adi,
+                                NobetOzelGunId = s.NobetOzelGunId,
+                                Tarih = s.Takvim.Tarih,
+                                NobetUstGrupGunGrupId = s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrupId,
+                                //GunGrupAdi = s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrup.GunGrup.Adi,
+                                //GunGrupId = s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrup.GunGrup.Id,
+                                GunGrupAdi = s.FarkliGunGosterilsinMi == true
+                                    ? nobetGrupGorevTipGunKural.GunGrup.Adi
+                                    : s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrup.GunGrup.Adi,
+                                GunGrupId = s.FarkliGunGosterilsinMi == true
+                                    ? nobetGrupGorevTipGunKural.GunGrupId
+                                    : s.NobetGrupGorevTipGunKural.NobetUstGrupGunGrup.GunGrupId,
+                                NobetUstGrupId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
+                                NobetGrupGorevTipId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTipId,
+                                NobetGorevTipId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGorevTipId,
+                                NobetGorevTipAdi = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGorevTip.Adi,
+                                NobetGrupId = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrupId,
+                                NobetGrupAdi = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrup.Adi,
+                                Id = s.Id,
+                                FarkliGunGosterilsinMi = s.FarkliGunGosterilsinMi,
+                                AgirlikDegeri = s.AgirlikDegeri
+                            });
 
                 return filter == null
                     ? liste.ToList()
