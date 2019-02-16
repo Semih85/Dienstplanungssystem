@@ -207,6 +207,7 @@
     <Compile Include="Concrete\EczaneNobet\NobetAltGrup.cs" />
     <Compile Include="Concrete\EczaneNobet\NobetDurum.cs" />
     <Compile Include="Concrete\EczaneNobet\NobetDurumTip.cs" />
+    <Compile Include="Concrete\EczaneNobet\NobetFeragatTip.cs" />
     <Compile Include="Concrete\EczaneNobet\NobetGorevTip.cs" />
     <Compile Include="Concrete\EczaneNobet\NobetGrupGorevTip.cs" />
     <Compile Include="Concrete\EczaneNobet\NobetGrupGorevTipGunKural.cs" />

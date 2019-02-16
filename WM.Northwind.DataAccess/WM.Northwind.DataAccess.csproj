@@ -82,6 +82,7 @@
     <Compile Include="Abstract\EczaneNobet\INobetAltGrupDal.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetDurumDal.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetDurumTipDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetFeragatTipDal.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipDal.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipGunKuralDal.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipTakvimOzelGunDal.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetAltGrupDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetDurumDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetDurumTipDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetFeragatTipDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGrupGorevTipDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGrupGorevTipGunKuralDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGrupGorevTipTakvimOzelGunDal.cs" />
@@ -208,6 +210,7 @@
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetAltGrupMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetDurumMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetDurumTipMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetFeragatTipMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetGorevTipMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\IlceMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetGrupGorevTipGunKuralMap.cs" />

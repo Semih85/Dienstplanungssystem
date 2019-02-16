@@ -39,6 +39,12 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.HasRequired(t => t.EczaneNobetSonuc)
                     .WithOptional(t => t.EczaneNobetFeragat)
                     .WillCascadeOnDelete(false);
+
+            // Relationship
+            this.HasRequired(t => t.NobetFeragatTip)
+                .WithMany(et => et.EczaneNobetFeragatlar)
+                .HasForeignKey(t => t.NobetFeragatTipId)
+                .WillCascadeOnDelete(false);
             #endregion
         }
     }

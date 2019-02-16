@@ -11,12 +11,12 @@ using WM.Northwind.Entities.Concrete.EczaneNobet;
 
 namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
 {
-    public class NobetDurumTipMap : EntityTypeConfiguration<NobetDurumTip>
+    public class NobetFeragatTipMap : EntityTypeConfiguration<NobetFeragatTip>
     {
-        public NobetDurumTipMap()
+        public NobetFeragatTipMap()
         {
             this.HasKey(t => t.Id);
-            this.ToTable("NobetDurumTipler");
+            this.ToTable("NobetFeragatTipler");
 
             #region columns
             this.Property(t => t.Id).HasColumnName("Id");
@@ -29,17 +29,17 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
                         .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(t => t.Id).IsRequired();
             this.Property(t => t.Adi).IsRequired()
-                        .HasMaxLength(50)
+                        .HasMaxLength(150)
                         .HasColumnAnnotation("Index",
                         new IndexAnnotation(
-                            new IndexAttribute("UN_NobetDurumTipler_Adi")
+                            new IndexAttribute("UN_NobetFeragatTipler_Adi")
                             {
                                 IsUnique = true
                             }));
 
             this.Property(t => t.Aciklama)
                         //.IsRequired()
-                        .HasMaxLength(200);
+                        .HasMaxLength(250);
             #endregion
 
             #region relationship

@@ -16,7 +16,9 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         [Required(ErrorMessage = "Feragat Açıklaması gereklidir.")]
         [Display(Name = "Açıklama")]
         public string Aciklama { get; set; }
+        public int NobetFeragatTipId { get; set; }
 
         public virtual EczaneNobetSonuc EczaneNobetSonuc { get; set; }
+        public virtual NobetFeragatTip NobetFeragatTip { get; set; }
     }
 }
