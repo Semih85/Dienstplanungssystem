@@ -51,6 +51,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
             using (var ctx = new EczaneNobetContext())
             {
                 var liste = ctx.EczaneNobetSonuclar
+                    .Where(w => w.EczaneNobetFeragat.NobetFeragatTipId == 3)
                     .Select(s => new EczaneNobetSonucDetay2
                     {
                         Id = s.Id,

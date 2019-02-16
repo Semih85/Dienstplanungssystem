@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<EczaneNobetFeragatDetay>
 
+@{
+    ViewBag.Title = "Nöbet Feragat | Nöbet Sistemi";
+}
+
 <h4>
     Eczane Nöbet Feragat
     <a class="btn btn-outline-success btn-sm ml-5" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
@@ -8,33 +12,36 @@
 <table class="table table-hover table-sm">
     <thead class="thead-light">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.EczaneNobetSonucId)
-            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.EczaneNobetSonucId)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.EczaneAdi)
             </th>
-            <th>
+            <th style="width:8%">
                 @Html.DisplayNameFor(model => model.NobetGrupAdi)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+                @Html.DisplayName("Görev Tipi")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Tarih)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.NobetFeragatTipAdi)
+            </th>
+            <th class="w-50">
                 @Html.DisplayNameFor(model => model.Aciklama)
             </th>
-            <th></th>
+            <th style="width:8%"></th>
         </tr>
     </thead>
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EczaneNobetSonucId)
-            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.EczaneNobetSonucId)
+                </td>*@
             <td>
                 @Html.DisplayFor(modelItem => item.EczaneAdi)
             </td>
@@ -42,10 +49,13 @@
                 @Html.DisplayFor(modelItem => item.NobetGrupAdi)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+                @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Tarih)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetFeragatTipAdi)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Aciklama)
@@ -58,10 +68,14 @@
                     <span class="fa fa-cog"></span>
                 </button>
                 <div class="collapse d-md-block" id="@target.Remove(0,1)">
-                    @Html.ActionLink(" ", "Edit", "EczaneNobetSonuc", new { id = item.EczaneNobetSonucId, nobetGrupId = item.NobetGrupId, takvimId = item.TakvimId }, new { @class = "btn btn-outline-warning btn-sm fa fa-hand-o-right fa-lg" })
-                    @Html.ActionLink(" ", "Edit", new { id = item.EczaneNobetSonucId }, new { @class = "btn btn-outline-success btn-sm fa fa-edit fa-lg", @style = "height:23px;" })
-                    @Html.ActionLink(" ", "Details", new { id = item.EczaneNobetSonucId }, new { @class = "btn btn-outline-primary btn-sm fa fa-info-circle fa-lg", @style = "height:23px;" })
-                    @Html.ActionLink(" ", "Delete", new { id = item.EczaneNobetSonucId }, new { @class = "btn btn-outline-danger btn-sm fa fa-remove fa-lg", @style = "height:23px;" })
+                    @Html.ActionLink(" ", "Edit", "EczaneNobetSonuc", new { id = item.EczaneNobetSonucId, nobetGrupId = item.NobetGrupId, takvimId = item.TakvimId }, new { @class = "btn btn-outline-warning btn-sm fa fa-hand-o-right" })
+                    <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.EczaneNobetSonucId, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                    <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.EczaneNobetSonucId, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                    <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.EczaneNobetSonucId, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+
+                    @*@Html.ActionLink(" ", "Edit", new { id = item.EczaneNobetSonucId }, new { @class = "btn btn-outline-success btn-sm fa fa-edit", @style = "height:23px;" })
+                        @Html.ActionLink(" ", "Details", new { id = item.EczaneNobetSonucId }, new { @class = "btn btn-outline-primary btn-sm fa fa-info-circle", @style = "height:23px;" })
+                        @Html.ActionLink(" ", "Delete", new { id = item.EczaneNobetSonucId }, new { @class = "btn btn-outline-danger btn-sm fa fa-remove ", @style = "height:23px;" })*@
                 </div>
             </td>
         </tr>

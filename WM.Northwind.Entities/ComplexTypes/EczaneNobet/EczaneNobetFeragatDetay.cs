@@ -19,6 +19,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int NobetGrupId { get; set; }
         public int TakvimId { get; set; }
         public int NobetGorevTipId { get; set; }
+        public int NobetFeragatTipId { get; set; }
 
         [Display(Name = "Eczane")]
         public string EczaneAdi { get; set; }
@@ -31,5 +32,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string NobetGorevTipAdi { get; set; }
         [Display(Name = "Açıklama")]
         public string Aciklama { get; set; }
+        [Display(Name = "Nöbet Feragat Tipi")]
+        public string NobetFeragatTipAdi { get; set; }
     } 
 } 

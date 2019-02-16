@@ -226,6 +226,9 @@ namespace WM.BLL.DependencyResolvers.Ninject
 
             Bind<IEczaneUzaklikMatrisService>().To<EczaneUzaklikMatrisManager>().InSingletonScope();
             Bind<IEczaneUzaklikMatrisDal>().To<EfEczaneUzaklikMatrisDal>();
+
+            Bind<INobetFeragatTipService>().To<NobetFeragatTipManager>().InSingletonScope();
+            Bind<INobetFeragatTipDal>().To<EfNobetFeragatTipDal>();
             #endregion
 
             #region Optimization

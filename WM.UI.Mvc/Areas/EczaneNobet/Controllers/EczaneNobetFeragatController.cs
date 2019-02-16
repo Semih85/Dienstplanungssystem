@@ -18,21 +18,26 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
     [Authorize]
     public class EczaneNobetFeragatController : Controller
     {
+        #region ctor
         private IEczaneNobetFeragatService _eczaneNobetFeragatService;
         private IEczaneNobetSonucService _eczaneNobetSonucService;
         private INobetUstGrupService _nobetUstGrupService;
         private IUserService _userService;
+        private INobetFeragatTipService _nobetFeragatTipService;
 
         public EczaneNobetFeragatController(IEczaneNobetFeragatService eczaneNobetFeragatService,
             IEczaneNobetSonucService eczaneNobetSonucService,
             INobetUstGrupService nobetUstGrupService,
-            IUserService userService)
+            IUserService userService,
+            INobetFeragatTipService nobetFeragatTipService)
         {
             _eczaneNobetFeragatService = eczaneNobetFeragatService;
             _eczaneNobetSonucService = eczaneNobetSonucService;
             _nobetUstGrupService = nobetUstGrupService;
             _userService = userService;
-        }
+            _nobetFeragatTipService = nobetFeragatTipService;
+        } 
+        #endregion
 
         // GET: EczaneNobet/EczaneNobetFeragat
         public ActionResult Index()
@@ -68,7 +73,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     .Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
                     .OrderBy(o => o.TakvimId);
 
-            ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s=>new MyDrop { Id=s.Id, Value=$"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value");
+            var nobetFeragatTipler = _nobetFeragatTipService.GetList();
+
+            ViewBag.NobetFeragatTipId = new SelectList(nobetFeragatTipler.Select(s => new MyDrop { Id = s.Id, Value = s.Adi }), "Id", "Value");
+            ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value");
             return View();
         }
 
@@ -77,7 +85,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EczaneNobetSonucId,Aciklama")] EczaneNobetFeragat eczaneNobetFeragat)
+        public ActionResult Create([Bind(Include = "EczaneNobetSonucId,Aciklama,NobetFeragatTipId")] EczaneNobetFeragat eczaneNobetFeragat)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +97,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar()
                     .Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
                     .OrderBy(o => o.TakvimId);
-            ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s=>new MyDrop { Id=s.Id, Value=$"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value", eczaneNobetFeragat.EczaneNobetSonucId);
+            var nobetFeragatTipler = _nobetFeragatTipService.GetList();
+
+            ViewBag.NobetFeragatTipId = new SelectList(nobetFeragatTipler.Select(s => new MyDrop { Id = s.Id, Value = s.Adi }), "Id", "Value");
+            ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value", eczaneNobetFeragat.EczaneNobetSonucId);
             return View(eczaneNobetFeragat);
         }
 
@@ -109,8 +120,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
             var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar()
                     .Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
-                    .OrderBy(o=>o.TakvimId);
-            ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s=>new MyDrop { Id=s.Id, Value=$"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value", eczaneNobetFeragat.EczaneNobetSonucId);
+                    .OrderBy(o => o.TakvimId);
+            var nobetFeragatTipler = _nobetFeragatTipService.GetList();
+
+            ViewBag.NobetFeragatTipId = new SelectList(nobetFeragatTipler.Select(s => new MyDrop { Id = s.Id, Value = s.Adi }), "Id", "Value");
+            ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value", eczaneNobetFeragat.EczaneNobetSonucId);
             return View(eczaneNobetFeragat);
         }
 
@@ -119,7 +133,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EczaneNobetSonucId,Aciklama")] EczaneNobetFeragat eczaneNobetFeragat)
+        public ActionResult Edit([Bind(Include = "EczaneNobetSonucId,Aciklama,NobetFeragatTipId")] EczaneNobetFeragat eczaneNobetFeragat)
         {
             if (ModelState.IsValid)
             {
@@ -131,7 +145,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar()
                     .Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
                     .OrderBy(o => o.TakvimId);
-            ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s=>new MyDrop { Id=s.Id, Value=$"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value", eczaneNobetFeragat.EczaneNobetSonucId);
+            var nobetFeragatTipler = _nobetFeragatTipService.GetList();
+
+            ViewBag.NobetFeragatTipId = new SelectList(nobetFeragatTipler.Select(s => new MyDrop { Id = s.Id, Value = s.Adi }), "Id", "Value");
+            ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value", eczaneNobetFeragat.EczaneNobetSonucId);
             return View(eczaneNobetFeragat);
         }
 

@@ -1,7 +1,7 @@
 ﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.EczaneNobetFeragat
 
 @{
-    ViewBag.Title = "Eczane Nöbet Feragat Ekle | Nöbet Yaz";
+    ViewBag.Title = "Eczane Nöbet Feragat Ekle | Nöbet Sistemi";
 }
 
 
@@ -23,6 +23,17 @@
                title = "Nöbet seçiniz..."
            })
                 @Html.ValidationMessageFor(model => model.EczaneNobetSonucId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NobetFeragatTipId, "Nöbet Feragat Tipi", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("NobetFeragatTipId", null, htmlAttributes: new { @class = "form-control selectpicker",
+               //data_live_search = "true",
+               //title = "Feragat tipini seçiniz..."
+           })
+                @Html.ValidationMessageFor(model => model.NobetFeragatTipId, "", new { @class = "text-danger" })
             </div>
         </div>
 

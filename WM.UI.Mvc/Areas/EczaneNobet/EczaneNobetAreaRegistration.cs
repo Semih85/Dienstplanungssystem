@@ -286,6 +286,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
             );
 
             context.MapRoute(
+                name: "EczaneNobetFeragat",
+                url: "eczane-nobet-feragatlar",
+                defaults: new { controller = "EczaneNobetFeragat", action = "Index" }
+            );
+
+            context.MapRoute(
                 name: "EczaneNobetDegistir",
                 url: "eczane-nobet-degistir",
                 defaults: new { controller = "EczaneNobetSonuc", action = "NobetDegistir" }

@@ -17,8 +17,10 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         [Display(Name = "Açıklama")]
         public string Aciklama { get; set; }
         public int NobetFeragatTipId { get; set; }
+        public int EczaneNobetGrupId { get; set; }
 
         public virtual EczaneNobetSonuc EczaneNobetSonuc { get; set; }
         public virtual NobetFeragatTip NobetFeragatTip { get; set; }
+        //public virtual EczaneNobetGrup EczaneNobetGrup { get; set; }
     }
 }
