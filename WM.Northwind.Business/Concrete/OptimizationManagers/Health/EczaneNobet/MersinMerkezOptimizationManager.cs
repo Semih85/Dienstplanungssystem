@@ -350,6 +350,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             #endregion
 
+            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe);
+
             var mersinMerkezDataModel = new MersinMerkezDataModelV2()
             {
                 Yil = yilBitis,
@@ -376,7 +378,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
                 EczaneNobetIstekler = eczaneNobetIstekler,
                 NobetGrupGunKurallar = _nobetGrupGunKuralService.GetDetaylarAktifList(nobetGrupIdListe),
-                NobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe),
+                NobetGrupKurallar = nobetGrupKurallar,
                 NobetGrupGorevTipler = nobetGrupGorevTipler,
                 NobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(nobetGrupIdListe, baslangicTarihi, bitisTarihi),
                 EczaneNobetGruplar = eczaneNobetGruplar,
@@ -396,6 +398,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             _eczaneNobetOrtakService.KurallariKontrolEtHaftaIciEnAzEnCok(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);
             _eczaneNobetOrtakService.KurallariKontrolEtMazeretIstek(nobetUstGrupId, eczaneNobetMazeretler, eczaneNobetIstekler);
+            _eczaneNobetOrtakService.KurallariKontrolEtIstek(nobetUstGrupId, eczaneNobetIstekler, nobetGrupKurallar);
 
             return mersinMerkezDataModel;
         }

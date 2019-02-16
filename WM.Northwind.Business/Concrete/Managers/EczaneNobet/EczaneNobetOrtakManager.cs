@@ -2962,6 +2962,100 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
         }
 
+        public void KurallariKontrolEtIstek(int nobetUstGrupId, List<EczaneNobetIstekDetay> eczaneNobetIstekler, List<NobetGrupKuralDetay> nobetGrupKuralDetaylar)
+        {//bir eczaneye peşpeşe günlerde istek girilemez
+            //son tuttuğu nöbetten sonra en az ardışık nöbet sayısı kadar boş gün geçmeden istek girilemez
+            var istek = _nobetUstGrupKisitService.GetDetay("istek", nobetUstGrupId);
+
+            var eczaneler = new List<string>();
+
+            if (!istek.PasifMi)
+            {
+                var nobetGrupKurallar = nobetGrupKuralDetaylar
+                    .Where(w => w.NobetKuralId == 1)
+                    .Select(s => new { s.NobetGrupGorevTipId, s.NobetGorevTipAdi, s.NobetGrupAdi, s.NobetGrupId, s.NobetKuralAdi, s.NobetKuralId, s.Deger }).Distinct().ToList();
+
+                foreach (var nobetGrupKural in nobetGrupKurallar)
+                {
+                    var varsayilanArdisikBosGunSayisi = (int)nobetGrupKural.Deger;
+
+                    var istekGirilenGruplar = eczaneNobetIstekler
+                      .Where(w => w.NobetGrupGorevTipId == nobetGrupKural.NobetGrupGorevTipId).ToList();
+
+                    var istekGirilenEczaneler = istekGirilenGruplar
+                      .Select(s => new
+                      {
+                          s.EczaneAdi,
+                          s.EczaneId,
+                          s.EczaneNobetGrupId
+                      }).Distinct().ToList();
+                    
+                    foreach (var istekGirilenEczane in istekGirilenEczaneler)
+                    {
+                        var istekTarihleri = istekGirilenGruplar
+                            .Where(w => w.EczaneNobetGrupId == istekGirilenEczane.EczaneNobetGrupId)
+                            .Select(s => new
+                            {
+                                s.TakvimId,
+                                s.Tarih
+                            }).ToList();
+                        
+                        foreach (var istekTarih in istekTarihleri)
+                        {
+                            var ilkTarih = istekTarih.Tarih;
+
+                            var sonrakiIstekGirilebilecekIstekTarihi = istekTarih.Tarih.AddDays(varsayilanArdisikBosGunSayisi);
+
+                            var pespeseGirilenIstekler = istekTarihleri.Where(w => w.Tarih >= ilkTarih && w.Tarih <= sonrakiIstekGirilebilecekIstekTarihi).ToList();
+
+                            var istekSayisi = pespeseGirilenIstekler.Count;
+
+                            if (istekSayisi > 1)
+                            {
+                                eczaneler.Add($"{nobetGrupKural.NobetGrupAdi} {istekGirilenEczane.EczaneAdi} eczanesi için; " +
+                                        $"<span class='badge badge-info'>{ilkTarih.ToShortDateString()}-{sonrakiIstekGirilebilecekIstekTarihi.ToShortDateString()}</span> tarihleri " +
+                                        $"arasında <b>{istekSayisi} adet istek</b> girilmiştir." +
+                                        $"(İki nöbet arasında <b>en az {varsayilanArdisikBosGunSayisi} boş gün</b> olmalıdır.)");
+                            }
+
+                            //foreach (var pespeseGirilenIstek in pespeseGirilenIstekler)
+                            //{
+                            //    eczaneler.Add($"<span class='badge badge-info'>{pespeseGirilenIstek.Tarih.ToShortDateString()}</span> tarihi " +
+                            //        $"arasında {pespeseGirilenIstekler.Count} gün istek girilmiştir."
+                            //        );
+                            //}                            
+                        }
+                    }
+                }
+
+                var ilgiliEczaneSayisi = eczaneler.Count;
+
+                var kuralIhlalMesaj = $"Kural kontol! "
+                        + $"Aşağıdaki açıklamalara göre "
+                        + $"<a href=\"/EczaneNobet/NobetUstGrupKisit/KisitAyarla\" class=\"card-link\" target=\"_blank\">nöbet ayarlarında</a> "
+                        + $"bazı değişiklikler yaparak <strong>tekrar çözmelisiniz..</strong>"
+                        + "<hr /> "
+                        + $"<strong>K{istek.KisitId} ({istek.KisitAdiGosterilen})</strong> kuralı aktiftir.</strong> "
+                        + $"Lütfen aşağıdaki "
+                        + $"eczane ve tarihleri <span class='badge badge-light'>{ilgiliEczaneSayisi}</span> kontrol ediniz.</p>";
+
+                var celiskiler = "<ul class='list-group list-group-flush mt-2 mb-3'>";
+
+                foreach (var eczane in eczaneler)
+                {
+                    celiskiler += $"<li class='list-group-item list-group-item-action py-1'>{eczane}</li>";
+                }
+                celiskiler += "</ul>";
+
+                kuralIhlalMesaj += celiskiler;
+
+                if (ilgiliEczaneSayisi > 0)
+                {
+                    throw new Exception(kuralIhlalMesaj);
+                }
+            }
+        }
+
         #endregion
     }
 }

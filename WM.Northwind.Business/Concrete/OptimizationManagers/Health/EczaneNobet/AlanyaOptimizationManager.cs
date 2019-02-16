@@ -436,6 +436,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             #endregion
             var eczaneNobetSonuclarAltGruplaAyniGun = new List<EczaneNobetSonucListe2>();
 
+            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe);
+
             #endregion
 
             var alanyaDataModel = new AlanyaDataModel()
@@ -461,7 +463,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 OncekiAylardaAyniGunNobetTutanEczaneler = oncekiAylardaAyniGunNobetTutanEczaneler,
                 EczaneNobetIstekler = eczaneNobetIstekler,
                 NobetGrupGunKurallar = _nobetGrupGunKuralService.GetDetaylarAktifList(nobetGrupIdListe),
-                NobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe),
+                NobetGrupKurallar = nobetGrupKurallar,
                 NobetGrupGorevTipler = nobetGrupGorevTipler,
                 NobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(nobetGrupIdListe, baslangicTarihi, bitisTarihi),
                 EczaneNobetGruplar = eczaneNobetGruplar,
@@ -486,6 +488,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             _eczaneNobetOrtakService.KurallariKontrolEtHaftaIciEnAzEnCok(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);
             _eczaneNobetOrtakService.KurallariKontrolEtMazeretIstek(nobetUstGrupId, eczaneNobetMazeretler, eczaneNobetIstekler);
+            _eczaneNobetOrtakService.KurallariKontrolEtIstek(nobetUstGrupId, eczaneNobetIstekler, nobetGrupKurallar);
 
             return alanyaDataModel;
         }

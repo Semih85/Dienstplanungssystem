@@ -1126,7 +1126,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     {
                         //data.CalismaSayisi++;
 
-                        if (data.CalismaSayisi == calismaSayisiEnFazla + 1)
+                        if (data.CalismaSayisi == calismaSayisiEnFazla //+ 1
+                            )
                         {
                             results.Celiskiler = CeliskileriEkle(solution);
                         }

@@ -1587,7 +1587,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var results = new EczaneNobetSonucModel();
             var calismaSayisiEnFazla = 0;
 
-            calismaSayisiEnFazla += 3;
+            calismaSayisiEnFazla = 3;
 
             _configuration = new Configuration
             {
