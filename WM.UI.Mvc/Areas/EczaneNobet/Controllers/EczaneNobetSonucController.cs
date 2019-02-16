@@ -1137,14 +1137,38 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
 
             var tarihler = _takvimService.GetList().Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()}" });
+
             var nobetGorevTipler = _nobetGorevTipService.GetList()
                 .Select(s => new MyDrop { Id = s.Id, Value = s.Adi })
                 .OrderBy(s => s.Id);
 
-            ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar, "Id", "Value");
             ViewBag.TakvimId = new SelectList(tarihler, "Id", "Value");
+            ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar, "Id", "Value");
             ViewBag.NobetGorevTipId = new SelectList(nobetGorevTipler, "Id", "Value");
             return View();
+        }
+
+        public ActionResult CreateGercekNobetci(int takvimId)
+        {
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var eczaneler = _eczaneService.GetListByUser(user);
+
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar()
+                .Where(w => eczaneler.Select(s => s.Id).Contains(w.EczaneId))
+                .OrderBy(s => s.EczaneAdi).ThenBy(t => t.NobetGrupAdi)
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" });
+
+
+            var tarihler = _takvimService.GetList().Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()}" });
+
+            var nobetGorevTipler = _nobetGorevTipService.GetList()
+                .Select(s => new MyDrop { Id = s.Id, Value = s.Adi })
+                .OrderBy(s => s.Id);            
+
+            ViewBag.TakvimId = new SelectList(tarihler, "Id", "Value", takvimId);
+            ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar, "Id", "Value");
+            ViewBag.NobetGorevTipId = new SelectList(nobetGorevTipler, "Id", "Value");
+            return View("Create");
         }
 
         // POST: EczaneNobet/EczaneNobetSonuc/Create
@@ -1174,7 +1198,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar, "Id", "Value", eczaneNobetSonuc.EczaneNobetGrupId);
             ViewBag.TakvimId = new SelectList(tarihler, "Id", "Value", eczaneNobetSonuc.TakvimId);
-            ViewBag.NobetGorevTipId = new SelectList(nobetGorevTipler, "Id", "Value");
+            ViewBag.NobetGorevTipId = new SelectList(nobetGorevTipler, "Id", "Value",eczaneNobetSonuc.NobetGorevTipId);
             return View(eczaneNobetSonuc);
         }
 
@@ -1277,17 +1301,23 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,EczaneNobetGrupId,TakvimId")] EczaneNobetSonuc eczaneNobetSonuc)
+        public ActionResult Edit([Bind(Include = "Id,EczaneNobetGrupId,TakvimId,NobetGorevTipId")] EczaneNobetSonuc eczaneNobetSonuc)
         {
             if (ModelState.IsValid)
             {
                 _eczaneNobetSonucService.Update(eczaneNobetSonuc);
-                return RedirectToAction("Index");
+                return RedirectToAction("PivotSonuclar");
             }
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar().Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" });
             var tarihler = _takvimService.GetList().Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()}" });
+            var nobetGorevTipler = _nobetGorevTipService.GetList()
+              .Select(s => new MyDrop { Id = s.Id, Value = s.Adi })
+              .OrderBy(s => s.Id);
+
+
             ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar, "Id", "Value", eczaneNobetSonuc.EczaneNobetGrupId);
             ViewBag.TakvimId = new SelectList(tarihler, "Id", "Value", eczaneNobetSonuc.TakvimId);
+            ViewBag.NobetGorevTipId = new SelectList(nobetGorevTipler, "Id", "Value",eczaneNobetSonuc.NobetGorevTipId);
             return View(eczaneNobetSonuc);
         }
 

@@ -21,6 +21,9 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int NobetGorevTipId { get; set; }
         public int NobetFeragatTipId { get; set; }
 
+        public string EczaneAdiFeragatEden { get; set; }
+        public int EczaneNobetGrupIdFeragatEden { get; set; }
+
         [Display(Name = "Eczane")]
         public string EczaneAdi { get; set; }
         [Display(Name = "Nöbet Grubu")]

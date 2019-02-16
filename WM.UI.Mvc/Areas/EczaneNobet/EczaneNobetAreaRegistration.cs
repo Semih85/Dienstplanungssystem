@@ -54,6 +54,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
             );
 
             context.MapRoute(
+                name: "EczaneNobetSonucEkle",
+                url: "eczane-nobet-ekle",
+                defaults: new { controller = "EczaneNobetSonuc", action = "Create", takvimId = UrlParameter.Optional }
+            );
+
+            context.MapRoute(
                 name: "NobeGrupOzelTakvimCreate",
                 url: "nobet-grup-ozel-takvim-ekle",
                 defaults: new { controller = "NobetGrupGorevTipTakvimOzelGun", action = "Create" }

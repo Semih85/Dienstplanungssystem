@@ -24,18 +24,21 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetUstGrupService _nobetUstGrupService;
         private IUserService _userService;
         private INobetFeragatTipService _nobetFeragatTipService;
+        private IEczaneNobetGrupService _eczaneNobetGrupService;
 
         public EczaneNobetFeragatController(IEczaneNobetFeragatService eczaneNobetFeragatService,
             IEczaneNobetSonucService eczaneNobetSonucService,
             INobetUstGrupService nobetUstGrupService,
             IUserService userService,
-            INobetFeragatTipService nobetFeragatTipService)
+            INobetFeragatTipService nobetFeragatTipService,
+            IEczaneNobetGrupService eczaneNobetGrupService)
         {
             _eczaneNobetFeragatService = eczaneNobetFeragatService;
             _eczaneNobetSonucService = eczaneNobetSonucService;
             _nobetUstGrupService = nobetUstGrupService;
             _userService = userService;
             _nobetFeragatTipService = nobetFeragatTipService;
+            _eczaneNobetGrupService = eczaneNobetGrupService;
         } 
         #endregion
 
@@ -75,6 +78,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var nobetFeragatTipler = _nobetFeragatTipService.GetList();
 
+            //var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGruplar.FirstOrDefault())
+            //    .OrderBy(s => s.EczaneAdi)
+            //    .ThenBy(t => t.NobetGrupAdi)
+            //    .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi} ({s.NobetGrupAdi}, {s.NobetGorevTipAdi})" });
+
+            //ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar, "Id", "Value");
             ViewBag.NobetFeragatTipId = new SelectList(nobetFeragatTipler.Select(s => new MyDrop { Id = s.Id, Value = s.Adi }), "Id", "Value");
             ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value");
             return View();
@@ -89,6 +98,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
+                var feragatEdilecekSonuc = _eczaneNobetSonucService.GetById(eczaneNobetFeragat.EczaneNobetSonucId);
+
+                eczaneNobetFeragat.EczaneNobetGrupId = feragatEdilecekSonuc.EczaneNobetGrupId;
+
                 _eczaneNobetFeragatService.Insert(eczaneNobetFeragat);
                 return RedirectToAction("Index");
             }
@@ -99,6 +112,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     .OrderBy(o => o.TakvimId);
             var nobetFeragatTipler = _nobetFeragatTipService.GetList();
 
+            //var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGruplar.FirstOrDefault())
+            //    .OrderBy(s => s.EczaneAdi)
+            //    .ThenBy(t => t.NobetGrupAdi)
+            //    .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi} ({s.NobetGrupAdi}, {s.NobetGorevTipAdi})" });
+
+            //ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar, "Id", "Value");
             ViewBag.NobetFeragatTipId = new SelectList(nobetFeragatTipler.Select(s => new MyDrop { Id = s.Id, Value = s.Adi }), "Id", "Value");
             ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value", eczaneNobetFeragat.EczaneNobetSonucId);
             return View(eczaneNobetFeragat);
@@ -123,6 +142,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     .OrderBy(o => o.TakvimId);
             var nobetFeragatTipler = _nobetFeragatTipService.GetList();
 
+            //var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGruplar.FirstOrDefault())
+            //    .OrderBy(s => s.EczaneAdi)
+            //    .ThenBy(t => t.NobetGrupAdi)
+            //    .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi} ({s.NobetGrupAdi}, {s.NobetGorevTipAdi})" });
+
+            //ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar, "Id", "Value");
             ViewBag.NobetFeragatTipId = new SelectList(nobetFeragatTipler.Select(s => new MyDrop { Id = s.Id, Value = s.Adi }), "Id", "Value");
             ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value", eczaneNobetFeragat.EczaneNobetSonucId);
             return View(eczaneNobetFeragat);
@@ -137,6 +162,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
+                var feragatEdilecekSonuc = _eczaneNobetSonucService.GetById(eczaneNobetFeragat.EczaneNobetSonucId);
+
+                eczaneNobetFeragat.EczaneNobetGrupId = feragatEdilecekSonuc.EczaneNobetGrupId;
+
                 _eczaneNobetFeragatService.Update(eczaneNobetFeragat);
                 return RedirectToAction("Index");
             }
@@ -147,6 +176,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     .OrderBy(o => o.TakvimId);
             var nobetFeragatTipler = _nobetFeragatTipService.GetList();
 
+            //var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGruplar.FirstOrDefault())
+            //    .OrderBy(s => s.EczaneAdi)
+            //    .ThenBy(t => t.NobetGrupAdi)
+            //    .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi} ({s.NobetGrupAdi}, {s.NobetGorevTipAdi})" });
+
+            //ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar, "Id", "Value");
             ViewBag.NobetFeragatTipId = new SelectList(nobetFeragatTipler.Select(s => new MyDrop { Id = s.Id, Value = s.Adi }), "Id", "Value");
             ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value", eczaneNobetFeragat.EczaneNobetSonucId);
             return View(eczaneNobetFeragat);

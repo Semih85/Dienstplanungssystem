@@ -36,7 +36,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupId = s.EczaneNobetSonuc.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         NobetUstGrupAdi = s.EczaneNobetSonuc.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
                         NobetFeragatTipId = s.NobetFeragatTipId,
-                        NobetFeragatTipAdi = s.NobetFeragatTip.Adi
+                        NobetFeragatTipAdi = s.NobetFeragatTip.Adi,
+                        EczaneNobetGrupIdFeragatEden = s.EczaneNobetGrupId,
+                        EczaneAdiFeragatEden = s.EczaneNobetGrup.Eczane.Adi
                     }).SingleOrDefault(filter);
             }
         }
@@ -62,7 +64,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupId = s.EczaneNobetSonuc.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         NobetUstGrupAdi = s.EczaneNobetSonuc.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
                         NobetFeragatTipId = s.NobetFeragatTipId,
-                        NobetFeragatTipAdi = s.NobetFeragatTip.Adi
+                        NobetFeragatTipAdi = s.NobetFeragatTip.Adi,
+                        EczaneNobetGrupIdFeragatEden = s.EczaneNobetGrupId,
+                        EczaneAdiFeragatEden = s.EczaneNobetGrup.Eczane.Adi
                     });
 
                 return filter == null

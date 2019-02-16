@@ -25,6 +25,9 @@
             </div>
         </div>
 
+        @Html.HiddenFor(m => m.NobetGorevTipId)
+        @Html.HiddenFor(m => m.TakvimId)
+
         <div class="form-group">
             @Html.LabelFor(model => model.TakvimId, "Tarih", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

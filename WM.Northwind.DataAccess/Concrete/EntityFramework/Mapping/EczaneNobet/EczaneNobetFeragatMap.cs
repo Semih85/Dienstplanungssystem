@@ -45,6 +45,11 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
                 .WithMany(et => et.EczaneNobetFeragatlar)
                 .HasForeignKey(t => t.NobetFeragatTipId)
                 .WillCascadeOnDelete(false);
+
+            this.HasRequired(t => t.EczaneNobetGrup)
+                .WithMany(et => et.EczaneNobetFeragatlar)
+                .HasForeignKey(t => t.EczaneNobetGrupId)
+                .WillCascadeOnDelete(false);
             #endregion
         }
     }
