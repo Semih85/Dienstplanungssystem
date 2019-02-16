@@ -26,6 +26,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IBartinOptimizationService _bartinOptimizationService;
         private ICorumOptimizationService _corumOptimizationService;
         private IIskenderunOptimizationService _iskenderunOptimizationService;
+        private IZonguldakOptimizationService _zonguldakOptimizationService;
 
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
@@ -62,7 +63,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                   IEczaneNobetSonucService eczaneNobetSonucService,
                                   IEczaneNobetOrtakService eczaneNobetOrtakService,
                                   IEczaneNobetMazeretService eczaneNobetMazeretService,
-                                  IKalibrasyonService kalibrasyonService
+                                  IKalibrasyonService kalibrasyonService,
+                                  IZonguldakOptimizationService zonguldakOptimizationService
             )
         {
             _alanyaOptimizationService = alanyaOptimizationService;
@@ -87,6 +89,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _eczaneNobetOrtakService = eczaneNobetOrtakService;
             _eczaneNobetMazeretService = eczaneNobetMazeretService;
             _kalibrasyonService = kalibrasyonService;
+            _zonguldakOptimizationService = zonguldakOptimizationService;
         }
         #endregion
 
@@ -235,8 +238,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 case 6:
                     sonucModel = _bartinOptimizationService.ModelCoz(eczaneNobetModelCoz);
                     break;
-                case 7://zonguldak
-                    //sonucModel = _iskenderunOptimizationService.ModelCoz(eczaneNobetModelCoz);
+                case 7:
+                    sonucModel = _zonguldakOptimizationService.ModelCoz(eczaneNobetModelCoz);
                     break;
                 case 8:
                     sonucModel = _iskenderunOptimizationService.ModelCoz(eczaneNobetModelCoz);

@@ -254,6 +254,7 @@
     <Compile Include="Concrete\Optimization\Blend\BlendDataModel.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\AlanyaDataModelEski.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\AlanyaDataModel.cs" />
+    <Compile Include="Concrete\Optimization\EczaneNobet\ZonguldakDataModel.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\BartinDataModel.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\CorumDataModel.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\IskenderunDataModel.cs" />

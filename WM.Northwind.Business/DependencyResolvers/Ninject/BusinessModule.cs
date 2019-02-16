@@ -264,6 +264,13 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IIskenderunOptimizationService>().To<IskenderunOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetIskenderunOptimization>().To<IskenderunOptano>().InSingletonScope();
 
+            Bind<IZonguldakOptimizationService>().To<ZonguldakOptimizationManager>().InSingletonScope();
+            Bind<IEczaneNobetZonguldakOptimization>().To<ZonguldakOptano>().InSingletonScope();
+
+
+
+
+
             Bind<ITransportService>().To<TransportManager>().InSingletonScope();
             Bind<ITransportOptimization>().To<TransportOptano>();
 

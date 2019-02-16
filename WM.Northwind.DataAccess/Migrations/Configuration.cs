@@ -29,7 +29,7 @@ namespace WM.Northwind.DataAccess.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-            bool guncelle = true;
+            bool guncelle = false;
 
             if (guncelle)
             {
@@ -110,7 +110,7 @@ namespace WM.Northwind.DataAccess.Migrations
             var baslamaTarihi = new DateTime(2019, 3, 1);
             var odaId = 5;
             var nobetUstGrupId = 6;
-            var nobetGrupGorevTipId = 45;
+            var nobetGrupGorevTipId = context.NobetGrupGorevTipler.Max(x => x.Id) + 1;
             var varsayilanNobetciSayisi = 1;
 
             //UstGrupPaketiEkle(context, baslamaTarihi, odaId, nobetUstGrupId);
@@ -185,12 +185,12 @@ new Eczane{ Adi="KAAN", AcilisTarihi=new DateTime(2014,9,24), Enlem=41.746243, B
                 }
             };
 
-            UstGrupPaketiEkle(gerekliBilgilerBartin);
+            //UstGrupPaketiEkle(gerekliBilgilerBartin);
 
             baslamaTarihi = new DateTime(2019, 3, 1);
             odaId = 5;
             nobetUstGrupId = 7;
-            nobetGrupGorevTipId = 31;
+            //nobetGrupGorevTipId = 31;
             varsayilanNobetciSayisi = 1;
             var gerekliBilgilerZonguldak2 = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)
             {
@@ -265,7 +265,7 @@ new Eczane{ Adi="BAHAR", AcilisTarihi=new DateTime(2016,10,20), Enlem=41.306890,
                 }
             };
 
-            //UstGrupPaketiEkle(gerekliBilgilerZonguldak);
+            UstGrupPaketiEkle(gerekliBilgilerZonguldak2);
 
         }
 
@@ -4786,6 +4786,8 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
             #region eczaneler            
 
+            var eczaneIdSon = b.EczaneNobetContext.Eczaneler.Max(m => m.Id);
+
             foreach (var eczane in b.Eczaneler)
             {
                 eczane.NobetUstGrupId = b.NobetUstGrupId;
@@ -4807,8 +4809,11 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
             var kullnicilar = b.Kullanicilar.Select(s => s.User);
 
-            b.EczaneNobetContext.Users.AddOrUpdate(s => new { s.Email }, kullnicilar.ToArray());
-            b.EczaneNobetContext.SaveChanges();
+            if (kullnicilar.Count() > 0)
+            {
+                b.EczaneNobetContext.Users.AddOrUpdate(s => new { s.Email }, kullnicilar.ToArray());
+                b.EczaneNobetContext.SaveChanges();
+            }
 
             #endregion
 
@@ -4934,7 +4939,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
             #region eczane nöbet gruplar
 
             //buraya dikkat. birden çok nöbet grubu varsa ayýrýp eklemek lazým
-            var eczaneler = b.EczaneNobetContext.Eczaneler.Where(w => w.NobetUstGrupId == b.NobetUstGrupId).ToList();
+            var eczaneler = b.EczaneNobetContext.Eczaneler.Where(w => w.Id > eczaneIdSon).ToList();
 
             var eczaneNobetGruplar = new List<EczaneNobetGrup>();
 
@@ -4946,19 +4951,15 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
                 //birden fazla nöbet grubu olursa ayarla mutlaka
 
-                if (indisEczaneSayisi <= 5)
+                if (indisEczaneSayisi <= 13)
                 {
-                    nobetGrupGorevTipId = 45;
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId;
                 }
-                else if (indisEczaneSayisi <= 9)
+                else if (indisEczaneSayisi <= 18)
                 {
-                    nobetGrupGorevTipId = 46;
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 1;
                 }
-                else
-                {
-                    nobetGrupGorevTipId = 47;
-                }
-
+  
                 eczaneNobetGruplar.Add(new EczaneNobetGrup()
                 {
                     EczaneId = eczane.Id,
@@ -4967,7 +4968,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
                     Aciklama = "-"
                 });
 
-                //indisEczaneSayisi++;
+                indisEczaneSayisi++;
             }
 
             b.EczaneNobetContext.EczaneNobetGruplar.AddOrUpdate(s => new { s.EczaneId, s.NobetGrupGorevTipId }, eczaneNobetGruplar.ToArray());
@@ -4987,7 +4988,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
                 .Where(w => w.NobetUstGrupId == 2)//antalya - varsayýlan
                 .ToList();
 
-            if (userNobetUstGruplar.Count > 0)
+            if (b.NobetUstGruplar != null)
             {
                 var kisitlar = new List<NobetUstGrupKisit>();
 
