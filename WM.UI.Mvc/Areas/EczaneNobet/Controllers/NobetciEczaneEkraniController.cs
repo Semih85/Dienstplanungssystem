@@ -147,7 +147,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 model.NobetciEczaneler.Add(new NobetciEczane
                 {
                     EczaneId = item.EczaneId,
-                    Adi = item.EczaneAdi,
+                    Adi = item.EczaneAdi.First().ToString().ToUpper() + item.EczaneAdi.Substring(1).ToLower(),
                     Adres = adres,
                     Enlem = enlem,
                     Boylam = boylam,

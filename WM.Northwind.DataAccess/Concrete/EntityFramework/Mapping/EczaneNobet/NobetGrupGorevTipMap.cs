@@ -20,10 +20,15 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.NobetGrupId).HasColumnName("NobetGrupId");
             this.Property(t => t.NobetGorevTipId).HasColumnName("NobetGorevTipId");
+            this.Property(t => t.BaslamaTarihi).HasColumnName("BaslamaTarihi");
+            this.Property(t => t.BitisTarihi).HasColumnName("BitisTarihi");
 
             this.Property(t => t.Id)
                         .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(t => t.Id).IsRequired();
+            this.Property(t => t.BaslamaTarihi).IsRequired();
+            this.Property(t => t.BitisTarihi).IsOptional();
+
             this.Property(t => t.NobetGrupId).IsRequired()
                         .HasColumnAnnotation("Index",
                          new IndexAnnotation(

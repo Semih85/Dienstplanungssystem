@@ -20,15 +20,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 {
     public class MersinMerkezOptano : EczaneNobetKisit, IEczaneNobetMersinMerkezOptimizationV2
     {
-        #region Değişkenler
+        #region local değişkenler
         //Karar değişkeni model çalıştıktan sonra değer aldığından burada tanımlandı
         private VariableCollection<EczaneNobetTarihAralik> _x { get; set; }
         private VariableCollection<EczaneNobetAltGrupTarihAralik> y { get; set; }
-        #endregion
         private CplexSolverConfiguration _solverConfig;
         private CplexSolver _solver;
         private Model model;
         private Configuration _configuration;
+        #endregion
 
         private Model Model(MersinMerkezDataModelV2 data)
         {
@@ -198,6 +198,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         .Where(s => s.NobetKuralId == 3)
                         .Select(s => s.Deger).SingleOrDefault();
 
+                var haftaIciPespeseNobetYazilmasinKuralKatsayisi = nobetGrupKurallar
+                    .Where(s => s.NobetKuralId == 5)
+                    .SingleOrDefault() ?? new NobetGrupKuralDetay();
+
                 //var nobetGrupTalepler = data.NobetGrupTalepler.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
 
                 #region tarihler
@@ -260,9 +264,17 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 //var nobetGrupGorevTipler = data.NobetGrupGorevTipler.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
 
                 #region peş peşe görev en az nöbet zamanı
-                //hafta içi
+
                 var farkliAyPespeseGorevAraligi = (gruptakiEczaneSayisi / gunlukNobetciSayisi * 1.2);
-                var altLimit = farkliAyPespeseGorevAraligi * 0.7666 - 10; //0.95
+                //var altLimit = farkliAyPespeseGorevAraligi * 0.7666 - 10; //0.95
+                var altLimit = (gruptakiEczaneSayisi / gunlukNobetciSayisi) * 0.5; //0.95
+
+                //hafta içi                
+                if (haftaIciPespeseNobetYazilmasinKuralKatsayisi.Deger > 0)
+                {
+                    altLimit = (int)haftaIciPespeseNobetYazilmasinKuralKatsayisi.Deger;
+                }
+
                 var ustLimit = farkliAyPespeseGorevAraligi + farkliAyPespeseGorevAraligi * 0.6667; //77;
                 var ustLimitKontrol = ustLimit * 0.95; //0.81 
                 //pazar
@@ -464,7 +476,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         OrtamalaNobetSayisi = haftaIciOrtamalaNobetSayisi,
                         EczaneNobetGrup = eczaneNobetGrup,
                         EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
-                        PespeseNobetSayisiAltLimit = gruptakiEczaneSayisi * 0.5, //altLimit, 0.6//14.02.2019
+                        PespeseNobetSayisiAltLimit = altLimit,//gruptakiEczaneSayisi * 0.5, //altLimit, 0.6//14.02.2019
                         NobetUstGrupKisit = haftaIciPespeseGorevEnAz,
                         KararDegiskeni = _x
                     };
@@ -1493,7 +1505,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 new NobetGrupGorevTipDetay { NobetGrupId = 16 }, //Toroslar-2
             };
 
-            var eczaneNobetTarihAralikAtlGrupluToroslar = data.EczaneNobetTarihAralik.Where(w => altGrupluTakipEdilecekNobetGrupGorevTiplerToroslar.Select(s => s.NobetGrupId).Contains(w.NobetGrupId)).ToList();
+            var eczaneNobetTarihAralikAtlGrupluToroslar = data.EczaneNobetTarihAralik
+                .Where(w => altGrupluTakipEdilecekNobetGrupGorevTiplerToroslar.Select(s => s.NobetGrupId).Contains(w.NobetGrupId)).ToList();
 
             var eczaneNobetSonuclarAltGruplaAyniGunToroslar = data.EczaneGrupNobetSonuclarTumu
                 .Where(w => altGrupluTakipEdilecekNobetGrupGorevTiplerToroslar.Select(s => s.NobetGrupId).Contains(w.NobetGrupId)).ToList();
@@ -1587,7 +1600,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var results = new EczaneNobetSonucModel();
             var calismaSayisiEnFazla = 0;
 
-            calismaSayisiEnFazla = 3;
+            //calismaSayisiEnFazla = 3;
 
             _configuration = new Configuration
             {

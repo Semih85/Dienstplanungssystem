@@ -13,6 +13,8 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public int Id { get; set; }
         public int NobetGrupId { get; set; }
         public int NobetGorevTipId { get; set; }
+        public DateTime BaslamaTarihi { get; set; }
+        public DateTime? BitisTarihi { get; set; }
 
         public virtual NobetGrup NobetGrup { get; set; }
         public virtual NobetGorevTip NobetGorevTip { get; set; }

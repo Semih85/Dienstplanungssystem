@@ -173,20 +173,14 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 .Where(w => !eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneNobetGrupId).Contains(w.Id)).ToList();
             //var sure_eczaneNobetGruplar = stopwatch.Elapsed;
 
-            //var planlananSonuclar = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetUstGrupId);
-
+            #region planlanan nöbetler - sıralı nöbet yazma (gün grubu bazında)
             //baslangicTarihi = new DateTime(2018, 6, 1);
-            //bitisTarihi = new DateTime(2018, 7, 31);
+            //bitisTarihi = new DateTime(2019, 2, 28);
 
-            //baslangicTarihi = new DateTime(2018, 8, 1);
-            //bitisTarihi = new DateTime(2018, 8, 31);
+            //var eczaneNobetGruplarHepsi = _eczaneNobetGrupService.GetDetaylar(nobetGrupIdListe);//, baslangicTarihi, bitisTarihi);
 
-            baslangicTarihi = new DateTime(2018, 6, 1);
-            bitisTarihi = new DateTime(2019, 2, 28);
-
-            var eczaneNobetGruplarHepsi = _eczaneNobetGrupService.GetDetaylar(nobetGrupIdListe);//, baslangicTarihi, bitisTarihi);
-
-            _takvimService.SiraliNobetYaz(nobetGrupGorevTipler, eczaneNobetGruplarHepsi, baslangicTarihi, bitisTarihi);
+            //_takvimService.SiraliNobetYaz(nobetGrupGorevTipler, eczaneNobetGruplarHepsi, baslangicTarihi, bitisTarihi, nobetUstGrupId); 
+            #endregion
 
             var eczaneNobetSonuclarCozulenGruplar = eczaneNobetSonuclar
                 .Where(w => eczaneNobetGruplar.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();

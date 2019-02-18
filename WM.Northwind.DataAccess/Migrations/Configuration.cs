@@ -39,11 +39,31 @@ namespace WM.Northwind.DataAccess.Migrations
 
         private static void VeriEkleGuncelle(Concrete.EntityFramework.Contexts.EczaneNobetContext context)
         {
-            //foreach (var item in context.Kalibrasyonlar)
+            //var ustGruplar = context.NobetUstGruplar.ToList();
+
+            //foreach (var nobetUstGrup in ustGruplar)
             //{
-            //    item.KalibrasyonTipId = 1;
+            //    var tarih = nobetUstGrup.BaslangicTarihi;
+
+            //    var gruplar = context.NobetGrupGorevTipler.Where(w => w.NobetGrup.NobetUstGrupId == nobetUstGrup.Id).ToList();
+
+            //    foreach (var item in gruplar)
+            //    {
+            //        if (item.Id == 31 || item.Id == 28)
+            //        {
+            //            tarih = new DateTime(2018, 4, 1);
+            //        }
+            //        else
+            //        {
+            //            tarih = nobetUstGrup.BaslangicTarihi;
+            //        }
+
+            //        item.BaslamaTarihi = tarih;
+
+            //        context.SaveChanges();
+            //    }
             //}
-            //context.SaveChanges();
+
 
             #region örnek
             //var kisitKategoriler = new List<KisitKategori>()
@@ -265,7 +285,7 @@ new Eczane{ Adi="BAHAR", AcilisTarihi=new DateTime(2016,10,20), Enlem=41.306890,
                 }
             };
 
-            UstGrupPaketiEkle(gerekliBilgilerZonguldak2);
+            //UstGrupPaketiEkle(gerekliBilgilerZonguldak2);
 
         }
 
@@ -4959,7 +4979,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
                 {
                     nobetGrupGorevTipId = b.NobetGrupGorevTipId + 1;
                 }
-  
+
                 eczaneNobetGruplar.Add(new EczaneNobetGrup()
                 {
                     EczaneId = eczane.Id,

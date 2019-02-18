@@ -72,7 +72,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetUstGrupIdlar = _nobetUstGrupService.GetListByUser(user)
                 .Select(s => s.Id).ToList();
 
-            var model = _nobetGrupKuralService.GetDetaylar((int)nobetGrupGorevTipId, (int)nobetKuralId, nobetUstGrupIdlar);
+            var model = _nobetGrupKuralService.GetDetaylar((int)nobetGrupGorevTipId, (int)nobetKuralId, nobetUstGrupIdlar).OrderBy(o => o.NobetKuralAdi).ThenBy(o => o.NobetGrupId).ToList();
 
             return PartialView("NobetGrupKuralPartialView", model);
         }

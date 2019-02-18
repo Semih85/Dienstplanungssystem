@@ -931,9 +931,9 @@
             else if (comparingValue < 700)
                 zoomDegeri = 16
             else if (comparingValue < 1300)
-                zoomDegeri = 15
-            else if (comparingValue < 1500)
                 zoomDegeri = 14.8
+            else if (comparingValue < 1500)
+                zoomDegeri = 14.7
             else if (comparingValue < 2100)
                 zoomDegeri = 14.2
             else if (comparingValue < 2300)
@@ -1098,8 +1098,9 @@
             }
 
             if (options.content) {
+		var boldContent = '<strong><h6>' + options.content + '</h6></strong>';
                 var infoWindow = new google.maps.InfoWindow({
-                    content: options.content
+                    content: boldContent 
                 });
                 //marker.addListener('click', function () {
                 infoWindow.open(map, marker);

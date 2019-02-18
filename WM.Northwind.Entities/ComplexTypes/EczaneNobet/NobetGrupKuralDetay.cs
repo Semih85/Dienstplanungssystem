@@ -21,7 +21,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public DateTime BaslangicTarihi { get; set; }
         public DateTime? BitisTarihi { get; set; }
         [Display(Name = "Değer")]
-        public int? Deger { get; set; }
+        public double? Deger { get; set; }
         [Display(Name = "Nöbet Grubu")]
         public string NobetGrupAdi { get; set; }
         public string NobetGorevTipAdi { get; set; }

@@ -18,7 +18,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         [Display(Name = "Bitiş Tarihi")]
         public DateTime? BitisTarihi { get; set; }
         [Display(Name = "Değer")]
-        public int? Deger { get; set; }
+        public double? Deger { get; set; }
 
         public virtual NobetGrupGorevTip NobetGrupGorevTip { get; set; }
         public virtual NobetKural NobetKural { get; set; }

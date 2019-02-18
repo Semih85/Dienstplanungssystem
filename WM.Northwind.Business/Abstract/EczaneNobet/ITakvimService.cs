@@ -78,7 +78,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
             List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,
-            DateTime nobetBitisTarihi);
+            DateTime nobetBitisTarihi,
+            int nobetUstGrupId);
 
         //List<AnahtarListe> AnahtarListeyiBuGuneTasi2(List<int> nobetGrupIdListe, 
         //    int nobetGorevTipId, 

@@ -1041,10 +1041,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public void SiraliNobetYaz(List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,
-            DateTime nobetBitisTarihi)
-        {
-            var nobetUstGrupId = 2;
-
+            DateTime nobetBitisTarihi,
+            int nobetUstGrupId)
+        {            
             var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrupId);
                 //.Where(w => w.GunGrupId == 3);
 
@@ -1172,12 +1171,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                             var eczaneNobetCozumAnaharListeGecis = new List<EczaneNobetCozumAnaharListeGecis>();
 
-                            var av = eczaneNobetGruplar.Where(w => w.EczaneAdi == "AVDANLIOĞLU");
+                            //var av = eczaneNobetGruplar.Where(w => w.EczaneAdi == "AVDANLIOĞLU");
 
-                            if (av.Count() > 0)
-                            {
+                            //if (av.Count() > 0)
+                            //{
 
-                            }
+                            //}
 
                             if (yeniAnahtarListeyeEklenecekEczaneler.Count > 0)
                             {

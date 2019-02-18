@@ -207,9 +207,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     .Select(s => s.Deger).SingleOrDefault();
 
                 int gunlukNobetciSayisi = (int)nobetGrupKurallar
-                        .Where(s => s.NobetKuralId == 3)
-                        .Select(s => s.Deger).SingleOrDefault();
+                    .Where(s => s.NobetKuralId == 3)
+                    .Select(s => s.Deger).SingleOrDefault();
 
+                var haftaIciPespeseNobetYazilmasinKuralKatsayisi = nobetGrupKurallar
+                    .Where(s => s.NobetKuralId == 5)
+                    .SingleOrDefault() ?? new NobetGrupKuralDetay();
                 //var nobetGrupTalepler = data.NobetGrupTalepler.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
 
                 #region tarihler
@@ -279,7 +282,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 #region peş peşe görev en az nöbet zamanı
 
                 var farkliAyPespeseGorevAraligi = (gruptakiEczaneSayisi / gunlukNobetciSayisi * 1.2);
-                var altLimit = farkliAyPespeseGorevAraligi * 0.7666; //0.95
+                //var altLimit = farkliAyPespeseGorevAraligi * 0.7666; //0.95
+                var altLimit = (gruptakiEczaneSayisi / gunlukNobetciSayisi) * 0.6; //0.95
+
+                //hafta içi                
+                if (haftaIciPespeseNobetYazilmasinKuralKatsayisi.Deger > 0)
+                {
+                    altLimit = (int)haftaIciPespeseNobetYazilmasinKuralKatsayisi.Deger;
+                }
+
                 var ustLimit = farkliAyPespeseGorevAraligi + farkliAyPespeseGorevAraligi * 0.6667; //77;
                 var ustLimitKontrol = ustLimit * 0.95; //0.81 
 
@@ -444,7 +455,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         OrtamalaNobetSayisi = haftaIciOrtamalaNobetSayisi,
                         EczaneNobetGrup = eczaneNobetGrup,
                         EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
-                        PespeseNobetSayisiAltLimit = gruptakiEczaneSayisi * 0.6, //altLimit,
+                        PespeseNobetSayisiAltLimit = altLimit,// gruptakiEczaneSayisi * 0.6, //altLimit,
                         NobetUstGrupKisit = haftaIciPespeseGorevEnAz,
                         KararDegiskeni = _x
                     };

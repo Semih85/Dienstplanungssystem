@@ -2039,6 +2039,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 .Where(w => birlikteNobetTutulanNobetAltGrupIdListe.Contains(w.NobetAltGrupId)).ToList();
 
                             var bakilanEczaneGrupTanimAdi = $"{eczane.NobetGrupAdi}, {eczane.EczaneAdi} - {gunGrup.GunGrup} aynı gün nöbetler";
+
                             //bakılan eczane
                             eczaneGruplar.Add(new EczaneGrupDetay
                             {
@@ -2121,9 +2122,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 var toroslar2dekiAltGruplarlaTakipEdilecekEczaneler = new List<int>
                     {
+                         530,//Hekim   toroslar-2
                          534,//Mesut   toroslar-2
                          546,//Siteler toroslar-2
-                         530,//Hekim   toroslar-2
                          549,//Tolga   toroslar-2
                     };
 
@@ -2144,7 +2145,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                          641,//Cadde   y.şehir-1
                          644,//Dünya   y.şehir-1
 
-                         530 //Hekim   toroslar-2
+                         //530 //Hekim   toroslar-2 - hekim, mesut,tolga,siteler ile aynı. özel bir istisna yok
                     };
 
                 //tüm liste
@@ -2177,7 +2178,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                         var kontrol = false;
 
-                        var kontrolEdilecekEczaneler = new string[] { "ALKIM" };
+                        var kontrolEdilecekEczaneler = new string[] { "MESUT" };
 
                         if (kontrol && kontrolEdilecekEczaneler.Contains(eczane.EczaneAdi))
                         {
@@ -2231,6 +2232,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 .Where(w => birlikteNobetTutulanNobetAltGrupIdListe.Contains(w.NobetAltGrupId)).ToList();
 
                             var bakilanEczaneGrupTanimAdi = $"{eczane.NobetGrupAdi}, {eczane.EczaneAdi} - {gunGrup.GunGrup} aynı gün nöbetler";
+
                             //bakılan eczane
                             eczaneGruplar.Add(new EczaneGrupDetay
                             {

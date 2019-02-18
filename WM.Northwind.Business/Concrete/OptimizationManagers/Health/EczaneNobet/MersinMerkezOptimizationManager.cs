@@ -325,7 +325,10 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                         15//Toroslar-2
                     };
 
-                altGruplarlaAyniGunNobetTutmayacakEczanelerToroslar = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturMersin(eczaneNobetSonuclarAltGruplaAyniGunToroslar, eczaneNobetGruplarAltGruplaAyniGunToroslar, eczaneNobetGrupAltGruplarToroslar1, altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, 1, ayniGunNobetTutmasiTakipEdilecekGruplarToroslar, altGrubuOlanNobetGruplarToroslar, (int)altGruplarlaAyniGunNobetTutma.SagTarafDegeri);
+                altGruplarlaAyniGunNobetTutmayacakEczanelerToroslar = _eczaneNobetOrtakService
+                    .AltGruplarlaSiraliNobetListesiniOlusturMersin(eczaneNobetSonuclarAltGruplaAyniGunToroslar, eczaneNobetGruplarAltGruplaAyniGunToroslar, eczaneNobetGrupAltGruplarToroslar1,
+                    altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, 1,
+                    ayniGunNobetTutmasiTakipEdilecekGruplarToroslar, altGrubuOlanNobetGruplarToroslar, (int)altGruplarlaAyniGunNobetTutma.SagTarafDegeri);
                 #endregion
             }
 
