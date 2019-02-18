@@ -82,9 +82,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
-        public List<EczaneNobetSonucDetay2> GetDetaylar(int nobetUstGrupId, int gunGrupId, int alinacakEczaneSayisi)
+        public List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipId(int nobetGrupGorevTipId)
         {
-            return _eczaneNobetSonucPlanlananDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId);
+            return _eczaneNobetSonucPlanlananDal.GetDetayList(x => x.NobetGrupGorevTipId == nobetGrupGorevTipId);
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
@@ -98,9 +98,17 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetSonucListe2> GetSonuclar(int nobetUstGrupId, int gunGrupId, int alinacakEczaneSayisi)
         {
-            var sonuclar = GetDetaylar(nobetUstGrupId, gunGrupId, alinacakEczaneSayisi);
+            var sonuclar = GetDetaylar(nobetUstGrupId);
 
-            return GetSonuclar(sonuclar);
+            return GetSonuclar(sonuclar).Where(w => w.GunGrupId == gunGrupId).ToList();
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucListe2> GetSonuclar(int nobetGrupGorevTipId, int gunGrupId)
+        {
+            var sonuclar = GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTipId);
+
+            return GetSonuclar(sonuclar).Where(w => w.GunGrupId == gunGrupId).ToList();
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]

@@ -6,8 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    @*<link rel="icon" href="~/Content/images/logo-nobetyaz.png" type="image/x-icon">*@
-    <link rel="icon" type="image/png" href="~/Content/images/favicon-32x32-transperent.png" sizes="32x32" />
+    <link rel="icon" href="~/Content/images/logo-nobetyaz.png" type="image/x-icon">
     <title>Nöbetçi Eczane Ekranı | Nöbet Yaz</title>
 
     <!-- Bootstrap, font-awasome, Site CSS -->
@@ -22,7 +21,7 @@
             }
 
             .harita {
-                height: 250px;
+                height: 150px;
             }
 
             .basliklar {
@@ -35,7 +34,7 @@
             }
 
             .kucukEczane {
-                height: 163px;
+                height: 130px;
                 font-size: smaller;
             }
         }
@@ -47,7 +46,7 @@
             }
 
             .harita {
-                height: 325px;
+                height: 225px;
             }
 
             .basliklar {
@@ -59,7 +58,7 @@
             }
 
             .kucukEczane {
-                height: 143px;
+                height: 110px;
             }
         }
 
@@ -70,7 +69,7 @@
             }
 
             .harita {
-                height: 400px;
+                height: 300px;
             }
 
             .basliklar {
@@ -82,7 +81,7 @@
             }
 
             .kucukEczane {
-                height: 139px;
+                height: 106px;
             }
         }
 
@@ -93,7 +92,7 @@
             }
 
             .harita {
-                height: 532px;
+                height: 432px;
             }
 
             .basliklar {
@@ -108,7 +107,7 @@
             }
 
             .kucukEczane {
-                height: 168px; /*123px;*/
+                height: 135px; /*123px;*/
                 font-size: small;
             }
         }
@@ -120,7 +119,7 @@
             }
 
             .harita {
-                height: 500px;
+                height: 400px;
             }
 
             .basliklar {
@@ -133,7 +132,7 @@
             }
 
             .kucukEczane {
-                height: 157px; /*141px*/
+                height: 124px; /*141px*/
                 font-size: x-small;
             }
         }
@@ -145,7 +144,7 @@
             }
 
             .harita {
-                height: 685px;
+                height: 585px;
             }
 
             .basliklar {
@@ -158,26 +157,26 @@
             }
 
             .kucukEczane {
-                height: 227px;
+                height: 195px;
                 font-size: large;
             }
         }
 
         #eczaneSolSutun {
-            background-color: purple;
+            background-color: #000000;
             border-style: initial;
             border: double;
-            border-color: #008000;
+            border-color: #023e96;
             text-align: center;
             color: white;
             align-items: center;
         }
 
         #eczaneSagSutun {
-            background-color: purple;
+            background-color: #000000;
             border-style: initial;
             border: double;
-            border-color: #008000;
+            border-color: #023e96;
             text-align: center;
             color: white;
             align-items: center;
@@ -187,7 +186,7 @@
             /*height: 150px;*/
             border-bottom: double;
             border-top: double;
-            border-color: #008000;
+            border-color: #023e96;
         }
 
         .adres {
@@ -206,7 +205,7 @@
             /*background-color: #000000;*/
             border-style: initial;
             border: double;
-            border-color: #008000;
+            border-color: #023e96;
             text-align: center;
             color: white;
             font-size: x-large;
@@ -229,18 +228,18 @@
 
         #labelTarih {
             color: white;
-            background-color: purple;
+            background-color: black;
             font-size: 22px;
-            border-color: #008000;
-            text-align: justify;
+            border-color: #023e96;
+            text-align: center;
             /*border: double;*/
         }
 
         #labelBaslik {
             color: white;
-            background-color: purple;
+            background-color: black;
             font-size: 35px;
-            border-color: #008000;
+            border-color: #023e96;
             border: double;
             font-weight: 600;
             border-style: initial;
@@ -253,7 +252,7 @@
             background-color: white;
             font-size: 20px;
             margin-top: -30px;
-            border-color: #008000;
+            border-color: #023e96;
             border: double;
             border-style: initial;
             text-align: center;
@@ -261,13 +260,13 @@
         }
 
         #labelSaat {
-            color: white;
-            background-color: purple;
+            color: #023e96;
+            background-color: black;
             font-size: 50px;
-            border-color: #008000;
+            border-color: #023e96;
             font-weight: 600;
             text-align: center;
-            /*background-image: url('../../../../Content/images/saatArkaPlan.png');*/
+            background-image: url('../../../../Content/images/saatArkaPlan.png');
             /*no-repeat center center fixed*/
             background-repeat: no-repeat;
             /*background:fixed*/
@@ -281,77 +280,153 @@
 
 
 <body>
+        
+    @if (Model.NobetciEcanelerEkraniTipId == 1)
+    {
+        <div class="container-fluid"> @* network *@
+            <div id="ustRow" class="row basliklar">
+                <div id="labelBaslik" class="col-lg-3">
+                    Nöbetçi Eczaneler
+                </div>
+                <div id="labelTarih" class="col-lg-5">
+                    <label id="lbl_tarih"></label>
+                </div>
+                <div id="labelSaat" class="col-lg-4">
+                    @*<label id="lbl_saat"></label>*@
+                </div>
+            </div>
+            <div class="row">
+                <div id="eczaneSolSutun" class="col-lg-3 ">
+                    <div class="eczaneHucre kucukEczane" id="div_1"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_2"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_3"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_4"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_5"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div id="map0" class="buyukHarita harita"></div>
+                    <div id="map1" class="buyukHarita harita"></div>
+                    <div id="map2" class="buyukHarita harita"></div>
+                    <div id="map3" class="buyukHarita harita"></div>
+                    <div id="map4" class="buyukHarita harita"></div>
+                    <div id="map5" class="buyukHarita harita"></div>
+                    <div id="map6" class="buyukHarita harita"></div>
+                    <div id="map7" class="buyukHarita harita"></div>
+                    <div id="map8" class="buyukHarita harita"></div>
+                    <div id="map9" class="buyukHarita harita"></div>
+                    <div class="row">
+                        <div id="divMyLetterImage" style="height:5px; width:5px; margin-top:-100px; margin-left:-10px" class="col-4">
 
-    <div  id="loading" class="row">
-        <div class="col-lg-3">
-        </div>
-        <div class="col-lg-4">
-            <div align="center" style="margin-top: 10%">
-                <img src="~/Content/images/orig.gif" />
-            </div>
-        </div>
-        <div class="col-lg-4">
-        </div>
-    </div>
-
-    <div id="div1" class="container-fluid">
-        @* network *@
-        <div id="ustRow" class="row basliklar">
-            <div id="labelBaslik" class="col-lg-3">
-                Nöbetçi Eczaneler
-            </div>
-            <div id="labelTarih" class="col-lg-6">
-                <label id="lbl_tarih"></label>
-            </div>
-            <div id="labelSaat" class="col-lg-3">
-                @*<label id="lbl_saat"></label>*@
-            </div>
-        </div>
-        <div class="row">
-            <div id="eczaneSolSutun" class="col-lg-3 ">
-                <div class="eczaneHucre kucukEczane" id="div_1"></div>
-                <div class="eczaneHucre kucukEczane" id="div_2"></div>
-                <div class="eczaneHucre kucukEczane" id="div_3"></div>
-            </div>
-            <div class="col-lg-6">
-                <div id="map0" class="buyukHarita harita"></div>
-                <div class="row">
-                    <div id="divMyLetterImage" style="height:5px; width:5px; margin-top:-100px; margin-left:-10px" class="col-4">
-
+                        </div>
+                        <div class="col-5"></div>
+                        <div id="labelMesafe" class="col-3">
+                            <label class="fa fa-car" id="lbl_mesafe0"> </label>
+                            <label class="fa fa-car" id="lbl_mesafe1"></label>
+                            <label class="fa fa-car" id="lbl_mesafe2"></label>
+                            <label class="fa fa-car" id="lbl_mesafe3"></label>
+                            <label class="fa fa-car" id="lbl_mesafe4"></label>
+                            <label class="fa fa-car" id="lbl_mesafe5"></label>
+                            <label class="fa fa-car" id="lbl_mesafe6"></label>
+                            <label class="fa fa-car" id="lbl_mesafe7"></label>
+                            <label class="fa fa-car" id="lbl_mesafe8"></label>
+                            <label class="fa fa-car" id="lbl_mesafe9"></label>
+                        </div>
                     </div>
-                    <div class="col-5"></div>
-                    <div id="labelMesafe" class="col-3">
-                        <label class="fa fa-car" id="lbl_mesafe0"> </label>
-                        <label class="fa fa-car" id="lbl_mesafe1"> </label>
-                        <label class="fa fa-car" id="lbl_mesafe2"> </label>
+                    <div id="div_100" class="eczaneBuyukHucre buyukEczane">
+                        @* <img style="width:60px;height:60px" src="~/Content/images/NobetciEczaneLogoUfaks.png" />*@
                     </div>
                 </div>
-                @*<div id="div_100" class="eczaneBuyukHucre buyukEczane">
-                         <img style="width:60px;height:60px" src="~/Content/images/NobetciEczaneLogoUfaks.png" />
-                    </div>*@
-            </div>
-            <div id="eczaneSagSutun" class="col-lg-3">
-
+                <div id="eczaneSagSutun" class="col-lg-3">
+                    <div class="eczaneHucre kucukEczane" id="div_6"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_7"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_8"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_9"></div>
+                    <div class="eczaneHucre kucukEczane" id="div_10"></div>
+                </div>
             </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div id="div_1" style="width:100%"></div>
+                    <div id="div_2"></div>
+                    <div id="div_3"></div>
+                    <div id="div_4"></div>
+                    <div id="div_5"></div>
+                    <div id="div_6"></div>
+                    <div id="div_7"></div>
+                    <div id="div_8"></div>
+                    <div id="div_9"></div>
+                    <div id="div_10"></div>
+                </div>
+                <div id="map0" style="height:800px" class="col-lg-9">
+                    @*Harita burada*@
+                </div>
+                <div id="map1" style="display:none; height:800px" class="col-lg-9">
+                    @*Harita burada*@
+                </div>
+                <div id="map2" style="display:none; height:800px" class="col-lg-9">
+                    @*Harita burada*@
+                </div>
+                <div id="map3" style="display:none; height:800px" class="col-lg-9">
+                    @*Harita burada*@
+                </div>
+                <div id="map4" style="display:none; height:800px" class="col-lg-9">
+                    @*Harita burada*@
+                </div>
+                <div id="map5" style="display:none; height:800px" class="col-lg-9">
+                    @*Harita burada*@
+                </div>
+                <div id="map6" style="display:none; height:800px" class="col-lg-9">
+                    @*Harita burada*@
+                </div>
+                <div id="map7" style="display:none; height:800px" class="col-lg-9">
+                    @*Harita burada*@
+                </div>
+                <div id="map8" style="display:none; height:800px" class="col-lg-9">
+                    @*Harita burada*@
+                </div>
+                <div id="map9" style="display:none; height:800px" class="col-lg-9">
+                    @*Harita burada*@
+                </div>
+            </div>
+            <div class="row" style="color:white; background-color:black; font-size:30px;">
+                <div style="color:white; background-color:black; font-size:30px;" class="col-lg-3">
+                    <label id="lbl_tarih"></label>
 
+                </div>
+                <div class="col-lg-9" style="border-color:#023e96">
+                    <label style="display:block" id="lbl_mesafe0"> </label>
+                    <label style="display:none" id="lbl_mesafe1"></label>
+                    <label style="display:none" id="lbl_mesafe2"></label>
+                    <label style="display:none" id="lbl_mesafe3"></label>
+                    <label style="display:none" id="lbl_mesafe4"></label>
+                    <label style="display:none" id="lbl_mesafe5"></label>
+                    <label style="display:none" id="lbl_mesafe6"></label>
+                    <label style="display:none" id="lbl_mesafe7"></label>
+                    <label style="display:none" id="lbl_mesafe8"></label>
+                    <label style="display:none" id="lbl_mesafe9"></label>
+                </div>
+            </div>
+        </div>
+    }
     @section Scripts{
         @Scripts.Render("~/bundle/ajax")
         @Scripts.Render("~/bundle/bootstrap-select/scripts")
         @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
         @Scripts.Render("~/bundle/scriptsDetailTable/script")
     }
-    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=geometry"></script>
     <script>
 
     //$(document).ready(function () {
     function myMap() {
 
         startTime()
-        document.getElementById("loading").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
-        document.getElementById("div1").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
-        //alert('ready2')
+
+        // alert('ready')
         var counter = 1;
         var bant = false;
         var deviceHeight = document.documentElement.clientHeight;
@@ -360,6 +435,15 @@
         //alert('myMap')
         //alert('deviceHeight: ' + deviceHeight);
         var mapCanvas = document.getElementById("map0");
+        var mapCanvas1 = document.getElementById("map1");
+        var mapCanvas2 = document.getElementById("map2");
+        var mapCanvas3 = document.getElementById("map3");
+        var mapCanvas4 = document.getElementById("map4");
+        var mapCanvas5 = document.getElementById("map5");
+        var mapCanvas6 = document.getElementById("map6");
+        var mapCanvas7 = document.getElementById("map7");
+        var mapCanvas8 = document.getElementById("map8");
+        var mapCanvas9 = document.getElementById("map9");
 
         var myCenter = { lat: 36.805533, lng: 34.626287 };
         var mapOptions = {
@@ -367,12 +451,38 @@
             zoom: 10,
             disableDefaultUI: true
         };
-
+        var mapOptions2 = {
+            center: myCenter,
+            zoom: 15,
+            disableDefaultUI: true
+        };
         var map = new google.maps.Map(mapCanvas, mapOptions);
+        var map1 = new google.maps.Map(mapCanvas1, mapOptions);
+        var map2 = new google.maps.Map(mapCanvas2, mapOptions);
+        var map3 = new google.maps.Map(mapCanvas3, mapOptions);
+        var map4 = new google.maps.Map(mapCanvas4, mapOptions);
+        var map5 = new google.maps.Map(mapCanvas5, mapOptions);
+        var map6 = new google.maps.Map(mapCanvas6, mapOptions2);
+        var map7 = new google.maps.Map(mapCanvas7, mapOptions);
+        var map8 = new google.maps.Map(mapCanvas8, mapOptions);
+        var map9 = new google.maps.Map(mapCanvas9, mapOptions);
+
+        //alert('map1')
+        var directionsService = new google.maps.DirectionsService;
+        var directionsService1 = new google.maps.DirectionsService;
+        var directionsService2 = new google.maps.DirectionsService;
+        var directionsService3 = new google.maps.DirectionsService;
+        var directionsService4 = new google.maps.DirectionsService;
+        var directionsService5 = new google.maps.DirectionsService;
+        var directionsService6 = new google.maps.DirectionsService;
+        var directionsService7 = new google.maps.DirectionsService;
+        var directionsService8 = new google.maps.DirectionsService;
+        var directionsService9 = new google.maps.DirectionsService;
+
+
         var directionsDisplay = new google.maps.DirectionsRenderer
             ({
-                suppressMarkers: true,
-                preserveViewport: false
+                suppressMarkers: true
                 //,
                 //polylineOptions: {
                 //strokeColor: "#0000ff",
@@ -381,40 +491,60 @@
             });
         var directionsDisplay1 = new google.maps.DirectionsRenderer
             ({
-                suppressMarkers: true,
-                preserveViewport: false
-                //,
-                //polylineOptions: {
-                //strokeColor: "#0000ff",
-                //strokeOpacity: 0.5
-                //}
+                suppressMarkers: true
             });
         var directionsDisplay2 = new google.maps.DirectionsRenderer
             ({
-                suppressMarkers: true,
-                preserveViewport: false
-                //,
-                //polylineOptions: {
-                //strokeColor: "#0000ff",
-                //strokeOpacity: 0.5
-                //}
+                suppressMarkers: true
             });
-        //directionsDisplay.setMap(null);
-        var directionsService = new google.maps.DirectionsService;
-        var directionsService1 = new google.maps.DirectionsService;
-        var directionsService2 = new google.maps.DirectionsService;
+        var directionsDisplay3 = new google.maps.DirectionsRenderer
+            ({
+                suppressMarkers: true
+            });
+        var directionsDisplay4 = new google.maps.DirectionsRenderer
+            ({
+                suppressMarkers: true
+            });
+        var directionsDisplay5 = new google.maps.DirectionsRenderer
+            ({
+                suppressMarkers: true
+            });
+        var directionsDisplay6 = new google.maps.DirectionsRenderer
+            ({
+                suppressMarkers: true
+            });
+        var directionsDisplay7 = new google.maps.DirectionsRenderer
+            ({
+                suppressMarkers: true
+            });
+        var directionsDisplay8 = new google.maps.DirectionsRenderer
+            ({
+                suppressMarkers: true
+            });
+        var directionsDisplay9 = new google.maps.DirectionsRenderer
+            ({
+                suppressMarkers: true
+            });
+        //alert('directionsDisplay')
+
         directionsDisplay.setMap(map);
-        directionsDisplay1.setMap(map);
-        directionsDisplay2.setMap(map);
-        
+        directionsDisplay1.setMap(map1);
+        directionsDisplay2.setMap(map2);
+        directionsDisplay3.setMap(map3);
+        directionsDisplay4.setMap(map4);
+        directionsDisplay5.setMap(map5);
+        directionsDisplay6.setMap(map6);
+        directionsDisplay7.setMap(map7);
+        directionsDisplay8.setMap(map8);
+        directionsDisplay9.setMap(map9);
+
         var model = @Html.Raw(Json.Encode(Model));
         var nobetciEczaneler = new Array();
         var mesafeler = new Array();
         var mesafelerNewArray = new Array();
         var mesafeCounter = 0;
         //modelden nöbetçi eczaneleri alır:
-        for (var g = 0; g < 3; g++) {
-       // for (var g = 0; g < model.NobetciEczaneler.length; g++) {
+        for (var g = 0; g < model.NobetciEczaneler.length; g++) {
             //quicksort:
             var newElement = {
                 adi: model.NobetciEczaneler[g].Adi,
@@ -423,7 +553,6 @@
                 tel: model.NobetciEczaneler[g].TelefonNo,
                 adres: model.NobetciEczaneler[g].Adres,
                 adresTarifi: model.NobetciEczaneler[g].AdresTarifiKisa,
-                oldIndex:0
             }
             nobetciEczaneler.push(newElement)
         }
@@ -452,22 +581,22 @@
 
                // alert(tel.length)
                 if(tel!=null)
-                    $("#div_" + intNumberOfi).append("<h4> " + adi + " Eczanesi </h4>" +
-                    "<h7 style=\"color:white\">" + adres + "</h7>" +
-                        "</br ><h7 style=\"color:yellow\">" + adresTarifi + "</h7>"
+                    $("#div_" + intNumberOfi).append("<h5> " + adi + " Eczanesi </h5>" +
+                    "<h9 style=\"color:white\">" + adres + "</h9>" +
+                        "</br ><h9 style=\"color:red\">" + adresTarifi + "</h9>"
                     +
-                   "</br ><h4>0 " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2) + "</h4>"
+                   "</br ><h5>0 " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2) + "</h5>"
 
                    // "</br >0" + tel
                 );
                 else
-                    $("#div_" + intNumberOfi).append("<h4> " + adi + " Eczanesi  </h4>" +
-                        "<h7 style=\"color:white\">" + adres + "</h7>" +
-                        "</br ><h7 style=\"color:yellow\">" + adresTarifi + "</h7>"
+                    $("#div_" + intNumberOfi).append("<h5> " + adi + " Eczanesi  </h5>" +
+                        "<h9 style=\"color:white\">" + adres + "</h9>" +
+                        "</br ><h9 style=\"color:red\">" + adresTarifi + "</h9>"
                         +
                         //  "</br ><h4>0 " + tel.substr(0, 3) + " " + tel.substr(4, 3) + " " + tel.substr(7, 2) + " " + tel.substr(9, 2) + "</h4>"
 
-                        "</br ><h4>0" + tel + + "</h4>"
+                        "</br ><h5>0" + tel + + "</h5>"
                     );
                 // $("p").append("<strong>Hello</strong>");
                 // Will stop running after "three"
@@ -484,14 +613,14 @@
         //sol menü renkleri ayarlar
         function changeColor(counter) {
             // alert('changeColor counter' + counter)
-            for (var k = 1; k < 4; k++) {
+            for (var k = 1; k < 11; k++) {
                 if (k == counter) {
                     $("#div_" + k).css('background-color', '');
-                    $("#div_" + k).css('background-color', ' #008000');
+                    $("#div_" + k).css('background-color', '#023e96');
                 }
                 else {
                     $("#div_" + k).css('background-color', '');
-                    $("#div_" + k).css('background-color', 'purple');
+                    $("#div_" + k).css('background-color', '#000000');
                 }
                 var adi = nobetciEczaneler[counter - 1].adi
                 var tel = nobetciEczaneler[counter - 1].tel
@@ -509,22 +638,22 @@
               //  alert(tel.length)
                // if (tel.length == 10)
                // alert(tel.length)
-                //if (tel != null)
-                //$("#div_100").html("<span>" +
-                //    "<img style=\"width: 40px; height: 40px\"  src=\"../../../../Content/images/NobetciEczaneLogoUfaks.png\" />"
-                //    + "</h2> " + adi + " Eczanesi  </h2>" +
-                //    "<h4> " + adres + "</h4>" +
-                //    "<h3 style=\"color:red\">  " + adresTarifi + "</h3>" +
-                //    "<h3>0 " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2) + "</h4>" +
-                //        "</span > ");
-                //else
-                //    $("#div_100").html("<span>" +
-                //        "<img style=\"width: 40px; height: 40px\"  src=\"../../../../Content/images/NobetciEczaneLogoUfaks.png\" />"
-                //        + " </h2> " + adi + " Eczanesi </h2>" +
-                //        "<h4> " + adres + "</h4>" +
-                //        "<h3 style=\"color:red\">  " + adresTarifi + "</h3>" +
-                //        "<h3>0 " + tel + "</h3>" +
-                //        "</span > ");
+                if (tel != null)
+                $("#div_100").html("<span>" +
+                    "<img style=\"width: 40px; height: 40px\"  src=\"../../../../Content/images/NobetciEczaneLogoUfaks.png\" />"
+                    + "</h2> " + adi + " Eczanesi  </h2>" +
+                    "<h4> " + adres + "</h4>" +
+                    "<h3 style=\"color:red\">  " + adresTarifi + "</h3>" +
+                    "<h3>0 " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2) + "</h4>" +
+                        "</span > ");
+                else
+                    $("#div_100").html("<span>" +
+                        "<img style=\"width: 40px; height: 40px\"  src=\"../../../../Content/images/NobetciEczaneLogoUfaks.png\" />"
+                        + " </h2> " + adi + " Eczanesi </h2>" +
+                        "<h4> " + adres + "</h4>" +
+                        "<h3 style=\"color:red\">  " + adresTarifi + "</h3>" +
+                        "<h3>0 " + tel + "</h3>" +
+                        "</span > ");
                 //var img = $('<img />',
                 //    {
                 //        id: 'elogo',
@@ -533,12 +662,12 @@
                 //        height: 50
                 //    })
                 //    .appendTo($("div_100"));
-                //$("#div_100").css({
-                //    'background-color': '#000000',
-                //    'color': 'white',
-                //    'font-size': '35px',
-                //    ' text-align': 'center',
-                //});
+                $("#div_100").css({
+                    'background-color': '#000000',
+                    'color': 'white',
+                    'font-size': '35px',
+                    ' text-align': 'center',
+                });
 
             }
         }
@@ -573,14 +702,8 @@
         //alert('nobetciEczaneImage')
         var bosImage = '../../../../Content/images/bos.png';
         var peopleIcon = '../../../../Content/images/peopleIcon.png';
-        var nobetciEczaneImage = '../../../../Content/images/NobetciEczaneLogoUfak.png';
-
         // alert('recursivelyChangePharmacy1')
         //start recursive
-        
-        var markers = [
-            //{ lat: 37.769, lng: -122.446 }
-        ];
         recursivelyChangePharmacy();//(directionsService, directionsDisplay);
         //alert(' banttanYayinla tamam')
 
@@ -607,63 +730,75 @@
         //    mymarkers.push(newMarker)
         //}
 
-        function recursivelyChangePharmacy() {//recursively nöbetçi eczaneleri değiştir
-             if (counter > 3)
-                 counter = 1;
-             changeColor(counter)
+
+        //recursively nöbetçi eczaneleri değiştir
+        function recursivelyChangePharmacy() {
+                if (counter > 10)
+                    counter = 1;
+                changeColor(counter)
                 //alert('nobetciEczaneler[0].koordinatx: ' + nobetciEczaneler[0].koordinatx)
 
                //alert('nobetciEczaneler[counter-1].koordinatx: ' + nobetciEczaneler[counter-1].koordinatx)
                 //Gidilecek Yer:
-            var locationOfDestination = {
-                adi: nobetciEczaneler[counter - 1].adi,
-                koordinatx: nobetciEczaneler[counter - 1].koordinatx,
-                koordinaty: nobetciEczaneler[counter - 1].koordinaty,
-                tel: nobetciEczaneler[counter - 1].tel,
-                adres: nobetciEczaneler[counter - 1].adres
-            }
+                var locationOfDestination = {
+                    adi: nobetciEczaneler[counter - 1].adi,
+                    koordinatx: nobetciEczaneler[counter - 1].koordinatx,
+                    koordinaty: nobetciEczaneler[counter - 1].koordinaty,
+                    tel: nobetciEczaneler[counter - 1].tel,
+                    adres: nobetciEczaneler[counter - 1].adres
+                }
                 //alert('newStartLat')
-            var newStartLat = locationOfCurrentPharmacy.koordinatx;
-            var newStartLng = locationOfCurrentPharmacy.koordinaty;
-            var newEndLat = locationOfDestination.koordinatx;
-            var newEndLng = locationOfDestination.koordinaty;
+                var newStartLat = locationOfCurrentPharmacy.koordinatx;
+                var newStartLng = locationOfCurrentPharmacy.koordinaty;
+                var newEndLat = locationOfDestination.koordinatx;
+                var newEndLng = locationOfDestination.koordinaty;
 
-            var startLocation = { lat: newStartLat, lng: newStartLng };
-            var endLocation = { lat: newEndLat, lng: newEndLng };
+                var startLocation = { lat: newStartLat, lng: newStartLng };
+                var endLocation = { lat: newEndLat, lng: newEndLng };
                 // alert('newEndLng: ' + newEndLng)
 
                 //mesafeHesapla(startLocation, endLocation)
+                var nobetciEczaneImage = '../../../../Content/images/NobetciEczaneLogoUfak.png';
 
-            var startOptions = {
-                coordinates: startLocation,
-                //content: '<p>Bulunduğunuz Yer</sapn> </p>',
-                image: peopleIcon
+                var startOptions = {
+                    coordinates: startLocation
+                    //,
+                    //content: '<p>Bulunduğunuz Yer</sapn> </p>'
+                    , image: peopleIcon
+                };
+                //alert('endOptions')
+                var endOptions = {
+                    coordinates: endLocation
+                    ,
+                    content: locationOfDestination.adi
+                    , image: nobetciEczaneImage
             };
-            //alert('startLocation.lat: ' + startLocation.lat)
-            //alert('startLocation.lng: ' + startLocation.lng)
-            var endOptions = {
-                coordinates: endLocation,
-                content: locationOfDestination.adi,
-                image: nobetciEczaneImage
-            };
-            //alert('startOption.coordinates.lat:  ' + startOptions.coordinates.lat)
-            //alert('startOption.coordinates.lng:  ' + startOptions.coordinates.lng)
             changeQRCode(counter)
 
-            if (counter == 1)
-            {
-                calculateAndDisplayRoute(directionsService, directionsDisplay, startOptions, endOptions); /* Request next message  */
-            }
-            else if (counter == 2)
-            {
-                calculateAndDisplayRoute(directionsService, directionsDisplay1, startOptions, endOptions); /* Request next message  */
-            }
-            else if (counter == 3)
-            {
-                calculateAndDisplayRoute(directionsService, directionsDisplay2, startOptions, endOptions); /* Request next message  */
-            }
 
-            if (mesafeCounter == 3) {//mesafeler hesaplandıktan sonra
+            if (counter == 1)
+                calculateAndDisplayRoute(directionsService, directionsDisplay, startOptions, endOptions); /* Request next message  */
+            else if (counter == 2)
+                calculateAndDisplayRoute(directionsService1, directionsDisplay1, startOptions, endOptions); /* Request next message  */
+            else if (counter == 3)
+                calculateAndDisplayRoute(directionsService2, directionsDisplay2, startOptions, endOptions); /* Request next message  */
+            else if (counter == 4)
+                calculateAndDisplayRoute(directionsService3, directionsDisplay3, startOptions, endOptions); /* Request next message  */
+            else if (counter == 5)
+                calculateAndDisplayRoute(directionsService4, directionsDisplay4, startOptions, endOptions); /* Request next message  */
+            else if (counter == 6)
+                calculateAndDisplayRoute(directionsService5, directionsDisplay5, startOptions, endOptions); /* Request next message  */
+            else if (counter == 7)
+                calculateAndDisplayRoute(directionsService6, directionsDisplay6, startOptions, endOptions); /* Request next message  */
+            else if (counter == 8)
+                calculateAndDisplayRoute(directionsService7, directionsDisplay7, startOptions, endOptions); /* Request next message  */
+            else if (counter == 9)
+                calculateAndDisplayRoute(directionsService8, directionsDisplay8, startOptions, endOptions); /* Request next message  */
+            else if (counter == 10)
+                calculateAndDisplayRoute(directionsService9, directionsDisplay9, startOptions, endOptions); /* Request next message  */
+
+
+            if (mesafeCounter == 10) {//mesafeler hesaplandıktam sonra
                 //alert('mesafeCounter')
                 nobetciEczaneler = []
                 //alert('quicksort')
@@ -699,25 +834,24 @@
                 //}
                 eczaneleriKutularaBosalt()
                 eczaneleriKutularaDoldur()
-                counter = 2
                 banttanYayinla()
                 //kutular tamam, maplarin sırası değişmeli!!
             }
 
             counter++
 
-            if (mesafeCounter < 3) {//yollar oluşturulurken
+            if (mesafeCounter < 10) {//yollar oluşturulurken
                 setTimeout(
-                    recursivelyChangePharmacy,//(directionsService, directionsDisplay) /* Request next message  */
-                    1000 /* ..after ms seconds */
+                    recursivelyChangePharmacy,//(directionsService, directionsDisplay), /* Request next message  */
+                    5000 /* ..after ms seconds */
                 );
             }
         }
         function banttanYayinla() {
-            //generateQRCode(newEndLat + "," + newEndLng)
-           // alert("banttanYayinla")
+            // generateQRCode(newEndLat + "," + newEndLng)
+            //alert("banttanYayinla")
 
-            if (counter > 3)
+            if (counter > 10)
                 counter = 1;
 
             changeColor(counter)
@@ -725,270 +859,29 @@
 
             var indexFromCounter = counter - 1;
 
-            for (var sayac = 0; sayac < 3; sayac++) {
+            for (var sayac = 0; sayac < 10; sayac++) {
                 if (sayac == indexFromCounter) {
-                   // $("#map" + nobetciEczaneler[sayac].oldIndex).css('display', 'block')
+                    $("#map" + nobetciEczaneler[sayac].oldIndex).css('display', 'block')
                     $("#lbl_mesafe" + nobetciEczaneler[sayac].oldIndex).css('display', 'block');
                 }
                 else {
-                   // $("#map" + nobetciEczaneler[sayac].oldIndex).css('display', 'none')
+                    $("#map" + nobetciEczaneler[sayac].oldIndex).css('display', 'none')
                     $("#lbl_mesafe" + nobetciEczaneler[sayac].oldIndex).css('display', 'none');
                 }
             }
-           
-            //for (var e = 0; e < nobetciEczaneler.length; e++) {
-            //    alert(nobetciEczaneler[e].adi)
-            //    alert(nobetciEczaneler[e].oldIndex)              
-            //}
-            //alert(nobetciEczaneler[counter - 1].adi)
-            //alert(counter)
-            var locationOfDestination = {
-                adi: nobetciEczaneler[counter - 1].adi,
-                koordinatx: nobetciEczaneler[counter - 1].koordinatx,
-                koordinaty: nobetciEczaneler[counter - 1].koordinaty,
-                tel: nobetciEczaneler[counter - 1].tel,
-                adres: nobetciEczaneler[counter - 1].adres
-            }
 
-            //alert('newStartLat')
-            var newStartLat = locationOfCurrentPharmacy.koordinatx;
-            var newStartLng = locationOfCurrentPharmacy.koordinaty;
-            var newEndLat = locationOfDestination.koordinatx;
-            var newEndLng = locationOfDestination.koordinaty;
-
-            var startLocation = { lat: newStartLat, lng: newStartLng };
-            var endLocation = { lat: newEndLat, lng: newEndLng };
-
-            var startOptions = {
-                coordinates: startLocation,
-                //content: '<p>Bulunduğunuz Yer</sapn> </p>',
-                image: peopleIcon
-            };
-            //alert('startLocation.lat: ' + startLocation.lat)
-            //alert('startLocation.lng: ' + startLocation.lng)
-            var endOptions = {
-                coordinates: endLocation,
-                content: locationOfDestination.adi,
-                image: nobetciEczaneImage
-            };
-
-            //deleteMarkers()
-
-            //AddMarker(startOptions);
-            //AddMarker(endOptions);
-            //var startLocation = { lat: newStartLat, lng: newStartLng };
-            //var endLocation = { lat: newEndLat, lng: newEndLng };
-            //center = bounds.getCenter();
-            //var bounds = new google.maps.LatLngBounds();
-           // center = bounds.getCenter();
-            //var y2_y1 = (newEndLng - newStartLng) / 2;
-            //alert('eczane:' + locationOfDestination.adi)
-
-            //alert('newStartLat: ' + newStartLat)
-            //alert('newStartLng: ' + newStartLng)
-
-            //alert('newEndLat: ' + newEndLat)
-            //alert('newEndLng: ' + newEndLng)
-            //alert('counter: ' + counter)
-
-            var ortaNokta_lat = getOrtaNoktaLat(newStartLat, newEndLat)
-            var ortaNokta_lng = getOrtaNoktaLng(newStartLng, newEndLng)
-            //alert('ortaNokta_lat: ' + ortaNokta_lat)
-           // alert('ortaNokta_lng: ' + ortaNokta_lng)
-            var enBuyukUzaklik = getEnBuyukUzaklik(newStartLat, newEndLat, newStartLng, newEndLng);
-            var pt = new google.maps.LatLng(ortaNokta_lat, ortaNokta_lng);
-            //alert('enBuyukUzaklik: ' + enBuyukUzaklik)
-            var zoomDegerim = getZoomDegeri(enBuyukUzaklik);
-            //alert('zoomDegerim: ' + zoomDegerim)
-            //setRouteColors();
-            
-            map.setCenter(pt);
-            map.setZoom(zoomDegerim);
-
-            //map2.setCenter(pt);
-            //map2.setZoom(zoomDegerim);
-
-            //map3.setCenter(pt);
-            //map3.setZoom(zoomDegerim);
-
-            //map.fitBounds(bounds);
-            //map2.fitBounds(bounds);
-            //map3.fitBounds(bounds);
-            if (counter == 1) {
-                document.getElementById("div1").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
-                document.getElementById("loading").style.display = "none";//sayfa yüklenirken tablo gizlenir
-            }
             counter++;
             //alert('counter: ' + counter)
-           
             setTimeout(
                 banttanYayinla,//(directionsService, directionsDisplay), /* Request next message  */
                 5000 /* ..after ms seconds */
             );
 
         }
-        function setRouteColors() {
-            if (counter == 0) {
-                //alert(counter)
-                //alert(nobetciEczaneler[counter - 1].oldIndex)
-                $("#lbl_mesafe0").css('display', 'block');
-                $("#lbl_mesafe1").css('display', 'none');
-                $("#lbl_mesafe2").css('display', 'none');
-
-                directionsDisplay.setOptions({
-                    polylineOptions: {
-                        strokeOpacity: 1,
-                        strokeColor: "#67b3ff"
-                    },
-                    map: map
-                });  
-                directionsDisplay1.setOptions({
-                    polylineOptions: {
-                        strokeOpacity: 0.0,
-                        strokeColor: "#67b3ff"
-                    },
-                    map: map
-                }); 
-                directionsDisplay2.setOptions({
-                    polylineOptions: {
-                        strokeOpacity: 0.0,
-                        strokeColor: "#67b3ff"
-                    },
-                    map: map
-                }); 
-            }
-            else if (counter == 1) {
-                //alert(counter)
-                //alert(nobetciEczaneler[counter - 1].oldIndex)
-                $("#lbl_mesafe1").css('display', 'block');
-                $("#lbl_mesafe0").css('display', 'none');
-                $("#lbl_mesafe2").css('display', 'none');
-                directionsDisplay1.setOptions({
-                    polylineOptions: {
-                        strokeOpacity: 1,
-                        strokeColor: "#67b3ff"
-                    },
-                    map: map
-                });  
-                directionsDisplay2.setOptions({
-                    polylineOptions: {
-                        strokeOpacity: 0.0,
-                        strokeColor: "#67b3ff"
-                    },
-                    map: map
-                });
-                directionsDisplay.setOptions({
-                    polylineOptions: {
-                        strokeOpacity: 0.0,
-                        strokeColor: "#67b3ff"
-                    },
-                    map: map
-                }); 
-            }
-            else if (counter == 2) {
-                //alert(counter)
-                //alert(nobetciEczaneler[counter - 1].oldIndex)
-                $("#lbl_mesafe2").css('display', 'block');
-                $("#lbl_mesafe1").css('display', 'none');
-                $("#lbl_mesafe0").css('display', 'none');
-                directionsDisplay2.setOptions({
-                    polylineOptions: {
-                        strokeOpacity: 1,
-                        strokeColor: "#67b3ff"
-
-                    },
-                    map: map
-                });
-                directionsDisplay1.setOptions({
-                    polylineOptions: {
-                        strokeOpacity: 0.0,
-                        strokeColor: "#67b3ff"
-                    },
-                    map: map
-                });
-                directionsDisplay.setOptions({
-                    polylineOptions: {
-                        strokeOpacity: 0.0,
-                        strokeColor: "#67b3ff"
-                    },
-                    map: map
-                }); 
-            }
-        }
-        function getEnBuyukUzaklik(newStartLat, newEndLat, newStartLng, newEndLng) {
-            var lat = Math.abs(newStartLat - newEndLat)
-            var lng = Math.abs(newStartLng - newEndLng)
-            if (lat > lng)
-                return lat
-            else
-                return lng
-        }
-        function getZoomDegeri(enBuyukUzaklik) {
-            var zoomDegeri = 10
-            var comparingValue = enBuyukUzaklik * 100000
-            if (comparingValue < 300)
-                zoomDegeri = 17
-            else if (comparingValue < 700)
-                zoomDegeri = 16
-            else if (comparingValue < 1300)
-                zoomDegeri = 15
-            else if (comparingValue < 1500)
-                zoomDegeri = 14.8
-            else if (comparingValue < 2100)
-                zoomDegeri = 14.2
-            else if (comparingValue < 2300)
-                zoomDegeri = 14.1
-            else if (comparingValue < 2700)
-                zoomDegeri = 14
-            else if (comparingValue < 3000)
-                zoomDegeri = 13.8
-            else if (comparingValue < 4000)
-                zoomDegeri = 13.2
-            else if (comparingValue < 6000)
-                zoomDegeri = 13
-            else if (comparingValue < 10000)
-                zoomDegeri = 12
-            else if (comparingValue < 20000)
-                zoomDegeri = 11
-            return zoomDegeri
-        }
-        function getOrtaNoktaLat(newStartLat, newEndLat) {
-            var result = newStartLat
-            var x2_x1
-            if (newStartLat > newEndLat) {
-                x2_x1 = (newStartLat - newEndLat) / 2;
-                //alert('x2_x1: ' + x2_x1)
-                result = newEndLat + x2_x1;
-            }
-            else {
-                x2_x1 = (newEndLat - newStartLat) / 2;
-                result = newStartLat + x2_x1;
-            }
-            return result.toFixed(6);
-        }
-        function getOrtaNoktaLng(newStartLng, newEndLng) {
-            var result = newStartLng
-            var y2_y1
-            if (newStartLng > newEndLng) {
-                y2_y1 = (newStartLng - newEndLng) / 2;
-                result = newEndLng + y2_y1;
-            }
-            else {
-                y2_y1 = (newEndLng - newStartLng) / 2;
-                result = newStartLng + y2_y1;
-            }
-            return result.toFixed(6);
-        }
         function calculateAndDisplayRoute(mydirectionsService, mydirectionsDisplay, startOptions, endOptions) {
             //alert('calculateAndDisplayRoute2')
-            //alert('startOption.coordinates.lat:  ' + startOptions.coordinates.lat)
-            //alert('startOption.coordinates.lng:  ' + startOptions.coordinates.lng)
-            //AddMarker(startOptions);
-            //AddMarker(endOptions);
-            //deleteMarkers()
             AddMarker(startOptions);
             AddMarker(endOptions);
-            //alert('startOptions.coordinates.lat: ' + startOptions.coordinates.lat)
             //alert('endOptions.coordinates.lat: ' + endOptions.coordinates.lat)
             var request = {
                 origin: startOptions.coordinates,
@@ -1001,7 +894,7 @@
                     mydirectionsDisplay.setDirections(result);
                     var mesafem = mesafeHesapla(startOptions.coordinates, endOptions.coordinates)
                     var indexFromCounter = counter - 2;
-                    if (mesafeCounter < 3) {
+                    if (mesafeCounter < 10) {
                         var newElement = {
                             adi: model.NobetciEczaneler[mesafeCounter].Adi,
                             mesafe: parseInt(mesafem.toFixed(0)),
@@ -1024,7 +917,7 @@
 
             var indexFromCounter = counter - 1;
 
-            for (var sayac = 0; sayac < 3; sayac++) {
+            for (var sayac = 0; sayac < 10; sayac++) {
                 if (sayac == indexFromCounter) {
                     $("#map" + sayac).css('display', 'block')
                     $("#lbl_mesafe" + sayac).css('display', 'block');
@@ -1036,62 +929,78 @@
             }
            // counter++;
         }
-        // Sets the map on all markers in the array.
-        function setMapOnAll(map) {
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(map);
-            }
-        }
-        // Removes the markers from the map, but keeps them in the array.
-        function clearMarkers() {
-            setMapOnAll(null);
-        }
-        // Deletes all markers in the array by removing references to them.
-        function deleteMarkers() {
-            clearMarkers();
-            markers = [];
-        }
-        // Adds a marker to the map and push to the array.
         function AddMarker(options) {
-            //alert('counter :' + counter)
-            //alert('options.coordinates.lat:  ' + options.coordinates.lat)
-            //alert('options.coordinates.lng:  ' + options.coordinates.lng)
-            if (counter == 1) {
+            //alert('3')
+            if (counter == 1)
                 var marker = new google.maps.Marker({
                     position: options.coordinates,
                     map: map
                     //,
                     // icon: options.image
                 });
-                markers.push(marker);
-                var bounds = new google.maps.LatLngBounds();
-                //center = bounds.getCenter();
-                map.fitBounds(bounds);
-            }
-            else if (counter == 2) {
+            else if (counter == 2)
                 var marker = new google.maps.Marker({
                     position: options.coordinates,
-                    map: map
+                    map: map1
                     //,
                     // icon: options.image
                 });
-                markers.push(marker);
-                var bounds = new google.maps.LatLngBounds();
-                //center = bounds.getCenter();
-                map.fitBounds(bounds);
-            }
-            else if (counter == 3) {
+            else if (counter == 3)
                 var marker = new google.maps.Marker({
                     position: options.coordinates,
-                    map: map
+                    map: map2
                     //,
                     // icon: options.image
                 });
-                markers.push(marker);
-                var bounds = new google.maps.LatLngBounds();
-                //center = bounds.getCenter();
-                map.fitBounds(bounds);
-            }
+            else if (counter == 4)
+                var marker = new google.maps.Marker({
+                    position: options.coordinates,
+                    map: map3
+                    //,
+                    // icon: options.image
+                });
+            else if (counter == 5)
+                var marker = new google.maps.Marker({
+                    position: options.coordinates,
+                    map: map4
+                    //,
+                    // icon: options.image
+                });
+            else if (counter == 6)
+                var marker = new google.maps.Marker({
+                    position: options.coordinates,
+                    map: map5
+                    //,
+                    // icon: options.image
+                });
+            else if (counter == 7)
+                var marker = new google.maps.Marker({
+                    position: options.coordinates,
+                    map: map6
+                    //,
+                    // icon: options.image
+                });
+            else if (counter == 8)
+                var marker = new google.maps.Marker({
+                    position: options.coordinates,
+                    map: map7
+                    //,
+                    // icon: options.image
+                });
+            else if (counter == 9)
+                var marker = new google.maps.Marker({
+                    position: options.coordinates,
+                    map: map8
+                    //,
+                    // icon: options.image
+                });
+            else if (counter == 10)
+                var marker = new google.maps.Marker({
+                    position: options.coordinates,
+                    map: map9
+                    //,
+                    // icon: options.image
+                });
 
             if (options.image) {
                 marker.setIcon(options.image)
@@ -1101,11 +1010,11 @@
                 var infoWindow = new google.maps.InfoWindow({
                     content: options.content
                 });
+
                 //marker.addListener('click', function () {
                 infoWindow.open(map, marker);
                 //});
             }
-
         }
         function mesafeHesapla(startLocation, endLocation) {
             var mesafe = "0";
@@ -1178,15 +1087,13 @@
             weekday[6] = " Cumartesi";
 
             var n = weekday[d.getDay() - 1];
-            if (d.getDay() == 0)
-                n = " Cumartesi"
             return today + n;
         }
         function getTomorrow() {
             var today = new Date();
             var dd = today.getDate() + 1;
             var mm = today.getMonth() + 1; //January is 0!
-            //alert('getTomorrow')
+
             var yyyy = today.getFullYear();
             if (dd < 10) {
                 dd = '0' + dd;
@@ -1195,7 +1102,7 @@
                 mm = '0' + mm;
             }
             var today = dd + '.' + mm + '.' + yyyy;
-            //alert('today: ' + today)
+
             var d = new Date();
             var weekday = new Array(7);
             weekday[0] = " Pazar";
@@ -1207,8 +1114,6 @@
             weekday[6] = " Cumartesi";
 
             var n = weekday[d.getDay() + 1];
-            if (d.getDay() == 6)
-                n = " Pazar"
             return today + n;
         }
         function startTime() {

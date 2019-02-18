@@ -13,6 +13,23 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
 {
     public class EfTakvimDal : EfEntityRepositoryBase<Takvim, EczaneNobetContext>, ITakvimDal
     {
+        public TakvimDetay GetTakvimDetay(Expression<Func<TakvimDetay, bool>> filter = null)
+        {
+            using (var context = new EczaneNobetContext())
+            {
+                return context.Takvimler
+                              .Select(t => new TakvimDetay
+                              {
+                                  TakvimId = t.Id,
+                                  Tarih = t.Tarih,
+                                  Yil = t.Tarih.Year,
+                                  Ay = t.Tarih.Month,
+                                  Gun = t.Tarih.Day,
+                                  HaftaninGunu = (int)SqlFunctions.DatePart("weekday", t.Tarih)
+                              }).SingleOrDefault(filter);
+            }
+        }
+
         public List<TakvimDetay> GetTakvimDetaylar(Expression<Func<TakvimDetay, bool>> filter = null)
         {
             using (var context = new EczaneNobetContext())

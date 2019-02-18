@@ -12,6 +12,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
     {
         Takvim GetById(int takvimId);
         Takvim GetByTarih(DateTime tarih);
+        TakvimDetay GetDetay(DateTime tarih);
         List<Takvim> GetList();        
         void Insert(Takvim takvim);
         void Update(Takvim takvim);
@@ -72,7 +73,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<AnahtarListe> AnahtarListeyiBuGuneTasi(List<int> nobetGrupIdListe, int nobetGorevTipId, DateTime nobetUstGrupBaslangicTarihi, List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay, List<EczaneNobetSonucListe2> anahtarListe,
             string gunGrubu);
 
-        void SiraliNobetYaz(List<EczaneNobetSonucListe2> eczaneNobetSonuclar,
+        void SiraliNobetYaz(
+            //List<EczaneNobetSonucListe2> eczaneNobetSonuclar,
             List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,

@@ -150,6 +150,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetGrupDetay> GetDetaylarTarihAralik(List<int> nobetGrupIdList, DateTime baslangicTarihi, DateTime bitisTarihi)
+        {
+            return _eczaneNobetGrupDal.GetDetayList(x => nobetGrupIdList.Contains(x.NobetGrupId)
+                                                     && (bitisTarihi >= x.BaslangicTarihi && bitisTarihi <= x.BitisTarihi));
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetGrupDetay> GetDetaylar(int nobetGrupId, DateTime baslangicTarihi, DateTime bitisTarihi)
         {
             return _eczaneNobetGrupDal.GetDetayList(x => x.NobetGrupId == nobetGrupId
