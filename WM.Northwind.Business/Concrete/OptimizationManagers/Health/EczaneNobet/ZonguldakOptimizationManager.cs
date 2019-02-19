@@ -144,7 +144,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var nobetUstGrupBaslangicTarihi = eczaneNobetDataModelParametre.NobetUstGrupBaslangicTarihi;
             var baslangicTarihi = eczaneNobetDataModelParametre.BaslangicTarihi;
             var bitisTarihi = eczaneNobetDataModelParametre.BitisTarihi;
-            var nobetGrupGorevTipler = eczaneNobetDataModelParametre.NobetGrupGorevTipler;
+            var nobetGrupGorevTipler = eczaneNobetDataModelParametre.NobetGrupGorevTipler.Where(w => nobetGrupIdListe.Contains(w.NobetGrupId)).ToList();
             var nobetGorevTipler = eczaneNobetDataModelParametre.NobetGrupGorevTipler.Select(s => s.NobetGorevTipId).Distinct().ToList();
             #endregion
 
@@ -166,6 +166,15 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 .Where(w => !eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneNobetGrupId).Contains(w.Id)
                 //&& w.EczaneAdi == "ÖZGÜR"
                 ).ToList();
+
+            #region planlanan nöbetler - sıralı nöbet yazma (gün grubu bazında)
+            //baslangicTarihi = new DateTime(2019, 3, 1);
+            //bitisTarihi = new DateTime(2020, 2, 28);
+
+            //var eczaneNobetGruplarHepsi = _eczaneNobetGrupService.GetDetaylar(nobetGrupIdListe);//, baslangicTarihi, bitisTarihi);
+
+            //_takvimService.SiraliNobetYaz(nobetGrupGorevTipler, eczaneNobetGruplarHepsi, baslangicTarihi, bitisTarihi, nobetUstGrupId);
+            #endregion
 
             var nobetGorevTipId = 1;
             if (!nobetGorevTipler.Contains(nobetGorevTipId))
@@ -460,7 +469,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                                        }).ToList();
                 }
 
-                
+
 
                 #endregion
 
@@ -696,7 +705,16 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                         model.NobetGrupId = nobetGrupIdListe;
                         var data = EczaneNobetDataModel(model);
                         //return EczaneNobetCozAktifiGuncelle(data);
-                        sonuclar = EczaneNobetCozAktifiGuncelle(data);
+                        //sonuclar = EczaneNobetCozAktifiGuncelle(data);
+                        var sonuc = EczaneNobetCozSonuclaraEkle(data);
+                        sonuclar.ObjectiveValue += sonuc.ObjectiveValue;
+                        sonuclar.KararDegikeniSayisi += sonuc.KararDegikeniSayisi;
+                        sonuclar.KisitSayisi += sonuc.KisitSayisi;
+
+                        sonuclar.CozumSuresi += sonuc.CozumSuresi;
+
+                        sonuclar.CalismaSayisi += sonuc.CalismaSayisi;
+                        sonuclar.IterasyonSayisi += sonuc.IterasyonSayisi;
                     }
                     return sonuclar;
                 }

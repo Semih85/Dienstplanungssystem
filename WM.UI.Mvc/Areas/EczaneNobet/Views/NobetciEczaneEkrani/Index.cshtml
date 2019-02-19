@@ -276,6 +276,16 @@
         #ustRow {
             /*height: 86px;*/
         }
+        #iw-container .iw-title {
+            font-family: 'Open Sans Condensed', sans-serif;
+            font-size: 22px;
+            font-weight: 400;
+            padding: 10px;
+            background-color: #48b5e9;
+            color: white;
+            margin: 1px;
+            border-radius: 2px 2px 0 0; /* In accordance with the rounding of the default infowindow corners. */
+        }
     </style>
 </head>
 
@@ -331,7 +341,7 @@
                     </div>*@
             </div>
             <div id="eczaneSagSutun" class="col-lg-3">
-
+                <h5 style="color:red"></h5>
             </div>
         </div>
     </div>
@@ -581,6 +591,8 @@
         var markers = [
             //{ lat: 37.769, lng: -122.446 }
         ];
+        var markerOthers
+
         recursivelyChangePharmacy();//(directionsService, directionsDisplay);
         //alert(' banttanYayinla tamam')
 
@@ -649,7 +661,10 @@
             //alert('startOption.coordinates.lat:  ' + startOptions.coordinates.lat)
             //alert('startOption.coordinates.lng:  ' + startOptions.coordinates.lng)
             changeQRCode(counter)
+            //alert(endLocation.lng)
 
+            //if (endLocation.lng != 1 && endLocation.lat  != 1)
+                //alert(endLocation.lng)
             if (counter == 1)
             {
                 calculateAndDisplayRoute(directionsService, directionsDisplay, startOptions, endOptions); /* Request next message  */
@@ -662,7 +677,7 @@
             {
                 calculateAndDisplayRoute(directionsService, directionsDisplay2, startOptions, endOptions); /* Request next message  */
             }
-
+            
             if (mesafeCounter == 3) {//mesafeler hesaplandıktan sonra
                 //alert('mesafeCounter')
                 nobetciEczaneler = []
@@ -704,6 +719,8 @@
                 //kutular tamam, maplarin sırası değişmeli!!
             }
 
+        
+
             counter++
 
             if (mesafeCounter < 3) {//yollar oluşturulurken
@@ -719,22 +736,40 @@
 
             if (counter > 3)
                 counter = 1;
+            clearMarkers()
 
             changeColor(counter)
             changeQRCode(counter)
 
             var indexFromCounter = counter - 1;
 
-            for (var sayac = 0; sayac < 3; sayac++) {
-                if (sayac == indexFromCounter) {
-                   // $("#map" + nobetciEczaneler[sayac].oldIndex).css('display', 'block')
-                    $("#lbl_mesafe" + nobetciEczaneler[sayac].oldIndex).css('display', 'block');
-                }
-                else {
-                   // $("#map" + nobetciEczaneler[sayac].oldIndex).css('display', 'none')
-                    $("#lbl_mesafe" + nobetciEczaneler[sayac].oldIndex).css('display', 'none');
-                }
+            var other1 = indexFromCounter + 1
+            var other2 = indexFromCounter + 2
+            if (other2 > 3) {
+                other2 = 1
+                other1 = 0
             }
+            else if (other2 > 2) {
+                other2 = 0
+            }
+    
+            var lat1 = nobetciEczaneler[other1].koordinatx
+            var lng1 = nobetciEczaneler[other1].koordinaty
+            var lat2 = nobetciEczaneler[other2].koordinatx
+            var lng2 = nobetciEczaneler[other2].koordinaty
+            var endLocation1 = { lat: lat1, lng: lng1 };
+            var endLocation2 = { lat: lat2, lng: lng2 };
+            var endOptions1 = {
+                coordinates: endLocation1,
+                content: nobetciEczaneler[other1].adi,
+                image: nobetciEczaneImage
+            };
+            var endOptions2 = {
+                coordinates: endLocation2,
+                content: nobetciEczaneler[other2].adi,
+                image: nobetciEczaneImage
+            };
+
            
             //for (var e = 0; e < nobetciEczaneler.length; e++) {
             //    alert(nobetciEczaneler[e].adi)
@@ -771,16 +806,16 @@
                 content: locationOfDestination.adi,
                 image: nobetciEczaneImage
             };
-
-            //deleteMarkers()
-
+           
+           
+            //clearMarkers()
             //AddMarker(startOptions);
             //AddMarker(endOptions);
             //var startLocation = { lat: newStartLat, lng: newStartLng };
             //var endLocation = { lat: newEndLat, lng: newEndLng };
             //center = bounds.getCenter();
             //var bounds = new google.maps.LatLngBounds();
-           // center = bounds.getCenter();
+            //center = bounds.getCenter();
             //var y2_y1 = (newEndLng - newStartLng) / 2;
             //alert('eczane:' + locationOfDestination.adi)
 
@@ -794,17 +829,19 @@
             var ortaNokta_lat = getOrtaNoktaLat(newStartLat, newEndLat)
             var ortaNokta_lng = getOrtaNoktaLng(newStartLng, newEndLng)
             //alert('ortaNokta_lat: ' + ortaNokta_lat)
-           // alert('ortaNokta_lng: ' + ortaNokta_lng)
+            //alert('ortaNokta_lng: ' + ortaNokta_lng)
             var enBuyukUzaklik = getEnBuyukUzaklik(newStartLat, newEndLat, newStartLng, newEndLng);
             var pt = new google.maps.LatLng(ortaNokta_lat, ortaNokta_lng);
             //alert('enBuyukUzaklik: ' + enBuyukUzaklik)
             var zoomDegerim = getZoomDegeri(enBuyukUzaklik);
             //alert('zoomDegerim: ' + zoomDegerim)
             //setRouteColors();
-            
             map.setCenter(pt);
             map.setZoom(zoomDegerim);
-
+            //var bounds =  new google.maps.LatLngBounds(
+            //    new google.maps.LatLng(newStartLat, -newEndLat, newStartLng, -newEndLng)
+            //);
+            //map.fitBounds(bounds);
             //map2.setCenter(pt);
             //map2.setZoom(zoomDegerim);
 
@@ -814,6 +851,24 @@
             //map.fitBounds(bounds);
             //map2.fitBounds(bounds);
             //map3.fitBounds(bounds);
+
+            var black = "black"
+            var red = "red"
+            for (var sayac = 0; sayac < 3; sayac++) {
+                if (sayac == indexFromCounter) {
+                    AddMarker2(endOptions, red, true);
+                    // $("#map" + nobetciEczaneler[sayac].oldIndex).css('display', 'block')
+                    $("#lbl_mesafe" + nobetciEczaneler[sayac].oldIndex).css('display', 'block');
+                }
+                else {
+                    //AddMarker(endOptions2, black);
+                    //AddMarker(endOptions1, black);
+                    // $("#map" + nobetciEczaneler[sayac].oldIndex).css('display', 'none')
+                    $("#lbl_mesafe" + nobetciEczaneler[sayac].oldIndex).css('display', 'none');
+                }
+            }
+
+
             if (counter == 1) {
                 document.getElementById("div1").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
                 document.getElementById("loading").style.display = "none";//sayfa yüklenirken tablo gizlenir
@@ -828,91 +883,117 @@
 
         }
         function setRouteColors() {
+               // alert(counter)
+
             if (counter == 0) {
-                //alert(counter)
                 //alert(nobetciEczaneler[counter - 1].oldIndex)
-                $("#lbl_mesafe0").css('display', 'block');
-                $("#lbl_mesafe1").css('display', 'none');
-                $("#lbl_mesafe2").css('display', 'none');
+                //$("#lbl_mesafe0").css('display', 'block');
+                //$("#lbl_mesafe1").css('display', 'none');
+                //$("#lbl_mesafe2").css('display', 'none');
+                directionsDisplay2.setMap(null);
+                directionsDisplay.setMap(null);
+                directionsDisplay1.setMap(null);
 
                 directionsDisplay.setOptions({
                     polylineOptions: {
-                        strokeOpacity: 1,
-                        strokeColor: "#67b3ff"
+                        strokeOpacity: 0.9,
+                        //strokeColor: "#ff0000"//"#67b3ff"
                     },
-                    map: map
+                   // map: map
                 });  
+               
                 directionsDisplay1.setOptions({
                     polylineOptions: {
-                        strokeOpacity: 0.0,
-                        strokeColor: "#67b3ff"
+                        strokeOpacity: 0.1,
+                       // strokeColor: "#67b3ff"
                     },
-                    map: map
+                   // map: map
                 }); 
                 directionsDisplay2.setOptions({
                     polylineOptions: {
-                        strokeOpacity: 0.0,
-                        strokeColor: "#67b3ff"
+                        strokeOpacity: 0.1,
+                       // strokeColor: "#67b3ff"
                     },
-                    map: map
+                   // map: map
                 }); 
+                directionsDisplay.setMap(map);
+                directionsDisplay1.setMap(map);
+                directionsDisplay2.setMap(map);
             }
             else if (counter == 1) {
                 //alert(counter)
                 //alert(nobetciEczaneler[counter - 1].oldIndex)
-                $("#lbl_mesafe1").css('display', 'block');
-                $("#lbl_mesafe0").css('display', 'none');
-                $("#lbl_mesafe2").css('display', 'none');
+                //$("#lbl_mesafe1").css('display', 'block');
+                //$("#lbl_mesafe0").css('display', 'none');
+                //$("#lbl_mesafe2").css('display', 'none');
+                directionsDisplay2.setMap(null);
+                directionsDisplay.setMap(null);
+                directionsDisplay1.setMap(null);
+
                 directionsDisplay1.setOptions({
                     polylineOptions: {
-                        strokeOpacity: 1,
-                        strokeColor: "#67b3ff"
+                        strokeOpacity: 0.9,
+                        //strokeColor: "#ff0000"//"#67b3ff"
                     },
-                    map: map
+                   // map: map
                 });  
+                
+
                 directionsDisplay2.setOptions({
                     polylineOptions: {
-                        strokeOpacity: 0.0,
-                        strokeColor: "#67b3ff"
+                        strokeOpacity: 0.1,
+                       // strokeColor: "#67b3ff"
                     },
-                    map: map
+                   // map: map
                 });
                 directionsDisplay.setOptions({
                     polylineOptions: {
-                        strokeOpacity: 0.0,
-                        strokeColor: "#67b3ff"
+                        strokeOpacity: 0.1,
+                       // strokeColor: "#67b3ff"
                     },
-                    map: map
+                   // map: map
                 }); 
+                directionsDisplay.setMap(map);
+                directionsDisplay1.setMap(map);
+                directionsDisplay2.setMap(map);
             }
             else if (counter == 2) {
                 //alert(counter)
                 //alert(nobetciEczaneler[counter - 1].oldIndex)
-                $("#lbl_mesafe2").css('display', 'block');
-                $("#lbl_mesafe1").css('display', 'none');
-                $("#lbl_mesafe0").css('display', 'none');
+                //$("#lbl_mesafe2").css('display', 'block');
+                //$("#lbl_mesafe1").css('display', 'none');
+                //$("#lbl_mesafe0").css('display', 'none');
+                directionsDisplay2.setMap(null);
+                directionsDisplay.setMap(null);
+                directionsDisplay1.setMap(null);
+
                 directionsDisplay2.setOptions({
                     polylineOptions: {
-                        strokeOpacity: 1,
-                        strokeColor: "#67b3ff"
+                        strokeOpacity: 0.9,
+                        //strokeColor: "#ff0000"//"#67b3ff"
 
                     },
-                    map: map
+                   // map: map
                 });
+
                 directionsDisplay1.setOptions({
                     polylineOptions: {
-                        strokeOpacity: 0.0,
-                        strokeColor: "#67b3ff"
+                        strokeOpacity: 0.1,
+                        //strokeColor: "#67b3ff"
                     },
-                    map: map
+                   // map: map
                 });
                 directionsDisplay.setOptions({
                     polylineOptions: {
-                        strokeOpacity: 0.0,
-                        strokeColor: "#67b3ff"
+                        strokeOpacity: 0.1,
+                        //strokeColor: "#67b3ff"
                     },
-                    map: map
+                  //  map: map
                 }); 
+                directionsDisplay.setMap(map);
+                directionsDisplay1.setMap(map);
+                directionsDisplay2.setMap(map);
+
             }
         }
         function getEnBuyukUzaklik(newStartLat, newEndLat, newStartLng, newEndLng) {
@@ -924,33 +1005,37 @@
                 return lng
         }
         function getZoomDegeri(enBuyukUzaklik) {
-            var zoomDegeri = 10
-            var comparingValue = enBuyukUzaklik * 100000
-            if (comparingValue < 300)
-                zoomDegeri = 17
-            else if (comparingValue < 700)
-                zoomDegeri = 16
-            else if (comparingValue < 1300)
-                zoomDegeri = 14.8
-            else if (comparingValue < 1500)
-                zoomDegeri = 14.7
-            else if (comparingValue < 2100)
-                zoomDegeri = 14.2
-            else if (comparingValue < 2300)
-                zoomDegeri = 14.1
-            else if (comparingValue < 2700)
-                zoomDegeri = 14
-            else if (comparingValue < 3000)
-                zoomDegeri = 13.8
-            else if (comparingValue < 4000)
-                zoomDegeri = 13.2
-            else if (comparingValue < 6000)
-                zoomDegeri = 13
-            else if (comparingValue < 10000)
-                zoomDegeri = 12
-            else if (comparingValue < 20000)
-                zoomDegeri = 11
-            return zoomDegeri
+            //-1,486*LOG(A2;2,7182818) + 25,575
+            var ln2 = Math.log(enBuyukUzaklik * 100000)
+            var result = -1.486 * ln2 + 25.2
+            return result
+            //var zoomDegeri = 10
+            //var comparingValue = enBuyukUzaklik * 100000
+            //if (comparingValue < 300)
+            //    zoomDegeri = 17
+            //else if (comparingValue < 800)
+            //    zoomDegeri = 16
+            //else if (comparingValue < 1300)
+            //    zoomDegeri = 14.8
+            //else if (comparingValue < 1500)
+            //    zoomDegeri = 14.7
+            //else if (comparingValue < 2100)
+            //    zoomDegeri = 14.2
+            //else if (comparingValue < 2300)
+            //    zoomDegeri = 14.1
+            //else if (comparingValue < 2700)
+            //    zoomDegeri = 14
+            //else if (comparingValue < 3000)
+            //    zoomDegeri = 13.8
+            //else if (comparingValue < 4000)
+            //    zoomDegeri = 13.5
+            //else if (comparingValue < 6000)
+            //    zoomDegeri = 13
+            //else if (comparingValue < 10000)
+            //    zoomDegeri = 12
+            //else if (comparingValue < 20000)
+            //    zoomDegeri = 11
+            //return zoomDegeri
         }
         function getOrtaNoktaLat(newStartLat, newEndLat) {
             var result = newStartLat
@@ -986,8 +1071,9 @@
             //AddMarker(startOptions);
             //AddMarker(endOptions);
             //deleteMarkers()
-            AddMarker(startOptions);
-            AddMarker(endOptions);
+            var black = "black"
+            AddMarker(startOptions, black, false);
+            AddMarker(endOptions, black, false);
             //alert('startOptions.coordinates.lat: ' + startOptions.coordinates.lat)
             //alert('endOptions.coordinates.lat: ' + endOptions.coordinates.lat)
             var request = {
@@ -1018,6 +1104,7 @@
                     $('#lbl_mesafe').text("HATA: " + status);
                     $("#lbl_mesafe0").css('background-color', '#ff0000');
                 }
+                //console.log('mesafem: ' + mesafem);
 
                 console.log(result, status);
             });
@@ -1048,63 +1135,77 @@
         }
         // Deletes all markers in the array by removing references to them.
         function deleteMarkers() {
-            clearMarkers();
+            clearMarkersOthers();
             markers = [];
         }
         // Adds a marker to the map and push to the array.
-        function AddMarker(options) {
-            //alert('counter :' + counter)
+        function AddMarker(options, color, infoWind) {
+            //alert('counter: ' + counter)
             //alert('options.coordinates.lat:  ' + options.coordinates.lat)
             //alert('options.coordinates.lng:  ' + options.coordinates.lng)
-            if (counter == 1) {
-                var marker = new google.maps.Marker({
-                    position: options.coordinates,
-                    map: map
+            //alert('oldIndex: ' + nobetciEczaneler[counter - 1].oldIndex)
+                     
+            var marker = new google.maps.Marker({
+                position: options.coordinates,
+                map: map,
                     //,
                     // icon: options.image
-                });
-                markers.push(marker);
-                var bounds = new google.maps.LatLngBounds();
-                //center = bounds.getCenter();
-                map.fitBounds(bounds);
-            }
-            else if (counter == 2) {
-                var marker = new google.maps.Marker({
-                    position: options.coordinates,
-                    map: map
-                    //,
-                    // icon: options.image
-                });
-                markers.push(marker);
-                var bounds = new google.maps.LatLngBounds();
-                //center = bounds.getCenter();
-                map.fitBounds(bounds);
-            }
-            else if (counter == 3) {
-                var marker = new google.maps.Marker({
-                    position: options.coordinates,
-                    map: map
-                    //,
-                    // icon: options.image
-                });
-                markers.push(marker);
-                var bounds = new google.maps.LatLngBounds();
-                //center = bounds.getCenter();
-                map.fitBounds(bounds);
-            }
+            });
+           //markers.push(marker);
+            //center = bounds.getCenter();
+            //if (color == "red") {
+            //    var bounds = new google.maps.LatLngBounds()
+            //    map.fitBounds(bounds);
+            //}
+            if (infoWind) {
+                if (options.content) {
+                    var boldContent = '<strong><h6 style="color: ' + color + '">' + options.content + '</h6></strong>';
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: boldContent,
 
+                    });
+                    //marker.addListener('click', function () {
+                    infoWindow.open(map, marker);
+                    //});
+                }
+            }
             if (options.image) {
                 marker.setIcon(options.image)
-            }
+            }     
 
-            if (options.content) {
-		var boldContent = '<strong><h6>' + options.content + '</h6></strong>';
-                var infoWindow = new google.maps.InfoWindow({
-                    content: boldContent 
-                });
-                //marker.addListener('click', function () {
-                infoWindow.open(map, marker);
-                //});
+        }
+        function AddMarker2(options, color, infoWind) {
+            //alert('counter: ' + counter)
+            //alert('options.coordinates.lat:  ' + options.coordinates.lat)
+            //alert('options.coordinates.lng:  ' + options.coordinates.lng)
+            //alert('oldIndex: ' + nobetciEczaneler[counter - 1].oldIndex)
+
+            var marker = new google.maps.Marker({
+                position: options.coordinates,
+                map: map,
+                //,
+                // icon: options.image
+            });
+            markers.push(marker);
+            //center = bounds.getCenter();
+            //if (color == "red") {
+            //    var bounds = new google.maps.LatLngBounds()
+            //    map.fitBounds(bounds);
+            //}
+            if (infoWind) {
+                if (options.content) {
+                    var boldContent = '<strong><h6 style="color: ' + color + '">' + options.content + '</h6></strong>';
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: boldContent,
+
+                    });
+                    //marker.addListener('click', function () {
+                    infoWindow.open(map, marker);
+                    //});
+                }
+            }
+            if (options.image) {
+                marker.setIcon(options.image)
             }
 
         }

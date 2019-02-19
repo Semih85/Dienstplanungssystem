@@ -422,7 +422,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                    GunTanim = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
                                                         ? b.NobetGunKuralAdi
                                                         : (nobetGrupGorevTipGunKural == null ? "Tanımsız gün kuralı" : nobetGrupGorevTipGunKural.NobetGunKuralAdi),
-                                                   //culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),
                                                    GunGrup = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
                                                         ? b.GunGrupAdi
                                                         : (nobetGrupGorevTipGunKural == null ? "Tanımsız gün grubu" : nobetGrupGorevTipGunKural.GunGrupAdi),
@@ -447,7 +446,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         private List<EczaneNobetSonucListe2> EczaneNobetSonucOsmaniye(List<EczaneNobetSonucListe2> eczaneNobetSonuclar, List<NobetDurumDetay> nobetDurumDetaylar)
-        {            
+        {
             var tarihler = eczaneNobetSonuclar
                 .Where(w => w.Tarih >= w.NobetUstGrupBaslamaTarihi)
                 .Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
@@ -845,25 +844,25 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 if (gunlukSonuclar.Count > 1)
                 {
                     foreach (var sonuc in gunlukSonuclar)
-                {
-                    oncekiAylardaAyniGunNobetTutanEczaneGruplar
-                        .Add(new EczaneGrupDetay
-                        {
-                            EczaneGrupTanimId = indisId + tarih.TakvimId,
-                            EczaneId = sonuc.EczaneId,
-                            ArdisikNobetSayisi = 0,
-                            NobetUstGrupId = sonuc.NobetUstGrupId,
-                            EczaneGrupTanimAdi = $"{tarih.TarihAciklama} tarihindeki nöbetler",
-                            EczaneGrupTanimTipAdi = "Aynı gün nöbet",
-                            EczaneGrupTanimTipId = -1,
-                            NobetGrupId = sonuc.NobetGrupId,
-                            EczaneAdi = sonuc.EczaneAdi,
-                            NobetGrupAdi = sonuc.NobetGrupAdi,
-                            EczaneNobetGrupId = sonuc.EczaneNobetGrupId,
-                            AyniGunNobetTutabilecekEczaneSayisi = 1
+                    {
+                        oncekiAylardaAyniGunNobetTutanEczaneGruplar
+                            .Add(new EczaneGrupDetay
+                            {
+                                EczaneGrupTanimId = indisId + tarih.TakvimId,
+                                EczaneId = sonuc.EczaneId,
+                                ArdisikNobetSayisi = 0,
+                                NobetUstGrupId = sonuc.NobetUstGrupId,
+                                EczaneGrupTanimAdi = $"{tarih.TarihAciklama} tarihindeki nöbetler",
+                                EczaneGrupTanimTipAdi = "Aynı gün nöbet",
+                                EczaneGrupTanimTipId = -1,
+                                NobetGrupId = sonuc.NobetGrupId,
+                                EczaneAdi = sonuc.EczaneAdi,
+                                NobetGrupAdi = sonuc.NobetGrupAdi,
+                                EczaneNobetGrupId = sonuc.EczaneNobetGrupId,
+                                AyniGunNobetTutabilecekEczaneSayisi = 1
                             //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
                         });
-                }
+                    }
                 }
             }
             //}
@@ -1347,7 +1346,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                }).ToList();
         }
 
-
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetGrupGunKuralIstatistik> GetEczaneNobetGrupGunKuralIstatistik(List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneGrupNobetSonuc> eczaneGrupNobetSonuc)
         {
@@ -1403,7 +1401,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return enSonNobetler;
         }
         #endregion
-
 
         #endregion
 

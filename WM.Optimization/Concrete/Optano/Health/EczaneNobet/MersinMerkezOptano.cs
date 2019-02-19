@@ -68,6 +68,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             var ayIcindeAyniGunNobet = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "ayIcindeAyniGunNobet", data.NobetUstGrupId);
             var altGruplarlaAyniGunNobetTutma = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "altGruplarlaAyniGunNobetTutma", data.NobetUstGrupId);
+            var altGruplarlaAyniGunNobetTutmaToroslar = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "altGruplarlaAyniGunNobetTutmaToroslar", data.NobetUstGrupId);
+
             var ikiliEczaneAyniGunNobet = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "ikiliEczaneAyniGunNobet", data.NobetUstGrupId);
 
             //pasifler
@@ -1516,7 +1518,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var kpEsGrubaAyniGunNobetYazma = new KpEsGrubaAyniGunNobetYazma
             {
                 Model = model,
-                NobetUstGrupKisit = altGruplarlaAyniGunNobetTutma,
                 KararDegiskeni = _x
             };
 
@@ -1532,6 +1533,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var kpEsGrubaAyniGunNobetYazmaYeniSehir = (KpEsGrubaAyniGunNobetYazma)kpEsGrubaAyniGunNobetYazma.Clone();
 
                 kpEsGrubaAyniGunNobetYazmaYeniSehir.EczaneNobetTarihAralik = eczaneNobetTarihAralikAtlGrupluYenisehir;
+                kpEsGrubaAyniGunNobetYazmaYeniSehir.NobetUstGrupKisit = altGruplarlaAyniGunNobetTutma;
                 kpEsGrubaAyniGunNobetYazmaYeniSehir.EczaneNobetSonuclar = GetSonuclarByGunGrup(eczaneNobetSonuclarAltGruplaAyniGunYenisehir, gunGrup.GunGrupId);
                 kpEsGrubaAyniGunNobetYazmaYeniSehir.EczaneGruplar = GetEczaneGruplarByEczaneGrupTanimTipId(data.AltGruplarlaAyniGunNobetTutmayacakEczanelerYenisehir, gunGrup.GunGrupId);
 
@@ -1542,6 +1544,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var kpEsGrubaAyniGunNobetYazmaToroslar = (KpEsGrubaAyniGunNobetYazma)kpEsGrubaAyniGunNobetYazma.Clone();
 
                 kpEsGrubaAyniGunNobetYazmaToroslar.EczaneNobetTarihAralik = eczaneNobetTarihAralikAtlGrupluToroslar;
+                kpEsGrubaAyniGunNobetYazmaToroslar.NobetUstGrupKisit = altGruplarlaAyniGunNobetTutmaToroslar;
                 kpEsGrubaAyniGunNobetYazmaToroslar.EczaneNobetSonuclar = GetSonuclarByGunGrup(eczaneNobetSonuclarAltGruplaAyniGunToroslar, gunGrup.GunGrupId);
                 kpEsGrubaAyniGunNobetYazmaToroslar.EczaneGruplar = GetEczaneGruplarByEczaneGrupTanimTipId(data.AltGruplarlaAyniGunNobetTutmayacakEczanelerToroslar, gunGrup.GunGrupId);
 

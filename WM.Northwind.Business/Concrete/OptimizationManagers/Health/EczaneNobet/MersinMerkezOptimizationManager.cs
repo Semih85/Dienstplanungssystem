@@ -242,7 +242,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
                             //|| (w.NobetGrupId1 == 23 && w.NobetGrupId2 == 24) //Mezitli 1-2
                             //)
-                            ).ToList(); 
+                            ).ToList();
 
             //2. karar değişkeni. her eczane ve ilgili altgrup
             var eczaneNobetAltGrupTarihAralik = _takvimService.GetEczaneNobetAltGrupTarihAralik(baslangicTarihi, bitisTarihi, nobetGorevTipId, nobetGrupIdListe)
@@ -261,6 +261,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetGrupAltGruplarToroslar1 = _eczaneNobetGrupAltGrupService.GetDetaylarByNobetGrupId(15);
 
             var altGruplarlaAyniGunNobetTutma = _nobetUstGrupKisitService.GetDetay("altGruplarlaAyniGunNobetTutma", nobetUstGrupId);
+            var altGruplarlaAyniGunNobetTutmaToroslar = _nobetUstGrupKisitService.GetDetay("altGruplarlaAyniGunNobetTutmaToroslar", nobetUstGrupId);
 
             var eczaneNobetSonuclarAltGruplaAyniGun = new List<EczaneNobetSonucListe2>();
             var eczaneNobetSonuclarAltGruplaAyniGunToroslar = new List<EczaneNobetSonucListe2>();
@@ -272,7 +273,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             if (!altGruplarlaAyniGunNobetTutma.PasifMi)
             {
-                indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
+                //indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
 
                 #region yenişehir
 
@@ -300,15 +301,18 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     };
 
                 altGruplarlaAyniGunNobetTutmayacakEczanelerYeniSehir = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturMersin(eczaneNobetSonuclarAltGruplaAyniGun, eczaneNobetGruplarAltGruplaAyniGun, eczaneNobetGrupAltGruplarYenisehir2, altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, indisId, ayniGunNobetTutmasiTakipEdilecekGruplar, altGrubuOlanNobetGruplar, (int)altGruplarlaAyniGunNobetTutma.SagTarafDegeri);
-                #endregion
+                #endregion                
+            }
 
+            if (!altGruplarlaAyniGunNobetTutmaToroslar.PasifMi)
+            {
                 #region toroslar
 
                 var altGrupluTakipEdilecekNobetGrupIdListToroslar =
-                     new List<int> {
+                 new List<int> {
                                            15, //Toroslar-1 - alt grubu olan
                                            16  //Toroslar-2 
-                     };
+                 };
 
                 var eczaneNobetGruplarAltGruplaAyniGunToroslar = _eczaneNobetGrupService.GetDetaylar(altGrupluTakipEdilecekNobetGrupIdListToroslar, baslangicTarihi, bitisTarihi)
                         .Where(w => !eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneNobetGrupId).Contains(w.Id)).ToList();
@@ -328,10 +332,11 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 altGruplarlaAyniGunNobetTutmayacakEczanelerToroslar = _eczaneNobetOrtakService
                     .AltGruplarlaSiraliNobetListesiniOlusturMersin(eczaneNobetSonuclarAltGruplaAyniGunToroslar, eczaneNobetGruplarAltGruplaAyniGunToroslar, eczaneNobetGrupAltGruplarToroslar1,
                     altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, 1,
-                    ayniGunNobetTutmasiTakipEdilecekGruplarToroslar, altGrubuOlanNobetGruplarToroslar, (int)altGruplarlaAyniGunNobetTutma.SagTarafDegeri);
+                    ayniGunNobetTutmasiTakipEdilecekGruplarToroslar, altGrubuOlanNobetGruplarToroslar, (int)altGruplarlaAyniGunNobetTutmaToroslar.SagTarafDegeri);
                 #endregion
             }
 
+            #region ikili eczaneler
             var ikiliEczaneAyniGunNobet = _nobetUstGrupKisitService.GetDetay("ikiliEczaneAyniGunNobet", nobetUstGrupId);
             var arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = new List<EczaneGrupDetay>();
 
@@ -339,7 +344,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             {
                 indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
                 arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = _ayniGunTutulanNobetService.GetArasinda2FarkOlanIkiliEczaneleri(eczaneNobetGruplar, nobetUstGrupId, (int)ikiliEczaneAyniGunNobet.SagTarafDegeri);
-            }
+            } 
+            #endregion
 
             #region önceki aylar aynı gün nöbet tutanlar çözülen ayda aynı gün nöbetçi olmasın
             var oncekiAylardaAyniGunNobetTutanEczaneler = new List<EczaneGrupDetay>();

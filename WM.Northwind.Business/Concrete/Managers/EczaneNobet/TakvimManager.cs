@@ -1043,9 +1043,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             DateTime nobetBaslangicTarihi,
             DateTime nobetBitisTarihi,
             int nobetUstGrupId)
-        {            
+        {
             var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrupId);
-                //.Where(w => w.GunGrupId == 3);
+            //.Where(w => w.GunGrupId == 3);
 
             foreach (var gunGrup in nobetUstGrupGunGruplar)
             {
@@ -1055,6 +1055,15 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 {
                     foreach (var nobetGrupGorevTip in nobetGrupGorevTipler)
                     {
+                        var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTip.Id);
+
+                        var nobetGrupGunGruplar = nobetGrupGorevTipGunKurallar.Select(s => s.GunGrupId).Distinct().ToList();
+
+                        if (!nobetGrupGunGruplar.Contains(gunGrup.GunGrupId))
+                        {
+                            continue;
+                        }
+
                         var ilgiliTarihlerByNobetGrup = ilgiliTarihler
                             .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id)
                             .OrderBy(o => o.Tarih).ToList();

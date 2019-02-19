@@ -135,7 +135,7 @@ namespace WM.Northwind.DataAccess.Migrations
 
             //UstGrupPaketiEkle(context, baslamaTarihi, odaId, nobetUstGrupId);
             //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { nobetGrupGorevTipId });
-            //NobetGrupGorevTipTakvimOzelGunEkle(context, nobetGrupGorevTipId);
+            //NobetGrupGorevTipTakvimOzelGunEkle(context, 50);
             //TalepEkle(context, 28, 2);
 
             var gerekliBilgilerBartin = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)

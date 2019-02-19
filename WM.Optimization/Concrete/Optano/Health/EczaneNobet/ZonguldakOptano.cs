@@ -212,10 +212,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #region Gece nöbetçileri
 
-            var nobetGorevTipId = 1;
-            var nobetGrupGorevTip = data.NobetGrupGorevTipler.Where(w => w.NobetGorevTipId == nobetGorevTipId).SingleOrDefault();
-
-            if (nobetGrupGorevTip != null)
+            foreach (var nobetGrupGorevTip in data.NobetGrupGorevTipler)
             {
                 #region ön hazırlama
 
