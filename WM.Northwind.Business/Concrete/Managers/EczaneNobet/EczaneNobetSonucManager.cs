@@ -679,9 +679,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                        ? s.Where(w => w.NobetGunKuralId == 1).Max(f => f.SonNobetTarihi)
                        : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
 
-                   NobetSayisiBayram = s.Where(w => w.NobetGunKuralId > 7).Sum(f => f.NobetSayisiGercek),
-                   SonNobetTarihiBayram = s.Where(w => w.NobetGunKuralId > 7).Sum(f => f.NobetSayisi) > 0
-                       ? s.Where(w => w.NobetGunKuralId > 7).Max(f => f.SonNobetTarihi)
+                   NobetSayisiBayram = s.Where(w => w.GunGrup == "Bayram").Sum(f => f.NobetSayisiGercek),
+                   SonNobetTarihiBayram = s.Where(w => w.GunGrup == "Bayram").Sum(f => f.NobetSayisi) > 0
+                       ? s.Where(w => w.GunGrup == "Bayram").Max(f => f.SonNobetTarihi)
                        : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
 
                    NobetSayisiArife = s.Where(w => w.NobetGunKuralId == 10).Sum(f => f.NobetSayisiGercek),

@@ -134,7 +134,7 @@ namespace WM.Northwind.DataAccess.Migrations
             var varsayilanNobetciSayisi = 1;
 
             //UstGrupPaketiEkle(context, baslamaTarihi, odaId, nobetUstGrupId);
-            //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { nobetGrupGorevTipId });
+            //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 29,30 }, varsayilanNobetciSayisi, 32);
             //NobetGrupGorevTipTakvimOzelGunEkle(context, 50);
             //TalepEkle(context, 28, 2);
 
@@ -5141,6 +5141,22 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
         {
             var nobetGrupGorevTipGunKuralListe = context.NobetGrupGorevTipGunKurallar
                             .Where(w => w.NobetGrupGorevTipId == 24) //antalya 11. grup
+                            .ToList();
+
+            var nobetGrupGorevTipGunKurallar = new List<NobetGrupGorevTipGunKural>();
+
+            var nobetGrupGorevTipler = context.NobetGrupGorevTipler
+                .Where(w => w.NobetGrup.NobetUstGrupId == nobetUstGrupId
+                         && nobetGrupGorevTipIdList.Contains(w.Id)).ToList();
+
+            NobetGrupGunKuralEkle2(context, baslamaTarihi, nobetUstGrupId, nobetGrupGorevTipGunKuralListe, nobetGrupGorevTipGunKurallar, nobetGrupGorevTipler, varsayilanNobetciSayisi);
+        }
+
+        private static void NobetGrupGunKuralEkle(Concrete.EntityFramework.Contexts.EczaneNobetContext context, DateTime baslamaTarihi, int nobetUstGrupId, List<int> nobetGrupGorevTipIdList, 
+            int varsayilanNobetciSayisi, int alinacakNobetGrupGorevTipId)
+        {
+            var nobetGrupGorevTipGunKuralListe = context.NobetGrupGorevTipGunKurallar
+                            .Where(w => w.NobetGrupGorevTipId == alinacakNobetGrupGorevTipId) 
                             .ToList();
 
             var nobetGrupGorevTipGunKurallar = new List<NobetGrupGorevTipGunKural>();

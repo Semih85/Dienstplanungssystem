@@ -782,6 +782,20 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     var kpKumulatifToplamEnFazlaHaftaIci = (KpKumulatifToplam)kpKumulatifToplam.Clone();
 
                     kpKumulatifToplamEnFazlaHaftaIci.Tarihler = haftaIciGunleri;
+
+                    //if (nobetGrupGorevTip.NobetGrupId == 1)
+                    //{
+                    //    haftaIciToplamMaxHedef.SagTarafDegeri = 9;
+                    //}
+                    //else if (nobetGrupGorevTip.NobetGrupId == 2)
+                    //{
+                    //    haftaIciToplamMaxHedef.SagTarafDegeri = 12;
+                    //}
+                    //else
+                    //{
+                    //    haftaIciToplamMaxHedef.SagTarafDegeri = 9;
+                    //}
+
                     kpKumulatifToplamEnFazlaHaftaIci.NobetUstGrupKisit = haftaIciToplamMaxHedef;
                     kpKumulatifToplamEnFazlaHaftaIci.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiHaftaIci;
 

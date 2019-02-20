@@ -27,6 +27,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int TalepEdilenNobetciSayisi { get; set; }
         public DateTime Tarih { get; set; }
         public DateTime? NobetGunKuralKapanmaTarihi { get; set; }
+        public int NobetGrubuBuyukluk { get; set; }
         //public DateTime? BitisTarihi { get; set; }
         //public DateTime BaslangicTarihi { get; set; }
     }

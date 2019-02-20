@@ -144,7 +144,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var nobetUstGrupBaslangicTarihi = eczaneNobetDataModelParametre.NobetUstGrupBaslangicTarihi;
             var baslangicTarihi = eczaneNobetDataModelParametre.BaslangicTarihi;
             var bitisTarihi = eczaneNobetDataModelParametre.BitisTarihi;
-            var nobetGrupGorevTipler = eczaneNobetDataModelParametre.NobetGrupGorevTipler;
+            //var nobetGrupGorevTipler = eczaneNobetDataModelParametre.NobetGrupGorevTipler;
+            var nobetGrupGorevTipler = eczaneNobetDataModelParametre.NobetGrupGorevTipler.Where(w => nobetGrupIdListe.Contains(w.NobetGrupId)).ToList();
             var nobetGorevTipler = eczaneNobetDataModelParametre.NobetGrupGorevTipler.Select(s => s.NobetGorevTipId).Distinct().ToList();
             #endregion
 
@@ -696,7 +697,16 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                         model.NobetGrupId = nobetGrupIdListe;
                         var data = EczaneNobetDataModel(model);
                         //return EczaneNobetCozAktifiGuncelle(data);
-                        sonuclar = EczaneNobetCozAktifiGuncelle(data);
+                        //sonuclar = EczaneNobetCozAktifiGuncelle(data);
+                        var sonuc = EczaneNobetCozSonuclaraEkle(data);
+                        sonuclar.ObjectiveValue += sonuc.ObjectiveValue;
+                        sonuclar.KararDegikeniSayisi += sonuc.KararDegikeniSayisi;
+                        sonuclar.KisitSayisi += sonuc.KisitSayisi;
+
+                        sonuclar.CozumSuresi += sonuc.CozumSuresi;
+
+                        sonuclar.CalismaSayisi += sonuc.CalismaSayisi;
+                        sonuclar.IterasyonSayisi += sonuc.IterasyonSayisi;
                     }
                     return sonuclar;
                 }

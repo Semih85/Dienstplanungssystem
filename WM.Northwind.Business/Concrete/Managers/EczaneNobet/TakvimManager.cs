@@ -401,7 +401,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                             ? (int)nobetGrupGorevTipGunKural?.NobetciSayisi
                                                             : (int)k.Deger,
                                                   Tarih = t.Tarih,
-                                                  NobetGunKuralKapanmaTarihi = nobetGrupGorevTipGunKural.BitisTarihi
+                                                  NobetGunKuralKapanmaTarihi = nobetGrupGorevTipGunKural.BitisTarihi,
+                                                  NobetGrubuBuyukluk = 0
                                               })
                                               .Where(w => w.GunGrupAdi != null)
                                               .ToList();

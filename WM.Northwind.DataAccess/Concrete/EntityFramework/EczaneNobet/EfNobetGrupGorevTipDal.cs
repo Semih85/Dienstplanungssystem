@@ -28,7 +28,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetGrupAdi = s.NobetGrup.Adi,
                         NobetUstGrupId = s.NobetGrup.NobetUstGrupId,
                         NobetUstGrupAdi = s.NobetGrup.NobetUstGrup.Adi,
-                        Id = s.Id
+                        Id = s.Id,
+                        BaslamaTarihi = s.BaslamaTarihi,
+                        BitisTarihi = s.BitisTarihi
                     }).SingleOrDefault(filter);
             }
         }
@@ -45,7 +47,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetGrupAdi = s.NobetGrup.Adi,
                         NobetUstGrupId = s.NobetGrup.NobetUstGrupId,
                         NobetUstGrupAdi = s.NobetGrup.NobetUstGrup.Adi,
-                        Id = s.Id
+                        Id = s.Id,
+                        BaslamaTarihi = s.BaslamaTarihi,
+                        BitisTarihi = s.BitisTarihi
                     });
 
                 return filter == null

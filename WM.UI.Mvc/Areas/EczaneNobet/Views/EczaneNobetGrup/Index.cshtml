@@ -4,7 +4,7 @@
     ViewBag.Title = "Eczane Nöbet Gruplar |  Nöbet Yaz";
 }
 
-<div class="well">
+@*<div class="well">
     <div class="form-inline">
         <h4 class="mr-5">Eczane Nöbet Gruplar</h4>
         <div class="form-group mr-5">
@@ -17,8 +17,36 @@
             <input type="text" id="myInput" class="form-control" placeholder="Tabloda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
         </div>
     </div>
+</div>*@
+
+<div class="row justify-content-between mb-2">
+    <div class="col-md-4 mb-2">
+        <div class="form-inline">
+            <h4 class="mr-5">Eczane Nöbet Gruplar</h4>
+            <div class="form-group">
+                <a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-xl-3">
+
+        <button class="btn btn-dark btn-sm" type="button" id="btnExceleAktar">
+            <i class="fa fa-file-excel-o text-success"></i> Excele Aktar
+            <i class="fa fa-download"></i>
+        </button>
+    </div>
+
+    <div class="col-md-4 col-xl-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="text" id="myInput" class="form-control" placeholder="Tabloda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+        </div>
+    </div>
 </div>
-<hr />
+
+
 @*----------------loading gif--------------------*@
 <div class="row">
     <div class="col-lg-3">
@@ -164,6 +192,46 @@
                 // document.getElementById("div_searching").style.visibility = "visible";//sayfa yüklenirken tablo gizlenir
                 document.getElementById("loading").style.visibility = "hidden";//gif gizlenir
                 document.getElementById("loading").style.display = "none";//gif yer kaplamasın
+            }
+
+            $('#btnExceleAktar').click(function () {
+                // alert('ConfirmSubmit')
+                $("#gridT > tbody > tr").each(function (i, el) {
+                    $(this).css('display', 'table-row');
+                });
+                exportToExcel();
+                //location.reload();
+                sayfalamaYap(model, 15);
+            });
+            function exportToExcel() {
+
+                var htmls = "";
+
+                var uri = 'data:application/vnd.ms-excel;base64,';
+
+                var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+
+                var base64 = function (s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                };
+
+                var format = function (s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) {
+                        return c[p];
+                    })
+                };
+
+                htmls = $("table").html();
+
+                var ctx = {
+                    worksheet: 'Worksheet',
+                    table: htmls
+                }
+
+                var link = document.createElement("a");
+                link.download = "eczaneNobetGruplar.xls";
+                link.href = uri + base64(format(template, ctx));
+                link.click();
             }
 
             $("#myInput").on("keyup", function () {

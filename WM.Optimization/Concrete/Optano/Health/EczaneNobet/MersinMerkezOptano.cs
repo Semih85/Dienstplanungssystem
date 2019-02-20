@@ -24,14 +24,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         //Karar değişkeni model çalıştıktan sonra değer aldığından burada tanımlandı
         private VariableCollection<EczaneNobetTarihAralik> _x { get; set; }
         private VariableCollection<EczaneNobetAltGrupTarihAralik> y { get; set; }
-        private CplexSolverConfiguration _solverConfig;
-        private CplexSolver _solver;
-        private Model model;
-        private Configuration _configuration;
+        //private CplexSolverConfiguration _solverConfig;
+        //private CplexSolver _solver;
+        //private Model model;
+        //private Configuration _configuration;
         #endregion
 
         private Model Model(MersinMerkezDataModelV2 data)
         {
+            var model = new Model() { Name = "Mersin Eczane Nöbet" };
+
             #region veriler
 
             #region kısıtlar
@@ -1604,8 +1606,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var calismaSayisiEnFazla = 0;
 
             //calismaSayisiEnFazla = 3;
-
-            _configuration = new Configuration
+            var config = new Configuration
             {
                 NameHandling = NameHandlingStyle.Manual,
                 ComputeRemovedVariables = true
@@ -1613,18 +1614,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             try
             {
-                using (var scope = new ModelScope(_configuration))
+                using (var scope = new ModelScope(config))
                 {
-                    model = new Model() { Name = "Mersin Merkez Eczane Nöbet" };
+                    var model = Model(data);
 
-                    model = Model(data);
+                    var solverConfig = new CplexSolverConfiguration() { ComputeIIS = true };
 
-                    //model.Name = "Mersin Merkez Eczane Nöbet";
-
-                    _solverConfig = new CplexSolverConfiguration() { ComputeIIS = true };
-
-                    _solver = new CplexSolver(_solverConfig);
-
+                    var solver = new CplexSolver(solverConfig);
                     // Get a solver instance, change your solver
 
                     //solver.Abort();
@@ -1642,7 +1638,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     //lpStream.Close();
 
                     // solve the model
-                    var solution = _solver.Solve(model);
+                    var solution = solver.Solve(model);
 
                     //Assert.IsTrue(solution.ConflictingSet.ConstraintsLB.Contains(brokenConstraint1));
                     //Assert.IsTrue(solution.ConflictingSet.ConstraintsLB.Contains(brokenConstraint2));
@@ -1952,7 +1948,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
         public void ModeliKapat()
         {
-            _solver.Abort();
+            //_solver.Abort();
 
             var field = typeof(ModelScope).GetRuntimeProperties().Single(rp => rp.Name == "Current");
             ModelScope reflectedScope = (ModelScope)field.GetValue(null);

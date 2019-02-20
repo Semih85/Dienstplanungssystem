@@ -62,5 +62,6 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public List<KalibrasyonYatay> Kalibrasyonlar { get; set; }
         public List<AyniGunTutulanNobetDetay> IkiliEczaneler { get; set; }
         public List<NobetDurumDetay> NobetDurumlar { get; set; }
+        public List<EczaneGrupDetay> MesafeKontrolEczaneler { get; set; }
     }
 }

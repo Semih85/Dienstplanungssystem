@@ -30,7 +30,15 @@
                                 <i class="fa fa-calendar" aria-hidden="true"></i>
                             </span>
                         </div>
-                        @Html.TextBoxFor(model => model.AcilisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Açılış Tarihi" })
+                        @Html.TextBox("AcilisTarihi", null , new { @class = "form-control datepicker mr-2",
+                               //data_toggle = "tooltip",
+                               //data_placement = "top",
+                               //title = "Başlangıç Tarihi",
+                               autocomplete = "off",
+                               placeHolder = "Açılış Tarihi"
+                           })
+
+                        @*@Html.TextBoxFor(model => model.AcilisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Açılış Tarihi" })*@
                     </div>
                     @Html.ValidationMessageFor(model => model.AcilisTarihi, "", new { @class = "text-danger" })
                 </div>
@@ -144,8 +152,8 @@
 }
 
 @section Scripts{
-    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
     @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
     @*@Scripts.Render("~/bundle/validation/scripts")*@
 
     <script>
@@ -154,23 +162,30 @@
         //    $("#Boylam").text().replace(".", ",");
         //});
         $(function () {           
-            var bslStr = tarihDondur2($("#AcilisTarihi").val());
-            var bsl = new Date(bslStr);
-            $("#AcilisTarihi").datepicker("setDate", new Date(bsl));
+
+            $('.datepicker').datepicker('setStartDate', "01-01-1900");
+
+            var baslangicStr = tarihDondur2($("#AcilisTarihi").val());
+                        
+            $("#AcilisTarihi").datepicker("setDate", baslangicStr);
+
         });
 
         function tarihDondur2(metin) {
-
+            
             var tarih = metin.split(' ', 1)[0];
+            //alert(tarih)
             var tarihTanim = tarih.split(".");
             //var tarihTanim = metin.substring(0, 10).split(".");
 
-            yil = tarihTanim[2];
-            ay = tarihTanim[1];
-            gun = tarihTanim[0];
+            yil = tarihTanim[2]*1;
+            //alert(yil)
+            ay = tarihTanim[1]*1;
+            gun = tarihTanim[0]*1;
 
             if (gun.length != 4) {
-                return yil + "." + ay + "." + gun;
+                
+                return new Date(yil,ay,gun);//yil + "." + ay + "." + gun;
             }
             else {
                 //alert(gun)

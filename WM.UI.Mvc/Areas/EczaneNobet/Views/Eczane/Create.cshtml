@@ -155,6 +155,12 @@
             //var d = new Date();
             //var strDate = d.getFullYear() + "." + (d.getMonth() + 1) + "." + d.getDate();
             //$("#AcilisTarihi").val(strDate);
+            $('.datepicker').datepicker('setStartDate', "01-01-1900");
+
+            //var baslangicStr = tarihDondur2($("#AcilisTarihi").val());
+
+            $("#AcilisTarihi").datepicker("setDate", new Date());
+
             if ($("#NobetUstGrupId option").length > 1) {
                 $("#NobetUstGrupId").show();
             }

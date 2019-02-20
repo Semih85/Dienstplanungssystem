@@ -212,7 +212,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #region Gece nöbetçileri
 
-            var nobetGorevTipId = 1;
+            var nobetGorevTipId = 7;
             var nobetGrupGorevTip = data.NobetGrupGorevTipler.Where(w => w.NobetGorevTipId == nobetGorevTipId).SingleOrDefault();
 
             if (nobetGrupGorevTip != null)
@@ -1250,6 +1250,18 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 };
                 EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaOncekiAylar);
 
+                var esGrubaAyniGunNobetYazmaMesafeler = new KpEsGrubaAyniGunNobetYazma
+                {
+                    Model = model,
+                    EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
+                    EczaneNobetSonuclar = eczaneNobetSonuclarGorevTipBazli,
+                    NobetUstGrupKisit = eczaneGrup,
+                    EczaneGruplar = data.MesafeKontrolEczaneler,
+                    Tarihler = tarihAraligi,
+                    KararDegiskeni = _x
+                };
+                EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaMesafeler);
+
                 #endregion
 
                 #region istek ve mazeret
@@ -1324,7 +1336,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             var config = new Configuration
             {
-                NameHandling = NameHandlingStyle.Manual,
+                NameHandling = NameHandlingStyle.UniqueShortNames,
                 ComputeRemovedVariables = true
             };
 

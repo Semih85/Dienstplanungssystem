@@ -12,11 +12,15 @@ namespace WM.Northwind.Business.ValidationRules.FluentValidation
     {
         public EczaneValidator()
         {
-            RuleFor(p => p.Adi).NotEmpty().Length(0, 20);
+            RuleFor(p => p.Adi)
+                .NotEmpty()
+                .WithMessage("Eczane Adı gereklidir.")
+                .Length(0, 20);
 
             RuleFor(p => p.Adres).MaximumLength(150);
-            RuleFor(p => p.AcilisTarihi).NotNull();
-                //.WithMessage("Açılış tarihi gereklidir.");
+            RuleFor(p => p.AcilisTarihi)
+                .NotNull()
+                .WithMessage("Açılış tarihi gereklidir.");
             
             RuleFor(p => p.MailAdresi).MaximumLength(40).EmailAddress();
             RuleFor(p => p.TelefonNo).MaximumLength(10);

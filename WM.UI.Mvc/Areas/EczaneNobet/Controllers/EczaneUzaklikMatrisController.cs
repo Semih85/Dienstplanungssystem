@@ -14,6 +14,8 @@ using WM.UI.Mvc.Models;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
+    [HandleError]
+    [Authorize]
     public class EczaneUzaklikMatrisController : Controller
     {
         #region ctor
