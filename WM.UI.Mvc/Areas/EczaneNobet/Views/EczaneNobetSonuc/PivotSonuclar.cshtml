@@ -930,7 +930,7 @@
                     $.each(dagilimlar.EczaneNobetAlacakVerecek, function (index, s) {
                         alacakVerecekLitesi.push({
                             Eczane: s.EczaneAdi,
-                            AnahtarSıra: s.AnahtarSıra,
+                            //AnahtarSıra: s.AnahtarSıra,
                             ["Gün Grup"]: s.GunGrup,
                             ["Nöbet Grubu"]: s.NobetGrupId + ' ' + s.NobetGrupAdi,
                             AnahtarTarih: s.AnahtarTarihAciklama,
@@ -2296,7 +2296,7 @@
                 alacakVereceklerList = $(function table7() {
                     $("#alacakVereceklerListe").pivotUI(alacakVerecekLitesi,
                         {
-                            rows: ["Gün Grup", "Nöbet Grubu", "AnahtarSıra", "AnahtarTarih", "Eczane", "SonNöbetTarihi", "NöbetSayısı"],
+                            rows: ["Gün Grup", "Nöbet Grubu", "AnahtarTarih", "Eczane", "SonNöbetTarihi", "NöbetSayısı"],
                             //cols: ["Gün Grup"],
                             vals: ["BorçluGünSayısı"],
                             aggregatorName: "Topla (Tamsayi)",

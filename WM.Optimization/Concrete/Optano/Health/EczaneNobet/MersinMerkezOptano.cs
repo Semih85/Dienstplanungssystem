@@ -1603,7 +1603,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         public EczaneNobetSonucModel Solve(MersinMerkezDataModelV2 data)
         {
             var results = new EczaneNobetSonucModel();
-            var calismaSayisiEnFazla = 0;
+            var calismaSayisiEnFazla = 3;
 
             //calismaSayisiEnFazla = 3;
             var config = new Configuration
