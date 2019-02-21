@@ -1892,7 +1892,7 @@
                             vals: ["Gün Farkı"],
                             aggregatorName: "En Fazla",
                             aggregators: pivotAggregators,
-                            rendererName: "Sütun Grafik",
+                            rendererName: "Yığılmış Sütun Grafik",
                             renderers: $.extend(
                                 pivotRenderers,
                                 pivotRenderersGrafik
@@ -2220,12 +2220,13 @@
                             rows: ["Gün Grup"],
                             cols: ["BorçluGünSayısı"],
                             vals: ["BorçluGünSayısı"],
-                            aggregatorName: "Say", //"Count as Fraction of Total"
-                            rendererName: "Sutun Grafik",
+                            aggregatorName: "Say",
+                            aggregators: pivotAggregators,
+                            rendererName: "Yığılmış Sütun Grafik",
                             renderers: $.extend(
-                                $.pivotUtilities.renderers,
-                                $.pivotUtilities.c3_renderers
-                            )
+                                pivotRenderers,
+                                pivotRenderersGrafik
+                            ),
                         }
                     );
                 });

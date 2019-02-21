@@ -3058,7 +3058,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 }
                             }
 
-                            amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(haftaIciCevrim, sonNobetTarihiEnKucukPazar, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiPazar, 7, manuelSayi, eczaneIstatistik.BorcluNobetSayisiPazar, mevsimKatsayisi: kalibrasyonDegeriPazar);
+                            amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(pazarCevrim, sonNobetTarihiEnKucukPazar, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiPazar, 7, manuelSayi, eczaneIstatistik.BorcluNobetSayisiPazar, mevsimKatsayisi: kalibrasyonDegeriPazar);
                             //amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(pazarCevrim, sonNobetTarihiEnKucukPazar, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiPazar, ozelKatsayi: 7, mevsimKatsayisi: kalibrasyonDegeriPazar);
                         }
                         else if (eczaneNobetTarih.HaftaIciMi && haftaIciTakipEdilsinMi)
