@@ -814,8 +814,49 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     var kpKumulatifToplamEnFazlaHaftaIci = (KpKumulatifToplam)kpKumulatifToplam.Clone();
 
+                    var hIciStd = haftaIciToplamMaxHedef;
+
                     kpKumulatifToplamEnFazlaHaftaIci.Tarihler = haftaIciGunleri;
-                    kpKumulatifToplamEnFazlaHaftaIci.NobetUstGrupKisit = haftaIciToplamMaxHedef;
+
+
+                    //if (nobetGrupGorevTip.NobetGrupId == 15)//akdeniz-2
+                    //{
+                    //    hIciStd.SagTarafDegeri = 12;
+                    //}
+                    //if (nobetGrupGorevTip.NobetGrupId == 18)//akdeniz-2
+                    //{
+                    //    hIciStd.SagTarafDegeri = 10;
+                    //}
+                    //else if (nobetGrupGorevTip.NobetGrupId == 19)//AKDENİZ 3-4
+                    //{
+                    //    hIciStd.SagTarafDegeri = 8;
+                    //}
+                    //else if (nobetGrupGorevTip.NobetGrupId == 20)//y.şehir 1
+                    //{
+                    //    hIciStd.SagTarafDegeri = 9;
+                    //}
+                    //else if (nobetGrupGorevTip.NobetGrupId == 21)//y.şehir 2
+                    //{
+                    //    hIciStd.SagTarafDegeri = 7;
+                    //}
+                    //else if (nobetGrupGorevTip.NobetGrupId == 22)//y.şehir 3
+                    //{
+                    //    hIciStd.SagTarafDegeri = 9;
+                    //}
+                    //else if (nobetGrupGorevTip.NobetGrupId == 23)//mezitli 1
+                    //{
+                    //    hIciStd.SagTarafDegeri = 7;
+                    //}
+                    //else if (nobetGrupGorevTip.NobetGrupId == 24)//mezitli 2
+                    //{
+                    //    hIciStd.SagTarafDegeri = 7;
+                    //}
+                    //else
+                    //{
+                    //    haftaIciToplamMaxHedef.SagTarafDegeri = 9;
+                    //}
+
+                    kpKumulatifToplamEnFazlaHaftaIci.NobetUstGrupKisit = hIciStd;
                     kpKumulatifToplamEnFazlaHaftaIci.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiHaftaIci;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaHaftaIci);
@@ -1480,6 +1521,19 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             };
             EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaOncekiAylar);
 
+
+            var sonrakiAylarAyniGunIstekGirilenler = new KpEsGrubaAyniGunNobetYazma
+            {
+                Model = model,
+                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                EczaneNobetSonuclar = data.EczaneGrupNobetSonuclarTumu,
+                NobetUstGrupKisit = oncekiAylarAyniGunNobet,
+                EczaneGruplar = data.SonrakiDonemAyniGunNobetIstekGirilenler,
+                Tarihler = data.TarihAraligi,
+                KararDegiskeni = _x
+            };
+            EsGruptakiEczanelereAyniGunNobetYazma(sonrakiAylarAyniGunIstekGirilenler);
+
             #endregion
 
             #region Alt gruplarla aynı gün nöbet dağılımı
@@ -1603,7 +1657,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         public EczaneNobetSonucModel Solve(MersinMerkezDataModelV2 data)
         {
             var results = new EczaneNobetSonucModel();
-            var calismaSayisiEnFazla = 3;
+            var calismaSayisiEnFazla = 0;
 
             //calismaSayisiEnFazla = 3;
             var config = new Configuration

@@ -14,155 +14,28 @@
     @Styles.Render("~/bundle/style")
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
     <style>
-
-        /*Extra small devices (portrait phones, less than 576px)*/
-        @@media (max-width: 575px) {
-            .network {
-                height: 300px;
-            }
-
-            .harita {
-                height: 250px;
-            }
-
-            .basliklar {
-                height: 50px;
-                font-size: xx-small;
-            }
-
-            .buyukEczane {
-                height: 118px;
-            }
-
-            .kucukEczane {
-                height: 163px;
-                font-size: smaller;
-            }
+        .network {
+            height: 300px;
         }
 
-        /*// Small devices (landscape phones, 576px and up)*/
-        @@media (min-width: 576px) and (max-width: 767px) {
-            .network {
-                height: 450px;
-            }
-
-            .harita {
-                height: 325px;
-            }
-
-            .basliklar {
-                height: 50px;
-            }
-
-            .buyukEczane {
-                height: 176px;
-            }
-
-            .kucukEczane {
-                height: 143px;
-            }
+        .harita {
+            height: 90%;
         }
 
-        /*// Medium devices (tablets, 768px and up)*/
-        @@media (min-width: 768px) and (max-width: 991px) {
-            .network {
-                height: 600px;
-            }
-
-            .harita {
-                height: 400px;
-            }
-
-            .basliklar {
-                height: 95px;
-            }
-
-            .buyukEczane {
-                height: 230px;
-            }
-
-            .kucukEczane {
-                height: 139px;
-            }
-        }
-
-        /*// Large devices (desktops, 992px and up)*/
-        @@media (min-width: 992px) and (max-width: 1199px) {
-            .network {
-                height: 700px;
-            }
-
-            .harita {
-                height: 532px;
-            }
-
-            .basliklar {
-                height: 95px;
-            }
-            /*.labelBaslik {
+        .basliklar {
+            height: 10%;
             font-size: x-small;
-            font-weight: 300;
-        }*/
-            .buyukEczane {
-                height: 268px;
-            }
-
-            .kucukEczane {
-                height: 168px; /*123px;*/
-                font-size: small;
-            }
         }
 
-        /*// Extra large devices (large desktops, 1200px and up)*/
-        @@media (min-width: 1200px) and (max-width: 1399px) {
-            .network {
-                height: 800px;
-            }
-
-            .harita {
-                height: 500px;
-            }
-
-            .basliklar {
-                height: 95px;
-            }
-
-            .buyukEczane {
-                height: 306px;
-                font-size: large;
-            }
-
-            .kucukEczane {
-                height: 157px; /*141px*/
-                font-size: x-small;
-            }
+        .buyukEczane {
+            height: 118px;
         }
 
-        /*// Extra x-large devices (large desktops, 1400px and up)*/
-        @@media (min-width: 1400px) {
-            .network {
-                height: 1000px;
-            }
-
-            .harita {
-                height: 685px;
-            }
-
-            .basliklar {
-                height: 95px;
-            }
-
-            .buyukEczane {
-                height: 395px;
-                font-size: x-large;
-            }
-
-            .kucukEczane {
-                height: 227px;
-                font-size: large;
-            }
+        .kucukEczane {
+            height: 30%;
+            font-size: smaller;
         }
-
+       
         #eczaneSolSutun {
             background-color: purple;
             border-style: initial;
@@ -195,7 +68,7 @@
         }
 
         html, body {
-            position: fixed;
+            /*position: fixed;*/
             top: 0;
             bottom: 0;
             left: 0;
@@ -290,7 +163,7 @@
 </head>
 
 
-<body>
+<body >
 
     <div  id="loading" class="row">
         <div class="col-lg-3">
@@ -304,7 +177,7 @@
         </div>
     </div>
 
-    <div id="div1" class="container-fluid">
+    <div id="div1" class="container-fluid" style="height:850px; width:1250px" >
         @* network *@
         <div id="ustRow" class="row basliklar">
             <div id="labelBaslik" class="col-lg-3">
@@ -323,7 +196,7 @@
                 <div class="eczaneHucre kucukEczane" id="div_2"></div>
                 <div class="eczaneHucre kucukEczane" id="div_3"></div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-9">
                 <div id="map0" class="buyukHarita harita"></div>
                 <div class="row">
                     <div id="divMyLetterImage" style="height:5px; width:5px; margin-top:-100px; margin-left:-10px" class="col-4">
@@ -340,9 +213,9 @@
                          <img style="width:60px;height:60px" src="~/Content/images/NobetciEczaneLogoUfaks.png" />
                     </div>*@
             </div>
-            <div id="eczaneSagSutun" class="col-lg-3">
+            @*<div id="eczaneSagSutun" class="col-lg-3">
                 <h5 style="color:red"></h5>
-            </div>
+            </div>*@
         </div>
     </div>
 
@@ -1007,7 +880,7 @@
         function getZoomDegeri(enBuyukUzaklik) {
             //-1,486*LOG(A2;2,7182818) + 25,575
             var ln2 = Math.log(enBuyukUzaklik * 100000)
-            var result = -1.486 * ln2 + 25.2
+            var result = -1.486 * ln2 + 25.7
             return result
             //var zoomDegeri = 10
             //var comparingValue = enBuyukUzaklik * 100000

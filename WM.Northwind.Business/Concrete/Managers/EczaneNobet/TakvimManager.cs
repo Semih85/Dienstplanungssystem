@@ -1181,12 +1181,17 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                             var eczaneNobetCozumAnaharListeGecis = new List<EczaneNobetCozumAnaharListeGecis>();
 
-                            //var av = eczaneNobetGruplar.Where(w => w.EczaneAdi == "AVDANLIOĞLU");
+                            var kontrol = true;
 
-                            //if (av.Count() > 0)
-                            //{
+                            if (kontrol)
+                            {
+                                var eczaneKontrolEdilecek = eczaneNobetGruplar.Where(w => w.EczaneAdi == "UNCALI EBRU");
 
-                            //}
+                                if (eczaneKontrolEdilecek.Count() > 0)
+                                {
+
+                                }
+                            }
 
                             if (yeniAnahtarListeyeEklenecekEczaneler.Count > 0)
                             {

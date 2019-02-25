@@ -68,7 +68,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var herAyEnaz1HaftaIciGorev = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyEnaz1HaftaIciGorev", data.NobetUstGrupId);
             var haftaninGunleriDagilimi = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "haftaninGunleriDagilimi", data.NobetUstGrupId);
             var enFazlaGrupBuyukluguOrtalamasi = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "enFazlaGrupBuyukluguOrtalamasi", data.NobetUstGrupId);
-            
+
 
             var toplamMaxHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "toplamMaxHedef", data.NobetUstGrupId);
             var haftaIciToplamMaxHedef = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "haftaIciToplamMaxHedef", data.NobetUstGrupId);
@@ -266,7 +266,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             j++;
                         }
 
-                        if (tarih.Gun <= eczaneSayisi2)
+                        if (i <= eczaneSayisi2)
                         {
                             tarih.NobetGrubuBuyukluk = j;
                         }
@@ -517,7 +517,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     //if (kpHerAyPespeseGorev.EczaneNobetGrup.EczaneAdi != "HAKAN")
                     //{
                     //}
-                        HerAyPespeseGorev(kpHerAyPespeseGorev);
+                    HerAyPespeseGorev(kpHerAyPespeseGorev);
 
                     var kpHerAyPespeseGorevHaftaIci = new KpHerAyHaftaIciPespeseGorev
                     {
@@ -691,8 +691,21 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     }
 
                     #endregion
-                    
+
                     #region her hafta en fazla      
+
+                    //var kpHerAyPespeseGorevHaftalik = new KpHerAyPespeseGorev
+                    //{
+                    //    Model = model,
+                    //    EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazliTumGrorevTipler,
+                    //    NobetUstGrupKisit = enFazlaGrupBuyukluguOrtalamasi,
+                    //    Tarihler = tarihler,
+                    //    PespeseNobetSayisi = eczaneSayisilari - 1,
+                    //    EczaneNobetGrup = eczaneNobetGrup,
+                    //    KararDegiskeni = _x
+                    //};
+
+                    //HerAyPespeseGorev(kpHerAyPespeseGorevHaftalik);
 
                     var haftalar = tarihler.Select(s => s.NobetGrubuBuyukluk).Distinct().ToList();
 
@@ -703,6 +716,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             var haftaTumGunler = tarihler.Where(w => w.NobetGrubuBuyukluk == hafta).ToList();
 
                             var ortalamaNobetSayisiHaftalikTumu = OrtalamaNobetSayisi(haftaTumGunler.Sum(s => s.TalepEdilenNobetciSayisi), gruptakiEczaneSayisi);
+
                             var ortalamaEnFazlaHerHafta = (KpTarihAraligiOrtalamaEnFazla)kpTarihAraligiOrtalamaEnFazla.Clone();
 
                             ortalamaEnFazlaHerHafta.Tarihler = haftaTumGunler;

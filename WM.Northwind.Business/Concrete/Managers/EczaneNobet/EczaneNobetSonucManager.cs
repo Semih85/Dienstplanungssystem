@@ -624,7 +624,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 {
                     s.TakvimId,
                     s.Tarih,
-                    s.TarihAciklama
+                    s.TarihAciklama,
+                    s.NobetGunKuralId
                 })
                 .Distinct()
                 .OrderBy(o => o.Tarih).ToList();
@@ -646,7 +647,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 NobetUstGrupId = sonuc.NobetUstGrupId,
                                 EczaneGrupTanimAdi = $"{tarih.TarihAciklama} tarihindeki nöbetler",
                                 EczaneGrupTanimTipAdi = "Aynı gün nöbet",
-                                EczaneGrupTanimTipId = -1,
+                                EczaneGrupTanimTipId = tarih.NobetGunKuralId,
                                 NobetGrupId = sonuc.NobetGrupId,
                                 EczaneAdi = sonuc.EczaneAdi,
                                 NobetGrupAdi = sonuc.NobetGrupAdi,

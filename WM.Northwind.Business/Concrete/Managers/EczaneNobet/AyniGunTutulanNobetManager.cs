@@ -192,7 +192,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     }
                 }
             }
-            else if (nobetUstGrupId == 6)
+            else if (nobetUstGrupId == 6 || nobetUstGrupId == 9)
             {//bartın 
                 var eczaneNobetGruplar1 = eczaneNobetGruplar.OrderBy(o => o.Id).ToList();
 

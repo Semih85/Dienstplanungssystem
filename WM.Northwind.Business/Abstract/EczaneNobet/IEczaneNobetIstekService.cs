@@ -32,6 +32,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetIstekDetay> GetDetaylar(int nobetUstGrupId);
         List<EczaneNobetIstekDetay> GetDetaylarByTakvimId(int takvimId, int nobetUstGrupId);
         List<EczaneGrupDetay> GetDetaylar(List<EczaneNobetIstekDetay> eczaneNobetIstekDetaylar, List<EczaneGrupDetay> eczaneGrupDetayalar);
+        List<EczaneGrupDetay> SonrakiAylardaAyniGunIstekGirilenEczaneler(List<EczaneNobetIstekDetay> eczaneNobetIstekDetaylar);
 
         List<EczaneNobetIstekDetay> GetDetaylar();
         void CokluEkle(List<EczaneNobetIstek> eczaneNobetIstekler);

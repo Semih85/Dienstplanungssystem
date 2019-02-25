@@ -126,6 +126,52 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneGrupDetay> SonrakiAylardaAyniGunIstekGirilenEczaneler(List<EczaneNobetIstekDetay> eczaneNobetIstekDetaylar)
+        {
+            var oncekiAylardaAyniGunNobetTutanEczaneGruplar = new List<EczaneGrupDetay>();
+   
+            var istekler = eczaneNobetIstekDetaylar;
+
+            var ayniGünBirdenCokIstekGirilenTarihler = istekler
+                .GroupBy(g => new { g.TakvimId, g.Tarih })
+                .Select(s => new
+                {
+                    s.Key.TakvimId,
+                    s.Key.Tarih,
+                    Sayi = s.Count()
+                })
+                .Where(w => w.Sayi > 1).ToList();
+
+            foreach (var tarih in ayniGünBirdenCokIstekGirilenTarihler)
+            {
+                var gunlukSonuclar = eczaneNobetIstekDetaylar.Where(w => w.TakvimId == tarih.TakvimId).ToList();
+
+                foreach (var sonuc in gunlukSonuclar)
+                {
+                    oncekiAylardaAyniGunNobetTutanEczaneGruplar
+                        .Add(new EczaneGrupDetay
+                        {
+                            EczaneGrupTanimId = tarih.TakvimId,
+                            EczaneId = sonuc.EczaneId,
+                            ArdisikNobetSayisi = 0,
+                            NobetUstGrupId = sonuc.NobetUstGrupId,
+                            EczaneGrupTanimAdi = $"{tarih.Tarih.ToShortDateString()} tarihindeki istekler",
+                            EczaneGrupTanimTipAdi = "Aynı gün nöbet - sonraki dönem istekler",
+                            EczaneGrupTanimTipId = tarih.Sayi,
+                            NobetGrupId = sonuc.NobetGrupId,
+                            EczaneAdi = sonuc.EczaneAdi,
+                            NobetGrupAdi = sonuc.NobetGrupAdi,
+                            EczaneNobetGrupId = sonuc.EczaneNobetGrupId,
+                            AyniGunNobetTutabilecekEczaneSayisi = 1
+                            //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
+                        });
+                }
+
+            }
+            return oncekiAylardaAyniGunNobetTutanEczaneGruplar;
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetIstek> GetList()
         {
             return _eczaneNobetIstekDal.GetList();

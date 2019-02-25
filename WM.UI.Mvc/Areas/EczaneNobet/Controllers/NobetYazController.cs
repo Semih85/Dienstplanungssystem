@@ -265,6 +265,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("PivotCozum", "EczaneNobetSonuc",
                     new { area = "EczaneNobet", nobetGrup = eczaneNobetModelCoz.NobetGrupId, yilBaslangic = eczaneNobetModelCoz.BaslangicTarihi.Year, yilBitis = eczaneNobetModelCoz.BitisTarihi.Year });
             }
+            else if (nobetUstGrup.Id == 6 || nobetUstGrup.Id == 7)
+            {
+                return RedirectToAction("PivotCozum", "EczaneNobetSonuc",
+                    new { area = "EczaneNobet", nobetGrup = eczaneNobetModelCoz.NobetGrupId, yilBaslangic = eczaneNobetModelCoz.BaslangicTarihi.Year, yilBitis = eczaneNobetModelCoz.BitisTarihi.Year });
+            }
 
             var routeValues = new PivotSonuclarParams
             {

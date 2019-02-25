@@ -180,8 +180,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             //var sure_eczaneNobetGruplar = stopwatch.Elapsed;
 
             #region planlanan nöbetler - sıralı nöbet yazma (gün grubu bazında)
-            //baslangicTarihi = new DateTime(2018, 6, 1);
-            //bitisTarihi = new DateTime(2019, 2, 28);
+            baslangicTarihi = new DateTime(2018, 6, 1);
+            bitisTarihi = new DateTime(2020, 12, 31);
 
             var eczaneNobetGruplarHepsi = _eczaneNobetGrupService.GetDetaylar(nobetGrupIdListe);//, baslangicTarihi, bitisTarihi);
 
@@ -210,6 +210,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var eczaneNobetGrupGunKuralIstatistikYatay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler);
             var eczaneNobetGrupGunKuralIstatistikYatayPlanlanan = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetlerPlanlanan);
+
+            var eczaneNobetGrupGunKuralIstatistikYataySon = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler, enSonNobetlerPlanlanan);
+
             //var sure_eczaneNobetGrupGunKuralIstatistikYatay = stopwatch.Elapsed;       
 
             var anahtarListe = eczaneNobetSonuclarCozulenGruplar
@@ -253,7 +256,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             ////var sure_borc = stopwatch.Elapsed;
 
-            var eczaneNobetAlacakVerecek = _eczaneNobetOrtakService.EczaneNobetAlacakVerecekHesapla(nobetUstGrup, eczaneNobetGrupGunKuralIstatistikYatay, eczaneNobetGrupGunKuralIstatistikYatayPlanlanan, nobetUstGrupGunGruplar);
+            var eczaneNobetAlacakVerecek =
+                _eczaneNobetOrtakService.EczaneNobetAlacakVerecekHesapla(nobetUstGrup, eczaneNobetGrupGunKuralIstatistikYataySon, eczaneNobetGrupGunKuralIstatistikYatayPlanlanan, nobetUstGrupGunGruplar);
 
             foreach (var nobetUstGrupGunGrup in nobetUstGrupGunGruplar.Where(w => w.GunGrupId == 1 || w.GunGrupId == 3))
             {
@@ -261,7 +265,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
                 foreach (var eczane in nobetBorcluEczaneler)
                 {
-                    var eczaneIstatistik = eczaneNobetGrupGunKuralIstatistikYatay
+                    var eczaneIstatistik = eczaneNobetGrupGunKuralIstatistikYataySon
                         .Where(w => w.EczaneNobetGrupId == eczane.EczaneNobetGrupId)
                         .FirstOrDefault();
 
@@ -312,7 +316,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetTarihAralik1 = _takvimService.GetEczaneNobetTarihAralik(baslangicTarihi, bitisTarihi, nobetGorevTipId, nobetGrupIdListe)
                 .Where(w => eczaneNobetGruplar.Select(s => s.EczaneId).Contains(w.EczaneId)).ToList();
 
-            var eczaneNobetTarihAralik = _eczaneNobetOrtakService.AmacFonksiyonuKatsayisiBelirle(eczaneNobetTarihAralik1, eczaneNobetGrupGunKuralIstatistikYatay);
+            var eczaneNobetTarihAralik = _eczaneNobetOrtakService.AmacFonksiyonuKatsayisiBelirle(eczaneNobetTarihAralik1, eczaneNobetGrupGunKuralIstatistikYataySon);
 
             //var sure_eczaneNobetTarihAralik = stopwatch.Elapsed;
 

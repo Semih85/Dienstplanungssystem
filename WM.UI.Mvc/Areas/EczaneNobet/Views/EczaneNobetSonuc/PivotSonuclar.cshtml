@@ -2262,11 +2262,12 @@
                             cols: ["Gün Grup", "BorçluGünSayısı"],
                             vals: ["BorçluGünSayısı"],
                             aggregatorName: "Say",
-                            rendererName: "Sicaklik Haritasi",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası",
                             renderers: $.extend(
-                                $.pivotUtilities.renderers,
-                                $.pivotUtilities.c3_renderers
-                            )
+                                pivotRenderers,
+                                pivotRenderersGrafik
+                            ),                            
                         }
                     );
                 });

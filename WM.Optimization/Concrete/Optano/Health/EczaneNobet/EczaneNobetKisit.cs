@@ -628,6 +628,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             if (!p.NobetUstGrupKisit.PasifMi)
             {
                 var tarihAraligi = p.Tarihler.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
+                var indis = 1;
 
                 foreach (var ikiliEczane in p.IkiliEczaneler)
                 {
@@ -641,7 +642,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         foreach (var tarih2 in tarihler2)
                         {
                             var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
-                                             $" [Std. 3]";
+                                             $" [Std. 3] {indis}";
 
                             var ikiliEczaneler = $"{ikiliEczane.EczaneAdi1}-{ikiliEczane.EczaneAdi2}";
                             var ikiliTarihler = $"{tarih.Tarih.ToShortDateString()}-{tarih2.Tarih.ToShortDateString()}";
@@ -671,6 +672,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             cns.LowerBound = 0;
 
                             p.Model.AddConstraint(cns, kisitAdi);
+
+                            indis++;
                         }
                     }
                 }
@@ -831,10 +834,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             if (!p.NobetUstGrupKisit.PasifMi)
             {
+                var indis = 0;
+
                 foreach (var eczaneNobetMazeret in p.EczaneNobetMazeretler)
                 {
                     var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
-                     + $"mazeret tarihi: {eczaneNobetMazeret.Tarih.ToShortDateString()}"
+                     + $"{indis} mazeret tarihi: {eczaneNobetMazeret.Tarih.ToShortDateString()}"
                      //+ $"{eczaneNobetMazeret.MazeretAdi}"
                      + $"]";
 
@@ -850,6 +855,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
                     var cns = Constraint.Equals(exp, std);
                     p.Model.AddConstraint(cns, kisitAdi);
+
+                    indis++;
                 }
             }
         }

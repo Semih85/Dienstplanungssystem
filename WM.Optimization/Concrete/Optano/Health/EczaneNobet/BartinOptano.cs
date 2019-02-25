@@ -265,7 +265,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             j++;
                         }
 
-                        if (tarih.Gun <= eczaneSayisi2)
+                        if (i <= eczaneSayisi2)
                         {
                             tarih.NobetGrubuBuyukluk = j;
                         }
