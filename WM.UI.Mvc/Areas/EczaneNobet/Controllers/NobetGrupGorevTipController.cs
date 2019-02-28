@@ -14,6 +14,8 @@ using WM.UI.Mvc.Models;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
+    [Authorize]
+    [HandleError]
     public class NobetGrupGorevTipController : Controller
     {
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
@@ -76,7 +78,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,NobetGrupId,NobetGorevTipId")] NobetGrupGorevTip nobetGrupGorevTip)
+        public ActionResult Create([Bind(Include = "Id,NobetGrupId,NobetGorevTipId,BaslamaTarihi,BitisTarihi")] NobetGrupGorevTip nobetGrupGorevTip)
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +115,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,NobetGrupId,NobetGorevTipId")] NobetGrupGorevTip nobetGrupGorevTip)
+        public ActionResult Edit([Bind(Include = "Id,NobetGrupId,NobetGorevTipId,BaslamaTarihi,BitisTarihi")] NobetGrupGorevTip nobetGrupGorevTip)
         {
             if (ModelState.IsValid)
             {

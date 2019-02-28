@@ -1,0 +1,80 @@
+﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.NobetGrupGorevTipKisit
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>NobetGrupGorevTipKisit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGrupGorevTip.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGrupGorevTip.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetUstGrupKisit.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetUstGrupKisit.Aciklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PasifMi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PasifMi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SagTarafDegeri)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SagTarafDegeri)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VarsayilanPasifMi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VarsayilanPasifMi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SagTarafDegeriVarsayilan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SagTarafDegeriVarsayilan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

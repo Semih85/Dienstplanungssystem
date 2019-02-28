@@ -92,6 +92,7 @@
     <Compile Include="Abstract\EczaneNobet\INobetDurumTipService.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetFeragatTipService.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipGunKuralService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipKisitService.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipTakvimOzelGunService.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetOzelGunService.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetSonucDemoTipService.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Concrete\Managers\EczaneNobet\NobetFeragatTipManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetGorevTipManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupGorevTipGunKuralManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupGorevTipKisitManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupGorevTipManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupGorevTipTakvimOzelGunManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupGunKuralManager.cs" />

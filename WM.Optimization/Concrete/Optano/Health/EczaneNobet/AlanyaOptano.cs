@@ -1168,6 +1168,34 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             };
             EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaIkiliEczaneler);
 
+            #region Tarih aralığı içinde aynı gün nöbet
+
+            var ayIcindeSadece1KezAyniGunNobetKisit = new KpAyIcindeSadece1KezAyniGunNobet
+            {
+                Model = model,
+                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                IkiliEczaneler = data.IkiliEczaneler,
+                NobetUstGrupKisit = ayIcindeAyniGunNobet,
+                Tarihler = data.TarihAraligi,
+                KararDegiskeni = _x
+            };
+            AyIcindeSadece1KezAyniGunNobetTutulsun(ayIcindeSadece1KezAyniGunNobetKisit);
+
+            //var kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu = new KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu
+            //{
+            //    Model = model,
+            //    EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+            //    EczaneNobetTarihAralikIkiliEczaneler = data.EczaneNobetTarihAralikIkiliEczaneler,
+            //    IkiliEczaneler = data.IkiliEczaneler,
+            //    NobetUstGrupKisit = ayIcindeAyniGunNobet,
+            //    Tarihler = data.TarihAraligi,
+            //    KararDegiskeni = _x,
+            //    KararDegiskeniIkiliEczaneler = _y
+            //};
+            //AyIcindeSadece1KezAyniGunNobetTutulsunDegiskenDonusumlu(kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
+
+            #endregion
+
             var esGrubaAyniGunNobetYazmaOncekiAylar = new KpEsGrubaAyniGunNobetYazma
             {
                 Model = model,
@@ -1204,35 +1232,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             };
             MazereteGorevYazma(mazereteGorevYazmaKisit);
 
-            #endregion
-
-            #region Tarih aralığı içinde aynı gün nöbet
-
-            var ayIcindeSadece1KezAyniGunNobetKisit = new KpAyIcindeSadece1KezAyniGunNobet
-            {
-                Model = model,
-                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
-                IkiliEczaneler = data.IkiliEczaneler,
-                NobetUstGrupKisit = ayIcindeAyniGunNobet,
-                Tarihler = data.TarihAraligi,
-                KararDegiskeni = _x
-            };
-            AyIcindeSadece1KezAyniGunNobetTutulsun(ayIcindeSadece1KezAyniGunNobetKisit);
-
-            //var kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu = new KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu
-            //{
-            //    Model = model,
-            //    EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
-            //    EczaneNobetTarihAralikIkiliEczaneler = data.EczaneNobetTarihAralikIkiliEczaneler,
-            //    IkiliEczaneler = data.IkiliEczaneler,
-            //    NobetUstGrupKisit = ayIcindeAyniGunNobet,
-            //    Tarihler = data.TarihAraligi,
-            //    KararDegiskeni = _x,
-            //    KararDegiskeniIkiliEczaneler = _y
-            //};
-            //AyIcindeSadece1KezAyniGunNobetTutulsunDegiskenDonusumlu(kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
-
-            #endregion
+            #endregion  
 
             #region Yılda en fazla aynı gün 3'ten fazla nöbet tutulmasın
 

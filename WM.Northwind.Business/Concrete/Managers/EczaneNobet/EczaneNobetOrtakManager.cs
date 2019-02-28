@@ -1298,6 +1298,74 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     //ayniGunNobetSayisi = yenisehir2_3AyniGunNobetSayisi;
 
                 }
+                else if (nobetUstGrupId == 8)
+                {
+                    var listePivot = (from s in ayniGunNobetTutanEczaneler
+                                      group s by new { s.TakvimId, s.Tarih, s.GunGrup } into grouped
+                                      select new
+                                      {
+                                          grouped.Key.TakvimId,
+                                          grouped.Key.Tarih,
+                                          grouped.Key.GunGrup,
+                                          Y1EczaneAdi = grouped.Where(w => w.NobetGrupId == nobetGrupIds[0]).Select(s => s.EczaneAdi).FirstOrDefault(), //42 - çarşı
+                                          Y2EczaneAdi = grouped.Where(w => w.NobetGrupId == nobetGrupIds[1]).Select(s => s.EczaneAdi).FirstOrDefault(), //53 - ssk
+                                          Y3EczaneAdi = grouped.Where(w => w.NobetGrupId == nobetGrupIds[2]).Select(s => s.EczaneAdi).FirstOrDefault(), //54 - gelişim
+                                          NobetAltGrupId = grouped.Where(w => w.NobetGrupGorevTipId == 53).Select(s => s.NobetAltGrupId).FirstOrDefault(),
+                                          NobetAltGrupAdi = grouped.Where(w => w.NobetGrupGorevTipId == 53).Select(s => s.NobetAltGrupAdi).FirstOrDefault(),
+                                          NobetAltGrupIdGelisim = grouped.Where(w => w.NobetGrupGorevTipId == 54).Select(s => s.NobetAltGrupId).FirstOrDefault(),
+                                          NobetAltGrupAdiGelisim = grouped.Where(w => w.NobetGrupGorevTipId == 54).Select(s => s.NobetAltGrupAdi).FirstOrDefault(),
+                                          NobetAltGrupIdCarsi = grouped.Where(w => w.NobetGrupGorevTipId == 42).Select(s => s.NobetAltGrupId).FirstOrDefault(),
+                                          NobetAltGrupAdiCarsi = grouped.Where(w => w.NobetGrupGorevTipId == 42).Select(s => s.NobetAltGrupAdi).FirstOrDefault(),
+                                      }).ToList();
+
+                    var iskenderunCarsiSkkAyniGunNobetSayisi = (from s in listePivot
+                                                                group s by new
+                                                                {
+                                                                    s.Y1EczaneAdi,
+                                                                    s.Y2EczaneAdi,
+                                                                    s.NobetAltGrupAdi,
+                                                                    s.Tarih,
+                                                                    s.GunGrup
+                                                                } into grouped
+                                                                where grouped.Count() > 0
+                                                                select new AyniGunNobetTutanEczane
+                                                                {
+                                                                    Grup = "Çarşı - Ssk",
+                                                                    G1Eczane = grouped.Key.Y1EczaneAdi,
+                                                                    G2Eczane = grouped.Key.Y2EczaneAdi,
+                                                                    AltGrupAdi = grouped.Key.NobetAltGrupAdi,
+                                                                    AyniGunNobetSayisi = grouped.Count(),
+                                                                    Tarih = grouped.Key.Tarih,
+                                                                    GunGrup = grouped.Key.GunGrup
+                                                                }).ToList();
+
+                    var iskenderunSkkGelisimAyniGunNobetSayisi = (from s in listePivot
+                                                                  group s by new
+                                                                  {
+                                                                      s.Y2EczaneAdi,
+                                                                      s.Y3EczaneAdi,
+                                                                      s.NobetAltGrupAdiGelisim,
+                                                                      s.Tarih,
+                                                                      s.GunGrup
+                                                                  } into grouped
+                                                                  where grouped.Count() > 0
+                                                                  select new AyniGunNobetTutanEczane
+                                                                  {
+                                                                      Grup = "Ssk - Gelişim",
+                                                                      G1Eczane = grouped.Key.Y2EczaneAdi,
+                                                                      G2Eczane = grouped.Key.Y3EczaneAdi,
+                                                                      AltGrupAdi = grouped.Key.NobetAltGrupAdiGelisim,
+                                                                      AyniGunNobetSayisi = grouped.Count(),
+                                                                      Tarih = grouped.Key.Tarih,
+                                                                      GunGrup = grouped.Key.GunGrup
+                                                                  }).ToList();
+
+
+                    ayniGunNobetSayisi = iskenderunCarsiSkkAyniGunNobetSayisi
+                        .Union(iskenderunSkkGelisimAyniGunNobetSayisi)
+                        //.Union(alanya2_3AyniGunNobetSayisi)
+                        .ToList();
+                }
             }
 
             return ayniGunNobetSayisi;
@@ -1814,6 +1882,98 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                                   .Union(mezitli1_2AyniGunNobetSayisi)
                                   .ToList();
+                }
+                else if (nobetUstGrupId == 8)
+                {
+                    var listePivot = (from s in ayniGunNobetTutanEczaneler
+                                      group s by new { s.TakvimId, s.Tarih, s.GunGrup } into grouped
+                                      select new
+                                      {
+                                          grouped.Key.TakvimId,
+                                          grouped.Key.Tarih,
+                                          //grouped.Key.GunGrup,
+                                          Y1EczaneAdi = grouped.Where(w => w.NobetGrupId == nobetGrupIds[0]).Select(s => s.EczaneAdi).FirstOrDefault(), //1
+                                          Y2EczaneAdi = grouped.Where(w => w.NobetGrupId == nobetGrupIds[1]).Select(s => s.EczaneAdi).FirstOrDefault(), //2
+                                          Y3EczaneAdi = grouped.Where(w => w.NobetGrupId == nobetGrupIds[2]).Select(s => s.EczaneAdi).FirstOrDefault(), //3                                        
+
+                                          Y1EczaneNobetGrupId = grouped.Where(w => w.NobetGrupId == nobetGrupIds[0]).Select(s => s.EczaneNobetGrupId).FirstOrDefault(), //1
+                                          Y2EczaneNobetGrupId = grouped.Where(w => w.NobetGrupId == nobetGrupIds[1]).Select(s => s.EczaneNobetGrupId).FirstOrDefault(), //2
+                                          Y3EczaneNobetGrupId = grouped.Where(w => w.NobetGrupId == nobetGrupIds[2]).Select(s => s.EczaneNobetGrupId).FirstOrDefault() //3      
+                                      }).ToList();
+
+                    var alanya1_2AyniGunNobetSayisi = (from s in listePivot
+                                                       group s by new
+                                                       {
+                                                           s.Y1EczaneAdi,
+                                                           s.Y2EczaneAdi,
+                                                           s.Y1EczaneNobetGrupId,
+                                                           s.Y2EczaneNobetGrupId,
+                                                       } into grouped
+                                                       where grouped.Count() > 0
+                                                       select new AyniGunNobetTutanEczane
+                                                       {
+                                                           Grup = "İskenderun 1-2",
+                                                           G1Eczane = grouped.Key.Y1EczaneAdi,
+                                                           G2Eczane = grouped.Key.Y2EczaneAdi,
+                                                           G1EczaneNobetGrupId = grouped.Key.Y1EczaneNobetGrupId,
+                                                           G2EczaneNobetGrupId = grouped.Key.Y2EczaneNobetGrupId,
+                                                           AltGrupAdi = "Kendisi",
+                                                           AyniGunNobetSayisi = grouped.Count(),
+                                                           Tarih = grouped.Max(m => m.Tarih),
+                                                           TakvimId = grouped.SingleOrDefault(m => m.Tarih == grouped.Max(c => c.Tarih)).TakvimId,
+                                                           //GunGrup = grouped.Key.GunGrup
+                                                       }).ToList();
+
+                    var alanya1_3AyniGunNobetSayisi = (from s in listePivot
+                                                       group s by new
+                                                       {
+                                                           s.Y1EczaneAdi,
+                                                           s.Y3EczaneAdi,
+                                                           s.Y1EczaneNobetGrupId,
+                                                           s.Y3EczaneNobetGrupId,
+                                                       } into grouped
+                                                       where grouped.Count() > 0
+                                                       select new AyniGunNobetTutanEczane
+                                                       {
+                                                           Grup = "İskenderun 1-3",
+                                                           G1Eczane = grouped.Key.Y1EczaneAdi,
+                                                           G2Eczane = grouped.Key.Y3EczaneAdi,
+                                                           G1EczaneNobetGrupId = grouped.Key.Y1EczaneNobetGrupId,
+                                                           G2EczaneNobetGrupId = grouped.Key.Y3EczaneNobetGrupId,
+                                                           AltGrupAdi = "Kendisi",
+                                                           AyniGunNobetSayisi = grouped.Count(),
+                                                           Tarih = grouped.Max(m => m.Tarih),
+                                                           TakvimId = grouped.SingleOrDefault(m => m.Tarih == grouped.Max(c => c.Tarih)).TakvimId,
+                                                           //GunGrup = grouped.Key.GunGrup
+                                                       }).ToList();
+
+                    var alanya2_3AyniGunNobetSayisi = (from s in listePivot
+                                                       group s by new
+                                                       {
+                                                           s.Y2EczaneAdi,
+                                                           s.Y3EczaneAdi,
+                                                           s.Y2EczaneNobetGrupId,
+                                                           s.Y3EczaneNobetGrupId,
+                                                       } into grouped
+                                                       where grouped.Count() > 0
+                                                       select new AyniGunNobetTutanEczane
+                                                       {
+                                                           Grup = "İskenderun 2-3",
+                                                           G1Eczane = grouped.Key.Y2EczaneAdi,
+                                                           G2Eczane = grouped.Key.Y3EczaneAdi,
+                                                           G1EczaneNobetGrupId = grouped.Key.Y2EczaneNobetGrupId,
+                                                           G2EczaneNobetGrupId = grouped.Key.Y3EczaneNobetGrupId,
+                                                           AltGrupAdi = "Kendisi",
+                                                           AyniGunNobetSayisi = grouped.Count(),
+                                                           Tarih = grouped.Max(m => m.Tarih),
+                                                           TakvimId = grouped.SingleOrDefault(m => m.Tarih == grouped.Max(c => c.Tarih)).TakvimId,
+                                                           //GunGrup = grouped.Key.GunGrup
+                                                       }).ToList();
+
+                    ayniGunNobetSayisi = alanya1_2AyniGunNobetSayisi
+                        .Union(alanya1_3AyniGunNobetSayisi)
+                        .Union(alanya2_3AyniGunNobetSayisi)
+                        .ToList();
                 }
             }
 
@@ -2569,6 +2729,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             int indisId,
             List<int> ayniGunNobetTutmasiTakipEdilecekNobetGrupIdList,
             List<int> altGrubuOlanNobetGrupIdList,
+            int nobetAltGrupId,
             int enSonNobetSayisi = 1)//en son aynı gün nöbet tuttuğu alt grup sayısı
         {//ay içinde gün grubu bazında birden fazla nöbet düşerse bu kısıt en son nöbet tuttuğu alt grubun dışındaki ile 2 kez nöbet tutabilir. buna dikkat.
             var eczaneGruplar = new List<EczaneGrupDetay>();
@@ -2623,7 +2784,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 //alt grubu olanlar
                 var nobetAltGrubuOlanlarinSonuclari = eczaneNobetSonuclar
-                    .Where(w => altGrubuOlanNobetGruplar.Contains(w.NobetGrupId)).ToList();
+                    .Where(w => altGrubuOlanNobetGruplar.Contains(w.NobetGrupId)
+                             && w.NobetAltGrupId == nobetAltGrupId || nobetAltGrupId == 0).ToList();
 
                 var gunGruplar = nobetAltGrubuOlanlarinSonuclari
                     .Select(s => new { s.GunGrupId, s.GunGrup }).Distinct()
@@ -2751,6 +2913,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             return eczaneGruplar;
         }
+
 
         /// <summary>
         /// İstenen bir gruptaki eczaneler en son hangi alt grupla nöbet tuttuysa 
@@ -3349,6 +3512,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
 
+
+
         #region kısıt kontrol
 
         public void KurallariKontrolEtHaftaIciEnAzEnCok(int nobetUstGrupId, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetSonuclarYatay)
@@ -3361,8 +3526,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             var eczaneler = new List<string>();
 
-            if (!herAyEnaz1HaftaIciGorev.PasifMi 
-                && !haftaIciToplamMaxHedef.PasifMi 
+            if (!herAyEnaz1HaftaIciGorev.PasifMi
+                && !haftaIciToplamMaxHedef.PasifMi
                 && haftaIciToplamMaxHedef.SagTarafDegeri > 0
                 )
             {

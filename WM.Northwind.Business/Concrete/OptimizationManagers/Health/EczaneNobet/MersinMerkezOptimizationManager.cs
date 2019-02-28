@@ -300,7 +300,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                         21//Yenişehir-2
                     };
 
-                altGruplarlaAyniGunNobetTutmayacakEczanelerYeniSehir = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturMersin(eczaneNobetSonuclarAltGruplaAyniGun, eczaneNobetGruplarAltGruplaAyniGun, eczaneNobetGrupAltGruplarYenisehir2, altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, indisId, ayniGunNobetTutmasiTakipEdilecekGruplar, altGrubuOlanNobetGruplar, (int)altGruplarlaAyniGunNobetTutma.SagTarafDegeri);
+                altGruplarlaAyniGunNobetTutmayacakEczanelerYeniSehir = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturMersin(eczaneNobetSonuclarAltGruplaAyniGun, eczaneNobetGruplarAltGruplaAyniGun, eczaneNobetGrupAltGruplarYenisehir2, altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, indisId, ayniGunNobetTutmasiTakipEdilecekGruplar, altGrubuOlanNobetGruplar, 0, (int)altGruplarlaAyniGunNobetTutma.SagTarafDegeri);
                 #endregion                
             }
 
@@ -332,7 +332,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 altGruplarlaAyniGunNobetTutmayacakEczanelerToroslar = _eczaneNobetOrtakService
                     .AltGruplarlaSiraliNobetListesiniOlusturMersin(eczaneNobetSonuclarAltGruplaAyniGunToroslar, eczaneNobetGruplarAltGruplaAyniGunToroslar, eczaneNobetGrupAltGruplarToroslar1,
                     altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, 1,
-                    ayniGunNobetTutmasiTakipEdilecekGruplarToroslar, altGrubuOlanNobetGruplarToroslar, (int)altGruplarlaAyniGunNobetTutmaToroslar.SagTarafDegeri);
+                    ayniGunNobetTutmasiTakipEdilecekGruplarToroslar, altGrubuOlanNobetGruplarToroslar, 0, (int)altGruplarlaAyniGunNobetTutmaToroslar.SagTarafDegeri);
                 #endregion
             }
 

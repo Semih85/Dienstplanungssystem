@@ -86,7 +86,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
         {
             using (var context = new EczaneNobetContext())
             {
-                var deletedEntity = context.EczaneNobetSonuclar.RemoveRange(context.EczaneNobetSonuclar.Where(w => ids.Contains(w.Id)));
+                var deletedEntity = context.EczaneNobetSonucPlanlananlar.RemoveRange(context.EczaneNobetSonucPlanlananlar.Where(w => ids.Contains(w.Id)));
 
                 context.SaveChanges();
             }

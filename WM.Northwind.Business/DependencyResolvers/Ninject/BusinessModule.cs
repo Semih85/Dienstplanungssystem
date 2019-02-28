@@ -229,6 +229,9 @@ namespace WM.BLL.DependencyResolvers.Ninject
 
             Bind<INobetFeragatTipService>().To<NobetFeragatTipManager>().InSingletonScope();
             Bind<INobetFeragatTipDal>().To<EfNobetFeragatTipDal>();
+
+            Bind<INobetGrupGorevTipKisitService>().To<NobetGrupGorevTipKisitManager>().InSingletonScope();
+            Bind<INobetGrupGorevTipKisitDal>().To<EfNobetGrupGorevTipKisitDal>();
             #endregion
 
             #region Optimization

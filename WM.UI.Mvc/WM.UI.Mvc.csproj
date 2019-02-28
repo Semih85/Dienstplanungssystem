@@ -738,6 +738,11 @@
     <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Index.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\IndexOsmaniyeDinamik.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Index3.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipKisit\Create.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipKisit\Delete.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipKisit\Details.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipKisit\Edit.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipKisit\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1057,6 +1062,7 @@
     <Compile Include="Areas\EczaneNobet\Controllers\NobetciEczaneHaritaController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\NobetDurumController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\NobetGrupGorevTipGunKuralController.cs" />
+    <Compile Include="Areas\EczaneNobet\Controllers\NobetGrupGorevTipKisitController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\NobetGrupGorevTipTakvimOzelGunController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\NobetOzelGunController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\NobetUstGrupGunGrupController.cs" />

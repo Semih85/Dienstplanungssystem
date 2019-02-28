@@ -20,6 +20,12 @@
             <th>
                 @Html.DisplayName("Nöbet Grubu")
             </th>
+            <th>
+                @Html.DisplayName("Başlama Tarihi")
+            </th>
+            <th>
+                @Html.DisplayName("Bitiş Tarihi")
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -31,6 +37,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BaslamaTarihi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BitisTarihi)
             </td>
             <td>
                 @{

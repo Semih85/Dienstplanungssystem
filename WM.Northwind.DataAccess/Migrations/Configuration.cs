@@ -127,11 +127,15 @@ namespace WM.Northwind.DataAccess.Migrations
             //context.SaveChanges(); 
             #endregion
 
-            var baslamaTarihi = new DateTime(2019, 3, 1);
+            var baslamaTarihi = new DateTime(2019, 4, 1);
             var odaId = 5;
-            var nobetUstGrupId = 6;
+            var nobetUstGrupId = 8;
             var nobetGrupGorevTipId = context.NobetGrupGorevTipler.Max(x => x.Id) + 1;
             var varsayilanNobetciSayisi = 1;
+
+            //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 53, 54 }, varsayilanNobetciSayisi, 42);
+            //NobetGrupGorevTipTakvimOzelGunEkle(context, 53);
+            //NobetGrupGorevTipTakvimOzelGunEkle(context, 54);
 
             //UstGrupPaketiEkle(context, baslamaTarihi, odaId, nobetUstGrupId);
             //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 29,30 }, varsayilanNobetciSayisi, 32);
@@ -5058,11 +5062,12 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
         private static void NobetGrupGorevTipTakvimOzelGunEkle(Concrete.EntityFramework.Contexts.EczaneNobetContext context, int nobetGrupGorevTipId)
         {
             var bayramlar2 = context.NobetGrupGorevTipTakvimOzelGunler
-                .Where(w => w.NobetGrupGorevTipGunKural.NobetGrupGorevTip.NobetGrupId == 4
-                && w.NobetOzelGunId != 10 //arife
-                                          //&& !(((int)w.Takvim.Tarih.DayOfWeek + 1 == 1 || (int)w.Takvim.Tarih.DayOfWeek + 1 == 6) && w.NobetOzelGunId == 9)
-                                          //&& !(((int)SqlFunctions.DatePart("weekday", w.Takvim.Tarih) == 1 || (int)SqlFunctions.DatePart("weekday", w.Takvim.Tarih) == 7) && w.NobetGunKuralId == 9)
-                                          //cumartesi, pazar hariç olduðunda üst satýr açýlacak
+                .Where(w => w.NobetGrupGorevTipGunKural.NobetGrupGorevTip.Id == 42
+                //&& w.NobetOzelGunId != 10 
+                //arife
+                //&& !(((int)w.Takvim.Tarih.DayOfWeek + 1 == 1 || (int)w.Takvim.Tarih.DayOfWeek + 1 == 6) && w.NobetOzelGunId == 9)
+                //&& !(((int)SqlFunctions.DatePart("weekday", w.Takvim.Tarih) == 1 || (int)SqlFunctions.DatePart("weekday", w.Takvim.Tarih) == 7) && w.NobetGunKuralId == 9)
+                //cumartesi, pazar hariç olduðunda üst satýr açýlacak
                 )
                 .ToList();
 
@@ -5071,7 +5076,8 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
             foreach (var bayram in bayramlar2)
             {
                 var nobetGrupGorevTipGunKural = context.NobetGrupGorevTipGunKurallar
-                    .SingleOrDefault(w => w.NobetGunKuralId == bayram.NobetGunKuralId && w.NobetGrupGorevTipId == nobetGrupGorevTipId);
+                    .SingleOrDefault(w => w.NobetGunKuralId == bayram.NobetGunKuralId
+                                       && w.NobetGrupGorevTipId == nobetGrupGorevTipId);
 
                 var nobetGrupGorevTipTakvimOzelGun = new NobetGrupGorevTipTakvimOzelGun()
                 {
@@ -5152,11 +5158,11 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
             NobetGrupGunKuralEkle2(context, baslamaTarihi, nobetUstGrupId, nobetGrupGorevTipGunKuralListe, nobetGrupGorevTipGunKurallar, nobetGrupGorevTipler, varsayilanNobetciSayisi);
         }
 
-        private static void NobetGrupGunKuralEkle(Concrete.EntityFramework.Contexts.EczaneNobetContext context, DateTime baslamaTarihi, int nobetUstGrupId, List<int> nobetGrupGorevTipIdList, 
+        private static void NobetGrupGunKuralEkle(Concrete.EntityFramework.Contexts.EczaneNobetContext context, DateTime baslamaTarihi, int nobetUstGrupId, List<int> nobetGrupGorevTipIdList,
             int varsayilanNobetciSayisi, int alinacakNobetGrupGorevTipId)
         {
             var nobetGrupGorevTipGunKuralListe = context.NobetGrupGorevTipGunKurallar
-                            .Where(w => w.NobetGrupGorevTipId == alinacakNobetGrupGorevTipId) 
+                            .Where(w => w.NobetGrupGorevTipId == alinacakNobetGrupGorevTipId)
                             .ToList();
 
             var nobetGrupGorevTipGunKurallar = new List<NobetGrupGorevTipGunKural>();

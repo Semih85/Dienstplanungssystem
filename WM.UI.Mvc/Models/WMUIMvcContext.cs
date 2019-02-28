@@ -144,5 +144,7 @@ namespace WM.UI.Mvc.Models
         public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.NobetDurumTip> NobetDurumTips { get; set; }
 
         public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.EczaneUzaklikMatris> EczaneUzaklikMatris { get; set; }
+
+        public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.NobetGrupGorevTipKisit> NobetGrupGorevTipKisits { get; set; }
     }
 }

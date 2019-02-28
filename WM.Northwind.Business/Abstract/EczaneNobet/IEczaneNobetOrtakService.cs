@@ -69,6 +69,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
             int indisId,
             List<int> ayniGunNobetTutmasiTakipEdilecekNobetGrupIdList,
             List<int> altGrubuOlanNobetGrupIdList,
+            int nobetAltGrupId,
             int enSonNobetSayisi);
 
         List<EczaneGrupDetay> AltGruplarlaSiraliNobetListesiniOlusturGiresun(
