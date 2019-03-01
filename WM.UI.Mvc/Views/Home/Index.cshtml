@@ -386,22 +386,22 @@
                 <h2>Referanslarımız</h2>
             </div>
             <div class="col-md-3">
-                <div style="display:none" id="odaSayisiSabit">4</div>
+                <div style="display:none" id="odaSayisiSabit">6</div>
                 <div class="counter circle bg-light font-weight-bold text-dark" id="odaSayisi">0</div>
                 <div class="seviye text-dark">Eczacı Odası</div>
             </div>
             <div class="col-md-3 mb-3">
-                <div style="display:none" id="ustGrupSayisiSabit">25</div>
+                <div style="display:none" id="ustGrupSayisiSabit">50</div>
                 <div class="counter circle bg-light font-weight-bold text-dark" id="ustGrupSayisi">0</div>
                 <div class="seviye text-dark">Nöbet Bölgesi</div>
             </div>
             <div class="col-md-3 mb-3">
-                <div style="display:none" id="grupSayisiSabit">950</div>
+                <div style="display:none" id="grupSayisiSabit">1200</div>
                 <div class="counter circle bg-light font-weight-bold text-dark" id="grupSayisi">0</div>
                 <div class="seviye text-dark">Eczane</div>
             </div>
             <div class="col-md-3 mb-3">
-                <div style="display:none" id="eczaneSayisiSabit">6500</div>
+                <div style="display:none" id="eczaneSayisiSabit">10440</div>
                 <div class="counter circle bg-light font-weight-bold text-dark" id="eczaneSayisi">0</div>
                 <div id="nobetSistemi"></div>
                 <div class="seviye text-dark">Yazılan Nöbet</div>
@@ -416,11 +416,6 @@
                 </a>
             </div>
 
-            <div class="col-md-4 mb-2">
-                <a class="nav-link" target="_blank" href="http://www.alanyaeo.org.tr/tr">
-                    <img class="img-fluid img-rounded" src="~/Content/images/logoAlanya.png" title="Alanya Eczacı Odası Temsilciliği" alt="Alanya Eczacı Odası Temsilciliği" style="height:50%; width:50%" />
-                </a>
-            </div>
 
             <div class="col-md-4 mb-2">
                 <a class="nav-link" target="_blank" href="https://www.mersineczaciodasi.org.tr/">
@@ -428,16 +423,15 @@
                 </a>
             </div>
 
-        </div>
-
-        <div class="row text-center">
-
-            <div class="col-md-4 offset-lg-2 mb-2">
+            <div class="col-md-4 mb-2">
                 <a class="nav-link" target="_blank" href="http://www.giresuneczaciodasi.org.tr/v2/">
                     <img class="img-fluid" src="~/Content/images/logoGiresun.jpg" title="Giresun Eczacı Odası" alt="Giresun Eczacı Odası" style="height:50%; width:50%" />
                 </a>
             </div>
 
+        </div>
+
+        <div class="row text-center mb-3">
 
             <div class="col-md-4 mb-2">
                 <a class="nav-link" target="_blank" href="https://www.osmaniyeeczaciodasi.org.tr/">
@@ -445,7 +439,38 @@
                 </a>
             </div>
 
+            <div class="col-md-4 mb-2">
+                <a class="nav-link" target="_blank" href="http://www.corumeo.org/">
+                    <img class="img-fluid img-rounded" src="~/Content/images/logoCorum.png" title="Çorum Eczacı Odası" alt="Çorum Eczacı Odası" style="height:55%; width:55%" />
+                </a>
+            </div>
+
+            <div class="col-md-4 mb-2">
+                <a class="nav-link" target="_blank" href="https://www.zeo.org.tr/">
+                    <img class="img-fluid" src="~/Content/images/logoZonguldakbuyuk1.png" title="Zonguldak Eczacı Odası" alt="Zonguldak Eczacı Odası" style="height:50%; width:50%" />
+                </a>
+            </div>
+
         </div>
+
+        <hr />
+        <div class="row text-center mb-2">
+
+            @*<h6>Temsilcilikler</h6>*@
+            <div class="col-md-4 mb-2">
+                <a class="nav-link" target="_blank" href="http://www.alanyaeo.org.tr/tr">
+                    <img class="img-fluid img-rounded" src="~/Content/images/logoAlanya.png" title="Alanya Eczacı Odası Temsilciliği" alt="Alanya Eczacı Odası Temsilciliği" style="height:50%; width:50%" />
+                </a>
+            </div>
+
+            <div class="col-md-4 mb-2">
+                <a class="nav-link" target="_blank" href="https://www.zeo.org.tr/">
+                    <img class="img-fluid img-rounded" src="~/Content/images/logoBartin.png" title="Zonguldak Eczacı Odası Bartın Temsilciliği" alt="Zonguldak Eczacı Odası Bartın Temsilciliği" style="height:50%; width:50%" />
+                </a>
+            </div>
+
+        </div>
+
     </div>
 
 </section>
@@ -579,7 +604,7 @@
             if (intOdaSayim < intOdaSayisiSabit) {
                 setTimeout(
                     odaSayisiSaydir,
-                    1600
+                    1200
                 );
             }
         }
@@ -593,7 +618,7 @@
             if (intustGrupSayim < intustGrupSayisiSabit) {
                 setTimeout(
                     ustGrupSayisiSaydir,
-                    200//1000
+                    120//1000
                 );
             }
             else {
@@ -610,7 +635,7 @@
             if (intgrupSayim < intgrupSayisiSabit) {
                 setTimeout(
                     grupSayisiSaydir,
-                    50//100
+                    55//100
                 );
             }
             else {
@@ -637,7 +662,7 @@
             if (inteczaneSayim < inteczaneSayisiSabit) {
                 setTimeout(
                     eczaneSayisiSaydir,
-                    17
+                    15
                 );
             }
             else {

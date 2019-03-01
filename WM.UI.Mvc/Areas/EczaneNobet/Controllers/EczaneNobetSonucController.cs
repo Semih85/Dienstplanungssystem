@@ -340,6 +340,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             else
             {
                 sonuclar = eczaneNobetSonuclarTumu
+                    //.Where(w => w.Tarih < nobetUstGrup.BaslangicTarihi)
                     .Where(w => w.Tarih >= nobetUstGrup.BaslangicTarihi)
                     //anahtar listedeki sonuçları görmek için üstteki satırı kapat
                     .ToList();
@@ -969,11 +970,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 .Where(w => w.NobetGrupId == nobetGrupId || nobetGrupId == 0)
                 .Select(s => s.Id).ToArray();
 
-            var silinecekNobetlerPlanlanan = _eczaneNobetSonucPlanlananService.GetDetaylar(baslangicTarihi, nobetUstGrup.Id)
-                .Where(w => w.NobetGrupId == nobetGrupId || nobetGrupId == 0)
-                .Select(s => s.Id).ToArray();
+            //var silinecekNobetlerPlanlanan = _eczaneNobetSonucPlanlananService.GetDetaylar(baslangicTarihi, nobetUstGrup.Id)
+            //    .Where(w => w.NobetGrupId == nobetGrupId || nobetGrupId == 0)
+            //    .Select(s => s.Id).ToArray();
 
-            var silinecekKayitSayisi = silinecekNobetler.Count() + silinecekNobetlerPlanlanan.Count();
+            var silinecekKayitSayisi = silinecekNobetler.Count();// + silinecekNobetlerPlanlanan.Count();
 
             if (TempData["SilinenAy"] != null)
             {
@@ -988,7 +989,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     if (nobetUstGrup.Id == 2)
                     {
-                        _eczaneNobetSonucPlanlananService.CokluSil(silinecekNobetlerPlanlanan);
+                        //_eczaneNobetSonucPlanlananService.CokluSil(silinecekNobetlerPlanlanan);
                     }
                 }
                 catch (Exception)

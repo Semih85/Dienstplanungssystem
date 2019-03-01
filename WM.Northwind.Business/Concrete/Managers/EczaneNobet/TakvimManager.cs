@@ -892,40 +892,85 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
         private List<EczaneNobetAltGrupTarihAralik> GetEczaneNobetAltGrupTarihAralik(List<TakvimNobetGrup> takvimNobetGrupGorevTipler, List<EczaneNobetGrupDetay> eczaneNobetGruplar)
         {
-            var nobetUstGrupId = 3;
-            var altGrupluGruplar = _nobetAltGrupService.GetDetaylar(nobetUstGrupId)
-                .Where(w => w.NobetGrupId == 21);
+            var nobetUstGrupId = eczaneNobetGruplar.Select(s => s.NobetUstGrupId).FirstOrDefault();
 
-            return (from e in eczaneNobetGruplar
-                    from t in takvimNobetGrupGorevTipler
-                    from a in altGrupluGruplar
-                    where e.NobetGrupId == t.NobetGrupId
-                       && (e.NobetGrupId == 20 || e.NobetGrupId == 22)
-                    select new EczaneNobetAltGrupTarihAralik
-                    {
-                        EczaneId = e.EczaneId,
-                        EczaneAdi = e.EczaneAdi,
-                        NobetGrupAdi = e.NobetGrupAdi,
-                        NobetGrupId = e.NobetGrupId,
-                        NobetGrupAltId = a.Id,
-                        NobetAltGrupAdi = a.Adi,
-                        NobetGorevTipId = t.NobetGorevTipId,
-                        EczaneNobetGrupId = e.Id,
-                        Yil = t.Yil,
-                        Ay = t.Ay,
-                        Gun = t.Gun,
-                        TakvimId = t.TakvimId,
-                        GunDegerId = t.NobetGunKuralId,
-                        HaftaninGunu = t.HaftaninGunu,
-                        Tarih = t.Tarih,
-                        CumartesiGunuMu = t.NobetGunKuralId == 7 ? true : false,
-                        PazarGunuMu = t.NobetGunKuralId == 1 ? true : false,
-                        BayramMi = t.NobetGunKuralId > 7 ? true : false,
-                        HaftaIciMi = e.NobetUstGrupId == 3
-                             ? ((t.NobetGunKuralId > 1 && t.NobetGunKuralId < 7) ? true : false)
-                             : ((t.NobetGunKuralId > 1 && t.NobetGunKuralId <= 7) ? true : false)
-                        //(t.NobetGunKuralId > 1 && t.NobetGunKuralId <= 7) ? true : false
-                    }).ToList();
+            var eczaneNobetAltGrupTarihAralik = new List<EczaneNobetAltGrupTarihAralik>();
+
+            if (nobetUstGrupId == 3)
+            {
+                var altGrupluGruplar = _nobetAltGrupService.GetDetaylar(nobetUstGrupId)
+                    .Where(w => w.NobetGrupId == 21);
+
+                eczaneNobetAltGrupTarihAralik = (from e in eczaneNobetGruplar
+                                                 from t in takvimNobetGrupGorevTipler
+                                                 from a in altGrupluGruplar
+                                                 where e.NobetGrupId == t.NobetGrupId
+                                                    && (e.NobetGrupId == 20 || e.NobetGrupId == 22)
+                                                 select new EczaneNobetAltGrupTarihAralik
+                                                 {
+                                                     EczaneId = e.EczaneId,
+                                                     EczaneAdi = e.EczaneAdi,
+                                                     NobetGrupAdi = e.NobetGrupAdi,
+                                                     NobetGrupId = e.NobetGrupId,
+                                                     NobetGrupAltId = a.Id,
+                                                     NobetAltGrupAdi = a.Adi,
+                                                     NobetGorevTipId = t.NobetGorevTipId,
+                                                     EczaneNobetGrupId = e.Id,
+                                                     Yil = t.Yil,
+                                                     Ay = t.Ay,
+                                                     Gun = t.Gun,
+                                                     TakvimId = t.TakvimId,
+                                                     GunDegerId = t.NobetGunKuralId,
+                                                     HaftaninGunu = t.HaftaninGunu,
+                                                     Tarih = t.Tarih,
+                                                     CumartesiGunuMu = t.NobetGunKuralId == 7 ? true : false,
+                                                     PazarGunuMu = t.NobetGunKuralId == 1 ? true : false,
+                                                     BayramMi = t.NobetGunKuralId > 7 ? true : false,
+                                                     HaftaIciMi = e.NobetUstGrupId == 3
+                                                          ? ((t.NobetGunKuralId > 1 && t.NobetGunKuralId < 7) ? true : false)
+                                                          : ((t.NobetGunKuralId > 1 && t.NobetGunKuralId <= 7) ? true : false)
+                                                     //(t.NobetGunKuralId > 1 && t.NobetGunKuralId <= 7) ? true : false
+                                                 }).ToList();
+            }
+            else if (nobetUstGrupId == 8)
+            {
+                var altGrupluGruplar = _nobetAltGrupService.GetDetaylar(nobetUstGrupId)
+                        .Where(w => w.NobetGrupGorevTipId == 53 || w.NobetGrupGorevTipId == 54);
+
+                eczaneNobetAltGrupTarihAralik = (from e in eczaneNobetGruplar
+                                                 from t in takvimNobetGrupGorevTipler
+                                                 from a in altGrupluGruplar
+                                                 where e.NobetGrupId == t.NobetGrupId
+                                                    //&& (e.NobetGrupGorevTipId == 42 || e.NobetGrupGorevTipId == 53)
+                                                 select new EczaneNobetAltGrupTarihAralik
+                                                 {
+                                                     EczaneId = e.EczaneId,
+                                                     EczaneAdi = e.EczaneAdi,
+                                                     NobetGrupAdi = e.NobetGrupAdi,
+                                                     NobetGrupId = e.NobetGrupId,
+                                                     NobetGrupAltId = a.Id,
+                                                     NobetAltGrupAdi = a.Adi,
+                                                     NobetGorevTipId = t.NobetGorevTipId,
+                                                     EczaneNobetGrupId = e.Id,
+                                                     Yil = t.Yil,
+                                                     Ay = t.Ay,
+                                                     Gun = t.Gun,
+                                                     TakvimId = t.TakvimId,
+                                                     GunDegerId = t.NobetGunKuralId,
+                                                     HaftaninGunu = t.HaftaninGunu,
+                                                     Tarih = t.Tarih,
+                                                     CumartesiGunuMu = t.NobetGunKuralId == 7 ? true : false,
+                                                     PazarGunuMu = t.NobetGunKuralId == 1 ? true : false,
+                                                     BayramMi = t.NobetGunKuralId > 7 ? true : false,
+                                                     HaftaIciMi = e.NobetUstGrupId == 3
+                                                          ? ((t.NobetGunKuralId > 1 && t.NobetGunKuralId < 7) ? true : false)
+                                                          : ((t.NobetGunKuralId > 1 && t.NobetGunKuralId <= 7) ? true : false)
+                                                     //(t.NobetGunKuralId > 1 && t.NobetGunKuralId <= 7) ? true : false
+                                                 }).ToList();
+
+            }
+
+            return eczaneNobetAltGrupTarihAralik;
         }
 
         #endregion

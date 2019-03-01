@@ -39,6 +39,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
             ? $"K{KisitId} ({KisitKategorisi}, {KisitAdiGosterilen}) &raquo;"
             : "";
 
+        public string KisitAdiUzun => $"K{KisitId} ({KisitKategorisi}, {KisitAdiGosterilen})";
+
         public int KisitKategoriId { get; set; }
     }
 }

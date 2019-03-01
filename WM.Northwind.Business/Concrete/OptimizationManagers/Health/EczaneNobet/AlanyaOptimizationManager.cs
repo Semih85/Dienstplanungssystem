@@ -38,6 +38,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private ITakvimService _takvimService;
         private IEczaneNobetMuafiyetService _eczaneNobetMuafiyetService;
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
+        private INobetGrupGorevTipKisitService _nobetGrupGorevTipKisitService;
 
         public AlanyaOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -58,7 +59,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     IEczaneNobetSonucService eczaneNobetSonucService,
                     IEczaneNobetMuafiyetService eczaneNobetMuafiyetService,
                     IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrupService,
-                    IAyniGunTutulanNobetService ayniGunTutulanNobetService
+                    IAyniGunTutulanNobetService ayniGunTutulanNobetService,
+                    INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -80,6 +82,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _eczaneNobetMuafiyetService = eczaneNobetMuafiyetService;
             _eczaneNobetGrupAltGrupService = eczaneNobetGrupAltGrupService;
             _ayniGunTutulanNobetService = ayniGunTutulanNobetService;
+            _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
         }
         #endregion
 
@@ -440,6 +443,18 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             #endregion
 
+            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupId);
+            var grupBazliKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrupId);
+
+            //if (grupBazliKisitlar.Count > 0)
+            //{
+            //    foreach (var grupBazliKisit in grupBazliKisitlar)
+            //    {
+            //        nobetUstGrupKisitlar.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId).PasifMi = grupBazliKisit.PasifMi;
+            //        nobetUstGrupKisitlar.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId).SagTarafDegeri = grupBazliKisit.SagTarafDegeri;
+            //    }
+            //}
+
             var alanyaDataModel = new AlanyaDataModel()
             {
                 Yil = eczaneNobetDataModelParametre.YilBitis,
@@ -467,7 +482,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 NobetGrupGorevTipler = nobetGrupGorevTipler,
                 NobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(nobetGrupIdListe, baslangicTarihi, bitisTarihi),
                 EczaneNobetGruplar = eczaneNobetGruplar,
-                NobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupId),
+                NobetUstGrupKisitlar = nobetUstGrupKisitlar,
                 EczaneGrupNobetSonuclar = eczaneGrupNobetSonuclar,
                 EczaneNobetSonuclar = eczaneNobetSonuclarCozulenGruplar,
                 EczaneGrupNobetSonuclarTumu = eczaneNobetSonuclar,
@@ -483,7 +498,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 //EczaneNobetSonuclarSonIkiAy = sonIkiAydakiSonuclar,
                 EczaneNobetSonuclarOncekiAylar = eczaneNobetSonuclarOncekiAylar,
 
-                IkiliEczaneler = ikiliEczaneler
+                IkiliEczaneler = ikiliEczaneler,
+                NobetGrupGorevTipKisitlar = grupBazliKisitlar
             };
 
             _eczaneNobetOrtakService.KurallariKontrolEtHaftaIciEnAzEnCok(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);

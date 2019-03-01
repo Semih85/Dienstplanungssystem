@@ -1,30 +1,30 @@
-﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.NobetGrupGorevTipKisit
+﻿@model NobetGrupGorevTipKisitDetay
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Nöbet Grup Görev Tip Kural Sil | Nöbet Sistemi";
 }
 
-<h2>Delete</h2>
+<h4>Nöbet Grup Görev Tip Kural Sil</h4>
+<hr />
 
-<h3>Are you sure you want to delete this?</h3>
+<h5 class="text-danger">Silmek istediğinizden emin misiniz?</h5>
 <div>
-    <h4>NobetGrupGorevTipKisit</h4>
-    <hr />
+
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.NobetGrupGorevTip.Id)
+            @Html.DisplayNameFor(model => model.NobetGrupGorevTipId)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NobetGrupGorevTip.Id)
+            @Html.DisplayFor(model => model.NobetGrupGorevTipId)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NobetUstGrupKisit.Aciklama)
+            @Html.DisplayNameFor(model => model.Aciklama)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NobetUstGrupKisit.Aciklama)
+            @Html.DisplayFor(model => model.Aciklama)
         </dd>
 
         <dt>
@@ -69,12 +69,13 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Sil" class="btn btn-danger" />
+            @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
         </div>
     }
 </div>

@@ -280,9 +280,14 @@
     <Content Include="Content\images\logo3.jpg" />
     <Content Include="Content\images\logoAlanya.png" />
     <Content Include="Content\images\logoAntalya.png" />
+    <Content Include="Content\images\logoBartin.png" />
+    <Content Include="Content\images\logoCorum.png" />
     <Content Include="Content\images\logoGiresun.jpg" />
     <Content Include="Content\images\logoMersin.png" />
     <Content Include="Content\images\logoOsmaniye.png" />
+    <Content Include="Content\images\logoZonguldak.png" />
+    <Content Include="Content\images\logoZonguldakbuyuk.png" />
+    <Content Include="Content\images\logoZonguldakbuyuk1.png" />
     <Content Include="Content\images\meeting-peoples-1080x625.png" />
     <Content Include="Content\images\NobetciEczaneLogo2.png" />
     <Content Include="Content\images\NobetciEczaneLogoUfak.png" />

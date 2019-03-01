@@ -17,18 +17,23 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
     [HandleError]
     public class NobetGrupGorevTipKisitController : Controller
     {
-        private WMUIMvcContext db = new WMUIMvcContext();
         private INobetGrupGorevTipKisitService _nobetGrupGorevTipKisitService;
         private INobetUstGrupService _nobetUstGrupService;
+        private INobetUstGrupKisitService _nobetUstGrupKisitService;
+        private INobetGrupGorevTipService _nobetGrupGorevTipService;
         private IUserService _userService;
 
         public NobetGrupGorevTipKisitController(INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
             INobetUstGrupService nobetUstGrupService,
-            IUserService userService)
+            IUserService userService,
+            INobetUstGrupKisitService nobetUstGrupKisitService,
+            INobetGrupGorevTipService nobetGrupGorevTipService)
         {
             _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
             _nobetUstGrupService = nobetUstGrupService;
             _userService = userService;
+            _nobetUstGrupKisitService = nobetUstGrupKisitService;
+            _nobetGrupGorevTipService = nobetGrupGorevTipService;
         }
 
         // GET: EczaneNobet/NobetGrupGorevTipKisit
@@ -45,13 +50,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/NobetGrupGorevTipKisit/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NobetGrupGorevTipKisit nobetGrupGorevTipKisit = db.NobetGrupGorevTipKisits.Find(id);
+            var nobetGrupGorevTipKisit = _nobetGrupGorevTipKisitService.GetDetayById(id);
             if (nobetGrupGorevTipKisit == null)
             {
                 return HttpNotFound();
@@ -62,8 +67,16 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/NobetGrupGorevTipKisit/Create
         public ActionResult Create()
         {
-            ViewBag.NobetGrupGorevTipId = new SelectList(db.NobetGrupGorevTips, "Id", "Id");
-            ViewBag.NobetUstGrupKisitId = new SelectList(db.NobetUstGrupKisits, "Id", "Aciklama");
+            var user = _userService.GetByUserName(User.Identity.Name);
+
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
+            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id);
+
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi");
+            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitlar, "Id", "KisitAdiUzun");
             return View();
         }
 
@@ -76,30 +89,44 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.NobetGrupGorevTipKisits.Add(nobetGrupGorevTipKisit);
-                db.SaveChanges();
+                _nobetGrupGorevTipKisitService.Insert(nobetGrupGorevTipKisit);
                 return RedirectToAction("Index");
             }
+            var user = _userService.GetByUserName(User.Identity.Name);
 
-            ViewBag.NobetGrupGorevTipId = new SelectList(db.NobetGrupGorevTips, "Id", "Id", nobetGrupGorevTipKisit.NobetGrupGorevTipId);
-            ViewBag.NobetUstGrupKisitId = new SelectList(db.NobetUstGrupKisits, "Id", "Aciklama", nobetGrupGorevTipKisit.NobetUstGrupKisitId);
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
+            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id);
+
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi", nobetGrupGorevTipKisit.NobetGrupGorevTipId);
+            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitlar, "Id", "KisitAdiUzun", nobetGrupGorevTipKisit.NobetUstGrupKisitId);
             return View(nobetGrupGorevTipKisit);
         }
 
         // GET: EczaneNobet/NobetGrupGorevTipKisit/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NobetGrupGorevTipKisit nobetGrupGorevTipKisit = db.NobetGrupGorevTipKisits.Find(id);
+            var nobetGrupGorevTipKisit = _nobetGrupGorevTipKisitService.GetDetayById(id);
             if (nobetGrupGorevTipKisit == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.NobetGrupGorevTipId = new SelectList(db.NobetGrupGorevTips, "Id", "Id", nobetGrupGorevTipKisit.NobetGrupGorevTipId);
-            ViewBag.NobetUstGrupKisitId = new SelectList(db.NobetUstGrupKisits, "Id", "Aciklama", nobetGrupGorevTipKisit.NobetUstGrupKisitId);
+            var user = _userService.GetByUserName(User.Identity.Name);
+
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
+            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id);
+
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi", nobetGrupGorevTipKisit.NobetGrupGorevTipId);
+            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitlar, "Id", "KisitAdiUzun", nobetGrupGorevTipKisit.NobetUstGrupKisitId);
             return View(nobetGrupGorevTipKisit);
         }
 
@@ -112,23 +139,30 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(nobetGrupGorevTipKisit).State = EntityState.Modified;
-                db.SaveChanges();
+                _nobetGrupGorevTipKisitService.Update(nobetGrupGorevTipKisit);
                 return RedirectToAction("Index");
             }
-            ViewBag.NobetGrupGorevTipId = new SelectList(db.NobetGrupGorevTips, "Id", "Id", nobetGrupGorevTipKisit.NobetGrupGorevTipId);
-            ViewBag.NobetUstGrupKisitId = new SelectList(db.NobetUstGrupKisits, "Id", "Aciklama", nobetGrupGorevTipKisit.NobetUstGrupKisitId);
+            var user = _userService.GetByUserName(User.Identity.Name);
+
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
+            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id);
+
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi", nobetGrupGorevTipKisit.NobetGrupGorevTipId);
+            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitlar, "Id", "KisitAdiUzun", nobetGrupGorevTipKisit.NobetUstGrupKisitId);
             return View(nobetGrupGorevTipKisit);
         }
 
         // GET: EczaneNobet/NobetGrupGorevTipKisit/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NobetGrupGorevTipKisit nobetGrupGorevTipKisit = db.NobetGrupGorevTipKisits.Find(id);
+            var nobetGrupGorevTipKisit = _nobetGrupGorevTipKisitService.GetDetayById(id);
             if (nobetGrupGorevTipKisit == null)
             {
                 return HttpNotFound();
@@ -141,19 +175,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            NobetGrupGorevTipKisit nobetGrupGorevTipKisit = db.NobetGrupGorevTipKisits.Find(id);
-            db.NobetGrupGorevTipKisits.Remove(nobetGrupGorevTipKisit);
-            db.SaveChanges();
+            _nobetGrupGorevTipKisitService.Delete(id);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+
     }
 }

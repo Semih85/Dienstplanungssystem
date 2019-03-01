@@ -1270,6 +1270,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                                          && s.NobetUstGrupId == nobetUstGrupId) ?? nobetUstGrupKisit;
         }
 
+        public virtual NobetUstGrupKisitDetay NobetUstGrupKisit(List<NobetUstGrupKisitDetay> nobetUstGrupKisitlar, string kisitAdiKisa)
+        {
+            var kisitId = Convert.ToInt32(kisitAdiKisa.Remove(0, 1));
+
+            var nobetUstGrupKisit = nobetUstGrupKisitlar.SingleOrDefault(s => s.KisitId == kisitId) ?? new NobetUstGrupKisitDetay() { PasifMi = true };
+
+            return nobetUstGrupKisit;
+        }
+
         public void GetEczaneGunHedef(EczaneNobetIstatistik hedef, out double maxArz, out double minArz, int gunDeger)
         {
             switch (gunDeger)

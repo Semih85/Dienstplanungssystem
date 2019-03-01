@@ -180,12 +180,12 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             //var sure_eczaneNobetGruplar = stopwatch.Elapsed;
 
             #region planlanan nöbetler - sıralı nöbet yazma (gün grubu bazında)
-            baslangicTarihi = new DateTime(2018, 6, 1);
-            bitisTarihi = new DateTime(2020, 12, 31);
+            //baslangicTarihi = new DateTime(2018, 6, 1);
+            //bitisTarihi = new DateTime(2020, 12, 31);
 
-            var eczaneNobetGruplarHepsi = _eczaneNobetGrupService.GetDetaylar(nobetGrupIdListe);//, baslangicTarihi, bitisTarihi);
+            //var eczaneNobetGruplarHepsi = _eczaneNobetGrupService.GetDetaylar(nobetGrupIdListe);//, baslangicTarihi, bitisTarihi);
 
-            _takvimService.SiraliNobetYaz(nobetGrupGorevTipler, eczaneNobetGruplarHepsi, baslangicTarihi, bitisTarihi, nobetUstGrupId);
+            //_takvimService.SiraliNobetYaz(nobetGrupGorevTipler, eczaneNobetGruplarHepsi, baslangicTarihi, bitisTarihi, nobetUstGrupId);
             #endregion
 
             var eczaneNobetSonuclarCozulenGruplar = eczaneNobetSonuclar
