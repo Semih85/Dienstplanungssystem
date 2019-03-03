@@ -41,10 +41,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var oncekiAylarAyniGunNobet = NobetUstGrupKisit(data.Kisitlar, "oncekiAylarAyniGunNobet", data.NobetUstGrupId);
             var eczanelerinNobetGunleriniKisitla = NobetUstGrupKisit(data.Kisitlar, "eczanelerinNobetGunleriniKisitla", data.NobetUstGrupId);
 
-            var ayIcindeAyniGunNobet = NobetUstGrupKisit(data.Kisitlar, "ayIcindeAyniGunNobet", data.NobetUstGrupId);
-
-            //pasifler
-            var enFazlaGrupBuyukluguOrtalamasi = NobetUstGrupKisit(data.Kisitlar, "enFazlaGrupBuyukluguOrtalamasi", data.NobetUstGrupId);
+            var ayIcindeAyniGunNobet = NobetUstGrupKisit(data.Kisitlar, "ayIcindeAyniGunNobet", data.NobetUstGrupId);            
 
             #endregion
 
@@ -260,24 +257,24 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var i = 1;
                 var j = 1;
 
-                if (nobetGrupGorevTip.Id == 50)//gökçebey
+                //if (nobetGrupGorevTip.Id == 50)//gökçebey
+                //{
+                foreach (var tarih in tarihler.OrderBy(o => o.Tarih).ToList())
                 {
-                    foreach (var tarih in tarihler.OrderBy(o => o.Tarih).ToList())
+                    if (i > eczaneSayisi2)
                     {
-                        if (i > eczaneSayisi2)
-                        {
-                            eczaneSayisi2 += eczaneSayisiIkiKat;
-                            j++;
-                        }
-
-                        if (i <= eczaneSayisi2)
-                        {
-                            tarih.NobetGrubuBuyukluk = j;
-                        }
-
-                        i++;
+                        eczaneSayisi2 += eczaneSayisiIkiKat;
+                        j++;
                     }
+
+                    if (i <= eczaneSayisi2)
+                    {
+                        tarih.NobetGrubuBuyukluk = j;
+                    }
+
+                    i++;
                 }
+                //}
 
                 #endregion
 
@@ -709,7 +706,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     //{
                     //    Model = model,
                     //    EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazliTumGrorevTipler,
-                    //    NobetUstGrupKisit = enFazlaGrupBuyukluguOrtalamasi,
+                    //    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K60"),
                     //    Tarihler = tarihler,
                     //    PespeseNobetSayisi = eczaneSayisilari - 1,
                     //    EczaneNobetGrup = eczaneNobetGrup,
@@ -734,7 +731,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             ortalamaEnFazlaHerHafta.GunSayisi = haftaTumGunler.Count;
                             ortalamaEnFazlaHerHafta.OrtalamaNobetSayisi = ortalamaNobetSayisiHaftalikTumu;
                             ortalamaEnFazlaHerHafta.GunKuralAdi = $"{hafta}.hafta";
-                            ortalamaEnFazlaHerHafta.NobetUstGrupKisit = enFazlaGrupBuyukluguOrtalamasi;
+                            ortalamaEnFazlaHerHafta.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K60");
 
                             TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaHerHafta);
                         }

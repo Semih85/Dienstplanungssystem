@@ -26,37 +26,37 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
             #region kısıtlar
 
-            var herAyPespeseGorev = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyPespeseGorev", data.NobetUstGrupId);
-            var farkliAyPespeseGorev = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "farkliAyPespeseGorev", data.NobetUstGrupId);
-            var pazarPespeseGorevEnAz = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "pazarPespeseGorevEnAz", data.NobetUstGrupId);
+            var herAyPespeseGorev = NobetUstGrupKisit(data.Kisitlar, "herAyPespeseGorev", data.NobetUstGrupId);
+            var farkliAyPespeseGorev = NobetUstGrupKisit(data.Kisitlar, "farkliAyPespeseGorev", data.NobetUstGrupId);
+            var pazarPespeseGorevEnAz = NobetUstGrupKisit(data.Kisitlar, "pazarPespeseGorevEnAz", data.NobetUstGrupId);
 
-            var herAyEnFazlaGorev = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyEnFazlaGorev", data.NobetUstGrupId);
-            var herAyEnFazlaHaftaIci = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyEnFazlaHaftaIci", data.NobetUstGrupId);
+            var herAyEnFazlaGorev = NobetUstGrupKisit(data.Kisitlar, "herAyEnFazlaGorev", data.NobetUstGrupId);
+            var herAyEnFazlaHaftaIci = NobetUstGrupKisit(data.Kisitlar, "herAyEnFazlaHaftaIci", data.NobetUstGrupId);
 
-            var haftaIciPespeseGorevEnAz = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "haftaIciPespeseGorevEnAz", data.NobetUstGrupId);
+            var haftaIciPespeseGorevEnAz = NobetUstGrupKisit(data.Kisitlar, "haftaIciPespeseGorevEnAz", data.NobetUstGrupId);
 
-            var gunKumulatifToplamEnFazla = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "gunKumulatifToplamEnFazla", data.NobetUstGrupId);
-            var herAyEnFazla1HaftaIciGunler = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyEnFazla1HaftaIciGunler", data.NobetUstGrupId);
+            var gunKumulatifToplamEnFazla = NobetUstGrupKisit(data.Kisitlar, "gunKumulatifToplamEnFazla", data.NobetUstGrupId);
+            var herAyEnFazla1HaftaIciGunler = NobetUstGrupKisit(data.Kisitlar, "herAyEnFazla1HaftaIciGunler", data.NobetUstGrupId);
 
-            var herAyEnFazla1Pazar = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyEnFazla1Pazar", data.NobetUstGrupId);
-            var herAyEnFazla1Cumartesi = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyEnFazla1Cumartesi", data.NobetUstGrupId);
-            var herAyEnFazla1Cuma = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyEnFazla1Cuma", data.NobetUstGrupId);
+            var herAyEnFazla1Pazar = NobetUstGrupKisit(data.Kisitlar, "herAyEnFazla1Pazar", data.NobetUstGrupId);
+            var herAyEnFazla1Cumartesi = NobetUstGrupKisit(data.Kisitlar, "herAyEnFazla1Cumartesi", data.NobetUstGrupId);
+            var herAyEnFazla1Cuma = NobetUstGrupKisit(data.Kisitlar, "herAyEnFazla1Cuma", data.NobetUstGrupId);
 
-            var bayramToplamEnFazla = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "bayramToplamEnFazla", data.NobetUstGrupId);
-            var bayramPespeseFarkliTur = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "bayramPespeseFarkliTur", data.NobetUstGrupId);
-            var herAyEnFazla1Bayram = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyEnFazla1Bayram", data.NobetUstGrupId);
+            var bayramToplamEnFazla = NobetUstGrupKisit(data.Kisitlar, "bayramToplamEnFazla", data.NobetUstGrupId);
+            var bayramPespeseFarkliTur = NobetUstGrupKisit(data.Kisitlar, "bayramPespeseFarkliTur", data.NobetUstGrupId);
+            var herAyEnFazla1Bayram = NobetUstGrupKisit(data.Kisitlar, "herAyEnFazla1Bayram", data.NobetUstGrupId);
 
-            var eczaneGrup = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "eczaneGrup", data.NobetUstGrupId);
-            var istek = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "istek", data.NobetUstGrupId);
-            var mazeret = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "mazeret", data.NobetUstGrupId);
+            var eczaneGrup = NobetUstGrupKisit(data.Kisitlar, "eczaneGrup", data.NobetUstGrupId);
+            var istek = NobetUstGrupKisit(data.Kisitlar, "istek", data.NobetUstGrupId);
+            var mazeret = NobetUstGrupKisit(data.Kisitlar, "mazeret", data.NobetUstGrupId);
 
-            var pespeseHaftaIciAyniGunNobet = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "pespeseHaftaIciAyniGunNobet", data.NobetUstGrupId);
-            var nobetBorcOdeme = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "nobetBorcOdeme", data.NobetUstGrupId);
+            var pespeseHaftaIciAyniGunNobet = NobetUstGrupKisit(data.Kisitlar, "pespeseHaftaIciAyniGunNobet", data.NobetUstGrupId);
+            var nobetBorcOdeme = NobetUstGrupKisit(data.Kisitlar, "nobetBorcOdeme", data.NobetUstGrupId);
 
-            var altGruplarlaAyniGunNobetTutma = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "altGruplarlaAyniGunNobetTutma", data.NobetUstGrupId);
+            var altGruplarlaAyniGunNobetTutma = NobetUstGrupKisit(data.Kisitlar, "altGruplarlaAyniGunNobetTutma", data.NobetUstGrupId);
 
             //pasifler
-            var herAyEnaz1Gorev = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "herAyEnaz1Gorev", data.NobetUstGrupId);
+            var herAyEnaz1Gorev = NobetUstGrupKisit(data.Kisitlar, "herAyEnaz1Gorev", data.NobetUstGrupId);
 
             #endregion
 
@@ -670,14 +670,14 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
                     //TarihAraligindaEnAz1NobetYaz(model, herAyEnaz1Gorev, tarihler, gruptakiEczaneSayisi, eczaneNobetGrup, eczaneNobetTarihAralikEczaneBazli, _x);
 
                     #region eski
-                    //var herAyEnaz1Gorev = data.NobetUstGrupKisitlar
+                    //var herAyEnaz1Gorev = data.Kisitlar
                     //                .Where(s => s.KisitAdi == "herAyEnaz1Gorev"
                     //                         && s.NobetUstGrupId == data.NobetUstGrupId)
                     //                .Select(w => w.PasifMi == false).SingleOrDefault();
 
                     //if (herAyEnaz1Gorev && gruptakiEczaneSayisi < tarihler.Count)
                     //{
-                    //    var herAyEnaz1GorevSTD = data.NobetUstGrupKisitlar
+                    //    var herAyEnaz1GorevSTD = data.Kisitlar
                     //                            .Where(s => s.KisitAdi == "herAyEnaz1Gorev"
                     //                                     && s.NobetUstGrupId == data.NobetUstGrupId)
                     //                            .Select(w => w.SagTarafDegeri).SingleOrDefault();
@@ -713,7 +713,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
                         var toplamBayramNobetSayisi = bayramNobetleri.Count();
 
-                        var bayramToplamMinHedef = data.NobetUstGrupKisitlar
+                        var bayramToplamMinHedef = data.Kisitlar
                                                     .Where(s => s.KisitAdi == "bayramToplamMinHedef"
                                                              && s.NobetUstGrupId == data.NobetUstGrupId)
                                                     .Select(w => w.PasifMi == false).SingleOrDefault();
@@ -723,7 +723,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
                             var toplamBayramMin = hedef.ToplamBayram - 1;
                             if (toplamBayramMin < 1) toplamBayramMin = 0;
 
-                            var bayramToplamMinHedefSTD = (int)data.NobetUstGrupKisitlar
+                            var bayramToplamMinHedefSTD = (int)data.Kisitlar
                                                         .Where(s => s.KisitAdi == "bayramToplamMinHedef"
                                                                  && s.NobetUstGrupId == data.NobetUstGrupId)
                                                         .Select(w => w.SagTarafDegeri).SingleOrDefault();
@@ -745,7 +745,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
                     #region Hafta içi toplam max hedefler
 
-                    //var haftaIciToplamMaxHedef = data.NobetUstGrupKisitlar
+                    //var haftaIciToplamMaxHedef = data.Kisitlar
                     //                            .Where(s => s.KisitAdi == "haftaIciToplamMaxHedef"
                     //                                     && s.NobetUstGrupId == data.NobetUstGrupId)
                     //                            .Select(w => w.PasifMi == false).SingleOrDefault();
@@ -774,7 +774,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
                     //        Std = haftaIciDurum.KuralSTD - 1;
                     //    }
 
-                    //    var haftaIciToplamMaxHedefStd = data.NobetUstGrupKisitlar
+                    //    var haftaIciToplamMaxHedefStd = data.Kisitlar
                     //        .Where(s => s.KisitAdi == "haftaIciToplamMaxHedef"
                     //                 && s.NobetUstGrupId == data.NobetUstGrupId)
                     //        .Select(w => w.SagTarafDegeri).SingleOrDefault();
@@ -822,7 +822,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
                     #region Hafta içi toplam min hedefler
 
-                    //var haftaIciToplamMinHedef = data.NobetUstGrupKisitlar
+                    //var haftaIciToplamMinHedef = data.Kisitlar
                     //                    .Where(s => s.KisitAdi == "haftaIciToplamMinHedef"
                     //                             && s.NobetUstGrupId == data.NobetUstGrupId)
                     //                    .Select(w => w.PasifMi == false).SingleOrDefault();
@@ -832,7 +832,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
                     //    var hedef = data.EczaneKumulatifHedefler.Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id).SingleOrDefault();
                     //    var haftaIciMinToplam = hedef.ToplamHaftaIci - 1;
 
-                    //    var haftaIciToplamMinHedefStd = (int)data.NobetUstGrupKisitlar
+                    //    var haftaIciToplamMinHedefStd = (int)data.Kisitlar
                     //          .Where(s => s.KisitAdi == "haftaIciToplamMinHedef"
                     //                   && s.NobetUstGrupId == data.NobetUstGrupId)
                     //          .Select(w => w.SagTarafDegeri).SingleOrDefault();
@@ -851,7 +851,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
                     #region Farklı aylar peşpeşe görev yazılmasın (Pazar peşpeşe)
 
-                    //var pazarPespeseGorev0 = data.NobetUstGrupKisitlar
+                    //var pazarPespeseGorev0 = data.Kisitlar
                     //                        .Where(s => s.KisitAdi == "pazarPespeseGorev0"
                     //                                 && s.NobetUstGrupId == data.NobetUstGrupId)
                     //                        .Select(w => w.PasifMi == false).SingleOrDefault();
@@ -918,7 +918,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
                     #region Farklı aylar peşpeşe görev yazılmasın (Pazar peşpeşe en fazla)
 
-                    var pazarPespeseGorevEnFazla = data.NobetUstGrupKisitlar
+                    var pazarPespeseGorevEnFazla = data.Kisitlar
                                             .Where(s => s.KisitAdi == "pazarPespeseGorevEnFazla"
                                                      && s.NobetUstGrupId == data.NobetUstGrupId)
                                             .Select(w => w.PasifMi == false).SingleOrDefault();
@@ -1016,7 +1016,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
                     #region Toplam cuma cumartesi max hedefler
 
-                    var toplamCumaCumartesiMaxHedef = data.NobetUstGrupKisitlar
+                    var toplamCumaCumartesiMaxHedef = data.Kisitlar
                                                 .Where(s => s.KisitAdi == "toplamCumaCumartesiMaxHedef"
                                                          && s.NobetUstGrupId == data.NobetUstGrupId)
                                                 .Select(w => w.PasifMi == false).SingleOrDefault();
@@ -1042,7 +1042,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
                     #region Toplam cuma cumartesi min hedefler
 
-                    var toplamCumaCumartesiMinHedef = data.NobetUstGrupKisitlar
+                    var toplamCumaCumartesiMinHedef = data.Kisitlar
                                         .Where(s => s.KisitAdi == "toplamCumaCumartesiMinHedef"
                                                  && s.NobetUstGrupId == data.NobetUstGrupId)
                                         .Select(w => w.PasifMi == false).SingleOrDefault();
@@ -1068,14 +1068,14 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
                     #region Toplam Cuma Max Hedef
 
-                    var toplamCumaMaxHedef = data.NobetUstGrupKisitlar
+                    var toplamCumaMaxHedef = data.Kisitlar
                                                 .Where(s => s.KisitAdi == "toplamCumaMaxHedef"
                                                          && s.NobetUstGrupId == data.NobetUstGrupId)
                                                 .Select(w => w.PasifMi == false).SingleOrDefault();
 
                     if (toplamCumaMaxHedef)
                     {
-                        var toplamCumaMaxHedefSTD = data.NobetUstGrupKisitlar
+                        var toplamCumaMaxHedefSTD = data.Kisitlar
                                                         .Where(s => s.KisitAdi == "toplamCumaMaxHedef"
                                                                  && s.NobetUstGrupId == data.NobetUstGrupId)
                                                         .Select(w => w.SagTarafDegeri).SingleOrDefault();
@@ -1103,14 +1103,14 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
                     #region Toplam Cumartesi Max Hedef
 
-                    var toplamCumartesiMaxHedef = data.NobetUstGrupKisitlar
+                    var toplamCumartesiMaxHedef = data.Kisitlar
                                                     .Where(s => s.KisitAdi == "toplamCumartesiMaxHedef"
                                                              && s.NobetUstGrupId == data.NobetUstGrupId)
                                                     .Select(w => w.PasifMi == false).SingleOrDefault();
 
                     if (toplamCumartesiMaxHedef)
                     {
-                        var toplamCumartesiMaxHedefSTD = data.NobetUstGrupKisitlar
+                        var toplamCumartesiMaxHedefSTD = data.Kisitlar
                                                             .Where(s => s.KisitAdi == "toplamCumartesiMaxHedef"
                                                                      && s.NobetUstGrupId == data.NobetUstGrupId)
                                                             .Select(w => w.SagTarafDegeri).SingleOrDefault();
@@ -1136,7 +1136,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
                     #region Toplam max
 
-                    var toplamMaxHedef = data.NobetUstGrupKisitlar
+                    var toplamMaxHedef = data.Kisitlar
                                                         .Where(s => s.KisitAdi == "toplamMaxHedef"
                                                                  && s.NobetUstGrupId == data.NobetUstGrupId)
                                                         .Select(w => w.PasifMi == false).SingleOrDefault();
@@ -1164,7 +1164,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
                                     )
                            .Select(s => s.TakvimId).Count();
 
-                        var toplamMaxHedefStd = data.NobetUstGrupKisitlar
+                        var toplamMaxHedefStd = data.Kisitlar
                                                             .Where(s => s.KisitAdi == "toplamMaxHedef"
                                                                      && s.NobetUstGrupId == data.NobetUstGrupId)
                                                             .Select(w => w.SagTarafDegeri).SingleOrDefault();
@@ -1186,7 +1186,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
 
                     #region Toplam min
 
-                    var toplamMinHedef = data.NobetUstGrupKisitlar
+                    var toplamMinHedef = data.Kisitlar
                                                         .Where(s => s.KisitAdi == "toplamMinHedef"
                                                                  && s.NobetUstGrupId == data.NobetUstGrupId)
                                                         .Select(w => w.PasifMi == false).SingleOrDefault();
@@ -1203,7 +1203,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
                            .Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id)
                            .Select(s => s.TakvimId).Count();
 
-                        var toplamMinHedefStd = data.NobetUstGrupKisitlar
+                        var toplamMinHedefStd = data.Kisitlar
                                     .Where(s => s.KisitAdi == "toplamMinHedef"
                                              && s.NobetUstGrupId == data.NobetUstGrupId)
                                     .Select(w => w.SagTarafDegeri).SingleOrDefault();

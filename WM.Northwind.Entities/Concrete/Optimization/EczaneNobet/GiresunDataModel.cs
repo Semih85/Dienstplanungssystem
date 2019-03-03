@@ -42,7 +42,7 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public List<EczaneNobetGrupDetay> EczaneNobetGruplar { get; set; }
         public List<EczaneNobetGrupAltGrupDetay> EczaneNobetGrupAltGruplar { get; set; }
 
-        public List<NobetUstGrupKisitDetay> NobetUstGrupKisitlar { get; set; }
+        public List<NobetUstGrupKisitDetay> Kisitlar { get; set; }
 
         public List<EczaneNobetSonucListe2> EczaneGrupNobetSonuclar { get; set; } //EczaneNobetSonucListe2
         public List<EczaneNobetSonucListe2> EczaneNobetSonuclar { get; set; } //EczaneNobetSonucListe2
@@ -65,5 +65,6 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public List<EczaneGrupDetay> AltGruplarlaAyniGunNobetTutmayacakEczanelerSehirDisi { get; set; }
         public List<EczaneGrupDetay> AltGruplarlaAyniGunNobetTutmayacakEczanelerSehirIci1 { get; set; }
         public List<EczaneGrupDetay> AltGruplarlaAyniGunNobetTutmayacakEczanelerSehirIci2 { get; set; }
+        public List<NobetGrupGorevTipKisitDetay> NobetGrupGorevTipKisitlar { get; set; }
     }
 }
