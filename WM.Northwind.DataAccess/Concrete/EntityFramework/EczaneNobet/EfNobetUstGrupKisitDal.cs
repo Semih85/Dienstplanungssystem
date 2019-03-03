@@ -34,7 +34,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         SagTarafDegeriVarsayilan = s.SagTarafDegeriVarsayilan,
                         KisitAdiGosterilen = s.Kisit.AdiGosterilen,
                         KisitKategoriAdi = s.Kisit.KisitKategori.Adi,
-                        KisitKategoriId = s.Kisit.KisitKategoriId
+                        KisitKategoriId = s.Kisit.KisitKategoriId,
+                        NobetGrupGorevtipKisitSayisi = s.NobetGrupGorevTipKisitlar.Count
                     }).SingleOrDefault(filter);
             }
         }
@@ -57,7 +58,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         SagTarafDegeriVarsayilan = s.SagTarafDegeriVarsayilan,
                         KisitAdiGosterilen = s.Kisit.AdiGosterilen,
                         KisitKategoriAdi = s.Kisit.KisitKategori.Adi,
-                        KisitKategoriId = s.Kisit.KisitKategoriId
+                        KisitKategoriId = s.Kisit.KisitKategoriId,
+                        NobetGrupGorevtipKisitSayisi = s.NobetGrupGorevTipKisitlar.Count
                     });
 
                 return filter == null

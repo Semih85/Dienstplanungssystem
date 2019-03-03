@@ -11,14 +11,22 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-   
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.NobetUstGrupKisitId, "NobetUstGrupKisitId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.NobetUstGrupKisitId, "NobetUstGrupKisitId", htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
-                @Html.DropDownList("NobetUstGrupKisitId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("NobetUstGrupKisitId", null, htmlAttributes: new { @class = "form-control selectpicker",
+           //multiple = "true",
+           //data_width = "auto",
+           //data_actions_box = "true",
+           mobile = "true",
+           data_live_search = "true",
+           //data_selected_text_format = "count > 4",
+           title = "Kural Seçiniz..."
+       })
                 @Html.ValidationMessageFor(model => model.NobetUstGrupKisitId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -68,9 +76,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
+            @*@Html.LabelFor(model => model.Aciklama, htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control", placeHolder = "Kural Açıklaması" })
+                @*@Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -82,3 +91,22 @@
     </div>
 }
 
+
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/validation/scripts")
+
+
+    <script>
+        $(function () {
+
+            $("#SagTarafDegeri").val(0);
+            $("#SagTarafDegeriVarsayilan").val(0);
+        });
+    </script>
+}

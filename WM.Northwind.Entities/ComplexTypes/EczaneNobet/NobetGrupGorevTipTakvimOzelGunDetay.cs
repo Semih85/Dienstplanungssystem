@@ -36,5 +36,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public double AgirlikDegeri { get; set; }
         public string NobetGunKuralAdiGrup { get; set; }
         public int NobetGunKuralIdGrup { get; set; }
+        public DateTime NobetGrupGorevTipBaslamaTarihi { get; set; }
+
     }
 }

@@ -31,5 +31,6 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<NobetGrupGorevTipDetay> GetDetaylar(int nobetGorevTipId, List<int> nobetGrupIdList);
         List<NobetGrupGorevTipDetay> GetDetaylarByIdList(List<int> idList);
         List<NobetGrupGorevTipDetay> GetDetaylarByNobetUstGrupIdList(List<int> nobetUstGrupIdList);
+        List<NobetGrupGorevTipDetay> GetDetaylarByNobetGrupGorevTipId(int nobetGrupGorevTipId);
     }
 } 

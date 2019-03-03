@@ -31,6 +31,11 @@
     </div>
 </div>
 
+<div class="alert alert-warning" role="alert">
+    <i class="fa fa-warning"></i> Bu sayfadaki gruba özel olarak tanımlanan her bir kural <span class="badge badge-light">silinmediği sürece</span> ilgili grubun
+    <a class="alert-link" href="@Url.RouteUrl("NobetUstGrupKisitAyarla")">nöbet ayarının</a> yerine geçerlidir.
+
+</div>
 @*----------------loading gif--------------------*@
 <div class="row">
     <div class="col-lg-3">
@@ -48,32 +53,38 @@
     <table id="gridT" class="table table-hover table-bordered table-sm">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.NobetGrupGorevTipId)
+                @*<th>
+                        @Html.DisplayName("Görev Tipi")
+                    </th>*@
+                <th style="width:20%">
+                    @Html.DisplayName("Kural")
+                </th>
+                <th style="width:7%">
+                    @Html.DisplayName("Görev Tipi")
+                </th>
+                <th style="width:10%">
+                    @Html.DisplayName("Nöbet Grubu")
+                </th>
+                <th style="width:15%">
+                    @Html.DisplayName("Kural Açıklama")
+                </th>
+                <th style="width:5%" title="Üst Grup Özel Açıklaması">
+                    @Html.DisplayName("Açıklama 2")
+                </th>
+                <th style="width:5%">
+                    @Html.DisplayName("Pasif mi?")
+                </th>
+                <th style="width:3%">
+                    @Html.DisplayName("Değer")
+                </th>
+                <th style="width:7%" title="Pasif mi? (Varsayılan)">
+                    @Html.DisplayName("Pasif Mi (Vars)")
+                </th>
+                <th style="width:7%" title="Değer (Varsayılan)">
+                    @Html.DisplayName("Değer (Vars)")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NobetGrupAdi)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AciklamaUstGrup)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PasifMi)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SagTarafDegeri)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.VarsayilanPasifMi)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.SagTarafDegeriVarsayilan)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Aciklama)
+                    @Html.DisplayName("Açıklama")
                 </th>
                 <th></th>
             </tr>
@@ -82,8 +93,11 @@
             @foreach (var item in Model)
             {
                 <tr class="gridtr">
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.NobetGrupGorevTipId)
+                        </td>*@
                     <td>
-                        @Html.DisplayFor(modelItem => item.NobetGrupGorevTipId)
+                        @Html.DisplayFor(modelItem => item.KisitKodu)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
@@ -91,17 +105,36 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.NobetGrupAdi)
                     </td>
+                    <td title="@item.KisitAciklama">
+                        @item.KisitAciklama.Substring(0, 30)
+                        @*@Html.DisplayFor(modelItem => item.KisitAciklama)*@
+                        ...
+                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.AciklamaUstGrup)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PasifMi)
+                        @if (item.PasifMi == true)
+                        {
+                            <span class="badge badge-danger"> Pasif </span>
+                        }
+                        else
+                        {
+                            <span class="font-weight-bold text-success"><i class="fa fa-check" aria-hidden="true"></i> Aktif </span>
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SagTarafDegeri)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.VarsayilanPasifMi)
+                        @if (item.VarsayilanPasifMi == true)
+                        {
+                            <span class="badge badge-danger"> Pasif </span>
+                        }
+                        else
+                        {
+                            <span class="font-weight-bold text-success"><i class="fa fa-check" aria-hidden="true"></i> Aktif </span>
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SagTarafDegeriVarsayilan)
@@ -138,7 +171,16 @@
 
 </div>
 
+
+@section Styles{
+    @Styles.Render("~/bundle/jqueryui/style")
+}
+
 @section Scripts{
+    @*@Scripts.Render("~/bundle/scriptsDetailTable/script")*@
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/queryui/scripts")
+
     @Scripts.Render("~/bundle/pager")
 
     <script>

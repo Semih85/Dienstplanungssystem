@@ -72,6 +72,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
             );
 
             context.MapRoute(
+                 name: "NobetGrupGorevTipKisitCreate",
+                 url: "nobet-grup-kural-ekle",
+                 defaults: new { controller = "NobetGrupGorevTipKisit", action = "Create" }
+                );
+
+
+            context.MapRoute(
                 name: "Create",
                 url: "eczane-nobet/{controller}/ekle",
                 defaults: new { action = "Create" }
@@ -128,6 +135,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                 url: "nobet-grup-haftanin-gunleri-duzenle/{id}",
                 defaults: new { controller = "NobetGrupGorevTipGunKural", action = "Edit", id = UrlParameter.Optional }
             );
+
+            context.MapRoute(
+                 name: "NobetGrupGorevTipKisitEdit",
+                 url: "nobet-grup-kural-duzenle/{id}",
+                 defaults: new { controller = "NobetGrupGorevTipKisit", action = "Edit", id = UrlParameter.Optional }
+                );
 
             context.MapRoute(
                 "Edit",
@@ -188,10 +201,17 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
             );
 
             context.MapRoute(
+               name: "NobetGrupGorevTipKisitDelete",
+               url: "nobet-grup-kural-sil/{id}",
+               defaults: new { controller = "NobetGrupGorevTipKisit", action = "Delete", id = UrlParameter.Optional }
+              );
+                       
+
+            context.MapRoute(
                 "Delete",
                 "eczane-nobet/{controller}/sil/{id}",
                 new { action = "Delete", id = UrlParameter.Optional }
-            );
+            );  
 
             #endregion
 
@@ -323,10 +343,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
 
             context.MapRoute(
                 name: "NobetUstGrupKisitAyarla",
-                url: "eczane-nobet-ayarlar",
+                url: "nobet-ustgrup-kurallar",
                 defaults: new { controller = "NobetUstGrupKisit", action = "KisitAyarla" }
             );
 
+            context.MapRoute(
+                name: "NobetGrupGorevTipKisit",
+                url: "nobet-grup-kurallar",
+                defaults: new { controller = "NobetGrupGorevTipKisit", action = "Index" }
+            );
 
             context.MapRoute(
                 name: "EczaneNobetSonucSil",

@@ -211,12 +211,11 @@ new Eczane{ Adi="KAAN", AcilisTarihi=new DateTime(2014,9,24), Enlem=41.746243, B
 
             //UstGrupPaketiEkle(gerekliBilgilerBartin);
 
-            baslamaTarihi = new DateTime(2019, 3, 1);
+            baslamaTarihi = new DateTime(2019, 4, 1);
             odaId = 5;
             nobetUstGrupId = 7;
-            //nobetGrupGorevTipId = 31;
             varsayilanNobetciSayisi = 1;
-            var gerekliBilgilerZonguldak2 = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)
+            var gerekliBilgilerZonguldak3 = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)
             {
                 //var baslamaTarihi = new DateTime(2019, 3, 5);
                 //var odaId = 6;
@@ -235,31 +234,106 @@ new Eczane{ Adi="KAAN", AcilisTarihi=new DateTime(2014,9,24), Enlem=41.746243, B
                 //},
 
                 NobetGruplar = new List<NobetGrup>() {
-                    new NobetGrup(){ Adi = "DEVREK", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
-                    new NobetGrup(){ Adi = "GÖKÇEBEY", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                    new NobetGrup(){ Adi = "ALAPLI", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                    new NobetGrup(){ Adi = "KDZ.EÐREÐLÝ", BaslamaTarihi = new DateTime(2019,5,1), NobetUstGrupId = nobetUstGrupId },
+                    new NobetGrup(){ Adi = "KDZ.EÐREÐLÝ KEPEZ", BaslamaTarihi = new DateTime(2019,5,1), NobetUstGrupId = nobetUstGrupId },
+                    new NobetGrup(){ Adi = "KÝLÝMLÝ", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                    new NobetGrup(){ Adi = "KOZLU", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                    new NobetGrup(){ Adi = "ÇAYCUMA", BaslamaTarihi = new DateTime(2019,5,1), NobetUstGrupId = nobetUstGrupId },
                 },
 
                 Eczaneler = new List<Eczane>()
                 {
-                    #region Zonguldak - 2
-new Eczane{ Adi="ULUPINAR", AcilisTarihi=new DateTime(1973,2,2), Enlem=41.218244, Boylam=31.954497, Adres="YENI MAH.NALBANTLAR SOK.NO:8/B", TelefonNo="3725561332", MailAdresi="eczhulyaozen@hotmail.com"},
-new Eczane{ Adi="ÝSMAÝL ERENOGLU", AcilisTarihi=new DateTime(1979,5,29), Enlem=41.2196864, Boylam=31.9619072, Adres="YENI MAH.YENIPAZAR ALANI NO:2/A", TelefonNo="3725561047", MailAdresi="eczsbengi_67@hotmail.com"},
-new Eczane{ Adi="KARADAYI", AcilisTarihi=new DateTime(1977,2,15), Enlem=41.220187, Boylam=31.954939, Adres="ZONGULDAK ÝLÝ DEVREK ÝLÇESÝ ESKÝ MAH DR.VEYSEL ATASOY CAD.NO:15/A", TelefonNo="3725561567", MailAdresi="isitankaradayi@hotmail.com"},
-new Eczane{ Adi="BAÞARAN", AcilisTarihi=new DateTime(1991,3,8), Enlem=41.219010, Boylam=31.957070, Adres="ISMETPASA MAH.INÖNÜ CAD.NO:4/B", TelefonNo="3725561088", MailAdresi="nesrin@basaraneczanesi.com"},
-new Eczane{ Adi="MÝNE", AcilisTarihi=new DateTime(1988,11,10), Enlem=41.220047, Boylam=31.955229, Adres="ESKÝ MAH. DR.VEYSEL ATASOY CAD. NO:12/A", TelefonNo="3725565486", MailAdresi="mineecz@mynet.com"},
-new Eczane{ Adi="PINAR", AcilisTarihi=new DateTime(1988,11,15), Enlem=41.217893, Boylam=31.955294, Adres="YENI MAH.VEDAT ALI ÖZKAN CAD.NO:38/A", TelefonNo="3725562224", MailAdresi="pinar_eczanesi67@hotmail.com"},
-new Eczane{ Adi="ÝNCÝ", AcilisTarihi=new DateTime(1995,3,1), Enlem=41.217191, Boylam=31.955422, Adres="YENI MAH.VEDAT ALI ÖZKAN CAD. 35/B DEVREK", TelefonNo="3725568595", MailAdresi="iburma@hotmail.com"},
-new Eczane{ Adi="KADAM", AcilisTarihi=new DateTime(1997,12,25), Enlem=41.2174988, Boylam=31.9553623, Adres="YENÝ MAH. VEDAT ALI ÖZKAN CAD.NO:31/B", TelefonNo="3725560048", MailAdresi="kadam_eczanesi@hotmail.com"},
-new Eczane{ Adi="UMUT", AcilisTarihi=new DateTime(2003,10,10), Enlem=41.2186, Boylam=31.9554, Adres="YENI MAH.VEDAT ALÝ ÖZKAN CAD.NO:20", TelefonNo="3725561014", MailAdresi="akkasliumut@hotmail.com"},
-new Eczane{ Adi="HÝLAL", AcilisTarihi=new DateTime(2013,8,1), Enlem=41.218021, Boylam=31.953593, Adres="YENÝ MAH. OKUL SOKAK NO:3/A", TelefonNo="3725561922", MailAdresi="h.ibrahim1453@hotmail.com"},
-new Eczane{ Adi="YENÝ SEVGÝ", AcilisTarihi=new DateTime(2014,7,14), Enlem=41.218448, Boylam=31.953468, Adres="YENÝ MAH. ESKÝ ORTAOKUL SK.21/A", TelefonNo="372556432", MailAdresi="ecz.hamit@hotmail.com"},
-new Eczane{ Adi="HALE", AcilisTarihi=new DateTime(2015,6,29), Enlem=41.220268, Boylam=31.960461, Adres="ÝSMETPAÞA MAH. ÝNÖNÜ CAD. NO:42/A", TelefonNo="3725000365", MailAdresi="eczaci1961@hotmail.com"},
-new Eczane{ Adi="ERTAN", AcilisTarihi=new DateTime(2016,3,1), Enlem=41.216259, Boylam=31.955305, Adres="YENÝ MAHALLE VEDAT ALÝ ÖZKAN CADDESÝ NO:56/B", TelefonNo="3725050607", MailAdresi="emre-240@hotmail.com"},
-new Eczane{ Adi="FURKAN", AcilisTarihi=new DateTime(2008,7,23), Enlem=41.306940, Boylam=32.139424, Adres="YENÝ MAH.ATATÜRK CAD. NO:56/A", TelefonNo="3725121080", MailAdresi="ayseozdogan@hotmail.com"},
-new Eczane{ Adi="DOÐA", AcilisTarihi=new DateTime(1999,9,30), Enlem=41.306124, Boylam=32.143671, Adres="ÇARSIIÇI MAH.ISMETPASA CAD.NO:36", TelefonNo="3725121109", MailAdresi="aslihan_kayabasli@hotmail.com"},
-new Eczane{ Adi="GÖKÇEBEY", AcilisTarihi=new DateTime(2008,7,9), Enlem=41.306039, Boylam=32.143185, Adres="ISTASYON MAH.ATATÜRK CAD.NO:50", TelefonNo="3725121096", MailAdresi="borakalayci@hotmail.com"},
-new Eczane{ Adi="OKTAY", AcilisTarihi=new DateTime(2007,3,6), Enlem=41.306607, Boylam=32.140094, Adres="ISTASYON MAH.ATATÜRK CAD.NO:48", TelefonNo="3725123345", MailAdresi="cem0scar@hotmail.com"},
-new Eczane{ Adi="BAHAR", AcilisTarihi=new DateTime(2016,10,20), Enlem=41.306890, Boylam=32.139120, Adres="YENÝ MAH. ATATÜRK CAD. NO:58/B", TelefonNo="3725122424", MailAdresi="ati_3321@hotmail.com"},
+                    #region Zonguldak - 3
+//alaplý
+new Eczane{ Adi="ÞÝFA", AcilisTarihi=new DateTime(2009,12,29), Enlem=41.179275, Boylam=31.387846, Adres="MERKEZ MAH. HUKUMET CAD NO:35/A", TelefonNo="3723781844", MailAdresi="sifa_eczanesi_alapli@mynet.com"},
+new Eczane{ Adi="ÇAVUÞOÐLU", AcilisTarihi=new DateTime(2011,5,12), Enlem=41.178156, Boylam=31.393012, Adres="YENI SITELER MAH. KARAAGAC BAYIRI SOK. NO: 69/B", TelefonNo="3723780099", MailAdresi="berkantcavusoglu@gmail.com"},
+new Eczane{ Adi="ERTUR", AcilisTarihi=new DateTime(2005,4,22), Enlem=41.178987, Boylam=31.390993, Adres="HUKUMET CAD. NO: 59/A", TelefonNo="3723784993", MailAdresi="bertur11@hotmail.com"},
+new Eczane{ Adi="DÝDEM", AcilisTarihi=new DateTime(2008,11,17), Enlem=41.180838, Boylam=31.387208, Adres="CUMHURÝYET MEYDANI NO:9", TelefonNo="3723783160", MailAdresi="didemcali@hotmail.com"},
+new Eczane{ Adi="YAZICIOÐLU", AcilisTarihi=new DateTime(2012,12,13), Enlem=41.181451, Boylam=31.386160, Adres="MERKEZ MAH.DEMIRCILER SOK.NO:2", TelefonNo="3723783630", MailAdresi="esraecz@hotmail.com"},
+new Eczane{ Adi="ALAPLI", AcilisTarihi=new DateTime(1975,6,17), Enlem=41.178988, Boylam=31.390974, Adres="HUKUMET CAD.NO:8/A", TelefonNo="3723781044", MailAdresi="yiltezel@hotmail.com"},
+new Eczane{ Adi="ÖZTÜRK", AcilisTarihi=new DateTime(2009,3,26), Enlem=41.180157, Boylam=31.386811, Adres="HÜKÜMET CAD. NO: 5/A", TelefonNo="3723780881", MailAdresi="ozturk.alapli@gmail.com"},
+new Eczane{ Adi="DÝLAN", AcilisTarihi=new DateTime(2010,9,24), Enlem=41.180525, Boylam=31.387501, Adres="MERKEZ MAH. ALI ALP CAD. NO:37/A", TelefonNo="3723786747", MailAdresi="ecz_murat_67@hotmail.com"},
+new Eczane{ Adi="CUMHURÝYET", AcilisTarihi=new DateTime(1985,6,4), Enlem=41.178982, Boylam=31.390991, Adres="MERKEZ MAH. AÇIKPAZARYERÝ NO:17/2-C", TelefonNo="3723781740", MailAdresi="bmozdemir@msn.com"},
+new Eczane{ Adi="SAÐLIK", AcilisTarihi=new DateTime(1985,12,10), Enlem=41.141866, Boylam=31.503815, Adres="DEMIRCILER CAD.NO:12", TelefonNo="3723787019", MailAdresi="semih-dizdar@mynet.com"},
+new Eczane{ Adi="SÝMGE", AcilisTarihi=new DateTime(2018,6,11), Enlem=41.180185, Boylam=31.386968, Adres="MERKEZ MAH. HÜKÜMET CAD.14/A", TelefonNo="3723786565", MailAdresi="simgeturann@gmail.com"},
+
+//kdz.ereðli
+new Eczane{ Adi="AYDOÐAN", AcilisTarihi=new DateTime(1981,4,22), Enlem=41.278820, Boylam=31.423729, Adres="KDZ.EREGLIMEYDANBASI CAD.NO:31", TelefonNo="3723163486", MailAdresi="sevimgerzeli@mynet.com"},
+new Eczane{ Adi="BAÐLIK", AcilisTarihi=new DateTime(1984,3,20), Enlem=41.272709, Boylam=31.436590, Adres="BAGLIK MAH. ERDEMÝR CAD.NO:279", TelefonNo="3723163468", MailAdresi="b.eczane@hotmail.com"},
+new Eczane{ Adi="BÝRUNÝ", AcilisTarihi=new DateTime(2005,5,2), Enlem=41.272163, Boylam=31.435918, Adres="MÜFTÜ MAH.ILHAMI SOYSAL CAD.NO:42", TelefonNo="3723234058", MailAdresi="birunieczanesi@hotmail.com"},
+new Eczane{ Adi="BÝLGÝ", AcilisTarihi=new DateTime(2016,2,9), Enlem=41.451957, Boylam=31.786081, Adres="MÜFTÜ MAHALLESÝ ERDEMÝR CADDESÝ NO:38/B", TelefonNo="3723120580", MailAdresi="gzmbilgi@gmail.com"},
+new Eczane{ Adi="BURCU", AcilisTarihi=new DateTime(2004,1,4), Enlem=41.281856, Boylam=31.423234, Adres="BAGLIK MAH. SUPHI KONAK CAD. ANDIÇ ISHANI NO:28/M", TelefonNo="3723162212", MailAdresi="burcu_ogut@hotmail.com"},
+new Eczane{ Adi="CANDAROÐLU", AcilisTarihi=new DateTime(2015,8,14), Enlem=41.276699, Boylam=31.434574, Adres="BAÐLIK MAH. HATÝP SOKAK KÖSEOÐLU APT. NO:105/A", TelefonNo="3723000037", MailAdresi="cagla.sucu@gmail.com"},
+new Eczane{ Adi="CEMÝL SART", AcilisTarihi=new DateTime(1998,11,11), Enlem=41.280262, Boylam=31.421713, Adres="MURTAZA MAH.HAMAMÜSTÜ CAD.ESAT TANERI ISHANI NO:19/A", TelefonNo="3723163477", MailAdresi="gulerdemiroglu@hotmail.com"},
+new Eczane{ Adi="DENÝZ", AcilisTarihi=new DateTime(2011,4,8), Enlem=41.286982, Boylam=31.412570, Adres="ORHANLAR MAH.HALIL PASA CAMII NO:2/A", TelefonNo="3723232913", MailAdresi="karakusgulen@hotmail.com"},
+new Eczane{ Adi="DERMAN", AcilisTarihi=new DateTime(2006,4,7), Enlem=41.277927, Boylam=31.424232, Adres="MÜFTÜ MAH. MEYDANBASI CAD. NO:69", TelefonNo="3723220252", MailAdresi="merbulbul0167@gmail.com"},
+new Eczane{ Adi="ERTEM", AcilisTarihi=new DateTime(2008,7,31), Enlem=41.275791, Boylam=31.430267, Adres="MÜFTÜ MAH. ERDEMIR CAD. NO:40/B", TelefonNo="3723237707", MailAdresi="zeynepccengiz@gmail.com"},
+new Eczane{ Adi="GÜR", AcilisTarihi=new DateTime(2010,3,29), Enlem=41.273429, Boylam=31.431724, Adres="MÜFTÜ MAH.ÇETIN APATAY BULVARI NO:20/A", TelefonNo="3123225010", MailAdresi="ecz.musgur@hotmail.com"},
+new Eczane{ Adi="GÜVEN", AcilisTarihi=new DateTime(1981,4,2), Enlem=41.273392, Boylam=31.435814, Adres="MÜFT MAH. ERDEMIR CAD. NO:142/A", TelefonNo="3723162438", MailAdresi="hilaltoygar51@gmail.com"},
+new Eczane{ Adi="ÝPEK", AcilisTarihi=new DateTime(2005,9,30), Enlem=41.279759, Boylam=31.421571, Adres="KDZ.EREGLI MÜFTÜ MAH.YUKARI SOK.NO:19", TelefonNo="3723222023", MailAdresi="ipek.eczanesi@hotmail.com"},
+new Eczane{ Adi="IÞIL", AcilisTarihi=new DateTime(2015,11,9), Enlem=41.275829, Boylam=31.430007, Adres="KDZ.EREGLIMÜFTÜ MAH.ERDEMIR CAD.NO:38/c", TelefonNo="3723238792", MailAdresi="isilersoz@hotmail.com"},
+new Eczane{ Adi="KOREL", AcilisTarihi=new DateTime(2011,6,13), Enlem=41.277416, Boylam=31.423101, Adres="MÜFTÜ MAH. MEYDANBASI CAD. NO:22", TelefonNo="3723168282", MailAdresi="aysensaglam@hotmail.com"},
+new Eczane{ Adi="MEMLEKET", AcilisTarihi=new DateTime(2012,5,18), Enlem=41.279637, Boylam=31.422552, Adres="MÜFTÜ MAH. DEMÝRCÝLER SOKAK 12", TelefonNo="3123161046", MailAdresi="memleketecz@hotmail.com"},
+new Eczane{ Adi="MERVE", AcilisTarihi=new DateTime(2013,11,19), Enlem=41.283221, Boylam=31.414285, Adres="ORHANLAR MAH. ORHANGAZÝ CAD. 37/B", TelefonNo="3723330016", MailAdresi="mrvyzn@hotmail.com"},
+new Eczane{ Adi="MERYEM", AcilisTarihi=new DateTime(2010,10,14), Enlem=41.273730, Boylam=31.433335, Adres="MÜFTÜ MAH.IBRAHIM EFE CAD.NO:55/B", TelefonNo="3723238008", MailAdresi="mersa29@hotmail.com"},
+new Eczane{ Adi="OVÜL", AcilisTarihi=new DateTime(2006,7,31), Enlem=39.7828096, Boylam=30.5127423, Adres="KDZ.EREGLI MEYDANBASI CAD.NO:47", TelefonNo="3723228042", MailAdresi="zuhreoztas@gmail.com"},
+new Eczane{ Adi="ÖZGÜMÜÞ", AcilisTarihi=new DateTime(2013,2,18), Enlem=41.275889, Boylam=31.430537, Adres="BAÐLIK MAH. ERDEMIR CAD. NO:63/A", TelefonNo="3723163248", MailAdresi="hilalozgumus@hotmail.com"},
+new Eczane{ Adi="ÖZTÜRK", AcilisTarihi=new DateTime(2018,4,20), Enlem=41.274410, Boylam=31.430208, Adres="ÞEHÝT ÖMER HALÝSDEMÝR BULVARI TOPCUOÐLU ÝÞMERKEZÝ,8/E", TelefonNo="5343637354", MailAdresi="ozturkbet@gmail.com"},
+new Eczane{ Adi="SEDA", AcilisTarihi=new DateTime(2011,4,29), Enlem=41.279869, Boylam=31.423040, Adres="MÜFTÜ MAH. 27 MAYIS CAD. NO:14", TelefonNo="3723220177", MailAdresi="sedakazokoglu@hotmail.com"},
+new Eczane{ Adi="SELÇUK", AcilisTarihi=new DateTime(2016,3,14), Enlem=41.273441, Boylam=31.431849, Adres="MÜFTÜ MAH.ÇETÝN APATAY BULVARI NO:20/1-2", TelefonNo="3723224122", MailAdresi="ozlemmkucuk@hotmail.com"},
+new Eczane{ Adi="SEVGÝ", AcilisTarihi=new DateTime(2009,1,30), Enlem=41.275636, Boylam=31.430797, Adres="MÜFTÜ MAH.ERDEMIR CAD.54/C", TelefonNo="3723228858", MailAdresi="bernasart@gmail.com"},
+new Eczane{ Adi="SONNUR", AcilisTarihi=new DateTime(1998,8,25), Enlem=41.279017, Boylam=31.423535, Adres="MÜFTÜ MAH.MEYDANBASI CAD. DEVRIM BULVARI NO:24", TelefonNo="3723166714", MailAdresi="sonnureczanesi@gmail.com"},
+new Eczane{ Adi="TÜRKOÐLU", AcilisTarihi=new DateTime(2016,12,26), Enlem=41.278806, Boylam=31.423935, Adres="MÜFTÜ MAH. MEYDANBAÞI CAD. NO:23/A", TelefonNo="3723232017", MailAdresi="hayriye.trkgl@gmail.com"},
+new Eczane{ Adi="UMUT", AcilisTarihi=new DateTime(2005,1,11), Enlem=41.279381, Boylam=31.422232, Adres="MÜFTÜ MAH. YUKARI SOK. NO:28", TelefonNo="3723121800", MailAdresi="umutocaktan@hotmail.com"},
+new Eczane{ Adi="VATAN", AcilisTarihi=new DateTime(2017,12,27), Enlem=41.295444, Boylam=31.407555, Adres="SÜLEYMANLAR MAHALLESÝ MEHMET ALÝ YILMAZ KÜME EVLERÝ NO:6/4B", TelefonNo="3723150550", MailAdresi="eraykorkusuz@gmail.com"},
+new Eczane{ Adi="YASEMÝN", AcilisTarihi=new DateTime(2002,8,5), Enlem=41.279138, Boylam=31.423326, Adres="KDZ.EREGLI MEYDANBASI CAD.MÜFTÜ MAH.UNPAZARI SOK.DIREKÇÝ ISHANI NO:16", TelefonNo="3723163096", MailAdresi="arifyesilbas@hotmail.com"},
+new Eczane{ Adi="YAZICIOÐLU", AcilisTarihi=new DateTime(2016,4,8), Enlem=41.275907, Boylam=31.430270, Adres="BAGLIK MAH.ERDEMIR CADDESI 55/A ", TelefonNo="3723330533", MailAdresi="haceryazicioglu@hotmail.com"},
+new Eczane{ Adi="ZEKÝ SÖNMEZ", AcilisTarihi=new DateTime(2015,1,2), Enlem=41.280061, Boylam=31.421852, Adres="MÜFTÜ MAH. HAMAMARASI SOK.NO:1/A", TelefonNo="3723161966", MailAdresi="yasar_caygec@hotmail.com"},
+
+//kdz.ereðli kepez
+new Eczane{ Adi="DEVA", AcilisTarihi=new DateTime(1977,8,25), Enlem=41.277729, Boylam=31.493513, Adres="ÖMERLÝ MAHALLESÝ KAYNARCA CADDESÝ NO:235/B", TelefonNo="3723150570", MailAdresi="abdullah.rak.sar@hotmail.com"},
+new Eczane{ Adi="YAÞAM", AcilisTarihi=new DateTime(2004,8,27), Enlem=41.281083, Boylam=31.493806, Adres="ÖMERLÝ MAH.KAYNARCA CAD.NO:281/A", TelefonNo="3723160605", MailAdresi="yasameczeregli@hotmail.com"},
+new Eczane{ Adi="KEPEZ", AcilisTarihi=new DateTime(2007,5,24), Enlem=41.275951, Boylam=31.430308, Adres="DEVREK YOLU CAD.KAVAKLIK MAH.78/1D", TelefonNo="3723220155", MailAdresi="aslihankasapoglu@hotmail.com"},
+new Eczane{ Adi="KAAN", AcilisTarihi=new DateTime(2010,3,4), Enlem=41.268829, Boylam=31.457152, Adres="SARI KORKMAZ MAH. SEHIT ER KUDRET ÖZCAN SOK. NO:24-A/1", TelefonNo="3723220038", MailAdresi="kaaneczanesi35@hotmail.com"},
+new Eczane{ Adi="SEYHAN", AcilisTarihi=new DateTime(2008,4,11), Enlem=41.268394, Boylam=31.440712, Adres="KAVAKLIK MAH. CAYIR SOKAK 27/A", TelefonNo="3723235106", MailAdresi="eminecolakecz@gmail.com"},
+new Eczane{ Adi="GÜNER", AcilisTarihi=new DateTime(2010,4,14), Enlem=41.275443, Boylam=31.443904, Adres="SARI KORKMAZ MAH. SEHIT KUDRETOZCAN SOK.  NO:20 ", TelefonNo="3723124646", MailAdresi="gunereczanesi@gmail.com"},
+new Eczane{ Adi="ÇÝLEK", AcilisTarihi=new DateTime(2016,8,11), Enlem=41.265736, Boylam=31.465612, Adres="KEPEZ MAH. PR.MUAMMER AKSOY CAD.NO:32/A", TelefonNo="3723233712", MailAdresi="mervecatpinar@gmail.com"},
+new Eczane{ Adi="MADENCÝ", AcilisTarihi=new DateTime(2013,12,31), Enlem=41.268406, Boylam=31.456961, Adres="SARIKOKMAZ MAH. DEVREK YOLU CAD.NO:95/B", TelefonNo="3723476167", MailAdresi="ecz.merve.haliloglu@gmail.com"},
+new Eczane{ Adi="ÖZGÜR", AcilisTarihi=new DateTime(2005,11,22), Enlem=41.278320, Boylam=31.494608, Adres="ÖMERLÝ MAH. KAYNARCA CAD. NO:229/A", TelefonNo="3723150797", MailAdresi="ozguraksar@hotmail.com"},
+new Eczane{ Adi="TUNCAY", AcilisTarihi=new DateTime(2006,11,10), Enlem=41.266965, Boylam=31.461312, Adres="KEPEZ MAH. PROF.MUAMMER AKSOY CAD. NO:121/B", TelefonNo="3723330010", MailAdresi="rasimtuncay@gmail.com"},
+new Eczane{ Adi="TÜRKÝLÝ", AcilisTarihi=new DateTime(2006,9,5), Enlem=41.488189, Boylam=31.838758, Adres="MERKEZ MAH. ATATÜRK CAD. NO:19/D", TelefonNo="3722656808", MailAdresi="burakturkili@hotmail.com"},
+new Eczane{ Adi="ÇAÐLAR", AcilisTarihi=new DateTime(2012,12,28), Enlem=41.480534, Boylam=31.831450, Adres="CAMLIK MAH. ÞEMSÝ DENÝZER CD. 11/A", TelefonNo="3722656770", MailAdresi="erkancaglar78@mynet.com"},
+new Eczane{ Adi="SAÐLIK", AcilisTarihi=new DateTime(1997,9,18), Enlem=41.487648, Boylam=31.838650, Adres="ATATURK CAD.NO:45/9", TelefonNo="3722651065", MailAdresi="filizatli.64@hotmail.com"},
+new Eczane{ Adi="KÝLÝMLÝ", AcilisTarihi=new DateTime(2007,1,30), Enlem=41.490096, Boylam=31.839299, Adres="BELEDIYE CADDESI NO:2/A", TelefonNo="3722651142", MailAdresi="semiralalbayrak@hotmail.com"},
+new Eczane{ Adi="ÖZTÜRK", AcilisTarihi=new DateTime(2009,9,11), Enlem=41.488492, Boylam=31.838837, Adres="MERKEZ MAH. ATATÜRK CAD.NO:25", TelefonNo="3722652940", MailAdresi="ecz.serkan61@hotmail.com"},
+new Eczane{ Adi="KANCA", AcilisTarihi=new DateTime(1997,9,29), Enlem=41.490986, Boylam=31.839267, Adres="ATATURK CAD.NO:4", TelefonNo="3722654638", MailAdresi="keremkanca@hotmail.com"},
+new Eczane{ Adi="ARZU", AcilisTarihi=new DateTime(2006,4,15), Enlem=41.434619, Boylam=31.748865, Adres="GUNEY MAH. CUMHURIYET CAD. NO:2/A", TelefonNo="3722666711", MailAdresi="eczarzueroglu@hotmail.com"},
+new Eczane{ Adi="BÝLLUR", AcilisTarihi=new DateTime(2010,8,4), Enlem=41.433489, Boylam=31.747056, Adres="19 MAYIS MAH. SEHIT POLIS RAMAZAN TAVSANCI CAD. NO: 4/A", TelefonNo="3722690033", MailAdresi="ecz.billur@gmail.com"},
+new Eczane{ Adi="DERMAN", AcilisTarihi=new DateTime(1986,4,9), Enlem=41.434029, Boylam=31.747651, Adres="19 MAYIS MAH. ATATURK CAD. NO:11", TelefonNo="3722668989", MailAdresi="avniyuksel67@hotmail.com"},
+new Eczane{ Adi="ÝSTANBUL", AcilisTarihi=new DateTime(2018,10,26), Enlem=41.434160, Boylam=31.748028, Adres="19 MAYIS MAH.ATATÜRK CAD.NO:1/1 ", TelefonNo="3722662974", MailAdresi="mervezoroglu@windowslive.com"},
+new Eczane{ Adi="MÝNE", AcilisTarihi=new DateTime(2005,9,12), Enlem=41.433955, Boylam=31.746795, Adres="MERKEZ MAH. MITHAT AKIF CAD. NO:5", TelefonNo="3722663898", MailAdresi="mine.tumer@hotmail.com"},
+new Eczane{ Adi="GÜVEN", AcilisTarihi=new DateTime(1987,12,29), Enlem=41.434341, Boylam=31.746079, Adres="MITHATAKIF CAD.NO:11", TelefonNo="3722661361", MailAdresi="sadettinbirinci@hotmail.com"},
+new Eczane{ Adi="KOZLU", AcilisTarihi=new DateTime(1968,9,20), Enlem=41.433832, Boylam=31.747420, Adres="ISTASYON CAD. NO: 04/A", TelefonNo="3722661377", MailAdresi="kozlueczanesi_67@hotmail.com "},
+new Eczane{ Adi="ÖZLEM", AcilisTarihi=new DateTime(2006,1,26), Enlem=41.433703, Boylam=31.745960, Adres="MERKEZ MAH. FEVZI CAKMAK CAD. NO:36", TelefonNo="3722690666", MailAdresi="ozlemdombayci@hotmail.com"},
+new Eczane{ Adi="ÞÝFA", AcilisTarihi=new DateTime(1993,6,16), Enlem=41.434970, Boylam=31.749145, Adres="GUNEY MAH. HURRIYET CAD. NO:3", TelefonNo="3722661289", MailAdresi="sifakozlu@hotmail.com"},
+new Eczane{ Adi="ÞÝFA", AcilisTarihi=new DateTime(1974,2,6), Enlem=41.427053, Boylam=32.072684, Adres="ÇAY MAH.ATATÜRK BULVARI NO:2/F", TelefonNo="3726151205", MailAdresi="osmanaksoy49@mynet.com"},
+new Eczane{ Adi="GÖNENÇ", AcilisTarihi=new DateTime(2013,6,14), Enlem=41.426834, Boylam=32.073691, Adres="ÇAY MAH. ATATÜRK BULVARI NO:10/F", TelefonNo="3726151034", MailAdresi="ozaygonenc@hotmail.com"},
+new Eczane{ Adi="YURTÖZ", AcilisTarihi=new DateTime(2012,7,6), Enlem=41.426804, Boylam=32.073749, Adres="ÇAY MAH.METÝN YURTBAY CAD. NO:18", TelefonNo="3726151569", MailAdresi="eyurtoz@hotmail.com"},
+new Eczane{ Adi="ÞAFAK", AcilisTarihi=new DateTime(1989,7,25), Enlem=41.427040, Boylam=32.075951, Adres="YENI MAH.GÜNES MÜFTÜOGLU CAD.NO:2-B", TelefonNo="3726153146", MailAdresi="safakvural67@gmail.com"},
+new Eczane{ Adi="BAÞAK", AcilisTarihi=new DateTime(2010,12,9), Enlem=41.418002, Boylam=32.092633, Adres="ISTASYON MAH. MANOLYA SOKAK  NO6/B", TelefonNo="3726157954", MailAdresi="basakgundas@hotmail.com"},
+new Eczane{ Adi="BÜYÜK", AcilisTarihi=new DateTime(1999,10,7), Enlem=41.426849, Boylam=32.074081, Adres="ÇAY MAH.ATATÜRK BULVARI NO:20", TelefonNo="3726151018", MailAdresi="ecz_n.unal@hotmail.com"},
+new Eczane{ Adi="KILIÇ", AcilisTarihi=new DateTime(2008,10,31), Enlem=41.428643, Boylam=32.077204, Adres="METIN YURTBAY CAD.NO:20/B", TelefonNo="3726153834", MailAdresi="goksenkilic@hotmail.com"},
+new Eczane{ Adi="ÝSTASYON", AcilisTarihi=new DateTime(2009,1,13), Enlem=41.423738, Boylam=32.094452, Adres="ISTASYON MAH.KENAN AYDIN CAD.NO:16/C", TelefonNo="3726154200", MailAdresi="ecz.emreaytekin@hotmail.com"},
+new Eczane{ Adi="ÇAÐRI", AcilisTarihi=new DateTime(2010,3,1), Enlem=41.426887, Boylam=32.075582, Adres="ÇAY MAH.ATATÜRK BULVARI 81/F", TelefonNo="3726152300", MailAdresi="oytcgr@hotmail.com"},
+new Eczane{ Adi="DERMAN", AcilisTarihi=new DateTime(2012,2,14), Enlem=41.426755, Boylam=32.073458, Adres="ISTASYON MAH.MANOLYA SOK.NO:67/A", TelefonNo="3726150090", MailAdresi="sinm_333@hotmail.com"},
+new Eczane{ Adi="SAÐLIK", AcilisTarihi=new DateTime(2013,6,14), Enlem=41.426766, Boylam=32.074395, Adres="ÇAY MAH.ATATÜRK BULVARI NO:59", TelefonNo="3726151405", MailAdresi="naimakca@hotmail.com"},
+new Eczane{ Adi="ÖZCAN", AcilisTarihi=new DateTime(2015,11,17), Enlem=41.426384, Boylam=32.0721092, Adres="DR.SEZAÝ ÖZTÜRK SOKAK NO:7/A", TelefonNo="3726151213", MailAdresi="mali8484@hotmail.com"},
+new Eczane{ Adi="ÇAYCUMA", AcilisTarihi=new DateTime(2016,11,22), Enlem=41.426403, Boylam=32.0757675, Adres="YENÝ MAH.NÝHAT KANTARCI CADDESÝ 7/B ", TelefonNo="3726152030", MailAdresi="sevilaykaragol@gmail.com"},
+new Eczane{ Adi="ÇAKMAK", AcilisTarihi=new DateTime(2017,12,27), Enlem=41.427342, Boylam=32.072441, Adres="ÇAY MAH. ATATÜRK BULVARI NO:6 ", TelefonNo="3726154121", MailAdresi="bahar.cak@hotmail.com"},
+new Eczane{ Adi="ASLAN", AcilisTarihi=new DateTime(2018,5,16), Enlem=41.430139, Boylam=32.076434, Adres="ÇAY MAHALLESÝ MÝMAR SÝNAN CADDESÝ NO:17", TelefonNo="3726155506", MailAdresi="umitaslan80@hotmail.com"},
+new Eczane{ Adi="HAYAT", AcilisTarihi=new DateTime(2018,7,9), Enlem=41.426857, Boylam=32.072859, Adres="ÇAY MAH. METÝN YURTBAY CADDESÝ NO:4 ", TelefonNo="3726151278", MailAdresi="muratcakir6767@hotmail.com"},
+new Eczane{ Adi="GÜLÞEN", AcilisTarihi=new DateTime(2018,7,9), Enlem=41.426686, Boylam=32.073091, Adres="ÇAY MAHALLESÝ METÝN YURTBAY CADDESÝ 8/C", TelefonNo="5372046333", MailAdresi="gulsen12002@ieo.org.tr"},
 
 
                     #endregion
@@ -267,7 +341,7 @@ new Eczane{ Adi="BAHAR", AcilisTarihi=new DateTime(2016,10,20), Enlem=41.306890,
 
                 Kullanicilar = new List<KullaniciRolEkle>()
                 {
-                    new KullaniciRolEkle(){ RoleId = 3, User= new User{ Email="ustGrupZonguldak@nobetyaz.com", FirstName="Üst Grup", LastName="Üst grup", Password=$"ustGrup{nobetUstGrupId}", UserName="ustGrupZonguldak"}},
+                    //new KullaniciRolEkle(){ RoleId = 3, User= new User{ Email="ustGrupZonguldak@nobetyaz.com", FirstName="Üst Grup", LastName="Üst grup", Password=$"ustGrup{nobetUstGrupId}", UserName="ustGrupZonguldak"}},
                     //new User(){ Email="odaIskenderun@nobetyaz.com", FirstName="Oda Ýskenderun", LastName="Oda Ýskenderun", Password=$"odaÝskenderun{odaId}", UserName="odaÝskenderun"},
                     //new User(){ Email="ustGrupZonguldak@nobetyaz.com", FirstName="Üst Grup", LastName="Üst grup", Password=$"ustGrup{nobetUstGrupId}", UserName="ustGrupZonguldak"},
                     //new User(){ Email="oncelnilgun@gmail.com", FirstName="NilGün", LastName="Öncel", Password="HeoNilgun", UserName="oncelnilgun@gmail.com"}
@@ -275,21 +349,21 @@ new Eczane{ Adi="BAHAR", AcilisTarihi=new DateTime(2016,10,20), Enlem=41.306890,
 
                 NobetGrupKurallar = new List<NobetGrupKural>()
                 {
-                    new NobetGrupKural(){ NobetGrupGorevTipId=nobetGrupGorevTipId, NobetKuralId=1, BaslangicTarihi=baslamaTarihi, Deger=4}, //Ardýþýk Boþ Gün Sayýsý
+                    new NobetGrupKural(){ NobetGrupGorevTipId=nobetGrupGorevTipId, NobetKuralId=1, BaslangicTarihi=baslamaTarihi, Deger=5}, //Ardýþýk Boþ Gün Sayýsý
                     //new NobetGrupKural(){ NobetGrupGorevTipId=28, NobetKuralId=2, BaslangicTarihi=baslamaTarihi, Deger=5}, //Birlikte Nöbet Sayýsý
                     new NobetGrupKural(){ NobetGrupGorevTipId=nobetGrupGorevTipId, NobetKuralId=3, BaslangicTarihi=baslamaTarihi, Deger=varsayilanNobetciSayisi} //Varsayýlan günlük nöbetçi sayýsý
                 },
 
                 NobetUstGrupGunGruplar = new List<NobetUstGrupGunGrup>()
                 {
-                    new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 1 },
-                    new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 2 },
-                    new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 3 },
-                    new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 4 },
+                    new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 1 },//pazar
+                    new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 2 },//bayram
+                    new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 3 },//h.içi
+                    new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 4 },//cts.
                 }
             };
 
-            //UstGrupPaketiEkle(gerekliBilgilerZonguldak2);
+            UstGrupPaketiEkle(gerekliBilgilerZonguldak3);
 
         }
 
@@ -4831,11 +4905,11 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
             #region users
 
-            var kullnicilar = b.Kullanicilar.Select(s => s.User);
+            var kullanicilar = b.Kullanicilar.Select(s => s.User);
 
-            if (kullnicilar.Count() > 0)
+            if (kullanicilar.Count() > 0)
             {
-                b.EczaneNobetContext.Users.AddOrUpdate(s => new { s.Email }, kullnicilar.ToArray());
+                b.EczaneNobetContext.Users.AddOrUpdate(s => new { s.Email }, kullanicilar.ToArray());
                 b.EczaneNobetContext.SaveChanges();
             }
 
@@ -4845,16 +4919,18 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
             var userRole = new List<UserRole>();
 
-            foreach (var kullanici in b.Kullanicilar)
+            if (kullanicilar.Count() > 0)
             {
-                var sonEklenenKullanici = b.EczaneNobetContext.Users.SingleOrDefault(w => w.Email == kullanici.User.Email);
+                foreach (var kullanici in b.Kullanicilar)
+                {
+                    var sonEklenenKullanici = b.EczaneNobetContext.Users.SingleOrDefault(w => w.Email == kullanici.User.Email);
 
-                userRole.Add(new UserRole() { RoleId = kullanici.RoleId, UserId = sonEklenenKullanici.Id });
-            };
+                    userRole.Add(new UserRole() { RoleId = kullanici.RoleId, UserId = sonEklenenKullanici.Id });
+                };
 
-            b.EczaneNobetContext.UserRoles.AddOrUpdate(s => new { s.RoleId, s.UserId }, userRole.ToArray());
-            b.EczaneNobetContext.SaveChanges();
-
+                b.EczaneNobetContext.UserRoles.AddOrUpdate(s => new { s.RoleId, s.UserId }, userRole.ToArray());
+                b.EczaneNobetContext.SaveChanges();
+            }
             #endregion
 
             #region user eczane odalar
@@ -4914,7 +4990,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
                 foreach (var gorevTip in gorevTipler)
                 {
-                    nobetGrupGorevTipler.Add(new NobetGrupGorevTip() { NobetGrupId = nobetGrup.Id, NobetGorevTipId = gorevTip });
+                    nobetGrupGorevTipler.Add(new NobetGrupGorevTip() { NobetGrupId = nobetGrup.Id, NobetGorevTipId = gorevTip, BaslamaTarihi = nobetGrup.BaslamaTarihi });
                 }
             }
 
@@ -4932,8 +5008,62 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
                 foreach (var kural in kurallar)
                 {
-                    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                    if (kural == 1)
+                    {//varsayýlan nöbetçi sayýsý
+                        if (nobetGrupGorevTip.Id == 55)
+                        {
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 5 });
+                        }
+                        else if (nobetGrupGorevTip.Id == 56)
+                        {
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 7 });
+                        }
+                        else if (nobetGrupGorevTip.Id == 57)
+                        {
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 5 });
+                        }
+                        else if (nobetGrupGorevTip.Id == 58)
+                        {
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 3 });
+                        }
+                        else if (nobetGrupGorevTip.Id == 59)
+                        {
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 4 });
+                        }
+                        else if (nobetGrupGorevTip.Id == 60)
+                        {
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 7 });
+                        }
+                    }
+                    else if (kural == 3)
+                    {
+                        if (nobetGrupGorevTip.Id == 55)
+                        {
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                        }
+                        else if (nobetGrupGorevTip.Id == 56)
+                        {
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                        }
+                        else if (nobetGrupGorevTip.Id == 57)
+                        {
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                        }
+                        else if (nobetGrupGorevTip.Id == 58)
+                        {
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                        }
+                        else if (nobetGrupGorevTip.Id == 59)
+                        {
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                        }
+                        else if (nobetGrupGorevTip.Id == 60)
+                        {
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                        }
+                    }
                 }
+
             }
 
             b.EczaneNobetContext.NobetGrupKurallar.AddOrUpdate(s => new { s.NobetGrupGorevTipId, s.NobetKuralId, s.BaslangicTarihi }, b.NobetGrupKurallar.ToArray());
@@ -4943,8 +5073,8 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
             #region nöbet üst grup gün gruplar
 
-            b.EczaneNobetContext.NobetUstGrupGunGruplar.AddOrUpdate(s => new { s.NobetUstGrupId, s.GunGrupId }, b.NobetUstGrupGunGruplar.ToArray());
-            b.EczaneNobetContext.SaveChanges();
+            //b.EczaneNobetContext.NobetUstGrupGunGruplar.AddOrUpdate(s => new { s.NobetUstGrupId, s.GunGrupId }, b.NobetUstGrupGunGruplar.ToArray());
+            //b.EczaneNobetContext.SaveChanges();
 
             #endregion            
 
@@ -4963,7 +5093,9 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
             #region eczane nöbet gruplar
 
             //buraya dikkat. birden çok nöbet grubu varsa ayýrýp eklemek lazým
-            var eczaneler = b.EczaneNobetContext.Eczaneler.Where(w => w.Id > eczaneIdSon).ToList();
+            var eczaneler = b.EczaneNobetContext.Eczaneler
+                .Where(w => w.Id > eczaneIdSon)
+                .OrderBy(o => o.Id).ToList();
 
             var eczaneNobetGruplar = new List<EczaneNobetGrup>();
 
@@ -4975,13 +5107,29 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
                 //birden fazla nöbet grubu olursa ayarla mutlaka
 
-                if (indisEczaneSayisi <= 13)
+                if (indisEczaneSayisi <= 11)
                 {
                     nobetGrupGorevTipId = b.NobetGrupGorevTipId;
                 }
-                else if (indisEczaneSayisi <= 18)
+                else if (indisEczaneSayisi <= 42)
                 {
                     nobetGrupGorevTipId = b.NobetGrupGorevTipId + 1;
+                }
+                else if (indisEczaneSayisi <= 52)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 2;
+                }
+                else if (indisEczaneSayisi <= 58)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 3;
+                }
+                else if (indisEczaneSayisi <= 67)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 4;
+                }
+                else if (indisEczaneSayisi <= 84)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 5;
                 }
 
                 eczaneNobetGruplar.Add(new EczaneNobetGrup()
@@ -4995,7 +5143,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
                 indisEczaneSayisi++;
             }
 
-            b.EczaneNobetContext.EczaneNobetGruplar.AddOrUpdate(s => new { s.EczaneId, s.NobetGrupGorevTipId }, eczaneNobetGruplar.ToArray());
+            b.EczaneNobetContext.EczaneNobetGruplar.AddOrUpdate(s => new { s.EczaneId, s.NobetGrupGorevTipId, s.BaslangicTarihi }, eczaneNobetGruplar.ToArray());
             b.EczaneNobetContext.SaveChanges();
 
             #endregion
@@ -5008,32 +5156,32 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
             #region nöbet üst grup kýsýtlar
 
-            var nobetUstGrupKisitlar = b.EczaneNobetContext.NobetUstGrupKisitlar
-                .Where(w => w.NobetUstGrupId == 2)//antalya - varsayýlan
-                .ToList();
+            //var nobetUstGrupKisitlar = b.EczaneNobetContext.NobetUstGrupKisitlar
+            //    .Where(w => w.NobetUstGrupId == 2)//antalya - varsayýlan
+            //    .ToList();
 
-            if (b.NobetUstGruplar != null)
-            {
-                var kisitlar = new List<NobetUstGrupKisit>();
+            //if (b.NobetUstGruplar != null)
+            //{
+            //    var kisitlar = new List<NobetUstGrupKisit>();
 
-                foreach (var nobetUstGrupKisit in nobetUstGrupKisitlar)
-                {
-                    var nobetUstGrupKisit2 = new NobetUstGrupKisit()
-                    {
-                        KisitId = nobetUstGrupKisit.KisitId,
-                        NobetUstGrupId = b.NobetUstGrupId,
-                        SagTarafDegeri = nobetUstGrupKisit.SagTarafDegeri,
-                        SagTarafDegeriVarsayilan = nobetUstGrupKisit.SagTarafDegeriVarsayilan,
-                        PasifMi = nobetUstGrupKisit.PasifMi,
-                        VarsayilanPasifMi = nobetUstGrupKisit.VarsayilanPasifMi
-                    };
+            //    foreach (var nobetUstGrupKisit in nobetUstGrupKisitlar)
+            //    {
+            //        var nobetUstGrupKisit2 = new NobetUstGrupKisit()
+            //        {
+            //            KisitId = nobetUstGrupKisit.KisitId,
+            //            NobetUstGrupId = b.NobetUstGrupId,
+            //            SagTarafDegeri = nobetUstGrupKisit.SagTarafDegeri,
+            //            SagTarafDegeriVarsayilan = nobetUstGrupKisit.SagTarafDegeriVarsayilan,
+            //            PasifMi = nobetUstGrupKisit.PasifMi,
+            //            VarsayilanPasifMi = nobetUstGrupKisit.VarsayilanPasifMi
+            //        };
 
-                    kisitlar.Add(nobetUstGrupKisit2);
-                }
+            //        kisitlar.Add(nobetUstGrupKisit2);
+            //    }
 
-                b.EczaneNobetContext.NobetUstGrupKisitlar.AddOrUpdate(s => new { s.NobetUstGrupId, s.KisitId }, kisitlar.ToArray());
-                b.EczaneNobetContext.SaveChanges();
-            }
+            //    b.EczaneNobetContext.NobetUstGrupKisitlar.AddOrUpdate(s => new { s.NobetUstGrupId, s.KisitId }, kisitlar.ToArray());
+            //    b.EczaneNobetContext.SaveChanges();
+            //}
             #endregion
         }
 
@@ -5097,7 +5245,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
         private static void NobetGrupGunKuralEkle(Concrete.EntityFramework.Contexts.EczaneNobetContext context, DateTime baslamaTarihi, int nobetUstGrupId, List<NobetGrupGorevTip> nobetGrupVeGorevTipler, int varsayilanNobetciSayisi)
         {
             var nobetGrupGorevTipGunKuralListe = context.NobetGrupGorevTipGunKurallar
-                            .Where(w => w.NobetGrupGorevTipId == 24) //antalya 11. grup
+                            .Where(w => w.NobetGrupGorevTipId == 49) //antalya 11. grup
                             .ToList();
 
             var nobetGrupGorevTipGunKurallar = new List<NobetGrupGorevTipGunKural>();
@@ -7110,4 +7258,80 @@ new Eczane{ Adi="ZÜLAL", AcilisTarihi=new DateTime(2017,1,1), Enlem=40.557700, B
 
         //UstGrupPaketiEkle(gerekliBilgilerCorum); 
         #endregion     
+ */
+
+/*
+
+var gerekliBilgilerZonguldak2 = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)
+        {
+            //var baslamaTarihi = new DateTime(2019, 3, 5);
+            //var odaId = 6;
+            //var nobetUstGrupId = 7;
+            //var nobetGrupGorevTipId = 30;
+
+            //BaslamaTarihi = new DateTime(2019, 3, 5),
+
+            //EczaneOdalalar = new List<EczaneOda>
+            //{
+            //    new EczaneOda(){ Adi="Hatay", Adres="Ekinci Mah. Ýnönü Bulvarý No:114 Antakya", TelefonNo="3262145647", MailAdresi="yonetim@hatayeo.org.tr", WebSitesi ="http://www.hatayeo.org.tr/"},
+            //},
+
+            //NobetUstGruplar = new List<NobetUstGrup>() {
+            //    new NobetUstGrup(){ Adi = "Zonguldak", Aciklama = "Zonguldak", EczaneOdaId = odaId, BaslangicTarihi=baslamaTarihi, Enlem = 41.4556754, Boylam = 31.7694652 },
+            //},
+
+            NobetGruplar = new List<NobetGrup>() {
+                new NobetGrup(){ Adi = "DEVREK", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                new NobetGrup(){ Adi = "GÖKÇEBEY", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+            },
+
+            Eczaneler = new List<Eczane>()
+            {
+                #region Zonguldak - 2
+new Eczane{ Adi="ULUPINAR", AcilisTarihi=new DateTime(1973,2,2), Enlem=41.218244, Boylam=31.954497, Adres="YENI MAH.NALBANTLAR SOK.NO:8/B", TelefonNo="3725561332", MailAdresi="eczhulyaozen@hotmail.com"},
+new Eczane{ Adi="ÝSMAÝL ERENOGLU", AcilisTarihi=new DateTime(1979,5,29), Enlem=41.2196864, Boylam=31.9619072, Adres="YENI MAH.YENIPAZAR ALANI NO:2/A", TelefonNo="3725561047", MailAdresi="eczsbengi_67@hotmail.com"},
+new Eczane{ Adi="KARADAYI", AcilisTarihi=new DateTime(1977,2,15), Enlem=41.220187, Boylam=31.954939, Adres="ZONGULDAK ÝLÝ DEVREK ÝLÇESÝ ESKÝ MAH DR.VEYSEL ATASOY CAD.NO:15/A", TelefonNo="3725561567", MailAdresi="isitankaradayi@hotmail.com"},
+new Eczane{ Adi="BAÞARAN", AcilisTarihi=new DateTime(1991,3,8), Enlem=41.219010, Boylam=31.957070, Adres="ISMETPASA MAH.INÖNÜ CAD.NO:4/B", TelefonNo="3725561088", MailAdresi="nesrin@basaraneczanesi.com"},
+new Eczane{ Adi="MÝNE", AcilisTarihi=new DateTime(1988,11,10), Enlem=41.220047, Boylam=31.955229, Adres="ESKÝ MAH. DR.VEYSEL ATASOY CAD. NO:12/A", TelefonNo="3725565486", MailAdresi="mineecz@mynet.com"},
+new Eczane{ Adi="PINAR", AcilisTarihi=new DateTime(1988,11,15), Enlem=41.217893, Boylam=31.955294, Adres="YENI MAH.VEDAT ALI ÖZKAN CAD.NO:38/A", TelefonNo="3725562224", MailAdresi="pinar_eczanesi67@hotmail.com"},
+new Eczane{ Adi="ÝNCÝ", AcilisTarihi=new DateTime(1995,3,1), Enlem=41.217191, Boylam=31.955422, Adres="YENI MAH.VEDAT ALI ÖZKAN CAD. 35/B DEVREK", TelefonNo="3725568595", MailAdresi="iburma@hotmail.com"},
+new Eczane{ Adi="KADAM", AcilisTarihi=new DateTime(1997,12,25), Enlem=41.2174988, Boylam=31.9553623, Adres="YENÝ MAH. VEDAT ALI ÖZKAN CAD.NO:31/B", TelefonNo="3725560048", MailAdresi="kadam_eczanesi@hotmail.com"},
+new Eczane{ Adi="UMUT", AcilisTarihi=new DateTime(2003,10,10), Enlem=41.2186, Boylam=31.9554, Adres="YENI MAH.VEDAT ALÝ ÖZKAN CAD.NO:20", TelefonNo="3725561014", MailAdresi="akkasliumut@hotmail.com"},
+new Eczane{ Adi="HÝLAL", AcilisTarihi=new DateTime(2013,8,1), Enlem=41.218021, Boylam=31.953593, Adres="YENÝ MAH. OKUL SOKAK NO:3/A", TelefonNo="3725561922", MailAdresi="h.ibrahim1453@hotmail.com"},
+new Eczane{ Adi="YENÝ SEVGÝ", AcilisTarihi=new DateTime(2014,7,14), Enlem=41.218448, Boylam=31.953468, Adres="YENÝ MAH. ESKÝ ORTAOKUL SK.21/A", TelefonNo="372556432", MailAdresi="ecz.hamit@hotmail.com"},
+new Eczane{ Adi="HALE", AcilisTarihi=new DateTime(2015,6,29), Enlem=41.220268, Boylam=31.960461, Adres="ÝSMETPAÞA MAH. ÝNÖNÜ CAD. NO:42/A", TelefonNo="3725000365", MailAdresi="eczaci1961@hotmail.com"},
+new Eczane{ Adi="ERTAN", AcilisTarihi=new DateTime(2016,3,1), Enlem=41.216259, Boylam=31.955305, Adres="YENÝ MAHALLE VEDAT ALÝ ÖZKAN CADDESÝ NO:56/B", TelefonNo="3725050607", MailAdresi="emre-240@hotmail.com"},
+new Eczane{ Adi="FURKAN", AcilisTarihi=new DateTime(2008,7,23), Enlem=41.306940, Boylam=32.139424, Adres="YENÝ MAH.ATATÜRK CAD. NO:56/A", TelefonNo="3725121080", MailAdresi="ayseozdogan@hotmail.com"},
+new Eczane{ Adi="DOÐA", AcilisTarihi=new DateTime(1999,9,30), Enlem=41.306124, Boylam=32.143671, Adres="ÇARSIIÇI MAH.ISMETPASA CAD.NO:36", TelefonNo="3725121109", MailAdresi="aslihan_kayabasli@hotmail.com"},
+new Eczane{ Adi="GÖKÇEBEY", AcilisTarihi=new DateTime(2008,7,9), Enlem=41.306039, Boylam=32.143185, Adres="ISTASYON MAH.ATATÜRK CAD.NO:50", TelefonNo="3725121096", MailAdresi="borakalayci@hotmail.com"},
+new Eczane{ Adi="OKTAY", AcilisTarihi=new DateTime(2007,3,6), Enlem=41.306607, Boylam=32.140094, Adres="ISTASYON MAH.ATATÜRK CAD.NO:48", TelefonNo="3725123345", MailAdresi="cem0scar@hotmail.com"},
+new Eczane{ Adi="BAHAR", AcilisTarihi=new DateTime(2016,10,20), Enlem=41.306890, Boylam=32.139120, Adres="YENÝ MAH. ATATÜRK CAD. NO:58/B", TelefonNo="3725122424", MailAdresi="ati_3321@hotmail.com"},
+
+
+                #endregion
+            },
+
+            Kullanicilar = new List<KullaniciRolEkle>()
+            {
+                new KullaniciRolEkle(){ RoleId = 3, User= new User{ Email="ustGrupZonguldak@nobetyaz.com", FirstName="Üst Grup", LastName="Üst grup", Password=$"ustGrup{nobetUstGrupId}", UserName="ustGrupZonguldak"}},
+                //new User(){ Email="odaIskenderun@nobetyaz.com", FirstName="Oda Ýskenderun", LastName="Oda Ýskenderun", Password=$"odaÝskenderun{odaId}", UserName="odaÝskenderun"},
+                //new User(){ Email="ustGrupZonguldak@nobetyaz.com", FirstName="Üst Grup", LastName="Üst grup", Password=$"ustGrup{nobetUstGrupId}", UserName="ustGrupZonguldak"},
+                //new User(){ Email="oncelnilgun@gmail.com", FirstName="NilGün", LastName="Öncel", Password="HeoNilgun", UserName="oncelnilgun@gmail.com"}
+            },
+
+            NobetGrupKurallar = new List<NobetGrupKural>()
+            {
+                new NobetGrupKural(){ NobetGrupGorevTipId=nobetGrupGorevTipId, NobetKuralId=1, BaslangicTarihi=baslamaTarihi, Deger=4}, //Ardýþýk Boþ Gün Sayýsý
+                //new NobetGrupKural(){ NobetGrupGorevTipId=28, NobetKuralId=2, BaslangicTarihi=baslamaTarihi, Deger=5}, //Birlikte Nöbet Sayýsý
+                new NobetGrupKural(){ NobetGrupGorevTipId=nobetGrupGorevTipId, NobetKuralId=3, BaslangicTarihi=baslamaTarihi, Deger=varsayilanNobetciSayisi} //Varsayýlan günlük nöbetçi sayýsý
+            },
+
+            NobetUstGrupGunGruplar = new List<NobetUstGrupGunGrup>()
+            {
+                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 1 },
+                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 2 },
+                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 3 },
+                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 4 },
+            }
+        };     
  */

@@ -482,7 +482,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 NobetGrupGorevTipler = nobetGrupGorevTipler,
                 NobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(nobetGrupIdListe, baslangicTarihi, bitisTarihi),
                 EczaneNobetGruplar = eczaneNobetGruplar,
-                NobetUstGrupKisitlar = nobetUstGrupKisitlar,
+                Kisitlar = nobetUstGrupKisitlar,
                 EczaneGrupNobetSonuclar = eczaneGrupNobetSonuclar,
                 EczaneNobetSonuclar = eczaneNobetSonuclarCozulenGruplar,
                 EczaneGrupNobetSonuclarTumu = eczaneNobetSonuclar,

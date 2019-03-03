@@ -9,7 +9,13 @@
     var kisitTurler = new string[3] { "varsayilandanFarkli", "False", "True" };
     //"varsayilandanFarkli",
     var tabId = "";
-    var varsayilandanFarkliKisitSayisi = Model.Kisitlar.Where(w => w.PasifMi != w.VarsayilanPasifMi || w.SagTarafDegeri != w.SagTarafDegeriVarsayilan).Count();
+    var varsayilandanFarkliKisitlar = Model.Kisitlar
+        .Where(w => w.PasifMi != w.VarsayilanPasifMi
+        || w.SagTarafDegeri != w.SagTarafDegeriVarsayilan
+        || w.NobetGrupGorevtipKisitSayisi > 0).ToList();
+
+    var varsayilandanFarkliKisitSayisi = varsayilandanFarkliKisitlar.Count;
+
     var kisitKategoriler = Model.Kisitlar.Select(s => new { s.KisitKategoriId, s.KisitKategoriAdi }).Distinct().OrderBy(o => o.KisitKategoriId).ToList();
     var ilkKisitKategorisi = kisitKategoriler.FirstOrDefault();
     var pasifKisitSayisi = Model.Kisitlar.Where(w => w.PasifMi == true).Count();
@@ -118,7 +124,7 @@
                     tabId = "varsayilandanFarkli";
                     //baslik = "Varsayılandan Farklı";
                     kisitSayisi = varsayilandanFarkliKisitSayisi;
-                    kisitlar = Model.Kisitlar.Where(w => w.PasifMi != w.VarsayilanPasifMi || w.SagTarafDegeri != w.SagTarafDegeriVarsayilan).ToList();
+                    kisitlar = varsayilandanFarkliKisitlar;
                 }
                 else if (kisitTuru == "True")
                 {
@@ -223,6 +229,13 @@
                                                         var badgeTip = "badge badge-primary";
                                                         var renk = "#007bff";
                                                         var kisitNumarasi = $"K{item.KisitId}";
+                                                        var haricKuralIdList = new int[4] {
+                                                            11,//eczaneGrup
+                                                            35, //pespeseHaftaIciAyniGunNobet,
+                                                            39, //nobetBorcOdeme
+                                                            10, //ayIcindeAyniGunNobet
+                                                        };
+
 
                                                         if (item.PasifMi == true)
                                                         {
@@ -257,11 +270,11 @@
                                                                     @if (kisitTuru == "varsayilandanFarkli")
                                                                     {
                                                                         @*<a class="badge badge-warning mr-2 mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
-                                                                            <span data-toggle="tooltip" data-placement="top" title="Varsayılana Dön">
-                                                                                <i class="fa fa-refresh" aria-hidden="true"></i>
-                                                                                <span class="d-none d-lg-inline"> Varsayılan</span>
-                                                                            </span>
-                                                                        </a>*@
+                                                                                <span data-toggle="tooltip" data-placement="top" title="Varsayılana Dön">
+                                                                                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                                                                                    <span class="d-none d-lg-inline"> Varsayılan</span>
+                                                                                </span>
+                                                                            </a>*@
                                                                     }
 
                                                                     <a class="badge badge-info pull-right mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
@@ -278,7 +291,7 @@
                                                                         </div>
 
                                                                     </div>
-                                                                    <h6 class="card-title mb-3">
+                                                                    <h6 class="card-title mb-2">
                                                                         @if (item.KisitAdi == "eczaneGrup")
                                                                         {
                                                                             <a href="@Url.Action("Index", "EczaneGrupTanim")" class="card-link" target="_blank" title="Eczane Grup Tanımlara Git">
@@ -307,7 +320,25 @@
                                                                         {
                                                                             @item.KisitAdiGosterilen
                                                                         }
+
+                                                                        @if (!haricKuralIdList.Contains(item.KisitId))
+                                                                        {
+                                                                            <a class="btn btn-outline-primary py-0 btn-sm mr-2" title="Gruba özel kural ekle" target="_blank"
+                                                                               href="@Url.Action("Create2", "NobetGrupGorevTipKisit", new { kisitId = item.KisitId, area= "EczaneNobet" })">
+                                                                                <span class="fa fa-plus"></span>
+                                                                            </a>
+                                                                        }
                                                                     </h6>
+
+                                                                    @if (@item.NobetGrupGorevtipKisitSayisi > 0)
+                                                                    {
+                                                                        <div class="alert alert-warning px-2 py-1" role="alert">
+                                                                            <a href="@Url.Action("Index", "NobetGrupGorevTipKisit")" class="alert-link " target="_blank">
+                                                                                Gruba özel kurallar <span class="badge badge-secondary" title="Gruba özel kural sayısı">@item.NobetGrupGorevtipKisitSayisi</span>
+                                                                            </a>
+                                                                        </div>
+                                                                    }
+
                                                                     <!-- #region kısıt güncelle form -->
                                                                     @*@using (Ajax.BeginForm(null, null, updateAjaxOptions, new { @class = "form-inline", id = $"form{id.Remove(0, 3)}" }))*@
                                                                     @*new { id = item.Id }*@
@@ -355,7 +386,7 @@
                                                                     <!-- #endregion -->
                                                                     <hr />
                                                                     <!-- #region varsayılan durum -->
-                                                                    <div class="alert alert-warning fade show px-2 py-1 mb-0" role="alert" title="Varsayılan Ayarlar">
+                                                                    <div class="alert alert-info fade show px-2 py-1 mb-0" role="alert" title="Varsayılan Ayarlar">
                                                                         @if (item.VarsayilanPasifMi == true)
                                                                         {
                                                                             @*<i class="fa fa-check-square-o" aria-hidden="true"></i>*@

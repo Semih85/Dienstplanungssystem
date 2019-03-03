@@ -337,6 +337,32 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         //BitisTarihi = g.NobetGrup.BitisTarihi
                     }).ToList();
         }
+        private List<TakvimNobetGrup> GetTakvimNobetGruplar(List<TakvimDetay> tarihler, NobetGrupGorevTipDetay nobetGrupGorevTip, List<BayramDetay> bayramlar)
+        {
+            return (from t in tarihler
+                    select new TakvimNobetGrup
+                    {
+                        TakvimId = t.TakvimId,
+                        Yil = t.Yil,
+                        Ay = t.Ay,
+                        Gun = t.Gun,
+                        HaftaninGunu = t.HaftaninGunu,
+                        NobetGrupId = nobetGrupGorevTip.NobetGrupId,
+                        NobetGorevTipId = nobetGrupGorevTip.NobetGorevTipId,
+                        NobetGunKuralId = bayramlar.Where(w => w.TakvimId == t.TakvimId
+                                                            && w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
+                                                            && w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId)
+                                              .Select(s => s.NobetGunKuralId).FirstOrDefault() > 0
+                                              ? bayramlar.Where(w => w.TakvimId == t.TakvimId
+                                                                  && w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
+                                                                  && w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId)
+                                              .Select(s => s.NobetGunKuralId).FirstOrDefault()
+                                              : t.HaftaninGunu,
+                        Tarih = t.Tarih
+                        //BaslangicTarihi = g.NobetGrup.BaslamaTarihi,
+                        //BitisTarihi = g.NobetGrup.BitisTarihi
+                    }).ToList();
+        }
         #endregion
 
         private List<TakvimNobetGrup> GetTakvimNobetGruplar(List<TakvimDetay> tarihler, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler, List<NobetGrupGorevTipTakvimOzelGunDetay> bayramlar, List<NobetGrupTalepDetay> nobetGrupTalepler)
@@ -358,6 +384,78 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             var takvimNobetGrupGorevTipler = (from t in tarihler
                                               from g in nobetGrupGorevTipler
+                                              from b in bayramlar
+                                                    .Where(w => g.Id == w.NobetGrupGorevTipId && t.TakvimId == w.TakvimId).DefaultIfEmpty()
+                                              from d in nobetGrupTalepler
+                                                    .Where(w => g.Id == w.NobetGrupGorevTipId && t.TakvimId == w.TakvimId).DefaultIfEmpty()
+                                              from k in nobetGrupKurallar
+                                                    .Where(w => g.Id == w.NobetGrupGorevTipId).DefaultIfEmpty()
+                                              let nobetGrupGorevTipGunKural = nobetGrupGorevTipGunKurallar
+                                                                .SingleOrDefault(w => w.NobetGrupGorevTipId == g.Id
+                                                                                   && w.NobetGunKuralId ==
+                                                                                   ((g.Id == b?.NobetGrupGorevTipId && t.TakvimId == b?.TakvimId)
+                                                                                       ? b.NobetGunKuralId
+                                                                                       : t.HaftaninGunu)
+                                                                                   )
+                                              select new TakvimNobetGrup
+                                              {
+                                                  TakvimId = t.TakvimId,
+                                                  Yil = t.Yil,
+                                                  Ay = t.Ay,
+                                                  Gun = t.Gun,
+                                                  HaftaninGunu = t.HaftaninGunu,
+                                                  NobetGrupId = g.NobetGrupId,
+                                                  NobetGorevTipId = g.NobetGorevTipId,
+                                                  NobetGrupGorevTipId = g.Id,
+                                                  NobetGunKuralId = (g.Id == b?.NobetGrupGorevTipId && t.TakvimId == b?.TakvimId) ? b.NobetGunKuralId : t.HaftaninGunu,
+                                                  NobetGorevTipAdi = g.NobetGorevTipAdi,
+                                                  NobetGrupAdi = g.NobetGrupAdi,
+                                                  NobetGunKuralAdi = (g.Id == b?.NobetGrupGorevTipId && t.TakvimId == b?.TakvimId)
+                                                       ? b.NobetGunKuralAdi
+                                                       : nobetGrupGorevTipGunKural?.NobetGunKuralAdi,
+                                                  GunGrupAdi = (g.Id == b?.NobetGrupGorevTipId && t.TakvimId == b?.TakvimId)
+                                                       ? b.GunGrupAdi
+                                                       : nobetGrupGorevTipGunKural?.GunGrupAdi,
+                                                  GunGrupId = (int)((g.Id == b?.NobetGrupGorevTipId && t.TakvimId == b?.TakvimId)
+                                                       ? b.GunGrupId
+                                                       : nobetGrupGorevTipGunKural == null
+                                                        ? 0
+                                                        : nobetGrupGorevTipGunKural?.GunGrupId),
+                                                  TalepEdilenNobetciSayisi = (g.Id == d?.NobetGrupGorevTipId && t.TakvimId == d?.TakvimId)
+                                                          ? d.NobetciSayisi
+                                                          : (int)k.Deger != nobetGrupGorevTipGunKural?.NobetciSayisi
+                                                            ? (int)nobetGrupGorevTipGunKural?.NobetciSayisi
+                                                            : (int)k.Deger,
+                                                  Tarih = t.Tarih,
+                                                  NobetGunKuralKapanmaTarihi = nobetGrupGorevTipGunKural.BitisTarihi,
+                                                  NobetGrubuBuyukluk = 0
+                                              })
+                                              .Where(w => w.GunGrupAdi != null)
+                                              .ToList();
+
+            //var vv = takvimNobetGrupGorevTipler
+            //    .Where(w => w.Tarih == new DateTime(2019, 4, 23)).SingleOrDefault();
+
+            return takvimNobetGrupGorevTipler;
+        }
+        private List<TakvimNobetGrup> GetTakvimNobetGruplar(List<TakvimDetay> tarihler, NobetGrupGorevTipDetay nobetGrupGorevTip, List<NobetGrupGorevTipTakvimOzelGunDetay> bayramlar, List<NobetGrupTalepDetay> nobetGrupTalepler)
+        {
+            var g = nobetGrupGorevTip;
+
+            var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTip.Id);
+
+            //var nobetGrupGorevTipTakvimOzelGunDetaylar = new List<NobetGrupGorevTipTakvimOzelGunDetay>();
+
+            //if (bayramlar.Count > 0)
+            //{
+            //    nobetGrupGorevTipTakvimOzelGunDetaylar = bayramlar;
+            //}
+            //var cc = nobetGrupGorevTipGunKurallar
+            //    .Where(w => w.NobetGunKuralId == 9).SingleOrDefault();
+
+            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupGorevTip.Id, 3); //3: varsayılan nöbetçi sayısı
+
+            var takvimNobetGrupGorevTipler = (from t in tarihler
                                               from b in bayramlar
                                                     .Where(w => g.Id == w.NobetGrupGorevTipId && t.TakvimId == w.TakvimId).DefaultIfEmpty()
                                               from d in nobetGrupTalepler
@@ -451,6 +549,18 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             return takvimNobetGruplar;
         }
+        public List<TakvimNobetGrup> GetTakvimNobetGruplarByNobetGrupGorevTipId(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetGrupGorevTipId)
+        {
+            var tarihler = GetDetaylar(baslangicTarihi, bitisTarihi);
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTipId);
+            var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar2(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+            var nobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipler.Select(s => s.Id).ToList());
+
+            var takvimNobetGruplar = GetTakvimNobetGruplar(tarihler, nobetGrupGorevTipler, nobetGrupGorevTipTakvimOzelGunler, nobetGrupTalepler);
+
+            return takvimNobetGruplar;
+        }
+
         public List<TakvimNobetGrup> GetTakvimNobetGruplar(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetGrupIdList, int nobetGorevTipId, List<int> nobetGunKuralIdList)
         {
             var tarihler = GetDetaylar(baslangicTarihi, bitisTarihi);
@@ -478,6 +588,16 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipler);
             var nobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipler.Select(s => s.Id).ToList());
             var takvimNobetGruplar = GetTakvimNobetGruplar(tarihler, nobetGrupGorevTipler, nobetGrupGorevTipTakvimOzelGunler, nobetGrupTalepler, nobetGunKuralIdList);
+
+            return takvimNobetGruplar;
+        }
+        public List<TakvimNobetGrup> GetTakvimNobetGruplar(DateTime baslangicTarihi, DateTime bitisTarihi, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler, int gunGrupId)
+        {
+            var tarihler = GetDetaylar(baslangicTarihi, bitisTarihi);
+            var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipler);
+            var nobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipler.Select(s => s.Id).ToList());
+
+            var takvimNobetGruplar = GetTakvimNobetGruplar(tarihler, nobetGrupGorevTipler, nobetGrupGorevTipTakvimOzelGunler, nobetGrupTalepler, gunGrupId);
 
             return takvimNobetGruplar;
         }
@@ -538,6 +658,37 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             return takvimNobetGruplarPeriyot;
         }
+        public List<TakvimNobetGrupPeriyot> GetTakvimNobetGruplar(DateTime baslangicTarihi, List<int> ayFarklari, int uzunluk, List<NobetGrupGorevTipDetay> nobetGrupGorevTipDetaylar, string gunGrup)
+        {
+            var tarihler = GetDetaylar(baslangicTarihi);
+            var nobetGrupGorevTipler = nobetGrupGorevTipDetaylar;// _nobetGrupGorevTipService.GetDetaylar(nobetGorevTipId, nobetGrupIdList);
+            var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(baslangicTarihi, nobetGrupGorevTipler);
+            var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipler.Select(s => s.Id).ToList());
+
+            var nobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(baslangicTarihi, nobetGrupGorevTipler.Select(s => s.Id).ToList());
+
+            var takvimNobetGruplar = GetTakvimNobetGruplar(tarihler, nobetGrupGorevTipler, nobetGrupGorevTipTakvimOzelGunler, nobetGrupTalepler, gunGrup);
+            var takvimNobetGruplarPeriyot = GetTakvimNobetGruplar(takvimNobetGruplar, ayFarklari, uzunluk);
+
+            return takvimNobetGruplarPeriyot;
+        }
+
+        public List<TakvimNobetGrupPeriyot> GetTakvimNobetGruplar(List<int> ayFarklari, int uzunluk, NobetGrupGorevTipDetay nobetGrupGorevTipDetay, string gunGrup)
+        {
+            var tarihler = GetDetaylar(nobetGrupGorevTipDetay.BaslamaTarihi);
+
+            var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylarNobetGrupGorevTipBaslamaTarihindenSonra(nobetGrupGorevTipDetay);
+            var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTipDetay.Id);
+
+            var nobetGrupTalepler = _nobetGrupTalepService.GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTipDetay.Id);
+
+            var takvimNobetGruplar = GetTakvimNobetGruplar(tarihler, nobetGrupGorevTipDetay, nobetGrupGorevTipTakvimOzelGunler, nobetGrupTalepler)
+                ;
+            var takvimNobetGruplarPeriyot = GetTakvimNobetGruplar(takvimNobetGruplar, ayFarklari, uzunluk);
+
+            return takvimNobetGruplarPeriyot;
+        }
+
         private List<TakvimNobetGrupPeriyot> GetTakvimNobetGruplar(List<TakvimNobetGrup> takvimNobetGruplar, List<int> ayFarklari, int uzunluk)
         {
             var atlanacakTarihSayisi = 0;
@@ -577,15 +728,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return takvimNobetGrupPeriyot;
         }
 
-        public List<TakvimNobetGrup> GetTakvimNobetGruplar(DateTime baslangicTarihi, DateTime bitisTarihi, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler, int gunGrupId)
+
+        public List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunDegerIstatistikler(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetGrupGorevTipId)
         {
-            var tarihler = GetDetaylar(baslangicTarihi, bitisTarihi);
-            var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipler);
-            var nobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipler.Select(s => s.Id).ToList());
+            var tarihler = GetTakvimNobetGruplarByNobetGrupGorevTipId(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
 
-            var takvimNobetGruplar = GetTakvimNobetGruplar(tarihler, nobetGrupGorevTipler, nobetGrupGorevTipTakvimOzelGunler, nobetGrupTalepler, gunGrupId);
-
-            return takvimNobetGruplar;
+            return GetTakvimNobetGrupGunKuralIstatistik(tarihler);
         }
 
         public List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunDegerIstatistikler(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetGrupIdList, int nobetGorevTipId)
@@ -941,7 +1089,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                  from t in takvimNobetGrupGorevTipler
                                                  from a in altGrupluGruplar
                                                  where e.NobetGrupId == t.NobetGrupId
-                                                    //&& (e.NobetGrupGorevTipId == 42 || e.NobetGrupGorevTipId == 53)
+                                                 //&& (e.NobetGrupGorevTipId == 42 || e.NobetGrupGorevTipId == 53)
                                                  select new EczaneNobetAltGrupTarihAralik
                                                  {
                                                      EczaneId = e.EczaneId,
@@ -1056,6 +1204,106 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 var nobetGrupIdListe2 = new List<int> { nobetGrupId };
 
                 var olmasiGerenNobetler = GetTakvimNobetGruplar(nobetUstGrupBaslangicTarihi, nobetSayilari, gruptakiEczaneSayisi, nobetGrupIdListe2, nobetGorevTipId, gunGrubu);
+
+                foreach (var nobetSayisi in nobetSayilari)
+                {
+                    var olmasiGerenNobetler2 = olmasiGerenNobetler
+                        .Where(w => w.NobetSayisi == nobetSayisi).ToList();
+
+                    var anahtarListeTumEczaneler2 = anahtarListeTumEczaneler.Take(olmasiGerenNobetler2.Count).ToList();
+
+                    for (int i = 0; i < anahtarListeTumEczaneler2.Count; i++)
+                    {
+                        anahtarListeTumEczanelerHepsi.Add(new AnahtarListe
+                        {
+                            GunGrup = gunGrubu,
+                            Id = i + 1,
+                            EczaneNobetGrupId = anahtarListeTumEczaneler[i].EczaneNobetGrupId,
+                            EczaneAdi = anahtarListeTumEczaneler[i].EczaneAdi,
+                            NobetGrupId = anahtarListeTumEczaneler[i].NobetGrupId,
+                            NobetGrupAdi = anahtarListeTumEczaneler[i].NobetGrupAdi,
+                            Tarih = olmasiGerenNobetler2[i].Tarih,
+                            NobetUstGrupBaslamaTarihi = anahtarListeTumEczaneler[i].NobetUstGrupBaslamaTarihi,
+                            NobetSayisi = nobetSayisi //haftaIciOlmasiGerenNobetler2[i].NobetSayisi
+                        });
+                    }
+                }
+            }
+            return anahtarListeTumEczanelerHepsi;
+        }
+
+        public List<AnahtarListe> AnahtarListeyiBuGuneTasi(List<NobetGrupGorevTipDetay> nobetGrupGorevTipDetaylar,
+            List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
+            List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatayTumu,
+            List<EczaneNobetSonucListe2> anahtarListeTumu,
+            string gunGrubu)
+        {
+            var anahtarListeTumEczanelerHepsi = new List<AnahtarListe>();
+
+            foreach (var nobetGrupGorevTip in nobetGrupGorevTipDetaylar)
+            {
+                var eczaneNobetGruplar = eczaneNobetGruplarTumu
+                    .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+
+                var anahtarListeGunGrup = anahtarListeTumu
+                    .Where(w => w.GunGrup == gunGrubu
+                             && w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+
+                var eczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatayTumu
+                    .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+
+                var nobetSayilari = new List<int>();
+
+                if (gunGrubu == "Pazar")
+                {
+                    nobetSayilari = eczaneNobetGrupGunKuralIstatistikYatay
+                        .Select(s => s.NobetSayisiPazar)
+                        .Distinct().OrderBy(o => o).ToList();
+                }
+                else if (gunGrubu == "Bayram")
+                {
+                    nobetSayilari = eczaneNobetGrupGunKuralIstatistikYatay
+                        .Select(s => s.NobetSayisiBayram)
+                        .Distinct().OrderBy(o => o).ToList();
+                }
+                else if (gunGrubu == "Cumartesi")
+                {
+                    nobetSayilari = eczaneNobetGrupGunKuralIstatistikYatay
+                        .Select(s => s.NobetSayisiCumartesi)
+                        .Distinct().OrderBy(o => o).ToList();
+                }
+                else if (gunGrubu == "Arife")
+                {
+                    nobetSayilari = eczaneNobetGrupGunKuralIstatistikYatay
+                        .Select(s => s.NobetSayisiArife)
+                        .Distinct().OrderBy(o => o).ToList();
+                }
+                else
+                {
+                    nobetSayilari = eczaneNobetGrupGunKuralIstatistikYatay
+                        .Select(s => s.NobetSayisiHaftaIci)
+                        .Distinct().OrderBy(o => o).ToList();
+                }
+
+                var anahtarListeTumEczaneler = (from s in eczaneNobetGruplar
+                                                from b in anahtarListeGunGrup
+                                                    .Where(w => w.EczaneNobetGrupId == s.Id).DefaultIfEmpty()
+                                                select new AnahtarListe
+                                                {
+                                                    EczaneNobetGrupId = s.Id,
+                                                    EczaneAdi = s.EczaneAdi,
+                                                    NobetGrupAdi = s.NobetGrupAdi,
+                                                    NobetGrupId = s.NobetGrupId,
+                                                    Tarih = (b?.EczaneNobetGrupId == s.Id) ? b.Tarih : s.BaslangicTarihi, //AnahtarListe
+                                                    NobetUstGrupBaslamaTarihi = s.NobetUstGrupBaslamaTarihi,
+                                                    //EczaneNobetGrupBaslamaTarihi = s.no 
+                                                })
+                                                .OrderBy(o => o.Tarih)
+                                                .ToList();
+
+                var gruptakiEczaneSayisi = anahtarListeTumEczaneler.Count;
+
+                var olmasiGerenNobetler = GetTakvimNobetGruplar(nobetSayilari, gruptakiEczaneSayisi, nobetGrupGorevTip, gunGrubu);
 
                 foreach (var nobetSayisi in nobetSayilari)
                 {

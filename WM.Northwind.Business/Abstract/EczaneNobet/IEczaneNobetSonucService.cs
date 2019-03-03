@@ -65,6 +65,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetGrupGunKuralIstatistik> GetEczaneNobetGrupGunKuralIstatistik(List<EczaneGrupNobetSonuc> eczaneGrupNobetSonuc);
         List<EczaneNobetGrupGunKuralIstatistik> GetEczaneNobetGrupGunKuralIstatistik(List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneGrupNobetSonuc> eczaneGrupNobetSonuc);
         List<EczaneNobetGrupGunKuralIstatistikYatay> GetEczaneBazliGunKuralIstatistikYatay(List<EczaneNobetGrupGunKuralIstatistik> eczaneNobetGrupGunKuralIstatistik);
+        List<EczaneNobetGrupGunKuralIstatistikYatay> GetEczaneBazliGunKuralIstatistikYatayByGorevTip(List<EczaneNobetGrupGunKuralIstatistik> eczaneNobetGrupGunKuralIstatistik);
 
         List<EczaneNobetIstatistikGunFarki> EczaneNobetIstatistikGunFarkiHesapla(int nobetUstGrupId);
         void UpdateSonuclarInsertDegisim(EczaneNobetSonuc eczaneNobetSonuc, EczaneNobetDegisim eczaneNobetDegisim);

@@ -36,6 +36,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         TakvimId = s.TakvimId,
                         Tarih = s.Takvim.Tarih,
                         NobetUstGrupBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
+                        NobetGrupGorevTipBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.BaslamaTarihi,
                         NobetGrupGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTipId,
                         NobetAltGrupId = s.EczaneNobetGrup.EczaneNobetGrupAltGrup != null
                         ? s.EczaneNobetGrup.EczaneNobetGrupAltGrup.NobetAltGrupId
@@ -67,6 +68,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                        TakvimId = s.TakvimId,
                        Tarih = s.Takvim.Tarih,
                        NobetUstGrupBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
+                       NobetGrupGorevTipBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.BaslamaTarihi,
                        NobetGrupGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTipId,
                        NobetAltGrupId = s.EczaneNobetGrup.EczaneNobetGrupAltGrup != null
                         ? s.EczaneNobetGrup.EczaneNobetGrupAltGrup.NobetAltGrupId

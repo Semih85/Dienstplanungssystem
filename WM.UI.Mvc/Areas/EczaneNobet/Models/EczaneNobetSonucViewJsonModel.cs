@@ -19,5 +19,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Models
         public List<NobetGrupGunDagilim> GunDagilimiMaxMin { get; internal set; }
         public int NobetUstGrupId { get; internal set; }
         public List<KalibrasyonDetay> KalibrasyonluToplamlar { get; internal set; }
+        public IEnumerable<EczaneNobetSonucListe2> SonuclarPlanlananVeGercek { get; internal set; }
     }
 }

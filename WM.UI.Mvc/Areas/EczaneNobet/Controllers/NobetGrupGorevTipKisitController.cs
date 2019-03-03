@@ -80,6 +80,25 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return View();
         }
 
+        public ActionResult Create2(int kisitId)
+        {
+            var user = _userService.GetByUserName(User.Identity.Name);
+
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
+            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id)
+                .Where(w => w.KisitId == kisitId).ToList();
+
+            var nobetUstGrupKisit = nobetUstGrupKisitlar.SingleOrDefault(x => x.KisitId == kisitId);
+
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi");
+            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitlar, "Id", "KisitAdiUzun", nobetUstGrupKisit.Id);
+
+            return View("Create");
+        }
+
         // POST: EczaneNobet/NobetGrupGorevTipKisit/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.

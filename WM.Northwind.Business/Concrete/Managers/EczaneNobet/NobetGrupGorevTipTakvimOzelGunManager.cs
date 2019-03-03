@@ -85,6 +85,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar2(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetGrupGorevTipId)
+        {
+            return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => (x.Tarih >= baslangicTarihi && x.Tarih <= bitisTarihi) && x.NobetGrupGorevTipId == nobetGrupGorevTipId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar(DateTime baslangicTarihi, List<int> nobetGrupIdList, int nobetGorevTipId)
         {
             return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => x.Tarih >= baslangicTarihi
@@ -110,6 +116,40 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => (x.Tarih >= baslangicTarihi && x.Tarih <= bitisTarihi)
             && ss.Contains(x.NobetGrupGorevTipId)
             //&& ss == x.NobetGrupGorevTipId
+            );
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar(DateTime baslangicTarihi, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler)
+        {
+            var ss = nobetGrupGorevTipler
+                //.Where(w => w.NobetGorevTipId == 2)
+                .Select(s => s.Id).ToList();
+
+            return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => x.Tarih >= baslangicTarihi 
+            && ss.Contains(x.NobetGrupGorevTipId)
+            //&& ss == x.NobetGrupGorevTipId
+            );
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylarNobetGrupGorevTipBaslamaTarihindenSonra(List<NobetGrupGorevTipDetay> nobetGrupGorevTipler)
+        {
+            var ss = nobetGrupGorevTipler
+                //.Where(w => w.NobetGorevTipId == 2)
+                .Select(s => s.Id).ToList();
+
+            return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => x.Tarih >= x.NobetGrupGorevTipBaslamaTarihi
+            && ss.Contains(x.NobetGrupGorevTipId)
+            //&& ss == x.NobetGrupGorevTipId
+            );
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylarNobetGrupGorevTipBaslamaTarihindenSonra(NobetGrupGorevTipDetay nobetGrupGorevTip)
+        {
+            return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => x.Tarih >= x.NobetGrupGorevTipBaslamaTarihi
+            && x.NobetGrupGorevTipId == nobetGrupGorevTip.Id
             );
         }
 

@@ -2125,6 +2125,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                    g.NobetGrupAdi,
                    g.NobetGorevTipId,
                    g.EczaneNobetGrupBaslamaTarihi,
+                   g.NobetGrupGorevTipBaslamaTarihi,
                    g.NobetUstGrupId
                })
                .Select(s => new EczaneNobetGrupGunKuralIstatistik
@@ -2134,6 +2135,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                    NobetGunKuralId = s.Key.NobetGunKuralId,
                    EczaneNobetGrupId = s.Key.EczaneNobetGrupId,
                    EczaneNobetGrupBaslamaTarihi = s.Key.EczaneNobetGrupBaslamaTarihi,
+                   NobetGrupGorevTipBaslamaTarihi = s.Key.NobetGrupGorevTipBaslamaTarihi,
                    EczaneId = s.Key.EczaneId,
                    EczaneAdi = s.Key.EczaneAdi,
                    NobetGrupId = s.Key.NobetGrupId,
@@ -2142,7 +2144,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                    IlkNobetTarihi = s.Min(c => c.Tarih),
                    SonNobetTarihi = s.Max(c => c.Tarih),
                    NobetSayisi = s.Count(),
-                   NobetSayisiGercek = s.Count(c => c.Tarih >= c.NobetUstGrupBaslamaTarihi //new DateTime(2018, 6, 1)
+                   NobetSayisiGercek = s.Count(c => c.Tarih >= c.NobetGrupGorevTipBaslamaTarihi //new DateTime(2018, 6, 1)
                    ),
                }).ToList();
 
@@ -2239,13 +2241,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                             NobetGrupId = eczaneNobetGrup.NobetGrupId,
                             NobetSayisi = 1,
                             EczaneNobetGrupBaslamaTarihi = eczaneNobetGrup.BaslangicTarihi,
-                            NobetUstGrupId = eczaneNobetGrup.NobetUstGrupId
+                            NobetUstGrupId = eczaneNobetGrup.NobetUstGrupId,
+                            NobetGrupGorevTipBaslamaTarihi = eczaneNobetGrup.NobetGrupGorevTipBaslamaTarihi
                         });
                     }
                 }
             }
 
-            //var eczaneTumu = enSonNobetler.Where(w => w.EczaneAdi == "EFENDİOĞLU").ToList();
+            var eczaneTumu = enSonNobetler.Where(w => w.EczaneAdi == "ADA").ToList();
 
             return enSonNobetler;
         }
@@ -2342,7 +2345,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                        : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
                }).ToList();
 
-            //var eczane = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.EczaneAdi == "EFENDİOĞLU").ToList();
+            var eczane = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.EczaneAdi == "ADA").ToList();
 
             return eczaneNobetGrupGunKuralIstatistikYatay;
         }
