@@ -18,7 +18,7 @@ namespace WM.Northwind.DataAccess.Migrations
         public Configuration()
         {
             //veri tabanýnda deðiþikliðe izin vermek için istendiði zaman true olacak.
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             //alan silineceði zaman true olacak. silmede veri kaybýný önlemek için false 
             AutomaticMigrationDataLossAllowed = false;
         }
@@ -29,7 +29,7 @@ namespace WM.Northwind.DataAccess.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-            bool guncelle = false;
+            bool guncelle = true;
 
             if (guncelle)
             {
@@ -64,6 +64,9 @@ namespace WM.Northwind.DataAccess.Migrations
             //    }
             //}
 
+            //NobetGrupGorevTipTakvimOzelGunEkle(context, 56);
+            //NobetGrupGorevTipTakvimOzelGunEkle(context, 57);
+            //NobetGrupGorevTipTakvimOzelGunEkle(context, 60);
 
             #region örnek
             //var kisitKategoriler = new List<KisitKategori>()
@@ -5210,7 +5213,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
         private static void NobetGrupGorevTipTakvimOzelGunEkle(Concrete.EntityFramework.Contexts.EczaneNobetContext context, int nobetGrupGorevTipId)
         {
             var bayramlar2 = context.NobetGrupGorevTipTakvimOzelGunler
-                .Where(w => w.NobetGrupGorevTipGunKural.NobetGrupGorevTip.Id == 42
+                .Where(w => w.NobetGrupGorevTipGunKural.NobetGrupGorevTip.Id == 55
                 //&& w.NobetOzelGunId != 10 
                 //arife
                 //&& !(((int)w.Takvim.Tarih.DayOfWeek + 1 == 1 || (int)w.Takvim.Tarih.DayOfWeek + 1 == 6) && w.NobetOzelGunId == 9)

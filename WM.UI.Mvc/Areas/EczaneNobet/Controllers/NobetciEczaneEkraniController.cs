@@ -53,7 +53,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var user = new User();// _userService.GetByUserName(User.Identity.Name);
 
-            if (User.Identity.Name == "" 
+            if (User.Identity.Name == ""
                 //&& name != null && password != null
                 )
             {
@@ -66,12 +66,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
             int nobetUstGrupId = 0;
-            
+
             //nobetUstGrupId = 3;
             //ay = 10;
             //gun = 10;
 
             var gosterilecekTarih = DateTime.Today;
+            var gosterilecekTarihDun = DateTime.Today.AddDays(-1);
 
             //eczaneId = 69;
 
@@ -117,7 +118,75 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             nobetUstGrupId = ekraninBulundugueczane.NobetUstGrupId;
 
-            var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(gosterilecekTarih, nobetUstGrupId);
+            var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(gosterilecekTarih, nobetUstGrupId)
+                .Take(8)
+                .ToList();
+
+            var nobetciEczanelerDun = _eczaneNobetSonucService.GetDetaylarGunluk(gosterilecekTarihDun, nobetUstGrupId);
+
+            nobetciEczaneler = nobetciEczaneler.Concat(nobetciEczanelerDun).ToList();
+
+            foreach (var item in nobetciEczaneler)
+            {
+                Int32 AcilisSaati = Convert.ToInt32(item.NobetGorevTipAdi.Substring(0, 2));
+                Int32 AcilisDakika = Convert.ToInt32(item.NobetGorevTipAdi.Substring(3, 2));
+
+                Int32 KapanisDaat = Convert.ToInt32(item.NobetGorevTipAdi.Substring(8, 2));
+                Int32 KapanisDakika = Convert.ToInt32(item.NobetGorevTipAdi.Substring(11, 2));
+            }
+
+            //nobetciEczaneler = (from n in nobetciEczaneler
+            //                    let kapanisSaati = Convert.ToInt32(n.NobetGorevTipAdi.Substring(8, 2))
+            //                    where
+            //                          //0123456789     (index)
+            //                          //08:30 - 08:30  (NobetAltGrupAdi)
+            //                          kapanisSaati >= 12 ? //ertesi güne sarkmıyor,
+            //                                               //(ertesi güne sarkanlar sabah saatinde yani öğlen 12 den önce kapanıyorlar)
+            //                           kapanisSaati < DateTime.Now.Hour
+
+            //                           ://nöbet görev tipi ertesi güne sarkıyor ise
+            //                           kapanisSaati >= DateTime.Now.Hour
+            //                    select n
+
+            //).ToList();
+
+            ;
+            nobetciEczaneler = nobetciEczaneler.Where(w =>
+            //0123456789     (index)
+            //08:30 - 08:30  (NobetGorevTipAdi)
+            Convert.ToInt32(w.NobetGorevTipAdi.Substring(8, 2)) >= 12 ? //ertesi güne sarkmıyor,
+            //(ertesi güne sarkanlar sabah saatinde yani öğlen 12 den önce kapanıyorlar)
+              (
+                //açılış saati den daha sonraki..
+                (((Convert.ToInt32(w.NobetGorevTipAdi.Substring(0, 2)) == DateTime.Now.Hour//saat eşit
+                    && Convert.ToInt32(w.NobetGorevTipAdi.Substring(3, 2)) <= DateTime.Now.Minute)//ve dakika küçükse
+                     || Convert.ToInt32(w.NobetGorevTipAdi.Substring(0, 2)) < DateTime.Now.Hour))//ya da direk saat küçükse
+                &&
+                //..kapanış saatindn önceki zaman diliminde...
+                (((Convert.ToInt32(w.NobetGorevTipAdi.Substring(8, 2)) == DateTime.Now.Hour//saat eşit 
+                    && Convert.ToInt32(w.NobetGorevTipAdi.Substring(11, 2)) > DateTime.Now.Minute)//ve dakika büyükse
+                     || Convert.ToInt32(w.NobetGorevTipAdi.Substring(8, 2)) > DateTime.Now.Hour))//ya da direk saat büyükse
+                && w.Tarih == DateTime.Today
+              )
+              ://nöbet görev tipi ertesi güne sarkıyor ise
+              (
+                //kapanış saatinden önce..
+                (((Convert.ToInt32(w.NobetGorevTipAdi.Substring(8, 2)) == DateTime.Now.Hour//saat eşit 
+                    && Convert.ToInt32(w.NobetGorevTipAdi.Substring(11, 2)) > DateTime.Now.Minute)//ve dakika büyükse
+                     || Convert.ToInt32(w.NobetGorevTipAdi.Substring(8, 2)) > DateTime.Now.Hour)//ya da direk saat büyükse
+                                                                                               //..ve dünün nöbetçisi ise
+                     && w.Tarih == DateTime.Today.AddDays(-1)
+                )
+                ||//ya da 
+                  //kapanış saatinden sonra..
+                (((Convert.ToInt32(w.NobetGorevTipAdi.Substring(8, 2)) == DateTime.Now.Hour//saat eşit 
+                    && Convert.ToInt32(w.NobetGorevTipAdi.Substring(11, 2)) < DateTime.Now.Minute)//ve dakika küçükse
+                     || Convert.ToInt32(w.NobetGorevTipAdi.Substring(8, 2)) < DateTime.Now.Hour)//ya da direk saat küçükse
+                                                                                               //..ve bugünün nöbetçileri gözüksün
+                     && w.Tarih == DateTime.Today
+                )
+              )
+            ).ToList();
 
             var model = new NobetciEcanelerEkraniViewModel
             {
@@ -131,7 +200,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     Enlem = ekraninBulundugueczane.Enlem,
                     Boylam = ekraninBulundugueczane.Boylam,
                     AdresTarifiKisa = ekraninBulundugueczane.AdresTarifiKisa,
-                    AdresTarifi = ekraninBulundugueczane.AdresTarifi
+                    AdresTarifi = ekraninBulundugueczane.AdresTarifi,
+
+                    //NobetGorevTipAdi = ekraninBulundugueczane.EczaneGorevTipler
                 }
             };
 
@@ -147,15 +218,18 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 model.NobetciEczaneler.Add(new NobetciEczane
                 {
                     EczaneId = item.EczaneId,
-                    Adi = item.EczaneAdi.First().ToString().ToUpper() + item.EczaneAdi.Substring(1).ToLower(),
+                    Adi = item.EczaneAdi,//.First().ToString().ToUpper() + item.EczaneAdi.Substring(1).ToLower(),
                     Adres = adres,
                     Enlem = enlem,
                     Boylam = boylam,
                     TelefonNo = telefonNo,
                     AdresTarifi = adresTarifi,
-                    AdresTarifiKisa = adresTarifiKisa
+                    AdresTarifiKisa = adresTarifiKisa != null ? adresTarifiKisa.ToUpper() : adresTarifiKisa,
+                    NobetGorevTipAdi = item.NobetGorevTipAdi
                 });
             }
+
+            model.NobetciEczaneler = model.NobetciEczaneler.Where(w => w.KapanisSaati > DateTime.Now).ToList();
 
             return View(model);
         }

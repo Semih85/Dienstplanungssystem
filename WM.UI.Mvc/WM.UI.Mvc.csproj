@@ -740,7 +740,7 @@
     <Content Include="Areas\EczaneNobet\Views\EczaneUzaklikMatris\Edit.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneUzaklikMatris\Index.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneUzaklikMatris\DirectionsFromGoogle.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Index.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\IndexsONDANoNCEKİ.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\IndexOsmaniyeDinamik.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Index3.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipKisit\Create.cshtml" />
@@ -748,6 +748,7 @@
     <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipKisit\Details.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipKisit\Edit.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipKisit\Index.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

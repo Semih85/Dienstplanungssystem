@@ -138,7 +138,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var baslangicTarihi = DateTime.Today; //new DateTime(gelecekTarih.Year, gelecekTarih.Month, 1);
             var bitisTarihi = new DateTime(gelecekTarih.Year, gelecekTarih.Month, aydakiGunSayisi);
 
+            var calismalar = new List<MyDrop>()
+            {
+                 new MyDrop{ Id = 0, Value = "1 kez çöz." },
+                 new MyDrop{ Id = 1, Value = "Çözüm yoksa tekrar çöz." },
+                 //new MyDrop{ Id = 3, Value = "" },
+            };
+
             ViewBag.NobetUstGrupId = new SelectList(items: nobetUstGruplar, dataValueField: "Id", dataTextField: "Adi", selectedValue: nobetUstGrup.Id);
+            ViewBag.CalismaSayisi = new SelectList(items: calismalar, dataValueField: "Id", dataTextField: "Value", selectedValue: 0);
             ViewBag.NobetUstGrupSayisi = nobetUstGruplar.Count;
 
             var sonNobetTarihi = _eczaneNobetSonucService.GetSonNobetTarihi(nobetUstGrup.Id);
@@ -149,9 +157,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 NobetUstGrupId = nobetUstGrup.Id,
                 BaslangicTarihi = sonNobetTarihi < nobetUstGrup.BaslangicTarihi ? nobetUstGrup.BaslangicTarihi : baslangicTarihi,
                 BitisTarihi = bitisTarihi,
-                SonNobetTarihi = sonNobetTarihi < nobetUstGrup.BaslangicTarihi ? nobetUstGrup.BaslangicTarihi.AddDays(-1) : sonNobetTarihi
+                SonNobetTarihi = sonNobetTarihi < nobetUstGrup.BaslangicTarihi ? nobetUstGrup.BaslangicTarihi.AddDays(-1) : sonNobetTarihi,
+                CalismaSayisi = 0,
+                TimeLimit = 180
             };
-
 
             if (TempData["KesinlesenBaslangicTarihi"] != null)
             {
@@ -194,7 +203,16 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-            var nobetUstGrup = _nobetUstGrupService.GetById(eczaneNobetViewModel.NobetUstGrupId);
+
+            if (eczaneNobetViewModel.TimeLimit > 1200)
+            {
+                throw new Exception($"Süre limiti en fazla {1200} saniye olabilir. Fazlası için lütfen Nöbetyaz yönetim ile irtiata geçiniz.");
+            }
+
+            var nobetUstGrup = _nobetUstGrupService.GetDetay(eczaneNobetViewModel.NobetUstGrupId);
+
+            //if (ModelState.IsValid)
+            //{
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylarByIdList(eczaneNobetViewModel.NobetGrupGorevTipId.ToList());
             var nobetGrupIdList = nobetGrupGorevTipler.Select(s => s.NobetGrupId).Distinct().ToArray();
 
@@ -213,7 +231,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 CozumTercih = eczaneNobetViewModel.CozumTercih,
                 SonrakiAylarRasgele = eczaneNobetViewModel.SonrakiAylarRasgele,
                 BaslangicTarihi = eczaneNobetViewModel.BaslangicTarihi,
-                BitisTarihi = eczaneNobetViewModel.BitisTarihi
+                BitisTarihi = eczaneNobetViewModel.BitisTarihi,
+                TimeLimit = eczaneNobetViewModel.TimeLimit,
+                CalismaSayisi = eczaneNobetViewModel.CalismaSayisi
             };
 
             var sonucModel = new EczaneNobetSonucModel();
@@ -289,6 +309,20 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
             return RedirectToAction("PivotSonuclar", "EczaneNobetSonucAktif", routeValues);
+
+            //}
+
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+            //var rolId = rolIdler.FirstOrDefault();
+
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+
+            //ViewBag.NobetUstGrupId = new SelectList(items: nobetUstGruplar, dataValueField: "Id", dataTextField: "Adi", selectedValue: nobetUstGrup.Id);
+            //ViewBag.NobetUstGrupSayisi = nobetUstGruplar.Count;
+
+            //return View("Index", eczaneNobetViewModel);
         }
 
         public void ModeliKapat()

@@ -433,6 +433,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         Mevsim = s.Mevsim,
                         Yil = s.Yil,
                         Ay = s.Ay,
+                        Hafta = s.Hafta,
                         NobetAltGrubu = s.NobetAltGrupAdi,
                         EczaneId = s.EczaneId,
                         EczaneNobetGrupId = s.EczaneNobetGrupId,

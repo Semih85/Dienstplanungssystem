@@ -1290,7 +1290,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         public EczaneNobetSonucModel Solve(AlanyaDataModel data)
         {
             var results = new EczaneNobetSonucModel();
-            var calismaSayisiEnFazla = 3;
+            var calismaSayisiEnFazla = data.CalismaSayisiLimit;
 
             var config = new Configuration
             {
@@ -1305,7 +1305,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     var model = Model(data);
 
                     // Get a solver instance, change your solver
-                    var solverConfig = new CplexSolverConfiguration() { ComputeIIS = true };
+                    var solverConfig = new CplexSolverConfiguration()
+                    {
+                        ComputeIIS = true,
+                        TimeLimit = data.TimeLimit
+                    };
 
                     var solver = new CplexSolver(solverConfig);
 

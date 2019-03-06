@@ -66,7 +66,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                                 EczaneNobetGrupBaslamaTarihi = s.EczaneNobetGrup.BaslangicTarihi,
                                 EczaneNobetGrupBitisTarihi = s.EczaneNobetGrup.BitisTarihi,
                                 EczaneNobetGrupId = eczaneNobetGrup.Id,
-                                NobetGorevTipAdi = s.NobetGorevTip.Adi,
+                                NobetGorevTipAdi = eczaneNobetGrup.NobetGrupGorevTip.NobetGorevTip.Adi, //s.NobetGorevTip.Adi,
                                 NobetGorevTipId = eczaneNobetGrup.NobetGrupGorevTip.NobetGorevTipId,
                                 NobetGrupAdi = eczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Adi,
                                 NobetGrupId = eczaneNobetGrup.NobetGrupGorevTip.NobetGrupId,

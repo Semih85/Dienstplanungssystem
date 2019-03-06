@@ -39,5 +39,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         //public int NobetDurumTipId { get; set; }
         public string NobetDurumAdi { get; set; }
         public string NobetDurumTipAdi { get; set; }
+        public int Hafta { get; set; }
     }
 }

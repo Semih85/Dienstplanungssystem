@@ -26,5 +26,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public DateTime BitisTarihi { get; set; }
         public int YilBaslangic { get; set; }
         public int AyBaslangic { get; set; }
+        public int TimeLimit { get; set; }
+        public int CalismaSayisi { get; set; }
     }
 }

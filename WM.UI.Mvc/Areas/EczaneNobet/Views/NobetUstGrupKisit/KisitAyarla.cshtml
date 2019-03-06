@@ -230,11 +230,11 @@
                                                         var renk = "#007bff";
                                                         var kisitNumarasi = $"K{item.KisitId}";
                                                         var haricKuralIdList = new int[4] {
-                                                            11,//eczaneGrup
-                                                            35, //pespeseHaftaIciAyniGunNobet,
-                                                            39, //nobetBorcOdeme
-                                                            10, //ayIcindeAyniGunNobet
-                                                        };
+                                                                                    11,//eczaneGrup
+                                                                                    35, //pespeseHaftaIciAyniGunNobet,
+                                                                                    39, //nobetBorcOdeme
+                                                                                    10, //ayIcindeAyniGunNobet
+                                                                                };
 
 
                                                         if (item.PasifMi == true)
@@ -277,6 +277,14 @@
                                                                             </a>*@
                                                                     }
 
+                                                                    @if (!haricKuralIdList.Contains(item.KisitId))
+                                                                    {
+                                                                        <a class="btn btn-outline-primary py-0 btn-sm mr-2" title="Gruba özel kural ekle" target="_blank"
+                                                                           href="@Url.Action("Create2", "NobetGrupGorevTipKisit", new { kisitId = item.KisitId, area= "EczaneNobet" })">
+                                                                            <span class="fa fa-plus"></span>
+                                                                        </a>
+                                                                    }
+
                                                                     <a class="badge badge-info pull-right mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
                                                                         <span data-toggle="tooltip" data-placement="top" title="Kural Açıklaması">
                                                                             <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -291,7 +299,7 @@
                                                                         </div>
 
                                                                     </div>
-                                                                    <h6 class="card-title mb-2">
+                                                                    <h6 class="card-title mb-3">
                                                                         @if (item.KisitAdi == "eczaneGrup")
                                                                         {
                                                                             <a href="@Url.Action("Index", "EczaneGrupTanim")" class="card-link" target="_blank" title="Eczane Grup Tanımlara Git">
@@ -321,13 +329,6 @@
                                                                             @item.KisitAdiGosterilen
                                                                         }
 
-                                                                        @if (!haricKuralIdList.Contains(item.KisitId))
-                                                                        {
-                                                                            <a class="btn btn-outline-primary py-0 btn-sm mr-2" title="Gruba özel kural ekle" target="_blank"
-                                                                               href="@Url.Action("Create2", "NobetGrupGorevTipKisit", new { kisitId = item.KisitId, area= "EczaneNobet" })">
-                                                                                <span class="fa fa-plus"></span>
-                                                                            </a>
-                                                                        }
                                                                     </h6>
 
                                                                     @if (@item.NobetGrupGorevtipKisitSayisi > 0)

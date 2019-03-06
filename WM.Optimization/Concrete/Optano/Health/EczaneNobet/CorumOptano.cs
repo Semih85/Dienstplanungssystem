@@ -1382,7 +1382,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         public EczaneNobetSonucModel Solve(CorumDataModel data)
         {
             var results = new EczaneNobetSonucModel();
-            var calismaSayisiEnFazla = 0;
+            var calismaSayisiEnFazla = data.CalismaSayisiLimit;
 
             var config = new Configuration
             {
@@ -1400,7 +1400,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     var solverConfig = new CplexSolverConfiguration()
                     {
                         ComputeIIS = true,
-                        //TimeLimit = 60
+                        TimeLimit = data.TimeLimit
                     };
 
                     var solver = new CplexSolver(solverConfig);

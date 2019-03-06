@@ -17,14 +17,14 @@
             @*@Html.LabelFor(model => model.NobetUstGrupKisitId, "NobetUstGrupKisitId", htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
                 @Html.DropDownList("NobetUstGrupKisitId", null, htmlAttributes: new { @class = "form-control selectpicker",
-           //multiple = "true",
-           //data_width = "auto",
-           //data_actions_box = "true",
-           mobile = "true",
-           data_live_search = "true",
-           //data_selected_text_format = "count > 4",
-           title = "Kural Seçiniz..."
-       })
+                   //multiple = "true",
+                   //data_width = "auto",
+                   //data_actions_box = "true",
+                   mobile = "true",
+                   data_live_search = "true",
+                   //data_selected_text_format = "count > 4",
+                   title = "Kural Seçiniz..."
+               })
                 @Html.ValidationMessageFor(model => model.NobetUstGrupKisitId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PasifMi, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PasifMi, "Pasif mi?", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.PasifMi)
@@ -48,7 +48,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SagTarafDegeri, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SagTarafDegeri,"Değer", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.SagTarafDegeri, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SagTarafDegeri, "", new { @class = "text-danger" })
@@ -58,7 +58,7 @@
         <hr class="bg-info" />
 
         <div class="form-group">
-            @Html.LabelFor(model => model.VarsayilanPasifMi, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.VarsayilanPasifMi, "Pasif mi? (Varsayılan)", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.VarsayilanPasifMi)
@@ -68,7 +68,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SagTarafDegeriVarsayilan, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SagTarafDegeriVarsayilan, "Değer (Varsayılan)", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.SagTarafDegeriVarsayilan, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SagTarafDegeriVarsayilan, "", new { @class = "text-danger" })

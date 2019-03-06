@@ -1658,9 +1658,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         public EczaneNobetSonucModel Solve(MersinMerkezDataModelV2 data)
         {
             var results = new EczaneNobetSonucModel();
-            var calismaSayisiEnFazla = 0;
+            var calismaSayisiEnFazla = data.CalismaSayisiLimit;
 
-            //calismaSayisiEnFazla = 3;
             var config = new Configuration
             {
                 NameHandling = NameHandlingStyle.Manual,
@@ -1673,7 +1672,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 {
                     var model = Model(data);
 
-                    var solverConfig = new CplexSolverConfiguration() { ComputeIIS = true };
+                    // Get a solver instance, change your solver
+                    var solverConfig = new CplexSolverConfiguration()
+                    {
+                        ComputeIIS = true,
+                        TimeLimit = data.TimeLimit
+                    };
 
                     var solver = new CplexSolver(solverConfig);
                     // Get a solver instance, change your solver

@@ -2858,7 +2858,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                             var altGruptakiEczaneler = eczaneNobetGrupAltGruplar
                                 .Where(w => birlikteNobetTutulanNobetAltGrupIdListe.Contains(w.NobetAltGrupId)).ToList();
 
-                            var bakilanEczaneGrupTanimAdi = $"{eczane.NobetGrupAdi}, {eczane.EczaneAdi} - {gunGrup.GunGrup} aynı gün nöbetler";
+                            var bakilanEczaneGrupTanimAdi = nobetAltGrupId > 0 
+                                ? $"{eczane.NobetGrupAdi}, alt grup id: {nobetAltGrupId}, {eczane.EczaneAdi} - {gunGrup.GunGrup} aynı gün nöbetler"
+                                : $"{eczane.NobetGrupAdi}, {eczane.EczaneAdi} - {gunGrup.GunGrup} aynı gün nöbetler";
 
                             //bakılan eczane
                             eczaneGruplar.Add(new EczaneGrupDetay

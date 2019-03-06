@@ -385,6 +385,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 Ay = ayBitis,
                 LowerBound = 0,
                 UpperBound = 1,
+                TimeLimit = eczaneNobetDataModelParametre.TimeLimit,
+                CalismaSayisiLimit = eczaneNobetDataModelParametre.CalismaSayisi,
                 BaslangicTarihi = baslangicTarihi,
                 BitisTarihi = bitisTarihi,
                 NobetUstGrupBaslangicTarihi = nobetUstGrupBaslangicTarihi,
@@ -482,7 +484,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     NobetUstGrupBaslangicTarihi = eczaneNobetModelCoz.NobetUstGrupBaslangicTarihi,
                     BuAyVeSonrasi = eczaneNobetModelCoz.BuAyVeSonrasi,
                     BaslangicTarihi = eczaneNobetModelCoz.BaslangicTarihi,
-                    BitisTarihi = eczaneNobetModelCoz.BitisTarihi
+                    BitisTarihi = eczaneNobetModelCoz.BitisTarihi,
+                    TimeLimit = eczaneNobetModelCoz.TimeLimit,
+                    CalismaSayisi = eczaneNobetModelCoz.CalismaSayisi
                 };
 
                 var aylar = _takvimService.GetAylar()

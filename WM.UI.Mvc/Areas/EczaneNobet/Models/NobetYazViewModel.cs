@@ -19,6 +19,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Models
         public int[] NobetGrupGorevTipId { get; set; }
         public bool BuAyVeSonrasi { get; set; }
 
+        public int TimeLimit { get; set; }
+        [Range(0, 3, ErrorMessage = "Lütfen geçerli bir tamsayı giriniz.")]
+        public int CalismaSayisi { get; set; }
+
         public int CozumTercih { get; set; }
         public bool SonrakiAylarRasgele { get; set; }
 

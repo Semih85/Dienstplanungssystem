@@ -59,5 +59,7 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public List<EczaneNobetSonucListe2> EczaneNobetSonuclarAltGruplarlaBirlikte { get; set; }
         public List<EczaneGrupDetay> AltGruplarlaAyniGunNobetTutmayacakEczaneler { get; set; }
         public List<NobetGrupGorevTipKisitDetay> NobetGrupGorevTipKisitlar { get; set; }
+        public int CalismaSayisiLimit { get; set; }
+        public int TimeLimit { get; set; }
     }
 }

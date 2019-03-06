@@ -635,7 +635,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     var kararIndexIkiliEczaneler = p.EczaneNobetTarihAralik
                              .Where(e => e.EczaneNobetGrupId == ikiliEczane.EczaneNobetGrupId1 || e.EczaneNobetGrupId == ikiliEczane.EczaneNobetGrupId2).ToList();
 
-                    foreach (var tarih in tarihAraligi.Take(p.Tarihler.Count - 1))
+                    if (kararIndexIkiliEczaneler.Count > 0)
+                    {
+                        foreach (var tarih in tarihAraligi.Take(p.Tarihler.Count - 1))
                     {
                         var tarihler2 = tarihAraligi.Where(w => w.Tarih > tarih.Tarih).ToList();
 
@@ -675,6 +677,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                             indis++;
                         }
+                    }
                     }
                 }
             }
