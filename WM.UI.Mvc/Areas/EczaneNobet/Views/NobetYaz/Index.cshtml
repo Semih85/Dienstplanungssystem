@@ -186,7 +186,7 @@
 
                                 <div class="form-inline">
                                     <label class="control-label font-weight-bold mr-1" data-toggle="tooltip" data-placement="top" title="Süre Limiti (saniye)" for="timeLimit">Limit sn.</label>
-                                    <input type="number" id="timeLimit" name="timeLimit" value=180 class="form-control w-25 mr-2">
+                                    <input type="number" id="timeLimit" name="timeLimit" value=@Model.TimeLimit class="form-control w-25 mr-2">
 
                                     @*@Html.LabelFor(model => model.EczaneId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
 
@@ -343,6 +343,9 @@
                             <span id="milliseconds">000</span>
                         </div>
                     </div>
+                </div>
+                <div class="spinner-border text-primary" role="status" id="kisitDurumuLoadingElement" style="display:none">
+                    <span class="sr-only">Loading...</span>
                 </div>
                 <div class="row justify-content-sm-center" id="degisenKisitUyari" style="display:none">
                     <div class="col-12">
@@ -1294,6 +1297,8 @@
 
             $.get(url, { nobetUstGrupId: @Model.NobetUstGrupId }, function (data) {
 
+                $("#kisitDurumuLoadingElement").show();
+
                 if (parseInt(data) > 0) {
                     $("#degisenKisitUyari").show();
                     $("#degisenKistiSayisi").html(data);
@@ -1301,6 +1306,8 @@
                 else {
                     $("#degisenKisitUyari").hide();
                 }
+            }).done(function () {                
+                $("#kisitDurumuLoadingElement").hide();
             });
 
         });

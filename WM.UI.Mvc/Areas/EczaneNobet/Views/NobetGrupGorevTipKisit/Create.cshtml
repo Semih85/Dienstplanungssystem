@@ -1,4 +1,4 @@
-﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.NobetGrupGorevTipKisit
+﻿@model NobetGrupGorevTipKisitDetay
 
 @{
     ViewBag.Title = "Nöbet Grup Görev Tip Kural Ekle |  Nöbet Yaz";
@@ -38,17 +38,16 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PasifMi, "Pasif mi?", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.PasifMi)
-                    @Html.ValidationMessageFor(model => model.PasifMi, "", new { @class = "text-danger" })
-                </div>
+            @*@Html.LabelFor(model => model.PasifMi, "Pasif mi?", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="custom-control custom-checkbox mb-2 ml-md-3">
+                @Html.CheckBox("PasifMi", new { @class = "custom-control-input" })
+                <label class="custom-control-label" for="PasifMi">Pasif mi?</label>
+                @Html.ValidationMessageFor(model => model.PasifMi, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SagTarafDegeri,"Değer", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SagTarafDegeri, "Değer", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.SagTarafDegeri, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SagTarafDegeri, "", new { @class = "text-danger" })
@@ -58,12 +57,10 @@
         <hr class="bg-info" />
 
         <div class="form-group">
-            @Html.LabelFor(model => model.VarsayilanPasifMi, "Pasif mi? (Varsayılan)", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.VarsayilanPasifMi)
-                    @Html.ValidationMessageFor(model => model.VarsayilanPasifMi, "", new { @class = "text-danger" })
-                </div>
+            <div class="custom-control custom-checkbox mb-2 ml-md-3">
+                @Html.CheckBox("VarsayilanPasifMi", new { @class = "custom-control-input" })
+                <label class="custom-control-label" for="VarsayilanPasifMi">Pasif mi? (Varsayılan)</label>
+                @Html.ValidationMessageFor(model => model.VarsayilanPasifMi, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -103,8 +100,8 @@
     <script>
         $(function () {
 
-            $("#SagTarafDegeri").val(0);
-            $("#SagTarafDegeriVarsayilan").val(0);
+            //$("#SagTarafDegeri").val(0);
+            //$("#SagTarafDegeriVarsayilan").val(0);
             $("#Aciklama").val("Gruba özel kural.");
         });
     </script>

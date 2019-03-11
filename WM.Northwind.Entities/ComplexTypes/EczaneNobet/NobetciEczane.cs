@@ -29,5 +29,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
             DateTime.Today.AddDays(1).AddHours(Convert.ToDouble(NobetGorevTipAdi.Substring(8, 2))).AddMinutes(Convert.ToDouble(NobetGorevTipAdi.Substring(11, 2)))
             : DateTime.Today.AddHours(Convert.ToDouble(NobetGorevTipAdi.Substring(8, 2))).AddMinutes(Convert.ToDouble(NobetGorevTipAdi.Substring(11, 2)))
             : DateTime.Now;
+
+        public string EczaneninAcikOlduguSaatAraligi { get; set; }
     }
 }

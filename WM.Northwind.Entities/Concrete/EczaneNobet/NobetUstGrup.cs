@@ -24,6 +24,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         [Display(Name = "Açıklama")]
         public string Aciklama { get; set; }
 
+        public int TimeLimit { get; set; }
         public double Enlem { get; set; }
         public double Boylam { get; set; }
 

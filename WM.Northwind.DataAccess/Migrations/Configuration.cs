@@ -18,7 +18,7 @@ namespace WM.Northwind.DataAccess.Migrations
         public Configuration()
         {
             //veri tabanýnda deðiþikliðe izin vermek için istendiði zaman true olacak.
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
             //alan silineceði zaman true olacak. silmede veri kaybýný önlemek için false 
             AutomaticMigrationDataLossAllowed = false;
         }
@@ -29,7 +29,7 @@ namespace WM.Northwind.DataAccess.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-            bool guncelle = true;
+            bool guncelle = false;
 
             if (guncelle)
             {

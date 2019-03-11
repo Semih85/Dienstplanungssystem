@@ -19,11 +19,21 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Adi).HasColumnName("Adi");
+            this.Property(t => t.EczaneninAcikOlduguSaatAraligi).HasColumnName("EczaneninAcikOlduguSaatAraligi");
+            this.Property(t => t.NobetSaatAraligi).HasColumnName("NobetSaatAraligi");
             //this.Property(t => t.NobetUstGrupId).HasColumnName("NobetUstGrupId");
 
             this.Property(t => t.Id)
                         .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(t => t.Id).IsRequired();
+
+            this.Property(t => t.EczaneninAcikOlduguSaatAraligi)
+                .HasMaxLength(100)
+                .IsRequired();
+
+            this.Property(t => t.NobetSaatAraligi)
+                .HasMaxLength(100)
+                .IsRequired();
 
             this.Property(t => t.Adi)
                 .HasMaxLength(100)

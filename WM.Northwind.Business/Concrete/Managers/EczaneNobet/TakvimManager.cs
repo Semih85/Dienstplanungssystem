@@ -396,7 +396,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                                                    ((g.Id == b?.NobetGrupGorevTipId && t.TakvimId == b?.TakvimId)
                                                                                        ? b.NobetGunKuralId
                                                                                        : t.HaftaninGunu)
-                                                                                   )
+                                                                                   ) ?? new NobetGrupGorevTipGunKuralDetay()
                                               select new TakvimNobetGrup
                                               {
                                                   TakvimId = t.TakvimId,
@@ -418,16 +418,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                        : nobetGrupGorevTipGunKural?.GunGrupAdi,
                                                   GunGrupId = (int)((g.Id == b?.NobetGrupGorevTipId && t.TakvimId == b?.TakvimId)
                                                        ? b.GunGrupId
-                                                       : nobetGrupGorevTipGunKural == null
-                                                        ? 0
-                                                        : nobetGrupGorevTipGunKural?.GunGrupId),
+                                                       : nobetGrupGorevTipGunKural?.GunGrupId),
                                                   TalepEdilenNobetciSayisi = (g.Id == d?.NobetGrupGorevTipId && t.TakvimId == d?.TakvimId)
                                                           ? d.NobetciSayisi
                                                           : (int)k.Deger != nobetGrupGorevTipGunKural?.NobetciSayisi
                                                             ? (int)nobetGrupGorevTipGunKural?.NobetciSayisi
                                                             : (int)k.Deger,
                                                   Tarih = t.Tarih,
-                                                  NobetGunKuralKapanmaTarihi = nobetGrupGorevTipGunKural.BitisTarihi,
+                                                  NobetGunKuralKapanmaTarihi = nobetGrupGorevTipGunKural?.BitisTarihi,
                                                   NobetGrubuBuyukluk = 0
                                               })
                                               .Where(w => w.GunGrupAdi != null)
@@ -468,7 +466,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                                                    ((g.Id == b?.NobetGrupGorevTipId && t.TakvimId == b?.TakvimId)
                                                                                        ? b.NobetGunKuralId
                                                                                        : t.HaftaninGunu)
-                                                                                   )
+                                                                                   ) ?? new NobetGrupGorevTipGunKuralDetay()
                                               select new TakvimNobetGrup
                                               {
                                                   TakvimId = t.TakvimId,
@@ -493,13 +491,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                        : nobetGrupGorevTipGunKural == null
                                                         ? 0
                                                         : nobetGrupGorevTipGunKural?.GunGrupId),
-                                                  TalepEdilenNobetciSayisi = (g.Id == d?.NobetGrupGorevTipId && t.TakvimId == d?.TakvimId)
+                                                  TalepEdilenNobetciSayisi = (int)((g.Id == d?.NobetGrupGorevTipId && t.TakvimId == d?.TakvimId)
                                                           ? d.NobetciSayisi
                                                           : (int)k.Deger != nobetGrupGorevTipGunKural?.NobetciSayisi
                                                             ? (int)nobetGrupGorevTipGunKural?.NobetciSayisi
-                                                            : (int)k.Deger,
+                                                            : (int)k.Deger),
                                                   Tarih = t.Tarih,
-                                                  NobetGunKuralKapanmaTarihi = nobetGrupGorevTipGunKural.BitisTarihi,
+                                                  NobetGunKuralKapanmaTarihi = nobetGrupGorevTipGunKural?.BitisTarihi,
                                                   NobetGrubuBuyukluk = 0
                                               })
                                               .Where(w => w.GunGrupAdi != null)
@@ -508,8 +506,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             //var vv = takvimNobetGrupGorevTipler
             //    .Where(w => w.Tarih == new DateTime(2019, 4, 23)).SingleOrDefault();
 
+            //var birdenAzOlanTalepOlanGunler = takvimNobetGrupGorevTipler
+            //    .Where(w => w.TalepEdilenNobetciSayisi < 1).ToList();
+
             return takvimNobetGrupGorevTipler;
         }
+
         private List<TakvimNobetGrup> GetTakvimNobetGruplar(List<TakvimDetay> tarihler, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler, List<NobetGrupGorevTipTakvimOzelGunDetay> bayramlar, List<NobetGrupTalepDetay> nobetGrupTalepler, List<int> nobetGunKuralIdList)
         {
             return GetTakvimNobetGruplar(tarihler, nobetGrupGorevTipler, bayramlar, nobetGrupTalepler)
@@ -682,9 +684,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             var nobetGrupTalepler = _nobetGrupTalepService.GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTipDetay.Id);
 
-            var takvimNobetGruplar = GetTakvimNobetGruplar(tarihler, nobetGrupGorevTipDetay, nobetGrupGorevTipTakvimOzelGunler, nobetGrupTalepler)
-                ;
-            var takvimNobetGruplarPeriyot = GetTakvimNobetGruplar(takvimNobetGruplar, ayFarklari, uzunluk);
+            var takvimNobetGruplar = GetTakvimNobetGruplar(tarihler, nobetGrupGorevTipDetay, nobetGrupGorevTipTakvimOzelGunler, nobetGrupTalepler);
+
+            var takvimNobetGruplarPeriyot = GetTakvimNobetGruplar(takvimNobetGruplar, ayFarklari, uzunluk)
+                .Where(w => w.GunGrupAdi == gunGrup).ToList();
 
             return takvimNobetGruplarPeriyot;
         }
@@ -1317,6 +1320,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         anahtarListeTumEczanelerHepsi.Add(new AnahtarListe
                         {
                             GunGrup = gunGrubu,
+
                             Id = i + 1,
                             EczaneNobetGrupId = anahtarListeTumEczaneler[i].EczaneNobetGrupId,
                             EczaneAdi = anahtarListeTumEczaneler[i].EczaneAdi,

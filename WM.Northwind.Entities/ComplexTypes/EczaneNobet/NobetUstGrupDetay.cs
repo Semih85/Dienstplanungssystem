@@ -28,5 +28,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 
         public double Enlem { get; set; }
         public double Boylam { get; set; }
+        public int TimeLimit { get; set; }
     }
 }

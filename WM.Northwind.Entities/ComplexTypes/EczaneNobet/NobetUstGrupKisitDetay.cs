@@ -10,7 +10,7 @@ using WM.Northwind.Entities.Concrete.EczaneNobet;
 
 namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 {
-    public class NobetUstGrupKisitDetay : IComplexType
+    public class NobetUstGrupKisitDetay : IComplexType, ICloneable
     {
         public int Id { get; set; }
         public int NobetUstGrupId { get; set; }
@@ -43,5 +43,10 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 
         public int KisitKategoriId { get; set; }
         public int NobetGrupGorevtipKisitSayisi { get; set; }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

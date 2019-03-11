@@ -24,11 +24,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             var model = new Model() { Name = "Alanya Eczane Nöbet" };
 
-            var kisitlarUstGrup = data.Kisitlar;
-            var kisitlarAktif = new List<NobetUstGrupKisitDetay>();
-
-            kisitlarAktif.AddRange(kisitlarUstGrup);
-
             #region Veriler
 
             #region kısıtlar
@@ -166,39 +161,19 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             {
                 #region kısıtlar grup bazlı
 
+                var kisitlarAktif = new List<NobetUstGrupKisitDetay>();
+
+                //üst grup kısıtlar olduğu gibi aktif listeye aktarıldı. grup bazlı değişen olursa aktiften değişecek.
+                data.Kisitlar.ForEach(x => kisitlarAktif.Add((NobetUstGrupKisitDetay)x.Clone()));
+
                 var kisitlarGrupBazli = data.NobetGrupGorevTipKisitlar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                if (kisitlarGrupBazli.Count > 0)
+                foreach (var grupBazliKisit in kisitlarGrupBazli)
                 {
-                    foreach (var grupBazliKisit in kisitlarGrupBazli)
-                    {
-                        var kisitUstGrup = kisitlarAktif.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId);
+                    var kisitGrupBazli = kisitlarAktif.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId);
 
-                        var kisitGrup = new NobetUstGrupKisitDetay
-                        {
-                            Id = kisitUstGrup.Id,
-                            KisitId = kisitUstGrup.KisitId,
-                            KisitAdi = kisitUstGrup.KisitAdi,
-                            KisitAciklama = kisitUstGrup.KisitAciklama,
-                            KisitAdiGosterilen = kisitUstGrup.KisitAdiGosterilen,
-                            KisitKategoriAdi = kisitUstGrup.KisitKategoriAdi,
-                            KisitKategoriId = kisitUstGrup.KisitKategoriId,
-                            NobetUstGrupAdi = kisitUstGrup.NobetUstGrupAdi,
-                            NobetUstGrupId = kisitUstGrup.NobetUstGrupId,
-                            SagTarafDegeriVarsayilan = kisitUstGrup.SagTarafDegeriVarsayilan,
-                            VarsayilanPasifMi = kisitUstGrup.VarsayilanPasifMi,
-
-                            PasifMi = grupBazliKisit.PasifMi,
-                            SagTarafDegeri = grupBazliKisit.SagTarafDegeri
-                        };
-
-                        kisitlarAktif.Remove(kisitUstGrup);
-                        kisitlarAktif.Add(kisitGrup);
-                    }
-                }
-                else
-                {
-                    kisitlarAktif = kisitlarUstGrup;
+                    kisitGrupBazli.PasifMi = grupBazliKisit.PasifMi;
+                    kisitGrupBazli.SagTarafDegeri = grupBazliKisit.SagTarafDegeri;
                 }
 
                 #endregion
@@ -1145,6 +1120,30 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #endregion
                 }
+
+                #region istek ve mazeret
+
+                var istegiKarsilaKisit = new KpIstegiKarsila
+                {
+                    Model = model,
+                    EczaneNobetTarihAralik = data.EczaneNobetTarihAralik.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K12"),
+                    EczaneNobetIstekler = data.EczaneNobetIstekler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
+                    KararDegiskeni = _x
+                };
+                IstegiKarsila(istegiKarsilaKisit);
+
+                var mazereteGorevYazmaKisit = new KpMazereteGorevYazma
+                {
+                    Model = model,
+                    EczaneNobetTarihAralik = data.EczaneNobetTarihAralik.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K13"),
+                    EczaneNobetMazeretler = data.EczaneNobetMazeretler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
+                    KararDegiskeni = _x
+                };
+                MazereteGorevYazma(mazereteGorevYazmaKisit);
+
+                #endregion
             }
 
             #region Eş grup aynı gün nöbet
@@ -1214,30 +1213,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaOncekiAylar);
 
             #endregion
-
-            #region istek ve mazeret
-
-            var istegiKarsilaKisit = new KpIstegiKarsila
-            {
-                Model = model,
-                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
-                NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K12"),
-                EczaneNobetIstekler = data.EczaneNobetIstekler,
-                KararDegiskeni = _x
-            };
-            IstegiKarsila(istegiKarsilaKisit);
-
-            var mazereteGorevYazmaKisit = new KpMazereteGorevYazma
-            {
-                Model = model,
-                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
-                NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K13"),
-                EczaneNobetMazeretler = data.EczaneNobetMazeretler,
-                KararDegiskeni = _x
-            };
-            MazereteGorevYazma(mazereteGorevYazmaKisit);
-
-            #endregion  
+            
 
             #region Yılda en fazla aynı gün 3'ten fazla nöbet tutulmasın
 

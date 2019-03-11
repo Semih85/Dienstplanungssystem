@@ -25,69 +25,79 @@
             overflow: hidden;
             overflow-y: hidden;
         }
-   
+
         @@media (max-width: 575px) {
+
             /*üst sıranın tamamı, başlık tarih ve saat*/
             .div_basliklar {
                 vertical-align: central;
-                height: 10%;
+                height: 7%;
                 text-align: center;
             }
             /*Nöbetçi eczaneler yazısı div*/
             #div_labelBaslik {
                 color: white;
-                background-color: #ff0000;
+                background-color: #000000;
                 font-weight: 600;
             }
             /*Nöbetçi eczaneler yazısı label*/
             #lbl_baslik {
-                font-size: 25px;
-                width: 75%;
-                height: 50%;
+                /*margin-top: -10%;*/
+                font-size: 10px;
+                /*width: 75%;
+                height: 50%;*/
+                /*display:none*/
             }
             /*eczane logosu*/
             #eczane_logosu {
-                margin-top: 3%;
-                margin-left: 3%;
-                width: 15%;
-                height: 65%;
+                /*margin-top: -5%;*/
+                display: none;
+                margin-left: 0%;
+                width: 12%;
+                height: 52%;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki div*/
             #div_tarih {
                 color: white;
-                background-color: #ff0000;
-                font-size: 26px;
+                background-color: #000000;
+                font-size: 10px;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki label*/
             #lbl_tarih {
+                margin-top: 0px;
                 font-weight: 600;
             }
             /*saatin yazıldığı üst sağdaki div*/
             #div_saat {
                 color: white;
-                background-color: #ff0000;
-                font-size: 40px;
+                background-color: #000000;
+                font-size: 10px;
                 font-weight: 600;
             }
             /*saatin yazıldığı label*/
             #lbl_saat {
+                margin-top: 0px;
                 font-weight: 600;
             }
             /*eczanenleri adresleri ve telefonları ile yazıldığı divleri içeren soldaki sütun div*/
             #div_eczaneSolSutun {
-                height: 90%;
+                height: 93%;
                 text-align: center;
+                background-color: #e0e0e0;
             }
 
             #div_eczaneSagSutun {
-                height: 90%;
+                height: 93%;
                 text-align: center;
+                background-color: #e0e0e0;
             }
 
             .div_kucukEczaneSag {
+                /*border-radius: 25px;*/
             }
             /*eczanenleri adresleri ve telefonları ile yazıldığı soldaki divlerin hepsini classı*/
             .div_kucukEczaneSol {
+                /*border-radius: 25px;*/
             }
             /*div_kucukEczane nin içinde eczanenin adının yazıldığı label*/
             .lbl_eczane_adi {
@@ -96,7 +106,7 @@
             }
 
             .lbl_eczane_nobetGrovTipAdi {
-                margin-top: -3.5%;
+                margin-top: -1.5%;
                 color: white;
                 font-weight: 600;
             }
@@ -119,32 +129,38 @@
             }
             /*harita bölümü div i, barkod ve mesafe dahil*/
             .div_haritaBolumu {
-                height: 90%;
+                height: 93%;
                 border: solid;
-                border-color: #ffffff;
-                border-width: 15px;
+                background-color: #e0e0e0;
+                border-color: #ff0001;
+                border-width: 8px;
             }
             /*harita div i*/
             .harita {
-                height: 100%;
-                width: 100%;
+                background-color: #e0e0e0;
             }
             /*barkdo div i*/
             #div_MyLetterImage {
-                margin-top: -130px;
+                margin-top: -30px;
+                /*border-radius: 0 0 0 20px;*/
+                border-color: #000000;
+                border-width: 10px;
+                border: 10px;
+                border-radius: 10px;
             }
             /*mesafe div i*/
             #div_labelMesafe {
                 color: black;
                 background-color: white;
-                font-size: x-large;
-                margin-top: -50px;
-                margin-right: 0px;
+                font-size: 9px;
+                margin-top: -25px;
                 text-align: center;
+                font-family: Verdana;
                 font-weight: 800;
                 border-right: solid;
-                border-color: #ffffff;
-                border-width: 15px;
+                border-color: #ff0001;
+                border-width: 5px;
+                border-radius: 0 0 5px 0;
             }
         }
 
@@ -153,64 +169,71 @@
             /*üst sıranın tamamı, başlık tarih ve saat*/
             .div_basliklar {
                 vertical-align: central;
-                height: 10%;
+                height: 7%;
                 text-align: center;
             }
             /*Nöbetçi eczaneler yazısı div*/
             #div_labelBaslik {
                 color: white;
-                background-color: #ff0000;
+                background-color: #000000;
                 font-weight: 600;
             }
             /*Nöbetçi eczaneler yazısı label*/
             #lbl_baslik {
-                font-size: 25px;
+                margin-top: 2px;
+                font-size: 12px;
                 width: 75%;
                 height: 50%;
             }
             /*eczane logosu*/
             #eczane_logosu {
-                margin-top: 3%;
+                margin-top: -3%;
                 margin-left: 3%;
-                width: 15%;
-                height: 65%;
+                width: 12%;
+                height: 62%;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki div*/
             #div_tarih {
                 color: white;
-                background-color: #ff0000;
-                font-size: 26px;
+                background-color: #000000;
+                font-size: 12px;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki label*/
             #lbl_tarih {
+                margin-top: 2px;
                 font-weight: 600;
             }
             /*saatin yazıldığı üst sağdaki div*/
             #div_saat {
                 color: white;
-                background-color: #ff0000;
-                font-size: 40px;
+                background-color: #000000;
+                font-size: 12px;
                 font-weight: 600;
             }
             /*saatin yazıldığı label*/
             #lbl_saat {
+                margin-top: 2px;
                 font-weight: 600;
             }
             /*eczanenleri adresleri ve telefonları ile yazıldığı divleri içeren soldaki sütun div*/
             #div_eczaneSolSutun {
-                height: 90%;
+                height: 93%;
                 text-align: center;
+                background-color: #e0e0e0;
             }
 
             #div_eczaneSagSutun {
-                height: 90%;
+                height: 93%;
                 text-align: center;
+                background-color: #e0e0e0;
             }
 
             .div_kucukEczaneSag {
+                /*border-radius: 25px;*/
             }
             /*eczanenleri adresleri ve telefonları ile yazıldığı soldaki divlerin hepsini classı*/
             .div_kucukEczaneSol {
+                /*border-radius: 25px;*/
             }
             /*div_kucukEczane nin içinde eczanenin adının yazıldığı label*/
             .lbl_eczane_adi {
@@ -242,32 +265,39 @@
             }
             /*harita bölümü div i, barkod ve mesafe dahil*/
             .div_haritaBolumu {
-                height: 90%;
+                height: 93%;
                 border: solid;
-                border-color: #ffffff;
-                border-width: 15px;
+                background-color: #e0e0e0;
+                border-color: #ff0001;
+                border-width: 12px;
             }
             /*harita div i*/
             .harita {
-                height: 100%;
-                width: 100%;
+                background-color: #e0e0e0;
             }
             /*barkdo div i*/
             #div_MyLetterImage {
-                margin-top: -130px;
+                margin-top: -55px;
+                /*border-radius: 0 0 0 20px;*/
+                border-color: #000000;
+                border-width: 12px;
+                border: 12px;
+                border-radius: 12px;
             }
             /*mesafe div i*/
             #div_labelMesafe {
                 color: black;
                 background-color: white;
-                font-size: x-large;
-                margin-top: -50px;
+                font-size: 14px;
+                margin-top: -35px;
                 margin-right: 0px;
                 text-align: center;
+                font-family: Verdana;
                 font-weight: 800;
                 border-right: solid;
-                border-color: #ffffff;
-                border-width: 15px;
+                border-color: #ff0001;
+                border-width: 14px;
+                border-radius: 0 0 14px 0;
             }
         }
 
@@ -276,64 +306,71 @@
             /*üst sıranın tamamı, başlık tarih ve saat*/
             .div_basliklar {
                 vertical-align: central;
-                height: 10%;
+                height: 7%;
                 text-align: center;
             }
             /*Nöbetçi eczaneler yazısı div*/
             #div_labelBaslik {
                 color: white;
-                background-color: #ff0000;
+                background-color: #000000;
                 font-weight: 600;
             }
             /*Nöbetçi eczaneler yazısı label*/
             #lbl_baslik {
-                font-size: 25px;
+                margin-top: 5px;
+                font-size: 14px;
                 width: 75%;
                 height: 50%;
             }
             /*eczane logosu*/
             #eczane_logosu {
-                margin-top: 3%;
+                margin-top: -3%;
                 margin-left: 3%;
-                width: 15%;
-                height: 65%;
+                width: 12%;
+                height: 62%;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki div*/
             #div_tarih {
                 color: white;
-                background-color: #ff0000;
-                font-size: 26px;
+                background-color: #000000;
+                font-size: 14px;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki label*/
             #lbl_tarih {
+                margin-top: 3px;
                 font-weight: 600;
             }
             /*saatin yazıldığı üst sağdaki div*/
             #div_saat {
                 color: white;
-                background-color: #ff0000;
-                font-size: 40px;
+                background-color: #000000;
+                font-size: 14px;
                 font-weight: 600;
             }
             /*saatin yazıldığı label*/
             #lbl_saat {
+                margin-top: 4px;
                 font-weight: 600;
             }
             /*eczanenleri adresleri ve telefonları ile yazıldığı divleri içeren soldaki sütun div*/
             #div_eczaneSolSutun {
-                height: 90%;
+                height: 93%;
                 text-align: center;
+                background-color: #e0e0e0;
             }
 
             #div_eczaneSagSutun {
-                height: 90%;
+                height: 93%;
                 text-align: center;
+                background-color: #e0e0e0;
             }
 
             .div_kucukEczaneSag {
+                /*border-radius: 25px;*/
             }
             /*eczanenleri adresleri ve telefonları ile yazıldığı soldaki divlerin hepsini classı*/
             .div_kucukEczaneSol {
+                /*border-radius: 25px;*/
             }
             /*div_kucukEczane nin içinde eczanenin adının yazıldığı label*/
             .lbl_eczane_adi {
@@ -365,32 +402,39 @@
             }
             /*harita bölümü div i, barkod ve mesafe dahil*/
             .div_haritaBolumu {
-                height: 90%;
+                height: 93%;
                 border: solid;
-                border-color: #ffffff;
-                border-width: 15px;
+                background-color: #e0e0e0;
+                border-color: #ff0001;
+                border-width: 18px;
             }
             /*harita div i*/
             .harita {
-                height: 100%;
-                width: 100%;
+                background-color: #e0e0e0;
             }
             /*barkdo div i*/
             #div_MyLetterImage {
-                margin-top: -130px;
+                margin-top: -78px;
+                /*border-radius: 0 0 0 20px;*/
+                border-color: #000000;
+                border-width: 14px;
+                border: 14px;
+                border-radius: 14px;
             }
             /*mesafe div i*/
             #div_labelMesafe {
                 color: black;
                 background-color: white;
-                font-size: x-large;
+                font-size: 18px;
                 margin-top: -50px;
                 margin-right: 0px;
                 text-align: center;
+                font-family: Verdana;
                 font-weight: 800;
                 border-right: solid;
-                border-color: #ffffff;
+                border-color: #ff0001;
                 border-width: 15px;
+                border-radius: 0 0 15px 0;
             }
         }
 
@@ -399,64 +443,71 @@
             /*üst sıranın tamamı, başlık tarih ve saat*/
             .div_basliklar {
                 vertical-align: central;
-                height: 10%;
+                height: 7%;
                 text-align: center;
             }
             /*Nöbetçi eczaneler yazısı div*/
             #div_labelBaslik {
                 color: white;
-                background-color: #ff0000;
+                background-color: #000000;
                 font-weight: 600;
             }
             /*Nöbetçi eczaneler yazısı label*/
             #lbl_baslik {
-                font-size: 25px;
+                margin-top: 5px;
+                font-size: 16px;
                 width: 75%;
                 height: 50%;
             }
             /*eczane logosu*/
             #eczane_logosu {
-                margin-top: 3%;
+                margin-top: 0%;
                 margin-left: 3%;
-                width: 15%;
-                height: 65%;
+                width: 12%;
+                height: 62%;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki div*/
             #div_tarih {
                 color: white;
-                background-color: #ff0000;
-                font-size: 26px;
+                background-color: #000000;
+                font-size: 16px;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki label*/
             #lbl_tarih {
+                margin-top: 4px;
                 font-weight: 600;
             }
             /*saatin yazıldığı üst sağdaki div*/
             #div_saat {
                 color: white;
-                background-color: #ff0000;
-                font-size: 40px;
+                background-color: #000000;
+                font-size: 16px;
                 font-weight: 600;
             }
             /*saatin yazıldığı label*/
             #lbl_saat {
+                margin-top: 4px;
                 font-weight: 600;
             }
             /*eczanenleri adresleri ve telefonları ile yazıldığı divleri içeren soldaki sütun div*/
             #div_eczaneSolSutun {
-                height: 90%;
+                height: 93%;
                 text-align: center;
+                background-color: #e0e0e0;
             }
 
             #div_eczaneSagSutun {
-                height: 90%;
+                height: 93%;
                 text-align: center;
+                background-color: #e0e0e0;
             }
 
             .div_kucukEczaneSag {
+                /*border-radius: 25px;*/
             }
             /*eczanenleri adresleri ve telefonları ile yazıldığı soldaki divlerin hepsini classı*/
             .div_kucukEczaneSol {
+                /*border-radius: 25px;*/
             }
             /*div_kucukEczane nin içinde eczanenin adının yazıldığı label*/
             .lbl_eczane_adi {
@@ -488,32 +539,39 @@
             }
             /*harita bölümü div i, barkod ve mesafe dahil*/
             .div_haritaBolumu {
-                height: 90%;
+                height: 93%;
                 border: solid;
-                border-color: #ffffff;
-                border-width: 15px;
+                background-color: #e0e0e0;
+                border-color: #ff0001;
+                border-width: 16px;
             }
             /*harita div i*/
             .harita {
-                height: 100%;
-                width: 100%;
+                background-color: #e0e0e0;
             }
             /*barkdo div i*/
             #div_MyLetterImage {
-                margin-top: -130px;
+                margin-top: -100px;
+                /*border-radius: 0 0 0 20px;*/
+                border-color: #000000;
+                border-width: 16px;
+                border: 16px;
+                border-radius: 16px;
             }
             /*mesafe div i*/
             #div_labelMesafe {
                 color: black;
                 background-color: white;
                 font-size: x-large;
-                margin-top: -50px;
+                margin-top: -40px;
                 margin-right: 0px;
                 text-align: center;
+                font-family: Verdana;
                 font-weight: 800;
                 border-right: solid;
-                border-color: #ffffff;
+                border-color: #ff0001;
                 border-width: 15px;
+                border-radius: 0 0 15px 0;
             }
         }
 
@@ -528,39 +586,39 @@
             /*Nöbetçi eczaneler yazısı div*/
             #div_labelBaslik {
                 color: white;
-                background-color: #ff0000;
+                background-color: #000000;
                 font-weight: 600;
             }
             /*Nöbetçi eczaneler yazısı label*/
             #lbl_baslik {
                 margin-top: 5px;
-                font-size: 25px;
+                font-size: 20px;
                 width: 75%;
                 height: 50%;
             }
             /*eczane logosu*/
             #eczane_logosu {
-                margin-top: 3%;
+                margin-top: -3%;
                 margin-left: 3%;
-                width: 15%;
+                width: 12%;
                 height: 62%;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki div*/
             #div_tarih {
                 color: white;
-                background-color: #ff0000;
-                font-size: 24px;
+                background-color: #000000;
+                font-size: 20px;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki label*/
             #lbl_tarih {
-                margin-top:5px;
+                margin-top: 5px;
                 font-weight: 600;
             }
             /*saatin yazıldığı üst sağdaki div*/
             #div_saat {
                 color: white;
-                background-color: #ff0000;
-                font-size: 40px;
+                background-color: #000000;
+                font-size: 20px;
                 font-weight: 600;
             }
             /*saatin yazıldığı label*/
@@ -572,27 +630,30 @@
             #div_eczaneSolSutun {
                 height: 93%;
                 text-align: center;
-                background-color: #ff0000;
+                background-color: #e0e0e0;
             }
+
             #div_eczaneSagSutun {
                 height: 93%;
                 text-align: center;
-                background-color: #ff0000;
+                background-color: #e0e0e0;
             }
-            .div_kucukEczaneSag {
 
+            .div_kucukEczaneSag {
+                /*border-radius: 25px;*/
             }
             /*eczanenleri adresleri ve telefonları ile yazıldığı soldaki divlerin hepsini classı*/
             .div_kucukEczaneSol {
-
+                /*border-radius: 25px;*/
             }
             /*div_kucukEczane nin içinde eczanenin adının yazıldığı label*/
             .lbl_eczane_adi {
                 color: white;
-                font-weight:600;
+                font-weight: 600;
             }
+
             .lbl_eczane_nobetGrovTipAdi {
-                margin-top:-3.5%;
+                margin-top: -3.5%;
                 color: white;
                 font-weight: 600;
             }
@@ -617,35 +678,50 @@
             .div_haritaBolumu {
                 height: 93%;
                 border: solid;
-                border-color: #ffffff;
-                border-width: 15px;
+                background-color: #e0e0e0;
+                border-color: #ff0001;
+                border-width: 18px;
             }
             /*harita div i*/
             .harita {
-                height: 100%;
-                width: 100%;
+                background-color: #e0e0e0;
+               
+               
             }
             /*barkdo div i*/
             #div_MyLetterImage {
-                margin-top: -90px;
+                margin-top: -100px;
+                /*border-radius: 0 0 0 20px;*/
+                border-color: #000000;
+                border-width: 25px;
+                border: 20px;
+                border-radius: 20px;
             }
             /*mesafe div i*/
             #div_labelMesafe {
                 color: black;
                 background-color: white;
                 font-size: x-large;
-                margin-top: -30px;
+                margin-top: -40px;
                 margin-right: 0px;
                 text-align: center;
+                font-family:Verdana;
                 font-weight: 800;
                 border-right: solid;
-                border-color: #ffffff;
+                border-color: #ff0001;
                 border-width: 15px;
+                border-radius: 0 0 15px 0;
             }
+            /*.img {
+                border-color: #000000;
+                border-width: 25px;
+                border-radius: 25px;
+                
+            }*/
         }
 
         /*// X large devices (large desktops, 1400px and up)*/
-        @@media (min-width: 1400px) and (max-width: 1999px) {
+        @@media (min-width: 1400px) and (max-width: 1699px) {
             /*üst sıranın tamamı, başlık tarih ve saat*/
             .div_basliklar {
                 vertical-align: central;
@@ -655,19 +731,19 @@
             /*Nöbetçi eczaneler yazısı div*/
             #div_labelBaslik {
                 color: white;
-                background-color: #ff0000;
+                background-color: #000000;
                 font-weight: 600;
             }
             /*Nöbetçi eczaneler yazısı label*/
             #lbl_baslik {
                 margin-top: 8px;
-                font-size: 38px;
+                font-size: 20px;
                 width: 75%;
                 height: 50%;
             }
             /*eczane logosu*/
             #eczane_logosu {
-                margin-top: -3%;
+                margin-top: -1%;
                 margin-left: 3%;
                 width: 10%;
                 height: 60%;
@@ -675,8 +751,8 @@
             /*nöbet tarihinin yazıldığı üst ortadaki div*/
             #div_tarih {
                 color: white;
-                background-color: #ff0000;
-                font-size: 35px;
+                background-color: #000000;
+                font-size: 20px;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki label*/
             #lbl_tarih {
@@ -686,8 +762,139 @@
             /*saatin yazıldığı üst sağdaki div*/
             #div_saat {
                 color: white;
+                background-color: #000000;
+                font-size: 20px;
+                font-weight: 600;
+            }
+            /*saatin yazıldığı label*/
+            #lbl_saat {
+                margin-top: 5px;
+                font-weight: 600;
+            }
+            /*eczanenleri adresleri ve telefonları ile yazıldığı divleri içeren soldaki sütun div*/
+            #div_eczaneSolSutun {
+                height: 93%;
                 background-color: #ff0000;
-                font-size: 40px;
+                text-align: center;
+            }
+
+            #div_eczaneSagSutun {
+                height: 93%;
+                background-color: #ff0000;
+                text-align: center;
+            }
+
+            .div_kucukEczaneSag {
+            }
+            /*eczanenleri adresleri ve telefonları ile yazıldığı soldaki divlerin hepsini classı*/
+            .div_kucukEczaneSol {
+            }
+            /*div_kucukEczane nin içinde eczanenin adının yazıldığı label*/
+            .lbl_eczane_adi {
+                color: white;
+                font-weight: 600;
+            }
+
+            .lbl_eczane_nobetGrovTipAdi {
+                margin-top: -3%;
+                color: white;
+                font-weight: 600;
+            }
+            /*div_kucukEczane nin içinde eczanenin adresini yazıldığı label*/
+            .lbl_eczane_adres {
+                color: white;
+                line-break: auto;
+                font-weight: 400;
+            }
+            /*div_kucukEczane nin içinde eczanenin adresin tarifinin yazıldığı label*/
+            .lbl_eczane_adresTarifi {
+                color: #00ff80;
+                font-weight: 500;
+                line-break: auto;
+                text-align: center
+            }
+            /*div_kucukEczane nin içinde eczanenin telefonun tarifinin yazıldığı label*/
+            .lbl_eczane_telefon {
+                color: white;
+                font-weight: 600;
+                line-break: auto;
+            }
+            /*harita bölümü div i, barkod ve mesafe dahil*/
+            .div_haritaBolumu {
+                height: 93%;
+                border: solid;
+                background-color: #e0e0e0;
+                border-color: #ff0001;
+                border-width: 30px;
+            }
+            /*harita div i*/
+            .harita {
+                height: 100%;
+                width: 100%;
+            }
+            /*barkdo div i*/
+            #div_MyLetterImage {
+                margin-top: -150px;
+            }
+            /*mesafe div i*/
+            #div_labelMesafe {
+                color: black;
+                background-color: white;
+                font-size: 30px;
+                margin-top: -60px;
+                margin-right: 0px;
+                text-align: center;
+                font-weight: 800;
+                border-right: solid;
+                border-color: #ff0001;
+                border-width: 15px;
+            }
+        }
+
+        /*// X large devices (large desktops, 1400px and up)*/
+        @@media (min-width: 1700px) and (max-width: 1999px) {
+            /*üst sıranın tamamı, başlık tarih ve saat*/
+            .div_basliklar {
+                vertical-align: central;
+                height: 7%;
+                text-align: center;
+            }
+            /*Nöbetçi eczaneler yazısı div*/
+            #div_labelBaslik {
+                color: white;
+                background-color: #000000;
+                font-weight: 600;
+            }
+            /*Nöbetçi eczaneler yazısı label*/
+            #lbl_baslik {
+                margin-top: 8px;
+                font-size: 30px;
+                width: 75%;
+                height: 50%;
+            }
+            /*eczane logosu*/
+            #eczane_logosu {
+                margin-top: -1%;
+                margin-left: 3%;
+                width: 10%;
+                height: 60%;
+            }
+            /*nöbet tarihinin yazıldığı üst ortadaki div*/
+            #div_tarih {
+                color: white;
+                background-color: #000000;
+                font-size: 28px;
+            }
+            /*nöbet tarihinin yazıldığı üst ortadaki label*/
+            #lbl_tarih {
+                margin-top: 8px;
+                font-weight: 600;
+            }
+            /*saatin yazıldığı üst sağdaki div*/
+            #div_saat {
+                color: white;
+                background-color: #000000;
+                font-size: 30px;
                 font-weight: 600;
             }
             /*saatin yazıldığı label*/
@@ -747,7 +954,8 @@
             .div_haritaBolumu {
                 height: 93%;
                 border: solid;
-                border-color: #ffffff;
+                background-color: #e0e0e0;
+                border-color: #ff0001;
                 border-width: 30px;
             }
             /*harita div i*/
@@ -769,8 +977,8 @@
                 text-align: center;
                 font-weight: 800;
                 border-right: solid;
-                border-color: #ffffff;
-                border-width: 30px;
+                border-color: #ff0001;
+                border-width: 15px;
             }
         }
 
@@ -785,13 +993,13 @@
             /*Nöbetçi eczaneler yazısı div*/
             #div_labelBaslik {
                 color: white;
-                background-color: #ff0000;
+                background-color: #000000;
                 font-weight: 600;
             }
             /*Nöbetçi eczaneler yazısı label*/
             #lbl_baslik {
                 margin-top: 12px;
-                font-size: 50px;
+                font-size: 35px;
                 width: 75%;
                 height: 50%;
             }
@@ -799,14 +1007,14 @@
             #eczane_logosu {
                 margin-top: -3%;
                 margin-left: 3%;
-                width: 15%;
+                width: 12%;
                 height: 65%;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki div*/
             #div_tarih {
                 color: white;
-                background-color: #ff0000;
-                font-size: 45px;
+                background-color: #000000;
+                font-size: 35px;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki label*/
             #lbl_tarih {
@@ -816,8 +1024,8 @@
             /*saatin yazıldığı üst sağdaki div*/
             #div_saat {
                 color: white;
-                background-color: #ff0000;
-                font-size: 60px;
+                background-color: #000000;
+                font-size:35px;
                 font-weight: 600;
             }
             /*saatin yazıldığı label*/
@@ -875,7 +1083,8 @@
             .div_haritaBolumu {
                 height: 93%;
                 border: solid;
-                border-color: #ffffff;
+                background-color: #e0e0e0;
+                border-color: #ff0001;
                 border-width: 40px;
             }
             /*harita div i*/
@@ -885,20 +1094,20 @@
             }
             /*barkdo div i*/
             #div_MyLetterImage {
-                margin-top: -190px;
+                margin-top: -200px;
             }
             /*mesafe div i*/
             #div_labelMesafe {
                 color: black;
                 background-color: white;
                 font-size: 45px;
-                margin-top: -65px;
+                margin-top: -70px;
                 margin-right: 0px;
                 text-align: center;
                 font-weight: 800;
                 border-right: solid;
-                border-color: #ffffff;
-                border-width: 40px;
+                border-color: #ff0001;
+                border-width: 15px;
             }
         }
 
@@ -913,28 +1122,28 @@
             /*Nöbetçi eczaneler yazısı div*/
             #div_labelBaslik {
                 color: white;
-                background-color: #ff0000;
+                background-color: #000000;
                 font-weight: 600;
             }
             /*Nöbetçi eczaneler yazısı label*/
             #lbl_baslik {
                 margin-top: 20px;
-                font-size: 75px;
+                font-size: 50px;
                 width: 75%;
                 height: 50%;
             }
             /*eczane logosu*/
             #eczane_logosu {
-                margin-top: -3%;
+                margin-top: -4%;
                 margin-left: 3%;
-                width: 15%;
+                width: 12%;
                 height: 65%;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki div*/
             #div_tarih {
                 color: white;
-                background-color: #ff0000;
-                font-size: 65px;
+                background-color: #000000;
+                font-size: 50px;
             }
             /*nöbet tarihinin yazıldığı üst ortadaki label*/
             #lbl_tarih {
@@ -944,8 +1153,8 @@
             /*saatin yazıldığı üst sağdaki div*/
             #div_saat {
                 color: white;
-                background-color: #ff0000;
-                font-size: 90px;
+                background-color: #000000;
+                font-size: 50px;
                 font-weight: 600;
             }
             /*saatin yazıldığı label*/
@@ -978,7 +1187,7 @@
             }
 
             .lbl_eczane_nobetGrovTipAdi {
-                margin-top: -3.5%;
+                margin-top: -1%;
                 color: white;
                 font-weight: 600;
             }
@@ -1005,7 +1214,8 @@
             .div_haritaBolumu {
                 height: 93%;
                 border: solid;
-                border-color: #ffffff;
+                background-color: #e0e0e0;
+                border-color: #ff0001;
                 border-width: 60px;
             }
             /*harita div i*/
@@ -1015,20 +1225,20 @@
             }
             /*barkdo div i*/
             #div_MyLetterImage {
-                margin-top: -260px;
+                margin-top: -300px;
             }
             /*mesafe div i*/
             #div_labelMesafe {
                 color: black;
                 background-color: white;
-                margin-top: -90px;
+                margin-top: -120px;
                 margin-right: 0px;
                 text-align: center;
                 font-weight: 800;
                 font-size: 70px;
                 border-right: solid;
-                border-color: #ffffff;
-                border-width: 60px;
+                border-color: #ff0001;
+                border-width: 15px;
             }
         }
     </style>
@@ -1041,7 +1251,7 @@
         <img src="~/Content/images/orig.gif" />
     </div>
 
-    <div id="div1" class="container-fluid">
+    <div id="div1" class="container-fluid" style="font-family:Verdana">
         <div class="row div_basliklar">
             <div class="col-3" id="div_labelBaslik">
                 <img id="eczane_logosu" src="~/Content/images/NobetciEczaneLogo2.png" />
@@ -1056,11 +1266,12 @@
         </div>
         @if (Model.NobetciEczaneler.Count < 6)
         {
+            <div class="row" >
+                <div style="width:25%" id="div_eczaneSolSutun">
 
-            <div class="row">
-                <div style="width:25%"  id="div_eczaneSolSutun">
                     @for (var i = 1; i < Model.NobetciEczaneler.Count() + 1; i++)
                     {
+                    <div id="@("div_solSutunBackGround_"+i)" class="div_solSutunBackGround">
                         <div class="div_kucukEczaneSol" id="@("div_"+i)">
                             <label id="@("lbl_eczane_adi_"+i)" class="lbl_eczane_adi"></label>
                             <label id="@("lbl_eczane_nobetGrovTipAdi_"+i)" class="lbl_eczane_nobetGrovTipAdi"></label><br />
@@ -1068,13 +1279,14 @@
                             <label id="@("lbl_eczane_adres_tarifi_"+i)" class="lbl_eczane_adresTarifi"></label><br />
                             <label id="@("lbl_eczane_telefon_"+i)" class="lbl_eczane_telefon"></label><br />
                         </div>
-                    }
-                </div>
+                    </div>
+                            }
+                    </div>
                 <div class="div_haritaBolumu" style="width:75%">
                     @*<a><img id="img" style="height:100%; width:100%; " src="" /></a>*@
                     @for (var i = 0; i < Model.NobetciEczaneler.Count(); i++)
                     {
-                        <img class="img" id="@("img"+i)" style="height:100%; width:100%; " src="" />
+                        <img class="img" id="@("img"+i)" style="width:100%; height:100%"  src="" />
                     }
 
                     <div class="row">
@@ -1089,21 +1301,23 @@
                         </div>
                     </div>
                     @*<div id="div_100" class="eczaneBuyukHucre buyukEczane">
-                         <img style="width:60px;height:60px" src="~/Content/images/NobetciEczaneLogoUfaks.png" />
-                    </div>*@
+                             <img style="width:60px;height:60px" src="~/Content/images/NobetciEczaneLogoUfaks.png" />
+                        </div>*@
                 </div>
                 @*<div id="eczaneSagSutun" class="col-lg-3">
-                    <h5 style="color:firebrick"></h5>
-                </div>*@
+                        <h5 style="color:firebrick"></h5>
+                    </div>*@
             </div>
         }
         else
         {
-           
             <div class="row">
-                <div style="width:25%"  id="div_eczaneSolSutun">
+                <div style="width:25%" id="div_eczaneSolSutun">
+
                     @for (var i = 1; i < Model.NobetciEczaneler.Count() / 2 + 1; i++)
                     {
+                    <div id="@("div_solSutunBackGround_"+i)" class="div_solSutunBackGround">
+
                         <div class="div_kucukEczaneSol" id="@("div_"+i)">
                             <label id="@("lbl_eczane_adi_"+i)" class="lbl_eczane_adi"></label>
                             <label id="@("lbl_eczane_nobetGrovTipAdi_"+i)" class="lbl_eczane_nobetGrovTipAdi"></label><br />
@@ -1111,44 +1325,52 @@
                             <label id="@("lbl_eczane_adres_tarifi_"+i)" class="lbl_eczane_adresTarifi"></label><br />
                             <label id="@("lbl_eczane_telefon_"+i)" class="lbl_eczane_telefon"></label><br />
                         </div>
-                    }
-                </div>
-                <div style="width:50%" class="div_haritaBolumu">
-                    @*<a><img id="img" style="height:100%; width:100%; " src="" /></a>*@
-                    @for (var i = 0; i < Model.NobetciEczaneler.Count(); i++)
-                    {
-                        <img class="img" id="@("img"+i)" style="height:100%; width:100%; " src="" />
-                    }
-
-                    <div class="row">
-                        <div id="div_MyLetterImage" class="col-6">
-                        </div>
-                        <div class="col-2"></div>
-                        <div id="div_labelMesafe" class="col-4">
-                            @for (var i = 0; i < Model.NobetciEczaneler.Count(); i++)
-                            {
-                                <label class="fa fa-car" id="@("lbl_mesafe"+i)"> </label>
+                    </div>
                             }
 
                         </div>
-                    </div>
-                    @*<div id="div_100" class="eczaneBuyukHucre buyukEczane">
-                         <img style="width:60px;height:60px" src="~/Content/images/NobetciEczaneLogoUfaks.png" />
-                    </div>*@
-                </div>
-                <div style="width:25%" id="div_eczaneSagSutun">
-                    @for (var i = Model.NobetciEczaneler.Count() / 2 + 1; i <= Model.NobetciEczaneler.Count(); i++)
-                    {
-                        <div class="div_kucukEczaneSag" id="@("div_"+i)">
-                            <label id="@("lbl_eczane_adi_"+i)" class="lbl_eczane_adi"></label>
-                            <label id="@("lbl_eczane_nobetGrovTipAdi_"+i)" class="lbl_eczane_nobetGrovTipAdi"></label>
-                            <label id="@("lbl_eczane_adres_"+i)" class="lbl_eczane_adres"></label>
-                            <label id="@("lbl_eczane_adres_tarifi_"+i)" class="lbl_eczane_adresTarifi"></label>
-                            <label id="@("lbl_eczane_telefon_"+i)" class="lbl_eczane_telefon"></label>
+                        <div style="width:50%" class="div_haritaBolumu">
+                            @*<a><img id="img" style="height:100%; width:100%; " src="" /></a>*@
+                            @for (var i = 0; i < Model.NobetciEczaneler.Count(); i++)
+                            {
+                                <img class="img" id="@("img"+i)" style="height:100%; width:100%; " src="" />
+                            }
+
+                            <div class="row">
+                                <div id="div_MyLetterImage" class="col-6">
+                                </div>
+                                <div class="col-1"></div>
+                                <div id="div_labelMesafe" class="col-5">
+                                    @for (var i = 0; i < Model.NobetciEczaneler.Count(); i++)
+                                    {
+                                        <label class="fa fa-car" id="@("lbl_mesafe"+i)"> </label>
+                                    }
+
+                                </div>
+                            </div>
+                            @*<div id="div_100" class="eczaneBuyukHucre buyukEczane">
+                     <img style="width:60px;height:60px" src="~/Content/images/NobetciEczaneLogoUfaks.png" />
+                </div>*@
                         </div>
-                    }
-                </div>
-            </div>
+                        <div style="width:25%" id="div_eczaneSagSutun">
+                            <div id="div_sagSutunBackGround">
+
+                                @for (var i = Model.NobetciEczaneler.Count() / 2 + 1; i <= Model.NobetciEczaneler.Count(); i++)
+                                {
+                                <div id="@("div_sagSutunBackGround_"+i)" class="div_solSutunBackGround">
+
+                                    <div class="div_kucukEczaneSag" id="@("div_"+i)">
+                                        <label id="@("lbl_eczane_adi_"+i)" class="lbl_eczane_adi"></label>
+                                        <label id="@("lbl_eczane_nobetGrovTipAdi_"+i)" class="lbl_eczane_nobetGrovTipAdi"></label>
+                                        <label id="@("lbl_eczane_adres_"+i)" class="lbl_eczane_adres"></label>
+                                        <label id="@("lbl_eczane_adres_tarifi_"+i)" class="lbl_eczane_adresTarifi"></label>
+                                        <label id="@("lbl_eczane_telefon_"+i)" class="lbl_eczane_telefon"></label>
+                                    </div>
+                                </div>
+                                        }
+                                    </div>
+                                </div>
+                    </div>
         }
 
 
@@ -1177,9 +1399,9 @@
             var dakika = today.getMinutes();
             var saniye = today.getSeconds();
             if (parseInt(saat) >= 8)
-                $('#lbl_tarih').text(getDate() + ' - ' + getTomorrow() + ' Tarihleri Arası');
+                $('#lbl_tarih').text(getDate() + ' - ' + getTomorrow());
             else
-                $('#lbl_tarih').text(getYesterday() + '- ' + getDate() + ' Tarihleri Arası');
+                $('#lbl_tarih').text(getYesterday() + '- ' + getDate());
 
             document.getElementById("loading").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
             document.getElementById("div1").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
@@ -1202,7 +1424,7 @@
         //modelden nöbetçi eczaneleri alır:
         for (var g = 0; g < nobetciEczaneSayisi; g++) {
        // for (var g = 0; g < model.NobetciEczaneler.length; g++) {
-            //quicksort:
+            
             var newElement = {
                 adi: model.NobetciEczaneler[g].Adi,
                 koordinatx: model.NobetciEczaneler[g].Enlem,
@@ -1210,7 +1432,9 @@
                 tel: model.NobetciEczaneler[g].TelefonNo,
                 adres: model.NobetciEczaneler[g].Adres,
                 adresTarifi: model.NobetciEczaneler[g].AdresTarifiKisa,
-                nobetGorevTipAdi: model.NobetciEczaneler[g].NobetGorevTipAdi,
+                eczaneninAcikOlduguSaatAraligi: model.NobetciEczaneler[g].EczaneninAcikOlduguSaatAraligi,
+               // nobetGorevTipAdi: model.NobetciEczaneler[g].NobetGorevTipAdi,
+                nobetUstGrupId: model.NobetciEczaneler[g].NobetUstGrupId,
                 oldIndex:0
             }
             nobetciEczaneler.push(newElement)
@@ -1220,21 +1444,364 @@
         //div leri doldurur
         function eczaneleriKutularaDoldur() {
             $('#lbl_baslik').text('Nöbetçi Eczaneler');
-            
+
             jQuery.each(nobetciEczaneler, function (i, val) {
                 var adi = nobetciEczaneler[i].adi
                 var tel = nobetciEczaneler[i].tel
                 var adres = nobetciEczaneler[i].adres
                 var adresTarifi = nobetciEczaneler[i].adresTarifi
-                var nobetGorevTipAdi = nobetciEczaneler[i].nobetGorevTipAdi
+                var eczaneninAcikOlduguSaatAraligi = nobetciEczaneler[i].eczaneninAcikOlduguSaatAraligi
+               // var nobetGorevTipAdi = nobetciEczaneler[i].nobetGorevTipAdi
                 var intNumberOfi = parseInt(i);
+                var nobetUstGrupId = nobetciEczaneler[i].nobetUstGrupId
+
                 intNumberOfi = intNumberOfi + 1;
 
                 var herEczaneBasinaDusenDivOrani = 100 / nobetciEczaneSayisi;
-                if (nobetciEczaneSayisi > 5)
+                if (nobetciEczaneSayisi > 5)//5 den fazla eczane sol sütuna sığmıyor, yarısını alırız
                     herEczaneBasinaDusenDivOrani = herEczaneBasinaDusenDivOrani*2
-                //console.log(herEczaneBasinaDusenDivOrani)
-                //alert('i: ' + intNumberOfi.toString())
+              
+                //zonguldakta adres tarifi yok
+                console.log('nobetUstGrupId: ' + nobetUstGrupId)
+                console.log('clientWidth: ' + clientWidth)
+
+                if (nobetUstGrupId == 7) {
+                    console.log('zonguldak')
+                    //eczane Adı fontunu ayarla
+                    if (true) {//satırları kapatabilmek için
+                        var fontSizeEczaneAdi = 5.5 * herEczaneBasinaDusenDivOrani;
+                        if (clientWidth > 574 && clientWidth < 767) {
+                            fontSizeEczaneAdi = 2 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 766 && clientWidth < 991) {
+                            fontSizeEczaneAdi = 3 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 990 && clientWidth < 1199) {
+                            fontSizeEczaneAdi = 4 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1198 && clientWidth < 1401) {
+                            fontSizeEczaneAdi = 5 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1400 && clientWidth < 1601) {
+                            fontSizeEczaneAdi = 6 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1600 && clientWidth < 1901) {
+                            fontSizeEczaneAdi = 7 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1900 && clientWidth < 2499) {
+                            if (nobetciEczaneSayisi > 5)
+                                fontSizeEczaneAdi = 9.5 * herEczaneBasinaDusenDivOrani;
+                            else
+                                fontSizeEczaneAdi = 7.5 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 2500 && clientWidth < 3099) {
+                            fontSizeEczaneAdi = 9.5 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 3100) {
+                            fontSizeEczaneAdi = 12.5 * herEczaneBasinaDusenDivOrani;
+                        }
+                    }
+                    //Adres fontunu ayarla
+                    if (true) {//satırları kapatabilmek için
+                        var fontSizeAdres = 5 * herEczaneBasinaDusenDivOrani;
+                        if (clientWidth > 574 && clientWidth < 767) {
+                            fontSizeAdres = 2 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 766 && clientWidth < 991) {
+                            fontSizeAdres = 3 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 990 && clientWidth < 1199) {
+                            fontSizeAdres = 4 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1198 && clientWidth < 1401) {
+                            fontSizeAdres = 5 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1400 && clientWidth < 1601) {
+                            fontSizeAdres = 6 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1600 && clientWidth < 1901) {
+                            fontSizeAdres = 7 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1900 && clientWidth < 2499) {
+                            fontSizeAdres = 6 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 2500 && clientWidth < 3099) {
+                            fontSizeAdres = 8 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 3100) {
+                            fontSizeAdres = 12 * herEczaneBasinaDusenDivOrani;
+                        }
+                    }
+                    //telefon fontunu ayarla
+                    if (true) {//satırları kapatabilmek için
+                        var fontSizeTelefon = 6 * herEczaneBasinaDusenDivOrani;
+                        if (tel != null) {
+                            if (clientWidth > 574 && clientWidth < 767) {
+                                fontSizeTelefon = 2 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 766 && clientWidth < 991) {
+                                fontSizeTelefon = 3 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 990 && clientWidth < 1199) {
+                                fontSizeTelefon = 4 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1198 && clientWidth < 1401) {
+                                fontSizeTelefon = 5 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1400 && clientWidth < 1601) {
+                                fontSizeTelefon = 6 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1600 && clientWidth < 1901) {
+                                fontSizeTelefon = 7 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1900 && clientWidth < 2499) {
+                                if (nobetciEczaneSayisi > 5)
+                                    fontSizeTelefon = 9 * herEczaneBasinaDusenDivOrani;
+                                else
+                                    fontSizeTelefon = 7 * herEczaneBasinaDusenDivOrani;
+
+                            }
+                            else if (clientWidth > 2500 && clientWidth < 3099) {
+                                fontSizeTelefon = 10 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 3100) {
+                                fontSizeTelefon = 11 * herEczaneBasinaDusenDivOrani;
+                            }
+                        }
+                        else {
+                            fontSizeTelefon = 0 * herEczaneBasinaDusenDivOrani;
+                        }
+                    }
+                    //nobetGorevTipAdı fontunu ayarla
+                    if (true) {//satırları kapatabilmek için
+                        var fontSizeNobetGorevTipAdi = 3.5 * herEczaneBasinaDusenDivOrani;
+                        if (clientWidth > 574 && clientWidth < 767) {
+                            fontSizeNobetGorevTipAdi = 2 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 766 && clientWidth < 991) {
+                            fontSizeNobetGorevTipAdi = 3 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 990 && clientWidth < 1199) {
+                            fontSizeNobetGorevTipAdi = 4 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1198 && clientWidth < 1401) {
+                            fontSizeNobetGorevTipAdi = 5 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1400 && clientWidth < 1601) {
+                            fontSizeNobetGorevTipAdi = 6 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1600 && clientWidth < 1901) {
+                            fontSizeNobetGorevTipAdi = 7 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (eczaneninAcikOlduguSaatAraligi != null) {
+                            if (clientWidth > 1900 && clientWidth < 2499) {
+                                fontSizeNobetGorevTipAdi = 4.5 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 2500 && clientWidth < 3099) {
+                                fontSizeNobetGorevTipAdi = 6.5 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 3100) {
+                                fontSizeNobetGorevTipAdi = 9.5 * herEczaneBasinaDusenDivOrani;
+                            }
+                        }
+                        else {
+                            fontSizeNobetGorevTipAdi = 0 * herEczaneBasinaDusenDivOrani;
+                        }
+                    }
+                }
+                else {
+                    //eczane Adı fontunu ayarla
+                    if (true) {//satırları kapatabilmek için
+                        fontSizeEczaneAdi = 2 * herEczaneBasinaDusenDivOrani;
+                        if (clientWidth > 574 && clientWidth < 767) {
+                            fontSizeEczaneAdi = 2 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 766 && clientWidth < 991) {
+                            fontSizeEczaneAdi = 3 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 990 && clientWidth < 1199) {
+                            fontSizeEczaneAdi = 4 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1198 && clientWidth < 1401) {
+                            fontSizeEczaneAdi = 4.5 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1400 && clientWidth < 1601) {
+                            fontSizeEczaneAdi = 5.0 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1600 && clientWidth < 1901) {
+                            fontSizeEczaneAdi = 7 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1900 && clientWidth < 2499) {
+                            if (nobetciEczaneSayisi > 5)
+                                fontSizeEczaneAdi = 9 * herEczaneBasinaDusenDivOrani;
+                            else
+                                fontSizeEczaneAdi = 7 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 2500 && clientWidth < 3099) {
+                            fontSizeEczaneAdi = 9 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 3100) {
+                            fontSizeEczaneAdi = 12 * herEczaneBasinaDusenDivOrani;
+                        }
+                    }
+                    //Adres fontunu ayarla
+                    if (true) {//satırları kapatabilmek için
+                        fontSizeAdres = 1 * herEczaneBasinaDusenDivOrani;
+                        if (clientWidth > 574 && clientWidth < 767) {
+                            fontSizeAdres = 2 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 766 && clientWidth < 991) {
+                            fontSizeAdres = 2.2 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 990 && clientWidth < 1199) {
+                            fontSizeAdres = 2.4 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1198 && clientWidth < 1401) {
+                            fontSizeAdres = 2.6 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1400 && clientWidth < 1601) {
+                            fontSizeAdres = 3.6 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1600 && clientWidth < 1901) {
+                            fontSizeAdres = 3.8 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1900 && clientWidth < 2499) {
+                            fontSizeAdres = 3.8 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 2500 && clientWidth < 3099) {
+                            fontSizeAdres = 5.8 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 3100) {
+                            fontSizeAdres = 9.8 * herEczaneBasinaDusenDivOrani;
+                        }
+                    }
+                    //Adres Tarifi fontunu ayarla
+                    if (true) {//satırları kapatabilmek için
+                        fontSizeAdresTarifi = 1 * herEczaneBasinaDusenDivOrani;
+                        if (clientWidth > 574 && clientWidth < 767) {
+                            fontSizeAdresTarifi = 2 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 766 && clientWidth < 991) {
+                            fontSizeAdresTarifi =2.2 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 990 && clientWidth < 1199) {
+                            fontSizeAdresTarifi = 2.4 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1198 && clientWidth < 1401) {
+                            fontSizeAdresTarifi = 2.6 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1400 && clientWidth < 1601) {
+                            fontSizeAdresTarifi = 3.0 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1600 && clientWidth < 1901) {
+                            fontSizeAdresTarifi = 3.8 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (fontSizeAdresTarifi != null) {
+                            if (clientWidth > 1900 && clientWidth < 2499) {
+                                fontSizeAdresTarifi = 3.8 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 2500 && clientWidth < 3099) {
+                                fontSizeAdresTarifi = 5.8 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 3100) {
+                                fontSizeAdresTarifi = 9.8 * herEczaneBasinaDusenDivOrani;
+                            }
+                        }
+                        else {
+                            fontSizeAdresTarifi = 0 * herEczaneBasinaDusenDivOrani;
+                        }
+                    }
+                    //telefon fontunu ayarla
+                    if (true) {//satırları kapatabilmek için
+                        fontSizeTelefon = 2 * herEczaneBasinaDusenDivOrani;
+                        if (clientWidth > 574 && clientWidth < 767) {
+                            fontSizeTelefon = 2 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 766 && clientWidth < 991) {
+                            fontSizeTelefon = 3 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 990 && clientWidth < 1199) {
+                            fontSizeTelefon = 4 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1198 && clientWidth < 1401) {
+                            fontSizeTelefon = 4.5 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1400 && clientWidth < 1601) {
+                            fontSizeTelefon = 5 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1600 && clientWidth < 1901) {
+                            fontSizeTelefon = 7 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (tel != null) {
+                            if (clientWidth > 1900 && clientWidth < 2499) {
+                                if (nobetciEczaneSayisi > 5)
+                                    fontSizeTelefon = 8 * herEczaneBasinaDusenDivOrani;
+                                else
+                                    fontSizeTelefon = 7 * herEczaneBasinaDusenDivOrani;
+
+                            }
+                            else if (clientWidth > 2500 && clientWidth < 3099) {
+                                fontSizeTelefon = 9 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 3100) {
+                                fontSizeTelefon = 10 * herEczaneBasinaDusenDivOrani;
+                            }
+                        }
+                        else {
+                            fontSizeTelefon = 0 * herEczaneBasinaDusenDivOrani;
+                        }
+                    }
+                    //nobetGorevTipAdı fontunu ayarla
+                    if (true) {//satırları kapatabilmek için
+                        fontSizeNobetGorevTipAdi = 1 * herEczaneBasinaDusenDivOrani;
+                        if (clientWidth > 574 && clientWidth < 767) {
+                            fontSizeNobetGorevTipAdi = 1.8 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 766 && clientWidth < 991) {
+                            fontSizeNobetGorevTipAdi = 2 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 990 && clientWidth < 1199) {
+                            fontSizeNobetGorevTipAdi = 2.8 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1198 && clientWidth < 1401) {
+                            fontSizeNobetGorevTipAdi = 3 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1400 && clientWidth < 1601) {
+                            fontSizeNobetGorevTipAdi = 3 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (clientWidth > 1600 && clientWidth < 1901) {
+                            fontSizeNobetGorevTipAdi = 3 * herEczaneBasinaDusenDivOrani;
+                        }
+                        else if (eczaneninAcikOlduguSaatAraligi != null) {
+                            if (clientWidth > 1900 && clientWidth < 2499) {
+                                fontSizeNobetGorevTipAdi = 4 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 2500 && clientWidth < 3099) {
+                                fontSizeNobetGorevTipAdi = 6 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 3100) {
+                                fontSizeNobetGorevTipAdi = 9 * herEczaneBasinaDusenDivOrani;
+                            }
+                        }
+                        else {
+                            fontSizeNobetGorevTipAdi = 0 * herEczaneBasinaDusenDivOrani;
+                        }
+                    }
+                }
+                console.log('eczaneninAcikOlduguSaatAraligi: ' + eczaneninAcikOlduguSaatAraligi)
+                $("#div_" + intNumberOfi).css("height", herEczaneBasinaDusenDivOrani +"%");             
+                $("#lbl_eczane_adi_" + intNumberOfi).append(adi + " ECZANESİ");
+                $("#lbl_eczane_adi_" + intNumberOfi).css("font-size", fontSizeEczaneAdi + "%");
+                $("#lbl_eczane_nobetGrovTipAdi_" + intNumberOfi).append("(" + eczaneninAcikOlduguSaatAraligi + ")");
+                $("#lbl_eczane_nobetGrovTipAdi_" + intNumberOfi).css("font-size", fontSizeNobetGorevTipAdi + "%");
+                $("#lbl_eczane_adres_" + intNumberOfi).append(adres);
+                $("#lbl_eczane_adres_" + intNumberOfi).css("font-size", fontSizeAdres + "%");
+                $("#lbl_eczane_adres_tarifi_" + intNumberOfi).append(adresTarifi);
+                $("#lbl_eczane_adres_tarifi_" + intNumberOfi).css("font-size", fontSizeAdresTarifi + "%");
+                if (tel != null) {
+                    $("#lbl_eczane_telefon_" + intNumberOfi).append(0 + " " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2));
+                    $("#lbl_eczane_telefon_" + intNumberOfi).css("font-size", fontSizeTelefon + "%");
+                }                
 
                 //var img = $('<img />',
                 //    {
@@ -1244,117 +1811,6 @@
                 //        height: 30
                 //    })
                 //    .appendTo($("#div_" + intNumberOfi));
-
-               // alert(tel.length)
-                var fontSizeEczaneAdi = 5 * herEczaneBasinaDusenDivOrani;
-                if (clientWidth > 1900 && clientWidth < 2499) {
-                    if(nobetciEczaneSayisi > 5)
-                        fontSizeEczaneAdi = 9 * herEczaneBasinaDusenDivOrani;
-                    else
-                        fontSizeEczaneAdi = 7 * herEczaneBasinaDusenDivOrani;
-
-                }
-                else if (clientWidth > 2500 && clientWidth < 3099 ) {
-                    fontSizeEczaneAdi = 9 * herEczaneBasinaDusenDivOrani;
-                }
-                else if (clientWidth > 3100) {
-                    fontSizeEczaneAdi = 12 * herEczaneBasinaDusenDivOrani;
-                }
-
-                var fontSizeTelefon = 5 * herEczaneBasinaDusenDivOrani;
-                if (clientWidth > 1900 && clientWidth < 2499) {
-                    if (nobetciEczaneSayisi > 5)
-                        fontSizeTelefon = 9 * herEczaneBasinaDusenDivOrani;
-                    else 
-                        fontSizeTelefon = 7 * herEczaneBasinaDusenDivOrani;
-
-                }
-                else if (clientWidth > 2500 && clientWidth < 3099) {
-                    fontSizeTelefon = 9 * herEczaneBasinaDusenDivOrani;
-                }
-                else if (clientWidth > 3100) {
-                    fontSizeTelefon = 10 * herEczaneBasinaDusenDivOrani;
-                }
-
-                var fontSizeAdres = 3.5 * herEczaneBasinaDusenDivOrani;
-                if (clientWidth > 1900 && clientWidth < 2499) {
-                    fontSizeAdres = 4.5 * herEczaneBasinaDusenDivOrani;
-                }
-                else if (clientWidth > 2500 && clientWidth < 3099) {
-                    fontSizeAdres = 6 * herEczaneBasinaDusenDivOrani;
-                }
-                else if (clientWidth > 3100) {
-                    fontSizeAdres = 10 * herEczaneBasinaDusenDivOrani;
-                }
-
-                var fontSizeNobetGorevTipAdi = 3 * herEczaneBasinaDusenDivOrani;
-                if (clientWidth > 1900 && clientWidth < 2499) {
-                    fontSizeNobetGorevTipAdi = 4 * herEczaneBasinaDusenDivOrani;
-                }
-                else if (clientWidth > 2500 && clientWidth < 3099) {
-                    fontSizeNobetGorevTipAdi = 6 * herEczaneBasinaDusenDivOrani;
-                }
-                else if (clientWidth > 3100) {
-                    fontSizeNobetGorevTipAdi = 9 * herEczaneBasinaDusenDivOrani;
-                }
-                //console.log(fontSizeEczane)
-                $("#div_" + intNumberOfi).css("height", herEczaneBasinaDusenDivOrani +"%");
-                if (tel != null) {
-                    $("#lbl_eczane_adi_" + intNumberOfi).append(adi + " ECZANESİ");
-                    $("#lbl_eczane_adi_" + intNumberOfi).css("font-size", fontSizeEczaneAdi + "%");
-                    $("#lbl_eczane_nobetGrovTipAdi_" + intNumberOfi).append("(" + nobetGorevTipAdi + ")");
-                    $("#lbl_eczane_nobetGrovTipAdi_" + intNumberOfi).css("font-size", fontSizeNobetGorevTipAdi + "%");
-                    $("#lbl_eczane_adres_" + intNumberOfi).append(adres);
-                    $("#lbl_eczane_adres_" + intNumberOfi).css("font-size", fontSizeAdres + "%");
-                    $("#lbl_eczane_adres_tarifi_" + intNumberOfi).append(adresTarifi);
-                    $("#lbl_eczane_adres_tarifi_" + intNumberOfi).css("font-size", fontSizeAdres + "%");
-                    $("#lbl_eczane_telefon_" + intNumberOfi).append(0 + " " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2));
-                    $("#lbl_eczane_telefon_" + intNumberOfi).css("font-size", fontSizeTelefon + "%");
-
-
-                    //$("#div_" + intNumberOfi).append(
-                    //    "<h7 style=\"color:white; font-weight:600\">" + adres + "</h7>" +
-                    //    "</br ><h7 style=\"color:#00ff80; font-weight:700\">" + adresTarifi + "</h7>"
-                    //    +
-                    //    "</br ><h4>0 " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2) + "</h4>"
-
-                    //    // "</br >0" + tel
-                    //);
-                }
-                else if (nobetGorevTipAdi != null) {
-                    $("#lbl_eczane_adi_" + intNumberOfi).append(adi + " ECZANESİ");
-                    $("#lbl_eczane_adi_" + intNumberOfi).css("font-size", fontSizeEczaneAdi + "%");
-                    $("#lbl_eczane_nobetGrovTipAdi_" + intNumberOfi).append("(" + nobetGorevTipAdi + ")");
-                    $("#lbl_eczane_nobetGrovTipAdi_" + intNumberOfi).css("font-size", fontSizeNobetGorevTipAdi + "%");
-                    $("#lbl_eczane_adres_" + intNumberOfi).append(adres);
-                    $("#lbl_eczane_adres_" + intNumberOfi).css("font-size", fontSizeAdres + "%");
-                    $("#lbl_eczane_adres_tarifi_" + intNumberOfi).append(adresTarifi);
-                    $("#lbl_eczane_adres_tarifi_" + intNumberOfi).css("font-size", fontSizeAdres + "%");
-
-                    // $("#lbl_eczane_telefon_" + intNumberOfi).append(0 + " " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2));
-                    //console.log(adi);
-
-                }
-                else {
-                    $("#lbl_eczane_adi_" + intNumberOfi).append(adi + " ECZANESİ");
-                    $("#lbl_eczane_adi_" + intNumberOfi).css("font-size", fontSizeEczaneAdi + "%");
-                    $("#lbl_eczane_adres_" + intNumberOfi).append(adres);
-                    $("#lbl_eczane_adres_" + intNumberOfi).css("font-size", fontSizeAdres + "%");
-                    $("#lbl_eczane_adres_tarifi_" + intNumberOfi).append(adresTarifi);
-                    $("#lbl_eczane_adres_tarifi_" + intNumberOfi).css("font-size", fontSizeAdres + "%");
-                }
-                    //$("#div_" + intNumberOfi).append("<h4> " + adi + " ECZANESİ  </h4>" +
-                    //    "<h7 style=\"color:white; font-weight:600\">" + adres + "</h7>" +
-                    //    "</br ><h7 style=\"color:#00ff80; font-weight:700\">" + adresTarifi + "</h7>"
-                    //    +
-                    //    //  "</br ><h4>0 " + tel.substr(0, 3) + " " + tel.substr(4, 3) + " " + tel.substr(7, 2) + " " + tel.substr(9, 2) + "</h4>"
-
-                    //    "</br ><h4>0" + tel + + "</h4>"
-                    //);
-
-                // $("p").append("<strong>Hello</strong>");
-                // Will stop running after "three"
-                //return (val !== "three");
             });
         }
 
@@ -1372,18 +1828,91 @@
         //sol menü renkleri ayarlar
         function changeColor(counter) {
             // alert('changeColor counter' + counter)
-          
+
             for (var k = 1; k < nobetciEczaneSayisi + 1; k++) {
                 if (k == counter) {
                     $("#div_" + k).css('background-color', '');
-                    $("#div_" + k).css('background-color', '#ffffff');
-                    $("#lbl_eczane_adi_" + k).css('color', '#ff0000');
-                    $("#lbl_eczane_adres_" + k).css('color', '#ff0000');
-                    $("#lbl_eczane_adres_tarifi_" + k).css('color', '#0000ff');
-                    $("#lbl_eczane_telefon_" + k).css('color', '#ff0000');
-                    $("#lbl_eczane_nobetGrovTipAdi_" + k).css('color', '#ff0000');
+                    $("#div_" + k).css('background-color', '#ff0001');
+                    $("#div_solSutunBackGround_" + k).css('background-color', '#e0e0e0');
+                    $(".div_solSutunBackGround").css('background-color', '#e0e0e0');
+
+                    //sol taraf
+                    if (nobetciEczaneSayisi < 6 || (nobetciEczaneSayisi >= 6 && k <= nobetciEczaneSayisi / 2)) {
+                        if (k == 1) {
+                            $("#div_" + k).css('border-radius', '15px 0 0 15px');
+                            $("#div_" + 2).css('border-radius', '0 15px 0 0');
+                            $("#div_" + 2).css('background-color', '#e0e0e0');
+                            $("#div_solSutunBackGround_" + 2).css('background-color', '#ff0001');
+                            $(".div_haritaBolumu").css('border-radius', '0 15px 15px 15px');
+
+                        }
+                        else if (k < nobetciEczaneSayisi / 2 || (k == 2 && nobetciEczaneSayisi > 2)) {
+                            var k_arti = k + 1;
+                            var k_eksi = k - 1;
+                            $("#div_" + k_eksi).css('border-radius', '0 0 15px 0');
+                            $("#div_" + k_eksi).css('background-color', '#e0e0e0');
+                            $("#div_solSutunBackGround_" + k_eksi).css('background-color', '#ff0001');
+                            $("#div_solSutunBackGround_" + k).css('background-color', '#e0e0e0');
+                            $("#div_" + k).css('border-radius', '15px 0 0 15px');
+                            $("#div_" + k_arti).css('border-radius', '0 15px 0 0');
+                            $("#div_" + k_arti).css('background-color', '#e0e0e0');
+                            $("#div_solSutunBackGround_" + k_arti).css('background-color', '#ff0001');
+                            $(".div_haritaBolumu").css('border-radius', '15px 15px 15px 15px');
+                        }
+                        else if (k == nobetciEczaneSayisi / 2 || nobetciEczaneSayisi == k) {
+                            var k_arti = k + 1;
+                            var k_eksi = k - 1;
+                            $("#div_" + k_eksi).css('background-color', '#e0e0e0');
+                            $("#div_solSutunBackGround_" + k_eksi).css('background-color', '#ff0001');
+                            $("#div_" + k_eksi).css('border-radius', '0 0 15px 0');
+                            $("#div_" + k).css('border-radius', '15px 0 0 15px');
+                            $(".div_haritaBolumu").css('border-radius', '15px 15px 15px 0');
+                        }
+                        else {
+                            $(".div_haritaBolumu").css('border-radius', '15px 15px 15px 15px');
+                            $("#div_" + k).css('border-radius', '15px 0 0 15px');
+                        }
+
+                    }
+                    else {
+                        if (k - 1 == nobetciEczaneSayisi / 2) {
+                            var k_arti = k + 1;
+                            var k_eksi = k - 1;
+                            $("#div_" + k).css('border-radius', '0 15px 15px 0');
+                            $("#div_" + k_arti).css('border-radius', '15px 0 0 0');
+                            $("#div_" + k_arti).css('background-color', '#e0e0e0');
+                            $("#div_sagSutunBackGround_" + k_arti).css('background-color', '#ff0001');
+                            $(".div_haritaBolumu").css('border-radius', '15px 0 15px 15px');
+                        }
+                        else if (k == nobetciEczaneSayisi) {
+                            var k_arti = k + 1;
+                            var k_eksi = k - 1;
+                            $("#div_sagSutunBackGround_" + k_eksi).css('background-color', '#ff0001');
+                            $("#div_" + k_eksi).css('border-radius', '0 0 0 15px');
+                            $("#div_" + k).css('border-radius', '0 15px 15px 0');
+                            $(".div_haritaBolumu").css('border-radius', '15px 15px 0 15px');
+                        }
+                        else {
+                            var k_arti = k + 1;
+                            var k_eksi = k - 1;
+                            $("#div_" + k_eksi).css('border-radius', '0 0 0 15px');
+                            $("#div_" + k_eksi).css('background-color', '#e0e0e0');
+                            $("#div_sagSutunBackGround_" + k_eksi).css('background-color', '#ff0001');
+                            $("#div_sagSutunBackGround_" + k).css('background-color', '#e0e0e0');
+                            $("#div_" + k).css('border-radius', '0 15px 15px 0');
+                            $("#div_" + k_arti).css('border-radius', '15px 0 0 0');
+                            $("#div_" + k_arti).css('background-color', '#e0e0e0');
+                            $("#div_sagSutunBackGround_" + k_arti).css('background-color', '#ff0001');
+                            $(".div_haritaBolumu").css('border-radius', '15px 15px 15px 15px');
+                        }
+                    }
+                    $("#lbl_eczane_adi_" + k).css('color', '#e0e0e0');
+                    $("#lbl_eczane_adres_" + k).css('color', '#e0e0e0');
+                    $("#lbl_eczane_adres_tarifi_" + k).css('color', '#000000');
+                    $("#lbl_eczane_telefon_" + k).css('color', '#e0e0e0');
+                    $("#lbl_eczane_nobetGrovTipAdi_" + k).css('color', '#e0e0e0');
                     //$("#div_" + k).css({
-                    //    "border-color": "#ffffff",
+                    //    "border-color": "#ff0001",
                     //    "border-width": "10px",
                     //    "border-style": "solid"
                     //});
@@ -1391,27 +1920,29 @@
                 }
                 else {
                     $("#div_" + k).css('background-color', '');
-                    $("#div_" + k).css('background-color', '#ff0000');
-                    $("#lbl_eczane_adi_" + k).css('color', '#ffffff');
-                    $("#lbl_eczane_adres_" + k).css('color', '#ffffff');
-                    $("#lbl_eczane_adres_tarifi_" + k).css('color', '#00ff00');
-                    $("#lbl_eczane_telefon_" + k).css('color', '#ffffff');
-                    $("#lbl_eczane_nobetGrovTipAdi_" + k).css('color', '#ffffff');
+                    $("#div_" + k).css('background-color', '#e0e0e0');
+                    //$("#div_" + k).css('border-radius', '0 0 0 0');
+
+                    $("#lbl_eczane_adi_" + k).css('color', '#ff0001');
+                    $("#lbl_eczane_adres_" + k).css('color', '#ff0001');
+                    $("#lbl_eczane_adres_tarifi_" + k).css('color', '#000000');
+                    $("#lbl_eczane_telefon_" + k).css('color', '#ff0001');
+                    $("#lbl_eczane_nobetGrovTipAdi_" + k).css('color', '#ff0001');
 
                     //$("#div_" + k).css({
                     //    "border-color": "#ff0000",
                     //    "border-width": "10px",
                     //    "border-style": "solid"
                     //});
-                    
+
 
                 }
                 var adi = nobetciEczaneler[k - 1].adi
                 var tel = nobetciEczaneler[k - 1].tel
                 var adres = nobetciEczaneler[k - 1].adres
                 var adresTarifi = nobetciEczaneler[k - 1].adresTarifi
-                var nobetGorevTipAdi = nobetciEczaneler[k - 1].nobetGorevTipAdi
-                //console.log('nobetGorevTipAdi: ' + nobetGorevTipAdi)
+                var eczaneninAcikOlduguSaatAraligi = nobetciEczaneler[k - 1].eczaneninAcikOlduguSaatAraligi
+                //console.log('eczaneninAcikOlduguSaatAraligi: ' + eczaneninAcikOlduguSaatAraligi)
                 //console.log('saat: ' + saat)
                 //console.log('dakika: ' + dakika)
                 //console.log('saniye: ' + saniye)
@@ -1419,11 +1950,11 @@
                 var saat = today.getHours();
                 var dakika = today.getMinutes();
                 var saniye = today.getSeconds();
-                var nobetBitisSaati = nobetGorevTipAdi.substr(8, 2)
-                var nobetBitisDakika = nobetGorevTipAdi.substr(11, 2)
+                var nobetBitisSaati = eczaneninAcikOlduguSaatAraligi.substr(8, 2)
+                var nobetBitisDakika = eczaneninAcikOlduguSaatAraligi.substr(11, 2)
                 //nobetBitisSaati = 23
                 //console.log('adi: ' + adi)
-                //console.log('nobetGorevTipAdi: ' + nobetGorevTipAdi)
+                //console.log('eczaneninAcikOlduguSaatAraligi: ' + eczaneninAcikOlduguSaatAraligi)
                 //console.log('nobetBitisSaati: ' + nobetBitisSaati)
                 //console.log('nobetBitisDakika: ' + nobetBitisDakika)
                 //console.log('dakika: ' + dakika)
@@ -1433,7 +1964,7 @@
                     //alert('location.reload')
                     location.reload()
                 }
-                
+
             }
         }
         function changeQRCode(counter) {
@@ -1461,7 +1992,7 @@
             tel: model.EkraninBulunduguEczane.TelefonNo,
             adres: model.EkraninBulunduguEczane.Adres,
             adresTarifi: model.EkraninBulunduguEczane.AdresTarifiKisa,
-            nobetGorevTipAdi: model.EkraninBulunduguEczane.NobetGorevTipAdi
+           //eczaneninAcikOlduguSaatAraligi: model.EkraninBulunduguEczane.EczaneninAcikOlduguSaatAraligi
         }
         //alert(model.NobetciEczaneler[1].Adi)
 
@@ -1495,8 +2026,8 @@
                 koordinaty: nobetciEczaneler[indexFromCounter].koordinaty,
                 tel: nobetciEczaneler[indexFromCounter].tel,
                 adres: nobetciEczaneler[indexFromCounter].adres,
-                nobetGorevTipAdi: nobetciEczaneler[indexFromCounter].nobetGorevTipAdi
-            }          
+                eczaneninAcikOlduguSaatAraligi: nobetciEczaneler[indexFromCounter].eczaneninAcikOlduguSaatAraligi
+            }
 
             var newStartLat = locationOfCurrentPharmacy.koordinatx;
             var newStartLng = locationOfCurrentPharmacy.koordinaty;
@@ -1537,23 +2068,32 @@
                                 tel: model.NobetciEczaneler[e].TelefonNo,
                                 adres: model.NobetciEczaneler[e].Adres,
                                 adresTarifi: model.NobetciEczaneler[e].AdresTarifiKisa,
-                                nobetGorevTipAdi: model.NobetciEczaneler[e].NobetGorevTipAdi,
+                                nobetUstGrupId: model.NobetciEczaneler[e].NobetUstGrupId,
+                                eczaneninAcikOlduguSaatAraligi: model.NobetciEczaneler[e].EczaneninAcikOlduguSaatAraligi,
+                                //nobetGorevTipAdi: model.NobetciEczaneler[e].NobetGorevTipAdi,
                                 oldIndex: mesafeler[e].Index
                             }
                             nobetciEczaneler.push(newElemente)
                         }
                     }
                 }
-                for (var d = 0; d < nobetciEczaneler.length; d++) {
-                    //alert(' mesafelerNewArray.length: ' + mesafelerNewArray.length)
-                    //alert(' nobetciEczaneler[d].adi: ' + nobetciEczaneler[d].adi)
-                    //alert(' nobetciEczaneler[d].oldIndex: ' + nobetciEczaneler[d].oldIndex)
-                }
+
+                //console.log('ekrandaOlmasiIstenenEczaneSayisi: ' + ekrandaOlmasiIstenenEczaneSayisi)
+                //if (mesafelerNewArray.length > 8 || model.NobetciEczaneler[0].NobetUstGrupId == 7) {
+                //    for (var d = 0; d < mesafelerNewArray.length; d++) {
+                //        if (mesafeler[d].mesafe > 15)
+                //            nobetciEczaneler.pop(newElemente)
+                //        //console.log(nobetciEczaneler[d].adi)
+
+                //    }
+                //}
+
                 eczaneleriKutularaBosalt()
                 eczaneleriKutularaDoldur()
                 //console.log('nobetciEczaneler: ' + nobetciEczaneler)
-                counter = nobetciEczaneSayisi - 1
+               // counter =  1
                 banttanYayinla()
+                return 0
                 //kutular tamam, maplarin sırası değişmeli!!
             }
 
@@ -1562,7 +2102,7 @@
             if (mesafeCounter < nobetciEczaneSayisi) {//yollar oluşturulurken
                 setTimeout(
                     recursivelyChangePharmacy,//(directionsService, directionsDisplay) /* Request next message  */
-                    1000 /* ..after ms seconds */
+                    500 /* ..after ms seconds */
                 );
             }
             }
@@ -1579,7 +2119,7 @@
                 return the_static_image_url_variable
                 console.log(the_static_image_url_variable)
             }
-            function getStaticUrlStringForMap(newStartLat, newEndLat, newStartLng, newEndLng, polyline_data) {
+            function getStaticUrlStringForMap(newStartLat, newEndLat, newStartLng, newEndLng, polyline_data, startAdress) {
                 //https: //maps.googleapis.com/maps/api/staticmap?center=37.070745,36.228997&zoom=14&scale=2&maptype=roadmap&markers=color:red%7Clabel:E%7C|37.073745,36.235997&markers=color:yellow%7Clabel:B%7C|37.068238,36.222535&path=weight:5|color:yellow|enc:polyline_data&size=400x300&key=AIzaSyAP29ma6oCPNwQPFdXbilDCYBKP2Gk52CE
                 var ortaNokta_lat = getOrtaNoktaLat(newStartLat, newEndLat)
                 var ortaNokta_lng = getOrtaNoktaLng(newStartLng, newEndLng)
@@ -1595,10 +2135,21 @@
                 var scale = "&scale=2";
                 var mapType = "&maptype=roadmap";
                 var merker1 = "&markers=color:black%7Clabel:B%7C|";
-                merker1 = "&markers=icon:https://bit.ly/2HiC6gq|"
+                //merker1 = "&markers=icon:https://bit.ly/2HiC6gq|"
                 //merker1 = "&markers=icon:~/Content/images/peopleStand_128x128.png|"
-
+                var markerString = "&markers=icon:"
+                var markerFolderUrl = "https://nobetyaz.com/Content/images/peopleIcon.png|"
                 var marker1Coordinates = newStartLat + "," + newStartLng;
+                var eholeMarkerUrl =  markerFolderUrl + marker1Coordinates
+                var encodedMarkerUrl = encodeURIComponent(eholeMarkerUrl)
+                merker1 = markerString + encodedMarkerUrl
+                //https%3A%2F%2Fbit.ly%2F2u2rdaA
+                var workingExample = "https://nobetyaz.com/Content/images/peopleIcon.png|"
+                merker1 = markerString + workingExample + startAdress//jsondan gelen açık adres
+                    //"Meltem Mahallesi, Falez Köprülü Kavşağı No:2006, 07050 Muratpaşa/Antalya, Türkiye"
+                console.log('merker1: ' + merker1)
+
+                console.log('startAdress: ' + startAdress)
                 var marker2 = "&markers=color:red%7Clabel:E%7C|";
                 var marker2Coordinates = newEndLat + "," + newEndLng;
                 var size = "&size=750x700";
@@ -1624,22 +2175,29 @@
                 success: function (data) {
                     var polyline_data = data.routes[0].overview_polyline.points;
                     var distance = data.routes[0].legs[0].distance.text;
+                    var startAdress = data.routes[0].legs[0].start_address;
+                    //var startLat = data.routes[0].legs[0].start_location.lat;
+                    //var startLng = data.routes[0].legs[0].start_location.lng;
+                    //var startLocation = startLat + "," + startLng
                     if (mesafeCounter < nobetciEczaneSayisi) {
                         var newElement = {
                             adi: model.NobetciEczaneler[mesafeCounter].Adi,
                             mesafe: parseFloat(distance.split(' ')[0].replace(',', '.')),
                             Index: mesafeCounter,
-                            nobetGorevTipAdi: model.NobetciEczaneler[mesafeCounter].NobetGorevTipAdi,
+                            eczaneninAcikOlduguSaatAraligi: model.NobetciEczaneler[mesafeCounter].EczaneninAcikOlduguSaatAraligi,
                         }
                         $("#lbl_mesafe" + mesafeCounter).text(" " + distance);
-                        
+
                         mesafeler.push(newElement)
                        // alert('mesafe')
                     }
 
                     //console.log(model.NobetciEczaneler[counter - 1].Adi)
                     //console.log(distance)
-                    var imgSrc = getStaticUrlStringForMap(newStartLat, newEndLat, newStartLng, newEndLng, polyline_data)
+                    //console.log('startAdress: ' + startAdress)
+                    var imgSrc = getStaticUrlStringForMap(newStartLat, newEndLat, newStartLng, newEndLng, polyline_data, startAdress)
+                    console.log('imgSrc: ' + imgSrc)
+
                     $("#img" + mesafeCounter).attr("src", imgSrc);
                     //console.log('mesafeCounter: ' + mesafeCounter)
                     mesafeCounter++;
@@ -1648,12 +2206,12 @@
                     //console.log('counter: ' + counter + ', distance: ' + distance)
                     //console.log('nobetciEczaneSayisi: ' + nobetciEczaneSayisi)
                     //var imageIndex = counter - 1;
-                 
+
                    //download0(imageAdi, imgSrc, "png")
-                  
+
                 },
                 error: function (request, textStatus, thrownError) {
-                    console.log('getGoogleMapStatic error');
+                   //console.log('getGoogleMapStatic error');
                 }
             });
             //location.reload();
@@ -1683,7 +2241,7 @@
                 pom.style.display = 'none';
                 document.body.appendChild(pom);
                 pom.click();
-                document.body.removeChild(pom);  
+                document.body.removeChild(pom);
             }
             function forceDownload(fileName, url) {
                 var xhr = new XMLHttpRequest();
@@ -1704,6 +2262,10 @@
         function banttanYayinla() {
             //generateQRCode(newEndLat + "," + newEndLng)
            //alert("banttanYayinla")
+            $("body").css('background-color', '#e0e0e0');
+
+            document.getElementById("div1").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
+            document.getElementById("loading").style.display = "none";//sayfa yüklenirken tablo gizlenir
 
             if (counter > nobetciEczaneSayisi)
                 counter = 1;
@@ -1721,20 +2283,20 @@
                 koordinaty: nobetciEczaneler[indexFromCounter].koordinaty,
                 tel: nobetciEczaneler[indexFromCounter].tel,
                 adres: nobetciEczaneler[indexFromCounter].adres,
-                nobetGorevTipAdi: nobetciEczaneler[indexFromCounter].nobetGorevTipAdi
+                eczaneninAcikOlduguSaatAraligi: nobetciEczaneler[indexFromCounter].eczaneninAcikOlduguSaatAraligi
             }
 
             var newStartLat = locationOfCurrentPharmacy.koordinatx;
             var newStartLng = locationOfCurrentPharmacy.koordinaty;
             var newEndLat = locationOfDestination.koordinatx;
             var newEndLng = locationOfDestination.koordinaty;
-           // console.log(locationOfDestination.nobetGorevTipAdi)
+           // console.log(locationOfDestination.eczaneninAcikOlduguSaatAraligi)
            //getGoogleMapStatic(newStartLat, newEndLat, newStartLng, newEndLng, counter)
 
             //var imgSrc = "../../../../Content/images/peopleStand_256x256.png";
             //$("#img" + indexFromCounter).attr("src", imgSrc);
 
-            
+
             for (var sayac = 0; sayac < nobetciEczaneSayisi; sayac++) {
                 //console.log(nobetciEczaneler[sayac].oldIndex)
                 if (sayac == indexFromCounter) {
@@ -1748,17 +2310,18 @@
             }
 
 
-            if (counter == 1) {
+            //if (counter == 1) {
+            //    $("body").css('background-color', '#e0e0e0');
 
-                document.getElementById("div1").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
-                document.getElementById("loading").style.display = "none";//sayfa yüklenirken tablo gizlenir
-            }
+            //    document.getElementById("div1").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
+            //    document.getElementById("loading").style.display = "none";//sayfa yüklenirken tablo gizlenir
+            //}
             counter++;
             //alert('counter: ' + counter)
 
             setTimeout(
                 banttanYayinla,//(directionsService, directionsDisplay), /* Request next message  */
-                5000 /* ..after ms seconds */
+                5000 /* bu değişirse changeColor da saniye==6 şeklinde oraya eklenmeli, azaltılırsa silinmeli */
             );
 
         }
@@ -1962,10 +2525,57 @@
                 success: function (data) {
                     //alert('700');
                     //console.log(clientWidth);
+                    if (clientWidth < 600) {
+                        // alert(clientWidth);
 
-                    if (clientWidth < 1400) {
+                        //alert('success');
+                        var imag = "<img  style=\"width: 30px; height: 30px\" "
+                            + "src='" + "data:image/jpg;base64,"
+                            + data.base64imgage + "'/>";
+                        $("#div_MyLetterImage").html(imag)
+                        // location.reload();
+                    }
+                    else if (clientWidth < 800) {
+                        //alert('success');
+                        var imag = "<img  style=\"width: 55px; height: 55px\" "
+                            + "src='" + "data:image/jpg;base64,"
+                            + data.base64imgage + "'/>";
+                        $("#div_MyLetterImage").html(imag)
+                        // location.reload();
+                    }
+                    else if (clientWidth < 1000) {
+                        // alert(clientWidth);
+
+                        //alert('success');
+                        var imag = "<img  style=\"width: 75px; height: 75px\" "
+                            + "src='" + "data:image/jpg;base64,"
+                            + data.base64imgage + "'/>";
+                        $("#div_MyLetterImage").html(imag)
+                        // location.reload();
+                    }
+                    else if (clientWidth < 1200) {
+                        // alert(clientWidth);
+
                         //alert('success');
                         var imag = "<img  style=\"width: 100px; height: 100px\" "
+                            + "src='" + "data:image/jpg;base64,"
+                            + data.base64imgage + "'/>";
+                        $("#div_MyLetterImage").html(imag)
+                        // location.reload();
+                    }
+                    else if (clientWidth < 1400) {
+                        //alert('success');
+                        var imag = "<img  style=\"width: 100px; height: 100px\" "
+                            + "src='" + "data:image/jpg;base64,"
+                            + data.base64imgage + "'/>";
+                        $("#div_MyLetterImage").html(imag)
+                        // location.reload();
+                    }
+                    else if (clientWidth < 1600) {
+                        // alert(clientWidth);
+
+                        //alert('success');
+                        var imag = "<img  style=\"width: 145px; height: 145px\" "
                             + "src='" + "data:image/jpg;base64,"
                             + data.base64imgage + "'/>";
                         $("#div_MyLetterImage").html(imag)
@@ -2005,7 +2615,7 @@
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
                    // addmsg("error", textStatus + " (" + errorThrown + ")");
-                    alert(textStatus + " (" + errorThrown + ")");
+                    //alert(textStatus + " (" + errorThrown + ")");
                 }
             });
         }
@@ -2034,7 +2644,7 @@
             var pivot = items[Math.floor((right + left) / 2)].mesafe,
                 i = left,
                 j = right;
- 
+
 
             while (i <= j) {
 

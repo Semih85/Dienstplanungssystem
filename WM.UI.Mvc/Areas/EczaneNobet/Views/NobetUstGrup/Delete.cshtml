@@ -44,6 +44,30 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Enlem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Enlem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Boylam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Boylam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeLimit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeLimit)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Aciklama)
         </dt>
 
@@ -53,7 +77,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

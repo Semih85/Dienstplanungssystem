@@ -73,7 +73,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<NobetUstGrupKisitDetay> GetVarsayilandanFarkliOlanlar(int nobetUstGrupId)
         {
             return _nobetUstGrupKisitDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId
-            && (x.SagTarafDegeri != x.SagTarafDegeriVarsayilan || x.PasifMi != x.VarsayilanPasifMi)
+            && (x.SagTarafDegeri != x.SagTarafDegeriVarsayilan
+             || x.PasifMi != x.VarsayilanPasifMi
+             || x.NobetGrupGorevtipKisitSayisi > 0
+             )
             );
         }
 
@@ -101,8 +104,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
         public int GetDegisenKisitlar(int nobetUstGrupId)
         {
-            var sayi = _nobetUstGrupKisitDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId
-                                                        && (x.PasifMi != x.VarsayilanPasifMi || x.SagTarafDegeri != x.SagTarafDegeriVarsayilan)).Count();
+            var sayi = GetVarsayilandanFarkliOlanlar(nobetUstGrupId).Count;
+
+            //_nobetUstGrupKisitDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId
+            //                                        && (x.PasifMi != x.VarsayilanPasifMi 
+            //                                        || x.SagTarafDegeri != x.SagTarafDegeriVarsayilan
+            //                                        || x.NobetGrupGorevtipKisitSayisi > 0
+            //                                        )).Count();
+
             if (sayi > 0)
             {
                 return sayi;

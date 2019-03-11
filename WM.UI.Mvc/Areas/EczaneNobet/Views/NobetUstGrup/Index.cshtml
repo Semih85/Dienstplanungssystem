@@ -28,6 +28,9 @@
                 @Html.DisplayNameFor(model => model.Aciklama)
             </th>
             <th>
+                @Html.DisplayName("Time Limit")
+            </th>
+            <th>
                 Durum
             </th>
             <th></th>
@@ -44,6 +47,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Aciklama)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeLimit)
             </td>
             <td>
                 @if (item.BitisTarihi != null)

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WM.Northwind.Business.Abstract.Authorization;
 using WM.Northwind.Business.Abstract.EczaneNobet;
+using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.UI.Mvc.Models;
 
@@ -93,10 +94,16 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var nobetUstGrupKisit = nobetUstGrupKisitlar.SingleOrDefault(x => x.KisitId == kisitId);
 
+            var nobetGrupGorevTipKisit = new NobetGrupGorevTipKisitDetay
+            {
+                SagTarafDegeri = nobetUstGrupKisit.SagTarafDegeri,
+                PasifMi = nobetUstGrupKisit.PasifMi
+            };
+
             ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi");
             ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitlar, "Id", "KisitAdiUzun", nobetUstGrupKisit.Id);
 
-            return View("Create");
+            return View("Create", nobetGrupGorevTipKisit);
         }
 
         // POST: EczaneNobet/NobetGrupGorevTipKisit/Create

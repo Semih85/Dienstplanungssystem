@@ -20,6 +20,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         NobetGrupGorevTipKisitDetay GetDetayById(int nobetGrupGorevTipKisitId);
         List<NobetGrupGorevTipKisitDetay> GetDetaylar();
         List<NobetGrupGorevTipKisitDetay> GetDetaylar(int nobetUstGrupId);
-
+        NobetGrupGorevTipKisitDetay GetDetay(int kisitId, int nobetGrupGorevTipId);
+        List<NobetGrupGorevTipKisitDetay> GetDetaylarByNobetGrupGorevTipId(int nobetGrupGorevTipId);
     }
 }

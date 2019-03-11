@@ -12,6 +12,8 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
     {
         public int Id { get; set; }
         public string Adi { get; set; }
+        public string EczaneninAcikOlduguSaatAraligi { get; set; }
+        public string NobetSaatAraligi { get; set; }
 
         public virtual List<EczaneNobetSonucAktif> EczaneNobetSonucAktifler { get; set; }
         public virtual List<EczaneNobetSonucDemo> EczaneNobetSonucDemolar { get; set; }

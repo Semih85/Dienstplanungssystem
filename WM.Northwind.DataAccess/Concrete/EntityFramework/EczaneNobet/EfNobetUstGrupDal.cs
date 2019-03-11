@@ -30,7 +30,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                             BaslangicTarihi = x.BaslangicTarihi,
                             BitisTarihi = x.BitisTarihi,
                             Enlem = x.Enlem,
-                            Boylam = x.Boylam
+                            Boylam = x.Boylam,
+                            TimeLimit = x.TimeLimit
                         }).SingleOrDefault(filter);
             }
         }
@@ -50,7 +51,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                             BaslangicTarihi = x.BaslangicTarihi,
                             BitisTarihi = x.BitisTarihi,
                             Enlem = x.Enlem,
-                            Boylam = x.Boylam
+                            Boylam = x.Boylam,
+                            TimeLimit = x.TimeLimit
                         });
 
                 return filter == null

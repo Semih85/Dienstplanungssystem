@@ -159,7 +159,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 BitisTarihi = bitisTarihi,
                 SonNobetTarihi = sonNobetTarihi < nobetUstGrup.BaslangicTarihi ? nobetUstGrup.BaslangicTarihi.AddDays(-1) : sonNobetTarihi,
                 CalismaSayisi = 0,
-                TimeLimit = 180
+                TimeLimit = nobetUstGrup.TimeLimit
             };
 
             if (TempData["KesinlesenBaslangicTarihi"] != null)
@@ -277,18 +277,23 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             if (eczaneNobetModelCoz.BuAyVeSonrasi)
             {
-                return RedirectToAction("PivotCozum", "EczaneNobetSonuc",
-                    new { area = "EczaneNobet", nobetGrup = eczaneNobetModelCoz.NobetGrupId, yilBaslangic = eczaneNobetModelCoz.BaslangicTarihi.Year, yilBitis = eczaneNobetModelCoz.BitisTarihi.Year });
+                return RedirectToAction("PivotSonuclar", "EczaneNobetSonuc");
+                    //RedirectToAction("PivotCozum", "EczaneNobetSonuc",
+                    //new { area = "EczaneNobet", nobetGrup = eczaneNobetModelCoz.NobetGrupId, yilBaslangic = eczaneNobetModelCoz.BaslangicTarihi.Year, yilBitis = eczaneNobetModelCoz.BitisTarihi.Year });
             }
             else if (eczaneNobetModelCoz.CozumTercih == 0 && eczaneNobetModelCoz.NobetGrupId.Count() > 1)
             {
-                return RedirectToAction("PivotCozum", "EczaneNobetSonuc",
-                    new { area = "EczaneNobet", nobetGrup = eczaneNobetModelCoz.NobetGrupId, yilBaslangic = eczaneNobetModelCoz.BaslangicTarihi.Year, yilBitis = eczaneNobetModelCoz.BitisTarihi.Year });
+                return RedirectToAction("PivotSonuclar", "EczaneNobetSonuc");
+
+                //return RedirectToAction("PivotCozum", "EczaneNobetSonuc",
+                //    new { area = "EczaneNobet", nobetGrup = eczaneNobetModelCoz.NobetGrupId, yilBaslangic = eczaneNobetModelCoz.BaslangicTarihi.Year, yilBitis = eczaneNobetModelCoz.BitisTarihi.Year });
             }
             else if (nobetUstGrup.Id == 6 || nobetUstGrup.Id == 7 || nobetUstGrup.Id == 8)
             {
-                return RedirectToAction("PivotCozum", "EczaneNobetSonuc",
-                    new { area = "EczaneNobet", nobetGrup = eczaneNobetModelCoz.NobetGrupId, yilBaslangic = eczaneNobetModelCoz.BaslangicTarihi.Year, yilBitis = eczaneNobetModelCoz.BitisTarihi.Year });
+                return RedirectToAction("PivotSonuclar", "EczaneNobetSonuc");
+
+                //return RedirectToAction("PivotCozum", "EczaneNobetSonuc",
+                //    new { area = "EczaneNobet", nobetGrup = eczaneNobetModelCoz.NobetGrupId, yilBaslangic = eczaneNobetModelCoz.BaslangicTarihi.Year, yilBitis = eczaneNobetModelCoz.BitisTarihi.Year });
             }
 
             var routeValues = new PivotSonuclarParams
@@ -472,6 +477,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
             return sonuc;
         }
+
         public ActionResult NobetGrupGorevTiplerDDLPartialView(int nobetUstGrupId)
         {
             var nobetGrupGorevTipler = _eczaneNobetGrupService.NobetGruplarDDL(nobetUstGrupId);

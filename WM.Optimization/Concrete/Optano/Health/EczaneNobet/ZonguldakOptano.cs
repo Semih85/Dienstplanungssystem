@@ -23,11 +23,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             var model = new Model() { Name = "Zonguldak Eczane Nöbet" };
 
-            var kisitlarUstGrup = data.Kisitlar;
-            var kisitlarAktif = new List<NobetUstGrupKisitDetay>();
-
-            kisitlarAktif.AddRange(kisitlarUstGrup);
-
             #region Veriler
 
             #region kısıtlar
@@ -41,7 +36,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var oncekiAylarAyniGunNobet = NobetUstGrupKisit(data.Kisitlar, "oncekiAylarAyniGunNobet", data.NobetUstGrupId);
             var eczanelerinNobetGunleriniKisitla = NobetUstGrupKisit(data.Kisitlar, "eczanelerinNobetGunleriniKisitla", data.NobetUstGrupId);
 
-            var ayIcindeAyniGunNobet = NobetUstGrupKisit(data.Kisitlar, "ayIcindeAyniGunNobet", data.NobetUstGrupId);            
+            var ayIcindeAyniGunNobet = NobetUstGrupKisit(data.Kisitlar, "ayIcindeAyniGunNobet", data.NobetUstGrupId);
 
             #endregion
 
@@ -170,45 +165,23 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #region Kısıtlar
 
-            #region Gece nöbetçileri
-
             foreach (var nobetGrupGorevTip in data.NobetGrupGorevTipler)
             {
                 #region kısıtlar grup bazlı
 
+                var kisitlarAktif = new List<NobetUstGrupKisitDetay>();
+
+                //üst grup kısıtlar olduğu gibi aktif listeye aktarıldı. grup bazlı değişen olursa aktiften değişecek.
+                data.Kisitlar.ForEach(x => kisitlarAktif.Add((NobetUstGrupKisitDetay)x.Clone()));
+
                 var kisitlarGrupBazli = data.NobetGrupGorevTipKisitlar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                if (kisitlarGrupBazli.Count > 0)
+                foreach (var grupBazliKisit in kisitlarGrupBazli)
                 {
-                    foreach (var grupBazliKisit in kisitlarGrupBazli)
-                    {
-                        var kisitUstGrup = kisitlarAktif.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId);
+                    var kisitGrupBazli = kisitlarAktif.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId);
 
-                        var kisitGrup = new NobetUstGrupKisitDetay
-                        {
-                            Id = kisitUstGrup.Id,
-                            KisitId = kisitUstGrup.KisitId,
-                            KisitAdi = kisitUstGrup.KisitAdi,
-                            KisitAciklama = kisitUstGrup.KisitAciklama,
-                            KisitAdiGosterilen = kisitUstGrup.KisitAdiGosterilen,
-                            KisitKategoriAdi = kisitUstGrup.KisitKategoriAdi,
-                            KisitKategoriId = kisitUstGrup.KisitKategoriId,
-                            NobetUstGrupAdi = kisitUstGrup.NobetUstGrupAdi,
-                            NobetUstGrupId = kisitUstGrup.NobetUstGrupId,
-                            SagTarafDegeriVarsayilan = kisitUstGrup.SagTarafDegeriVarsayilan,
-                            VarsayilanPasifMi = kisitUstGrup.VarsayilanPasifMi,
-
-                            PasifMi = grupBazliKisit.PasifMi,
-                            SagTarafDegeri = grupBazliKisit.SagTarafDegeri
-                        };
-
-                        kisitlarAktif.Remove(kisitUstGrup);
-                        kisitlarAktif.Add(kisitGrup);
-                    }
-                }
-                else
-                {
-                    kisitlarAktif = data.Kisitlar;
+                    kisitGrupBazli.PasifMi = grupBazliKisit.PasifMi;
+                    kisitGrupBazli.SagTarafDegeri = grupBazliKisit.SagTarafDegeri;
                 }
 
                 #endregion
@@ -1386,7 +1359,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 #endregion
 
             }
-            #endregion
 
             #endregion
 

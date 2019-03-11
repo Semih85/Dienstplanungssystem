@@ -18,6 +18,13 @@
             <th>
                 @Html.DisplayName("Adı")
             </th>
+            <th>
+                @Html.DisplayName("Eczanenin Açık Olduğu Saat Aralığı")
+            </th>
+
+            <th>
+                @Html.DisplayName("Nöbet Saat Aralığı")
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -28,6 +35,12 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EczaneninAcikOlduguSaatAraligi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NobetSaatAraligi)
         </td>
         <td>
             @{
