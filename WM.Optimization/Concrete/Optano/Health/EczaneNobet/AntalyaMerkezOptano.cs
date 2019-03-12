@@ -616,13 +616,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     if (bayramSayisi > 0)
                     {
-                        var bayramNobetleri = nobetGunKuralNobetSayilari
-                            .Where(w => w.GunGrupId == 2).ToList();
+                        //var bayramNobetleri = nobetGunKuralNobetSayilari
+                        //    .Where(w => w.GunGrupId == 2).ToList();
 
                         var bayramNobetleriAnahtarli = eczaneNobetSonuclar
                                 .Where(w => w.GunGrupId == 2).ToList();
 
-                        var toplamBayramNobetSayisi = bayramNobetleri.Sum(s => s.NobetSayisi);
+                        var toplamBayramNobetSayisi = eczaneNobetIstatistik.NobetSayisiBayram;// bayramNobetleri.Sum(s => s.NobetSayisi);
 
                         var bayramGunKuralIstatistikler = nobetGunKuralIstatistikler
                                                         .Where(w => w.GunGrupId == 2).ToList();

@@ -664,16 +664,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     if (bayramSayisi > 0)
                     {
-                        var bayramNobetleri = eczaneNobetSonuclar
-                                .Where(w => w.NobetGunKuralId > 7
-                                         && w.Tarih >= data.NobetUstGrupBaslangicTarihi)
-                                .Select(s => new { s.TakvimId, s.NobetGunKuralId }).ToList();
+                        //var bayramNobetleri = eczaneNobetSonuclar
+                        //        .Where(w => w.NobetGunKuralId > 7
+                        //                 && w.Tarih >= data.NobetUstGrupBaslangicTarihi)
+                        //        .Select(s => new { s.TakvimId, s.NobetGunKuralId }).ToList();
 
                         var bayramNobetleriAnahtarli = eczaneNobetSonuclar
                                 .Where(w => w.NobetGunKuralId > 7).ToList();
                         //.Select(s => new { s.TakvimId, s.NobetGunKuralId }).ToList();
 
-                        var toplamBayramNobetSayisi = bayramNobetleri.Count();
+                        var toplamBayramNobetSayisi = eczaneNobetIstatistik.NobetSayisiBayram;//bayramNobetleri.Count();
 
                         var bayramGunKuralIstatistikler = nobetGunKuralIstatistikler
                                                         .Where(w => w.NobetGunKuralId > 7).ToList();

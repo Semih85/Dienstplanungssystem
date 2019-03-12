@@ -21,9 +21,10 @@
 }
 <!-- #endregion -->
 
-<h4><span class="text-danger">Nöbet Sil</span> 
+<h4>
+    <span class="text-danger">Nöbet Sil</span>
     @*(Gelecek Dönem)*@
-    </h4>
+</h4>
 <hr />
 <div class="container mt-sm-1 mt-md-3">
 
@@ -62,30 +63,46 @@
                         @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <p class="card-text">
-                    Silme işlemi <span class="badge badge-danger">@buAy</span> tarihinden öncesi için yapılamamaktadır.
-                </p>
+
+                <div class="alert alert-warning" role="alert">
+                    <i class="fa fa-warning" aria-hidden="true"></i> Nöbet silme işlemi <span class="font-weight-bold">nöbet grup başlama tarihi ya da @buAy</span> tarihinden öncesi için yapılmamaktadır.
+                </div>
+
                 <div class="form-group row">
                     @*<label class="col-sm-2 col-lg-1 col-form-label font-weight-bold text-secondary">Grup</label>*@
                     <div class="col-sm-12">
-                        @Html.DropDownList("NobetGrupId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "Tüm Gruplar")
+                        <label class="font-weight-bold mb-3 mr-1"><i class="fa fa-bars" aria-hidden="true"></i> Nöbet Grupları</label>
+                        <a id="tumunuSecKaldir" href="#" class="badge badge-primary mr-2" data-toggle="tooltip" data-placement="top" title="Tüm Grupları Seç/Kaldır">
+                            @*<i class="fa fa-check"></i>*@ Tümü
+                        </a>
+                        @Html.ListBox("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control mb-2", size = $"{(ViewBag.grupSayisi > 11 ? 11 : ViewBag.grupSayisi)}" }) @*$"{ViewBag.grupSayisi}"*@
+
+                        @*@Html.ListBox("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control selectpicker",
+                                multiple = "true",
+                                //data_width = "auto",
+                                data_actions_box = "true",
+                                mobile = "true",
+                                data_live_search = "true",
+                                //data_selected_text_format = "count > 4",
+                                title = "Tüm Gruplar"
+                            })*@
                     </div>
                 </div>
 
                 @*<div class="form-group mr-2 mb-4">
-                <label class="form-control-label font-weight-bold text-secondary mr-sm-2">Nöbet Grubu: </label>
-                @Html.DropDownList("NobetGrupId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "---Tümü---")
-            </div>*@
+                        <label class="form-control-label font-weight-bold text-secondary mr-sm-2">Nöbet Grubu: </label>
+                        @Html.DropDownList("NobetGrupId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "---Tümü---")
+                    </div>*@
 
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Bu nöbetleri kalıcı olarak silmek istediğinizden emin misiniz?');">Nöbetleri Sil <i class="fa fa-remove"></i></button>
+                        <button type="submit" class="btn btn-outline-danger" id="submitNobetSil">Nöbetleri Sil <i class="fa fa-trash"></i></button>
                     </div>
                 </div>
 
                 @*<div class="form-groupmb-1" id="btnSil">
-                <button type="submit" class="btn btn-danger mr-3" onclick="return confirm('Bu nöbetleri kalıcı olarak silmek istediğinizden emin misiniz?');">Nöbetleri Sil</button>
-            </div>*@
+                        <button type="submit" class="btn btn-danger mr-3" onclick="return confirm('Bu nöbetleri kalıcı olarak silmek istediğinizden emin misiniz?');">Nöbetleri Sil</button>
+                    </div>*@
             }
 
 
@@ -111,12 +128,14 @@
 @section styles{
 
     @Styles.Render("~/bundle/bootstrap-datepicker/style")
+    @Styles.Render("~/bundle/bootstrap-select/style")
 }
 
 @section Scripts{
 
     @Scripts.Render("~/bundle/ajax")
     @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
 
     <script>
         //function SelectedIndexChanged() {
@@ -125,6 +144,7 @@
         //}
         var yil = $('#Yil').val();
         var ay = $('#Ay').val();
+        var secilenGrupSayisi = 0;
 
         $("#Yil").change(function () {
             yil = this.value;
@@ -138,7 +158,7 @@
             var baslangicStr = tarihDondur2($("#BaslangicTarihi").val());
             //alert(($("#BaslangicTarihi").val()))
             //alert(baslangicStr)
-            
+
             $('#BaslangicTarihi').datepicker('setStartDate', new Date(baslangicStr));
             $("#BaslangicTarihi").datepicker("setDate", new Date(baslangicStr));
             $('#BitisTarihi').datepicker('setStartDate', new Date(baslangicStr));
@@ -224,5 +244,38 @@
                 });
             }
         }
+
+        var tumuSeciliMi = false;
+
+        $('#tumunuSecKaldir').click(function () {
+            if (tumuSeciliMi == false && secilenGrupSayisi == 0) {
+                tumuSeciliMi = true;
+                $('#NobetGrupGorevTipId option').prop('selected', true);
+                $("#CozumTercihleri").show();
+            }
+            else {
+                tumuSeciliMi = false;
+                $('#NobetGrupGorevTipId option').prop('selected', false);
+                $("#CozumTercihleri").hide();
+            }
+            secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+        });
+
+        
+        $("#submitNobetSil").click(function (e) {
+
+            secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+
+            tarihKontrol();
+
+            if (secilenGrupSayisi == 0) {
+                alert("Lütfen nöbet grubu seçiniz")
+                e.preventDefault();
+                return false;
+            };
+
+            return confirm('Bu nöbetleri kalıcı olarak silmek istediğinizden emin misiniz?');
+
+        });
     </script>
 }

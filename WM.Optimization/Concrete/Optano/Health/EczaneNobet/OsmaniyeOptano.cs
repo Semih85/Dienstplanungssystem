@@ -254,6 +254,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         .Where(s => s.NobetKuralId == 3)
                         .Select(s => s.Deger).SingleOrDefault();
 
+                var haftaIciPespeseNobetYazilmasinKuralKatsayisi = nobetGrupKurallar
+                    .Where(s => s.NobetKuralId == 5)
+                    .SingleOrDefault() ?? new NobetGrupKuralDetay();
                 //var nobetGrupTalepler = data.NobetGrupTalepler.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
 
                 #region tarihler
@@ -332,8 +335,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 #region haftaIciPespeseGorevEnAz
 
+                //var altLimit = farkliAyPespeseGorevAraligi / gunlukNobetciSayisi * 0.7666; //0.95
+                var altLimit = (gruptakiEczaneSayisi / gunlukNobetciSayisi) * 0.6; //0.95
+
+                //hafta içi                
+                if (haftaIciPespeseNobetYazilmasinKuralKatsayisi.Deger > 0)
+                {
+                    altLimit = (int)haftaIciPespeseNobetYazilmasinKuralKatsayisi.Deger;
+                }
+
                 var farkliAyPespeseGorevAraligi = (gruptakiEczaneSayisi / gunlukNobetciSayisi * 1.2);
-                var altLimit = farkliAyPespeseGorevAraligi / gunlukNobetciSayisi * 0.7666; //0.95
                 var ustLimit = farkliAyPespeseGorevAraligi + farkliAyPespeseGorevAraligi * 0.6667; //77;
                 var ustLimitKontrol = ustLimit * 0.95; //0.81 
 
@@ -783,13 +794,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     if (bayramlar.Count() > 0)
                     {
-                        var bayramNobetleri = nobetGunKuralNobetSayilari.Where(w => w.NobetGunKuralId > 7).ToList();
+                        //var bayramNobetleri = nobetGunKuralNobetSayilari.Where(w => w.NobetGunKuralId > 7).ToList();
 
                         var bayramNobetleriAnahtarli = eczaneNobetSonuclar
                                 .Where(w => w.NobetGunKuralId > 7).ToList();
                         //.Select(s => new { s.TakvimId, s.NobetGunKuralId }).ToList();
 
-                        var toplamBayramNobetSayisi = bayramNobetleri.Sum(s => s.NobetSayisi);
+                        var toplamBayramNobetSayisi = eczaneNobetIstatistik.NobetSayisiBayram;// bayramNobetleri.Sum(s => s.NobetSayisi);
                         //bayramNobetleri.Count();
 
                         if (!bayramToplamEnFazla.PasifMi)

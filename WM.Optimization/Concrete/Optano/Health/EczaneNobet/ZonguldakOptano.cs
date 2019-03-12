@@ -879,13 +879,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     if (bayramlar.Count() > 0)
                     {
-                        var bayramNobetleri = nobetGunKuralNobetSayilari.Where(w => w.NobetGunKuralId > 7).ToList();
+                        //var bayramNobetleri = nobetGunKuralNobetSayilari.Where(w => w.NobetGunKuralId > 7).ToList();
 
                         var bayramNobetleriAnahtarli = eczaneNobetSonuclar
                                 .Where(w => w.NobetGunKuralId > 7).ToList();
                         //.Select(s => new { s.TakvimId, s.NobetGunKuralId }).ToList();
 
-                        var toplamBayramNobetSayisi = bayramNobetleri.Sum(s => s.NobetSayisi);
+                        var toplamBayramNobetSayisi = eczaneNobetIstatistik.NobetSayisiBayram;// bayramNobetleri.Sum(s => s.NobetSayisi);
                         //bayramNobetleri.Count();
 
                         if (!NobetUstGrupKisit(kisitlarAktif, "K5").PasifMi)
@@ -898,7 +898,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             var kumulatifBayramSayisi = bayramGunKuralIstatistikler.Sum(x => x.GunSayisi);
 
                             var yillikOrtalamaGunKuralSayisi = OrtalamaNobetSayisi(gunlukNobetciSayisi, gruptakiEczaneSayisi, kumulatifBayramSayisi);
-                            //Math.Ceiling((double)kumulatifBayramSayisi / gruptakiEczaneSayisi);
 
                             if (kumulatifBayramSayisi == gruptakiEczaneSayisi)
                             {
@@ -955,13 +954,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                     KumulatifToplamEnFazla(kumulatifToplamEnFazlaBayram);
                                 }
                             }
-
-                            //model.AddConstraint(
-                            //  Expression.Sum(data.EczaneNobetTarihAralik
-                            //                .Where(e => e.EczaneNobetGrupId == eczaneNobetGrup.Id
-                            //                         && e.GunDegerId > 7)
-                            //                .Select(m => _x[m])) + toplamBayramNobetSayisi <= toplamBayramMax,
-                            //                $"her eczaneye bir ayda nobet grubunun hedefi kadar toplam bayram nobeti yazilmali, {eczaneNobetGrup}");
                         }
                     }
                     #endregion

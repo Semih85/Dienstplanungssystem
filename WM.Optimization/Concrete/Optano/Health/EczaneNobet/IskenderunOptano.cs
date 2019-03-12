@@ -756,12 +756,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     if (bayramlar.Count() > 0)
                     {
-                        var bayramNobetleri = nobetGunKuralNobetSayilari.Where(w => w.GunGrupId == 2).ToList();
+                        //var bayramNobetleri = nobetGunKuralNobetSayilari.Where(w => w.GunGrupId == 2).ToList();
 
                         var bayramNobetleriAnahtarli = eczaneNobetSonuclar
                                 .Where(w => w.NobetGunKuralId > 7).ToList();
 
-                        var toplamBayramNobetSayisi = bayramNobetleri.Sum(s => s.NobetSayisi);
+                        var toplamBayramNobetSayisi = eczaneNobetIstatistik.NobetSayisiBayram;// bayramNobetleri.Sum(s => s.NobetSayisi);
 
                         if (!NobetUstGrupKisit(kisitlarAktif, "K5").PasifMi)
                         {
@@ -1616,9 +1616,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             };
             EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaOncekiAylar);
 
-            #endregion
-
-            
+            #endregion            
 
             #endregion
 

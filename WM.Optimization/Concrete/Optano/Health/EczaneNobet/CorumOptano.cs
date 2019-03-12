@@ -209,9 +209,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #endregion
 
-            #region Kısıtlar
-
-            #region Gece nöbetçileri
+            #region Kısıtlar            
 
             var nobetGorevTipId = 7;
             var nobetGrupGorevTip = data.NobetGrupGorevTipler.Where(w => w.NobetGorevTipId == nobetGorevTipId).SingleOrDefault();
@@ -837,13 +835,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     if (bayramlar.Count() > 0)
                     {
-                        var bayramNobetleri = nobetGunKuralNobetSayilari.Where(w => w.NobetGunKuralId > 7).ToList();
+                        //var bayramNobetleri = nobetGunKuralNobetSayilari.Where(w => w.NobetGunKuralId > 7).ToList();
 
                         var bayramNobetleriAnahtarli = eczaneNobetSonuclar
                                 .Where(w => w.NobetGunKuralId > 7).ToList();
                         //.Select(s => new { s.TakvimId, s.NobetGunKuralId }).ToList();
 
-                        var toplamBayramNobetSayisi = bayramNobetleri.Sum(s => s.NobetSayisi);
+                        var toplamBayramNobetSayisi = eczaneNobetIstatistik.NobetSayisiBayram;// bayramNobetleri.Sum(s => s.NobetSayisi);
                         //bayramNobetleri.Count();
 
                         if (!bayramToplamEnFazla.PasifMi)
@@ -1372,7 +1370,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 #endregion
 
             }
-            #endregion
 
             #endregion
 
