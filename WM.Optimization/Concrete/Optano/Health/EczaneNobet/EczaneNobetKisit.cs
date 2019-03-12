@@ -344,7 +344,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var ilgiliTarihler = p.Tarihler.Where(w => w.NobetGunKuralId == p.SonNobet.NobetGunKuralId).ToList();
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
-                     + $"son bayram nöbeti: {p.SonNobet.NobetGorevTipAdi}"
+                     + $"son görev türü: {p.SonNobet.NobetGorevTipAdi}"
                      + $"]";
 
                 var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);

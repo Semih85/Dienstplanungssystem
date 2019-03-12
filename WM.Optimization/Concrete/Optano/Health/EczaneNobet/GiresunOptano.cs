@@ -391,12 +391,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 {
                     #region kontrol
 
-                    var kontrol = false;
+                    var kontrol = true;
 
                     if (kontrol)
                     {
                         var kontrolEdilecekEczaneler = new string[] {
-                            "IŞIK",
+                            "GEDİKKAYA",
                             //"ELİF", "AYDINLAR", "DERYA", "KARABIÇAK","IŞIK"
                         };
 
@@ -508,6 +508,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     pesPeseGorevEnAzFarkliAylar.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K18");
                     pesPeseGorevEnAzFarkliAylar.Tarihler = tarihler;
                     pesPeseGorevEnAzFarkliAylar.NobetYazilabilecekIlkTarih = nobetYazilabilecekIlkTarihTumGorevTipleri;
+                    pesPeseGorevEnAzFarkliAylar.SonNobetTarihi = eczaneNobetIstatistik.SonNobetTarihi;
 
                     PesPeseGorevEnAz(pesPeseGorevEnAzFarkliAylar);
 
@@ -522,6 +523,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     pesPeseGorevEnAzCumartesi.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K37");
                     pesPeseGorevEnAzCumartesi.Tarihler = cumartesiGunleri;
                     pesPeseGorevEnAzCumartesi.NobetYazilabilecekIlkTarih = yazilabilecekIlkCumartesiTarihi;
+                    pesPeseGorevEnAzCumartesi.SonNobetTarihi = eczaneNobetIstatistik.SonNobetTarihiCumartesi;
 
                     PesPeseGorevEnAz(pesPeseGorevEnAzCumartesi);
 
@@ -535,6 +537,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     pesPeseGorevEnAzPazar.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K28");
                     pesPeseGorevEnAzPazar.Tarihler = pazarGunleri;
                     pesPeseGorevEnAzPazar.NobetYazilabilecekIlkTarih = yazilabilecekIlkPazarTarihi;
+                    pesPeseGorevEnAzPazar.SonNobetTarihi = eczaneNobetIstatistik.SonNobetTarihiPazar;
 
                     PesPeseGorevEnAz(pesPeseGorevEnAzPazar);
 
@@ -548,6 +551,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     pesPeseGorevEnAzHaftaIci.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K27");
                     pesPeseGorevEnAzHaftaIci.Tarihler = haftaIciGunleri;
                     pesPeseGorevEnAzHaftaIci.NobetYazilabilecekIlkTarih = yazilabilecekIlkHaftaIciTarihi;
+                    pesPeseGorevEnAzHaftaIci.SonNobetTarihi = eczaneNobetIstatistik.SonNobetTarihiHaftaIci;
 
                     PesPeseGorevEnAz(pesPeseGorevEnAzHaftaIci);
 
@@ -1350,7 +1354,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         kisitGrupBazli.PasifMi = grupBazliKisit.PasifMi;
                         kisitGrupBazli.SagTarafDegeri = grupBazliKisit.SagTarafDegeri;
                     }
-                }       
+                }
 
                 #endregion
 
@@ -1592,6 +1596,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         NobetSayisi = eczaneNobetIstatistik.NobetSayisiCumartesi,
                         EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
                         NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K37"),
+                        SonNobetTarihi = eczaneNobetIstatistik.SonNobetTarihiCumartesi,
                         Tarihler = cumartesiGunleri,
                         NobetYazilabilecekIlkTarih = yazilabilecekIlkCumartesiTarihi,
                         EczaneNobetGrup = eczaneNobetGrup,
@@ -1610,7 +1615,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         GunSayisi = cumartesiSayisi,
                         OrtalamaNobetSayisi = cumartesiOrtamalaNobetSayisi,
                         EczaneNobetGrup = eczaneNobetGrup,
-                        EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
+                        EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazliTumGrorevTipler.Where(w => w.NobetGunKuralId == 7).ToList(),// eczaneNobetTarihAralikEczaneBazli,
                         NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K38"),
                         GunKuralAdi = "Cumartesi_master",
                         KararDegiskeni = _x
@@ -1624,7 +1629,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         GunSayisi = bayramSayisi,
                         OrtalamaNobetSayisi = bayramOrtalamaNobetSayisi,
                         EczaneNobetGrup = eczaneNobetGrup,
-                        EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
+                        EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazliTumGrorevTipler.Where(w => w.GunGrupId == 2).ToList(),
                         NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K14"),
                         GunKuralAdi = "Bayram_master",
                         KararDegiskeni = _x
@@ -1843,21 +1848,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                         };
                                         PespeseFarkliTurNobetYaz(bayramPespeseFarkliTurKisit);
                                     }
-
-                                    //if (bayramlar.Select(s => s.NobetGunKuralId).Contains(sonBayram.NobetGunKuralId))
-                                    //{
-                                    //    var bayramPespeseFarkliGorevTipi = new KpPespeseFarkliTurNobet
-                                    //    {
-                                    //        Model = model,
-                                    //        NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "K36"),
-                                    //        Tarihler = bayramlar,
-                                    //        EczaneNobetGrup = eczaneNobetGrup,
-                                    //        EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazliTumGrorevTipler,
-                                    //        SonNobet = sonBayram,
-                                    //        KararDegiskeni = _x
-                                    //    };
-                                    //    PespeseFarkliTurNobetYaz(bayramPespeseFarkliGorevTipi);
-                                    //}
                                 }
                                 else
                                 {
@@ -1876,13 +1866,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                     KumulatifToplamEnFazla(kumulatifToplamEnFazlaBayram);
                                 }
                             }
-
-                            //model.AddConstraint(
-                            //  Expression.Sum(data.EczaneNobetTarihAralik
-                            //                .Where(e => e.EczaneNobetGrupId == eczaneNobetGrup.Id
-                            //                         && e.GunDegerId > 7)
-                            //                .Select(m => _x[m])) + toplamBayramNobetSayisi <= toplamBayramMax,
-                            //                $"her eczaneye bir ayda nobet grubunun hedefi kadar toplam bayram nobeti yazilmali, {eczaneNobetGrup}");
                         }
                     }
                     #endregion

@@ -99,9 +99,11 @@
 
     <script>
         $(function () {
-
-            //$("#SagTarafDegeri").val(0);
-            //$("#SagTarafDegeriVarsayilan").val(0);
+            
+            if ($("#SagTarafDegeri").val() == null || $("#SagTarafDegeri").val() == "") {
+                $("#SagTarafDegeri").val(0);
+                $("#SagTarafDegeriVarsayilan").val(0);
+            }
             $("#Aciklama").val("Gruba özel kural.");
         });
     </script>

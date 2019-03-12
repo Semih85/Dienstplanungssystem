@@ -128,6 +128,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi", nobetGrupGorevTipKisit.NobetGrupGorevTipId);
             ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitlar, "Id", "KisitAdiUzun", nobetGrupGorevTipKisit.NobetUstGrupKisitId);
+
             return View(nobetGrupGorevTipKisit);
         }
 
