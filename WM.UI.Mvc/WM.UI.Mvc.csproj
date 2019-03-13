@@ -738,7 +738,7 @@
     <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipKisit\Details.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipKisit\Edit.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipKisit\Index.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Index.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Index999.cshtml" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
@@ -749,6 +749,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
