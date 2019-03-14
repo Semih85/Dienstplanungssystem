@@ -3841,8 +3841,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             if (!mazeret.PasifMi && !istek.PasifMi)
             {
-                var mazeretler = eczaneNobetMazeretler.Select(w => new { w.TakvimId, w.Tarih, w.NobetGrupAdi, w.EczaneAdi, w.EczaneNobetGrupId, w.EczaneId, Tip = "mazeret" }).Distinct().ToList();
-                var istekler = eczaneNobetIstekler.Select(w => new { w.TakvimId, w.Tarih, w.NobetGrupAdi, w.EczaneAdi, w.EczaneNobetGrupId, w.EczaneId, Tip = "istek" }).Distinct().ToList();
+                var mazeretler = eczaneNobetMazeretler.Select(w => new { w.TakvimId, w.Tarih, w.NobetGrupAdi, w.EczaneAdi, w.EczaneId, Tip = "mazeret" }).Distinct().ToList();
+                var istekler = eczaneNobetIstekler.Select(w => new { w.TakvimId, w.Tarih, w.NobetGrupAdi, w.EczaneAdi, w.EczaneId, Tip = "istek" }).Distinct().ToList();
                 var istekVeMazeretler = istekler.Union(mazeretler).ToList();
 
                 var ayniGunMazeretveIstekGirilenEczaneler = istekVeMazeretler

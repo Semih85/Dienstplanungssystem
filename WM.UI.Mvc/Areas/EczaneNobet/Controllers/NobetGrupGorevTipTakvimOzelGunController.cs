@@ -53,11 +53,67 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
 
-            var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGruplar)
-                .OrderBy(o => o.NobetGorevTipAdi)
-                .ThenBy(o => o.Tarih);
+            //var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGruplar)
+            //    .OrderBy(o => o.NobetGorevTipAdi)
+            //    .ThenBy(o => o.Tarih).ToList();
 
-            return View(nobetGrupGorevTipTakvimOzelGunler);
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylarByNobetUstGrupIdList(nobetUstGruplar);
+            var nobetOzelGunler = _nobetOzelGunService.GetList();//bayramTurler
+
+            ViewBag.NobetOzelGunId = new SelectList(nobetOzelGunler, "Id", "Adi");
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi");
+
+            return View();
+        }
+
+        public ActionResult SearchWithBayram(int? nobetGrupGorevTipId = 0, int? nobetOzelGunId = 0)
+        {
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
+
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylarByNobetUstGrupIdList(nobetUstGruplar)
+            .Where(w => w.Id == nobetGrupGorevTipId || nobetGrupGorevTipId == 0);
+
+            var nobetOzelGunler = _nobetOzelGunService.GetList()
+                .Where(w => w.Id == nobetOzelGunId || nobetOzelGunId == 0);
+
+            var bayramlar = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGruplar)
+                .Where(w => (w.NobetGrupGorevTipId == nobetGrupGorevTipId || nobetGrupGorevTipId == 0)
+                         && (w.NobetOzelGunId == nobetOzelGunId || nobetOzelGunId == 0)
+                ).OrderBy(o => o.Tarih).ToList();
+
+            ViewBag.NobetOzelGunId = new SelectList(nobetOzelGunler, "Id", "Adi");
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "Adi");
+
+            return PartialView("TakvimOzelGunPartialView", bayramlar);
+        }
+
+        public ActionResult SecilenleriSil(string silinecekBayramlar, int? nobetGrupGorevTipId = 0, int? nobetOzelGunId = 0)
+        {
+            var mesaj = "Seçim Yapmadınız!";
+
+            if (silinecekBayramlar == "")
+                return Json(mesaj, JsonRequestBehavior.AllowGet);
+            
+            var liste = silinecekBayramlar.Split(',');
+
+            var silinecekBayramids = Array.ConvertAll(liste, s => int.Parse(s));
+
+            if (silinecekBayramids.Count() > 0)
+                _nobetGrupGorevTipTakvimOzelGunService.CokluSil(silinecekBayramids);
+
+            var user = _userService.GetByUserName(User.Identity.Name);
+
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
+
+            var bayramlar = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGruplar)
+                .Where(w => (w.NobetGrupGorevTipId == nobetGrupGorevTipId || nobetGrupGorevTipId == 0)
+                         && (w.NobetOzelGunId == nobetOzelGunId || nobetOzelGunId == 0)
+                ).OrderBy(o => o.Tarih).ToList();
+
+            ViewBag.SilinenBayramSayisi = silinecekBayramids.Length;
+
+            return PartialView("TakvimOzelGunPartialView", bayramlar);
         }
 
         // GET: EczaneNobet/NobetGrupGorevTipTakvimOzelGun/Details/5

@@ -1,12 +1,12 @@
-﻿@model IEnumerable<BayramDetay>
+﻿@model IEnumerable<NobetGrupGorevTipTakvimOzelGunDetay>
 
 
-@if (TempData["SilinenBayramSayisi"] != null)
+@if (ViewBag.SilinenBayramSayisi != null)
 {
     <div class="row justify-content-sm-center">
         <div class="col-12">
             <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
-                <i class="fa fa-check"></i> @TempData["SilinenBayramSayisi"] adet bayram silinmiştir.
+                <i class="fa fa-check"></i> @ViewBag.SilinenBayramSayisi adet bayram silinmiştir.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -16,74 +16,119 @@
 }
 @if (Model.Count() > 0)
 {
-    <table class="table table-hover table-sm">
-        <thead class="thead-light">
-            <tr>
-                <th><input type="checkbox" id="checkAll" /></th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tarih)
-                </th>
-                <th>
-                    @Html.DisplayName("Bayram")
-                </th>
-                <th>
-                    @Html.DisplayName("Nöbet Grubu")
-                </th>
-                <th>
-                    @Html.DisplayName("Görev Tipi")
-                </th>
-                <th>
-                    @Html.DisplayName("Bayram Grubu")
-                </th>
-                @*<th>
-                        @Html.DisplayNameFor(model => model.TakvimAciklama)
-                    </th>*@
-                <th></th>
-            </tr>
-        </thead>
-        <tbody id="bayramTablo">
-            @foreach (var item in Model)
-            {
+    <div id="div1">
+        <table id="gridT" class="table table-hover table-striped table-bordered table-sm">
+            <thead class="thead-light">
                 <tr>
-                    <td>
-                        <input type="checkbox" class="checkBox"
-                               value="@item.Id" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Tarih)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BayramTurAdi)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NobetGrupAdi)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NobetGrupGorevTipAdi)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NobetGunKuralAdi)
-                    </td>
-                    @*<td>
-                            @Html.DisplayFor(modelItem => item.TakvimAciklama)
-                        </td>*@
-                    <td>
-                        @{
-                            var target = $"#islem{@item.Id}";
-                        }
-                        <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="fa fa-cog"></span>
-                        </button>
-                        <div class="collapse d-md-block" id="@target.Remove(0,1)">
-                            <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
-                            <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
-                            <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
-                        </div>
-                    </td>
+                    <th style="width:2%">
+                        @*<input type="checkbox" id="checkAll" />*@
+                    </th>
+                    <th style="width:7%">
+                        @Html.DisplayName("Nöbet Grubu")
+                    </th>
+                    <th style="width:10%">
+                        @Html.DisplayName("Görev Tipi")
+                    </th>
+                    <th style="width:6%">
+                        @Html.DisplayName("Gün Grubu")
+                    </th>
+                    <th style="width:6%">
+                        @Html.DisplayName("Gün Kuralı")
+                    </th>
+                    <th style="width:5%">
+                        @Html.DisplayName("Farklı mı?")
+                    </th>
+                    <th style="width:6%">
+                        @Html.DisplayName("Gün Kuralı Farklı")
+                    </th>
+                    <th style="width:12%">
+                        @Html.DisplayName("Özel Gün")
+                    </th>
+                    <th style="width:12%">
+                        @Html.DisplayName("Tarih")
+                    </th>
+                    <th style="width:4%">
+                        @Html.DisplayName("Puan")
+                    </th>
+                    <th style="width:10%"></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody id="ozelTakvimTablo">
+                @foreach (var item in Model)
+                {
+                    <tr class="gridtr">
+                        <td>
+                            <input type="checkbox" class="checkBox"
+                                   value="@item.Id" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GunGrupAdi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetGrupGorevTipGunKuralAdi)
+                        </td>
+                        <td>
+                            @if (item.FarkliGunGosterilsinMi == true)
+                            {
+                                <span class="badge badge-danger">
+                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    Farklı
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-secondary">
+                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    Aynı
+                                </span>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetGunKuralAdi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetOzelGunAdi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tarih)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AgirlikDegeri)
+                        </td>
+                        <td>
+                            @{
+                                var target = $"#islem{@item.Id}";
+                            }
+                            <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="fa fa-cog"></span>
+                            </button>
+                            <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                                <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                                <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                                <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="...">
+            <ul class="navbar-nav">
+                <li class="nav-link" id="myPaging">
+                </li>
+            </ul>
+            <div class="nav-item">Toplam Kayıt: <span id="toplamKayitSayisi"></span></div>
+        </nav>
+
+    </div>
 }
 else
 {
@@ -109,6 +154,11 @@ else
                 $(this).prop('checked'));
         });
 
+    });
+
+    $(document).ready(function () {
+        var model = @Html.Raw(Json.Encode(Model));
+        sayfalamaYap(model, 15);
     });
 
 </script>

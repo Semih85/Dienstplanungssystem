@@ -344,7 +344,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var ilgiliTarihler = p.Tarihler.Where(w => w.NobetGunKuralId == p.SonNobet.NobetGunKuralId).ToList();
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
-                     + $"son görev türü: {p.SonNobet.NobetGorevTipAdi}"
+                     + $"son bayram türü: {p.SonNobet.NobetGunKuralId}"
                      + $"]";
 
                 var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
@@ -353,7 +353,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var kararIndex = p.EczaneNobetTarihAralik
                     .Where(e => ilgiliTarihler.Select(s => s.TakvimId).Contains(e.TakvimId)
-                             && e.NobetGorevTipId == p.SonNobet.NobetGorevTipId //sonradan ekledim.
+                             && e.NobetGorevTipId == p.SonNobet.NobetGorevTipId //sonradan ekledim. farklı görev tiplerini de içine alsın diye.14.03.2019
                              ).ToList();
 
                 var std = 0;
@@ -362,7 +362,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 p.Model.AddConstraint(cns, kisitAdi);
             }
         }
-
         #endregion
 
         #region aynı gün nöbetler
@@ -842,7 +841,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 foreach (var eczaneNobetMazeret in p.EczaneNobetMazeretler)
                 {
                     var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
-                     + $"{indis} mazeret tarihi: {eczaneNobetMazeret.Tarih.ToShortDateString()}"
+                     + $"{indis}.mazeret - Tarih: {eczaneNobetMazeret.Tarih.ToShortDateString()}"
                      //+ $"{eczaneNobetMazeret.MazeretAdi}"
                      + $"]";
 

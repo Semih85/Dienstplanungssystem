@@ -19,6 +19,7 @@ namespace WM.Optimization.Abstract.Health
         void MazereteGorevYazma(KpMazereteGorevYazma mazereteGorevYazmaKisitParametreModel);
         void IstegiKarsila(KpIstegiKarsila istegiKarsilaKisitParametreModel);
         void PespeseFarkliTurNobetYaz(KpPespeseFarkliTurNobet bayramPespeseFarkliTurKisitParametreModel);
+
         void HerAyHaftaIciPespeseGorev(KpHerAyHaftaIciPespeseGorev herAyHaftaIciPespeseGorevKisitParametreModel);        
         void TarihAraligindaEnAz1NobetYaz(KpTarihAraligindaEnAz1NobetYaz tarihAraligindaEnAz1NobetYazKisitParametreModel);        
         void BirEczaneyeAyniGunSadece1GorevYaz(KpAyniGunSadece1NobetTuru ayniGunSadece1NobetTuruKisitParametreModel);
