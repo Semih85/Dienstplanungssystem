@@ -150,56 +150,56 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             //).ToList();
 
-            ;
+            //;
 
-            //nobetciEczaneler = nobetciEczaneler.Concat(nobetciEczanelerDun).ToList();
+            nobetciEczaneler = nobetciEczaneler.Concat(nobetciEczanelerDun).ToList();
 
-            //nobetciEczaneler = nobetciEczaneler.Where(w =>
-            //   //0123456789     (index)
-            //   //08:30 - 08:30  (NobetGorevTipAdi)
-            //   Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) >= 12 ? //ertesi güne sarkmıyor,
-            //                                                                             //(ertesi güne sarkanlar sabah saatinde yani öğlen 12 den önce kapanıyorlar)
-            //     (
-            //       //açılış saati den daha sonraki..
-            //       (((Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(0, 2)) == DateTime.Now.Hour//saat eşit
-            //           && Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(3, 2)) <= DateTime.Now.Minute)//ve dakika küçükse
-            //            || Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(0, 2)) < DateTime.Now.Hour))//ya da direk saat küçükse
-            //       &&
-            //       //..kapanış saatindn önceki zaman diliminde...
-            //       (((Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) == DateTime.Now.Hour//saat eşit 
-            //           && Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(11, 2)) > DateTime.Now.Minute)//ve dakika büyükse
-            //            || Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) > DateTime.Now.Hour))//ya da direk saat büyükse
-            //       && w.Tarih == DateTime.Today
-            //     )
-            //     ://nöbet görev tipi ertesi güne sarkıyor ise
-            //     (
-            //       //açılış saati den daha sonraki..
-            //       (((Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(0, 2)) == DateTime.Now.Hour//saat eşit
-            //           && Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(3, 2)) <= DateTime.Now.Minute)//ve dakika küçükse
-            //            || Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(0, 2)) < DateTime.Now.Hour))//ya da direk saat küçükse
-            //       &&
-            //       //kapanış saatinden önce..
-            //       (((Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) == DateTime.Now.Hour//saat eşit 
-            //           && Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(11, 2)) > DateTime.Now.Minute)//ve dakika büyükse
-            //            || Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) > DateTime.Now.Hour)//ya da direk saat büyükse
-            //                                                                                                     //..ve dünün nöbetçisi ise
-            //            && w.Tarih == DateTime.Today.AddDays(-1)
-            //       )
-            //       ||//ya da 
-            //         //açılış saati den daha sonraki..
-            //       (((Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(0, 2)) == DateTime.Now.Hour//saat eşit
-            //           && Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(3, 2)) <= DateTime.Now.Minute)//ve dakika küçükse
-            //            || Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(0, 2)) < DateTime.Now.Hour))//ya da direk saat küçükse
-            //       &&
-            //       //kapanış saatinden sonra..
-            //       (((Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) == DateTime.Now.Hour//saat eşit 
-            //           && Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(11, 2)) < DateTime.Now.Minute)//ve dakika küçükse
-            //            || Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) < DateTime.Now.Hour)//ya da direk saat küçükse
-            //                                                                                                     //..ve bugünün nöbetçileri gözüksün
-            //            && w.Tarih == DateTime.Today
-            //       )
-            //     )
-            //   ).ToList();
+            nobetciEczaneler = nobetciEczaneler.Where(w =>
+               //0123456789     (index)
+               //08:30 - 08:30  (NobetGorevTipAdi)
+               Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) >= 12 ? //ertesi güne sarkmıyor,
+                                                                                         //(ertesi güne sarkanlar sabah saatinde yani öğlen 12 den önce kapanıyorlar)
+                 (
+                   //açılış saati den daha sonraki..
+                   (((Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(0, 2)) == DateTime.Now.Hour//saat eşit
+                       && Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(3, 2)) <= DateTime.Now.Minute)//ve dakika küçükse
+                        || Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(0, 2)) < DateTime.Now.Hour))//ya da direk saat küçükse
+                   &&
+                   //..kapanış saatindn önceki zaman diliminde...
+                   (((Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) == DateTime.Now.Hour//saat eşit 
+                       && Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(11, 2)) > DateTime.Now.Minute)//ve dakika büyükse
+                        || Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) > DateTime.Now.Hour))//ya da direk saat büyükse
+                   && w.Tarih == DateTime.Today
+                 )
+                 ://nöbet görev tipi ertesi güne sarkıyor ise
+                 (
+                   //açılış saati den daha sonraki..
+                   //(((Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(0, 2)) == DateTime.Now.Hour//saat eşit
+                   //    && Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(3, 2)) <= DateTime.Now.Minute)//ve dakika küçükse
+                   //     || Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(0, 2)) < DateTime.Now.Hour))//ya da direk saat küçükse
+                   //&&
+                   //kapanış saatinden önce..
+                   (((Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) == DateTime.Now.Hour//saat eşit 
+                       && Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(11, 2)) > DateTime.Now.Minute)//ve dakika büyükse
+                        || Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) > DateTime.Now.Hour)//ya da direk saat büyükse
+                                                                                                                 //..ve dünün nöbetçisi ise
+                        && w.Tarih == DateTime.Today.AddDays(-1)
+                   )
+                   ||//ya da 
+                     //açılış saati den daha sonraki..
+                   (((Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(0, 2)) == DateTime.Now.Hour//saat eşit
+                       && Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(3, 2)) <= DateTime.Now.Minute)//ve dakika küçükse
+                        || Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(0, 2)) < DateTime.Now.Hour))//ya da direk saat küçükse
+                   &&
+                   //kapanış saatinden sonra..
+                   (((Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) == DateTime.Now.Hour//saat eşit 
+                       && Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(11, 2)) < DateTime.Now.Minute)//ve dakika küçükse
+                        || Convert.ToInt32(w.EczaneninAcikOlduguSaatAraligi.Substring(8, 2)) < DateTime.Now.Hour)//ya da direk saat küçükse
+                                                                                                                 //..ve bugünün nöbetçileri gözüksün
+                        && w.Tarih == DateTime.Today
+                   )
+                 )
+               ).ToList();
 
             var model = new NobetciEcanelerEkraniViewModel
             {

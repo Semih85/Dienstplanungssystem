@@ -75,5 +75,6 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public List<EczaneGrupDetay> AltGruplarlaAyniGunNobetTutmayacakEczanelerYeniDevlet { get; set; }
         public int CalismaSayisiLimit { get; set; }
         public int TimeLimit { get; set; }
+        public List<EczaneGrupDetay> SonrakiDonemAyniGunNobetIstekGirilenler { get; set; }
     }
 }

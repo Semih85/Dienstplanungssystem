@@ -1339,6 +1339,84 @@
         });
         function myMap() {
             var kacKmdenFazlasiniGosterme = 15
+
+            //var obj = JSON.parse(response);
+            //var polyline_data = obj.routes[0].overview_polyline.points;
+            startTime()
+            var today = new Date();
+            var saat = today.getHours();
+            var dakika = today.getMinutes();
+            var saniye = today.getSeconds();
+            if (parseInt(saat) >= 8)
+                $('#lbl_tarih').text(getDate() + ' - ' + getTomorrow());
+            else
+                $('#lbl_tarih').text(getYesterday() + '- ' + getDate());
+
+            document.getElementById("loading").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
+            document.getElementById("div1").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
+            //alert('ready2')
+            var counter = 1;
+            var bant = false;
+            var clientWidth = document.documentElement.clientWidth;
+
+            var model = @Html.Raw(Json.Encode(Model));
+
+            //var map = new google.maps.Map(mapCanvas, mapOptions);
+            var nobetciEczaneSayisi = model.NobetciEczaneler.length;
+            console.log(nobetciEczaneSayisi)
+            var nobetciEczaneler = new Array();
+            var mesafeler = new Array();
+            var mesafelerNewArray = new Array();
+            var mesafeCounter = 0;
+            var nobetUstGrupId = 0;
+            var ekrandaOlmasiIstenenEczaneSayisi
+            console.log('nobetciEczaneSayisi: ' + nobetciEczaneSayisi);
+            //modelden nöbetçi eczaneleri alır:
+            for (var g = 0; g < nobetciEczaneSayisi; g++) {
+            // for (var g = 0; g < model.NobetciEczaneler.length; g++) {
+
+            var newElement = {
+                adi: model.NobetciEczaneler[g].Adi,
+                koordinatx: model.NobetciEczaneler[g].Enlem,
+                koordinaty: model.NobetciEczaneler[g].Boylam,
+                tel: model.NobetciEczaneler[g].TelefonNo,
+                adres: model.NobetciEczaneler[g].Adres,
+                adresTarifi: model.NobetciEczaneler[g].AdresTarifiKisa,
+                eczaneninAcikOlduguSaatAraligi: model.NobetciEczaneler[g].EczaneninAcikOlduguSaatAraligi,
+               // nobetGorevTipAdi: model.NobetciEczaneler[g].NobetGorevTipAdi,
+                nobetUstGrupId: model.NobetciEczaneler[g].NobetUstGrupId,
+                oldIndex:0
+            }
+            nobetciEczaneler.push(newElement)
+            }
+
+            htmlOlustur()
+            eczaneleriDivlereDoldur()
+            //Ekranın Bulunduğu Yer Modelden Alınır:
+            var locationOfCurrentPharmacy = {
+            adi: model.EkraninBulunduguEczane.Adi,
+            koordinatx: model.EkraninBulunduguEczane.Enlem,
+            koordinaty: model.EkraninBulunduguEczane.Boylam,
+            tel: model.EkraninBulunduguEczane.TelefonNo,
+            adres: model.EkraninBulunduguEczane.Adres,
+            adresTarifi: model.EkraninBulunduguEczane.AdresTarifiKisa,
+           //eczaneninAcikOlduguSaatAraligi: model.EkraninBulunduguEczane.EczaneninAcikOlduguSaatAraligi
+            }
+
+            var bosImage = '../../../../Content/images/bos.png';
+            var peopleIcon = '../../../../Content/images/peopleStand_128x128.png';
+            if (clientWidth > 2000)
+                peopleIcon = '../../../../Content/images/peopleStand_256x256.png';
+            var nobetciEczaneImage = '../../../../Content/images/NobetciEczaneLogoUfak.png';
+            //alert(clientWidth)
+            if (clientWidth > 1000)
+             nobetciEczaneImage = '../../../../Content/images/NobetciEczaneLogoUfak.png';
+            if (clientWidth > 2000)
+                nobetciEczaneImage = '../../../../Content/images/NobetciEczaneLogoUfak_hd.png';
+            //alert('recursivelyChangePharmacy1')
+            //start recursive
+
+            recursivelyChangePharmacy()
             function htmlTekrarOlustur() {
                 console.log('htmlTekrarOlustur nobetciEczaneSayisi: ' + nobetciEczaneSayisi);
 
@@ -1366,7 +1444,7 @@
                     solSutunOlustur(nobetciEczaneSayisi)
                 }
                 else {
-                    solSutunOlustur(nobetciEczaneSayisi/2 + 1)
+                    solSutunOlustur(nobetciEczaneSayisi / 2 + 1)
                     sagSutunOlustur(nobetciEczaneSayisi)
                 }
                 haritaBolumuOlustur()
@@ -1397,7 +1475,8 @@
                     var myElemant4 = '<label  id="lbl_eczane_nobetGrovTipAdi_' + i +
                         '" class="lbl_eczane_nobetGrovTipAdi" >' +
                         '</label> <br />';
-                    $(myElemant4).appendTo("#div_" + i);
+                    if (nobetUstGrupId != 3)
+                       $(myElemant4).appendTo("#div_" + i);
                     //eczane_adres label
                     var myElemant4 = '<label  id="lbl_eczane_adres_' + i +
                         '" class="lbl_eczane_adres" >' +
@@ -1438,7 +1517,8 @@
                     var myElemant4 = '<label  id="lbl_eczane_nobetGrovTipAdi_' + i +
                         '" class="lbl_eczane_nobetGrovTipAdi" >' +
                         '</label> <br />';
-                    $(myElemant4).appendTo("#div_" + i);
+                    if (nobetUstGrupId != 3)
+                        $(myElemant4).appendTo("#div_" + i);
                     //eczane_adres label
                     var myElemant4 = '<label  id="lbl_eczane_adres_' + i +
                         '" class="lbl_eczane_adres" >' +
@@ -1469,14 +1549,14 @@
                         '</div>')
                     $("#div_innerMap").append('<img class="img"  id="img' + i +
                         '"  style="width:100%; height:100%"  src="" />')
-                        //< div id = "div_MyLetterImage" class="col-6" >
+                    //< div id = "div_MyLetterImage" class="col-6" >
                     $("#div_haritaBolumu").append('<div id="div_QrKod_Mesafe"></div>')
                     $("#div_QrKod_Mesafe").append('<div id="div_MyLetterImage"></div>')
                     $("#div_QrKod_Mesafe").append('<div style="background-color:#000000" id="div_labelMesafe"></div>')
                     $("#div_labelMesafe").css('background-color', '#000000');
 
-                    $("#div_labelMesafe").append('<label id="lbl_mesafe' + i +
-                        '" class="fa fa-car">' +
+                    $("#div_labelMesafe").append('<label style="margin-top:-50%; margin-left:0%" id="lbl_mesafe' + i +
+                        '" class="lbl_mesafe fa fa-car">' +
                         '</label>')
                     $("#lbl_mesafe" + i).css('color', '#574BB6');
 
@@ -1493,69 +1573,14 @@
             }
             function htmlBosalt() {
                 $("#div_eczaneSolSutun").empty()
-               // $("#div_innerMap").empty()
-               // $("#div_labelMesafe").empty()
+                // $("#div_innerMap").empty()
+                // $("#div_labelMesafe").empty()
                 $("#div_eczaneSagSutun").empty()
             }
-            //var obj = JSON.parse(response);
-            //var polyline_data = obj.routes[0].overview_polyline.points;
-            startTime()
-            var today = new Date();
-            var saat = today.getHours();
-            var dakika = today.getMinutes();
-            var saniye = today.getSeconds();
-            if (parseInt(saat) >= 8)
-                $('#lbl_tarih').text(getDate() + ' - ' + getTomorrow());
-            else
-                $('#lbl_tarih').text(getYesterday() + '- ' + getDate());
-
-            document.getElementById("loading").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
-            document.getElementById("div1").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
-            //alert('ready2')
-            var counter = 1;
-            var bant = false;
-            var clientWidth = document.documentElement.clientWidth;
-
-
-            var model = @Html.Raw(Json.Encode(Model));
-
-            //var map = new google.maps.Map(mapCanvas, mapOptions);
-            var nobetciEczaneSayisi = model.NobetciEczaneler.length;
-            console.log(nobetciEczaneSayisi)
-            var nobetciEczaneler = new Array();
-            var mesafeler = new Array();
-            var mesafelerNewArray = new Array();
-            var mesafeCounter = 0;
-            var ekrandaOlmasiIstenenEczaneSayisi
-            console.log('nobetciEczaneSayisi: ' + nobetciEczaneSayisi);
-            //modelden nöbetçi eczaneleri alır:
-            for (var g = 0; g < nobetciEczaneSayisi; g++) {
-            // for (var g = 0; g < model.NobetciEczaneler.length; g++) {
-
-            var newElement = {
-                adi: model.NobetciEczaneler[g].Adi,
-                koordinatx: model.NobetciEczaneler[g].Enlem,
-                koordinaty: model.NobetciEczaneler[g].Boylam,
-                tel: model.NobetciEczaneler[g].TelefonNo,
-                adres: model.NobetciEczaneler[g].Adres,
-                adresTarifi: model.NobetciEczaneler[g].AdresTarifiKisa,
-                eczaneninAcikOlduguSaatAraligi: model.NobetciEczaneler[g].EczaneninAcikOlduguSaatAraligi,
-               // nobetGorevTipAdi: model.NobetciEczaneler[g].NobetGorevTipAdi,
-                nobetUstGrupId: model.NobetciEczaneler[g].NobetUstGrupId,
-                oldIndex:0
-            }
-            nobetciEczaneler.push(newElement)
-            }
-
-            htmlOlustur()
-            eczaneleriDivlereDoldur()
-
-            //div leri doldurur
             function eczaneleriDivlereDoldur() {
                 $('#lbl_baslik').text('Nöbetçi Eczaneler');
                 console.log('nobetciEczaneSayisi gosterilecekEczaneSayisi: ' + nobetciEczaneSayisi)
 
-                //console.log(nobetciEczaneler.length)
                 jQuery.each(nobetciEczaneler, function (i, val) {
                     var adi = nobetciEczaneler[i].adi
                     var tel = nobetciEczaneler[i].tel
@@ -1564,7 +1589,7 @@
                     var eczaneninAcikOlduguSaatAraligi = nobetciEczaneler[i].eczaneninAcikOlduguSaatAraligi
                     //var nobetGorevTipAdi = nobetciEczaneler[i].nobetGorevTipAdi
                     var intNumberOfi = parseInt(i);
-                    var nobetUstGrupId = nobetciEczaneler[i].nobetUstGrupId
+                    nobetUstGrupId = nobetciEczaneler[i].nobetUstGrupId
                     var herEczaneBasinaDusenDivOrani = 100 / nobetciEczaneSayisi
                     intNumberOfi = intNumberOfi + 1;
 
@@ -1578,83 +1603,116 @@
 
 
                     //zonguldakta adres tarifi yok
-                    //console.log('adi: ' + adi)
-                    //console.log('nobetUstGrupId: ' + nobetUstGrupId)
+                    console.log('nobetUstGrupId: ' + nobetUstGrupId)
                     //console.log('clientWidth: ' + clientWidth)
-                    console.log('herEczaneBasinaDusenDivOrani: ' + herEczaneBasinaDusenDivOrani)
-                   // console.log('intNumberOfi: ' + intNumberOfi)
+                    //console.log('herEczaneBasinaDusenDivOrani: ' + herEczaneBasinaDusenDivOrani)
+                    // console.log('intNumberOfi: ' + intNumberOfi)
 
-                if (nobetUstGrupId == 7) {
-                    console.log('zonguldak')
-                    //eczane Adı fontunu ayarla
-                    if (true) {//satırları kapatabilmek için
-                        var fontSizeEczaneAdi = 5.5 * herEczaneBasinaDusenDivOrani;
-                        if (clientWidth > 574 && clientWidth < 767) {
+
+                        //eczane Adı fontunu ayarla
+                        if (true) {//satırları kapatabilmek için
                             fontSizeEczaneAdi = 2 * herEczaneBasinaDusenDivOrani;
+                            if (clientWidth > 574 && clientWidth < 767) {
+                                fontSizeEczaneAdi = 2 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 766 && clientWidth < 991) {
+                                fontSizeEczaneAdi = 3 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 990 && clientWidth < 1199) {
+                                fontSizeEczaneAdi = 4 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1198 && clientWidth < 1401) {
+                                fontSizeEczaneAdi = 4.5 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1400 && clientWidth < 1601) {
+                                fontSizeEczaneAdi = 5.0 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1600 && clientWidth < 1901) {
+                                fontSizeEczaneAdi = 7 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1900 && clientWidth < 2499) {
+                                if (nobetciEczaneSayisi > 5)
+                                    fontSizeEczaneAdi = 9 * herEczaneBasinaDusenDivOrani;
+                                else
+                                    fontSizeEczaneAdi = 7 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 2500 && clientWidth < 3099) {
+                                fontSizeEczaneAdi = 9 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 3100) {
+                                fontSizeEczaneAdi = 12 * herEczaneBasinaDusenDivOrani;
+                            }
                         }
-                        else if (clientWidth > 766 && clientWidth < 991) {
-                            fontSizeEczaneAdi = 3 * herEczaneBasinaDusenDivOrani;
+                        //Adres fontunu ayarla
+                        if (true) {//satırları kapatabilmek için
+                            fontSizeAdres = 1 * herEczaneBasinaDusenDivOrani;
+                            if (clientWidth > 574 && clientWidth < 767) {
+                                fontSizeAdres = 2 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 766 && clientWidth < 991) {
+                                fontSizeAdres = 2.2 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 990 && clientWidth < 1199) {
+                                fontSizeAdres = 2.4 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1198 && clientWidth < 1401) {
+                                fontSizeAdres = 2.6 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1400 && clientWidth < 1601) {
+                                fontSizeAdres = 3.6 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1600 && clientWidth < 1901) {
+                                fontSizeAdres = 3.8 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1900 && clientWidth < 2499) {
+                                fontSizeAdres = 3.8 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 2500 && clientWidth < 3099) {
+                                fontSizeAdres = 5.8 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 3100) {
+                                fontSizeAdres = 9.8 * herEczaneBasinaDusenDivOrani;
+                            }
                         }
-                        else if (clientWidth > 990 && clientWidth < 1199) {
-                            fontSizeEczaneAdi = 4 * herEczaneBasinaDusenDivOrani;
+                        //Adres Tarifi fontunu ayarla
+                        if (true) {//satırları kapatabilmek için
+                            fontSizeAdresTarifi = 1 * herEczaneBasinaDusenDivOrani;
+                            if (clientWidth > 574 && clientWidth < 767) {
+                                fontSizeAdresTarifi = 2 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 766 && clientWidth < 991) {
+                                fontSizeAdresTarifi = 2.2 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 990 && clientWidth < 1199) {
+                                fontSizeAdresTarifi = 2.4 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1198 && clientWidth < 1401) {
+                                fontSizeAdresTarifi = 2.6 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1400 && clientWidth < 1601) {
+                                fontSizeAdresTarifi = 3.0 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1600 && clientWidth < 1901) {
+                                fontSizeAdresTarifi = 3.8 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (fontSizeAdresTarifi != null) {
+                                if (clientWidth > 1900 && clientWidth < 2499) {
+                                    fontSizeAdresTarifi = 3.8 * herEczaneBasinaDusenDivOrani;
+                                }
+                                else if (clientWidth > 2500 && clientWidth < 3099) {
+                                    fontSizeAdresTarifi = 5.8 * herEczaneBasinaDusenDivOrani;
+                                }
+                                else if (clientWidth > 3100) {
+                                    fontSizeAdresTarifi = 9.8 * herEczaneBasinaDusenDivOrani;
+                                }
+                            }
+                            else {
+                                fontSizeAdresTarifi = 0 * herEczaneBasinaDusenDivOrani;
+                            }
                         }
-                        else if (clientWidth > 1198 && clientWidth < 1401) {
-                            fontSizeEczaneAdi = 5 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1400 && clientWidth < 1601) {
-                            fontSizeEczaneAdi = 6 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1600 && clientWidth < 1901) {
-                            fontSizeEczaneAdi = 7 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1900 && clientWidth < 2499) {
-                            if (nobetciEczaneSayisi > 5)
-                                fontSizeEczaneAdi = 9.5 * herEczaneBasinaDusenDivOrani;
-                            else
-                                fontSizeEczaneAdi = 7.5 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 2500 && clientWidth < 3099) {
-                            fontSizeEczaneAdi = 9.5 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 3100) {
-                            fontSizeEczaneAdi = 12.5 * herEczaneBasinaDusenDivOrani;
-                        }
-                    }
-                    //Adres fontunu ayarla
-                    if (true) {//satırları kapatabilmek için
-                        var fontSizeAdres = 5 * herEczaneBasinaDusenDivOrani;
-                        if (clientWidth > 574 && clientWidth < 767) {
-                            fontSizeAdres = 2 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 766 && clientWidth < 991) {
-                            fontSizeAdres = 3 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 990 && clientWidth < 1199) {
-                            fontSizeAdres = 4 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1198 && clientWidth < 1401) {
-                            fontSizeAdres = 5 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1400 && clientWidth < 1601) {
-                            fontSizeAdres = 6 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1600 && clientWidth < 1901) {
-                            fontSizeAdres = 7 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1900 && clientWidth < 2499) {
-                            fontSizeAdres = 6 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 2500 && clientWidth < 3099) {
-                            fontSizeAdres = 8 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 3100) {
-                            fontSizeAdres = 12 * herEczaneBasinaDusenDivOrani;
-                        }
-                    }
-                    //telefon fontunu ayarla
-                    if (true) {//satırları kapatabilmek için
-                        var fontSizeTelefon = 6 * herEczaneBasinaDusenDivOrani;
-                        if (tel != null) {
+                        //telefon fontunu ayarla
+                        if (true) {//satırları kapatabilmek için
+                            fontSizeTelefon = 2 * herEczaneBasinaDusenDivOrani;
                             if (clientWidth > 574 && clientWidth < 767) {
                                 fontSizeTelefon = 2 * herEczaneBasinaDusenDivOrani;
                             }
@@ -1665,262 +1723,89 @@
                                 fontSizeTelefon = 4 * herEczaneBasinaDusenDivOrani;
                             }
                             else if (clientWidth > 1198 && clientWidth < 1401) {
-                                fontSizeTelefon = 5 * herEczaneBasinaDusenDivOrani;
+                                fontSizeTelefon = 4.5 * herEczaneBasinaDusenDivOrani;
                             }
                             else if (clientWidth > 1400 && clientWidth < 1601) {
-                                fontSizeTelefon = 6 * herEczaneBasinaDusenDivOrani;
+                                fontSizeTelefon = 5 * herEczaneBasinaDusenDivOrani;
                             }
                             else if (clientWidth > 1600 && clientWidth < 1901) {
                                 fontSizeTelefon = 7 * herEczaneBasinaDusenDivOrani;
                             }
-                            else if (clientWidth > 1900 && clientWidth < 2499) {
-                                if (nobetciEczaneSayisi > 5)
+                            else if (tel != null) {
+                                if (clientWidth > 1900 && clientWidth < 2499) {
+                                    if (nobetciEczaneSayisi > 5)
+                                        fontSizeTelefon = 8 * herEczaneBasinaDusenDivOrani;
+                                    else
+                                        fontSizeTelefon = 7 * herEczaneBasinaDusenDivOrani;
+
+                                }
+                                else if (clientWidth > 2500 && clientWidth < 3099) {
                                     fontSizeTelefon = 9 * herEczaneBasinaDusenDivOrani;
-                                else
-                                    fontSizeTelefon = 7 * herEczaneBasinaDusenDivOrani;
+                                }
+                                else if (clientWidth > 3100) {
+                                    fontSizeTelefon = 10 * herEczaneBasinaDusenDivOrani;
+                                }
+                            }
+                            else {
+                                 fontSizeTelefon = 0 * herEczaneBasinaDusenDivOrani;
+                            }
+                        }
+                        //nobetGorevTipAdı fontunu ayarla
+                        if (true) {//satırları kapatabilmek için
+                            fontSizeNobetGorevTipAdi = 1 * herEczaneBasinaDusenDivOrani;
+                            if (clientWidth > 574 && clientWidth < 767) {
+                                fontSizeNobetGorevTipAdi = 1.8 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 766 && clientWidth < 991) {
+                                fontSizeNobetGorevTipAdi = 2 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 990 && clientWidth < 1199) {
+                                fontSizeNobetGorevTipAdi = 2.8 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1198 && clientWidth < 1401) {
+                                fontSizeNobetGorevTipAdi = 3 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1400 && clientWidth < 1601) {
+                                fontSizeNobetGorevTipAdi = 3 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (clientWidth > 1600 && clientWidth < 1901) {
+                                fontSizeNobetGorevTipAdi = 3 * herEczaneBasinaDusenDivOrani;
+                            }
+                            else if (eczaneninAcikOlduguSaatAraligi != null) {
+                                if (clientWidth > 1900 && clientWidth < 2499) {
+                                    fontSizeNobetGorevTipAdi = 4 * herEczaneBasinaDusenDivOrani;
+                                }
+                                else if (clientWidth > 2500 && clientWidth < 3099) {
+                                    fontSizeNobetGorevTipAdi = 6 * herEczaneBasinaDusenDivOrani;
+                                }
+                                else if (clientWidth > 3100) {
+                                    fontSizeNobetGorevTipAdi = 9 * herEczaneBasinaDusenDivOrani;
+                                }
+                            }
+                            else {
+                                fontSizeNobetGorevTipAdi = 0 * herEczaneBasinaDusenDivOrani;
+                            }
+                        }
 
-                            }
-                            else if (clientWidth > 2500 && clientWidth < 3099) {
-                                fontSizeTelefon = 10 * herEczaneBasinaDusenDivOrani;
-                            }
-                            else if (clientWidth > 3100) {
-                                fontSizeTelefon = 11 * herEczaneBasinaDusenDivOrani;
-                            }
-                        }
-                        else {
-                            fontSizeTelefon = 0 * herEczaneBasinaDusenDivOrani;
-                        }
-                    }
-                    //nobetGorevTipAdı fontunu ayarla
-                    if (true) {//satırları kapatabilmek için
-                        var fontSizeNobetGorevTipAdi = 3.5 * herEczaneBasinaDusenDivOrani;
-                        if (clientWidth > 574 && clientWidth < 767) {
-                            fontSizeNobetGorevTipAdi = 2 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 766 && clientWidth < 991) {
-                            fontSizeNobetGorevTipAdi = 3 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 990 && clientWidth < 1199) {
-                            fontSizeNobetGorevTipAdi = 4 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1198 && clientWidth < 1401) {
-                            fontSizeNobetGorevTipAdi = 5 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1400 && clientWidth < 1601) {
-                            fontSizeNobetGorevTipAdi = 6 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1600 && clientWidth < 1901) {
-                            fontSizeNobetGorevTipAdi = 7 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (eczaneninAcikOlduguSaatAraligi != null) {
-                            if (clientWidth > 1900 && clientWidth < 2499) {
-                                fontSizeNobetGorevTipAdi = 4.5 * herEczaneBasinaDusenDivOrani;
-                            }
-                            else if (clientWidth > 2500 && clientWidth < 3099) {
-                                fontSizeNobetGorevTipAdi = 6.5 * herEczaneBasinaDusenDivOrani;
-                            }
-                            else if (clientWidth > 3100) {
-                                fontSizeNobetGorevTipAdi = 9.5 * herEczaneBasinaDusenDivOrani;
-                            }
-                        }
-                        else {
-                            fontSizeNobetGorevTipAdi = 0 * herEczaneBasinaDusenDivOrani;
-                        }
-                    }
-                }
-                else {
-                    //eczane Adı fontunu ayarla
-                    if (true) {//satırları kapatabilmek için
-                        fontSizeEczaneAdi = 2 * herEczaneBasinaDusenDivOrani;
-                        if (clientWidth > 574 && clientWidth < 767) {
-                            fontSizeEczaneAdi = 2 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 766 && clientWidth < 991) {
-                            fontSizeEczaneAdi = 3 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 990 && clientWidth < 1199) {
-                            fontSizeEczaneAdi = 4 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1198 && clientWidth < 1401) {
-                            fontSizeEczaneAdi = 4.5 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1400 && clientWidth < 1601) {
-                            fontSizeEczaneAdi = 5.0 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1600 && clientWidth < 1901) {
-                            fontSizeEczaneAdi = 7 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1900 && clientWidth < 2499) {
-                            if (nobetciEczaneSayisi > 5)
-                                fontSizeEczaneAdi = 9 * herEczaneBasinaDusenDivOrani;
-                            else
-                                fontSizeEczaneAdi = 7 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 2500 && clientWidth < 3099) {
-                            fontSizeEczaneAdi = 9 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 3100) {
-                            fontSizeEczaneAdi = 12 * herEczaneBasinaDusenDivOrani;
-                        }
-                    }
-                    //Adres fontunu ayarla
-                    if (true) {//satırları kapatabilmek için
-                        fontSizeAdres = 1 * herEczaneBasinaDusenDivOrani;
-                        if (clientWidth > 574 && clientWidth < 767) {
-                            fontSizeAdres = 2 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 766 && clientWidth < 991) {
-                            fontSizeAdres = 2.2 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 990 && clientWidth < 1199) {
-                            fontSizeAdres = 2.4 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1198 && clientWidth < 1401) {
-                            fontSizeAdres = 2.6 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1400 && clientWidth < 1601) {
-                            fontSizeAdres = 3.6 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1600 && clientWidth < 1901) {
-                            fontSizeAdres = 3.8 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1900 && clientWidth < 2499) {
-                            fontSizeAdres = 3.8 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 2500 && clientWidth < 3099) {
-                            fontSizeAdres = 5.8 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 3100) {
-                            fontSizeAdres = 9.8 * herEczaneBasinaDusenDivOrani;
-                        }
-                    }
-                    //Adres Tarifi fontunu ayarla
-                    if (true) {//satırları kapatabilmek için
-                        fontSizeAdresTarifi = 1 * herEczaneBasinaDusenDivOrani;
-                        if (clientWidth > 574 && clientWidth < 767) {
-                            fontSizeAdresTarifi = 2 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 766 && clientWidth < 991) {
-                            fontSizeAdresTarifi =2.2 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 990 && clientWidth < 1199) {
-                            fontSizeAdresTarifi = 2.4 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1198 && clientWidth < 1401) {
-                            fontSizeAdresTarifi = 2.6 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1400 && clientWidth < 1601) {
-                            fontSizeAdresTarifi = 3.0 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1600 && clientWidth < 1901) {
-                            fontSizeAdresTarifi = 3.8 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (fontSizeAdresTarifi != null) {
-                            if (clientWidth > 1900 && clientWidth < 2499) {
-                                fontSizeAdresTarifi = 3.8 * herEczaneBasinaDusenDivOrani;
-                            }
-                            else if (clientWidth > 2500 && clientWidth < 3099) {
-                                fontSizeAdresTarifi = 5.8 * herEczaneBasinaDusenDivOrani;
-                            }
-                            else if (clientWidth > 3100) {
-                                fontSizeAdresTarifi = 9.8 * herEczaneBasinaDusenDivOrani;
-                            }
-                        }
-                        else {
-                            fontSizeAdresTarifi = 0 * herEczaneBasinaDusenDivOrani;
-                        }
-                    }
-                    //telefon fontunu ayarla
-                    if (true) {//satırları kapatabilmek için
-                        fontSizeTelefon = 2 * herEczaneBasinaDusenDivOrani;
-                        if (clientWidth > 574 && clientWidth < 767) {
-                            fontSizeTelefon = 2 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 766 && clientWidth < 991) {
-                            fontSizeTelefon = 3 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 990 && clientWidth < 1199) {
-                            fontSizeTelefon = 4 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1198 && clientWidth < 1401) {
-                            fontSizeTelefon = 4.5 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1400 && clientWidth < 1601) {
-                            fontSizeTelefon = 5 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1600 && clientWidth < 1901) {
-                            fontSizeTelefon = 7 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (tel != null) {
-                            if (clientWidth > 1900 && clientWidth < 2499) {
-                                if (nobetciEczaneSayisi > 5)
-                                    fontSizeTelefon = 8 * herEczaneBasinaDusenDivOrani;
-                                else
-                                    fontSizeTelefon = 7 * herEczaneBasinaDusenDivOrani;
 
-                            }
-                            else if (clientWidth > 2500 && clientWidth < 3099) {
-                                fontSizeTelefon = 9 * herEczaneBasinaDusenDivOrani;
-                            }
-                            else if (clientWidth > 3100) {
-                                fontSizeTelefon = 10 * herEczaneBasinaDusenDivOrani;
-                            }
-                        }
-                        else {
-                            fontSizeTelefon = 0 * herEczaneBasinaDusenDivOrani;
-                        }
-                    }
-                    //nobetGorevTipAdı fontunu ayarla
-                    if (true) {//satırları kapatabilmek için
-                        fontSizeNobetGorevTipAdi = 1 * herEczaneBasinaDusenDivOrani;
-                        if (clientWidth > 574 && clientWidth < 767) {
-                            fontSizeNobetGorevTipAdi = 1.8 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 766 && clientWidth < 991) {
-                            fontSizeNobetGorevTipAdi = 2 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 990 && clientWidth < 1199) {
-                            fontSizeNobetGorevTipAdi = 2.8 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1198 && clientWidth < 1401) {
-                            fontSizeNobetGorevTipAdi = 3 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1400 && clientWidth < 1601) {
-                            fontSizeNobetGorevTipAdi = 3 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (clientWidth > 1600 && clientWidth < 1901) {
-                            fontSizeNobetGorevTipAdi = 3 * herEczaneBasinaDusenDivOrani;
-                        }
-                        else if (eczaneninAcikOlduguSaatAraligi != null) {
-                            if (clientWidth > 1900 && clientWidth < 2499) {
-                                fontSizeNobetGorevTipAdi = 4 * herEczaneBasinaDusenDivOrani;
-                            }
-                            else if (clientWidth > 2500 && clientWidth < 3099) {
-                                fontSizeNobetGorevTipAdi = 6 * herEczaneBasinaDusenDivOrani;
-                            }
-                            else if (clientWidth > 3100) {
-                                fontSizeNobetGorevTipAdi = 9 * herEczaneBasinaDusenDivOrani;
-                            }
-                        }
-                        else {
-                            fontSizeNobetGorevTipAdi = 0 * herEczaneBasinaDusenDivOrani;
-                        }
-                    }
-                }
                     //console.log('eczaneninAcikOlduguSaatAraligi: ' + eczaneninAcikOlduguSaatAraligi)
-                    $("#div_" + intNumberOfi).css("height", herEczaneBasinaDusenDivOrani +"%");
+                    $("#div_" + intNumberOfi).css("height", herEczaneBasinaDusenDivOrani + "%");
                     $("#lbl_eczane_adi_" + intNumberOfi).append(adi + " ECZANESİ");
                     $("#lbl_eczane_adi_" + intNumberOfi).css("font-size", fontSizeEczaneAdi + "%");
-                    $("#lbl_eczane_nobetGrovTipAdi_" + intNumberOfi).append("(" + eczaneninAcikOlduguSaatAraligi + ")");
-                    $("#lbl_eczane_nobetGrovTipAdi_" + intNumberOfi).css("font-size", fontSizeNobetGorevTipAdi + "%");
+                    if (nobetUstGrupId != 3 && nobetUstGrupId != 1 && nobetUstGrupId != 2) {
+                        $("#lbl_eczane_nobetGrovTipAdi_" + intNumberOfi).append("(" + eczaneninAcikOlduguSaatAraligi + ")");
+                        $("#lbl_eczane_nobetGrovTipAdi_" + intNumberOfi).css("font-size", fontSizeNobetGorevTipAdi + "%");
+                    }
                     $("#lbl_eczane_adres_" + intNumberOfi).append(adres);
                     $("#lbl_eczane_adres_" + intNumberOfi).css("font-size", fontSizeAdres + "%");
-                    $("#lbl_eczane_adres_tarifi_" + intNumberOfi).append(adresTarifi);
-                    $("#lbl_eczane_adres_tarifi_" + intNumberOfi).css("font-size", fontSizeAdres + "%");
-                if (tel != null) {
-                    $("#lbl_eczane_telefon_" + intNumberOfi).append(0 + " " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2));
-                    $("#lbl_eczane_telefon_" + intNumberOfi).css("font-size", fontSizeTelefon + "%");
-                }
+                    if (nobetUstGrupId != 7) {
+                        $("#lbl_eczane_adres_tarifi_" + intNumberOfi).append(adresTarifi);
+                        $("#lbl_eczane_adres_tarifi_" + intNumberOfi).css("font-size", fontSizeAdres + "%");
+                    }
+                    if (tel != null) {
+                        $("#lbl_eczane_telefon_" + intNumberOfi).append(0 + " " + tel.substr(0, 3) + " " + tel.substr(3, 3) + " " + tel.substr(6, 2) + " " + tel.substr(8, 2));
+                        $("#lbl_eczane_telefon_" + intNumberOfi).css("font-size", fontSizeTelefon + "%");
+                    }
 
                     //var img = $('<img />',
                     //    {
@@ -1932,26 +1817,25 @@
                     //    .appendTo($("#div_" + intNumberOfi));
                 });
             }
-
             function eczaneleriDivlerdenBosalt() {
-            jQuery.each(nobetciEczaneler, function (i, val) {
-                var intNumberOfi = parseInt(i);
-                intNumberOfi = intNumberOfi + 1;
-                $("#lbl_eczane_adi_" + intNumberOfi).empty()
-                $("#lbl_eczane_adres_" + intNumberOfi).empty()
-                $("#lbl_eczane_adres_tarifi_" + intNumberOfi).empty()
-                $("#lbl_eczane_telefon_" + intNumberOfi).empty()
-                $("#lbl_eczane_nobetGrovTipAdi_" + intNumberOfi).empty()
-            });
-        }
+                jQuery.each(nobetciEczaneler, function (i, val) {
+                    var intNumberOfi = parseInt(i);
+                    intNumberOfi = intNumberOfi + 1;
+                    $("#lbl_eczane_adi_" + intNumberOfi).empty()
+                    $("#lbl_eczane_adres_" + intNumberOfi).empty()
+                    $("#lbl_eczane_adres_tarifi_" + intNumberOfi).empty()
+                    $("#lbl_eczane_telefon_" + intNumberOfi).empty()
+                    $("#lbl_eczane_nobetGrovTipAdi_" + intNumberOfi).empty()
+                });
+            }
             //sol menü renkleri ayarlar
             function changeColor(counter) {
                 //alert('changeColor counter' + counter)
-                console.log('changeColor nobetciEczaneSayisi: ' + nobetciEczaneSayisi)
+                //console.log('changeColor nobetciEczaneSayisi: ' + nobetciEczaneSayisi)
                 for (var k = 1; k < nobetciEczaneSayisi + 1; k++) {
                     //console.log('changeColor k: ' + k)
                     if (k == counter) {
-                       // console.log('k == counter')
+                        // console.log('k == counter')
 
                         $("#div_" + k).css('background-color', '');
                         $("#div_" + k).css('background-color', '#ff0001');
@@ -1961,202 +1845,173 @@
                         //sol taraf
                         if (nobetciEczaneSayisi < 6 ||//tek taraf ya da
                             (nobetciEczaneSayisi >= 6 && k <= parseInt(nobetciEczaneSayisi / 2))//çift tarafın solu
-                            || (k <= parseInt(nobetciEczaneSayisi / 2) + 1 && nobetciEczaneSayisi%2 == 1 )) {//satı tek ise soldaki bir fazla
-                           // console.log('if sol taraf')
+                            || (k <= parseInt(nobetciEczaneSayisi / 2) + 1 && nobetciEczaneSayisi % 2 == 1)) {//satı tek ise soldaki bir fazla
+                            // console.log('if sol taraf')
 
                             if (k == 1) {//soldaki ilk
-                               // console.log('if soldaki ilk')
+                                // console.log('if soldaki ilk')
 
-                            $("#div_" + k).css('border-radius', '15px 0 0 15px');
-                            $("#div_" + 2).css('border-radius', '0 15px 0 0');
-                            $("#div_" + 2).css('background-color', '#f5f7f8 ');
-                            $("#div_solSutunBackGround_" + 2).css('background-color', '#ff0001');
-                            $(".div_haritaBolumum").css('border-radius', '0 15px 15px 15px');
+                                $("#div_" + k).css('border-radius', '15px 0 0 15px');
+                                $("#div_" + 2).css('border-radius', '0 15px 0 0');
+                                $("#div_" + 2).css('background-color', '#f5f7f8 ');
+                                $("#div_solSutunBackGround_" + 2).css('background-color', '#ff0001');
+                                $(".div_haritaBolumum").css('border-radius', '0 15px 15px 15px');
 
-                        }
+                            }
                             else if (k < nobetciEczaneSayisi / 2 || (k == 2 && nobetciEczaneSayisi > 2)
-                                || (nobetciEczaneSayisi < 6 && k < nobetciEczaneSayisi )) {//solda aradakiler
+                                || (nobetciEczaneSayisi < 6 && k < nobetciEczaneSayisi)) {//solda aradakiler
                                 //console.log('else if solda aradakiler')
 
-                            var k_arti = k + 1;
-                            var k_eksi = k - 1;
-                            $("#div_" + k_eksi).css('border-radius', '0 0 15px 0');
-                            $("#div_" + k_eksi).css('background-color', '#f5f7f8 ');
-                            $("#div_solSutunBackGround_" + k_eksi).css('background-color', '#ff0001');
-                            $("#div_solSutunBackGround_" + k).css('background-color', '#f5f7f8 ');
-                            $("#div_" + k).css('border-radius', '15px 0 0 15px');
-                            $("#div_" + k_arti).css('border-radius', '0 15px 0 0');
-                            $("#div_" + k_arti).css('background-color', '#f5f7f8 ');
-                            $("#div_solSutunBackGround_" + k_arti).css('background-color', '#ff0001');
-                            $(".div_haritaBolumum").css('border-radius', '15px 15px 15px 15px');
-                        }
-                        else if (k == nobetciEczaneSayisi / 2 || nobetciEczaneSayisi == k
-                            || (nobetciEczaneSayisi % 2 == 1 && (k == nobetciEczaneSayisi / 2) + 1 )) {//soldaki son
-                               // console.log('else if soldaki son')
+                                var k_arti = k + 1;
+                                var k_eksi = k - 1;
+                                $("#div_" + k_eksi).css('border-radius', '0 0 15px 0');
+                                $("#div_" + k_eksi).css('background-color', '#f5f7f8 ');
+                                $("#div_solSutunBackGround_" + k_eksi).css('background-color', '#ff0001');
+                                $("#div_solSutunBackGround_" + k).css('background-color', '#f5f7f8 ');
+                                $("#div_" + k).css('border-radius', '15px 0 0 15px');
+                                $("#div_" + k_arti).css('border-radius', '0 15px 0 0');
+                                $("#div_" + k_arti).css('background-color', '#f5f7f8 ');
+                                $("#div_solSutunBackGround_" + k_arti).css('background-color', '#ff0001');
+                                $(".div_haritaBolumum").css('border-radius', '15px 15px 15px 15px');
+                            }
+                            else if (k == nobetciEczaneSayisi / 2 || nobetciEczaneSayisi == k
+                                || (nobetciEczaneSayisi % 2 == 1 && (k == nobetciEczaneSayisi / 2) + 1)) {//soldaki son
+                                // console.log('else if soldaki son')
 
                                 var k_arti = k + 1;
-                            var k_eksi = k - 1;
-                            $("#div_" + k_eksi).css('background-color', '#f5f7f8 ');
-                            $("#div_solSutunBackGround_" + k_eksi).css('background-color', '#ff0001');
-                            $("#div_" + k_eksi).css('border-radius', '0 0 15px 0');
-                            $("#div_" + k).css('border-radius', '15px 0 0 15px');
-                            $(".div_haritaBolumum").css('border-radius', '15px 15px 15px 0');
-                        }
+                                var k_eksi = k - 1;
+                                $("#div_" + k_eksi).css('background-color', '#f5f7f8 ');
+                                $("#div_solSutunBackGround_" + k_eksi).css('background-color', '#ff0001');
+                                $("#div_" + k_eksi).css('border-radius', '0 0 15px 0');
+                                $("#div_" + k).css('border-radius', '15px 0 0 15px');
+                                $(".div_haritaBolumum").css('border-radius', '15px 15px 15px 0');
+                            }
                             else {
                                 console.log('if else')
 
-                            $(".div_haritaBolumum").css('border-radius', '15px 15px 15px 15px');
-                            $("#div_" + k).css('border-radius', '15px 0 0 15px');
-                        }
+                                $(".div_haritaBolumum").css('border-radius', '15px 15px 15px 15px');
+                                $("#div_" + k).css('border-radius', '15px 0 0 15px');
+                            }
 
-                    }
-                    else {
-                            //console.log('else')
-
-                        if (k - 1 == nobetciEczaneSayisi / 2
-                            || (nobetciEczaneSayisi % 2 == 1 && k == parseInt(nobetciEczaneSayisi / 2) + 2)) {//sağ ilk || dan sonra tek sayıdaki nobetciEczaneSayisi için
-                            //console.log('else sağ ilk')
-
-                            var k_arti = k + 1;
-                            var k_eksi = k - 1;
-                            $("#div_" + k).css('border-radius', '0 15px 15px 0');
-                            $("#div_" + k_arti).css('border-radius', '15px 0 0 0');
-                            $("#div_" + k_arti).css('background-color', '#f5f7f8 ');
-                            $("#div_sagSutunBackGround_" + k_arti).css('background-color', '#ff0001');
-                            $(".div_haritaBolumum").css('border-radius', '15px 0 15px 15px');
-                        }
-                        else if (k == nobetciEczaneSayisi) {//sağ sonda
-                            //console.log('else sağ sonda')
-
-                            var k_arti = k + 1;
-                            var k_eksi = k - 1;
-                            $("#div_sagSutunBackGround_" + k_eksi).css('background-color', '#ff0001');
-                            $("#div_" + k_eksi).css('border-radius', '0 0 0 15px');
-                            $("#div_" + k).css('border-radius', '0 15px 15px 0');
-                            $(".div_haritaBolumum").css('border-radius', '15px 15px 0 15px');
                         }
                         else {
-                            //console.log('else else')
-                            var k_arti = k + 1;
-                            var k_eksi = k - 1;
-                            $("#div_" + k_eksi).css('border-radius', '0 0 0 15px');
-                            $("#div_" + k_eksi).css('background-color', '#f5f7f8 ');
-                            $("#div_sagSutunBackGround_" + k_eksi).css('background-color', '#ff0001');
-                            $("#div_sagSutunBackGround_" + k).css('background-color', '#f5f7f8 ');
-                            $("#div_" + k).css('border-radius', '0 15px 15px 0');
-                            $("#div_" + k_arti).css('border-radius', '15px 0 0 0');
-                            $("#div_" + k_arti).css('background-color', '#f5f7f8 ');
-                            $("#div_sagSutunBackGround_" + k_arti).css('background-color', '#ff0001');
-                            $(".div_haritaBolumum").css('border-radius', '15px 15px 15px 15px');
+                            //console.log('else')
+
+                            if (k - 1 == nobetciEczaneSayisi / 2
+                                || (nobetciEczaneSayisi % 2 == 1 && k == parseInt(nobetciEczaneSayisi / 2) + 2)) {//sağ ilk || dan sonra tek sayıdaki nobetciEczaneSayisi için
+                                //console.log('else sağ ilk')
+
+                                var k_arti = k + 1;
+                                var k_eksi = k - 1;
+                                $("#div_" + k).css('border-radius', '0 15px 15px 0');
+                                $("#div_" + k_arti).css('border-radius', '15px 0 0 0');
+                                $("#div_" + k_arti).css('background-color', '#f5f7f8 ');
+                                $("#div_sagSutunBackGround_" + k_arti).css('background-color', '#ff0001');
+                                $(".div_haritaBolumum").css('border-radius', '15px 0 15px 15px');
+                            }
+                            else if (k == nobetciEczaneSayisi) {//sağ sonda
+                                //console.log('else sağ sonda')
+
+                                var k_arti = k + 1;
+                                var k_eksi = k - 1;
+                                $("#div_sagSutunBackGround_" + k_eksi).css('background-color', '#ff0001');
+                                $("#div_" + k_eksi).css('border-radius', '0 0 0 15px');
+                                $("#div_" + k).css('border-radius', '0 15px 15px 0');
+                                $(".div_haritaBolumum").css('border-radius', '15px 15px 0 15px');
+                            }
+                            else {
+                                //console.log('else else')
+                                var k_arti = k + 1;
+                                var k_eksi = k - 1;
+                                $("#div_" + k_eksi).css('border-radius', '0 0 0 15px');
+                                $("#div_" + k_eksi).css('background-color', '#f5f7f8 ');
+                                $("#div_sagSutunBackGround_" + k_eksi).css('background-color', '#ff0001');
+                                $("#div_sagSutunBackGround_" + k).css('background-color', '#f5f7f8 ');
+                                $("#div_" + k).css('border-radius', '0 15px 15px 0');
+                                $("#div_" + k_arti).css('border-radius', '15px 0 0 0');
+                                $("#div_" + k_arti).css('background-color', '#f5f7f8 ');
+                                $("#div_sagSutunBackGround_" + k_arti).css('background-color', '#ff0001');
+                                $(".div_haritaBolumum").css('border-radius', '15px 15px 15px 15px');
+                            }
                         }
+                        $("#lbl_eczane_adi_" + k).css('color', '#f5f7f8 ');
+                        $("#lbl_eczane_adres_" + k).css('color', '#f5f7f8 ');
+                        $("#lbl_eczane_adres_tarifi_" + k).css('color', '#000000');
+                        $("#lbl_eczane_telefon_" + k).css('color', '#f5f7f8 ');
+                        $("#lbl_eczane_nobetGrovTipAdi_" + k).css('color', '#f5f7f8 ');
+                        //$("#div_" + k).css({
+                        //    "border-color": "#ff0001",
+                        //    "border-width": "10px",
+                        //    "border-style": "solid"
+                        //});
+                        //$("#div_" + k).animate({ width: "50%", height: "50%" }, 'slow');
                     }
-                    $("#lbl_eczane_adi_" + k).css('color', '#f5f7f8 ');
-                    $("#lbl_eczane_adres_" + k).css('color', '#f5f7f8 ');
-                    $("#lbl_eczane_adres_tarifi_" + k).css('color', '#000000');
-                    $("#lbl_eczane_telefon_" + k).css('color', '#f5f7f8 ');
-                    $("#lbl_eczane_nobetGrovTipAdi_" + k).css('color', '#f5f7f8 ');
-                    //$("#div_" + k).css({
-                    //    "border-color": "#ff0001",
-                    //    "border-width": "10px",
-                    //    "border-style": "solid"
-                    //});
-                    //$("#div_" + k).animate({ width: "50%", height: "50%" }, 'slow');
+                    else {
+                        $("#div_" + k).css('background-color', '');
+                        $("#div_" + k).css('background-color', '#f5f7f8 ');
+                        //$("#div_" + k).css('border-radius', '0 0 0 0');
+
+                        $("#lbl_eczane_adi_" + k).css('color', '#ff0001');
+                        $("#lbl_eczane_adres_" + k).css('color', '#ff0001');
+                        $("#lbl_eczane_adres_tarifi_" + k).css('color', '#000000');
+                        $("#lbl_eczane_telefon_" + k).css('color', '#ff0001');
+                        $("#lbl_eczane_nobetGrovTipAdi_" + k).css('color', '#ff0001');
+
+                        //$("#div_" + k).css({
+                        //    "border-color": "#ff0000",
+                        //    "border-width": "10px",
+                        //    "border-style": "solid"
+                        //});
+
+
+                    }
+                    var adi = nobetciEczaneler[k - 1].adi
+                    var tel = nobetciEczaneler[k - 1].tel
+                    var adres = nobetciEczaneler[k - 1].adres
+                    var adresTarifi = nobetciEczaneler[k - 1].adresTarifi
+                    var eczaneninAcikOlduguSaatAraligi = nobetciEczaneler[k - 1].eczaneninAcikOlduguSaatAraligi
+                    //console.log('eczaneninAcikOlduguSaatAraligi: ' + eczaneninAcikOlduguSaatAraligi)
+                    //console.log('saat: ' + saat)
+                    //console.log('dakika: ' + dakika)
+                    //console.log('saniye: ' + saniye)
+                    var today = new Date();
+                    var saat = today.getHours();
+                    var dakika = today.getMinutes();
+                    var saniye = today.getSeconds();
+                    var nobetBitisSaati = eczaneninAcikOlduguSaatAraligi.substr(8, 2)
+                    var nobetBitisDakika = eczaneninAcikOlduguSaatAraligi.substr(11, 2)
+                    //nobetBitisSaati = 23
+                    //console.log('adi: ' + adi)
+                    //console.log('eczaneninAcikOlduguSaatAraligi: ' + eczaneninAcikOlduguSaatAraligi)
+                    //console.log('nobetBitisSaati: ' + nobetBitisSaati)
+                    //console.log('nobetBitisDakika: ' + nobetBitisDakika)
+                    //console.log('dakika: ' + dakika)
+                    if (parseInt(nobetBitisSaati) == saat && parseInt(nobetBitisDakika) == dakika &&
+                        (saniye == 0 || saniye == 1 || saniye == 2
+                            || saniye == 3 || saniye == 4 || saniye == 5)) {
+                        //alert('location.reload')
+                        location.reload()
+                    }
+
                 }
-                else {
-                    $("#div_" + k).css('background-color', '');
-                    $("#div_" + k).css('background-color', '#f5f7f8 ');
-                    //$("#div_" + k).css('border-radius', '0 0 0 0');
-
-                    $("#lbl_eczane_adi_" + k).css('color', '#ff0001');
-                    $("#lbl_eczane_adres_" + k).css('color', '#ff0001');
-                    $("#lbl_eczane_adres_tarifi_" + k).css('color', '#000000');
-                    $("#lbl_eczane_telefon_" + k).css('color', '#ff0001');
-                    $("#lbl_eczane_nobetGrovTipAdi_" + k).css('color', '#ff0001');
-
-                    //$("#div_" + k).css({
-                    //    "border-color": "#ff0000",
-                    //    "border-width": "10px",
-                    //    "border-style": "solid"
-                    //});
-
-
-                }
-                var adi = nobetciEczaneler[k - 1].adi
-                var tel = nobetciEczaneler[k - 1].tel
-                var adres = nobetciEczaneler[k - 1].adres
-                var adresTarifi = nobetciEczaneler[k - 1].adresTarifi
-                var eczaneninAcikOlduguSaatAraligi = nobetciEczaneler[k - 1].eczaneninAcikOlduguSaatAraligi
-                //console.log('eczaneninAcikOlduguSaatAraligi: ' + eczaneninAcikOlduguSaatAraligi)
-                //console.log('saat: ' + saat)
-                //console.log('dakika: ' + dakika)
-                //console.log('saniye: ' + saniye)
-                var today = new Date();
-                var saat = today.getHours();
-                var dakika = today.getMinutes();
-                var saniye = today.getSeconds();
-                var nobetBitisSaati = eczaneninAcikOlduguSaatAraligi.substr(8, 2)
-                var nobetBitisDakika = eczaneninAcikOlduguSaatAraligi.substr(11, 2)
-                //nobetBitisSaati = 23
-                //console.log('adi: ' + adi)
-                //console.log('eczaneninAcikOlduguSaatAraligi: ' + eczaneninAcikOlduguSaatAraligi)
-                //console.log('nobetBitisSaati: ' + nobetBitisSaati)
-                //console.log('nobetBitisDakika: ' + nobetBitisDakika)
-                //console.log('dakika: ' + dakika)
-                if (parseInt(nobetBitisSaati) == saat && parseInt(nobetBitisDakika) == dakika &&
-                    (saniye == 0 || saniye == 1 || saniye== 2
-                        || saniye == 3 || saniye == 4 || saniye == 5)) {
-                    //alert('location.reload')
-                    location.reload()
-                }
-
             }
-        }
             function changeQRCode(counter) {
-            var locationOfDestination = {
-                adi: nobetciEczaneler[counter - 1].adi,
-                koordinatx: nobetciEczaneler[counter - 1].koordinatx,
-                koordinaty: nobetciEczaneler[counter - 1].koordinaty,
-                tel: nobetciEczaneler[counter - 1].tel,
-                adres: nobetciEczaneler[counter - 1].adres
+                var locationOfDestination = {
+                    adi: nobetciEczaneler[counter - 1].adi,
+                    koordinatx: nobetciEczaneler[counter - 1].koordinatx,
+                    koordinaty: nobetciEczaneler[counter - 1].koordinaty,
+                    tel: nobetciEczaneler[counter - 1].tel,
+                    adres: nobetciEczaneler[counter - 1].adres
+                }
+                //alert('newStartLat')
+                var newStartLat = locationOfCurrentPharmacy.koordinatx;
+                var newStartLng = locationOfCurrentPharmacy.koordinaty;
+                var newEndLat = locationOfDestination.koordinatx;
+                var newEndLng = locationOfDestination.koordinaty;
+
+                generateQRCode(newEndLat + "," + newEndLng)
+
             }
-            //alert('newStartLat')
-            var newStartLat = locationOfCurrentPharmacy.koordinatx;
-            var newStartLng = locationOfCurrentPharmacy.koordinaty;
-            var newEndLat = locationOfDestination.koordinatx;
-            var newEndLng = locationOfDestination.koordinaty;
-
-            generateQRCode(newEndLat + "," + newEndLng)
-
-            }
-
-            //Ekranın Bulunduğu Yer Modelden Alınır:
-            var locationOfCurrentPharmacy = {
-            adi: model.EkraninBulunduguEczane.Adi,
-            koordinatx: model.EkraninBulunduguEczane.Enlem,
-            koordinaty: model.EkraninBulunduguEczane.Boylam,
-            tel: model.EkraninBulunduguEczane.TelefonNo,
-            adres: model.EkraninBulunduguEczane.Adres,
-            adresTarifi: model.EkraninBulunduguEczane.AdresTarifiKisa,
-           //eczaneninAcikOlduguSaatAraligi: model.EkraninBulunduguEczane.EczaneninAcikOlduguSaatAraligi
-        }
-            //alert(model.NobetciEczaneler[1].Adi)
-
-            //alert('nobetciEczaneImage')
-            var bosImage = '../../../../Content/images/bos.png';
-            var peopleIcon = '../../../../Content/images/peopleStand_128x128.png';
-            if (clientWidth > 2000)
-                peopleIcon = '../../../../Content/images/peopleStand_256x256.png';
-            var nobetciEczaneImage = '../../../../Content/images/NobetciEczaneLogoUfak.png';
-            //alert(clientWidth)
-            if (clientWidth > 1000)
-             nobetciEczaneImage = '../../../../Content/images/NobetciEczaneLogoUfak.png';
-            if (clientWidth > 2000)
-                nobetciEczaneImage = '../../../../Content/images/NobetciEczaneLogoUfak_hd.png';
-            //alert('recursivelyChangePharmacy1')
-            //start recursive
-
-            recursivelyChangePharmacy()
-
             function recursivelyChangePharmacy() {//recursively nöbetçi eczaneleri değiştir
                 if (counter > nobetciEczaneSayisi)
                     counter = 1;
@@ -2380,8 +2235,10 @@
                 var marker2 = "&markers=color:red%7Clabel:E%7C|";
                 var marker2Coordinates = newEndLat + "," + newEndLng;
                 var size = "&size=750x700";
-                if (nobetciEczaneSayisi < 6)
+                if (nobetciEczaneSayisi < 6) {
                     size = "&size=700x400";
+                    $(".lbl_mesafe").css('margin-top', '-35%');
+                }
                 var pathWeight = "&path=weight:5|";
                 var pathColor = "color:blue|enc:";
                 var the_static_image_url_variable = http + markersCentervs +
