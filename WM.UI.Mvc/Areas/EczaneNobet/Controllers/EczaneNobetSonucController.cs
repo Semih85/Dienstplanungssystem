@@ -344,7 +344,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var eskiVeriGosterilsinMi = false;
 
-            if (eskiVeriGosterilsinMi && nobetUstGrup.Id == 6)
+            if (eskiVeriGosterilsinMi && nobetUstGrup.Id == 5)
             {
                 sonuclar = eczaneNobetSonuclarTumu;
             }

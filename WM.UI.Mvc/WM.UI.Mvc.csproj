@@ -672,6 +672,12 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\Index.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipTakvimOzelGun\SilinenBayramlarPartialView.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\Kalibrasyon\Create.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\Kalibrasyon\Delete.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\Kalibrasyon\Details.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\Kalibrasyon\Edit.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\Kalibrasyon\Index.cshtml" />
     <Content Include="Scripts\i18n\defaults-am_ET.js" />
     <Content Include="Scripts\i18n\defaults-am_ET.min.js" />
     <Content Include="Scripts\i18n\defaults-ar_AR.js" />
@@ -788,7 +794,6 @@
     <Content Include="Scripts\bootstrap-select.min.js.map" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
-    <Content Include="Areas\EczaneNobet\Views\NobetGrupGorevTipTakvimOzelGun\SilinenBayramlarPartialView.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -1105,6 +1110,7 @@
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetDegisimController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneUzaklikMatrisController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EkranController.cs" />
+    <Compile Include="Areas\EczaneNobet\Controllers\KalibrasyonController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\NobetciEczaneEkraniController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\NobetciEczaneHaritaController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\NobetDurumController.cs" />

@@ -209,12 +209,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #endregion
 
-            #region Kısıtlar            
+            #region Kısıtlar
 
-            var nobetGorevTipId = 7;
-            var nobetGrupGorevTip = data.NobetGrupGorevTipler.Where(w => w.NobetGorevTipId == nobetGorevTipId).SingleOrDefault();
-
-            if (nobetGrupGorevTip != null)
+            foreach (var nobetGrupGorevTip in data.NobetGrupGorevTipler)
             {
                 #region ön hazırlama
 

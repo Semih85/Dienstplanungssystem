@@ -33,7 +33,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var nobetBorcOdeme = NobetUstGrupKisit(data.Kisitlar, "nobetBorcOdeme", data.NobetUstGrupId);
 
             var altGruplarlaAyniGunNobetTutma = NobetUstGrupKisit(data.Kisitlar, "altGruplarlaAyniGunNobetTutma", data.NobetUstGrupId);
-            var oncekiAylarAyniGunNobet = NobetUstGrupKisit(data.Kisitlar, "oncekiAylarAyniGunNobet", data.NobetUstGrupId);
             var eczanelerinNobetGunleriniKisitla = NobetUstGrupKisit(data.Kisitlar, "eczanelerinNobetGunleriniKisitla", data.NobetUstGrupId);
 
             var ayIcindeAyniGunNobet = NobetUstGrupKisit(data.Kisitlar, "ayIcindeAyniGunNobet", data.NobetUstGrupId);
@@ -1275,7 +1274,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     Model = model,
                     EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
                     EczaneNobetSonuclar = eczaneNobetSonuclarGorevTipBazli,
-                    NobetUstGrupKisit = oncekiAylarAyniGunNobet,
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k41"),
                     EczaneGruplar = data.OncekiAylardaAyniGunNobetTutanEczaneler,
                     Tarihler = tarihAraligi,
                     KararDegiskeni = _x
@@ -1340,7 +1339,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 AyIcindeSadece1KezAyniGunNobetTutulsun(ayIcindeSadece1KezAyniGunNobetKisit);
 
                 #endregion
-
             }
          
             #endregion
@@ -1420,10 +1418,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                         var sonuclar = data.EczaneNobetTarihAralik.Where(s => _x[s].Value.IsAlmost(1) == true).ToList();
 
-                        //var nobetGorevTipId = 1;
-
                         var nobetGrupTarihler1 = data.EczaneNobetTarihAralik
-                             //.Where(w => w.NobetGorevTipId == nobetGorevTipId)
                              .Select(s => new
                              {
                                  s.NobetGrupId,

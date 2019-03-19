@@ -1,0 +1,58 @@
+﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.Kalibrasyon
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Kalibrasyon</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneNobetGrup.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneNobetGrup.Aciklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KalibrasyonTip.Adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KalibrasyonTip.Adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetUstGrupGunGrup.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetUstGrupGunGrup.Aciklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Deger)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Deger)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
