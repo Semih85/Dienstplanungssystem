@@ -157,7 +157,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.NobetGrupGorevTipGunKuralId = new SelectList(nobetGrupGorevTipGunKurallar, "Id", "Value");
             ViewBag.NobetOzelGunId = new SelectList(_nobetOzelGunService.GetList(), "Id", "Adi");
             ViewBag.NobetGunKuralId = new SelectList(nobetGrunKurallar, "NobetGunKuralId", "NobetGunKuralAdi");
-            //ViewBag.TakvimId = new SelectList(_takvimService.GetList(), "Id", "Tarih");
 
             return View();
         }

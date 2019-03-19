@@ -1615,7 +1615,7 @@ new AltGrupIleTutulanNobetDurumu { EczaneNobetGrupId =1260,NobetAltGrupId=43,Nob
                 Model = model,
                 EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
                 EczaneNobetSonuclar = data.EczaneGrupNobetSonuclarTumu,
-                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "K11"),
+                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k11"),
                 EczaneGruplar = data.EczaneGruplar,
                 Tarihler = tarihAraligi,
                 KararDegiskeni = _x
@@ -1643,7 +1643,7 @@ new AltGrupIleTutulanNobetDurumu { EczaneNobetGrupId =1260,NobetAltGrupId=43,Nob
             {
                 Model = model,
                 KararDegiskeni = _x,
-                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "K19"),
+                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k19"),
                 Tarihler = data.TarihAraligi
             };
 
@@ -1687,16 +1687,16 @@ new AltGrupIleTutulanNobetDurumu { EczaneNobetGrupId =1260,NobetAltGrupId=43,Nob
 
             #region Tarih aralığı içinde aynı gün 2 kez nöbet 
 
-            var ayIcindeSadece1KezAyniGunNobetKisit = new KpAyIcindeSadece1KezAyniGunNobet
-            {
-                Model = model,
-                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik.Where(w => w.NobetGrupGorevTipId != 54).ToList(),
-                IkiliEczaneler = data.IkiliEczaneler.Where(w => w.NobetGrupId2 != 54).ToList(),
-                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "K10"),
-                Tarihler = data.TarihAraligi,
-                KararDegiskeni = _x
-            };
-            AyIcindeSadece1KezAyniGunNobetTutulsun(ayIcindeSadece1KezAyniGunNobetKisit);
+            //var ayIcindeSadece1KezAyniGunNobetKisit = new KpAyIcindeSadece1KezAyniGunNobet
+            //{
+            //    Model = model,
+            //    EczaneNobetTarihAralik = data.EczaneNobetTarihAralik.Where(w => w.NobetGrupGorevTipId != 54).ToList(),
+            //    IkiliEczaneler = data.IkiliEczaneler.Where(w => w.NobetGrupId2 != 54).ToList(),
+            //    NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k10"),
+            //    Tarihler = data.TarihAraligi,
+            //    KararDegiskeni = _x
+            //};
+            //AyIcindeSadece1KezAyniGunNobetTutulsun(ayIcindeSadece1KezAyniGunNobetKisit);
 
             //var kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu = new KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu
             //{
@@ -1718,7 +1718,7 @@ new AltGrupIleTutulanNobetDurumu { EczaneNobetGrupId =1260,NobetAltGrupId=43,Nob
                 Model = model,
                 EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
                 EczaneNobetSonuclar = data.EczaneGrupNobetSonuclarTumu,
-                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "K41"),
+                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k41"),
                 EczaneGruplar = data.OncekiAylardaAyniGunNobetTutanEczaneler,
                 Tarihler = tarihAraligi,
                 KararDegiskeni = _x
@@ -1798,6 +1798,33 @@ new AltGrupIleTutulanNobetDurumu { EczaneNobetGrupId =1260,NobetAltGrupId=43,Nob
                     }
                     else
                     {
+                        var ayIcindeSadece1KezAyniGunNobetKisit = new KpAyIcindeSadece1KezAyniGunNobet
+                        {
+                            Model = model,
+                            EczaneNobetTarihAralik = data.EczaneNobetTarihAralik.Where(w => w.NobetGrupGorevTipId != 54).ToList(),
+                            IkiliEczaneler = data.IkiliEczaneler.Where(w => w.NobetGrupId2 != 54).ToList(),
+                            NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k10"),
+                            Tarihler = data.TarihAraligi,
+                            KararDegiskeni = _x
+                        };
+                        AyIcindeSadece1KezAyniGunNobetTutulsun(ayIcindeSadece1KezAyniGunNobetKisit);
+
+                        solution = solver.Solve(model);
+
+                        modelStatus = solution.ModelStatus;
+
+                        if (modelStatus != ModelStatus.Feasible)
+                        {
+                            //data.CalismaSayisi++;
+
+                            if (data.CalismaSayisi == calismaSayisiEnFazla)
+                            {
+                                results.Celiskiler = CeliskileriEkle(solution);
+                            }
+
+                            throw new Exception($"Uygun çözüm bulunamadı! k10 aynı gün 2 kez nöbet.");
+                        }
+
                         // import the results back into the model 
                         model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
                         var objective = solution.ObjectiveValues.Single();

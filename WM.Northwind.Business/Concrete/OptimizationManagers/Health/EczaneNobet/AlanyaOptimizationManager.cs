@@ -39,6 +39,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private IEczaneNobetMuafiyetService _eczaneNobetMuafiyetService;
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
         private INobetGrupGorevTipKisitService _nobetGrupGorevTipKisitService;
+        private IKalibrasyonService _kalibrasyonService;
 
         public AlanyaOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -60,7 +61,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     IEczaneNobetMuafiyetService eczaneNobetMuafiyetService,
                     IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrupService,
                     IAyniGunTutulanNobetService ayniGunTutulanNobetService,
-                    INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService
+                    INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
+                    IKalibrasyonService kalibrasyonService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -83,6 +85,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _eczaneNobetGrupAltGrupService = eczaneNobetGrupAltGrupService;
             _ayniGunTutulanNobetService = ayniGunTutulanNobetService;
             _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
+            _kalibrasyonService = kalibrasyonService;
         }
         #endregion
 
@@ -501,7 +504,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneNobetSonuclarOncekiAylar = eczaneNobetSonuclarOncekiAylar,
 
                 IkiliEczaneler = ikiliEczaneler,
-                NobetGrupGorevTipKisitlar = grupBazliKisitlar
+                NobetGrupGorevTipKisitlar = grupBazliKisitlar,
+                Kalibrasyonlar = _kalibrasyonService.GetKalibrasyonlarYatay(nobetUstGrupId)
             };
 
             _eczaneNobetOrtakService.KurallariKontrolEtHaftaIciEnAzEnCok(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);

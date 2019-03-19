@@ -132,6 +132,23 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _eczaneNobetGrupDal.GetDetayList(x => nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId));
         }
+        
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetGrupDetay> GetDetaylarByNobetUstGrupIdList(List<int> nobetUstGrupIdList)
+        {
+            return _eczaneNobetGrupDal.GetDetayList(x => nobetUstGrupIdList.Contains(x.NobetUstGrupId));
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<MyDrop> GetMyDrop(List<EczaneNobetGrupDetay> czaneNobetGrupDetaylar)
+        {
+            var liste = czaneNobetGrupDetaylar
+                .OrderBy(s => s.EczaneAdi)
+                .ThenBy(t => t.NobetGrupAdi)
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi} ({s.NobetGrupAdi}, {s.NobetGorevTipAdi})" }).ToList();
+
+            return liste;
+        }
 
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetGrupDetay> GetDetaylar(int nobetGrupId, int eczaneId)

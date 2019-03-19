@@ -99,10 +99,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetListByUser(user).Select(s => s.Id).ToList();
 
-            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipler)
-                .OrderBy(s => s.EczaneAdi)
-                .ThenBy(t => t.NobetGrupAdi)
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi} ({s.NobetGrupAdi}, {s.NobetGorevTipAdi})" });
+            var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipler);
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetMyDrop(eczaneNobetGrupList);
 
             var nobetAltGruplar = _nobetAltGrupService.GetDetaylar(nobetGrupGorevTipler);
 
@@ -150,10 +148,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetListByUser(user).Select(s => s.Id).ToList();
 
-            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipler)
-                .OrderBy(s => s.EczaneAdi)
-                .ThenBy(t => t.NobetGrupAdi)
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi} ({s.NobetGrupAdi}, {s.NobetGorevTipAdi})" });
+            var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipler);
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetMyDrop(eczaneNobetGrupList);
 
             var nobetAltGruplar = _nobetAltGrupService.GetDetaylar(nobetGrupGorevTipler);
 
@@ -197,11 +193,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetListByUser(user).Select(s => s.Id).ToList();
 
-            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipler)
-                //.Where(w => nobetGruplar.Contains(w.NobetGrupId))
-                .OrderBy(s => s.EczaneAdi)
-                .ThenBy(t => t.NobetGrupAdi)
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi} ({s.NobetGrupAdi}, {s.NobetGorevTipAdi})" });
+            var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipler);
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetMyDrop(eczaneNobetGrupList);
 
             var nobetAltGruplar = _nobetAltGrupService.GetDetaylar(nobetGrupGorevTipler);
 
@@ -225,11 +218,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetListByUser(user).Select(s => s.Id).ToList();
 
-            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipler)
-                //.Where(w => nobetGruplar.Contains(w.NobetGrupId))
-                .OrderBy(s => s.EczaneAdi)
-                .ThenBy(t => t.NobetGrupAdi)
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi} ({s.NobetGrupAdi}, {s.NobetGorevTipAdi})" });
+            var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipler);
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetMyDrop(eczaneNobetGrupList);
 
             var nobetAltGruplar = _nobetAltGrupService.GetDetaylar(nobetGrupGorevTipler);
 
@@ -258,7 +248,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var eczaneNobetGrupAltGrup = _eczaneNobetGrupAltGrupService.GetDetayById(id);
+            //var eczaneNobetGrupAltGrup = _eczaneNobetGrupAltGrupService.GetDetayById(id);
             _eczaneNobetGrupAltGrupService.Delete(id);
             return RedirectToAction("Index");
         }

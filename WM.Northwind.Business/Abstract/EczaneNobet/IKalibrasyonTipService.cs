@@ -19,5 +19,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void Delete(int kalibrasyonTipId);
         KalibrasyonTipDetay GetDetayById(int kalibrasyonTipId);
         List<KalibrasyonTipDetay> GetDetaylar();
+        List<MyDrop> GetMyDrop(List<KalibrasyonTipDetay> kalibrasyonTipDetaylar);
+        List<KalibrasyonTipDetay> GetDetaylar(List<int> nobetUstGrupIdList);
     }
 }

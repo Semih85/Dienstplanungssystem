@@ -73,5 +73,6 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public List<NobetGrupGorevTipKisitDetay> NobetGrupGorevTipKisitlar { get; set; }
         public int CalismaSayisiLimit { get; set; }
         public int TimeLimit { get; set; }
+        public List<KalibrasyonYatay> Kalibrasyonlar { get; set; }
     }
 }

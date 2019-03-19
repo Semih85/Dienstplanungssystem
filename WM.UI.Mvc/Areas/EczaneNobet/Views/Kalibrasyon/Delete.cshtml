@@ -1,4 +1,4 @@
-﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.Kalibrasyon
+﻿@model KalibrasyonDetay
 
 @{
     ViewBag.Title = "Delete";
@@ -12,27 +12,41 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.EczaneNobetGrup.Aciklama)
+            @Html.DisplayNameFor(model => model.NobetGrupAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EczaneNobetGrup.Aciklama)
+            @Html.DisplayFor(model => model.NobetGrupAdi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGorevTipAdi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneAdi)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.KalibrasyonTip.Adi)
+            @Html.DisplayNameFor(model => model.KalibrasyonTipAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.KalibrasyonTip.Adi)
+            @Html.DisplayFor(model => model.KalibrasyonTipAdi)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NobetUstGrupGunGrup.Aciklama)
+            @Html.DisplayNameFor(model => model.GunGrupAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NobetUstGrupGunGrup.Aciklama)
+            @Html.DisplayFor(model => model.GunGrupAdi)
         </dd>
 
         <dt>
@@ -53,12 +67,13 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Sil" class="btn btn-danger" />
+            @Html.ActionLink("Kalibrasyonlar", "Index", null, new { @class = "btn btn-warning" })
         </div>
     }
 </div>

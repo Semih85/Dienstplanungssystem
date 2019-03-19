@@ -1253,16 +1253,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 #region Tarih aralığı içinde aynı gün nöbet
 
-                var ayIcindeSadece1KezAyniGunNobetKisit = new KpAyIcindeSadece1KezAyniGunNobet
-                {
-                    Model = model,
-                    EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
-                    IkiliEczaneler = data.IkiliEczaneler,
-                    NobetUstGrupKisit = ayIcindeAyniGunNobet,
-                    Tarihler = data.TarihAraligi,
-                    KararDegiskeni = _x
-                };
-                AyIcindeSadece1KezAyniGunNobetTutulsun(ayIcindeSadece1KezAyniGunNobetKisit);
+                //var ayIcindeSadece1KezAyniGunNobetKisit = new KpAyIcindeSadece1KezAyniGunNobet
+                //{
+                //    Model = model,
+                //    EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                //    IkiliEczaneler = data.IkiliEczaneler,
+                //    NobetUstGrupKisit = ayIcindeAyniGunNobet,
+                //    Tarihler = data.TarihAraligi,
+                //    KararDegiskeni = _x
+                //};
+                //AyIcindeSadece1KezAyniGunNobetTutulsun(ayIcindeSadece1KezAyniGunNobetKisit);
 
                 #endregion
 
@@ -1508,6 +1508,33 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     }
                     else
                     {
+                        var ayIcindeSadece1KezAyniGunNobetKisit = new KpAyIcindeSadece1KezAyniGunNobet
+                        {
+                            Model = model,
+                            EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                            IkiliEczaneler = data.IkiliEczaneler,
+                            NobetUstGrupKisit = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "k10"),
+                            Tarihler = data.TarihAraligi,
+                            KararDegiskeni = _x
+                        };
+                        AyIcindeSadece1KezAyniGunNobetTutulsun(ayIcindeSadece1KezAyniGunNobetKisit);
+
+                        solution = solver.Solve(model);
+
+                        modelStatus = solution.ModelStatus;
+
+                        if (modelStatus != ModelStatus.Feasible)
+                        {
+                            //data.CalismaSayisi++;
+
+                            if (data.CalismaSayisi == calismaSayisiEnFazla)
+                            {
+                                results.Celiskiler = CeliskileriEkle(solution);
+                            }
+
+                            throw new Exception($"Uygun çözüm bulunamadı! k10 aynı gün 2 kez nöbet.");
+                        }
+
                         // import the results back into the model 
                         model.VariableCollections.ForEach(vc => vc.SetVariableValues(solution.VariableValues));
                         var objective = solution.ObjectiveValues.Single();

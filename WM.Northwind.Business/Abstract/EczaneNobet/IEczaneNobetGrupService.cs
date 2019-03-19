@@ -48,5 +48,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
 
         List<EczaneNobetGrupIstatistik> NobetGruplarDDL(int nobetUstGrupId);
         void CokluEkle(List<EczaneNobetGrup> eczaneNobetGruplar);
+
+        List<MyDrop> GetMyDrop(List<EczaneNobetGrupDetay> czaneNobetGrupDetaylar);
+        List<EczaneNobetGrupDetay> GetDetaylarByNobetUstGrupIdList(List<int> nobetUstGrupIdList);
     }
 }

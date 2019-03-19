@@ -78,50 +78,107 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<KalibrasyonDetay> GetDetaylar(List<int> nobetUstGrupIdList)
+        {
+            return _kalibrasyonDal.GetDetayList(x => nobetUstGrupIdList.Contains(x.NobetUstGrupId));
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<KalibrasyonYatay> GetKalibrasyonlarYatay(int nobetUstGrupId)
         {
             var kalibrasyonlar = GetDetaylar(nobetUstGrupId);
 
-            return (from k in kalibrasyonlar
-                    group k by new
-                    {
-                        k.EczaneNobetGrupId,
-                        k.EczaneAdi,
-                        k.KalibrasyonTipId,
-                        k.KalibrasyonTipAdi
-                    } into s
-                    let klbr = kalibrasyonlar
-                                     .Where(w => w.EczaneNobetGrupId == s.Key.EczaneNobetGrupId
-                                              && w.KalibrasyonTipId == s.Key.KalibrasyonTipId
-                                              && w.KalibrasyonTipId < 7)
-                    let klbrToplam = kalibrasyonlar
-                           .Where(w => w.EczaneNobetGrupId == s.Key.EczaneNobetGrupId
-                                    && w.KalibrasyonTipId == 7)
-                    select new KalibrasyonYatay
-                    {
-                        EczaneNobetGrupId = s.Key.EczaneNobetGrupId,
-                        EczaneAdi = s.Key.EczaneAdi,
-                        KalibrasyonTipId = s.Key.KalibrasyonTipId,
-                        KalibrasyonTipAdi = s.Key.KalibrasyonTipAdi,
-                        KalibrasyonCumartesi = klbr
-                                     .Where(w => w.GunGrupId == 4)
-                                     .Select(s1 => s1.Deger).SingleOrDefault(),
-                        KalibrasyonPazar = klbr
-                                     .Where(w => w.GunGrupId == 1)
-                                     .Select(s1 => s1.Deger).SingleOrDefault(),
-                        KalibrasyonHaftaIci = klbr
-                                     .Where(w => w.GunGrupId == 3)
-                                     .Select(s1 => s1.Deger).SingleOrDefault(),
-                        KalibrasyonToplamCumartesi = klbrToplam
-                                     .Where(w => w.GunGrupId == 4)
-                                              .Select(s1 => s1.Deger).SingleOrDefault(),
-                        KalibrasyonToplamPazar = klbrToplam
-                                     .Where(w => w.GunGrupId == 1)
-                                              .Select(s1 => s1.Deger).SingleOrDefault(),
-                        KalibrasyonToplamHaftaIci = klbrToplam
-                                     .Where(w => w.GunGrupId == 3)
-                                     .Select(s1 => s1.Deger).SingleOrDefault()
-                    }).ToList();
+            var liste = new List<KalibrasyonYatay>();
+
+            if (nobetUstGrupId == 1)
+            {
+                liste = (from k in kalibrasyonlar
+                         group k by new
+                         {
+                             k.EczaneNobetGrupId,
+                             k.EczaneAdi,
+                             k.KalibrasyonTipId,
+                             k.KalibrasyonTipAdi
+                         } into s
+                         let klbr = kalibrasyonlar
+                                          .Where(w => w.EczaneNobetGrupId == s.Key.EczaneNobetGrupId
+                                                   && w.KalibrasyonTipId == s.Key.KalibrasyonTipId
+                                                   && w.KalibrasyonTipId < 8)
+                         let klbrToplam = kalibrasyonlar
+                                .Where(w => w.EczaneNobetGrupId == s.Key.EczaneNobetGrupId
+                                         && w.KalibrasyonTipId == 8)
+                         select new KalibrasyonYatay
+                         {
+                             EczaneNobetGrupId = s.Key.EczaneNobetGrupId,
+                             EczaneAdi = s.Key.EczaneAdi,
+                             KalibrasyonTipId = s.Key.KalibrasyonTipId,
+                             KalibrasyonTipAdi = s.Key.KalibrasyonTipAdi,
+                             KalibrasyonCumartesi = klbr
+                                          .Where(w => w.GunGrupId == 4)
+                                          .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonPazar = klbr
+                                          .Where(w => w.GunGrupId == 1)
+                                          .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonHaftaIci = klbr
+                                          .Where(w => w.GunGrupId == 3)
+                                          .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonToplamCumartesi = klbrToplam
+                                          .Where(w => w.GunGrupId == 4)
+                                                   .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonToplamPazar = klbrToplam
+                                          .Where(w => w.GunGrupId == 1)
+                                                   .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonToplamHaftaIci = klbrToplam
+                                          .Where(w => w.GunGrupId == 3)
+                                          .Select(s1 => s1.Deger).SingleOrDefault()
+                         }).ToList();
+            }
+            else if (nobetUstGrupId == 5)
+            {
+                liste = (from k in kalibrasyonlar
+                         group k by new
+                         {
+                             k.EczaneNobetGrupId,
+                             k.EczaneAdi,
+                             k.KalibrasyonTipId,
+                             k.KalibrasyonTipAdi
+                         } into s
+                         let klbr = kalibrasyonlar
+                                          .Where(w => w.EczaneNobetGrupId == s.Key.EczaneNobetGrupId
+                                                   && w.KalibrasyonTipId == s.Key.KalibrasyonTipId
+                                                   && w.KalibrasyonTipId < 7)
+                         let klbrToplam = kalibrasyonlar
+                                .Where(w => w.EczaneNobetGrupId == s.Key.EczaneNobetGrupId
+                                         && w.KalibrasyonTipId == 7)
+                         select new KalibrasyonYatay
+                         {
+                             EczaneNobetGrupId = s.Key.EczaneNobetGrupId,
+                             EczaneAdi = s.Key.EczaneAdi,
+                             KalibrasyonTipId = s.Key.KalibrasyonTipId,
+                             KalibrasyonTipAdi = s.Key.KalibrasyonTipAdi,
+                             KalibrasyonCumartesi = klbr
+                                          .Where(w => w.GunGrupId == 4)
+                                          .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonPazar = klbr
+                                          .Where(w => w.GunGrupId == 1)
+                                          .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonHaftaIci = klbr
+                                          .Where(w => w.GunGrupId == 3)
+                                          .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonToplamCumartesi = klbrToplam
+                                          .Where(w => w.GunGrupId == 4)
+                                                   .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonToplamPazar = klbrToplam
+                                          .Where(w => w.GunGrupId == 1)
+                                                   .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonToplamHaftaIci = klbrToplam
+                                          .Where(w => w.GunGrupId == 3)
+                                          .Select(s1 => s1.Deger).SingleOrDefault()
+                         }).ToList();
+            }
+
+
+            return liste;
         }
     }
 }

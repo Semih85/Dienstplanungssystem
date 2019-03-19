@@ -33,21 +33,25 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetUstGrupGunGrupDal.Get(x => x.Id == nobetUstGrupGunGrupId);
         }
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetUstGrupGunGrup> GetList()
         {
             return _nobetUstGrupGunGrupDal.GetList();
         }
+
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(NobetUstGrupGunGrup nobetUstGrupGunGrup)
         {
             _nobetUstGrupGunGrupDal.Insert(nobetUstGrupGunGrup);
         }
+
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetUstGrupGunGrup nobetUstGrupGunGrup)
         {
             _nobetUstGrupGunGrupDal.Update(nobetUstGrupGunGrup);
         }
+
         public NobetUstGrupGunGrupDetay GetDetayById(int nobetUstGrupGunGrupId)
         {
             return _nobetUstGrupGunGrupDal.GetDetay(x => x.Id == nobetUstGrupGunGrupId);
@@ -63,6 +67,18 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<NobetUstGrupGunGrupDetay> GetDetaylar(int nobetUstGupId)
         {
             return _nobetUstGrupGunGrupDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGupId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetUstGrupGunGrupDetay> GetDetaylarByNobetUstGupIdList(List<int> nobetUstGupIdList)
+        {
+            return _nobetUstGrupGunGrupDal.GetDetayList(x => nobetUstGupIdList.Contains(x.NobetUstGrupId));
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<MyDrop> GetMyDrop(List<NobetUstGrupGunGrupDetay> nobetUstGrupGunGrupDetaylar)
+        {
+            return nobetUstGrupGunGrupDetaylar.Select(s => new MyDrop { Id = s.Id, Value = $"{s.GunGrupAdi}" }).ToList();
         }
 
     }

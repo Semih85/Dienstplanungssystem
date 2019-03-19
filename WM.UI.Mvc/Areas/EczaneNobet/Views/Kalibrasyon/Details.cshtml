@@ -1,4 +1,4 @@
-﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.Kalibrasyon
+﻿@model KalibrasyonDetay
 
 @{
     ViewBag.Title = "Details";
@@ -11,27 +11,41 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.EczaneNobetGrup.Aciklama)
+            @Html.DisplayNameFor(model => model.NobetGrupAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EczaneNobetGrup.Aciklama)
+            @Html.DisplayFor(model => model.NobetGrupAdi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGorevTipAdi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneAdi)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.KalibrasyonTip.Adi)
+            @Html.DisplayNameFor(model => model.KalibrasyonTipAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.KalibrasyonTip.Adi)
+            @Html.DisplayFor(model => model.KalibrasyonTipAdi)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NobetUstGrupGunGrup.Aciklama)
+            @Html.DisplayNameFor(model => model.GunGrupAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NobetUstGrupGunGrup.Aciklama)
+            @Html.DisplayFor(model => model.GunGrupAdi)
         </dd>
 
         <dt>
@@ -53,6 +67,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Listeye Dön", "Index")
 </p>
