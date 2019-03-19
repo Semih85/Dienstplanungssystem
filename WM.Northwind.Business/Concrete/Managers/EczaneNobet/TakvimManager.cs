@@ -1336,6 +1336,102 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return anahtarListeTumEczanelerHepsi;
         }
 
+        public List<EczaneNobetAlacakVerecek> EczaneNobetAlacakVerecekHesaplaAntalya(
+               List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,
+               List<EczaneNobetSonucListe2> anahtarListeTumu,
+               List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
+               List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatayTumu)
+        {
+            var anahtarListeTumEczanelerHepsi = new List<AnahtarListe>();
+
+            var gunGruplar = anahtarListeTumu
+                //.Where(w => w.GunGrup != "Bayram")
+                .Select(s => s.GunGrup)
+                .Distinct().ToList();
+
+            foreach (var gunGrup in gunGruplar)
+            {
+                //if (gunGrup == "Cumartesi")
+                //    continue;
+
+                var anahtarListeGunGrup = anahtarListeTumu
+                  .Where(w => w.GunGrup == gunGrup).ToList();
+
+                var anahtarListeTumEczaneler = AnahtarListeyiBuGuneTasiAntalya(nobetGrupGorevTipler, eczaneNobetGruplarTumu, eczaneNobetGrupGunKuralIstatistikYatayTumu, anahtarListeGunGrup, gunGrup);
+
+                anahtarListeTumEczanelerHepsi.AddRange(anahtarListeTumEczaneler);
+            }
+
+            var eczaneNobetAlacakVerecek = (from s in eczaneNobetGrupGunKuralIstatistikYatayTumu
+                                            from b in anahtarListeTumEczanelerHepsi
+                                            where s.EczaneNobetGrupId == b.EczaneNobetGrupId
+                                            //&& b.GunGrup == gunGrup
+                                            && (b.GunGrup == "Pazar"
+                                                ? s.NobetSayisiPazar == b.NobetSayisi
+                                                : b.GunGrup == "Arife"
+                                                ? s.NobetSayisiArife == b.NobetSayisi
+                                                : b.GunGrup == "Bayram"
+                                                ? s.NobetSayisiBayram == b.NobetSayisi
+                                                : b.GunGrup == "Cumartesi"
+                                                ? s.NobetSayisiCumartesi == b.NobetSayisi
+                                                : s.NobetSayisiHaftaIci == b.NobetSayisi
+                                                )
+                                            select new EczaneNobetAlacakVerecek
+                                            {
+                                                EczaneNobetGrupId = s.EczaneNobetGrupId,
+                                                EczaneId = s.EczaneId,
+                                                EczaneAdi = s.EczaneAdi,
+                                                NobetGrupAdi = s.NobetGrupAdi,
+                                                NobetGrupId = s.NobetGrupId,
+                                                NobetGrupGorevTipId = s.NobetGrupGorevTipId,
+                                                NobetGorevTipId = s.NobetGorevTipId,
+                                                //NobetGorevTipAdi = b,
+                                                NobetSayisi = b.GunGrup == "Pazar"
+                                                    ? s.NobetSayisiPazar
+                                                    : b.GunGrup == "Arife"
+                                                    ? s.NobetSayisiArife
+                                                    : b.GunGrup == "Bayram"
+                                                    ? s.NobetSayisiBayram
+                                                    : b.GunGrup == "Cumartesi"
+                                                    ? s.NobetSayisiCumartesi
+                                                    : s.NobetSayisiHaftaIci,
+                                                SonNobetTarihi = b.GunGrup == "Pazar"
+                                                    ? s.SonNobetTarihiPazar
+                                                    : b.GunGrup == "Arife"
+                                                    ? s.SonNobetTarihiArife
+                                                    : b.GunGrup == "Bayram"
+                                                    ? s.SonNobetTarihiBayram
+                                                    : b.GunGrup == "Cumartesi"
+                                                    ? s.SonNobetTarihiCumartesi
+                                                    : s.SonNobetTarihiHaftaIci,
+                                                AnahtarTarih = b.Tarih,
+                                                BorcluGunSayisi = b.GunGrup == "Pazar"
+                                                 ? (int)(s.NobetSayisiPazar > 0
+                                                        ? (s.SonNobetTarihiPazar - b.Tarih).TotalDays
+                                                        : (s.SonNobetTarihiPazar - b.Tarih).TotalDays - (s.SonNobetTarihiPazar - b.NobetUstGrupBaslamaTarihi).TotalDays)
+                                                 : b.GunGrup == "Arife"
+                                                 ? (int)(s.NobetSayisiArife > 0
+                                                        ? (s.SonNobetTarihiArife - b.Tarih).TotalDays
+                                                        : (s.SonNobetTarihiArife - b.Tarih).TotalDays - (s.SonNobetTarihiArife - b.NobetUstGrupBaslamaTarihi).TotalDays)
+                                                 : b.GunGrup == "Bayram"
+                                                 ? (int)(s.NobetSayisiBayram > 0
+                                                        ? (s.SonNobetTarihiBayram - b.Tarih).TotalDays
+                                                        : (s.SonNobetTarihiBayram - b.Tarih).TotalDays - (s.SonNobetTarihiBayram - b.NobetUstGrupBaslamaTarihi).TotalDays)
+                                                 : b.GunGrup == "Cumartesi"
+                                                 ? (int)(s.NobetSayisiCumartesi > 0
+                                                        ? (s.SonNobetTarihiCumartesi - b.Tarih).TotalDays
+                                                        : (s.SonNobetTarihiCumartesi - b.Tarih).TotalDays - (s.SonNobetTarihiCumartesi - b.NobetUstGrupBaslamaTarihi).TotalDays)
+                                                 : (int)(s.NobetSayisiHaftaIci > 0
+                                                        ? (s.SonNobetTarihiHaftaIci - b.Tarih).TotalDays
+                                                        : (s.SonNobetTarihiHaftaIci - b.Tarih).TotalDays - (s.SonNobetTarihiHaftaIci - b.NobetUstGrupBaslamaTarihi).TotalDays),
+                                                GunGrup = b.GunGrup,
+                                                //Nobets = b.NobetSayisi,
+                                                AnahtarSıra = b.Id
+                                            }).ToList();
+
+            return eczaneNobetAlacakVerecek;
+        }
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<AnahtarListe> GetSonuclarSirali(List<EczaneNobetSonucListe2> sonuclar, List<EczaneNobetGrupDetay> eczaneNobetGruplar)
         {
@@ -1380,9 +1476,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return eczaneNobetSonucListeSirali;
         }
 
-        public List<AnahtarListe> AnahtarListeyiBuGuneTasiAntalya(List<int> nobetGrupIdListe,
-            int nobetGorevTipId,
-            DateTime nobetUstGrupBaslangicTarihi,
+        public List<AnahtarListe> AnahtarListeyiBuGuneTasiAntalya(
+            List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatayTumu,
             List<EczaneNobetSonucListe2> planlananNobetlerBaslamaTarihindenSonra,
@@ -1390,79 +1485,21 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             var anahtarListeTumEczanelerHepsi = new List<AnahtarListe>();
 
-            foreach (var nobetGrupId in nobetGrupIdListe)
+            foreach (var nobetGrupGorevTip in nobetGrupGorevTipler)
             {
                 var eczaneNobetGruplar = eczaneNobetGruplarTumu
-                    .Where(w => w.NobetGrupId == nobetGrupId
-                             && w.NobetGorevTipId == nobetGorevTipId).ToList();
+                    .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
                 var anahtarListeGunGrup = planlananNobetlerBaslamaTarihindenSonra
                     .Where(w => w.GunGrup == gunGrubu
-                             && w.NobetGrupId == nobetGrupId
-                             && w.NobetGorevTipId == nobetGorevTipId)
-                             //.OrderBy(o => o.Tarih)
+                             && w.NobetGrupGorevTipId == nobetGrupGorevTip.Id)
                              .ToList();
 
-                var anahtarListeTumEczaneler = GetSonuclarSirali(anahtarListeGunGrup, eczaneNobetGruplar);
-
-                //var eczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatayTumu
-                //    .Where(w => w.NobetGrupId == nobetGrupId
-                //             && w.NobetGorevTipId == nobetGorevTipId).ToList();
-
-                //var nobetSayilari = new List<int>();
-
-                //if (gunGrubu == "Pazar")
-                //{
-                //    nobetSayilari = eczaneNobetGrupGunKuralIstatistikYatay
-                //        .Select(s => s.NobetSayisiPazar)
-                //        .Distinct().OrderBy(o => o).ToList();
-                //}
-                //else if (gunGrubu == "Bayram")
-                //{
-                //    nobetSayilari = eczaneNobetGrupGunKuralIstatistikYatay
-                //        .Select(s => s.NobetSayisiBayram)
-                //        .Distinct().OrderBy(o => o).ToList();
-                //}
-                //else if (gunGrubu == "Cumartesi")
-                //{
-                //    nobetSayilari = eczaneNobetGrupGunKuralIstatistikYatay
-                //        .Select(s => s.NobetSayisiCumartesi)
-                //        .Distinct().OrderBy(o => o).ToList();
-                //}
-                //else if (gunGrubu == "Arife")
-                //{
-                //    nobetSayilari = eczaneNobetGrupGunKuralIstatistikYatay
-                //        .Select(s => s.NobetSayisiArife)
-                //        .Distinct().OrderBy(o => o).ToList();
-                //}
-                //else
-                //{
-                //    nobetSayilari = eczaneNobetGrupGunKuralIstatistikYatay
-                //        .Select(s => s.NobetSayisiHaftaIci)
-                //        .Distinct().OrderBy(o => o).ToList();
-                //}
-
-                //foreach (var nobetSayisi in nobetSayilari)
-                //{
-                //    for (int i = 0; i < anahtarListeTumEczaneler.Count; i++)
-                //    {
-                //        anahtarListeTumEczanelerHepsi.Add(new AnahtarListe
-                //        {
-                //            Id = i + 1,
-                //            GunGrup = gunGrubu,
-                //            EczaneNobetGrupId = anahtarListeTumEczaneler[i].EczaneNobetGrupId,
-                //            EczaneAdi = anahtarListeTumEczaneler[i].EczaneAdi,
-                //            NobetGrupId = anahtarListeTumEczaneler[i].NobetGrupId,
-                //            NobetGrupAdi = anahtarListeTumEczaneler[i].NobetGrupAdi,
-                //            Tarih = anahtarListeTumEczaneler[i].Tarih,
-                //            NobetUstGrupBaslamaTarihi = anahtarListeTumEczaneler[i].NobetUstGrupBaslamaTarihi,
-                //            NobetSayisi = nobetSayisi //haftaIciOlmasiGerenNobetler2[i].NobetSayisi
-                //        });
-                //    }
-                //}
+                var anahtarListeTumEczaneler = GetSonuclarSirali(anahtarListeGunGrup, eczaneNobetGruplar);             
 
                 anahtarListeTumEczanelerHepsi.AddRange(anahtarListeTumEczaneler);
             }
+
             return anahtarListeTumEczanelerHepsi;
         }
 

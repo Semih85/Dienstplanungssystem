@@ -67,7 +67,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
             List<EczaneNobetSonucListe2> anahtarListeTumu,
             string gunGrubu);
 
-        List<AnahtarListe> AnahtarListeyiBuGuneTasiAntalya(List<int> nobetGrupIdListe, int nobetGorevTipId, DateTime nobetUstGrupBaslangicTarihi, List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay, List<EczaneNobetSonucListe2> anahtarListe,
+        List<AnahtarListe> AnahtarListeyiBuGuneTasiAntalya(List<NobetGrupGorevTipDetay> nobetGrupGorevTipler, List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay, List<EczaneNobetSonucListe2> anahtarListe,
             string gunGrubu);
 
         void SiraliNobetYaz(
@@ -77,6 +77,13 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
             DateTime nobetBaslangicTarihi,
             DateTime nobetBitisTarihi,
             int nobetUstGrupId);
+
+
+        List<EczaneNobetAlacakVerecek> EczaneNobetAlacakVerecekHesaplaAntalya(
+               List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,
+               List<EczaneNobetSonucListe2> anahtarListeTumu,
+               List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
+               List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatayTumu);
 
         //List<AnahtarListe> AnahtarListeyiBuGuneTasi2(List<int> nobetGrupIdListe, 
         //    int nobetGorevTipId, 

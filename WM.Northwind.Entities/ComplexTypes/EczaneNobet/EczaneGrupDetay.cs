@@ -22,6 +22,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int EczaneGrupTanimId { get; set; }
         [Display(Name = "Bitiş Tarihi")]
         public DateTime? EczaneGrupTanimBitisTarihi { get; set; }
+        //public DateTime? EczaneGrupBitisTarihi { get; set; }
         public int NobetGrupId { get; set; }
         public int EczaneGrupTanimTipId { get; set; }
         public string EczaneGrupTanimTipAdi { get; set; }

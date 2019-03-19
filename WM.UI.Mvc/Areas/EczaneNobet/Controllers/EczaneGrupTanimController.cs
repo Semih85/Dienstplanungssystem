@@ -114,10 +114,17 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             /////////////////////////////////
 
-            var eczaneGrupDetaylar = _eczaneGrupService.GetDetaylar();
+            var eczaneGrupDetaylar = _eczaneGrupService.GetDetaylarByNobetUstGrupIdList(nobetUstGruplar.ToList());
+
+            //var fff = eczaneGrupDetaylar.Where(w => w.EczaneGrupTanimAdi == "3-4(1)");
 
             foreach (var item in eczaneGrupTanimlar)
             {
+                if (item.Adi == "3-4(1)")
+                {
+
+                }
+
                 var eczaneGrupDetays = eczaneGrupDetaylar
                     .Where(w => w.EczaneGrupTanimId == item.Id)
                     .OrderBy(o => o.NobetGrupId)
@@ -139,6 +146,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult SearchWithEczaneAdi(string Keywords, int? EczaneGruptanimTipId = 0)
         {
             var eczaneGrupTanimDetaylar = SearchMethod(Keywords, EczaneGruptanimTipId);
+
             return PartialView("EczaneGrupTanimPartialView", eczaneGrupTanimDetaylar);
         }
 

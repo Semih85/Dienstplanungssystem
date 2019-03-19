@@ -978,6 +978,7 @@
                             ["Gün Grup"]: s.GunGrup,
                             ["Nöbet Grubu"]: s.NobetGrupId + ' ' + s.NobetGrupAdi,
                             AnahtarTarih: s.AnahtarTarihAciklama,
+                            ["Borç Durumu"]: borcDurum(s.BorcluGunSayisi),
                             BorçluGünSayısı: s.BorcluGunSayisi,
                             NöbetSayısı: s.NobetSayisi,
                             SonNöbetTarihi: s.SonNobetTarihiAciklama
@@ -986,6 +987,20 @@
                     alacakVerecekLitesi = JSON.parse(JSON.stringify(alacakVerecekLitesi));
                     alacakVerecekLitesiTumu = alacakVerecekLitesi;
 
+                    function borcDurum(borcSayisi) {
+
+                        var borcluGunSayisi = parseFloat(borcSayisi);
+
+                        if (borcluGunSayisi == 0) {
+                            return "Borç/alacak yok."
+                        }
+                        else if (borcluGunSayisi > 0) {
+                            return "Sistemden alacaklı"
+                        }
+                        else {
+                            return "Sisteme borçlu"
+                        }
+                    }
                     //aynı Gün Nöbet Tutan Eczaneler
                     //alert(dagilimlar.AltGrupAyniGunNobetTutanEczaneler.length)
                     $.each(dagilimlar.AyniGunNobetTutanEczaneler, function (index, s) {
@@ -2364,7 +2379,7 @@
                 alacakVereceklerList = $(function table7() {
                     $("#alacakVereceklerListe").pivotUI(alacakVerecekLitesi,
                         {
-                            rows: ["Gün Grup", "Nöbet Grubu", "AnahtarTarih", "Eczane", "SonNöbetTarihi", "NöbetSayısı"],
+                            rows: ["Gün Grup", "Nöbet Grubu", "AnahtarTarih", "Eczane", "SonNöbetTarihi", "NöbetSayısı", "Borç Durumu"],
                             //cols: ["Gün Grup"],
                             vals: ["BorçluGünSayısı"],
                             aggregatorName: "Topla (Tamsayi)",

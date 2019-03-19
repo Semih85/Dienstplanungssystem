@@ -3451,7 +3451,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
         public List<EczaneNobetTarihAralik> AmacFonksiyonuKatsayisiBelirle(List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
             List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay,
-            List<KalibrasyonYatay> kalibrasyonDetaylar = null)
+            List<KalibrasyonYatay> kalibrasyonDetaylar = null,
+            List<EczaneNobetAlacakVerecek> eczaneNobetAlacakVerecekler = null
+            )
         {
             //bartın, 1 ocak, milli bayram, dini bayram öncelik sırası
             int bayramCevrimDini = 8000;
@@ -3486,6 +3488,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     s.NobetGrupId
                 }).Distinct().ToList();
 
+            if (eczaneNobetAlacakVerecekler == null)
+            {
+                eczaneNobetAlacakVerecekler = new List<EczaneNobetAlacakVerecek>();
+            }
+
+            var gunGruplar = eczaneNobetAlacakVerecekler.Select(s => s.GunGrup).Distinct().ToList();
+
             foreach (var nobetGrupGorevTip in nobetGrupGorevTipler)
             {
                 var bayramPespeseFarkliTurGrupBazli = _nobetGrupGorevTipKisitService.GetDetay(36, nobetGrupGorevTip.NobetGrupGorevTipId);
@@ -3499,6 +3508,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 var gunKuralIstatistikGrupBazli = eczaneNobetGrupGunKuralIstatistikYatay
                     .Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
                              && w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
+
+                var eczaneNobetAlacakVereceklerGrupBazli = eczaneNobetAlacakVerecekler
+                    .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.NobetGrupGorevTipId).ToList();
 
                 var toplamKalibrasyon = kalibrasyonDetaylar != null
                     ? kalibrasyonDetaylar.Where(w => w.KalibrasyonTipId == 7).ToList()
@@ -3536,11 +3548,39 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     var sonNobetTarihiEnKucukYilbasi = gunKuralIstatistikGrupBazli.Min(s => s.SonNobetTarihi1Ocak);
                     var sonNobetTarihiEnKucukYilSonu = gunKuralIstatistikGrupBazli.Min(s => s.SonNobetTarihiYilSonu);
 
-                    var kd = eczaneNobetTarihAralik.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.NobetGrupGorevTipId).ToList();
+                    var kararDegiskeniIndexSeti = eczaneNobetTarihAralik.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.NobetGrupGorevTipId).ToList();
 
-                    foreach (var eczaneNobetTarih in kd)
+                    foreach (var eczaneNobetTarih in kararDegiskeniIndexSeti)
                     {
                         var eczaneIstatistik = gunKuralIstatistikGrupBazli.SingleOrDefault(w => w.EczaneNobetGrupId == eczaneNobetTarih.EczaneNobetGrupId);
+
+                        var nobetBorcEczaneBazli = eczaneNobetAlacakVereceklerGrupBazli
+                            .Where(w => w.EczaneNobetGrupId == eczaneNobetTarih.EczaneNobetGrupId).ToList();
+
+                        foreach (var gunGrup in gunGruplar)
+                        {
+                            var nobetBorcDurumuGunGrupBazli = nobetBorcEczaneBazli.SingleOrDefault(w => w.GunGrup == gunGrup);
+
+                            if (nobetBorcDurumuGunGrupBazli == null)                            
+                                continue;
+
+                            if (gunGrup == "Pazar")
+                            {
+                                eczaneIstatistik.BorcluNobetSayisiPazar = (int)nobetBorcDurumuGunGrupBazli.BorcluGunSayisi;
+                            }
+                            else if (gunGrup == "Bayram")
+                            {
+                                eczaneIstatistik.BorcluNobetSayisiBayram = (int)nobetBorcDurumuGunGrupBazli.BorcluGunSayisi;
+                            }
+                            else if (gunGrup == "Hafta İçi")
+                            {
+                                eczaneIstatistik.BorcluNobetSayisiHaftaIci = (int)nobetBorcDurumuGunGrupBazli.BorcluGunSayisi;
+                            }
+                            else if (gunGrup == "Cumartesi")
+                            {
+                                eczaneIstatistik.BorcluNobetSayisiCumartesi = (int)nobetBorcDurumuGunGrupBazli.BorcluGunSayisi;
+                            }
+                        }
 
                         var eczaneKalibrasyonlar = kalibrasyonDetaylar != null
                             ? kalibrasyonDetaylar
@@ -3550,23 +3590,23 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                         #region kontrol
 
-                        var kontrol = false;
+                        var kontrol = true;
 
                         if (kontrol)
                         {
                             var kontrolEdilecekEczaneler = new string[] {
                                 //"ŞADIRVAN", //23.4.2008
-                                "SAĞLIK",    //01.5.2008
-                                "ÖZCAN"     //19.5.2008
+                                //"PORTAKAL",   //-5
+                                "SEÇKİN"     //14
                             };
 
                             if (kontrolEdilecekEczaneler.Contains(eczaneNobetTarih.EczaneAdi)
-                                && eczaneNobetTarih.BayramMi
+                                //&& eczaneNobetTarih.BayramMi
                                 )
                             {
 
                             }
-                        } 
+                        }
                         #endregion
 
                         //dini milli ayru gün kural tanımlanmış olabilir.
@@ -3633,7 +3673,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                             }
 
                             amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(pazarCevrim, sonNobetTarihiEnKucukPazar, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiPazar, 7, manuelSayi, eczaneIstatistik.BorcluNobetSayisiPazar, mevsimKatsayisi: kalibrasyonDegeriPazar);
-                            //amacFonksiyonKatsayi = GetAmacFonksiyonKatsayisi(pazarCevrim, sonNobetTarihiEnKucukPazar, ilkTarih, eczaneNobetTarih.Tarih, eczaneIstatistik.SonNobetTarihiPazar, ozelKatsayi: 7, mevsimKatsayisi: kalibrasyonDegeriPazar);
                         }
                         else if (eczaneNobetTarih.HaftaIciMi && haftaIciTakipEdilsinMi)
                         {
@@ -3899,9 +3938,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
         }
 
+        /// <summary>
+        /// Bir eczaneye peşpeşe günlerde ve son nöbet tarihinden en az ardışık nöbet sayısı kadar boş gün geçmeden istek girilemez.
+        /// </summary>
+        /// <param name="nobetUstGrupId"></param>
+        /// <param name="eczaneNobetIstekler"></param>
+        /// <param name="nobetGrupKuralDetaylar"></param>
         public void KurallariKontrolEtIstek(int nobetUstGrupId, List<EczaneNobetIstekDetay> eczaneNobetIstekler, List<NobetGrupKuralDetay> nobetGrupKuralDetaylar)
-        {//bir eczaneye peşpeşe günlerde istek girilemez
-            //son tuttuğu nöbetten sonra en az ardışık nöbet sayısı kadar boş gün geçmeden istek girilemez
+        {
             var istek = _nobetUstGrupKisitService.GetDetay("istek", nobetUstGrupId);
 
             var eczaneler = new List<string>();
@@ -3909,7 +3953,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             if (!istek.PasifMi)
             {
                 var nobetGrupKurallar = nobetGrupKuralDetaylar
-                    .Where(w => w.NobetKuralId == 1)
+                    .Where(w => w.NobetKuralId == 1)//Ardışık Boş Gün Sayısı
                     .Select(s => new { s.NobetGrupGorevTipId, s.NobetGorevTipAdi, s.NobetGrupAdi, s.NobetGrupId, s.NobetKuralAdi, s.NobetKuralId, s.Deger }).Distinct().ToList();
 
                 foreach (var nobetGrupKural in nobetGrupKurallar)

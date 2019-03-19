@@ -41,6 +41,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IEczaneNobetOrtakService _eczaneNobetOrtakService;
         private IEczaneNobetMazeretService _eczaneNobetMazeretService;
         private IKalibrasyonService _kalibrasyonService;
+        private IEczaneNobetSonucPlanlananService _eczaneNobetSonucPlanlananService;
 
         public NobetYazController(IAlanyaOptimizationService alanyaOptimizationService,
                                   IAntalyaMerkezOptimizationService antalyaMerkezOptimizationService,
@@ -64,7 +65,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                   IEczaneNobetOrtakService eczaneNobetOrtakService,
                                   IEczaneNobetMazeretService eczaneNobetMazeretService,
                                   IKalibrasyonService kalibrasyonService,
-                                  IZonguldakOptimizationService zonguldakOptimizationService
+                                  IZonguldakOptimizationService zonguldakOptimizationService,
+                                  IEczaneNobetSonucPlanlananService eczaneNobetSonucPlanlananService
             )
         {
             _alanyaOptimizationService = alanyaOptimizationService;
@@ -90,6 +92,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _eczaneNobetMazeretService = eczaneNobetMazeretService;
             _kalibrasyonService = kalibrasyonService;
             _zonguldakOptimizationService = zonguldakOptimizationService;
+            _eczaneNobetSonucPlanlananService = eczaneNobetSonucPlanlananService;
         }
         #endregion
 
@@ -522,6 +525,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
             var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
 
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
+
             var eczaneNobetMazeretNobettenDusenler = new List<EczaneNobetMazeretSayilari>();
 
             //var mazeret = _nobetUstGrupKisitService.GetKisitPasifMi("mazeret", nobetUstGrup.Id);
@@ -535,8 +540,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //).ToList();
 
             var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar(nobetUstGrup.Id);
+            var eczaneNobetSonuclarPlanlanan = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetUstGrup.Id);
 
             var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplarTumu, eczaneNobetSonuclar);
+
+            //var kontrol = enSonNobetler.Where(w => new int[] { 61, 100 }.Contains(w.EczaneNobetGrupId));
 
             var eczaneNobetGrupGunKuralIstatistikYatay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler);
 
@@ -557,7 +565,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 kalibrasyonlar = _kalibrasyonService.GetKalibrasyonlarYatay(nobetUstGrup.Id);
             }
 
-            var eczaneNobetTarihAralik = _eczaneNobetOrtakService.AmacFonksiyonuKatsayisiBelirle(eczaneNobetTarihAralik1, eczaneNobetGrupGunKuralIstatistikYatay, kalibrasyonlar);
+            var eczaneNobetAlacakVerecek = _takvimService.EczaneNobetAlacakVerecekHesaplaAntalya(nobetGrupGorevTipler, eczaneNobetSonuclarPlanlanan, eczaneNobetGruplarTumu, eczaneNobetGrupGunKuralIstatistikYatay);
+
+            var eczaneNobetTarihAralik = _eczaneNobetOrtakService.AmacFonksiyonuKatsayisiBelirle(eczaneNobetTarihAralik1, eczaneNobetGrupGunKuralIstatistikYatay, kalibrasyonlar, eczaneNobetAlacakVerecek);
 
             var jsonResult = Json(eczaneNobetTarihAralik, JsonRequestBehavior.AllowGet);
             jsonResult.MaxJsonLength = int.MaxValue;

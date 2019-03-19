@@ -14,12 +14,15 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
     {
         public int AnahtarSıra { get; set; }
         public int EczaneNobetGrupId { get; set; }
+        public int NobetGrupGorevTipId { get; set; }
+        public int NobetGorevTipId { get; set; }
         public string EczaneAdi { get; set; }
         public int NobetGrupId { get; set; }
         public int EczaneId { get; set; }
         public int NobetSayisi { get; set; }
         public int BorcluGunSayisi { get; set; }
         public string NobetGrupAdi { get; set; }
+        public string NobetGorevTipAdi { get; set; }
         public DateTime AnahtarTarih { get; set; }
         public DateTime SonNobetTarihi { get; set; }
         public string AnahtarTarihAciklama => String.Format("{0:yyyy MM dd, ddd}", AnahtarTarih);

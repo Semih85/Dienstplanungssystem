@@ -90,7 +90,9 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
 
         List<EczaneNobetTarihAralik> AmacFonksiyonuKatsayisiBelirle(List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
             List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay,
-            List<KalibrasyonYatay> kalibrasyonDetaylar = null);
+            List<KalibrasyonYatay> kalibrasyonDetaylar = null,
+            List<EczaneNobetAlacakVerecek> eczaneNobetAlacakVerecekler = null
+            );
 
         void KurallariKontrolEtHaftaIciEnAzEnCok(int nobetUstGrupId, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetSonuclarYatay);
         void KurallariKontrolEtMazeretIstek(int nobetUstGrupId, List<EczaneNobetMazeretDetay> eczaneNobetMazeretler, List<EczaneNobetIstekDetay> eczaneNobetIstekler);

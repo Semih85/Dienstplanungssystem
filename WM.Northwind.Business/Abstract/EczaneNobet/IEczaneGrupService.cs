@@ -45,5 +45,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<NobetBagGrup> EsGrupluEczanelerinGruplariniBelirleTumu(List<EczaneGrupDetay> eczaneGrupDetaylar, List<int> nobetGruplar);
         List<NobetBagGrup> EsGrupluEczanelerinGruplariniBelirle(List<EczaneGrupDetay> eczaneGrupDetaylar);
         List<EczaneGrup> GetListByUser(User user);
+
+        List<EczaneGrupDetay> GetDetaylarByNobetUstGrupIdList(List<int> nobetUstGrupIdList);
     }
 }

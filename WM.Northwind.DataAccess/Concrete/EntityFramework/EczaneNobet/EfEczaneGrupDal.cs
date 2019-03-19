@@ -23,7 +23,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                              from g in ctx.EczaneNobetGruplar
                              where t.EczaneId == g.EczaneId
                                 && t.EczaneGrupTanim.NobetGorevTipId == g.NobetGrupGorevTip.NobetGorevTipId
-                                //&& g.BitisTarihi == null
+                                && g.BitisTarihi == null
                              select new EczaneGrupDetay
                              {
                                  Id = t.Id,
@@ -44,7 +44,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                                  ArdisikNobetSayisi = t.EczaneGrupTanim.ArdisikNobetSayisi,
                                  NobetGorevTipId = t.EczaneGrupTanim.NobetGorevTipId,
                                  NobetGorevTipAdi = t.EczaneGrupTanim.NobetGorevTip.Adi,
-                                 AyniGunNobetTutabilecekEczaneSayisi = t.EczaneGrupTanim.AyniGunNobetTutabilecekEczaneSayisi
+                                 AyniGunNobetTutabilecekEczaneSayisi = t.EczaneGrupTanim.AyniGunNobetTutabilecekEczaneSayisi,
+                                 //EczaneGrupBitisTarihi = g.BitisTarihi
                              });
 
                 return filter == null
