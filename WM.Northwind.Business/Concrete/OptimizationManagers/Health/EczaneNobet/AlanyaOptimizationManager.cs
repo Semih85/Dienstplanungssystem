@@ -437,6 +437,36 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             {
                 indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
                 oncekiAylardaAyniGunNobetTutanEczaneler = _eczaneNobetSonucService.OncekiAylardaAyniGunNobetTutanlar(baslangicTarihi, eczaneNobetSonuclarOncekiAylar, indisId, (int)oncekiAylarAyniGunNobet.SagTarafDegeri);
+
+                var oncekiAylarEczaneGrupTanimlar = oncekiAylardaAyniGunNobetTutanEczaneler.Select(s => new { s.EczaneGrupTanimId, s.EczaneGrupTanimAdi }).Distinct().ToList();
+
+                if (oncekiAylarEczaneGrupTanimlar.Count > 0)
+                {
+                    var ikililerdenCikacakEczaneler = new List<AyniGunTutulanNobetDetay>();
+
+                    foreach (var item in oncekiAylarEczaneGrupTanimlar)
+                    {
+                        var gruptakiEczaneler = oncekiAylardaAyniGunNobetTutanEczaneler
+                            .Where(w => w.EczaneGrupTanimId == item.EczaneGrupTanimId)
+                            .OrderBy(o => o.EczaneId).ToList();
+
+                        foreach (var gruptakiEczane1 in gruptakiEczaneler)
+                        {
+                            var ikinciListe = gruptakiEczaneler.Where(w => w.EczaneId > gruptakiEczane1.EczaneId).ToList();
+
+                            foreach (var gruptakiEczane2 in ikinciListe)
+                            {
+                                var eklenecekEczaneler = ikiliEczaneler
+                                    .Where(w => (w.EczaneId1 == gruptakiEczane1.EczaneId || w.EczaneId1 == gruptakiEczane2.EczaneId)
+                                             && (w.EczaneId2 == gruptakiEczane1.EczaneId || w.EczaneId2 == gruptakiEczane2.EczaneId)).ToList();
+
+                                ikililerdenCikacakEczaneler.AddRange(eklenecekEczaneler);
+                            }
+                        }
+                    }
+
+                    ikiliEczaneler = ikiliEczaneler.Where(w => !ikililerdenCikacakEczaneler.Select(s => s.Id).Contains(w.Id)).ToList();
+                }
             }
 
             #endregion

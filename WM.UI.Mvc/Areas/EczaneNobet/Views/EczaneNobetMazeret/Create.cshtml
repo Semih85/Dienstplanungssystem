@@ -90,10 +90,15 @@
             </div>
         </div>
 
-        <div class="form-group">
+        
+        <div class="form-group">            
+
             @Html.LabelFor(model => model.HaftaninGunu, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("HaftaninGunu", null, htmlAttributes: new { @class = "form-control selectpicker", multiple = "true", data_actions_box = "true" })
+                <div class="alert alert-info" role="alert">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i> Seçilen tarih aralığının tümüne mazeret eklemek için haftanının günlerinin hepsini seçiniz. Eğer seçilen tarih aralığında örneğin sadece Pazar günlerine mazeret eklenmesi için haftanın günü olarak sadece Pazar seçiniz.
+                </div>
+                @Html.DropDownList("HaftaninGunu", null, htmlAttributes: new { @class = "form-control selectpicker", data_dropup_auto = "false", multiple = "true", data_actions_box = "true" })
                 @Html.ValidationMessageFor(model => model.HaftaninGunu, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -109,7 +114,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Ekle" id="formSubmitButton" class="btn btn-primary"  />
+                <input type="submit" value="Ekle" id="formSubmitButton" class="btn btn-primary" />
                 @Html.ActionLink("Eczane Nöbet Mazeret Listesine Dön", "Index", null, new { @class = "btn btn-warning" })
             </div>
         </div>

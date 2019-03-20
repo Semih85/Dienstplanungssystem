@@ -207,10 +207,12 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 .Where(w => w.Tarih >= nobetUstGrupBaslangicTarihi).ToList();
 
             var sonuclarKontrol = _eczaneNobetSonucService.GetSonuclar(baslangicTarihi, bitisTarihi, eczaneNobetSonuclarCozulenGruplar);
+                        
+            if (sonuclarKontrol.Count > 0)
+                throw new Exception("Kriterlere uygun <strong>daha önce yazılmış nöbetler</strong> bulunmaktadır. Lütfen kontrol ediniz!");
 
-            //geçici kapatıldı
-            //if (sonuclarKontrol.Count > 0)
-            //throw new Exception("Kriterlere uygun <strong>daha önce yazılmış nöbetler</strong> bulunmaktadır. Lütfen kontrol ediniz!");
+            //var anahtarListe = eczaneNobetSonuclarCozulenGruplar
+            //    .Where(w => w.Tarih < nobetUstGrupBaslangicTarihi).ToList();
 
             var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplar, eczaneNobetSonuclarCozulenGruplar);
             //var enSonNobetlerPlanlanan = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplar, eczaneNobetSonuclarCozulenGruplarPlanlanan);
@@ -221,14 +223,11 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             //var eczaneNobetGrupGunKuralIstatistikYataySon = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler, enSonNobetlerPlanlanan);
 
-            //var sure_eczaneNobetGrupGunKuralIstatistikYatay = stopwatch.Elapsed;       
-
-            var anahtarListe = eczaneNobetSonuclarCozulenGruplar
-                 .Where(w => w.Tarih < nobetUstGrupBaslangicTarihi).ToList();
+            //var sure_eczaneNobetGrupGunKuralIstatistikYatay = stopwatch.Elapsed;
 
             //var sure_anahtarListe1 = stopwatch.Elapsed;
 
-            var nobetBorcAlacakVerecek = _takvimService.EczaneNobetAlacakVerecekHesaplaAntalya(nobetGrupGorevTipler, eczaneNobetSonuclarPlanlanan, eczaneNobetGruplar, eczaneNobetGrupGunKuralIstatistikYatay);           
+            var nobetBorcAlacakVerecek = _takvimService.EczaneNobetAlacakVerecekHesaplaAntalya(nobetGrupGorevTipler, eczaneNobetSonuclarPlanlanan, eczaneNobetGruplar, eczaneNobetGrupGunKuralIstatistikYatay);
 
             var grupluEczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar(baslangicTarihi, bitisTarihi, eczaneNobetSonuclar);
 
