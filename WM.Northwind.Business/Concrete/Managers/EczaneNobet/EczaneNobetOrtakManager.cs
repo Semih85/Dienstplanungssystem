@@ -3473,11 +3473,15 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var ilkTarih = eczaneNobetTarihAralik.Min(s => s.Tarih).AddDays(-1);
 
             var nobetBorcOdeme = _nobetUstGrupKisitService.GetDetay("nobetBorcOdeme", nobetUstGrupId);
+            var nobetBorcOdemeAktif = (NobetUstGrupKisitDetay)nobetBorcOdeme.Clone();
+
             var pespeseHaftaIciAyniGunNobet = _nobetUstGrupKisitService.GetDetay("pespeseHaftaIciAyniGunNobet", nobetUstGrupId);
+
             var bayramPespeseFarkliTur = _nobetUstGrupKisitService.GetDetay("bayramPespeseFarkliTur", nobetUstGrupId);
             var bayramPespeseFarkliTurAktif = (NobetUstGrupKisitDetay)bayramPespeseFarkliTur.Clone();
+
             var bayramFarkliTur = _nobetUstGrupKisitService.GetDetay("bayramFarkliTur", nobetUstGrupId);
-            var bayramFarkliTurAktif = bayramFarkliTur;
+            var bayramFarkliTurAktif = (NobetUstGrupKisitDetay)bayramFarkliTur.Clone();
 
             var nobetGrupGorevTipler = eczaneNobetTarihAralik
                 .Select(s => new
@@ -3499,9 +3503,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             {
                 var bayramPespeseFarkliTurGrupBazli = _nobetGrupGorevTipKisitService.GetDetay(36, nobetGrupGorevTip.NobetGrupGorevTipId);
                 var bayramFarkliTurGrupBazli = _nobetGrupGorevTipKisitService.GetDetay(61, nobetGrupGorevTip.NobetGrupGorevTipId);
+                var nobetBorcOdemeGrupBazli = _nobetGrupGorevTipKisitService.GetDetay(39, nobetGrupGorevTip.NobetGrupGorevTipId);
 
                 bayramPespeseFarkliTurAktif = KisitiGrupBazliGuncelle(bayramPespeseFarkliTur, bayramPespeseFarkliTurAktif, bayramPespeseFarkliTurGrupBazli);
                 bayramFarkliTurAktif = KisitiGrupBazliGuncelle(bayramFarkliTur, bayramFarkliTurAktif, bayramFarkliTurGrupBazli);
+                nobetBorcOdemeAktif = KisitiGrupBazliGuncelle(nobetBorcOdeme, nobetBorcOdemeAktif, nobetBorcOdemeGrupBazli);
 
                 var gunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTip.NobetGrupGorevTipId);
 
@@ -3554,31 +3560,34 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     {
                         var eczaneIstatistik = gunKuralIstatistikGrupBazli.SingleOrDefault(w => w.EczaneNobetGrupId == eczaneNobetTarih.EczaneNobetGrupId);
 
-                        var nobetBorcEczaneBazli = eczaneNobetAlacakVereceklerGrupBazli
-                            .Where(w => w.EczaneNobetGrupId == eczaneNobetTarih.EczaneNobetGrupId).ToList();
-
-                        foreach (var gunGrup in gunGruplar)
+                        if (!nobetBorcOdemeAktif.PasifMi)
                         {
-                            var nobetBorcDurumuGunGrupBazli = nobetBorcEczaneBazli.SingleOrDefault(w => w.GunGrup == gunGrup);
+                            var nobetBorcEczaneBazli = eczaneNobetAlacakVereceklerGrupBazli
+                                .Where(w => w.EczaneNobetGrupId == eczaneNobetTarih.EczaneNobetGrupId).ToList();
 
-                            if (nobetBorcDurumuGunGrupBazli == null)                            
-                                continue;
+                            foreach (var gunGrup in gunGruplar)
+                            {
+                                var nobetBorcDurumuGunGrupBazli = nobetBorcEczaneBazli.SingleOrDefault(w => w.GunGrup == gunGrup);
 
-                            if (gunGrup == "Pazar")
-                            {
-                                eczaneIstatistik.BorcluNobetSayisiPazar = (int)nobetBorcDurumuGunGrupBazli.BorcluGunSayisi;
-                            }
-                            else if (gunGrup == "Bayram")
-                            {
-                                eczaneIstatistik.BorcluNobetSayisiBayram = (int)nobetBorcDurumuGunGrupBazli.BorcluGunSayisi;
-                            }
-                            else if (gunGrup == "Hafta İçi")
-                            {
-                                eczaneIstatistik.BorcluNobetSayisiHaftaIci = (int)nobetBorcDurumuGunGrupBazli.BorcluGunSayisi;
-                            }
-                            else if (gunGrup == "Cumartesi")
-                            {
-                                eczaneIstatistik.BorcluNobetSayisiCumartesi = (int)nobetBorcDurumuGunGrupBazli.BorcluGunSayisi;
+                                if (nobetBorcDurumuGunGrupBazli == null)
+                                    continue;
+
+                                if (gunGrup == "Pazar")
+                                {
+                                    eczaneIstatistik.BorcluNobetSayisiPazar = (int)nobetBorcDurumuGunGrupBazli.BorcluGunSayisi;
+                                }
+                                else if (gunGrup == "Bayram")
+                                {
+                                    eczaneIstatistik.BorcluNobetSayisiBayram = (int)nobetBorcDurumuGunGrupBazli.BorcluGunSayisi;
+                                }
+                                else if (gunGrup == "Hafta İçi")
+                                {
+                                    eczaneIstatistik.BorcluNobetSayisiHaftaIci = (int)nobetBorcDurumuGunGrupBazli.BorcluGunSayisi;
+                                }
+                                else if (gunGrup == "Cumartesi")
+                                {
+                                    eczaneIstatistik.BorcluNobetSayisiCumartesi = (int)nobetBorcDurumuGunGrupBazli.BorcluGunSayisi;
+                                }
                             }
                         }
 

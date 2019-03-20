@@ -744,7 +744,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     .OrderBy(o => o.Tarih).ToList();
 
                 anahtarListeTumEczanelerHepsi.AddRange(anahtarListeTumEczaneler);
-            }            
+            }
 
             var eczaneNobetAlacakVerecekler = (from s in eczaneNobetGrupGunKuralIstatistikYatayTumu
                                                from b in anahtarListeTumEczanelerHepsi

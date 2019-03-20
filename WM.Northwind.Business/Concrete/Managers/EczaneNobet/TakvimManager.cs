@@ -1649,7 +1649,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                             if (kontrol)
                             {
-                                var eczaneKontrolEdilecek = eczaneNobetGruplar.Where(w => w.EczaneAdi == "GÜLAY");
+                                var eczaneKontrolEdilecek = eczaneNobetGruplar.Where(w => w.EczaneAdi == "ÇAĞLA");
 
                                 if (eczaneKontrolEdilecek.Count() > 0)
                                 {

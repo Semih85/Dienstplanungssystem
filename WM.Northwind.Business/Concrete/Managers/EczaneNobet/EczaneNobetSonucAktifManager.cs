@@ -284,11 +284,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                               s.EczaneAdi,
                               s.NobetGrupAdi,
                               s.NobetGrupId,
-                              NobetGrupGorevTipId = b.Id,
+                              s.NobetGrupGorevTipId,
                               s.Tarih,
                               s.NobetUstGrupId,
                               s.EczaneId,
-                              b.NobetGorevTipAdi
+                              b.NobetGorevTipAdi,
                           }).ToList();
 
             var culture = new CultureInfo("tr-TR");
@@ -328,7 +328,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                              MazeretTuru = (m?.TakvimId == s.TakvimId && m?.EczaneNobetGrupId == s.EczaneNobetGrupId) ? m.MazeretTuru : null,
                              NobetGorevTipAdi = s.NobetGorevTipAdi,
                              NobetGorevTipId = s.NobetGorevTipId,
-                             SonucTuru = "Taslak"
+                             SonucTuru = "Taslak",
+                             NobetGrupGorevTipId = s.NobetGrupGorevTipId
                          }).ToList();
             return liste;
         }

@@ -62,7 +62,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         TakvimId = s.TakvimId,
                         Tarih = s.Takvim.Tarih,
-                        NobetUstGrupBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi
+                        NobetUstGrupBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
+                        NobetGrupGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTipId
                     }).SingleOrDefault(filter);
             }
         }
@@ -86,7 +87,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         TakvimId = s.TakvimId,
                         Tarih = s.Takvim.Tarih,
-                        NobetUstGrupBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi
+                        NobetUstGrupBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
+                        NobetGrupGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTipId
                     });
 
                 return filter == null

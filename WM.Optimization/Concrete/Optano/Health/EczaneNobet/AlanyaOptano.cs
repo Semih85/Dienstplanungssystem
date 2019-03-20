@@ -55,6 +55,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             #endregion
 
             #region Karar Değişkenleri
+
             _x = new VariableCollection<EczaneNobetTarihAralik>(
                     model,
                     data.EczaneNobetTarihAralik,
@@ -64,14 +65,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     h => data.UpperBound,
                     a => VariableType.Binary);
 
-            //_y = new VariableCollection<EczaneNobetTarihAralikIkili>(
-            //        model,
-            //        data.EczaneNobetTarihAralikIkiliEczaneler,
-            //        "_y",
-            //        t => $"{t.EczaneNobetGrupId1},{t.EczaneNobetGrupId2},{t.TakvimId}, {t.EczaneAdi1}, {t.EczaneAdi2}, {t.Tarih.ToShortDateString()}",
-            //        h => data.LowerBound,
-            //        h => data.UpperBound,
-            //        a => VariableType.Binary);
+            _y = new VariableCollection<EczaneNobetTarihAralikIkili>(
+                    model,
+                    data.EczaneNobetTarihAralikIkiliEczaneler,
+                    "_y",
+                    t => $"{t.EczaneNobetGrupId1},{t.EczaneNobetGrupId2},{t.TakvimId}, {t.EczaneAdi1}, {t.EczaneAdi2}, {t.Tarih.ToShortDateString()}",
+                    h => data.LowerBound,
+                    h => data.UpperBound,
+                    a => VariableType.Binary);
+
             #endregion
 
             #region Amaç Fonksiyonu
@@ -83,6 +85,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                      ObjectiveSense.Minimize);
 
             model.AddObjective(amac);
+
             #endregion
 
             #region Kısıtlar
@@ -294,7 +297,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 {
                     #region kontrol
 
-                    var kontrol = true;
+                    var kontrol = false;
 
                     var kontrolEdilecekEczaneler = new string[] { "EMRE" };
 
@@ -1126,7 +1129,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             //    KararDegiskeni = _x,
             //    KararDegiskeniIkiliEczaneler = _y
             //};
-            //AyIcindeSadece1KezAyniGunNobetTutulsunDegiskenDonusumlu(kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
+            //AyIcindeSadece1KezAyniGunNobetTutulsun(kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
 
             #endregion
 
@@ -1142,8 +1145,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             };
             EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaOncekiAylar);
 
-            #endregion
-            
+            #endregion            
 
             #region Yılda en fazla aynı gün 3'ten fazla nöbet tutulmasın
 
@@ -1245,16 +1247,29 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     }
                     else
                     {
-                        var ayIcindeSadece1KezAyniGunNobetKisit = new KpAyIcindeSadece1KezAyniGunNobet
+                        //var ayIcindeSadece1KezAyniGunNobetKisit = new KpAyIcindeSadece1KezAyniGunNobet
+                        //{
+                        //    Model = model,
+                        //    EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                        //    IkiliEczaneler = data.IkiliEczaneler,
+                        //    NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k10"),
+                        //    Tarihler = data.TarihAraligi,
+                        //    KararDegiskeni = _x
+                        //};
+                        //AyIcindeSadece1KezAyniGunNobetTutulsun(ayIcindeSadece1KezAyniGunNobetKisit);
+
+                        var kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu = new KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu
                         {
                             Model = model,
                             EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                            EczaneNobetTarihAralikIkiliEczaneler = data.EczaneNobetTarihAralikIkiliEczaneler,
                             IkiliEczaneler = data.IkiliEczaneler,
                             NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k10"),
                             Tarihler = data.TarihAraligi,
-                            KararDegiskeni = _x
+                            KararDegiskeni = _x,
+                            KararDegiskeniIkiliEczaneler = _y
                         };
-                        AyIcindeSadece1KezAyniGunNobetTutulsun(ayIcindeSadece1KezAyniGunNobetKisit);
+                        AyIcindeSadece1KezAyniGunNobetTutulsun(kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
 
                         solution = solver.Solve(model);
 

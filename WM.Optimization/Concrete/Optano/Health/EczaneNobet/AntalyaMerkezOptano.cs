@@ -930,32 +930,32 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     }
                     #endregion
 
-                    #endregion
-
-                    #region istek ve mazeretler
-
-                    var istegiKarsilaKisit = new KpIstegiKarsila
-                    {
-                        Model = model,
-                        EczaneNobetTarihAralik = data.EczaneNobetTarihAralik.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
-                        NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k12"),
-                        EczaneNobetIstekler = data.EczaneNobetIstekler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
-                        KararDegiskeni = _x
-                    };
-                    IstegiKarsila(istegiKarsilaKisit);
-
-                    var mazereteGorevYazmaKisit = new KpMazereteGorevYazma
-                    {
-                        Model = model,
-                        EczaneNobetTarihAralik = data.EczaneNobetTarihAralik.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
-                        NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k13"),
-                        EczaneNobetMazeretler = data.EczaneNobetMazeretler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
-                        KararDegiskeni = _x
-                    };
-                    MazereteGorevYazma(mazereteGorevYazmaKisit);
-
-                    #endregion
+                    #endregion                    
                 }
+
+                #region istek ve mazeretler
+
+                var istegiKarsilaKisit = new KpIstegiKarsila
+                {
+                    Model = model,
+                    EczaneNobetTarihAralik = data.EczaneNobetTarihAralik.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k12"),
+                    EczaneNobetIstekler = data.EczaneNobetIstekler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
+                    KararDegiskeni = _x
+                };
+                IstegiKarsila(istegiKarsilaKisit);
+
+                var mazereteGorevYazmaKisit = new KpMazereteGorevYazma
+                {
+                    Model = model,
+                    EczaneNobetTarihAralik = data.EczaneNobetTarihAralik.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k13"),
+                    EczaneNobetMazeretler = data.EczaneNobetMazeretler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
+                    KararDegiskeni = _x
+                };
+                MazereteGorevYazma(mazereteGorevYazmaKisit);
+
+                #endregion
             }
 
             #region Eş gruplar (aynı gün nöbet)

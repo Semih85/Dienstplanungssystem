@@ -208,8 +208,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var borcTakipEdilecekGunGruplar = new int[]
             {
                 //1,
-                //3,
-                4
+                3,//h.içi
+                //4
             };
 
             var gunGruplar = tarihAralik
