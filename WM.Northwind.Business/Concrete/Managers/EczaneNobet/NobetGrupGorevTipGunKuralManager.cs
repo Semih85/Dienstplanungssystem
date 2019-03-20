@@ -12,6 +12,9 @@ using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Samples;
+using WM.Core.Aspects.PostSharp.TranstionAspects;
+using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
+using WM.Core.Aspects.PostSharp.LogAspects;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -23,6 +26,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             _nobetGrupGorevTipGunKuralDal = nobetGrupGorevTipGunKuralDal;
         }
+
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int nobetGrupGorevTipGunKuralId)
         {
@@ -33,21 +37,25 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetGrupGorevTipGunKuralDal.Get(x => x.Id == nobetGrupGorevTipGunKuralId);
         }
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetGrupGorevTipGunKural> GetList()
         {
             return _nobetGrupGorevTipGunKuralDal.GetList();
         }
+
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(NobetGrupGorevTipGunKural nobetGrupGorevTipGunKural)
         {
             _nobetGrupGorevTipGunKuralDal.Insert(nobetGrupGorevTipGunKural);
         }
+
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetGrupGorevTipGunKural nobetGrupGorevTipGunKural)
         {
             _nobetGrupGorevTipGunKuralDal.Update(nobetGrupGorevTipGunKural);
         }
+
         public NobetGrupGorevTipGunKuralDetay GetDetayById(int nobetGrupGorevTipGunKuralId)
         {
             return _nobetGrupGorevTipGunKuralDal.GetDetay(x => x.Id == nobetGrupGorevTipGunKuralId);
@@ -87,6 +95,32 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<NobetGrupGorevTipGunKuralDetay> GetDetaylarByNobetGrupGorevTipId(int nobetGrupGorevTipId)
         {
             return _nobetGrupGorevTipGunKuralDal.GetDetayList(x => x.NobetGrupGorevTipId == nobetGrupGorevTipId);
+        }
+
+        [TransactionScopeAspect]
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public void CokluAktifPasifYap(List<NobetGrupGorevTipGunKuralDetay> nobetGrupGorevTipGunKurallar, bool pasifMi)
+        {
+            foreach (var nobetGrupGorevTipGunKuralDetay in nobetGrupGorevTipGunKurallar)
+            {
+                if (pasifMi)
+                {
+                    var nobetGrupGorevTipGunKural = GetById(nobetGrupGorevTipGunKuralDetay.Id);
+
+                    nobetGrupGorevTipGunKural.BitisTarihi = DateTime.Today;
+
+                    Update(nobetGrupGorevTipGunKural);
+                }
+                else
+                {
+                    var nobetGrupGorevTipGunKural = GetById(nobetGrupGorevTipGunKuralDetay.Id);
+
+                    nobetGrupGorevTipGunKural.BitisTarihi = null;
+
+                    Update(nobetGrupGorevTipGunKural);
+                }
+            }
         }
 
     }

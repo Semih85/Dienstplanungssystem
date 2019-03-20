@@ -227,7 +227,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 #endregion
 
                 var nobetGunKuralIstatistikler = data.TakvimNobetGrupGunDegerIstatistikler
-                                      .Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
+                                      .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
                                                && tarihler.Select(s => s.NobetGunKuralId).Distinct().Contains(w.NobetGunKuralId)).ToList();
 
                 var nobetGunKuralTarihler = new List<NobetGunKuralTarihAralik>();

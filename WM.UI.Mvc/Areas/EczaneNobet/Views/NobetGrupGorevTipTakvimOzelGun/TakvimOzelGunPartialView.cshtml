@@ -140,12 +140,14 @@ else
     </div>
 }
 
-@section Scripts{
+@*@section Scripts{
     @Scripts.Render("~/bundle/ajax")
     @Scripts.Render("~/bundle/bootstrap-select/scripts")
     @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
-}
+}*@
+
 <script>
+
     $(document).ready(function () {
 
         $("#checkAll").click(function () {
@@ -154,9 +156,6 @@ else
                 $(this).prop('checked'));
         });
 
-    });
-
-    $(document).ready(function () {
         var model = @Html.Raw(Json.Encode(Model));
         sayfalamaYap(model, 15);
     });
