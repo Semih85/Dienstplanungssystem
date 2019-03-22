@@ -26,13 +26,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IUserService _userService;
         private INobetUstGrupService _nobetUstGrupService;
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
+        private ITakvimService _takvimService;
 
         public EczaneNobetGrupController(IEczaneNobetGrupService eczaneNobetGrupService,
                                          IEczaneService eczaneService,
                                          INobetGrupGorevTipService nobetGrupGorevTipService,
                                          INobetUstGrupService nobetUstGrupService,
                                          IUserService userService,
-                                         IAyniGunTutulanNobetService ayniGunTutulanNobetService)
+                                         IAyniGunTutulanNobetService ayniGunTutulanNobetService,
+                                         ITakvimService takvimService)
         {
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _eczaneService = eczaneService;
@@ -40,6 +42,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _userService = userService;
             _nobetUstGrupService = nobetUstGrupService;
             _ayniGunTutulanNobetService = ayniGunTutulanNobetService;
+            _takvimService = takvimService;
         }
         #endregion
 
@@ -152,17 +155,43 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             if (ModelState.IsValid && eklenecekEczaneSayisi > 0)
             {
-                TempData["EklenenEczane"] = $"{_nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId).NobetGrupGorevTipAdi} nöbet grubuna {eczaneNobetGrupCoklu.EczaneId.Count()} adet eczane başarılı bir şekilde eklenmiştir.";
+                var eklenenNobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
+
+                TempData["EklenenEczane"] = $"{eklenenNobetGrupGorevTip.NobetGrupGorevTipAdi} nöbet grubuna {eczaneNobetGrupCoklu.EczaneId.Count()} adet eczane başarılı bir şekilde eklenmiştir.";
 
                 _eczaneNobetGrupService.CokluEkle(eczaneNobetGruplar);
+
+                var gruptakiEczaneler = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
+                var eczaneIdList = eczaneNobetGruplar.Select(s => s.EczaneId).ToList();
+                var eczaneNobetGrupDetaylar = _eczaneNobetGrupService.GetDetaylar(eczaneIdList, eczaneNobetGrupCoklu.NobetGrupGorevTipId);
+
+                if (eklenenNobetGrupGorevTip.NobetUstGrupId == 2)
+                {//antalya'da planlanan nöbetleri yazmak için
+                    if (eczaneNobetGrupDetaylar.Count > 0)
+                    {//grupta eczaneler var. grup yeni değil. tekli olarak eklenen eczaneler için planlanan nöbetler yeniden yazılacak.
+                        #region planlanan nöbetler - sıralı nöbet yazma (gün grubu bazında)
+
+                        var baslangicTarihi = eczaneNobetGrupDetaylar.Min(s => s.BaslangicTarihi);
+
+                        var planlananNobetlerinYazilacagiSonTarih = new DateTime(2020, 12, 31);
+
+                        var planlananNobetlerinYazilacagiNobetGrubu = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
+
+                        _takvimService.SiraliNobetYazGrupBazinda(planlananNobetlerinYazilacagiNobetGrubu, gruptakiEczaneler, baslangicTarihi, planlananNobetlerinYazilacagiSonTarih);
+
+                        #endregion
+                    }
+                    else
+                    {//gruba ilk kez eczane ekleniyor
+
+                    }
+                }
 
                 var nobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
                 var nobetUstGrupId = nobetGrupGorevTip.NobetUstGrupId;
 
                 if (nobetUstGrupId == 1 || nobetUstGrupId == 3)
                 {//anlanya ya da mersin için
-                    var eczaneIdList = eczaneNobetGruplar.Select(s => s.EczaneId).ToList();
-                    var eczaneNobetGrupDetaylar = _eczaneNobetGrupService.GetDetaylar(eczaneIdList, eczaneNobetGrupCoklu.NobetGrupGorevTipId);
                     var eklenenIkiliEczaneler = _ayniGunTutulanNobetService.IkiliEczaneleriOlustur(eczaneNobetGrupDetaylar);
                 }
 
@@ -214,7 +243,49 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
+                var degisecekEczaneNobetGrupOncekiHali = _eczaneNobetGrupService.GetDetayById(eczaneNobetGrup.Id);
+
+                var eklenenNobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrup.NobetGrupGorevTipId);
+
                 _eczaneNobetGrupService.Update(eczaneNobetGrup);
+
+                var bitisTarihiDegistiMi = degisecekEczaneNobetGrupOncekiHali.BitisTarihi != eczaneNobetGrup.BitisTarihi;
+                //var baslangicTarihiDegistiMi = degisecekEczaneNobetGrupOncekiHali.BaslangicTarihi != eczaneNobetGrup.BaslangicTarihi;
+
+                if (eklenenNobetGrupGorevTip.NobetUstGrupId == 2
+                    && (bitisTarihiDegistiMi 
+                    //|| baslangicTarihiDegistiMi
+                    )
+                    )
+                {//antalya'da planlanan nöbetleri yazmak için
+                 //grupta eczaneler var. grup yeni değil. tekli olarak eklenen eczaneler için planlanan nöbetler yeniden yazılacak.
+                    #region planlanan nöbetler - sıralı nöbet yazma (gün grubu bazında)
+
+                    var gruptakiEczaneler = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(eczaneNobetGrup.NobetGrupGorevTipId);
+
+                    var baslangicTarihi = (DateTime)eczaneNobetGrup.BitisTarihi;
+
+                    //if (baslangicTarihiDegistiMi)
+                    //{
+                    //    baslangicTarihi = eczaneNobetGrup.BaslangicTarihi < degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi 
+                    //        ? degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi
+                    //        : eczaneNobetGrup.BaslangicTarihi;
+                    //}
+                    if (bitisTarihiDegistiMi 
+                        && eczaneNobetGrup.BitisTarihi != null)
+                    {
+                        baslangicTarihi = (DateTime)eczaneNobetGrup.BitisTarihi;
+                    }
+
+                    var planlananNobetlerinYazilacagiSonTarih = new DateTime(2020, 12, 31);
+
+                    var planlananNobetlerinYazilacagiNobetGrubu = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrup.NobetGrupGorevTipId);
+
+                    _takvimService.SiraliNobetYazGrupBazinda(planlananNobetlerinYazilacagiNobetGrubu, gruptakiEczaneler, baslangicTarihi, planlananNobetlerinYazilacagiSonTarih);
+
+                    #endregion
+                }
+
                 return RedirectToAction("Index");
             }
             var user = _userService.GetByUserName(User.Identity.Name);

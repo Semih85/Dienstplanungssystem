@@ -535,7 +535,7 @@
                                         <h5>
                                             Planlanan ve Gerceklesen Nöbetler
                                             <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterPlanlananVsGerceklesen">
-                                                Alanları Göster
+                                                Alanları Gizle
                                             </button>
                                         </h5>
                                         <div id="planlananVsGerceklesen">
@@ -803,7 +803,7 @@
         var pivotAlanlariGosterMevsimDagilim = false;
         var pivotAlanlariGosterKalibrasyonluDetayli = false;
         var pivotAlanlariGosterNobetDurumlari = false;
-        var pivotAlanlariGosterPlanlanaGerceklesen = false;
+        var pivotAlanlariGosterPlanlanaGerceklesen = true;
 
         //function getJsonDagilimlarTekli(url) {
         //    $.ajax({
@@ -2431,6 +2431,8 @@
                     onRefresh: function (config) {
                         $("#planlananVsGerceklesen").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
                         //alert(0)
+                        //pivotAlanlariGosterPlanlanaGerceklesen = true;
+
                         if (pivotAlanlariGosterPlanlanaGerceklesen == false) {
                             $("#planlananVsGerceklesen").parent().find('.pvtAxisContainer').hide();
                             $("#planlananVsGerceklesen").parent().find('.pvtAttrDropdown').hide();

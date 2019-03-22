@@ -71,13 +71,16 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
             string gunGrubu);
 
         void SiraliNobetYaz(
-            //List<EczaneNobetSonucListe2> eczaneNobetSonuclar,
             List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,
             DateTime nobetBitisTarihi,
             int nobetUstGrupId);
 
+        void SiraliNobetYazGrupBazinda(NobetGrupGorevTipDetay nobetGrupGorevTip,
+            List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
+            DateTime nobetBaslangicTarihi,
+            DateTime nobetBitisTarihi);
 
         List<EczaneNobetAlacakVerecek> EczaneNobetAlacakVerecekHesaplaAntalya(
                List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,

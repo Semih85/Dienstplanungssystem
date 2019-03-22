@@ -184,11 +184,15 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             #region planlanan nöbetler - sıralı nöbet yazma (gün grubu bazında)
             //baslangicTarihi = new DateTime(2018, 6, 1);
+            //baslangicTarihi = new DateTime(2019, 3, 13);
             //bitisTarihi = new DateTime(2020, 12, 31);
 
             //var eczaneNobetGruplarHepsi = _eczaneNobetGrupService.GetDetaylar(nobetGrupIdListe);//, baslangicTarihi, bitisTarihi);
 
             //_takvimService.SiraliNobetYaz(nobetGrupGorevTipler, eczaneNobetGruplarHepsi, baslangicTarihi, bitisTarihi, nobetUstGrupId);
+            //var besinciBolge = nobetGrupGorevTipler.SingleOrDefault(x => x.Id == 8);
+
+            //_takvimService.SiraliNobetYazGrupBazinda(besinciBolge, eczaneNobetGruplarHepsi, baslangicTarihi, bitisTarihi);
             #endregion
 
             var eczaneNobetSonuclarCozulenGruplar = eczaneNobetSonuclar
@@ -207,7 +211,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 .Where(w => w.Tarih >= nobetUstGrupBaslangicTarihi).ToList();
 
             var sonuclarKontrol = _eczaneNobetSonucService.GetSonuclar(baslangicTarihi, bitisTarihi, eczaneNobetSonuclarCozulenGruplar);
-                        
+
             if (sonuclarKontrol.Count > 0)
                 throw new Exception("Kriterlere uygun <strong>daha önce yazılmış nöbetler</strong> bulunmaktadır. Lütfen kontrol ediniz!");
 

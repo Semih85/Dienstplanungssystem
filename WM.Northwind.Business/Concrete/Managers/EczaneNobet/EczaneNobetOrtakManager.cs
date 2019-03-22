@@ -3638,9 +3638,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         if (kontrol)
                         {
                             var kontrolEdilecekEczaneler = new string[] {
-                                //"ŞADIRVAN", //23.4.2008
-                                //"PORTAKAL",   //-5
-                                "SEÇKİN"     //14
+                                "AYDIN", //23.4.2008
+                                "OSMANBEY",   //-5
+                                //"SEÇKİN"     //14
                             };
 
                             if (kontrolEdilecekEczaneler.Contains(eczaneNobetTarih.EczaneAdi)

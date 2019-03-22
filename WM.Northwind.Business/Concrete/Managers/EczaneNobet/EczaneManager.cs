@@ -87,7 +87,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [LogAspect(typeof(DatabaseLogger))]
         public void Insert(Eczane eczane)
         {
-            eczane.Adi.Trim().ToUpper(new CultureInfo("tr-TR"));
+            eczane.Adi = eczane.Adi.Trim().ToUpper(new CultureInfo("tr-TR"));
             _eczaneDal.Insert(eczane);
         }
 
@@ -96,7 +96,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [LogAspect(typeof(DatabaseLogger))]
         public void Update(Eczane eczane)
         {
-            eczane.Adi.Trim().ToUpper(new CultureInfo("tr-TR"));
+            eczane.Adi = eczane.Adi.Trim().ToUpper(new CultureInfo("tr-TR"));
             _eczaneDal.Update(eczane);
         }
 

@@ -104,11 +104,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<EczaneNobetGrupDetay> GetDetaylar(List<int> eczaneIdList, int nobetGrupGorevTipId)
         {
             return _eczaneNobetGrupDal.GetDetayList(x => eczaneIdList.Contains(x.EczaneId)
-            && x.BitisTarihi == null 
+            && x.BitisTarihi == null
             && x.NobetGrupGorevTipId == nobetGrupGorevTipId
             );
         }
-        
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetGrupDetay> GetDetaylar()
         {
@@ -132,7 +132,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _eczaneNobetGrupDal.GetDetayList(x => nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId));
         }
-        
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetGrupDetay> GetDetaylarByNobetGrupGorevTipler(int nobetGrupGorevTipId)
+        {
+            return _eczaneNobetGrupDal.GetDetayList(x => x.NobetGrupGorevTipId == nobetGrupGorevTipId);
+        }
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetGrupDetay> GetDetaylarByNobetUstGrupIdList(List<int> nobetUstGrupIdList)
         {
@@ -276,7 +282,34 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void CokluEkle(List<EczaneNobetGrup> eczaneNobetGruplar)
         {
-            _eczaneNobetGrupDal.CokluEkle(eczaneNobetGruplar);
+            var nobetGrupGorevTipId = eczaneNobetGruplar.Select(s => s.NobetGrupGorevTipId).Distinct().FirstOrDefault();
+
+            var gruptakiEczaneler = GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipId);
+
+            var dahaOnceGruptaAyniGruptaOlanEczaneler = gruptakiEczaneler.Where(w => eczaneNobetGruplar.Select(s => s.EczaneId).Contains(w.EczaneId)).ToList();
+
+            if (dahaOnceGruptaAyniGruptaOlanEczaneler.Count == 0)
+            {
+                _eczaneNobetGrupDal.CokluEkle(eczaneNobetGruplar);
+            }
+            else
+            {
+                foreach (var dahaOnceGruptaAyniGruptaOlanEczane in dahaOnceGruptaAyniGruptaOlanEczaneler)
+                {
+                    var eklenecekEczane = eczaneNobetGruplar.SingleOrDefault(x => x.EczaneId == dahaOnceGruptaAyniGruptaOlanEczane.EczaneId);
+
+                    //if (dahaOnceGruptaAyniGruptaOlanEczane.BitisTarihi == null 
+                    //    && eklenecekEczane.BitisTarihi == null
+                    //    )
+                    //{
+                    throw new Exception($"'{dahaOnceGruptaAyniGruptaOlanEczane.EczaneAdi}' eczanesi " +
+                        $"{dahaOnceGruptaAyniGruptaOlanEczane.NobetGrupAdi},'{dahaOnceGruptaAyniGruptaOlanEczane.NobetGorevTipAdi}' nöbet grubuna " +
+                        $"2 kez eklenemez.");
+                    //}
+                }
+
+                _eczaneNobetGrupDal.CokluEkle(eczaneNobetGruplar);
+            }
         }
     }
 }
