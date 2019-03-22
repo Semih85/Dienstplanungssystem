@@ -446,7 +446,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                    NobetGorevTipId = s.NobetGorevTipId,
                                                    NobetGrupGorevTipId = s.NobetGrupGorevTipId,
                                                    NobetAltGrupId = s.NobetAltGrupId,
-                                                   NobetAltGrupAdi = s.NobetAltGrupAdi
+                                                   NobetAltGrupAdi = s.NobetAltGrupAdi,
+                                                   YayimlandiMi = s.YayimlandiMi
                                                }).ToList();
 
             return eczaneNobetSonuclarBirlesim;

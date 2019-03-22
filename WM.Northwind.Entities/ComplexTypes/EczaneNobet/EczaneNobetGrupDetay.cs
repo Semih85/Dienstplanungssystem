@@ -46,5 +46,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int? NobetAltGrupId { get; set; }
         public DateTime NobetUstGrupBaslamaTarihi { get; set; }
         public DateTime NobetGrupGorevTipBaslamaTarihi { get; set; }
+
+        public bool EnErkenTarihteNobetYazilsinMi { get; set; }
     }
 }

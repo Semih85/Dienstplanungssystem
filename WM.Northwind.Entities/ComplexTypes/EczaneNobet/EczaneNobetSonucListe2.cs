@@ -20,6 +20,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         //NobetUstGrupId == 3 
         //? $"{NobetGrupId} {NobetGrupAdi}"
         //: $"{NobetGrupAdi}";
+        public bool YayimlandiMi { get; set; }
 
         public int EczaneNobetGrupId { get; set; }
         public int NobetUstGrupId { get; set; }

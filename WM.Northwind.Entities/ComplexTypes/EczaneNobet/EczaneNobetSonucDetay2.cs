@@ -12,6 +12,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
     {
         public int Id { get; set; }
         public DateTime Tarih { get; set; }
+        public bool YayimlandiMi { get; set; }
         public int TakvimId { get; set; }
         public int EczaneNobetGrupId { get; set; }
         public int NobetGorevTipId { get; set; }

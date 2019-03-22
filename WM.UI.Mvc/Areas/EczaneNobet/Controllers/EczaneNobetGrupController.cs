@@ -135,7 +135,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Oda,Üst Grup")]
-        public ActionResult Create([Bind(Include = "Id,EczaneId,NobetGrupGorevTipId,BaslangicTarihi,BitisTarihi,Aciklama")] EczaneNobetGrupCoklu eczaneNobetGrupCoklu)
+        public ActionResult Create([Bind(Include = "Id,EczaneId,NobetGrupGorevTipId,BaslangicTarihi,BitisTarihi,Aciklama,EnErkenTarihteNobetYazilsinMi")] EczaneNobetGrupCoklu eczaneNobetGrupCoklu)
         {
             var eczaneNobetGruplar = new List<EczaneNobetGrup>();
 
@@ -239,7 +239,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Oda,Üst Grup")]
-        public ActionResult Edit([Bind(Include = "Id,EczaneId,NobetGrupGorevTipId,BaslangicTarihi,BitisTarihi,Aciklama")] EczaneNobetGrup eczaneNobetGrup)
+        public ActionResult Edit([Bind(Include = "Id,EczaneId,NobetGrupGorevTipId,BaslangicTarihi,BitisTarihi,Aciklama,EnErkenTarihteNobetYazilsinMi")] EczaneNobetGrup eczaneNobetGrup)
         {
             if (ModelState.IsValid)
             {

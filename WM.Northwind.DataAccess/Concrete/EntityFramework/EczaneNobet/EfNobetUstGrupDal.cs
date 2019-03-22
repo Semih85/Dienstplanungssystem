@@ -31,7 +31,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                             BitisTarihi = x.BitisTarihi,
                             Enlem = x.Enlem,
                             Boylam = x.Boylam,
-                            TimeLimit = x.TimeLimit
+                            TimeLimit = x.TimeLimit,
+                            OneedeGosterilecekEnUzakMesafe = x.OneedeGosterilecekEnUzakMesafe
                         }).SingleOrDefault(filter);
             }
         }
@@ -52,7 +53,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                             BitisTarihi = x.BitisTarihi,
                             Enlem = x.Enlem,
                             Boylam = x.Boylam,
-                            TimeLimit = x.TimeLimit
+                            TimeLimit = x.TimeLimit,
+                            OneedeGosterilecekEnUzakMesafe = x.OneedeGosterilecekEnUzakMesafe
                         });
 
                 return filter == null

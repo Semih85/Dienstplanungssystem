@@ -24,7 +24,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.EczaneNobetGrupId).HasColumnName("EczaneNobetGrupId");
             this.Property(t => t.TakvimId).HasColumnName("TakvimId");
             this.Property(t => t.NobetGorevTipId).HasColumnName("NobetGorevTipId");
-            
+            this.Property(t => t.YayimlandiMi).HasColumnName("YayimlandiMi");
+
             #region Properties
 
             this.Property(t => t.Id)
@@ -62,6 +63,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
                            IsUnique = true,
                            Order = 3
                        }));
+
+            this.Property(t => t.YayimlandiMi).IsRequired();
+
             #endregion
 
             // Relationship

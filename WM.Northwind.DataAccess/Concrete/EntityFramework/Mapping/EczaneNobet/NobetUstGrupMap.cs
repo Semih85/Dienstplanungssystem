@@ -23,6 +23,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.Enlem).HasColumnName("Enlem");
             this.Property(t => t.Boylam).HasColumnName("Boylam");
             this.Property(t => t.TimeLimit).HasColumnName("TimeLimit");
+            this.Property(t => t.OneedeGosterilecekEnUzakMesafe).HasColumnName("OneedeGosterilecekEnUzakMesafe");
             // Properties 
 
             this.Property(t => t.Id)
@@ -41,6 +42,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
 
             this.Property(t => t.BaslangicTarihi).IsRequired();
             this.Property(t => t.TimeLimit).IsRequired();
+            this.Property(t => t.OneedeGosterilecekEnUzakMesafe).IsRequired();
             this.Property(t => t.BitisTarihi).IsOptional();
             this.Property(t => t.Aciklama)
                 .IsRequired()

@@ -13,6 +13,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public int EczaneNobetGrupId { get; set; }
         public int NobetGorevTipId { get; set; }
         public int TakvimId { get; set; }
+        public bool YayimlandiMi { get; set; }
 
         public virtual NobetGorevTip NobetGorevTip { get; set; }
         public virtual EczaneNobetGrup EczaneNobetGrup { get; set; }

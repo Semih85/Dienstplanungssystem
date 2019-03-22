@@ -2212,20 +2212,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             //var eczaneSonucuOlan = enSonNobetler.Where(w => w.EczaneAdi == "ATA").ToList();
 
             var sonucuOlanGunler = enSonNobetler
-                //.GroupBy(g => new
-                //{
-                //    g.NobetGunKuralId,
-                //    g.NobetGorevTipId,
-                //    g.NobetGrupGorevTipId,
-                //    g.GunGrup
-                //})
                 .Select(s => new
                 {
                     s.NobetGunKuralId,
                     s.NobetGorevTipId,
                     s.NobetGrupGorevTipId,
-                    s.GunGrup,
-                    //SonNoetTarihi = s.Max(m => m.SonNobetTarihi)
+                    s.GunGrup
                 })
                 .Distinct()
                 .OrderBy(o => o.NobetGorevTipId)
@@ -2258,18 +2250,25 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 {
                     foreach (var eczaneNobetGrup in sonucuOlmayanlar)
                     {
+                        #region Kontrol
+
                         var kontrol = false;
 
                         if (kontrol)
                         {
-                            if (eczaneNobetGrup.Id == 460)//ata
+                            if (eczaneNobetGrup.Id == 1090)//"UNCALI EBRU"
                             {
                             }
-                        }
+                        } 
 
-                        varsayilanBaslangicNobetTarihi = eczaneNobetGrup.BaslangicTarihi < eczaneNobetGrup.NobetGrupGorevTipBaslamaTarihi
-                             ? eczaneNobetGrup.NobetGrupGorevTipBaslamaTarihi
-                             : eczaneNobetGrup.BaslangicTarihi;
+                        #endregion
+
+                        if (!eczaneNobetGrup.EnErkenTarihteNobetYazilsinMi)
+                        {
+                            varsayilanBaslangicNobetTarihi = eczaneNobetGrup.BaslangicTarihi < eczaneNobetGrup.NobetGrupGorevTipBaslamaTarihi
+                                 ? eczaneNobetGrup.NobetGrupGorevTipBaslamaTarihi
+                                 : eczaneNobetGrup.BaslangicTarihi;
+                        }
 
                         var gunGrupSonNobetTarihi = eczaneNobetSonuc
                             .Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id
@@ -2304,7 +2303,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 }
             }
 
-            var eczaneTumu = enSonNobetler.Where(w => w.EczaneAdi == "ADA").ToList();
+            //var eczaneTumu = enSonNobetler.Where(w => w.EczaneAdi == "ADA").ToList();
 
             return enSonNobetler;
         }

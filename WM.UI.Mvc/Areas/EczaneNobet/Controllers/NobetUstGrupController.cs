@@ -74,7 +74,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Adi,EczaneOdaId,BaslangicTarihi,BitisTarihi,Enlem,Boylam,TimeLimit,Aciklama")] NobetUstGrup nobetUstGrup)
+        public ActionResult Create([Bind(Include = "Id,Adi,EczaneOdaId,BaslangicTarihi,BitisTarihi,Enlem,Boylam,TimeLimit,Aciklama,OneedeGosterilecekEnUzakMesafe")] NobetUstGrup nobetUstGrup)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +107,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Adi,EczaneOdaId,BaslangicTarihi,BitisTarihi,Enlem,Boylam,TimeLimit,Aciklama")] NobetUstGrup nobetUstGrup)
+        public ActionResult Edit([Bind(Include = "Id,Adi,EczaneOdaId,BaslangicTarihi,BitisTarihi,Enlem,Boylam,TimeLimit,Aciklama,OneedeGosterilecekEnUzakMesafe")] NobetUstGrup nobetUstGrup)
         {
             if (ModelState.IsValid)
             {

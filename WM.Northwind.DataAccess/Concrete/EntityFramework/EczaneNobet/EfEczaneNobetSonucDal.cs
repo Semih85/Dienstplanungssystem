@@ -43,7 +43,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         : 0,
                         NobetAltGrupAdi = s.EczaneNobetGrup.EczaneNobetGrupAltGrup != null
                         ? s.EczaneNobetGrup.EczaneNobetGrupAltGrup.NobetAltGrup.Adi
-                        : "Aalt grup yok"
+                        : "Aalt grup yok",
+                        YayimlandiMi = s.YayimlandiMi
                     }).SingleOrDefault(filter);
             }
         }
@@ -83,7 +84,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                                 : 0,
                                 NobetAltGrupAdi = eczaneNobetGrup.EczaneNobetGrupAltGrup != null
                                 ? eczaneNobetGrup.EczaneNobetGrupAltGrup.NobetAltGrup.Adi
-                                : "Aalt grup yok"
+                                : "Aalt grup yok",
+                                YayimlandiMi = s.YayimlandiMi
                             });
 
                 return filter == null

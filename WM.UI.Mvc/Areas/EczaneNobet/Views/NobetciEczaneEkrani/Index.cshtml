@@ -151,8 +151,8 @@
             #div_labelMesafe {
                 color: black;
                 /*background-color: white;*/
-                font-size: 10px;
-                margin-top: -15px;
+                font-size: 8px;
+                margin-top: -12px;
                 text-align: center;
                 font-weight: 300;
                 /*border-right: solid;
@@ -285,8 +285,8 @@
             #div_labelMesafe {
                 color: black;
                 /*background-color: white;*/
-                font-size: 15px;
-                margin-top: -20px;
+                font-size: 11px;
+                margin-top: -15px;
                 text-align: center;
                 font-weight: 400;
                 /*border-right: solid;
@@ -408,7 +408,7 @@
             }
             /*barkdo div i*/
             #div_MyLetterImage {
-                margin-top: -78px;
+                margin-top: -75px;
                 /*border-radius: 0 0 0 20px;*/
                 border-color: #000000;
                 border-width: 14px;
@@ -419,8 +419,8 @@
             #div_labelMesafe {
                 color: black;
                 /*background-color: white;*/
-                font-size: 20px;
-                margin-top: -30px;
+                font-size: 15px;
+                margin-top: -21px;
                 text-align: center;
                 font-weight: 500;
                 /*border-right: solid;
@@ -553,8 +553,8 @@
             #div_labelMesafe {
                 color: black;
                 /*background-color: white;*/
-                font-size: 20px;
-                margin-top: -30px;
+                font-size: 18px;
+                margin-top: -27px;
                 text-align: center;
                 font-weight: 500;
                 /*border-right: solid;
@@ -687,8 +687,8 @@
             #div_labelMesafe {
                 color: black;
                 /*background-color: white;*/
-                font-size: 25px;
-                margin-top: -35px;
+                font-size: 18px;
+                margin-top: -27px;
                 text-align: center;
                 font-weight: 600;
                 /*border-right: solid;
@@ -823,8 +823,8 @@
             #div_labelMesafe {
                 color: black;
                 /*background-color: white;*/
-                font-size: 30px;
-                margin-top: -40px;
+                font-size: 25px;
+                margin-top: -35px;
                 text-align: center;
                 font-weight: 700;
                 /*border-right: solid;
@@ -953,8 +953,8 @@
             #div_labelMesafe {
                 color: black;
                 /*background-color: white;*/
-                font-size: 35px;
-                margin-top: -50px;
+                font-size: 26px;
+                margin-top: -38px;
                 text-align: center;
                 font-weight: 800;
                 /*border-right: solid;
@@ -1081,8 +1081,8 @@
             #div_labelMesafe {
                 color: black;
                 /*background-color: white;*/
-                font-size: 40px;
-                margin-top: -60px;
+                font-size: 35px;
+                margin-top: -50px;
                 text-align: center;
                 font-weight: 800;
                 /*border-right: solid;
@@ -1211,8 +1211,8 @@
             #div_labelMesafe {
                 color: black;
                 /*background-color: white;*/
-                font-size: 50px;
-                margin-top: -75px;
+                font-size: 46px;
+                margin-top: -68px;
                 text-align: center;
                 font-weight: 900;
                 /*border-right: solid;
@@ -1222,6 +1222,7 @@
         }
     </style>
 </head>
+
 
 <body>
     <div id="loading" style="height:100%; width:100%; margin-left:35%;margin-top:15%">
@@ -1499,14 +1500,15 @@
                         '"  style="width:100%; height:100%"  src="" />')
                     //< div id = "div_MyLetterImage" class="col-6" >
                     $("#div_haritaBolumu").append('<div class="row" id="myRow"></div>')
-                    $("#myRow").append('<div class="col-6" id="div_QrKod_Mesafe"></div>')
+                    $("#myRow").append('<div class="col-3" id="div_QrKod_Mesafe"></div>')
                     $("#div_QrKod_Mesafe").append('<div id="div_MyLetterImage"></div>')
-                    $("#myRow").append('<div class="col-3 offset-3" id="div_labelMesafe"></div>')
+                    $("#myRow").append('<div class="col-9 offset-0" id="div_labelMesafe"></div>')
 
                     $("#div_labelMesafe").append('<label style="background-color:white" id="lbl_mesafe' + i +
                         //'" class="lbl_mesafe fa fa-car"'  +
                         '"> ' +
                         '</label>')
+
                     //$('#lbl_mesafe' + i).css('position', 'absolute');
                 }
             }
@@ -2484,6 +2486,7 @@
             }
             function yolicinAdresSatiriAl(newStartLat, newEndLat, newStartLng, newEndLng) {
                //https://maps.googleapis.com/maps/api/directions/json?origin=37.073745,36.235997&destination=37.068238,36.222535&key=AIzaSyAP29ma6oCPNwQPFdXbilDCYBKP2Gk52CE,
+               //https://maps.googleapis.com/maps/api/directions/json?origin=37.073745,36.235997&destination=37.068238,36.222535&travel_mode=WALKING&key=AIzaSyAP29ma6oCPNwQPFdXbilDCYBKP2Gk52CE,
 
                 var http = "https://maps.googleapis.com/maps/api/directions/json?";
                 var myApiKey = "&key=AIzaSyAP29ma6oCPNwQPFdXbilDCYBKP2Gk52CE";
@@ -2491,7 +2494,17 @@
                 var origin = "origin=" + newStartLat + "," + newStartLng;
                 var destination = "&destination=" + newEndLat + "," + newEndLng;
 
-                var the_static_image_url_variable = http + origin + destination + myApiKey;
+                var avoid = "&avoid=highways"
+                var waypoints = "&waypoints=via:" + newStartLat + "," + newStartLng;
+                var mode = "&mode=driving"
+                var departure_time = "&departure_time=now"
+
+                var the_static_image_url_variable = http + origin + destination
+                   // + avoid
+                    + mode
+                    + waypoints
+                    + departure_time
+                    + myApiKey;
                 return the_static_image_url_variable
                 console.log(the_static_image_url_variable)
             }
@@ -2571,7 +2584,7 @@
             function haritayiAyarla(newStartLat, newEndLat, newStartLng, newEndLng, imageAdi) {
 
                 var staticMapDirectionUrlString = yolicinAdresSatiriAl(newStartLat, newEndLat, newStartLng, newEndLng)
-               // console.log(staticMapDirectionUrlString)
+                console.log(staticMapDirectionUrlString)
                 console.log("Google'dan Static Map çekildi.")
                 $.ajax({
                     type: "GET",
@@ -2580,7 +2593,9 @@
                     success: function (data) {
                         var polyline_data = data.routes[0].overview_polyline.points;
                         var distance = data.routes[0].legs[0].distance.text;
+                        var duration = data.routes[0].legs[0].duration.text;
                         var startAdress = data.routes[0].legs[0].start_address;
+                        var duration_in_traffic = data.routes[0].legs[0].duration_in_traffic.text;
                         //var startLat = data.routes[0].legs[0].start_location.lat;
                         //var startLng = data.routes[0].legs[0].start_location.lng;
                         //var startLocation = startLat + "," + startLng
@@ -2591,7 +2606,7 @@
                                 Index: mesafeCounter,
                                 eczaneninAcikOlduguSaatAraligi: model.NobetciEczaneler[mesafeCounter].EczaneninAcikOlduguSaatAraligi,
                             }
-                            $("#lbl_mesafe" + mesafeCounter).text(" " + distance);
+                            $("#lbl_mesafe" + mesafeCounter).text(" " + distance + ". Arabayla saat " + saat + " trafiğinde " + duration_in_traffic);
 
                             mesafeler.push(newElement)
                            // alert('mesafe')
