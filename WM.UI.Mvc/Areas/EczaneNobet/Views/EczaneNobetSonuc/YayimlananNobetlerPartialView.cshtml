@@ -1,7 +1,6 @@
 ﻿
 @{
     int? silinenKayitSayisi = ViewBag.SilinenKayitSayisi;
-    int? yayimlananKayitSayisi = ViewBag.YayimlananKayitSayisi;
     int? silinenKayitSayisiPost = ViewBag.SilinenKayitSayisiPost;
 }
 
@@ -11,22 +10,7 @@
         <div class="col-12">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <i class="fa fa-check"></i>
-                @silinenKayitSayisi adet kayıt silindi.
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-    </div>
-}
-
-@if (yayimlananKayitSayisi > 0)
-{
-    <div class="row justify-content-sm-center">
-        <div class="col-12">
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fa fa-check"></i>
-                @silinenKayitSayisi adet nöbet yayımlandı.
+                @silinenKayitSayisi adet nöbet @((bool)ViewBag.YayimlanmaDurumu == true ? "yayımlandı" : "yayımdan kaldırıldı").
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

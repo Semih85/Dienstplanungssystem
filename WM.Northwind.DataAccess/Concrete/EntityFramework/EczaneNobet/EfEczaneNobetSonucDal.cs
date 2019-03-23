@@ -122,20 +122,23 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                     liste.Add(nobetSonuc);
                 }
 
-                //foreach (var nobetCozum in eczaneNobetCozumler)
-                //{
-                //    var nobetSonuc = new EczaneNobetSonuc
-                //    {
-                //        TakvimId = nobetCozum.TakvimId,
-                //        EczaneNobetGrupId = nobetCozum.EczaneNobetGrupId,
-                //        NobetGorevTipId = nobetCozum.NobetGorevTipId
-                //    };
-
-                //    context.EczaneNobetSonuclar.Add(nobetSonuc);
-                //}                
-
                 context.EczaneNobetSonuclar.AddRange(liste);
                 context.SaveChanges();
+            }
+        }
+
+        public virtual void CokluYayimla(List<EczaneNobetSonuc> eczaneNobetSonuclar, bool yayimlandiMi)
+        {
+            using (var context = new EczaneNobetContext())
+            {
+                foreach (var eczaneNobetSonuc in eczaneNobetSonuclar)
+                {
+                    var mevcutSonuc = context.EczaneNobetSonuclar.SingleOrDefault(x => x.Id == eczaneNobetSonuc.Id);
+
+                    mevcutSonuc.YayimlandiMi = yayimlandiMi;
+
+                    context.SaveChanges();
+                }
             }
         }
     }

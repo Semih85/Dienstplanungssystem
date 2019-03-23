@@ -16,6 +16,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
     public interface IEczaneNobetSonucService
     {
         List<EczaneNobetSonuc> GetList();
+        List<EczaneNobetSonuc> GetList(int[] ids);
         List<EczaneNobetSonucGunKural> GetDetaylarForIstatistik();
         EczaneNobetSonuc GetById(int Id);
         EczaneNobetSonucDetay2 GetDetay2ById(int Id);
@@ -25,7 +26,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void CokluSil(int[] ids);
         void CokluEkle(List<EczaneNobetCozum> eczaneNobetCozumler);
         DateTime GetSonNobetTarihi(int nobetUstGrupId);
-       
+        void CokluNobetYayimla(int[] ids, bool yayimlandiMi);
+
         List<EczaneNobetIstatistik> GetEczaneNobetIstatistik2(List<int> nobetGrupIdList);
 
         List<EczaneNobetSonucNode> GetEczaneNobetSonucNodes();
@@ -44,6 +46,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetSonucDetay2> GetDetaylarUstGrupBaslamaTarihindenSonra(int[] nobetGrupIdList);
         List<EczaneNobetSonucDetay2> GetDetaylarUstGrupBaslamaTarihindenSonra(int nobetUstGrupId);
         List<EczaneNobetSonucDetay2> GetDetaylarUstGrupBaslamaTarihindenSonraEczaneNobetGrupId(int eczaneNobetGrupId);
+        List<EczaneNobetSonucDetay2> GetDetaylarById(int[] ids);
 
         List<EczaneNobetSonucDetay2> GetDetaylarUstGrupBaslamaTarihindenOnce(int nobetUstGrupId);
         List<EczaneNobetSonucDetay2> GetDetaylarGunluk(DateTime nobetTarihi, int nobetUstGrupId);

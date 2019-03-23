@@ -1014,7 +1014,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var silinecekNobetlerTumu = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi2, nobetGrupGorevTipId);
 
             var silinecekNobetler = silinecekNobetlerTumu
-                .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)
+                .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi
+                        && !w.YayimlandiMi) //yayımlanan nöbetler silinemez
                 .Select(s => s.Id).ToArray();
 
             //var silinecekNobetlerPlanlanan = _eczaneNobetSonucPlanlananService.GetDetaylar(baslangicTarihi, nobetUstGrup.Id)
@@ -1062,6 +1063,163 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.SilinenKayitSayisiPost = silinecekKayitSayisi == 0 ? 1 : 0;
 
             return PartialView();
+        }
+
+        public ActionResult YayimlananNobetlerPartialView(int? silinecekKayitSayisi, bool yayimlandiMi)
+        {
+            ViewBag.YayimlanmaDurumu = yayimlandiMi;
+            ViewBag.SilinenKayitSayisi = silinecekKayitSayisi;
+            ViewBag.SilinenKayitSayisiPost = silinecekKayitSayisi == 0 ? 1 : 0;
+
+            return PartialView();
+        }
+
+
+        public ActionResult NobetleriYayimla()
+        {
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetGorevTipler = nobetGrupGorevTipler.Select(s => s.NobetGorevTipId).Distinct().ToList();
+            var nobetGrupGorevTipBaslamaSaatleri = nobetGrupGorevTipler.Select(s => s.BaslamaTarihi).Distinct().ToList();
+
+            var nobetGruplar = new List<MyDrop>();
+
+            if (nobetGrupGorevTipBaslamaSaatleri.Count > 1)
+            {
+                nobetGruplar = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
+                .Select(s => new MyDrop
+                {
+                    Id = s.Id,
+                    Value = $"{s.Id}, {s.NobetGrupAdi}, {s.NobetGorevTipAdi} ({s.BaslamaTarihi.ToShortDateString()})"
+                }).ToList();
+            }
+            else if (nobetGorevTipler.Count > 1)
+            {
+                nobetGruplar = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
+                .Select(s => new MyDrop
+                {
+                    Id = s.Id,
+                    Value = $"{s.Id}, {s.NobetGrupAdi}, {s.NobetGorevTipAdi}"
+                }).ToList();
+            }
+            else
+            {
+                nobetGruplar = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
+                .Select(s => new MyDrop
+                {
+                    Id = s.Id,
+                    Value = $"{s.Id}, {s.NobetGrupAdi}"
+                }).ToList();
+            }
+
+
+            var gelecekTarih = DateTime.Today.AddMonths(1);
+            int gelecekYil = gelecekTarih.Year;
+            int gelecekAy = gelecekTarih.Month;
+
+            var baslangicTarihi = new DateTime(gelecekYil, gelecekAy, 1);
+
+            if (nobetUstGrup.BaslangicTarihi > baslangicTarihi)
+            {
+                baslangicTarihi = nobetUstGrup.BaslangicTarihi;
+            }
+            //var yillar = _takvimService.GetList()
+            //    .Where(w => w.Tarih >= gelecekTarih)
+            //    .Select(s => s.Tarih.Year).Distinct().ToList();
+
+            //var aylar = _takvimService.GetAylarDdl();
+
+            //ViewBag.Yil = new SelectList(yillar, gelecekYil);
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGruplar, "Id", "Value");
+            //ViewBag.Ay = new SelectList(items: aylar, dataValueField: "Id", dataTextField: "Value", selectedValue: gelecekAy);
+            ViewBag.grupSayisi = nobetGruplar.Count();
+
+            var model = new NobetleriYayimlaViewModel
+            {
+                Yil = gelecekYil,
+                Ay = gelecekAy,
+                NobetGrupId = 0,
+                NobetGrupAdi = "",
+                BaslangicTarihi = baslangicTarihi
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [HandleError]
+        public ActionResult NobetleriYayimla(DateTime baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipId, bool yayimlandiMi)
+        {
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            //var silinecekTarihBaslangic = new DateTime(yil, ay, 1);
+            var gelecekTarih = DateTime.Today.AddMonths(1);
+            int gelecekYil = gelecekTarih.Year;
+            int gelecekAy = gelecekTarih.Month;
+
+            //var buGun = DateTime.Today;
+            var kriter = new DateTime(gelecekYil, gelecekAy, 1);
+
+            var bitisTarihi2 = new DateTime();
+
+            if (bitisTarihi == null)
+            {
+                bitisTarihi2 = DateTime.Today.AddYears(10);
+            }
+            else
+            {
+                bitisTarihi2 = (DateTime)bitisTarihi;
+            }
+
+            if (baslangicTarihi < nobetUstGrup.BaslangicTarihi)
+            {//geçmiş silinemez
+                ViewBag.BaslangicTarihiUyari = $"Yayımlanacak tarih ({baslangicTarihi.ToShortDateString()}) üst grup başlama tarihinden ({nobetUstGrup.BaslangicTarihi.ToShortDateString()}) küçük olamaz.";
+
+                return RedirectToAction("YayimlananNobetlerPartialView", new { silinecekKayitSayisi = -1, yayimlandiMi });
+            }
+
+            if (baslangicTarihi < kriter)
+            {//giçmiş silinemez
+                ViewBag.BaslangicTarihiUyari = $"Yayımlanacak tarih ({baslangicTarihi.ToShortDateString()}) tarihinden ({kriter.ToShortDateString()}) küçük olamaz.";
+
+                return RedirectToAction("YayimlananNobetlerPartialView", new { silinecekKayitSayisi = -1 , yayimlandiMi });
+            }
+
+            var yayimlanacakNobetlerTumu = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi2, nobetGrupGorevTipId);
+
+            var yayimlanacakNobetler = yayimlanacakNobetlerTumu
+                .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)
+                .Select(s => s.Id).ToArray();
+
+            //var silinecekNobetlerPlanlanan = _eczaneNobetSonucPlanlananService.GetDetaylar(baslangicTarihi, nobetUstGrup.Id)
+            //    .Where(w => w.NobetGrupId == nobetGrupId || nobetGrupId == 0)
+            //    .Select(s => s.Id).ToArray();
+
+            var silinecekKayitSayisi = yayimlanacakNobetler.Count();// + silinecekNobetlerPlanlanan.Count();
+
+            if (TempData["SilinenAy"] != null)
+            {
+                TempData["SilinenAy"] = $"{baslangicTarihi}-{bitisTarihi}";
+            }
+
+            if (silinecekKayitSayisi > 0)
+            {
+                try
+                {
+                    _eczaneNobetSonucService.CokluNobetYayimla(yayimlanacakNobetler, yayimlandiMi);
+                }
+                catch (Exception)
+                {
+                    throw new Exception("Yayımlama işlemi başarısız...");
+                }
+            }
+
+            return RedirectToAction("YayimlananNobetlerPartialView", new { silinecekKayitSayisi , yayimlandiMi });
         }
 
         public ActionResult AylarDdlPartialView(int yil)

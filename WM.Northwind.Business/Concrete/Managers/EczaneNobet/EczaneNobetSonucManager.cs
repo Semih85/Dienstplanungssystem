@@ -89,11 +89,22 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _eczaneNobetSonucDal.Update(eczaneNobetSonuc);
         }
 
+        [TransactionScopeAspect]
         [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void CokluSil(int[] ids)
         {
             _eczaneNobetSonucDal.CokluSil(ids);
+        }
+
+        [TransactionScopeAspect]
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public void CokluNobetYayimla(int[] ids, bool yayimlandiMi)
+        {
+            var sonuclar = GetList(ids);
+
+            _eczaneNobetSonucDal.CokluYayimla(sonuclar, yayimlandiMi);
         }
 
         [TransactionScopeAspect]
@@ -152,6 +163,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _eczaneNobetSonucDal.GetList();
         }
 
+        [CacheAspect(typeof(MemoryCacheManager))]
+        [LogAspect(typeof(DatabaseLogger))]
+        public List<EczaneNobetSonuc> GetList(int[] ids)
+        {
+            return _eczaneNobetSonucDal.GetList(x => ids.Contains(x.Id));
+        }
+
         #endregion
 
         #region detaylar
@@ -175,6 +193,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<EczaneNobetSonucDetay2> GetDetaylar()
         {
             return _eczaneNobetSonucDal.GetDetayList();
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        [LogAspect(typeof(DatabaseLogger))]
+        public List<EczaneNobetSonucDetay2> GetDetaylarById(int[] ids)
+        {
+            return _eczaneNobetSonucDal.GetDetayList(x => ids.Contains(x.Id));
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
@@ -586,8 +611,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 NobetGrupAdi = sonuc.NobetGrupAdi,
                                 EczaneNobetGrupId = sonuc.EczaneNobetGrupId,
                                 AyniGunNobetTutabilecekEczaneSayisi = 1
-                            //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
-                        });
+                                //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
+                            });
                     }
                 }
             }

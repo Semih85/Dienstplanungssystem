@@ -794,6 +794,8 @@
     <Content Include="Scripts\bootstrap-select.min.js.map" />
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\NobetleriYayimla.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\YayimlananNobetlerPartialView.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -1167,6 +1169,7 @@
     <Compile Include="Areas\EczaneNobet\Models\EczaneNobetSonucViewJsonModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\EczaneNobetSonuclarViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\EczaneUzaklikMatrisViewModel.cs" />
+    <Compile Include="Areas\EczaneNobet\Models\NobetleriYayimlaViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\KisitPartialViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\NobetAltGrupViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\NobetciEcanelerEkraniViewModel.cs" />
