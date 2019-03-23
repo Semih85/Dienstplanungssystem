@@ -18,12 +18,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
     {
         //Karar değişkeni model çalıştıktan sonra değer aldığından burada tanımlandı
         private VariableCollection<EczaneNobetTarihAralik> _x { get; set; }
+        private NobetGrupKuralDetay _nobetGrupKuralDetay { get; set; }
 
         private Model Model(CorumDataModel data)
         {
             var model = new Model() { Name = "Corum Eczane Nöbet" };
 
             #region Veriler
+
+            _nobetGrupKuralDetay = new NobetGrupKuralDetay();
 
             #region kısıtlar
 
@@ -217,13 +220,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var nobetGrupKurallar = data.NobetGrupKurallar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                var pespeseNobetSayisi = (int)nobetGrupKurallar
-                        .Where(s => s.NobetKuralId == 1)
-                        .Select(s => s.Deger).SingleOrDefault();
-
-                int gunlukNobetciSayisi = (int)nobetGrupKurallar
-                        .Where(s => s.NobetKuralId == 3)
-                        .Select(s => s.Deger).SingleOrDefault();
+                var pespeseNobetSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 1, _nobetGrupKuralDetay);
+                var gunlukNobetciSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 3, _nobetGrupKuralDetay);
+                var pespeseNobetSayisiHaftaIci = (int)GetNobetGunKural(nobetGrupKurallar, 5, _nobetGrupKuralDetay);
+                var pespeseNobetSayisiPazar = (int)GetNobetGunKural(nobetGrupKurallar, 6, _nobetGrupKuralDetay);
+                var pespeseNobetSayisiCumartesi = (int)GetNobetGunKural(nobetGrupKurallar, 7, _nobetGrupKuralDetay);
 
                 //var nobetGrupTalepler = data.NobetGrupTalepler.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
 
@@ -315,16 +316,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 #endregion
 
                 var nobetGrupBayramNobetleri = data.EczaneNobetSonuclar
-                    .Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
-                             && w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId
+                    .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
                              && w.GunGrupId == 2
                              && w.Tarih >= data.NobetUstGrupBaslangicTarihi)
                     .Select(s => new { s.TakvimId, s.NobetGunKuralId }).ToList();
 
                 var nobetGunKuralIstatistikler = data.TakvimNobetGrupGunDegerIstatistikler
-                                      .Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
-                                               && w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId
-                                               && tarihler.Select(s => s.NobetGunKuralId).Distinct().Contains(w.NobetGunKuralId)).ToList();
+                                      .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
+                                               //&& tarihler.Select(s => s.NobetGunKuralId).Distinct().Contains(w.NobetGunKuralId)
+                                               ).ToList();
 
                 var nobetGunKuralTarihler = new List<NobetGunKuralTarihAralik>();
 
@@ -730,21 +730,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         {
                         }
 
-                        switch (gunKural.NobetGunKuralId)
-                        {
-                            case 1:
-                                herAyEnFazlaIlgiliKisit = herAyEnFazla1Pazar;
-                                break;
-                            case 7:
-                                herAyEnFazlaIlgiliKisit = herAyEnFazla1Cumartesi;
-                                break;
-                            case 6:
-                                herAyEnFazlaIlgiliKisit = herAyEnFazla1Cuma;
-                                break;
-                            default:
-                                herAyEnFazlaIlgiliKisit = herAyEnFazla1HaftaIciGunler;
-                                break;
-                        }
+                        herAyEnFazlaIlgiliKisit = GetNobetGunKuralIlgiliKisit(data.NobetUstGrupKisitlar, gunKural.NobetGunKuralId);
 
                         var tarihAralik = nobetGunKuralTarihler.Where(w => w.NobetGunKuralId == gunKural.NobetGunKuralId).SingleOrDefault() ?? new NobetGunKuralTarihAralik();
 

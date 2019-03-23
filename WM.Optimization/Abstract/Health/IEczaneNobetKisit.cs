@@ -54,6 +54,9 @@ namespace WM.Optimization.Abstract.Health
         List<EczaneGrupDetay> GetEczaneGruplarByEczaneGrupTanimTipId(List<EczaneGrupDetay> eczaneGruplar, int eczaneGrupTanimTipId);
         List<EczaneNobetSonucListe2> GetSonuclarByGunGrup(List<EczaneNobetSonucListe2> sonuclar, string gunGrup);
         string CeliskileriEkle(Solution solution);
+
+        double GetNobetGunKural(List<NobetGrupKuralDetay> nobetGrupKurallar, int nobetKuralId, NobetGrupKuralDetay nobetGrupKuralDetay);
+        NobetUstGrupKisitDetay GetNobetGunKuralIlgiliKisit(List<NobetUstGrupKisitDetay> kisitlarAktif, int nobetGunKuralId);
     }
 }
 

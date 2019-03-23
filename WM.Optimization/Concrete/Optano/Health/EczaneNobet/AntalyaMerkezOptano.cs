@@ -19,12 +19,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
     {
         //Karar değişkeni model çalıştıktan sonra değer aldığından burada tanımlandı
         private VariableCollection<EczaneNobetTarihAralik> _x { get; set; }
+        private NobetGrupKuralDetay _nobetGrupKuralDetay { get; set; }
 
         private Model Model(AntalyaMerkezDataModel data)
         {
             var model = new Model() { Name = "Antalya Merkez Eczane Nöbet" };
 
             #region Veriler
+
+            _nobetGrupKuralDetay = new NobetGrupKuralDetay();
 
             #region kısıtlar
 
@@ -37,6 +40,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             //pasifler
 
+            _nobetGrupKuralDetay = new NobetGrupKuralDetay();
             #endregion
 
             //özel tur takibi yapılacak günler
@@ -102,18 +106,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 #region tarihler
 
                 var nobetGrupKurallar = data.NobetGrupKurallar.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
-
-                var pespeseNobetSayisi = (int)nobetGrupKurallar
-                    .Where(s => s.NobetKuralId == 1)
-                    .Select(s => s.Deger).SingleOrDefault();
-
-                int gunlukNobetciSayisi = (int)nobetGrupKurallar
-                    .Where(s => s.NobetKuralId == 3)
-                    .Select(s => s.Deger).SingleOrDefault();
-
-                var haftaIciPespeseNobetYazilmasinKuralKatsayisi = nobetGrupKurallar
-                    .Where(s => s.NobetKuralId == 5)
-                    .SingleOrDefault() ?? new NobetGrupKuralDetay();
+                
+                var pespeseNobetSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 1, _nobetGrupKuralDetay);
+                var gunlukNobetciSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 3, _nobetGrupKuralDetay);
+                var pespeseNobetSayisiHaftaIci = (int)GetNobetGunKural(nobetGrupKurallar, 5, _nobetGrupKuralDetay);
+                var pespeseNobetSayisiPazar = (int)GetNobetGunKural(nobetGrupKurallar, 6, _nobetGrupKuralDetay);
 
                 //var nobetGrupTalepler = data.NobetGrupTalepler.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
 
@@ -180,9 +177,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var altLimit = (gruptakiEczaneSayisi / gunlukNobetciSayisi) * 0.6; //0.95
 
                 //hafta içi                
-                if (haftaIciPespeseNobetYazilmasinKuralKatsayisi.Deger > 0)
+                if (pespeseNobetSayisiHaftaIci > 0)
                 {
-                    altLimit = (int)haftaIciPespeseNobetYazilmasinKuralKatsayisi.Deger;
+                    altLimit = pespeseNobetSayisiHaftaIci;
                 }
                 var ustLimit = farkliAyPespeseGorevAraligi + farkliAyPespeseGorevAraligi * 0.6667; //77;
                 var ustLimitKontrol = ustLimit * 0.95; //0.81 
@@ -228,7 +225,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var nobetGunKuralIstatistikler = data.TakvimNobetGrupGunDegerIstatistikler
                                       .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
-                                               && tarihler.Select(s => s.NobetGunKuralId).Distinct().Contains(w.NobetGunKuralId)).ToList();
+                                               //&& tarihler.Select(s => s.NobetGunKuralId).Distinct().Contains(w.NobetGunKuralId)
+                                               ).ToList();
 
                 var nobetGunKuralTarihler = new List<NobetGunKuralTarihAralik>();
 
@@ -273,7 +271,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #region kontrol
 
-                    var kontrol = true;
+                    var kontrol = false;
 
                     if (kontrol)
                     {
@@ -462,21 +460,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         {
                         }
 
-                        switch (gunKural.NobetGunKuralId)
-                        {
-                            case 1:
-                                herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k23");
-                                break;
-                            case 7:
-                                herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k38");
-                                break;
-                            case 6:
-                                herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k23");
-                                break;
-                            default:
-                                herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k42");
-                                break;
-                        }
+                        herAyEnFazlaIlgiliKisit = GetNobetGunKuralIlgiliKisit(kisitlarAktif, gunKural.NobetGunKuralId);
 
                         var tarihAralik = nobetGunKuralTarihler.Where(w => w.NobetGunKuralId == gunKural.NobetGunKuralId).SingleOrDefault() ?? new NobetGunKuralTarihAralik();
 

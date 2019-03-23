@@ -155,7 +155,6 @@
                         @{
                             var accordionId = $"#{tabId}_kisitAcordion";
                         }
-
                         <div class="accordion" id="@accordionId.Substring(1)">
 
                             @foreach (var kisitKategori in kisitKategoriler)
@@ -197,6 +196,17 @@
                                             <div class="card-body border-bottom pb-1">
 
                                                 <div class="row">
+                                                    <div class="col-12">
+                                                        @if (kisitKategori.KisitKategoriId == 6)
+                                                        {
+                                                        <div class="alert alert-info" role="alert">
+                                                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                            Bu kategorideki kurallar <b title="Ortalama Nöbet Sayısı = Tarih aralığındaki talep edilen toplam nöbetçi sayısı / Gruptaki nöbetçi sayısı">ortalama nöbet sayıları</b> üzerinden uygulanmaktadır. Ortalama nöbet sayıları <span class="badge badge-light">#Değer</span> alanları değiştirilerek artırılabilmektedir.
+                                                        </div>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="row">
 
                                                     @foreach (var item in kisitlar2)
                                                     {
@@ -230,11 +240,11 @@
                                                         var renk = "#007bff";
                                                         var kisitNumarasi = $"K{item.KisitId}";
                                                         var haricKuralIdList = new int[4] {
-                                                                                    11,//eczaneGrup
-                                                                                    35, //pespeseHaftaIciAyniGunNobet,
-                                                                                    39, //nobetBorcOdeme
-                                                                                    10, //ayIcindeAyniGunNobet
-                                                                                };
+                                                                                                                                                                                                            11,//eczaneGrup
+                                                                                                                                                                                                            35, //pespeseHaftaIciAyniGunNobet,
+                                                                                                                                                                                                            39, //nobetBorcOdeme
+                                                                                                                                                                                                            10, //ayIcindeAyniGunNobet
+                                                                                                                                                                                                        };
 
 
                                                         if (item.PasifMi == true)

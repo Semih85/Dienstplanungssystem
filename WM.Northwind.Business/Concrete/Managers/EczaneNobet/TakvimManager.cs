@@ -776,8 +776,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     GunGrupId = s.Key.GunGrupId,
                     GunSayisi = s.Count(),
                     TalepEdilenNobetciSayisi = s.Sum(f => f.TalepEdilenNobetciSayisi),
-                    IstatistikBaslamaTarihi = s.Max(f => f.Tarih),
-                    IstatistikBitisTarihi = s.Min(f => f.Tarih),
+                    IstatistikBaslamaTarihi = s.Min(f => f.Tarih),
+                    IstatistikBitisTarihi = s.Max(f => f.Tarih),
                     NobetGunKuralKapanmaTarihi = s.Key.NobetGunKuralKapanmaTarihi
                 }).ToList();
         }

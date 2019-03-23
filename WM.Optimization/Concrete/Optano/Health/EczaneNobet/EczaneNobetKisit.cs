@@ -1782,6 +1782,36 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             return kisitAdi;
         }
+
+        public double GetNobetGunKural(List<NobetGrupKuralDetay> nobetGrupKurallar, int nobetKuralId, NobetGrupKuralDetay nobetGrupKuralDetay)
+        {
+            var kural = nobetGrupKurallar.SingleOrDefault(s => s.NobetKuralId == nobetKuralId) ?? nobetGrupKuralDetay;
+
+            return kural.Deger ?? 0;
+        }
+
+        public NobetUstGrupKisitDetay GetNobetGunKuralIlgiliKisit(List<NobetUstGrupKisitDetay> kisitlarAktif, int nobetGunKuralId)
+        {
+            NobetUstGrupKisitDetay herAyEnFazlaIlgiliKisit;
+
+            switch (nobetGunKuralId)
+            {
+                case 1:
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k23");
+                    break;
+                case 7:
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k38");
+                    break;
+                case 6:
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k43");
+                    break;
+                default:
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k42");
+                    break;
+            }
+
+            return herAyEnFazlaIlgiliKisit;
+        }
         #endregion        
     }
 }

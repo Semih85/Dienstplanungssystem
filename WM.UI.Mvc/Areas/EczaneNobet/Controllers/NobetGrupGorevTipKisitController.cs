@@ -45,7 +45,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
             var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
 
-            var nobetGrupGorevTipKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrup.Id);
+            var nobetGrupGorevTipKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrup.Id)
+                .OrderByDescending(o=>o.Id).ToList();
 
             return View(nobetGrupGorevTipKisitlar);
         }

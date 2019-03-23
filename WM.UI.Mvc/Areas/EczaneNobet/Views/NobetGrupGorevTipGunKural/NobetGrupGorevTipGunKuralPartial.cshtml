@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<NobetGrupGorevTipGunKuralDetay>
 
-<a data-toggle="collapse" href="#collapseExample" aria-expanded="false" title="Açıklama!!!" aria-controls="collapseExample" class="card-link">
+<a data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="btn btn-info btn-sm">
     <i class="fa fa-info-circle" aria-hidden="true"> Açıklama</i>
 </a>
 
 <div class="collapse" id="collapseExample">
     <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <span class="font-weight-bold"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Aktif</span> günler <strong>eşit dağılım için </strong>takip edilmektedir.
+        <span class="font-weight-bold"><i class="fa fa-check-circle-o" aria-hidden="true"></i> Aktif</span> günler <strong>adil dağılım için </strong>takip edilmektedir.
         <strong>Aktif / pasif</strong> olarak değiştirilmek istenen gün için <strong>Nöbet Grubu</strong> ve <strong>Gün</strong> seçeneklerini kullanarak <strong class="text-primary">Güncelle</strong> butonu ile güncelleyiniz.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -31,10 +31,10 @@
                     @Html.DisplayName("Gün Grubu")
                 </th>
                 <th>
-                    @Html.DisplayName("Nöbetçi Sayısı")
+                    @Html.DisplayName("Nöbetçi Sayısı / Gün")
                 </th>
                 <th>
-                    @Html.DisplayName("Durum")
+                    @Html.DisplayName("Adil dağılsın mı?")
                 </th>
                 @*<th>
                         @Html.DisplayNameFor(model => model.BitisTarihi)
@@ -64,7 +64,7 @@
                             @Html.DisplayFor(modelItem => item.NobetciSayisi)
                         </td>
                         <td>
-                            <span class="font-weight-bold text-danger">Pasif</span>
+                            <span class="font-weight-bold text-danger">Hayır</span>
                         </td>
                         @*<td>
                                 @Html.DisplayFor(modelItem => item.BitisTarihi)
@@ -103,7 +103,7 @@
                             @Html.DisplayFor(modelItem => item.NobetciSayisi)
                         </td>
                         <td>
-                            <span class="font-weight-bold text-success"><i class="fa fa-check" aria-hidden="true"></i> Aktif</span>
+                            <span class="font-weight-bold text-success"><i class="fa fa-check" aria-hidden="true"></i> Evet</span>
                         </td>
                         @*<td>
                                 @Html.DisplayFor(modelItem => item.BitisTarihi)
