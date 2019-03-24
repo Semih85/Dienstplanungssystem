@@ -28,6 +28,9 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         DateTime GetSonNobetTarihi(int nobetUstGrupId);
         void CokluNobetYayimla(int[] ids, bool yayimlandiMi);
 
+
+        List<MyDrop> GetNobetGrupSonYayimNobetTarihleri(int nobetUstGrupId);
+
         List<EczaneNobetIstatistik> GetEczaneNobetIstatistik2(List<int> nobetGrupIdList);
 
         List<EczaneNobetSonucNode> GetEczaneNobetSonucNodes();

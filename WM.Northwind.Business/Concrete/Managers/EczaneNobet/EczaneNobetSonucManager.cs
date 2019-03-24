@@ -183,6 +183,33 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
         [CacheAspect(typeof(MemoryCacheManager))]
         [LogAspect(typeof(DatabaseLogger))]
+        public List<MyDrop> GetNobetGrupSonYayimNobetTarihleri(int nobetUstGrupId)
+        {
+            var liste = _eczaneNobetSonucDal
+                .GetDetayList(w => w.NobetUstGrupId == nobetUstGrupId && w.YayimlandiMi)
+                .GroupBy(g => new
+                {
+                    g.NobetGrupGorevTipId,
+                    g.NobetGorevTipAdi,
+                    g.NobetGrupAdi
+                })
+                .Select(s => new
+                {
+                    Id = s.Key.NobetGrupGorevTipId,
+                    Value = $"{s.Key.NobetGrupGorevTipId}, {s.Key.NobetGrupAdi}, {s.Key.NobetGorevTipAdi}, Son Yayım Tarihi: ",
+                    SonTarih = s.Max(m => m.Tarih)
+                }).ToList();
+
+            return liste
+                .Select(s => new MyDrop
+                {
+                    Id = s.Id,
+                    Value = $"{s.Value} {s.SonTarih.ToShortDateString()}"
+                }).ToList();
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        [LogAspect(typeof(DatabaseLogger))]
         public List<EczaneNobetSonucDetay2> GetDetaylarByEczaneNobetGrupId(int eczaneNobetGrupId)
         {
             return _eczaneNobetSonucDal.GetDetayList(w => w.EczaneNobetGrupId == eczaneNobetGrupId);

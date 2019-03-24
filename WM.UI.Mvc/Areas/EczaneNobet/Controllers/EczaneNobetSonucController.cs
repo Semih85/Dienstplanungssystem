@@ -1085,36 +1085,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetGorevTipler = nobetGrupGorevTipler.Select(s => s.NobetGorevTipId).Distinct().ToList();
             var nobetGrupGorevTipBaslamaSaatleri = nobetGrupGorevTipler.Select(s => s.BaslamaTarihi).Distinct().ToList();
 
-            var nobetGruplar = new List<MyDrop>();
-
-            if (nobetGrupGorevTipBaslamaSaatleri.Count > 1)
-            {
-                nobetGruplar = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
-                .Select(s => new MyDrop
-                {
-                    Id = s.Id,
-                    Value = $"{s.Id}, {s.NobetGrupAdi}, {s.NobetGorevTipAdi} ({s.BaslamaTarihi.ToShortDateString()})"
-                }).ToList();
-            }
-            else if (nobetGorevTipler.Count > 1)
-            {
-                nobetGruplar = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
-                .Select(s => new MyDrop
-                {
-                    Id = s.Id,
-                    Value = $"{s.Id}, {s.NobetGrupAdi}, {s.NobetGorevTipAdi}"
-                }).ToList();
-            }
-            else
-            {
-                nobetGruplar = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
-                .Select(s => new MyDrop
-                {
-                    Id = s.Id,
-                    Value = $"{s.Id}, {s.NobetGrupAdi}"
-                }).ToList();
-            }
-
+            var nobetGruplar = _eczaneNobetSonucService.GetNobetGrupSonYayimNobetTarihleri(nobetUstGrup.Id);
 
             var gelecekTarih = DateTime.Today.AddMonths(1);
             int gelecekYil = gelecekTarih.Year;
@@ -1143,7 +1114,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 Ay = gelecekAy,
                 NobetGrupId = 0,
                 NobetGrupAdi = "",
-                BaslangicTarihi = baslangicTarihi
+                BaslangicTarihi = baslangicTarihi,
+                YayimlandiMi = true
             };
 
             return View(model);

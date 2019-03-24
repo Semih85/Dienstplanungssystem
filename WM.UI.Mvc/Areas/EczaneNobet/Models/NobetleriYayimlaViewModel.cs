@@ -10,5 +10,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Models
         public DateTime BaslangicTarihi { get; set; }
         public DateTime? BitisTarihi { get; set; }
         public string NobetGrupAdi { get; internal set; }
+        public bool YayimlandiMi { get; internal set; }
     }
 }

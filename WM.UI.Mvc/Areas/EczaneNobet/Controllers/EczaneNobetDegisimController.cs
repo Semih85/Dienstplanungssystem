@@ -134,7 +134,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/EczaneNobetDegisim/Edit/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Edit(int id)
         {
             if (id < 1)
@@ -183,7 +183,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/EczaneNobetDegisim/Delete/5
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Delete(int id)
         {
             if (id < 1)

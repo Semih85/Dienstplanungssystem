@@ -1283,6 +1283,16 @@
             var clientWidth = document.documentElement.clientWidth;
             var clientHeight = document.documentElement.clientHeight;
             var model = @Html.Raw(Json.Encode(Model));
+            var serverSaati = model.Saat
+            var n = today.getTime();
+            var m = serverSaati.substr(6, 13)
+            console.log('server Saati: ' + serverSaati)
+            console.log('m: ' + m)
+            console.log('today: ' + today)
+            console.log('n: ' + n)
+            var saatFarki = n - m//milliseconds
+
+            console.log('saatFarki: ' + saatFarki/1000)
             var nobetciEczaneSayisi = model.NobetciEczaneler.length;
             var ekraninBulunduguYer
             var nobetciEczaneler = new Array();
@@ -2282,9 +2292,26 @@
                     //console.log('nobetBitisSaati: ' + nobetBitisSaati)
                     //console.log('nobetBitisDakika: ' + nobetBitisDakika)
                     //console.log('dakika: ' + dakika)
+
+                    var saniyeFarki = saatFarki / 1000
+                    var dakikaFarki = 0
+                    if (saniyeFarki > 59)
+                        dakikaFarki = saatFarkiSeconds / 60
+                    console.log('xxxxxxxxxxxxxxxxxxxxxxx')
+
+                    console.log('saniyeFarki: ' + saniyeFarki)
+                    console.log('dakikaFarki: ' + dakikaFarki)
+                    dakika = dakika - dakikaFarki
+                    dakika = dakika % 60
+                    console.log('dakika: ' + dakika)
+
+                    saniye = saniye - saniyeFarki
+                    saniye = saniye % 60
+                    console.log('saniye: ' + parseInt(saniye))
+
                     if (parseInt(nobetBitisSaati) == saat && parseInt(nobetBitisDakika) == dakika &&
-                        (saniye == 0 || saniye == 1 || saniye == 2
-                            || saniye == 3 || saniye == 4 || saniye == 5)) {
+                        (parseInt(saniye) == 0 || parseInt(saniye) == 1 || parseInt(saniye) == 2
+                        || parseInt(saniye) == 3 || parseInt(saniye) == 4 || parseInt(saniye) == 5)) {
                         //alert('location.reload')
                         location.reload()
                     }
@@ -2606,7 +2633,7 @@
                                 Index: mesafeCounter,
                                 eczaneninAcikOlduguSaatAraligi: model.NobetciEczaneler[mesafeCounter].EczaneninAcikOlduguSaatAraligi,
                             }
-                            $("#lbl_mesafe" + mesafeCounter).text(" " + distance + ". Arabayla saat " + saat + " trafiğinde " + duration_in_traffic);
+                            $("#lbl_mesafe" + mesafeCounter).text(" " + distance + ". Saat " + saat + " trafiğine göre arabayla " + duration_in_traffic);
 
                             mesafeler.push(newElement)
                            // alert('mesafe')

@@ -245,6 +245,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
             model.NobetciEczaneler = model.NobetciEczaneler.Where(w => w.KapanisSaati > DateTime.Now).ToList();
+            model.Saat = DateTime.Now;
 
             return View(model);
         }
