@@ -36,6 +36,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private IEczaneNobetMuafiyetService _eczaneNobetMuafiyetService;
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
         private INobetGrupGorevTipKisitService _nobetGrupGorevTipKisitService;
+        private INobetAltGrupService _nobetAltGrupService;
 
         public IskenderunOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -58,7 +59,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     IEczaneNobetMuafiyetService eczaneNobetMuafiyetService,
                     IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrupService,
                     IAyniGunTutulanNobetService ayniGunTutulanNobetService,
-                    INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService
+                    INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
+                    INobetAltGrupService nobetAltGrupService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -82,6 +84,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _eczaneNobetGrupAltGrupService = eczaneNobetGrupAltGrupService;
             _ayniGunTutulanNobetService = ayniGunTutulanNobetService;
             _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
+            _nobetAltGrupService = nobetAltGrupService;
         }
         #endregion
 
@@ -459,7 +462,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 IkiliEczaneler = ikiliEczaneler,
                 SonrakiDonemAyniGunNobetIstekGirilenler = sonrakiDonemAyniGunNobetIstekGirilenler,
                 NobetGrupGorevTipKisitlar = grupBazliKisitlar,
-                EczaneNobetAltGrupTarihAralik = eczaneNobetAltGrupTarihAralik
+                EczaneNobetAltGrupTarihAralik = eczaneNobetAltGrupTarihAralik,
+                NobetAltGruplar= _nobetAltGrupService.GetDetaylar(nobetUstGrupId)
             };
 
             _eczaneNobetOrtakService.KurallariKontrolEtHaftaIciEnAzEnCok(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);

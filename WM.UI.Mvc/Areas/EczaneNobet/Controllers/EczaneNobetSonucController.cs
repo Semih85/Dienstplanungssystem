@@ -376,7 +376,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             if (nobetUstGrup.Id == 2)
             {
                 eczaneNobetAlacakVerecek = _takvimService.EczaneNobetAlacakVerecekHesaplaAntalya(nobetGrupGorevTiplerTumu, eczaneNobetSonuclarPlanlanan, eczaneNobetGruplarTumu, eczaneNobetGrupGunKuralIstatistikYatayTumu);
-                //_eczaneNobetOrtakService.EczaneNobetAlacakVerecekHesapla(nobetUstGrupDetay, eczaneNobetGrupGunKuralIstatistikYatayTumu, eczaneNobetGrupGunKuralIstatistikYatayTumuPlanlanan, nobetUstGrupGunGruplar);
             }
             else
             {
@@ -457,6 +456,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 AltGrupAyniGunNobetTutanEczaneler = ayniGunNobetTutanAltGrupluEczaneler,
                 AyniGunNobetTutanEczaneler = ayniGunNobetTutanEczaneler,
                 EczaneNobetAlacakVerecek = eczaneNobetAlacakVerecek,
+                    //.Where(w => w.NobetSayisi > 0).ToList(),
                 GunDagilimiMaxMin = gunDagilimiMaxMin,
                 NobetUstGrupId = nobetUstGrup.Id,
                 SonuclarPlanlananVeGercek = sonuclar.Union(eczaneNobetSonuclarPlanlananSonrasi)
@@ -1159,7 +1159,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {//giçmiş silinemez
                 ViewBag.BaslangicTarihiUyari = $"Yayımlanacak tarih ({baslangicTarihi.ToShortDateString()}) tarihinden ({kriter.ToShortDateString()}) küçük olamaz.";
 
-                return RedirectToAction("YayimlananNobetlerPartialView", new { silinecekKayitSayisi = -1 , yayimlandiMi });
+                return RedirectToAction("YayimlananNobetlerPartialView", new { silinecekKayitSayisi = -1, yayimlandiMi });
             }
 
             var yayimlanacakNobetlerTumu = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi2, nobetGrupGorevTipId);
@@ -1191,7 +1191,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 }
             }
 
-            return RedirectToAction("YayimlananNobetlerPartialView", new { silinecekKayitSayisi , yayimlandiMi });
+            return RedirectToAction("YayimlananNobetlerPartialView", new { silinecekKayitSayisi, yayimlandiMi });
         }
 
         public ActionResult AylarDdlPartialView(int yil)

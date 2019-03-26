@@ -36,7 +36,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var nobetBorcOdeme = NobetUstGrupKisit(data.Kisitlar, "nobetBorcOdeme", data.NobetUstGrupId);
 
             var ayIcindeAyniGunNobet = NobetUstGrupKisit(data.Kisitlar, "ayIcindeAyniGunNobet", data.NobetUstGrupId);
-            var altGruplarlaAyniGunNobetTutma = NobetUstGrupKisit(data.Kisitlar, "altGruplarlaAyniGunNobetTutma", data.NobetUstGrupId);
 
             var eczanelerinNobetGunleriniKisitla = NobetUstGrupKisit(data.Kisitlar, "eczanelerinNobetGunleriniKisitla", data.NobetUstGrupId);
             var cumartesiGorevTiplerineGoreNobetleriDagit = NobetUstGrupKisit(data.Kisitlar, "cumartesiGorevTiplerineGoreNobetleriDagit", data.NobetUstGrupId);
@@ -1175,7 +1174,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 {
                     Model = model,
                     EczaneNobetTarihAralik = eczaneNobetTarihAralikAtlGruplu,
-                    NobetUstGrupKisit = altGruplarlaAyniGunNobetTutma,
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k29"),
                     KararDegiskeni = _x
                 };
 

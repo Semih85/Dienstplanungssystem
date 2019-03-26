@@ -1434,7 +1434,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                         ),
                                                 GunGrup = b.GunGrup,
                                                 //Nobets = b.NobetSayisi,
-                                                AnahtarSıra = b.Id
+                                                AnahtarSıra = b.NobetSayisi
                                             }).ToList();
 
             //var kontrol2 = eczaneNobetAlacakVerecek.Where(w => w.EczaneAdi == "AYDIN").ToList();
@@ -1447,19 +1447,19 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             var eczaneNobetSonucListeSirali = new List<AnahtarListe>();
 
-            foreach (var eczane in eczaneNobetGruplar)
+            foreach (var eczaneNobetGrup in eczaneNobetGruplar)
             {
                 var kontrol = true;
 
                 if (kontrol
-                    && eczane.EczaneAdi == "GÜLAY")
+                    && eczaneNobetGrup.EczaneAdi == "GÜLAY")
                 {
 
                 }
                 var indis = 0;
 
                 var sonuclarEczane = sonuclar
-                    .Where(w => w.EczaneNobetGrupId == eczane.Id)
+                    .Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id)
                     .OrderBy(o => o.Tarih)
                     .ToList();
 

@@ -179,6 +179,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                    NobetGrupAdi = s.NobetGrupAdi,
                                                    NobetUstGrupId = s.NobetUstGrupId,
                                                    NobetUstGrupBaslamaTarihi = s.NobetUstGrupBaslamaTarihi,
+                                                   NobetGrupGorevTipBaslamaTarihi = s.NobetGrupGorevTipBaslamaTarihi,
                                                    SonucTuru = "Planlanan",
                                                    NobetGunKuralId = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
                                                         ? b.NobetGunKuralId

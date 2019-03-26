@@ -76,5 +76,6 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public int CalismaSayisiLimit { get; set; }
         public int TimeLimit { get; set; }
         public List<EczaneGrupDetay> SonrakiDonemAyniGunNobetIstekGirilenler { get; set; }
+        public List<NobetAltGrupDetay> NobetAltGruplar { get; set; }
     }
 }
