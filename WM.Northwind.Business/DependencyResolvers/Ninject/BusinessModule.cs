@@ -232,6 +232,12 @@ namespace WM.BLL.DependencyResolvers.Ninject
 
             Bind<INobetGrupGorevTipKisitService>().To<NobetGrupGorevTipKisitManager>().InSingletonScope();
             Bind<INobetGrupGorevTipKisitDal>().To<EfNobetGrupGorevTipKisitDal>();
+
+            Bind<IAyniGunNobetTakipGrupAltGrupService>().To<AyniGunNobetTakipGrupAltGrupManager>().InSingletonScope();
+            Bind<IAyniGunNobetTakipGrupAltGrupDal>().To<EfAyniGunNobetTakipGrupAltGrupDal>();
+
+            Bind<IGunGrupService>().To<GunGrupManager>().InSingletonScope();
+            Bind<IGunGrupDal>().To<EfGunGrupDal>();
             #endregion
 
             #region Optimization

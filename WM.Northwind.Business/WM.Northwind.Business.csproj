@@ -71,6 +71,7 @@
     <Compile Include="Abstract\Authorization\IUserRoleService.cs" />
     <Compile Include="Abstract\Authorization\IRoleService.cs" />
     <Compile Include="Abstract\Authorization\IUserService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IAyniGunNobetTakipGrupAltGrupService.cs" />
     <Compile Include="Abstract\EczaneNobet\IAyniGunTutulanNobetService.cs" />
     <Compile Include="Abstract\EczaneNobet\IBayramService.cs" />
     <Compile Include="Abstract\EczaneNobet\IBayramTurService.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Concrete\Managers\AdminManager.cs" />
     <Compile Include="Concrete\Managers\Authorization\UserRoleManager.cs" />
     <Compile Include="Concrete\Managers\Authorization\RoleManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\AyniGunNobetTakipGrupAltGrupManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\AyniGunTutulanNobetManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\BagGrup.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\BayramManager.cs" />

@@ -1226,6 +1226,235 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             }
         }
 
+        /// <summary>
+        /// Nöbet grubu ile alt grup arasındaki nöbetin dağılımı
+        /// </summary>
+        /// <param name="p"></param>
+        public void AltGruplarlaAyniGunNobetGrupAltGrup(KpAltGruplarlaAyniGunNobetGrupAltGrup p)
+        {
+            var altGruplarlaAyniGunNobetTutma = p.NobetUstGrupKisit;
+
+            if (!altGruplarlaAyniGunNobetTutma.PasifMi)
+            {
+                var tarihler = p.Tarihler.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
+
+                foreach (var nobetGrupGorevTip in p.NobetGrupGorevTipler)
+                {
+                    //if (nobetGrupGorevTip.Id == 53)
+                    //    continue;
+
+                    var eczaneNobetGruplar = p.EczaneNobetGruplar
+                        .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+
+                    var nobetAltGruplar = p.AyniGunNobetTakipGrupAltGruplar
+                        .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+
+                    var eczaneNobetSonuclar = p.EczaneNobetSonuclar
+                        .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
+                                 && w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
+
+                    foreach (var nobetAltGrup in nobetAltGruplar)
+                    {
+                        //if (nobetAltGrup.NobetAltGrupId == 44)
+                            //continue;
+
+                        var altGruplaAyniGunGecmisNobetSayilari = p.AltGrupIleTutulanNobetDurumlari
+                            .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
+                                     && w.NobetAltGrupId == nobetAltGrup.NobetAltGrupId).ToList();
+
+                        var altGruptakiEczaneninSonuclari = p.EczaneNobetSonuclar
+                            .Where(w => nobetAltGrup.NobetAltGrupId == w.NobetAltGrupId
+                                     && w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
+
+                        var birlikteNobetTutulmayacakAltGruptakiEczaneler = p.EczaneNobetGrupAltGruplar
+                            .Where(w => w.NobetAltGrupId == nobetAltGrup.NobetAltGrupId).ToList();
+
+                        foreach (var eczaneNobetGrup in eczaneNobetGruplar)
+                        {
+                            var birlikteNobetTutmayacakEczaneler = new List<int>();
+
+                            birlikteNobetTutulmayacakAltGruptakiEczaneler.ForEach(x => birlikteNobetTutmayacakEczaneler.Add(x.EczaneNobetGrupId));
+
+                            #region kontrol
+
+                            var kontrol = false;
+
+                            if (kontrol)
+                            {
+                                var kontrolEdilecekEczaneler = new string[] {
+                                    "TURGUT",
+                                    "PEHLİVAN",
+                                    "ÖZEN"//çarşı
+                                    //"NİLGÜN ÖNCEL"
+                                };
+
+                                if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.EczaneAdi))
+                                {
+                                }
+                            }
+
+                            #endregion
+
+                            birlikteNobetTutmayacakEczaneler.Add(eczaneNobetGrup.Id);
+
+                            var bakilanEczaneninSonuclari = eczaneNobetSonuclar
+                                .Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id).ToList();
+
+                            var bakilanEczaneninToplamNobetSayisi = bakilanEczaneninSonuclari.Count();
+
+                            var bolum = Math.Round((double)bakilanEczaneninToplamNobetSayisi / nobetAltGruplar.Count(), 0);
+
+                            var altGrupIleTutulacakNobetSayisiUstLimiti = bolum + 1;
+
+                            if (nobetAltGrup.KumulatifToplamNobetSayisi > 0)
+                            {
+                                if (altGruplarlaAyniGunNobetTutma.SagTarafDegeri > 0)
+                                {
+                                    altGrupIleTutulacakNobetSayisiUstLimiti = altGruplarlaAyniGunNobetTutma.SagTarafDegeri;
+                                }
+                                else
+                                {
+                                    altGrupIleTutulacakNobetSayisiUstLimiti = nobetAltGrup.KumulatifToplamNobetSayisi;
+                                }
+                            }
+                            else
+                            {
+                                altGrupIleTutulacakNobetSayisiUstLimiti = 2;
+                            }
+
+                            var altGruplaAyniGunTutulanNobetler = (from g1 in bakilanEczaneninSonuclari
+                                                                   from g2 in altGruptakiEczaneninSonuclari
+                                                                   where g1.TakvimId == g2.TakvimId
+                                                                   select new AltGrupIleAyniGunNobetDurumu
+                                                                   {
+                                                                       TakvimId = g1.TakvimId,
+                                                                       Tarih = g1.Tarih,
+                                                                       NobetAltGrupId = g2.NobetAltGrupId,
+                                                                       EczaneNobetGrupIdAltGrubuOlmayan = g1.EczaneNobetGrupId,
+                                                                       EczaneNobetGrupIdAltGruplu = g2.EczaneNobetGrupId,
+                                                                       EczaneIdAltGrubuOlmayan = g1.EczaneId,
+                                                                       EczaneIdAltGruplu = g2.EczaneId,
+                                                                       EczaneAdiAltGrubuOlmayan = g1.EczaneAdi,
+                                                                       EczaneAdiAltGruplu = g2.EczaneAdi,
+                                                                       NobetGrupAdiAltGrubuOlmayan = g1.NobetGrupAdi,
+                                                                       NobetGrupAdiAltGruplu = g2.NobetGrupAdi,
+                                                                       NobetGrupIdAltGrubuOlmayan = g1.NobetGrupId,
+                                                                       NobetGrupIdAltGruplu = g2.NobetGrupId
+                                                                   }).ToList();
+
+                            #region bir eczane bir grup ile aynı gün nöbet tutatsa, (tarih aralığı içinde ve kümülatif en fazla)
+
+                            var kisitAdiBase = $"{altGruplarlaAyniGunNobetTutma.KisitTanim} {nobetAltGrup.NobetGrupAdi}, {eczaneNobetGrup.EczaneAdi} ";
+
+                            var kisitAdiAltGrupIliski = $"{kisitAdiBase} eczanesi {nobetAltGrup.NobetAltGrupAdi} ";
+
+                            var kisitAdiAltGrupIliskiUstLimit = $"{kisitAdiBase} eczanesinin {nobetAltGrup.NobetAltGrupAdi} ile birlikte tutacağı en fazla nöbet sayısı: ";
+
+                            var eczaneNobetAltGrupTarihAralikEczaneVeAltGrupBazli = p.EczaneNobetAltGrupTarihAralik
+                                .Where(e => e.EczaneNobetGrupId == eczaneNobetGrup.Id
+                                         && e.NobetGrupAltId == nobetAltGrup.NobetAltGrupId).ToList();
+
+                            var eczaneNobetTarihAralikIlgiliEczaneler = p.EczaneNobetTarihAralik
+                                  .Where(e => birlikteNobetTutmayacakEczaneler.Contains(e.EczaneNobetGrupId)).ToList();
+
+                            #region bakılan eczane ve ilgili alt grup aynı gün nöbetçi olursa
+
+                            foreach (var tarih in tarihler)
+                            {
+                                var kisitAdi = $" {kisitAdiAltGrupIliski} ile birlikte {tarih.Tarih.ToShortDateString()} tarihinde nöbet tuttu mu";
+
+                                var kisitAdiBuyuktur = kisitAdi + " &ge;";
+
+                                var kararIndex2 = eczaneNobetAltGrupTarihAralikEczaneVeAltGrupBazli
+                                    .Where(e => e.TakvimId == tarih.TakvimId).FirstOrDefault();
+
+                                var kararIndex = eczaneNobetTarihAralikIlgiliEczaneler
+                                    .Where(e => e.TakvimId == tarih.TakvimId).ToList();
+
+                                var stdBuyuktur = 2 - 2 * (1 - p.KararDegiskeni2[kararIndex2]);
+                                var expBuyuktur = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                                var cnsBuyuktur = Constraint.GreaterThanOrEqual(expBuyuktur, stdBuyuktur);
+                                p.Model.AddConstraint(cnsBuyuktur, kisitAdiBuyuktur);
+
+                                var kisitAdiKucuktur = kisitAdi + " &le;";
+
+                                var stdKucuktur = 1 + 2 * p.KararDegiskeni2[kararIndex2];
+                                var expKucuktur = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                                var cnsKucuktur = Constraint.LessThanOrEqual(expKucuktur, stdKucuktur);
+                                p.Model.AddConstraint(cnsKucuktur, kisitAdiKucuktur);
+                            }
+
+                            #endregion
+
+                            var altGruplabirlikteTutulanNobetler = altGruplaAyniGunTutulanNobetler
+                                .Where(w => w.NobetAltGrupId == nobetAltGrup.NobetAltGrupId).ToList();
+
+                            var altGruplaBirlikteNobetSayisi = altGruplabirlikteTutulanNobetler.Count();
+
+                            if (altGrupIleTutulacakNobetSayisiUstLimiti - altGruplaBirlikteNobetSayisi < 2)
+                            {
+                                //altGrupIleTutulacakNobetSayisiUstLimiti = 2;
+                            }
+
+                            var ayIciSinir = true;
+
+                            if (ayIciSinir)
+                            {
+                                var ayIcındekiAltGruplaBirlikteNobetSayisi = 1;
+
+                                var kisitAdiTarihAraligi = $"{kisitAdiAltGrupIliskiUstLimit} {ayIcındekiAltGruplaBirlikteNobetSayisi} - tarih araligi içinde";
+
+                                var kararIndex = eczaneNobetAltGrupTarihAralikEczaneVeAltGrupBazli;
+
+                                var stdTarihAraligi = ayIcındekiAltGruplaBirlikteNobetSayisi;
+                                var expTarihAraligi = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni2[i]));
+                                var cnsTarihAraligi = Constraint.LessThanOrEqual(expTarihAraligi, stdTarihAraligi);
+                                p.Model.AddConstraint(cnsTarihAraligi, kisitAdiTarihAraligi);
+                            }
+
+                            var tumZamanlar = true;
+
+                            if (tumZamanlar)
+                            {
+                                //if (nobetGrup.Id == 22)                                
+                                //    altGrupIleTutulacakNobetSayisiUstLimiti = 2;   
+
+                                var nobetDurumuGecmis = altGruplaAyniGunGecmisNobetSayilari.SingleOrDefault(x => x.EczaneNobetGrupId == eczaneNobetGrup.Id);
+
+                                var nobetSayisiGecmis = nobetDurumuGecmis == null ? 0 : nobetDurumuGecmis.NobetSayisi;
+
+                                var gecmisNobetSayisiToplam = altGruplaBirlikteNobetSayisi + nobetSayisiGecmis;
+
+                                var stdFarki = altGrupIleTutulacakNobetSayisiUstLimiti - gecmisNobetSayisiToplam;
+
+                                var stdUstLimit = stdFarki;
+
+                                if (stdFarki < 0)
+                                {
+                                    stdUstLimit = 0;
+                                }
+                                else
+                                {
+                                    stdUstLimit = stdFarki;
+                                }
+
+                                var kisitAdiKumulatif = $"{kisitAdiAltGrupIliskiUstLimit} {stdUstLimit} - kümülatif toplam";
+
+                                var kararIndex = eczaneNobetAltGrupTarihAralikEczaneVeAltGrupBazli;
+
+                                var stdKumulatif = stdUstLimit;
+                                var expKumulatif = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni2[i]));
+                                var cnsKumulatif = Constraint.LessThanOrEqual(expKumulatif, stdKumulatif);
+                                p.Model.AddConstraint(cnsKumulatif, kisitAdiKumulatif);
+                            }
+
+                            #endregion
+                        }
+                    }
+                }
+            }
+        }
+
         #region yardımcı metotlar
 
         public void TalepleriTakvimeIsle(List<NobetGrupTalepDetay> nobetGrupTalepler, int varsayilanGunlukNobetciSayisi, List<TakvimNobetGrup> tarihler)

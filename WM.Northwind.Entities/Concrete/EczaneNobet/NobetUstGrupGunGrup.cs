@@ -13,6 +13,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public int Id { get; set; }
         public int GunGrupId { get; set; }
         public int NobetUstGrupId { get; set; }
+        public int AmacFonksiyonuKatsayisi { get; set; }
         public string Aciklama { get; set; }
 
         public virtual GunGrup GunGrup { get; set; }

@@ -150,5 +150,7 @@ namespace WM.UI.Mvc.Models
         public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.Kalibrasyon> Kalibrasyons { get; set; }
 
         public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.KalibrasyonTip> KalibrasyonTips { get; set; }
+
+        public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.AyniGunNobetTakipGrupAltGrup> AyniGunNobetTakipGrupAltGrups { get; set; }
     }
 }

@@ -23,12 +23,14 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.GunGrupId).HasColumnName("GunGrupId");
             this.Property(t => t.NobetUstGrupId).HasColumnName("NobetUstGrupId");
             this.Property(t => t.Aciklama).HasColumnName("Aciklama");
+            this.Property(t => t.AmacFonksiyonuKatsayisi).HasColumnName("AmacFonksiyonuKatsayisi");
             #endregion
 
             #region properties
             this.Property(t => t.Id)
                         .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(t => t.Id).IsRequired();
+            this.Property(t => t.AmacFonksiyonuKatsayisi).IsRequired();
             this.Property(t => t.GunGrupId).IsRequired()
                         .HasColumnAnnotation("Index",
                          new IndexAnnotation(

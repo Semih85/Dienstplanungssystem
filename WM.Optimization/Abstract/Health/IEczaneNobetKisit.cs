@@ -31,6 +31,8 @@ namespace WM.Optimization.Abstract.Health
 
         void AyIcindeSadece1KezAyniGunNobetTutulsun(KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
 
+        void AltGruplarlaAyniGunNobetGrupAltGrup(KpAltGruplarlaAyniGunNobetGrupAltGrup p);
+
         void AltGruplarlaSiraliNobetTutulsun(Model model,
             List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
             List<EczaneNobetSonucListe2> eczaneNobetSonuclar,

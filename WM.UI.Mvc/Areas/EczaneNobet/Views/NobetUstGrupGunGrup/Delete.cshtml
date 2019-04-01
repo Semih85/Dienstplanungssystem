@@ -1,4 +1,4 @@
-﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.NobetUstGrupGunGrup
+﻿@model NobetUstGrupGunGrupDetay
 
 @{
     ViewBag.Title = "Delete";
@@ -12,19 +12,27 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.GunGrup.Adi)
+            @Html.DisplayNameFor(model => model.GunGrupAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.GunGrup.Adi)
+            @Html.DisplayFor(model => model.GunGrupAdi)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NobetUstGrup.Adi)
+            @Html.DisplayNameFor(model => model.NobetUstGrupAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NobetUstGrup.Adi)
+            @Html.DisplayFor(model => model.NobetUstGrupAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmacFonksiyonuKatsayisi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmacFonksiyonuKatsayisi)
         </dd>
 
         <dt>
@@ -37,7 +45,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

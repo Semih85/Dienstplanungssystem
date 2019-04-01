@@ -372,15 +372,21 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
             );
 
             context.MapRoute(
-                name: "NobeGrupOzelTakvim",
+                name: "NobetGrupOzelTakvim",
                 url: "nobet-grup-ozel-takvim",
                 defaults: new { controller = "NobetGrupGorevTipTakvimOzelGun", action = "Index" }
             );
 
             context.MapRoute(
-                name: "NobeGrupGunKural",
+                name: "NobetGrupGunKural",
                 url: "nobet-grup-haftanin-gunleri",
                 defaults: new { controller = "NobetGrupGorevTipGunKural", action = "Index" }
+            );
+
+            context.MapRoute(
+                name: "NobetUstGrupGunGrup",
+                url: "nobet-ust-grup-gun-gruplar",
+                defaults: new { controller = "NobetUstGrupGunGrup", action = "Index" }
             );
 
             /*

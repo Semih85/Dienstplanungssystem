@@ -104,8 +104,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<EczaneUzaklikMatris> EczaneUzaklikMatrisler { get; set; }
         public DbSet<NobetFeragatTip> NobetFeragatTipler { get; set; }
         public DbSet<NobetGrupGorevTipKisit> NobetGrupGorevTipKisitlar { get; set; }
-
+        public DbSet<AyniGunNobetTakipGrupAltGrup> AyniGunNobetTakipGrupAltGruplar { get; set; }
         
+
         #endregion
 
         #region Mapping
@@ -194,6 +195,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new EczaneUzaklikMatrisMap());
             modelBuilder.Configurations.Add(new NobetFeragatTipMap());
             modelBuilder.Configurations.Add(new NobetGrupGorevTipKisitMap());
+            modelBuilder.Configurations.Add(new AyniGunNobetTakipGrupAltGrupMap());
             
             #endregion
         }

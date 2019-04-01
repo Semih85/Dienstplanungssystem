@@ -18,5 +18,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string Aciklama { get; set; }
         public string GunGrupAdi { get; set; }
         public string NobetUstGrupAdi { get; set; }
+        public int AmacFonksiyonuKatsayisi { get; set; }
     }
 }

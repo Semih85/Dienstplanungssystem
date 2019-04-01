@@ -796,6 +796,11 @@
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\NobetleriYayimla.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\YayimlananNobetlerPartialView.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\AyniGunNobetTakipGrupAltGrup\Create.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\AyniGunNobetTakipGrupAltGrup\Delete.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\AyniGunNobetTakipGrupAltGrup\Details.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\AyniGunNobetTakipGrupAltGrup\Edit.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\AyniGunNobetTakipGrupAltGrup\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -1101,6 +1106,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\EczaneNobet\Controllers\AyniGunNobetTakipGrupAltGrupController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\AyniGunTutulanNobetController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\BayramController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\BayramTurController.cs" />

@@ -54,6 +54,7 @@
     <Compile Include="Abstract\Authorization\IUserRoleDal.cs" />
     <Compile Include="Abstract\Authorization\IRoleDal.cs" />
     <Compile Include="Abstract\Authorization\IUserDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IAyniGunNobetTakipGrupAltGrupDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IAyniGunTutulanNobetDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IBayramDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IBayramTurDal.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Concrete\EntityFramework\Authorization\EfUserDal.cs" />
     <Compile Include="Concrete\EntityFramework\Contexts\IdentityContext.cs" />
     <Compile Include="Concrete\EntityFramework\Contexts\EczaneNobetContext.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfAyniGunNobetTakipGrupAltGrupDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfAyniGunTutulanNobetDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfBayramDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfBayramTurDal.cs" />
@@ -192,6 +194,7 @@
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfTakvimDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfCategoryDal.cs" />
     <Compile Include="Concrete\EntityFramework\Initializers\IdentityInitializer.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\AyniGunNobetTakipGrupAltGrupMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\AyniGunTutulanNobetMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\BayramTurMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneGorevTipMap.cs" />

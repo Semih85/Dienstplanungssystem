@@ -906,35 +906,37 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetGorevTipler = nobetGrupGorevTipler.Select(s => s.NobetGorevTipId).Distinct().ToList();
             var nobetGrupGorevTipBaslamaSaatleri = nobetGrupGorevTipler.Select(s => s.BaslamaTarihi).Distinct().ToList();
 
-            var nobetGruplar = new List<MyDrop>();
+            //var nobetGruplar = new List<MyDrop>();
 
-            if (nobetGrupGorevTipBaslamaSaatleri.Count > 1)
-            {
-                nobetGruplar = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
-                .Select(s => new MyDrop
-                {
-                    Id = s.Id,
-                    Value = $"{s.Id}, {s.NobetGrupAdi}, {s.NobetGorevTipAdi} ({s.BaslamaTarihi.ToShortDateString()})"
-                }).ToList();
-            }
-            else if (nobetGorevTipler.Count > 1)
-            {
-                nobetGruplar = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
-                .Select(s => new MyDrop
-                {
-                    Id = s.Id,
-                    Value = $"{s.Id}, {s.NobetGrupAdi}, {s.NobetGorevTipAdi}"
-                }).ToList();
-            }
-            else
-            {
-                nobetGruplar = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
-                .Select(s => new MyDrop
-                {
-                    Id = s.Id,
-                    Value = $"{s.Id}, {s.NobetGrupAdi}"
-                }).ToList();
-            }
+            var nobetGruplar = _eczaneNobetSonucService.GetNobetGrupSonYayimNobetTarihleri(nobetUstGrup.Id);
+
+            //if (nobetGrupGorevTipBaslamaSaatleri.Count > 1)
+            //{
+            //    nobetGruplar = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
+            //    .Select(s => new MyDrop
+            //    {
+            //        Id = s.Id,
+            //        Value = $"{s.Id}, {s.NobetGrupAdi}, {s.NobetGorevTipAdi} ({s.BaslamaTarihi.ToShortDateString()})"
+            //    }).ToList();
+            //}
+            //else if (nobetGorevTipler.Count > 1)
+            //{
+            //    nobetGruplar = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
+            //    .Select(s => new MyDrop
+            //    {
+            //        Id = s.Id,
+            //        Value = $"{s.Id}, {s.NobetGrupAdi}, {s.NobetGorevTipAdi}"
+            //    }).ToList();
+            //}
+            //else
+            //{
+            //    nobetGruplar = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
+            //    .Select(s => new MyDrop
+            //    {
+            //        Id = s.Id,
+            //        Value = $"{s.Id}, {s.NobetGrupAdi}"
+            //    }).ToList();
+            //}
 
 
             var gelecekTarih = DateTime.Today.AddMonths(1);
@@ -947,15 +949,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 baslangicTarihi = nobetUstGrup.BaslangicTarihi;
             }
-            //var yillar = _takvimService.GetList()
-            //    .Where(w => w.Tarih >= gelecekTarih)
-            //    .Select(s => s.Tarih.Year).Distinct().ToList();
 
-            //var aylar = _takvimService.GetAylarDdl();
-
-            //ViewBag.Yil = new SelectList(yillar, gelecekYil);
             ViewBag.NobetGrupGorevTipId = new SelectList(nobetGruplar, "Id", "Value");
-            //ViewBag.Ay = new SelectList(items: aylar, dataValueField: "Id", dataTextField: "Value", selectedValue: gelecekAy);
             ViewBag.grupSayisi = nobetGruplar.Count();
 
             var model = new GelecekDonemSilViewModel

@@ -13,18 +13,22 @@ using WM.UI.Mvc.Models;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
+    [Authorize]
+    [HandleError]
     public class NobetUstGrupGunGrupController : Controller
-    {
-        private WMUIMvcContext db = new WMUIMvcContext();
+    {        
         private INobetUstGrupGunGrupService _nobetUstGrupGunGrupService;
+        private IGunGrupService _gunGrupService;
         private INobetUstGrupService _nobetUstGrupService;
         private IUserService _userService;
 
         public NobetUstGrupGunGrupController(INobetUstGrupGunGrupService nobetUstGrupGunGrupService,
             IUserService userService,
+            IGunGrupService gunGrupService,
             INobetUstGrupService nobetUstGrupService)
         {
             _nobetUstGrupGunGrupService = nobetUstGrupGunGrupService;
+            _gunGrupService = gunGrupService;
             _userService = userService;
             _nobetUstGrupService = nobetUstGrupService;
         }
@@ -40,13 +44,14 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/NobetUstGrupGunGrup/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NobetUstGrupGunGrup nobetUstGrupGunGrup = db.NobetUstGrupGunGrups.Find(id);
+            var nobetUstGrupGunGrup = _nobetUstGrupGunGrupService.GetDetayById(id);
+
             if (nobetUstGrupGunGrup == null)
             {
                 return HttpNotFound();
@@ -57,8 +62,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/NobetUstGrupGunGrup/Create
         public ActionResult Create()
         {
-            ViewBag.GunGrupId = new SelectList(db.GunGrups, "Id", "Adi");
-            ViewBag.NobetUstGrupId = new SelectList(db.NobetUstGrups, "Id", "Adi");
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+
+            ViewBag.GunGrupId = new SelectList(_gunGrupService.GetList(), "Id", "Adi");
+            ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar, "Id", "Adi");
             return View();
         }
 
@@ -67,34 +75,42 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,GunGrupId,NobetUstGrupId,Aciklama")] NobetUstGrupGunGrup nobetUstGrupGunGrup)
+        public ActionResult Create([Bind(Include = "Id,GunGrupId,NobetUstGrupId,Aciklama,AmacFonksiyonuKatsayisi")] NobetUstGrupGunGrup nobetUstGrupGunGrup)
         {
             if (ModelState.IsValid)
             {
-                db.NobetUstGrupGunGrups.Add(nobetUstGrupGunGrup);
-                db.SaveChanges();
+                _nobetUstGrupGunGrupService.Insert(nobetUstGrupGunGrup);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.GunGrupId = new SelectList(db.GunGrups, "Id", "Adi", nobetUstGrupGunGrup.GunGrupId);
-            ViewBag.NobetUstGrupId = new SelectList(db.NobetUstGrups, "Id", "Adi", nobetUstGrupGunGrup.NobetUstGrupId);
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+
+            ViewBag.GunGrupId = new SelectList(_gunGrupService.GetList(), "Id", "Adi", nobetUstGrupGunGrup.GunGrupId);
+            ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar, "Id", "Adi", nobetUstGrupGunGrup.NobetUstGrupId);
+            
             return View(nobetUstGrupGunGrup);
         }
 
         // GET: EczaneNobet/NobetUstGrupGunGrup/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NobetUstGrupGunGrup nobetUstGrupGunGrup = db.NobetUstGrupGunGrups.Find(id);
+            var nobetUstGrupGunGrup = _nobetUstGrupGunGrupService.GetDetayById(id);
+
             if (nobetUstGrupGunGrup == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.GunGrupId = new SelectList(db.GunGrups, "Id", "Adi", nobetUstGrupGunGrup.GunGrupId);
-            ViewBag.NobetUstGrupId = new SelectList(db.NobetUstGrups, "Id", "Adi", nobetUstGrupGunGrup.NobetUstGrupId);
+
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+
+            ViewBag.GunGrupId = new SelectList(_gunGrupService.GetList(), "Id", "Adi", nobetUstGrupGunGrup.GunGrupId);
+            ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar, "Id", "Adi", nobetUstGrupGunGrup.NobetUstGrupId);
             return View(nobetUstGrupGunGrup);
         }
 
@@ -103,27 +119,30 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,GunGrupId,NobetUstGrupId,Aciklama")] NobetUstGrupGunGrup nobetUstGrupGunGrup)
+        public ActionResult Edit([Bind(Include = "Id,GunGrupId,NobetUstGrupId,Aciklama,AmacFonksiyonuKatsayisi")] NobetUstGrupGunGrup nobetUstGrupGunGrup)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(nobetUstGrupGunGrup).State = EntityState.Modified;
-                db.SaveChanges();
+                _nobetUstGrupGunGrupService.Update(nobetUstGrupGunGrup);
                 return RedirectToAction("Index");
             }
-            ViewBag.GunGrupId = new SelectList(db.GunGrups, "Id", "Adi", nobetUstGrupGunGrup.GunGrupId);
-            ViewBag.NobetUstGrupId = new SelectList(db.NobetUstGrups, "Id", "Adi", nobetUstGrupGunGrup.NobetUstGrupId);
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+
+            ViewBag.GunGrupId = new SelectList(_gunGrupService.GetList(), "Id", "Adi", nobetUstGrupGunGrup.GunGrupId);
+            ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar, "Id", "Adi", nobetUstGrupGunGrup.NobetUstGrupId);
             return View(nobetUstGrupGunGrup);
         }
 
         // GET: EczaneNobet/NobetUstGrupGunGrup/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            NobetUstGrupGunGrup nobetUstGrupGunGrup = db.NobetUstGrupGunGrups.Find(id);
+            var nobetUstGrupGunGrup = _nobetUstGrupGunGrupService.GetDetayById(id);
+
             if (nobetUstGrupGunGrup == null)
             {
                 return HttpNotFound();
@@ -136,19 +155,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            NobetUstGrupGunGrup nobetUstGrupGunGrup = db.NobetUstGrupGunGrups.Find(id);
-            db.NobetUstGrupGunGrups.Remove(nobetUstGrupGunGrup);
-            db.SaveChanges();
+            var nobetUstGrupGunGrup = _nobetUstGrupGunGrupService.GetDetayById(id);
+            _nobetUstGrupGunGrupService.Delete(id);
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }

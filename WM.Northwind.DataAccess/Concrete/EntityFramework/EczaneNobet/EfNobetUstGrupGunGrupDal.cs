@@ -27,7 +27,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         GunGrupId = s.GunGrupId,
                         GunGrupAdi = s.GunGrup.Adi,
                         NobetUstGrupId = s.NobetUstGrupId,
-                        NobetUstGrupAdi = s.NobetUstGrup.Adi
+                        NobetUstGrupAdi = s.NobetUstGrup.Adi,
+                        AmacFonksiyonuKatsayisi = s.AmacFonksiyonuKatsayisi
                     }).SingleOrDefault(filter);
             }
         }
@@ -43,7 +44,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         GunGrupId = s.GunGrupId,
                         GunGrupAdi = s.GunGrup.Adi,
                         NobetUstGrupId = s.NobetUstGrupId,
-                        NobetUstGrupAdi = s.NobetUstGrup.Adi
+                        NobetUstGrupAdi = s.NobetUstGrup.Adi,
+                        AmacFonksiyonuKatsayisi = s.AmacFonksiyonuKatsayisi
                     });
 
                 return filter == null

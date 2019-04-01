@@ -6,10 +6,10 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>NobetUstGrupGunGrup</h4>
         <hr />
@@ -27,6 +27,14 @@
             <div class="col-md-10">
                 @Html.DropDownList("NobetUstGrupId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.NobetUstGrupId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AmacFonksiyonuKatsayisi, "AmacFonksiyonuKatsayisi", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AmacFonksiyonuKatsayisi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AmacFonksiyonuKatsayisi, "", new { @class = "text-danger" })
             </div>
         </div>
 

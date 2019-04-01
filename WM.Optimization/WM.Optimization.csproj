@@ -144,6 +144,7 @@
     <Compile Include="Concrete\Optano\Samples\TransportOptanoSolve.cs" />
     <Compile Include="Entities\KisitParametre\KpAyIcindeSadece1KezAyniGunNobetGiresunAltGrup.cs" />
     <Compile Include="Entities\KisitParametre\KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu.cs" />
+    <Compile Include="Entities\KisitParametre\KpAltGruplarlaAyniGunNobetGrupAltGrup.cs" />
     <Compile Include="Entities\KisitParametre\KpGorevTipineGorevDagilim.cs" />
     <Compile Include="Entities\KisitParametre\KpEsGrubaAyniGunNobetYazma.cs" />
     <Compile Include="Entities\KisitParametre\KpKumulatifToplam.cs" />

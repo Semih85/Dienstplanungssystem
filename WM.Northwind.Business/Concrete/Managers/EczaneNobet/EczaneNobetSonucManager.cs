@@ -196,7 +196,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 .Select(s => new
                 {
                     Id = s.Key.NobetGrupGorevTipId,
-                    Value = $"{s.Key.NobetGrupGorevTipId}, {s.Key.NobetGrupAdi}, {s.Key.NobetGorevTipAdi}, Son Yayım Tarihi: ",
+                    Value = $"{s.Key.NobetGrupGorevTipId}, {s.Key.NobetGrupAdi}, {s.Key.NobetGorevTipAdi}, Son Nöbet Yayım Tarihi: ",
                     SonTarih = s.Max(m => m.Tarih)
                 }).ToList();
 
