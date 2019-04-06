@@ -32,7 +32,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                             Enlem = x.Enlem,
                             Boylam = x.Boylam,
                             TimeLimit = x.TimeLimit,
-                            OneedeGosterilecekEnUzakMesafe = x.OneedeGosterilecekEnUzakMesafe
+                            OneedeGosterilecekEnUzakMesafe = x.OneedeGosterilecekEnUzakMesafe,
+                            BaslamaTarihindenOncekiSonuclarGosterilsinMi = x.BaslamaTarihindenOncekiSonuclarGosterilsinMi
                         }).SingleOrDefault(filter);
             }
         }
@@ -54,7 +55,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                             Enlem = x.Enlem,
                             Boylam = x.Boylam,
                             TimeLimit = x.TimeLimit,
-                            OneedeGosterilecekEnUzakMesafe = x.OneedeGosterilecekEnUzakMesafe
+                            OneedeGosterilecekEnUzakMesafe = x.OneedeGosterilecekEnUzakMesafe,
+                            BaslamaTarihindenOncekiSonuclarGosterilsinMi = x.BaslamaTarihindenOncekiSonuclarGosterilsinMi
                         });
 
                 return filter == null

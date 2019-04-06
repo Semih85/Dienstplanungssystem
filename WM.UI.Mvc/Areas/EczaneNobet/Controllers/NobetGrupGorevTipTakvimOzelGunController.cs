@@ -27,6 +27,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetOzelGunService _nobetOzelGunService;
         private IUserService _userService;
         private INobetGunKuralService _nobetGunKuralService;
+        private INobetOzelGunKategoriService _nobetOzelGunKategoriService;
 
         public NobetGrupGorevTipTakvimOzelGunController(INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService,
             INobetGrupGorevTipService nobetGrupGorevTipService,
@@ -35,7 +36,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             IUserService userService,
             INobetUstGrupService nobetUstGrupService,
             INobetGunKuralService nobetGunKuralService,
-            INobetGrupGorevTipGunKuralService nobetGrupGorevTipGunKuralService)
+            INobetGrupGorevTipGunKuralService nobetGrupGorevTipGunKuralService,
+            INobetOzelGunKategoriService nobetOzelGunKategoriService)
         {
             _nobetGrupGorevTipTakvimOzelGunService = nobetGrupGorevTipTakvimOzelGunService;
             _nobetGrupGorevTipService = nobetGrupGorevTipService;
@@ -45,6 +47,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _nobetUstGrupService = nobetUstGrupService;
             _nobetGunKuralService = nobetGunKuralService;
             _nobetGrupGorevTipGunKuralService = nobetGrupGorevTipGunKuralService;
+            _nobetOzelGunKategoriService = nobetOzelGunKategoriService;
         }
         #endregion
         // GET: EczaneNobet/NobetGrupGorevTipTakvimOzelGun
@@ -157,6 +160,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.NobetGrupGorevTipGunKuralId = new SelectList(nobetGrupGorevTipGunKurallar, "Id", "Value");
             ViewBag.NobetOzelGunId = new SelectList(_nobetOzelGunService.GetList(), "Id", "Adi");
             ViewBag.NobetGunKuralId = new SelectList(nobetGrunKurallar, "NobetGunKuralId", "NobetGunKuralAdi");
+            ViewBag.NobetOzelGunKategoriId = new SelectList(_nobetOzelGunKategoriService.GetList(), "Id", "Adi");
 
             return View();
         }
@@ -166,7 +170,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Tarih,NobetGunKuralId,NobetGrupGorevTipGunKuralId,FarkliGunGosterilsinMi,NobetOzelGunId,AgirlikDegeri")] TakvimOzelGunCoklu takvimOzelGunCoklu)
+        public ActionResult Create([Bind(Include = "Id,Tarih,NobetGunKuralId,NobetGrupGorevTipGunKuralId,FarkliGunGosterilsinMi,NobetOzelGunId,AgirlikDegeri,NobetOzelGunKategoriId")] TakvimOzelGunCoklu takvimOzelGunCoklu)
         {
             if (ModelState.IsValid)
             {
@@ -185,7 +189,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         NobetGrupGorevTipGunKuralId = nobetGrupGorevTipGunKuralId,
                         NobetOzelGunId = takvimOzelGunCoklu.NobetOzelGunId,
                         FarkliGunGosterilsinMi = takvimOzelGunCoklu.FarkliGunGosterilsinMi,
-                        AgirlikDegeri = takvimOzelGunCoklu.AgirlikDegeri
+                        AgirlikDegeri = takvimOzelGunCoklu.AgirlikDegeri,
+                        NobetOzelGunKategoriId = takvimOzelGunCoklu.NobetOzelGunKategoriId
                     });
                 }
 
@@ -221,6 +226,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.NobetOzelGunId = new SelectList(_nobetOzelGunService.GetList(), "Id", "Adi");
             ViewBag.NobetGunKuralId = new SelectList(nobetGrunKurallar, "NobetGunKuralId", "NobetGunKuralAdi");
             //ViewBag.TakvimId = new SelectList(_takvimService.GetList(), "Id", "Tarih");
+            ViewBag.NobetOzelGunKategoriId = new SelectList(_nobetOzelGunKategoriService.GetList(), "Id", "Adi");
 
             return View(takvimOzelGunCoklu);
         }
@@ -258,6 +264,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.NobetOzelGunId = new SelectList(_nobetOzelGunService.GetList(), "Id", "Adi", nobetGrupGorevTipTakvimOzelGun.NobetOzelGunId);
             ViewBag.NobetGunKuralId = new SelectList(nobetGrunKurallar, "NobetGunKuralId", "NobetGunKuralAdi", nobetGrupGorevTipTakvimOzelGun.NobetGunKuralId);
             ViewBag.TakvimId = new SelectList(_takvimService.GetList().Select(s => new MyDrop { Id = s.Id, Value = s.Tarih.ToLongDateString() }), "Id", "Value", nobetGrupGorevTipTakvimOzelGun.TakvimId);
+            ViewBag.NobetOzelGunKategoriId = new SelectList(_nobetOzelGunKategoriService.GetList(), "Id", "Adi", nobetGrupGorevTipTakvimOzelGun.NobetOzelGunKategoriId);
 
             return View(nobetGrupGorevTipTakvimOzelGun);
         }
@@ -267,7 +274,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TakvimId,NobetGunKuralId,NobetGrupGorevTipGunKuralId,FarkliGunGosterilsinMi,NobetOzelGunId,AgirlikDegeri")] NobetGrupGorevTipTakvimOzelGun nobetGrupGorevTipTakvimOzelGun)
+        public ActionResult Edit([Bind(Include = "Id,TakvimId,NobetGunKuralId,NobetGrupGorevTipGunKuralId,FarkliGunGosterilsinMi,NobetOzelGunId,AgirlikDegeri,NobetOzelGunKategoriId")] NobetGrupGorevTipTakvimOzelGun nobetGrupGorevTipTakvimOzelGun)
         {
             if (ModelState.IsValid)
             {
@@ -301,6 +308,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.NobetOzelGunId = new SelectList(_nobetOzelGunService.GetList(), "Id", "Adi", nobetGrupGorevTipTakvimOzelGun.NobetOzelGunId);
             ViewBag.NobetGunKuralId = new SelectList(nobetGrunKurallar, "NobetGunKuralId", "NobetGunKuralAdi", nobetGrupGorevTipTakvimOzelGun.NobetGunKuralId);
             ViewBag.TakvimId = new SelectList(_takvimService.GetList().Select(s => new MyDrop { Id = s.Id, Value = s.Tarih.ToLongDateString() }), "Id", "Value", nobetGrupGorevTipTakvimOzelGun.TakvimId);
+            ViewBag.NobetOzelGunKategoriId = new SelectList(_nobetOzelGunKategoriService.GetList(), "Id", "Adi", nobetGrupGorevTipTakvimOzelGun.NobetOzelGunKategoriId);
 
             return View(nobetGrupGorevTipTakvimOzelGun);
         }

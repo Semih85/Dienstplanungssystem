@@ -26,6 +26,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public DateTime NobetUstGrupBaslamaTarihi { get; set; }
         public DateTime NobetGrupGorevTipBaslamaTarihi { get; set; }
 
+
         public string NobetGorevTipAdi { get; set; }
         public string NobetGrupAdi { get; set; }        
         public string EczaneAdi { get; set; }

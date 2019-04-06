@@ -340,11 +340,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //sonuclar = eczaneNobetSonuclarTumu
             //        //.Where(w => w.Tarih >= nobetUstGrup.BaslangicTarihi)
             //        //anahtar listedeki sonuçları görmek için üstteki satırı kapat
-            //        .ToList();
+            //        .ToList();                       
 
-            var eskiVeriGosterilsinMi = false;
-
-            if (eskiVeriGosterilsinMi && nobetUstGrup.Id == 5)
+            if (nobetUstGrup.BaslamaTarihindenOncekiSonuclarGosterilsinMi)
             {
                 sonuclar = eczaneNobetSonuclarTumu;
             }
@@ -447,7 +445,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         NobetDurumAdi = s.NobetDurumAdi,
                         NobetDurumTipAdi = s.NobetDurumTipAdi,
                         KalibrasyonDeger = KalibrasyonDegeriToplam(nobetUstGrup.Id, s.EczaneNobetGrupId, s.GunGrupId, 7),
-                        EczaneNobetGrupBitisTarihi = s.EczaneNobetGrupBitisTarihi
+                        EczaneNobetGrupBitisTarihi = s.EczaneNobetGrupBitisTarihi,
+                        AgirlikDegeri = s.AgirlikDegeri,
+                        NobetOzelGunAdi = s.NobetOzelGunAdi,
+                        NobetOzelGunKategoriAdi = s.NobetOzelGunKategoriAdi
                     }).ToList(),
                 KalibrasyonluToplamlar = KalibrasyonlaSonuclariBirlestir(nobetUstGrup.Id),
                 GunFarklariTumSonuclar = gunFarklari,
@@ -456,7 +457,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 AltGrupAyniGunNobetTutanEczaneler = ayniGunNobetTutanAltGrupluEczaneler,
                 AyniGunNobetTutanEczaneler = ayniGunNobetTutanEczaneler,
                 EczaneNobetAlacakVerecek = eczaneNobetAlacakVerecek,
-                    //.Where(w => w.NobetSayisi > 0).ToList(),
+                //.Where(w => w.NobetSayisi > 0).ToList(),
                 GunDagilimiMaxMin = gunDagilimiMaxMin,
                 NobetUstGrupId = nobetUstGrup.Id,
                 SonuclarPlanlananVeGercek = sonuclar.Union(eczaneNobetSonuclarPlanlananSonrasi)

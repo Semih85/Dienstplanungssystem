@@ -18,15 +18,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
     {
         //Karar değişkeni model çalıştıktan sonra değer aldığından burada tanımlandı
         private VariableCollection<EczaneNobetTarihAralik> _x { get; set; }
-        private NobetGrupKuralDetay _nobetGrupKuralDetay { get; set; }
 
         private Model Model(OsmaniyeDataModel data)
         {
             var model = new Model() { Name = "Osmaniye Eczane Nöbet" };
 
-            #region Veriler
-
-            _nobetGrupKuralDetay = new NobetGrupKuralDetay();
+            #region Veriler            
 
             #region kısıtlar
 
@@ -158,11 +155,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var nobetGrupKurallar = data.NobetGrupKurallar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                var pespeseNobetSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 1, _nobetGrupKuralDetay);
-                var gunlukNobetciSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 3, _nobetGrupKuralDetay);
-                var pespeseNobetSayisiHaftaIci = (int)GetNobetGunKural(nobetGrupKurallar, 5, _nobetGrupKuralDetay);
-                var pespeseNobetSayisiPazar = (int)GetNobetGunKural(nobetGrupKurallar, 6, _nobetGrupKuralDetay);
-                var pespeseNobetSayisiCumartesi = (int)GetNobetGunKural(nobetGrupKurallar, 7, _nobetGrupKuralDetay);
+                var pespeseNobetSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 1);
+                var gunlukNobetciSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 3);
+                var pespeseNobetSayisiHaftaIci = (int)GetNobetGunKural(nobetGrupKurallar, 5);
+                var pespeseNobetSayisiPazar = (int)GetNobetGunKural(nobetGrupKurallar, 6);
+                var pespeseNobetSayisiCumartesi = (int)GetNobetGunKural(nobetGrupKurallar, 7);
 
                 //var nobetGrupTalepler = data.NobetGrupTalepler.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
 

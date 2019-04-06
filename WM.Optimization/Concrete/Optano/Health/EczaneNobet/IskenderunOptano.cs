@@ -19,7 +19,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         //Karar değişkeni model çalıştıktan sonra değer aldığından burada tanımlandı
         private VariableCollection<EczaneNobetTarihAralik> _x { get; set; }
         private VariableCollection<EczaneNobetAltGrupTarihAralik> _y { get; set; }
-        private NobetGrupKuralDetay _nobetGrupKuralDetay { get; set; }
 
         private Model Model(IskenderunDataModel data)
         {
@@ -43,9 +42,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #endregion
 
-            #region Veriler            
-
-            _nobetGrupKuralDetay = new NobetGrupKuralDetay();
+            #region Veriler                        
 
             var eczaneNobetTutamazGunler = new List<EczaneNobetTutamazGun>
             {                
@@ -216,11 +213,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var nobetGrupKurallar = data.NobetGrupKurallar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                var pespeseNobetSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 1, _nobetGrupKuralDetay);
-                var gunlukNobetciSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 3, _nobetGrupKuralDetay);
-                var pespeseNobetSayisiHaftaIci = (int)GetNobetGunKural(nobetGrupKurallar, 5, _nobetGrupKuralDetay);
-                var pespeseNobetSayisiPazar = (int)GetNobetGunKural(nobetGrupKurallar, 6, _nobetGrupKuralDetay);
-                var pespeseNobetSayisiCumartesi = (int)GetNobetGunKural(nobetGrupKurallar, 7, _nobetGrupKuralDetay);
+                var pespeseNobetSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 1);
+                var gunlukNobetciSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 3);
+                var pespeseNobetSayisiHaftaIci = (int)GetNobetGunKural(nobetGrupKurallar, 5);
+                var pespeseNobetSayisiPazar = (int)GetNobetGunKural(nobetGrupKurallar, 6);
+                var pespeseNobetSayisiCumartesi = (int)GetNobetGunKural(nobetGrupKurallar, 7);
 
                 //var nobetGrupTalepler = data.NobetGrupTalepler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
@@ -270,12 +267,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     .Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
 
                 var eczaneNobetGrupGunKuralIstatistikler = data.EczaneNobetGrupGunKuralIstatistikYatay
-                    .Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
-                             && w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
+                    .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
                 var nobetGrupGunKurallar = data.NobetGrupGorevTipGunKurallar
                                                     .Where(s => s.NobetGrupGorevTipId == nobetGrupGorevTip.Id
-                                                             && nobetGunKurallar.Contains(s.NobetGunKuralId))
+                                                             && nobetGunKurallar.Contains(s.NobetGunKuralId)
+                                                             )
                                                     .Select(s => s.NobetGunKuralId).ToList();
 
                 //var nobetGrupGorevTipler = data.NobetGrupGorevTipler.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
@@ -318,8 +315,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 #endregion
 
                 var nobetGrupBayramNobetleri = data.EczaneNobetSonuclar
-                    .Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
-                             && w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId
+                    .Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId
                              && w.GunGrupId == 2
                              && w.Tarih >= data.NobetUstGrupBaslangicTarihi)
                     .Select(s => new { s.TakvimId, s.NobetGunKuralId }).ToList();

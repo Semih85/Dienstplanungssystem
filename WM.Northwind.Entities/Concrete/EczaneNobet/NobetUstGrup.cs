@@ -29,6 +29,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public double Boylam { get; set; }
 
         public int OneedeGosterilecekEnUzakMesafe { get; set; }
+        public bool BaslamaTarihindenOncekiSonuclarGosterilsinMi { get; set; }
 
         public virtual EczaneOda EczaneOda { get; set; }
         public virtual List<NobetGrup> NobetGruplar { get; set; }

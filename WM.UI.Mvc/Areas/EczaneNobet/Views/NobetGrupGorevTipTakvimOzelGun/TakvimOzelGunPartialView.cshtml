@@ -26,7 +26,7 @@
                     <th style="width:7%">
                         @Html.DisplayName("Nöbet Grubu")
                     </th>
-                    <th style="width:10%">
+                    <th style="width:7%">
                         @Html.DisplayName("Görev Tipi")
                     </th>
                     <th style="width:6%">
@@ -41,7 +41,7 @@
                     <th style="width:6%">
                         @Html.DisplayName("Gün Kuralı Farklı")
                     </th>
-                    <th style="width:12%">
+                    <th style="width:8%">
                         @Html.DisplayName("Özel Gün")
                     </th>
                     <th style="width:12%">
@@ -49,6 +49,9 @@
                     </th>
                     <th style="width:4%">
                         @Html.DisplayName("Puan")
+                    </th>
+                    <th style="width:8%">
+                        @Html.DisplayName("Gün Ktg")
                     </th>
                     <th style="width:10%"></th>
                 </tr>
@@ -102,6 +105,9 @@
                             @Html.DisplayFor(modelItem => item.AgirlikDegeri)
                         </td>
                         <td>
+                            @Html.DisplayFor(modelItem => item.NobetOzelGunKategoriAdi)
+                        </td>
+                        <td>
                             @{
                                 var target = $"#islem{@item.Id}";
                             }
@@ -141,10 +147,10 @@ else
 }
 
 @*@section Scripts{
-    @Scripts.Render("~/bundle/ajax")
-    @Scripts.Render("~/bundle/bootstrap-select/scripts")
-    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
-}*@
+        @Scripts.Render("~/bundle/ajax")
+        @Scripts.Render("~/bundle/bootstrap-select/scripts")
+        @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    }*@
 
 <script>
 

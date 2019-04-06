@@ -26,6 +26,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int NobetOzelGunId { get; set; }
         public bool FarkliGunGosterilsinMi { get; set; }//true ise NobetGunKuralId, değilse -normalde- NobetGrupGorevTipGunKuralId
         public double AgirlikDegeri { get; set; }
+        [Display(Name = "Gün Kategori")]
+        public int NobetOzelGunKategoriId { get; set; }
 
     }
 }

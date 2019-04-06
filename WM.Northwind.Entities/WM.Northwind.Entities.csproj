@@ -222,6 +222,7 @@
     <Compile Include="Concrete\EczaneNobet\NobetGrupTalep.cs" />
     <Compile Include="Concrete\EczaneNobet\NobetGunKural.cs" />
     <Compile Include="Concrete\EczaneNobet\NobetOzelGun.cs" />
+    <Compile Include="Concrete\EczaneNobet\NobetOzelGunKategori.cs" />
     <Compile Include="Concrete\EczaneNobet\NobetSonucDemoTip.cs" />
     <Compile Include="Concrete\EczaneNobet\NobetUstGrupGunGrup.cs" />
     <Compile Include="Concrete\EczaneNobet\NobetUstGrupKisit.cs" />

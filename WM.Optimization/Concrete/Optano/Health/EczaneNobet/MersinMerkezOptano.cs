@@ -28,7 +28,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         //private CplexSolver _solver;
         //private Model model;
         //private Configuration _configuration;
-        private NobetGrupKuralDetay _nobetGrupKuralDetay { get; set; }
 
         #endregion
 
@@ -37,9 +36,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var model = new Model() { Name = "Mersin Eczane Nöbet" };
 
             #region veriler
-
-            _nobetGrupKuralDetay = new NobetGrupKuralDetay();
-
+            
             #region kısıtlar
 
             var eczaneGrup = NobetUstGrupKisit(data.Kisitlar, "eczaneGrup", data.NobetUstGrupId);
@@ -174,11 +171,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var nobetGrupKurallar = data.NobetGrupKurallar.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
 
-                var pespeseNobetSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 1, _nobetGrupKuralDetay);
-                var gunlukNobetciSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 3, _nobetGrupKuralDetay);
-                var pespeseNobetSayisiHaftaIci = (int)GetNobetGunKural(nobetGrupKurallar, 5, _nobetGrupKuralDetay);
-                var pespeseNobetSayisiPazar = (int)GetNobetGunKural(nobetGrupKurallar, 6, _nobetGrupKuralDetay);
-                var pespeseNobetSayisiCumartesi = (int)GetNobetGunKural(nobetGrupKurallar, 7, _nobetGrupKuralDetay);
+                var pespeseNobetSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 1);
+                var gunlukNobetciSayisi = (int)GetNobetGunKural(nobetGrupKurallar, 3);
+                var pespeseNobetSayisiHaftaIci = (int)GetNobetGunKural(nobetGrupKurallar, 5);
+                var pespeseNobetSayisiPazar = (int)GetNobetGunKural(nobetGrupKurallar, 6);
+                var pespeseNobetSayisiCumartesi = (int)GetNobetGunKural(nobetGrupKurallar, 7);
 
                 //var nobetGrupTalepler = data.NobetGrupTalepler.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
 

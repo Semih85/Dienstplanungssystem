@@ -17,10 +17,12 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public int NobetOzelGunId { get; set; }//bayramTurId -- eski adı
         public bool FarkliGunGosterilsinMi { get; set; }//true ise NobetGunKuralId, değilse -normalde- NobetGrupGorevTipGunKuralId
         public double AgirlikDegeri { get; set; }
+        public int NobetOzelGunKategoriId { get; set; }
 
         public virtual NobetGrupGorevTipGunKural NobetGrupGorevTipGunKural { get; set; }
         public virtual NobetGunKural NobetGunKural { get; set; }
         public virtual NobetOzelGun NobetOzelGun { get; set; }
         public virtual Takvim Takvim { get; set; }
+        public virtual NobetOzelGunKategori NobetOzelGunKategori { get; set; }
     }
 }

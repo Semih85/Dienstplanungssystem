@@ -21,6 +21,9 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         //? $"{NobetGrupId} {NobetGrupAdi}"
         //: $"{NobetGrupAdi}";
         public bool YayimlandiMi { get; set; }
+        public double AgirlikDegeri { get; set; }
+        public string NobetOzelGunAdi { get; set; }
+        public string NobetOzelGunKategoriAdi { get; set; }
 
         public int EczaneNobetGrupId { get; set; }
         public int NobetUstGrupId { get; set; }

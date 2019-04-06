@@ -238,6 +238,11 @@ namespace WM.BLL.DependencyResolvers.Ninject
 
             Bind<IGunGrupService>().To<GunGrupManager>().InSingletonScope();
             Bind<IGunGrupDal>().To<EfGunGrupDal>();
+
+            Bind<INobetOzelGunKategoriService>().To<NobetOzelGunKategoriManager>().InSingletonScope();
+            Bind<INobetOzelGunKategoriDal>().To<EfNobetOzelGunKategoriDal>();
+
+
             #endregion
 
             #region Optimization

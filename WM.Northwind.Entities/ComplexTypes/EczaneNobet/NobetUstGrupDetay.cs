@@ -30,5 +30,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public double Boylam { get; set; }
         public int TimeLimit { get; set; }
         public int OneedeGosterilecekEnUzakMesafe { get; set; }
+        public bool BaslamaTarihindenOncekiSonuclarGosterilsinMi { get; set; }
     }
 }

@@ -105,6 +105,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<NobetFeragatTip> NobetFeragatTipler { get; set; }
         public DbSet<NobetGrupGorevTipKisit> NobetGrupGorevTipKisitlar { get; set; }
         public DbSet<AyniGunNobetTakipGrupAltGrup> AyniGunNobetTakipGrupAltGruplar { get; set; }
+        public DbSet<NobetOzelGunKategori> NobetOzelGunKategoriler { get; set; }
         
 
         #endregion
@@ -196,6 +197,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new NobetFeragatTipMap());
             modelBuilder.Configurations.Add(new NobetGrupGorevTipKisitMap());
             modelBuilder.Configurations.Add(new AyniGunNobetTakipGrupAltGrupMap());
+            modelBuilder.Configurations.Add(new NobetOzelGunKategoriMap());
             
             #endregion
         }

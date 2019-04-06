@@ -499,7 +499,16 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                    NobetGrupGorevTipId = s.NobetGrupGorevTipId,
                                                    NobetAltGrupId = s.NobetAltGrupId,
                                                    NobetAltGrupAdi = s.NobetAltGrupAdi,
-                                                   YayimlandiMi = s.YayimlandiMi
+                                                   YayimlandiMi = s.YayimlandiMi,
+                                                   AgirlikDegeri = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
+                                                        ? b.AgirlikDegeri
+                                                        : 0,
+                                                   NobetOzelGunAdi = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
+                                                        ? b.NobetOzelGunAdi
+                                                        : "",
+                                                   NobetOzelGunKategoriAdi = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
+                                                        ? b.NobetOzelGunKategoriAdi
+                                                        : "",
                                                }).ToList();
 
             return eczaneNobetSonuclarBirlesim;

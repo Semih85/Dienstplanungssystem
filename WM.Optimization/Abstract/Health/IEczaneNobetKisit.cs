@@ -57,7 +57,7 @@ namespace WM.Optimization.Abstract.Health
         List<EczaneNobetSonucListe2> GetSonuclarByGunGrup(List<EczaneNobetSonucListe2> sonuclar, string gunGrup);
         string CeliskileriEkle(Solution solution);
 
-        double GetNobetGunKural(List<NobetGrupKuralDetay> nobetGrupKurallar, int nobetKuralId, NobetGrupKuralDetay nobetGrupKuralDetay);
+        double GetNobetGunKural(List<NobetGrupKuralDetay> nobetGrupKurallar, int nobetKuralId);
         NobetUstGrupKisitDetay GetNobetGunKuralIlgiliKisit(List<NobetUstGrupKisitDetay> kisitlarAktif, int nobetGunKuralId);
     }
 }

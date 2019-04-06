@@ -214,7 +214,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     Boylam = ekraninBulundugueczane.Boylam,
                     AdresTarifiKisa = ekraninBulundugueczane.AdresTarifiKisa,
                     AdresTarifi = ekraninBulundugueczane.AdresTarifi,
-
+                    NobetUstGrupId = ekraninBulundugueczane.NobetUstGrupId
                     //NobetGorevTipAdi = ekraninBulundugueczane.EczaneGorevTipler
                 }
             };

@@ -1256,7 +1256,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     foreach (var nobetAltGrup in nobetAltGruplar)
                     {
                         //if (nobetAltGrup.NobetAltGrupId == 44)
-                            //continue;
+                        //continue;
 
                         var altGruplaAyniGunGecmisNobetSayilari = p.AltGrupIleTutulanNobetDurumlari
                             .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
@@ -2012,11 +2012,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             return kisitAdi;
         }
 
-        public double GetNobetGunKural(List<NobetGrupKuralDetay> nobetGrupKurallar, int nobetKuralId, NobetGrupKuralDetay nobetGrupKuralDetay)
+        public double GetNobetGunKural(List<NobetGrupKuralDetay> nobetGrupKurallar, int nobetKuralId)
         {
-            var kural = nobetGrupKurallar.SingleOrDefault(s => s.NobetKuralId == nobetKuralId) ?? nobetGrupKuralDetay;
+            var kural = nobetGrupKurallar.SingleOrDefault(s => s.NobetKuralId == nobetKuralId);
 
-            return kural.Deger ?? 0;
+            var deger = kural == null ? 0 : kural.Deger;
+
+            return (double)deger;
         }
 
         public NobetUstGrupKisitDetay GetNobetGunKuralIlgiliKisit(List<NobetUstGrupKisitDetay> kisitlarAktif, int nobetGunKuralId)

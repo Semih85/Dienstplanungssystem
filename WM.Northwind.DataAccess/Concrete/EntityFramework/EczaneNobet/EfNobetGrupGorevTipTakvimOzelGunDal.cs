@@ -74,7 +74,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                             Id = s.Id,
                             FarkliGunGosterilsinMi = s.FarkliGunGosterilsinMi,
                             AgirlikDegeri = s.AgirlikDegeri,
-                            NobetGrupGorevTipBaslamaTarihi = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.BaslamaTarihi
+                            NobetGrupGorevTipBaslamaTarihi = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.BaslamaTarihi,
+                            NobetOzelGunKategoriId = s.NobetOzelGunKategoriId,
+                            NobetOzelGunKategoriAdi = s.NobetOzelGunKategori.Adi
                         })).SingleOrDefault(filter);
             }
         }
@@ -115,7 +117,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                                 Id = s.Id,
                                 FarkliGunGosterilsinMi = s.FarkliGunGosterilsinMi,
                                 AgirlikDegeri = s.AgirlikDegeri,
-                                NobetGrupGorevTipBaslamaTarihi = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.BaslamaTarihi
+                                NobetGrupGorevTipBaslamaTarihi = s.NobetGrupGorevTipGunKural.NobetGrupGorevTip.BaslamaTarihi,
+                                NobetOzelGunKategoriId = s.NobetOzelGunKategoriId,
+                                NobetOzelGunKategoriAdi = s.NobetOzelGunKategori.Adi
                             });
 
                 return filter == null
