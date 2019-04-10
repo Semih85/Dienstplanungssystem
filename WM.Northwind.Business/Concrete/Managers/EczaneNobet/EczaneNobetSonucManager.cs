@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -178,6 +179,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [LogAspect(typeof(DatabaseLogger))]
         public List<EczaneNobetSonucDetay2> GetDetaylar(int nobetUstGrupId)
         {
+            //var sw = new Stopwatch();
+            //sw.Start();
+            //var detaylar = 
+            //sw.Stop();
             return _eczaneNobetSonucDal.GetDetayList(w => w.NobetUstGrupId == nobetUstGrupId);
         }
 
@@ -244,6 +249,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        [LogAspect(typeof(DatabaseLogger))]
+        public List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipId(int nobetGrupGorevTipId)
+        {
+            return _eczaneNobetSonucDal.GetDetayList(x => x.NobetGrupGorevTipId == nobetGrupGorevTipId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetSonucDetay2> GetDetaylar(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId)
         {
             return _eczaneNobetSonucDal.GetDetayList(x => (x.Tarih >= baslangicTarihi && x.Tarih <= bitisTarihi) && x.NobetUstGrupId == nobetUstGrupId);
@@ -267,6 +279,19 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             var sonuclar = _eczaneNobetSonucDal.GetDetayList(x => x.Tarih == nobetTarihi
             && (x.NobetUstGrupId == nobetUstGrupId || nobetUstGrupId == 0));
+
+            return sonuclar;
+            //sonuclar.Count == 0
+            //? throw new Exception($"{nobetTarihi} tarihinde nöbet tutan eczane bulunmamaktadır.")
+            //: sonuclar;
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        [LogAspect(typeof(DatabaseLogger))]
+        public List<EczaneNobetSonucDetay2> GetDetaylar(DateTime baslamaTarihi, int nobetGrupGorevTipId)
+        {
+            var sonuclar = _eczaneNobetSonucDal.GetDetayList(x => x.Tarih >= baslamaTarihi
+            && (x.NobetUstGrupId == nobetGrupGorevTipId));
 
             return sonuclar;
             //sonuclar.Count == 0
@@ -342,6 +367,15 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucListe2> GetSonuclar(int nobetGrupGorevTipId, int gunGrupId)
+        {
+            var sonuclar = GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTipId);
+
+            return GetSonuclar(sonuclar)
+                .Where(w => w.GunGrupId == gunGrupId).ToList();
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetSonucListe2> GetSonuclar(int nobetUstGrupId)
         {
             var detaylar = GetDetaylar(nobetUstGrupId);
@@ -355,8 +389,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 return EczaneNobetSonucOsmaniye(sonuclar, nobetDurumlar);
             }
+            //var sw = new Stopwatch();
+            //sw.Start();
+            //var sonuclarT = GetSonuclar(detaylar, nobetUstGrupId);
+            //sw.Stop();
 
-            return GetSonuclar(detaylar, nobetUstGrupId);
+            return GetSonuclar(detaylar, nobetUstGrupId); ;
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
@@ -378,12 +416,23 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetSonucListe2> GetSonuclar(List<EczaneNobetSonucDetay2> eczaneNobetSonucDetaylar, int nobetUstGrupId)
         {
+            var sw = new Stopwatch();
+            sw.Start();
             var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylar(nobetUstGrupId);
+            var s1 = sw.Elapsed;
+            sw.Restart();
             var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGrupId);
+            var s2 = sw.Elapsed;
+            sw.Restart();
             var mazeretler = _eczaneNobetMazeretService.GetDetaylar(nobetUstGrupId);
+            var s3 = sw.Elapsed;
+            sw.Restart();
             var istekler = _eczaneNobetIstekService.GetDetaylar(nobetUstGrupId);
-
+            var s4 = sw.Elapsed;
+            sw.Restart();
             var sonuclar = EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, mazeretler, istekler);
+            var s5 = sw.Elapsed;
+            sw.Stop();
 
             return sonuclar;
         }
@@ -440,7 +489,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return GetSonuclar(sonuclar);
         }
 
-        private List<EczaneNobetSonucListe2> EczaneNobetSonucBirlesim(
+        public List<EczaneNobetSonucListe2> EczaneNobetSonucBirlesim(
             List<NobetGrupGorevTipGunKuralDetay> nobetGrupGorevTipGunKurallar,
             List<EczaneNobetSonucDetay2> eczaneNobetSonuclar,
             List<NobetGrupGorevTipTakvimOzelGunDetay> nobetGrupGorevTipTakvimOzelGunler,

@@ -68,6 +68,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     enAzNobetSayisi = (int)p.NobetUstGrupKisit.SagTarafDegeri;
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
+                    $" {p.KuralAciklama}" +
                     $" [Std. {enAzNobetSayisi}"
                     ;
 
@@ -2043,6 +2044,74 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             return herAyEnFazlaIlgiliKisit;
         }
+
+        public List<NobetUstGrupKisitDetay> GetKisitlarNobetGrupBazli(List<NobetUstGrupKisitDetay> kisitlarUstGrupBazli, List<NobetGrupGorevTipKisitDetay> kisitlarGrupBazli)
+        {
+            var kisitlarAktif = new List<NobetUstGrupKisitDetay>();
+
+            //üst grup kısıtlar olduğu gibi aktif listeye aktarıldı. grup bazlı değişen olursa aktiften değişecek.
+            kisitlarUstGrupBazli.ForEach(x => kisitlarAktif.Add((NobetUstGrupKisitDetay)x.Clone()));
+
+            foreach (var grupBazliKisit in kisitlarGrupBazli)
+            {
+                var kisitGrupBazli = kisitlarAktif.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId);
+
+                kisitGrupBazli.PasifMi = grupBazliKisit.PasifMi;
+                kisitGrupBazli.SagTarafDegeri = grupBazliKisit.SagTarafDegeri;
+            }
+
+            return kisitlarAktif;
+        }
+
+        public void NobetGrupBuyuklugunuTakvimeEkle(List<TakvimNobetGrup> tarihler, int eczaneSayisi)
+        {
+            var gunGruplar = tarihler
+                .Select(s => new
+                {
+                    s.GunGrupId,
+                    s.GunGrupAdi
+                })
+                .OrderBy(o => o.GunGrupId)
+                .Distinct().ToList();
+
+            foreach (var gunGrup in gunGruplar)
+            {
+                var eczaneSayisiKumulatif = eczaneSayisi;
+
+                var i = 1;
+                var j = 1;
+
+                var tarihlerSirali = tarihler
+                    .Where(w => w.GunGrupId == gunGrup.GunGrupId)
+                    .OrderBy(o => o.Tarih).ToList();
+
+                foreach (var tarih in tarihlerSirali)
+                {
+                    if (i > eczaneSayisiKumulatif)
+                    {
+                        eczaneSayisiKumulatif += eczaneSayisi;
+                        j++;
+                    }
+                    //else
+                    //{
+                    //    tarih.NobetGrubuBuyukluk = j;
+                    //}
+
+                    if (j == 0)
+                    {
+
+                    }
+
+                    if (i <= eczaneSayisiKumulatif)
+                    {
+                        tarih.NobetGrubuBuyukluk = j;
+                    }
+
+                    i++;
+                }
+            }
+        }
+
         #endregion        
     }
 }

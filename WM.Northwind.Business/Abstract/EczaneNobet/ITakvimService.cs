@@ -82,6 +82,11 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
             DateTime nobetBaslangicTarihi,
             DateTime nobetBitisTarihi);
 
+        List<EczaneNobetCozum> SiraliNobetYazGrupBazindaEczaneNobetSonuclar(NobetGrupGorevTipDetay nobetGrupGorevTip,
+            List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
+            DateTime nobetBaslangicTarihi,
+            DateTime nobetBitisTarihi);
+
         List<EczaneNobetAlacakVerecek> EczaneNobetAlacakVerecekHesaplaAntalya(
                List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,
                List<EczaneNobetSonucListe2> anahtarListeTumu,

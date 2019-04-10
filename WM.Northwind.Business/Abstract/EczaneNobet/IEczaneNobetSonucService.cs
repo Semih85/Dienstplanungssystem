@@ -28,7 +28,6 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         DateTime GetSonNobetTarihi(int nobetUstGrupId);
         void CokluNobetYayimla(int[] ids, bool yayimlandiMi);
 
-
         List<MyDrop> GetNobetGrupSonYayimNobetTarihleri(int nobetUstGrupId);
 
         List<EczaneNobetIstatistik> GetEczaneNobetIstatistik2(List<int> nobetGrupIdList);
@@ -38,10 +37,12 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetSonucNode> GetEczaneNobetSonucNodes(int yil, int ay, List<int> eczaneIdList);
         List<EczaneNobetSonucEdge> GetEczaneNobetSonucEdges(int yil, int ay, int ayniGuneDenkGelenNobetSayisi, int nobetUstGrupId);
 
+        List<EczaneNobetSonucDetay2> GetDetaylar(DateTime baslamaTarihi, int nobetGrupGorevTipId);
         List<EczaneNobetSonucDetay2> GetDetaylar(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId);
         List<EczaneNobetSonucDetay2> GetDetaylar(DateTime baslangicTarihi, DateTime bitisTarihi, int[] nobetGrupIdList);
         List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipIdList(DateTime baslangicTarihi, DateTime bitisTarihi, int[] nobetGrupGorevTipIdList);
         List<EczaneNobetSonucDetay2> GetDetaylar(int nobetUstGrupId);
+        List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipId(int nobetGrupGorevTipId);
         List<EczaneNobetSonucDetay2> GetDetaylar(List<int> nobetGrupIdList);
         List<EczaneNobetSonucDetay2> GetDetaylar(int yil, int ay, int nobetUstGrupId);
         List<EczaneNobetSonucDetay2> GetDetaylar2ByYilAyNobetGrup(int yil, int ay, int nobetGrupId, bool buAyVeSonrasi);
@@ -58,12 +59,18 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetSonucListe2> GetSonuclar();
         List<EczaneNobetSonucListe2> GetSonuclar(int nobetUstGrupId);
         List<EczaneNobetSonucListe2> GetSonuclar(int yil, int ay, int nobetUstGrupId);
+        List<EczaneNobetSonucListe2> GetSonuclar(int nobetGrupGorevTipId, int gunGrupId);
         List<EczaneNobetSonucListe2> GetSonuclar(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId);
         List<EczaneNobetSonucListe2> GetSonuclar(DateTime baslangicTarihi, DateTime bitisTarihi, List<EczaneNobetSonucListe2> eczaneNobetSonuclar);
         List<EczaneNobetSonucListe2> GetSonuclar(List<EczaneNobetSonucDetay2> eczaneNobetSonucDetaylar, int nobetUstGrupId);
         List<EczaneNobetSonucListe2> GetSonuclarUstGrupBaslamaTarihindenSonra(int[] nobetGrupIdList);
-        List<EczaneNobetSonucListe2> GetSonuclarUstGrupBaslamaTarihindenSonra(int nobetUstGrupId);       
-        
+        List<EczaneNobetSonucListe2> GetSonuclarUstGrupBaslamaTarihindenSonra(int nobetUstGrupId);
+        List<EczaneNobetSonucListe2> EczaneNobetSonucBirlesim(
+            List<NobetGrupGorevTipGunKuralDetay> nobetGrupGorevTipGunKurallar,
+            List<EczaneNobetSonucDetay2> eczaneNobetSonuclar,
+            List<NobetGrupGorevTipTakvimOzelGunDetay> nobetGrupGorevTipTakvimOzelGunler,
+            List<EczaneNobetMazeretDetay> mazeretler,
+            List<EczaneNobetIstekDetay> istekler);
 
         List<EczaneGrupNobetSonuc> GetEczaneGrupNobetSonuc(int nobetUstGrupId);
         List<EczaneGrupNobetSonuc> GetEczaneGrupNobetSonuc(List<int> nobetGrupIdList);
