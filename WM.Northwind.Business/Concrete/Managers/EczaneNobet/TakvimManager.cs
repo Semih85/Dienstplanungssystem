@@ -1997,11 +1997,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var sonuclarHepsi = new List<EczaneNobetCozum>();
 
             #region yeni eczanenin gruba giriş tarihinden sonraki nöbetler siindi
+            //bu
+            //var silinecekNobetler = _eczaneNobetSonucService.GetDetaylar(nobetBaslangicTarihi, nobetGrupGorevTip.Id)
+            //     .Select(s => s.Id).ToArray();
 
-            var silinecekNobetler = _eczaneNobetSonucService.GetDetaylar(nobetBaslangicTarihi, nobetGrupGorevTip.Id)
-                 .Select(s => s.Id).ToArray();
-
-            _eczaneNobetSonucService.CokluSil(silinecekNobetler);
+            //_eczaneNobetSonucService.CokluSil(silinecekNobetler);
 
             #endregion
 
@@ -2025,6 +2025,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     var anahtarListeIlk = _eczaneNobetSonucService.GetSonuclar(nobetGrupGorevTip.Id, gunGrup.GunGrupId)
                         .OrderBy(o => o.Tarih).ToList();
 
+                    //bu istisna eklenemez. sıralı nöbette son yazılan nöbet bloğu tam olmalı.
+                    //if (nobetGrupGorevTip.Id == 46)//kozcağız - istisna
+                    //{
+                    //    anahtarListeIlk = _eczaneNobetSonucService.GetSonuclar(nobetGrupGorevTip.Id, gunGrup.GunGrupId)
+                    //    .Where(w => w.Tarih < w.NobetUstGrupBaslamaTarihi).OrderBy(o => o.Tarih).ToList();
+                    //}
+
                     var sonNobetci = anahtarListeIlk.LastOrDefault();
 
                     var sonNobetcininOncekiNobeti = anahtarListeIlk
@@ -2032,9 +2039,25 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                     && w.EczaneNobetGrupId == sonNobetci.EczaneNobetGrupId)
                                     .LastOrDefault() ?? new EczaneNobetSonucListe2();
 
+                    //if (gunGrup.GunGrupId == 3)
+                    //{
+                    //    anahtarListeIlk = anahtarListeIlk
+                    //    .Where(w => w.Tarih > sonNobetcininOncekiNobeti.Tarih.AddDays(1)
+                    //             && w.Tarih <= sonNobetci.Tarih)
+                    //    .OrderBy(o => o.Tarih).ToList();
+                    //}
+                    //else
+                    //{
+                    //    anahtarListeIlk = anahtarListeIlk
+                    //    .Where(w => w.Tarih > sonNobetcininOncekiNobeti.Tarih//.AddDays(1)
+                    //             && w.Tarih <= sonNobetci.Tarih)
+                    //    .OrderBy(o => o.Tarih).ToList();
+                    //}
+
                     anahtarListeIlk = anahtarListeIlk
-                        .Where(w => (w.Tarih > sonNobetcininOncekiNobeti.Tarih && w.Tarih <= sonNobetci.Tarih))
-                        .OrderBy(o => o.Tarih).ToList();
+                         .Where(w => w.Tarih > sonNobetcininOncekiNobeti.Tarih//.AddDays(1)
+                                  && w.Tarih <= sonNobetci.Tarih)
+                         .OrderBy(o => o.Tarih).ToList();
 
                     var alinacakEczaneSayisi = ilgiliTarihler.Count;
 
@@ -2213,7 +2236,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         }
 
                         sonuclarGunGrup.AddRange(araCozum);
-                        sonuclarHepsi.AddRange(sonuclarGunGrup);
+                        sonuclarHepsi.AddRange(araCozum);
 
                         _eczaneNobetSonucService.CokluEkle(araCozum);
 

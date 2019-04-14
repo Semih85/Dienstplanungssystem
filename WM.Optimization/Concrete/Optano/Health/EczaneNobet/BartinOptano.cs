@@ -23,20 +23,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             var model = new Model() { Name = "Bartin Eczane Nöbet" };
 
-            #region Veriler
-
-            #region kısıtlar
-
-            var eczaneGrup = NobetUstGrupKisit(data.Kisitlar, "eczaneGrup", data.NobetUstGrupId);
-
-            var pespeseHaftaIciAyniGunNobet = NobetUstGrupKisit(data.Kisitlar, "pespeseHaftaIciAyniGunNobet", data.NobetUstGrupId);
-
-            var altGruplarlaAyniGunNobetTutma = NobetUstGrupKisit(data.Kisitlar, "altGruplarlaAyniGunNobetTutma", data.NobetUstGrupId);
-            var eczanelerinNobetGunleriniKisitla = NobetUstGrupKisit(data.Kisitlar, "eczanelerinNobetGunleriniKisitla", data.NobetUstGrupId);
-
-            var ayIcindeAyniGunNobet = NobetUstGrupKisit(data.Kisitlar, "ayIcindeAyniGunNobet", data.NobetUstGrupId);
-
-            #endregion
+            #region Veriler            
 
             #region tur çevrim katsayıları
 
@@ -92,12 +79,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             foreach (var nobetGrupGorevTip in data.NobetGrupGorevTipler)
             {
-
-                #region ön hazırlama
+                #region kısıtlar grup bazlı
 
                 var kisitlarGrupBazli = data.NobetGrupGorevTipKisitlar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                var kisitlarAktif = GetKisitlarNobetGrupBazli(data.Kisitlar, kisitlarGrupBazli);
+                var kisitlarAktif = GetKisitlarNobetGrupBazli(data.Kisitlar, kisitlarGrupBazli); 
+
+                #endregion
+
+                #region ön hazırlama
 
                 #region nöbet kurallar
 
@@ -1153,7 +1143,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     Model = model,
                     EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
                     EczaneNobetSonuclar = eczaneNobetSonuclarGorevTipBazli,
-                    NobetUstGrupKisit = eczaneGrup,
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k11"),
                     EczaneGruplar = data.EczaneGruplar
                         .Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId
                         //&& !(w.EczaneGrupTanimAdi == "3. HASTANE" && (w.EczaneAdi == "HAKAN" || w.EczaneAdi == "YAŞAM"))
@@ -1226,7 +1216,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     Model = model,
                     EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
                     IkiliEczaneler = data.IkiliEczaneler,
-                    NobetUstGrupKisit = ayIcindeAyniGunNobet,
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k10"),
                     Tarihler = data.TarihAraligi.Where(w => w.TalepEdilenNobetciSayisi > 1).ToList(),
                     KararDegiskeni = _x
                 };
@@ -1307,7 +1297,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         results.ResultModel = new List<EczaneNobetCozum>();
                         results.KararDegikeniSayisi = data.EczaneNobetTarihAralik.Count;
                         results.CalismaSayisi = data.CalismaSayisi;
-                        results.NobetGrupSayisi = data.NobetGruplar.Count;
+                        results.NobetGrupSayisi = data.NobetGrupGorevTipler.Count;
                         results.IncelenenEczaneSayisi = data.EczaneNobetGruplar.Count;
 
                         var sonuclar = data.EczaneNobetTarihAralik.Where(s => _x[s].Value.IsAlmost(1) == true).ToList();
@@ -1368,9 +1358,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     string cozulenNobetGruplar = null;
 
-                    var ilkGrup = data.NobetGruplar.Select(s => s.Adi).FirstOrDefault();
+                    var ilkGrup = data.NobetGrupGorevTipler.Select(s => s.NobetGrupAdi).FirstOrDefault();
 
-                    foreach (var i in data.NobetGruplar.Select(s => s.Adi))
+                    foreach (var i in data.NobetGrupGorevTipler.Select(s => s.NobetGrupAdi))
                     {
                         if (i == ilkGrup)
                         {

@@ -519,7 +519,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
                 var nobetGrupGorevTiplerTumu = model.NobetGrupGorevTipler.Where(w => model.NobetGrupId.Contains(w.NobetGrupId)).ToList();
 
-                var sadeceSiraliNobetYazilacakGruplar = _nobetGrupGorevTipKisitService.GetDetaylarByKisitId(63);//Sadece Sıralı Nöbet Yaz
+                //Sadece Sıralı Nöbet Yaz
+                var sadeceSiraliNobetYazilacakGruplar = _nobetGrupGorevTipKisitService.GetDetaylar(63, nobetGrupGorevTiplerTumu.Select(s => s.Id).ToList());
 
                 var nobetGrupGorevTiplerSiradanYazilacaklar = new List<NobetGrupGorevTipDetay>();
                 var eczaneNobetGruplarSiradanYazilacakGruplar = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(sadeceSiraliNobetYazilacakGruplar.Select(s => s.NobetGrupGorevTipId).ToList());

@@ -8,7 +8,6 @@ using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Business.Abstract.Optimization.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
-using WM.UI.Mvc.Areas.EczaneNobet.Filters;
 using WM.UI.Mvc.Areas.EczaneNobet.Models;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
@@ -281,8 +280,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             if (eczaneNobetModelCoz.BuAyVeSonrasi)
             {
                 return RedirectToAction("PivotSonuclar", "EczaneNobetSonuc");
-                    //RedirectToAction("PivotCozum", "EczaneNobetSonuc",
-                    //new { area = "EczaneNobet", nobetGrup = eczaneNobetModelCoz.NobetGrupId, yilBaslangic = eczaneNobetModelCoz.BaslangicTarihi.Year, yilBitis = eczaneNobetModelCoz.BitisTarihi.Year });
+                //RedirectToAction("PivotCozum", "EczaneNobetSonuc",
+                //new { area = "EczaneNobet", nobetGrup = eczaneNobetModelCoz.NobetGrupId, yilBaslangic = eczaneNobetModelCoz.BaslangicTarihi.Year, yilBitis = eczaneNobetModelCoz.BitisTarihi.Year });
             }
             else if (eczaneNobetModelCoz.CozumTercih == 0 && eczaneNobetModelCoz.NobetGrupId.Count() > 1)
             {

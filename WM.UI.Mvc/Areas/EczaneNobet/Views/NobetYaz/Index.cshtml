@@ -100,7 +100,9 @@
                                         <label for="TarihBitis" class="ml-4 mb-0"><span class="badge badge-light">Bitiş Tarihi</span></label>*@
                                     <div class="input-group input-daterange mb-2" style="width:260px;">
 
-                                        @Html.TextBox("TarihBaslangic", null , new { @class = "form-control datepicker mr-2",
+                                        @Html.TextBox("TarihBaslangic", null, new
+                                        {
+                                            @class = "form-control datepicker mr-2",
                                            //data_toggle = "tooltip",
                                            //data_placement = "top",
                                            //title = "Başlangıç Tarihi",
@@ -110,7 +112,9 @@
 
                                         <div class="input-group-addon mr-2 mt-1 p-1">-</div>
 
-                                        @Html.TextBox("TarihBitis", null, new { @class = "form-control datepicker mr-3",
+                                        @Html.TextBox("TarihBitis", null, new
+                                        {
+                                            @class = "form-control datepicker mr-3",
                                            //data_toggle = "tooltip",
                                            //data_placement = "top",
                                            //title = "Bitiş Tarihi",
@@ -192,7 +196,9 @@
 
                                     @*@Html.LabelFor(model => model.EczaneId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
 
-                                    @Html.DropDownList("CalismaSayisi", null, htmlAttributes: new { @class = "form-control selectpicker mr-2 mr-md-5",
+                                    @Html.DropDownList("CalismaSayisi", null, htmlAttributes: new
+                                    {
+                                        @class = "form-control selectpicker mr-2 mr-md-5",
                                        mobile = "true",
                                        title = "Çalışma Sayısını Seçiniz..."
                                    })
@@ -509,24 +515,24 @@
     @Scripts.Render("~/bundle/chart/scripts")
 
     @*<script>
-        // Load the IFrame Player API code asynchronously.
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/player_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+            // Load the IFrame Player API code asynchronously.
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/player_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        // Replace the 'ytplayer' element with an <iframe> and
-        // YouTube player after the API code downloads.
-        var player;
-        function onYouTubePlayerAPIReady() {
-            player = new YT.Player('ytplayer', {
-                height: '360',
-                width: '640',
-                videoId: 'M7lc1UVf-VE',
-                playerVars: { 'autoplay': 1, 'controls': 0 },
-            });
-        }
-    </script>*@
+            // Replace the 'ytplayer' element with an <iframe> and
+            // YouTube player after the API code downloads.
+            var player;
+            function onYouTubePlayerAPIReady() {
+                player = new YT.Player('ytplayer', {
+                    height: '360',
+                    width: '640',
+                    videoId: 'M7lc1UVf-VE',
+                    playerVars: { 'autoplay': 1, 'controls': 0 },
+                });
+            }
+        </script>*@
 
     <script>
 

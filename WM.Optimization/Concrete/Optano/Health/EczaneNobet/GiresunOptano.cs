@@ -141,23 +141,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             {
                 #region kısıtlar grup bazlı
 
-                var kisitlarAktif = new List<NobetUstGrupKisitDetay>();
-
-                //üst grup kısıtlar olduğu gibi aktif listeye aktarıldı. grup bazlı değişen olursa aktiften değişecek.
-                data.Kisitlar.ForEach(x => kisitlarAktif.Add((NobetUstGrupKisitDetay)x.Clone()));
-
                 var kisitlarGrupBazli = data.NobetGrupGorevTipKisitlar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                if (kisitlarGrupBazli.Count > 0)
-                {
-                    foreach (var grupBazliKisit in kisitlarGrupBazli)
-                    {
-                        var kisitGrupBazli = kisitlarAktif.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId);
-
-                        kisitGrupBazli.PasifMi = grupBazliKisit.PasifMi;
-                        kisitGrupBazli.SagTarafDegeri = grupBazliKisit.SagTarafDegeri;
-                    }
-                }
+                var kisitlarAktif = GetKisitlarNobetGrupBazli(data.Kisitlar, kisitlarGrupBazli);
 
                 #endregion
 
@@ -1270,23 +1256,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             {
                 #region kısıtlar grup bazlı
 
-                var kisitlarAktif = new List<NobetUstGrupKisitDetay>();
-
-                //üst grup kısıtlar olduğu gibi aktif listeye aktarıldı. grup bazlı değişen olursa aktiften değişecek.
-                data.Kisitlar.ForEach(x => kisitlarAktif.Add((NobetUstGrupKisitDetay)x.Clone()));
-
                 var kisitlarGrupBazli = data.NobetGrupGorevTipKisitlar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                if (kisitlarGrupBazli.Count > 0)
-                {
-                    foreach (var grupBazliKisit in kisitlarGrupBazli)
-                    {
-                        var kisitGrupBazli = kisitlarAktif.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId);
-
-                        kisitGrupBazli.PasifMi = grupBazliKisit.PasifMi;
-                        kisitGrupBazli.SagTarafDegeri = grupBazliKisit.SagTarafDegeri;
-                    }
-                }
+                var kisitlarAktif = GetKisitlarNobetGrupBazli(data.Kisitlar, kisitlarGrupBazli);
 
                 #endregion
 
