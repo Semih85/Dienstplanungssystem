@@ -131,8 +131,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var kararIndex = p.EczaneNobetTarihAralik
                                    .Where(e => p.Tarihler.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
 
-                if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
-                    p.KumulatifOrtalamaGunKuralSayisi = p.NobetUstGrupKisit.SagTarafDegeri;
+                if (p.EnAzMi)
+                {
+                    if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
+                        p.KumulatifOrtalamaGunKuralSayisi = p.NobetUstGrupKisit.SagTarafDegeri;
+                }
+                else
+                {
+                    if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
+                        p.KumulatifOrtalamaGunKuralSayisi += p.NobetUstGrupKisit.SagTarafDegeri;
+                }
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
                     $" [Std. {p.KumulatifOrtalamaGunKuralSayisi}" +
@@ -2112,6 +2120,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             }
         }
 
+        public double GetArdisikBosGunSayisi(int pespeseNobetSayisiHaftaIci, double altLimit)
+        {
+            if (pespeseNobetSayisiHaftaIci > 0)
+            {
+                altLimit = pespeseNobetSayisiHaftaIci;
+            }
+
+            return altLimit;
+        }
         #endregion        
     }
 }

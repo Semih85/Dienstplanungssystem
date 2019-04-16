@@ -61,6 +61,7 @@ namespace WM.Optimization.Abstract.Health
         NobetUstGrupKisitDetay GetNobetGunKuralIlgiliKisit(List<NobetUstGrupKisitDetay> kisitlarAktif, int nobetGunKuralId);
         List<NobetUstGrupKisitDetay> GetKisitlarNobetGrupBazli(List<NobetUstGrupKisitDetay> kisitlarUstGrupBazli, List<NobetGrupGorevTipKisitDetay> kisitlarGrupBazli);
         void NobetGrupBuyuklugunuTakvimeEkle(List<TakvimNobetGrup> tarihler, int eczaneSayisi);
+        double GetArdisikBosGunSayisi(int pespeseNobetSayisiHaftaIci, double altLimit);
     }
 }
 
