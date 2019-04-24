@@ -263,7 +263,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     var gruptakiEczaneler = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(eczaneNobetGrup.NobetGrupGorevTipId);
 
-                    var baslangicTarihi = (DateTime)eczaneNobetGrup.BitisTarihi;
+                    var baslangicTarihi = eczaneNobetGrup.BaslangicTarihi;
 
                     //if (baslangicTarihiDegistiMi)
                     //{
@@ -271,6 +271,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     //        ? degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi
                     //        : eczaneNobetGrup.BaslangicTarihi;
                     //}
+
                     if (bitisTarihiDegistiMi 
                         && eczaneNobetGrup.BitisTarihi != null)
                     {

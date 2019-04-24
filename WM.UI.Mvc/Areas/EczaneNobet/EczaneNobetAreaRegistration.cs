@@ -295,7 +295,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
 
             context.MapRoute(
                 name: "EczaneGrup",
-                url: "eczane-grup",
+                url: "eczane-gruplar",
                 defaults: new { controller = "EczaneGrup", action = "Index" }
             );
 

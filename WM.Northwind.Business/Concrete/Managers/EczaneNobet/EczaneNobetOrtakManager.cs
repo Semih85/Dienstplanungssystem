@@ -3960,18 +3960,18 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                         #region kontrol
 
-                        var kontrol = true;
+                        var kontrol = false;
 
                         if (kontrol)
                         {
                             var kontrolEdilecekEczaneler = new string[] {
-                                "AYDIN", //23.4.2008
-                                "OSMANBEY",   //-5
-                                //"SEÇKİN"     //14
+                                //"AYDIN", //23.4.2008
+                                //"OSMANBEY",   //-5
+                                "MAYA"     //14
                             };
 
                             if (kontrolEdilecekEczaneler.Contains(eczaneNobetTarih.EczaneAdi)
-                                //&& eczaneNobetTarih.BayramMi
+                                && eczaneNobetTarih.PazarGunuMu
                                 )
                             {
 
@@ -4089,19 +4089,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             return bayramPespeseFarkliTurAktif;
         }
-
-        private bool GunGrubuTakipDurumu(int nobetUstGrupId, int[] takipEdilecekNobetUstGruplar)
-        {
-            if (takipEdilecekNobetUstGruplar.Contains(nobetUstGrupId))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
+        
         private bool GunGrubuTakipDurumu(int nobetGunKuralId, List<NobetGrupGorevTipGunKuralDetay> nobetGrupGorevTipGunKurallar)
         {
             if (nobetGrupGorevTipGunKurallar.Select(s => s.NobetGunKuralId).Contains(nobetGunKuralId))
@@ -4174,7 +4162,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             if (ozelKatsayi > 1)
             {
-                var haftaSonuIndis = Math.Ceiling(ilkTarihtenSonrakiGecenGunSayisi / ozelKatsayi);
+                //var haftaSonuIndis = Math.Ceiling(ilkTarihtenSonrakiGecenGunSayisi / ozelKatsayi);
 
                 return toplamFark;
             }

@@ -350,6 +350,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var eczaneNobetSonuclarPlanlananSonrasi = eczaneNobetSonuclarPlanlanan
                 .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
+
             perf.Add(new KeyValuePair<string, TimeSpan>("04. sonuçlar planlanan başlama tarihinden sonra", sw.Elapsed));
             sw.Restart();
 
@@ -406,6 +407,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             perf.Add(new KeyValuePair<string, TimeSpan>("09. EczaneNobetAlacakVerecekHesapla", sw.Elapsed));
             sw.Restart();
 
+            var eczaneNobetAlacakVerecekKontrol = eczaneNobetAlacakVerecek
+                .Where(w => w.EczaneAdi == "KUMBUL"
+                         //|| w.EczaneAdi == "MÜĞREN"
+                         )
+                .ToList();
             //var altGrupluEczaneler = _eczaneNobetGrupAltGrupService.GetDetaylar(nobetUstGrup.Id)
             //    .Select(s => s.NobetGrupId).Distinct().ToArray();
 
@@ -488,7 +494,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         NobetOzelGunAdi = s.NobetOzelGunAdi,
                         NobetOzelGunKategoriAdi = s.NobetOzelGunKategoriAdi
                     }).ToList(),
-                KalibrasyonluToplamlar =  KalibrasyonlaSonuclariBirlestir(nobetUstGrup.Id),
+                KalibrasyonluToplamlar = KalibrasyonlaSonuclariBirlestir(nobetUstGrup.Id),
                 GunFarklariTumSonuclar = gunFarklari,
                 GunFarklariFrekanslar = gunFarkiFrekanslar,
                 EsGrubaAyniGunYazilanNobetler = esGrubaAyniGunYazilanNobetler,

@@ -177,7 +177,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         public virtual void PesPeseGorevEnAz(KpPesPeseGorevEnAz p)
         {
 
-            if (!p.NobetUstGrupKisit.PasifMi && p.NobetSayisi > 0
+            if (!p.NobetUstGrupKisit.PasifMi 
+                && p.NobetSayisi > 0 //alanya için ilk nöbette yazılamayacak tarihi yarıya düşürmüştüm. 22.04.2019 dikkatli olmak lazım.
                 //&& (p.NobetUstGrupKisit.NobetUstGrupId == 6 bartın 
                 //&& p.EczaneNobetGrup.EczaneAdi != "BÜYÜK")
                 //enSonNobetTarihi >= nobetUstGrupBaslamaTarihi

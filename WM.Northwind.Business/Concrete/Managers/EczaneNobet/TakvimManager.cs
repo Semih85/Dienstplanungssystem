@@ -1473,6 +1473,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         EczaneNobetGrupId = s.EczaneNobetGrupId,
                         NobetUstGrupBaslamaTarihi = s.NobetUstGrupBaslamaTarihi,
                         GunGrup = s.GunGrup,
+                        GunGrupId = s.GunGrupId,
                         NobetGrupAdi = s.NobetGrupAdi,
                         NobetGrupId = s.NobetGrupId,
                         NobetSayisi = indis,
@@ -1535,9 +1536,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         var nobetGrupGunGruplar = nobetGrupGorevTipGunKurallar.Select(s => s.GunGrupId).Distinct().ToList();
 
                         if (!nobetGrupGunGruplar.Contains(gunGrup.GunGrupId))
-                        {
                             continue;
-                        }
 
                         var ilgiliTarihlerByNobetGrup = ilgiliTarihler
                             .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id)
@@ -1607,7 +1606,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                             var eczaneNobetGruplar = eczaneNobetGruplarTumu
                                 .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
-                                && (w.BitisTarihi >= bitisTarihi || w.BitisTarihi == null)
+                                        && (w.BitisTarihi >= bitisTarihi || w.BitisTarihi == null)
                                 ).ToList();
 
                             //son Anahtar Listede Olan EczaneNobetGruplarda olmayan Eczaneler (yeni anahtar listede olmayacak eczaneler)
@@ -1655,17 +1654,21 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                             var eczaneNobetCozumAnaharListeGecis = new List<EczaneNobetCozumAnaharListeGecis>();
 
+                            #region kontrol
+
                             var kontrol = true;
 
                             if (kontrol)
                             {
-                                var eczaneKontrolEdilecek = eczaneNobetGruplar.Where(w => w.EczaneAdi == "ÇAĞLA");
+                                var eczaneKontrolEdilecek = eczaneNobetGruplar
+                                    .Where(w => w.EczaneAdi == "ÇAĞLA");
 
                                 if (eczaneKontrolEdilecek.Count() > 0)
                                 {
-
                                 }
                             }
+
+                            #endregion
 
                             if (yeniAnahtarListeyeEklenecekEczaneler.Count > 0)
                             {
@@ -1897,7 +1900,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                         #region kontrol
 
-                        var kontrol = true;
+                        var kontrol = false;
 
                         if (kontrol)
                         {
@@ -1979,11 +1982,17 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         }
                     }
                 }
-
             }
-
         }
 
+        /// <summary>
+        /// Eczane nöbet sonuçlarda sıralı nöbet yazdırmak için
+        /// </summary>
+        /// <param name="nobetGrupGorevTip"></param>
+        /// <param name="eczaneNobetGruplarTumu"></param>
+        /// <param name="nobetBaslangicTarihi"></param>
+        /// <param name="nobetBitisTarihi"></param>
+        /// <returns></returns>
         public List<EczaneNobetCozum> SiraliNobetYazGrupBazindaEczaneNobetSonuclar(NobetGrupGorevTipDetay nobetGrupGorevTip,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,

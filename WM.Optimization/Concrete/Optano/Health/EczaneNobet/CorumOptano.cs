@@ -245,7 +245,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         OrtalamaNobetSayisi = OrtalamaNobetSayisi(talepEdilenNobetciSayisiGunKuralBazli, gruptakiEczaneSayisi),
                         KumulatifGunSayisi = item.GunSayisi,
                         KumulatifOrtalamaNobetSayisi = OrtalamaNobetSayisi(kumulatifNobetSayisiGunKuralBazli + talepEdilenNobetciSayisiGunKuralBazli, gruptakiEczaneSayisi)
-                        //KumulatifOrtalamaNobetSayisi = OrtalamaNobetSayisi(item.TalepEdilenNobetciSayisi, gruptakiEczaneSayisi)
                     });
                 }
 
