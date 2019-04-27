@@ -176,7 +176,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         /// <param name="p">KpPesPeseGorevEnAz</param>
         public virtual void PesPeseGorevEnAz(KpPesPeseGorevEnAz p)
         {
-
             if (!p.NobetUstGrupKisit.PasifMi 
                 && p.NobetSayisi > 0 //alanya için ilk nöbette yazılamayacak tarihi yarıya düşürmüştüm. 22.04.2019 dikkatli olmak lazım.
                 //&& (p.NobetUstGrupKisit.NobetUstGrupId == 6 bartın 
@@ -217,7 +216,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         /// <param name="p">KpHerAyHaftaIciPespeseGorev</param>
         public virtual void HerAyHaftaIciPespeseGorev(KpHerAyHaftaIciPespeseGorev p)
         {
-            if (!p.NobetUstGrupKisit.PasifMi && p.OrtamalaNobetSayisi > 1)
+            if (!p.NobetUstGrupKisit.PasifMi 
+                && p.OrtamalaNobetSayisi > 1
+                )
             {
                 var gunSayisi = p.Tarihler.Count;
 
@@ -313,10 +314,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         public virtual void HerAyPespeseGorev(KpHerAyPespeseGorev p)
         {
             if (!p.NobetUstGrupKisit.PasifMi)
-            {
-                var tarihler2 = p.Tarihler.Take(p.Tarihler.Count - p.PespeseNobetSayisi).ToList();
+            {//PespeseNobetSayisi std değil ama bu kısıt için arayüzdeki std kullanılabilir.
+                //Çünkü std hep 1 olacak zaten.
 
-                foreach (var tarih in tarihler2)
+                //if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
+                //    p.PespeseNobetSayisi = (int)p.NobetUstGrupKisit.SagTarafDegeri;
+
+                var tarihler = p.Tarihler.Take(p.Tarihler.Count - p.PespeseNobetSayisi).ToList();
+
+                foreach (var tarih in tarihler)
                 {
                     var altLimit = tarih.Tarih;
                     var ustLimit = tarih.Tarih.AddDays(p.PespeseNobetSayisi);
@@ -858,7 +864,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 foreach (var eczaneNobetMazeret in p.EczaneNobetMazeretler)
                 {
                     var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
-                     + $"{indis}.mazeret - Tarih: {eczaneNobetMazeret.Tarih.ToShortDateString()}"
+                     + $"m{indis}. Mazeret tarihi: {eczaneNobetMazeret.Tarih.ToShortDateString()}"
                      //+ $"{eczaneNobetMazeret.MazeretAdi}"
                      + $"]";
 
@@ -1942,6 +1948,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             var celiskiler = "<ul class='list-group list-group-flush mt-2 mb-3'>";
 
+            if (solution.ConflictingSet.ConstraintsLB.Count() > 1000)
+            {
+                return $"Çok sayıda kural için çelişki bulunmaktadır. Lütfen tüm kuralları gözden geçiriniz.*{solution.ConflictingSet.ConstraintsLB.Count()}";
+            }
+
             var celisikKurallar = new List<string>();
 
             foreach (var conflictLb in solution.ConflictingSet.ConstraintsLB)
@@ -2121,11 +2132,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             }
         }
 
-        public double GetArdisikBosGunSayisi(int pespeseNobetSayisiHaftaIci, double altLimit)
+        public double GetArdisikBosGunSayisi(int pespeseNobetSayisi, double altLimit)
         {
-            if (pespeseNobetSayisiHaftaIci > 0)
+            if (pespeseNobetSayisi > 0)
             {
-                altLimit = pespeseNobetSayisiHaftaIci;
+                altLimit = pespeseNobetSayisi;
             }
 
             return altLimit;

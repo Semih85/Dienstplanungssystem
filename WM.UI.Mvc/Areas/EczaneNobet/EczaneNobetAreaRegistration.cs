@@ -389,6 +389,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                 defaults: new { controller = "NobetUstGrupGunGrup", action = "Index" }
             );
 
+            context.MapRoute(
+                name: "AyniGunTutulanNobet",
+                url: "ayni-gun-tutulan-nobetler",
+                defaults: new { controller = "AyniGunTutulanNobet", action = "Index" }
+            );
             /*
                 context.MapRoute(
                     "NobetGrup",

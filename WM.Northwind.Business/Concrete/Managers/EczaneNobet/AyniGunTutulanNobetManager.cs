@@ -244,7 +244,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     .Select(s => s.Id)
                     .OrderBy(o => o).ToList();
 
-
                 foreach (var nobetGrup in nobetGruplari)
                 {
                     var eczaneNobetGruplar1 = eczaneNobetGruplar.Where(w => w.NobetGrupId == nobetGrup).ToList();

@@ -20,5 +20,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Models
         public int NobetUstGrupId { get; internal set; }
         public List<KalibrasyonDetay> KalibrasyonluToplamlar { get; internal set; }
         public IEnumerable<EczaneNobetSonucListe2> SonuclarPlanlananVeGercek { get; internal set; }
+        public List<AyniGunNobetTutanEczane> AyniGunNobetTutanEczanelerOzet { get; internal set; }
     }
 }

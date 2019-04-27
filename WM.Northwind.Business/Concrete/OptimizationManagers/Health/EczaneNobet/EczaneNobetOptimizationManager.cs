@@ -119,7 +119,10 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var nobetUstGrup = _nobetGrupService.GetDetaylar(nobetGrupIdList.ToList()).FirstOrDefault();
 
-            if (nobetUstGrup.Id == 1 || nobetUstGrup.Id == 3)
+            if (nobetUstGrup.Id == 1 //alanya
+                || nobetUstGrup.Id == 3 //mersin
+                || nobetUstGrup.Id == 9 //çorum
+                )
             {
                 var sonuclar = _eczaneNobetSonucService.GetSonuclarUstGrupBaslamaTarihindenSonra(nobetGrupIdList);
 

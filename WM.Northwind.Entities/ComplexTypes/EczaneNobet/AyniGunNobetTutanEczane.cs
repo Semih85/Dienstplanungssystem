@@ -24,5 +24,11 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public DateTime Tarih { get; set; }
         public string TarihAciklama => String.Format("{0:yyy MM dd, ddd}", Tarih);
         public string YilAy => String.Format("{0:yy-MM}", Tarih);
+        public string EczaneBirlesim => $"{G1EczaneNobetGrupId}{G2EczaneNobetGrupId}";
+
+        public string G1NobetGrupAdi { get; set; }
+        public string G2NobetGrupAdi { get; set; }
+        public string G2NobetAltGrupAdi { get; set; }
+        public string G1NobetAltGrupAdi { get; set; }
     }
 }

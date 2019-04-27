@@ -423,6 +423,44 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             perf.Add(new KeyValuePair<string, TimeSpan>("11. ayniGunNobetTutanEczaneler", sw.Elapsed));
             sw.Restart();
 
+            var ayniGunNobetSayisiGrouped = (from s in ayniGunNobetTutanEczaneler
+                                             group s by new
+                                             {
+                                                 s.EczaneBirlesim,
+                                                 s.G1Eczane,
+                                                 s.G2Eczane,
+                                                 s.G1EczaneNobetGrupId,
+                                                 s.G2EczaneNobetGrupId,
+                                                 s.G1NobetGrupAdi,
+                                                 s.G2NobetGrupAdi,
+                                                 s.G1NobetAltGrupAdi,
+                                                 s.G2NobetAltGrupAdi
+                                             } into grouped
+                                             //where grouped.Count() > 1
+                                             select new AyniGunNobetTutanEczane
+                                             {
+                                                 Grup = "Tümü",
+                                                 G1Eczane = grouped.Key.G1Eczane,
+                                                 G2Eczane = grouped.Key.G2Eczane,
+                                                 G1NobetGrupAdi = grouped.Key.G1NobetGrupAdi,
+                                                 G2NobetGrupAdi = grouped.Key.G2NobetGrupAdi,
+                                                 G1NobetAltGrupAdi = grouped.Key.G1NobetAltGrupAdi,
+                                                 G2NobetAltGrupAdi = grouped.Key.G2NobetAltGrupAdi,
+                                                 G1EczaneNobetGrupId = grouped.Key.G1EczaneNobetGrupId,
+                                                 G2EczaneNobetGrupId = grouped.Key.G2EczaneNobetGrupId,
+                                                 //AltGrupAdi = "Kendisi",
+                                                 AyniGunNobetSayisi = grouped.Count(),
+                                                 //Tarih = grouped.Key.Tarih,
+                                                 //TakvimId = s.TakvimId,
+                                                 //GunGrup = grouped.Key.GunGrup
+                                             }).ToList();
+
+            var ayniGunNobetSayisi1denFazlaGrouped = ayniGunNobetSayisiGrouped
+                .Where(w => w.AyniGunNobetSayisi > 1).ToList();
+
+            ayniGunNobetTutanEczaneler = ayniGunNobetTutanEczaneler
+                .Where(w => ayniGunNobetSayisi1denFazlaGrouped.Select(s => s.EczaneBirlesim).Contains(w.EczaneBirlesim)).ToList();
+
             ViewBag.ToplamUzunluk = sonuclar.Count;
 
             var gunFarklari = _eczaneNobetOrtakService.EczaneNobetIstatistikGunFarkiHesapla(sonuclar);
@@ -500,6 +538,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 EsGrubaAyniGunYazilanNobetler = esGrubaAyniGunYazilanNobetler,
                 AltGrupAyniGunNobetTutanEczaneler = ayniGunNobetTutanAltGrupluEczaneler,
                 AyniGunNobetTutanEczaneler = ayniGunNobetTutanEczaneler,
+                AyniGunNobetTutanEczanelerOzet = ayniGunNobetSayisiGrouped,
                 EczaneNobetAlacakVerecek = eczaneNobetAlacakVerecek,
                 //.Where(w => w.NobetSayisi > 0).ToList(),
                 GunDagilimiMaxMin = gunDagilimiMaxMin,
@@ -998,7 +1037,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //    }).ToList();
             //}
 
-
             var gelecekTarih = DateTime.Today.AddMonths(1);
             int gelecekYil = gelecekTarih.Year;
             int gelecekAy = gelecekTarih.Month;
@@ -1100,7 +1138,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     throw new Exception("Silme işlemi başarısız...");
                 }
 
-                if (nobetUstGrup.Id == 1 || nobetUstGrup.Id == 3)
+                if (nobetUstGrup.Id == 1
+                    || nobetUstGrup.Id == 3
+                    || nobetUstGrup.Id == 9
+                    )
                 {
                     _ayniGunTutulanNobetService.IkiliEczaneIstatistiginiSifirla(nobetUstGrup.Id);
                     var sonuclar = _eczaneNobetSonucService.GetSonuclarUstGrupBaslamaTarihindenSonra(nobetUstGrup.Id);

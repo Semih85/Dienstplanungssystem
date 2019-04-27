@@ -804,6 +804,7 @@
         var dagilimlarPlanlananGerceklesenFiltreli = null;
 
         var ayniGunNobetTutanEczaneler = new Array();
+        var ayniGunNobetTutanEczanelerOzet = new Array();
         var altGrupAyniGunNobetTutanEczaneler = new Array();
         var altGrupSiraliAyniGunNobetTutanEczaneler = new Array();
         var esGrubaAyniGunYazilanNobetler = new Array();
@@ -1021,18 +1022,41 @@
                     }
                     //aynı Gün Nöbet Tutan Eczaneler
                     //alert(dagilimlar.AltGrupAyniGunNobetTutanEczaneler.length)
+                    $.each(dagilimlar.AyniGunNobetTutanEczanelerOzet, function (index, s) {
+                        ayniGunNobetTutanEczanelerOzet.push({
+                            G1Eczane: s.G1Eczane,
+                            G2Eczane: s.G2Eczane,
+                            ["G1 Nöbet Grubu"]: s.G1NobetGrupAdi,
+                            ["G2 Nöbet Grubu"]: s.G2NobetGrupAdi,
+                            ["G1 Nöbet Alt Grubu"]: s.G1NobetAltGrupAdi,
+                            ["G2 Nöbet Alt Grubu"]: s.G2NobetAltGrupAdi,
+                            ["Gün Grup"]: s.GunGrup,
+                            //Grup: s.Grup,
+                            //["Alt Grup"]: s.AltGrupAdi,
+                            ["Aynı Gün Nöbet Sayısı"]: s.AyniGunNobetSayisi,
+                            //["Nöbet Tarihi"]: s.TarihAciklama,
+                            //["Yıl-Ay"]: s.YilAy
+                        });
+                    });
+                    ayniGunNobetTutanEczanelerOzet = JSON.parse(JSON.stringify(ayniGunNobetTutanEczanelerOzet));
+
                     $.each(dagilimlar.AyniGunNobetTutanEczaneler, function (index, s) {
                         ayniGunNobetTutanEczaneler.push({
                             G1Eczane: s.G1Eczane,
                             G2Eczane: s.G2Eczane,
-                            Grup: s.Grup,
-                            ["Alt Grup"]: s.AltGrupAdi,
-                            AynıGünNöbetSayısı: s.AyniGunNobetSayisi,
-                            ["Son Nöbet Tarihi"]: s.TarihAciklama,
+                            ["G1 Nöbet Grubu"]: s.G1NobetGrupAdi,
+                            ["G2 Nöbet Grubu"]: s.G2NobetGrupAdi,
+                            ["G1 Nöbet Alt Grubu"]: s.G1NobetAltGrupAdi,
+                            ["G2 Nöbet Alt Grubu"]: s.G2NobetAltGrupAdi,
+                            ["Gün Grup"]: s.GunGrup,
+                            //Grup: s.Grup,
+                            //["Alt Grup"]: s.AltGrupAdi,
+                            ["Aynı Gün Nöbet Sayısı"]: s.AyniGunNobetSayisi,
+                            ["Nöbet Tarihi"]: s.TarihAciklama,
                             ["Yıl-Ay"]: s.YilAy
                         });
                     });
-                    ayniGunNobetTutanEczaneler = JSON.parse(JSON.stringify(ayniGunNobetTutanEczaneler));
+                    ayniGunNobetTutanEczaneler = JSON.parse(JSON.stringify(ayniGunNobetTutanEczaneler));                    
 
                     var altGrup = $.grep(dagilimlar.AltGrupAyniGunNobetTutanEczaneler, function (n, i) {
                         return n.AltGrupAdi != "Kendisi";
@@ -1045,7 +1069,7 @@
                             G2Eczane: s.G2Eczane,
                             Grup: s.Grup,
                             AltGrup: s.AltGrupAdi,
-                            AynıGünNöbetSayısı: s.AyniGunNobetSayisi,
+                            ["Aynı Gün Nöbet Sayısı"]: s.AyniGunNobetSayisi,
                             //Tarih: s.Tarih.toDateString("yyy MM dd, ddd"),
                             //Yıl_Ay: $.datepicker.formatDate('yyyyMM', s.Tarih),
                             //Tarih = String.Format("{0:yyy MM dd, ddd}", s.Tarih),
@@ -1062,7 +1086,7 @@
                             G2Eczane: s.G2Eczane,
                             Grup: s.Grup,
                             AltGrup: s.AltGrupAdi,
-                            AynıGünNöbetSayısı: s.AyniGunNobetSayisi,
+                            ["Aynı Gün Nöbet Sayısı"]: s.AyniGunNobetSayisi,
                             Tarih: s.TarihAciklama,
                             ["Gün Grup"]: s.GunGrup,
                             ["Yıl-Ay"]: s.YilAy
@@ -1475,6 +1499,7 @@
 
                 if (nobetUstGrupId == 5 // osmaniye
                     || nobetUstGrupId == 6//bartın
+                    || nobetUstGrupId == 9//çorum
                 ) {
                     pivotCols = ["Eczane"];
                 }
@@ -2677,13 +2702,13 @@
         //aynı gün nöbet dağılımı grafik
         var ayniGunDagilim;
         function ayniGunDagilimlar() {
-            if (ayniGunNobetTutanEczaneler.length > 0) {
+            if (ayniGunNobetTutanEczanelerOzet.length > 0) {
                 ayniGunDagilim = $(function table8() {
-                    $("#ayniGunNobetTutanlar").pivotUI(ayniGunNobetTutanEczaneler,
+                    $("#ayniGunNobetTutanlar").pivotUI(ayniGunNobetTutanEczanelerOzet,
                         {
-                            rows: ["AynıGünNöbetSayısı"],
-                            cols: ["Grup"],
-                            vals: ["AynıGünNöbetSayısı"],
+                            rows: ["Aynı Gün Nöbet Sayısı"],
+                            cols: ["G1 Nöbet Grubu"],
+                            vals: ["Aynı Gün Nöbet Sayısı"],
                             aggregatorName: "Say",
                             rendererName: "Sutun Grafik",
                             renderers: $.extend(
@@ -2718,9 +2743,9 @@
                 ayniGunDagilimTablo = $(function table8() {
                     $("#ayniGunNobetTutanlarTablo").pivotUI(ayniGunNobetTutanEczaneler,
                         {
-                            rows: ["Grup"],
-                            cols: ["AynıGünNöbetSayısı"],
-                            vals: ["AynıGünNöbetSayısı"],
+                            rows: ["G1Eczane", "G2Eczane"],//"G2 Nöbet Grubu", 
+                            cols: ["Yıl-Ay"],
+                            vals: ["Aynı Gün Nöbet Sayısı"],
                             aggregatorName: "Say",
                             rendererName: "Sicaklik Haritasi",
                             //renderers: $.extend(
@@ -3287,5 +3312,6 @@
         });
     </script>
     <!-- #endregion -->
+<!-- #endregion -->
 
 }

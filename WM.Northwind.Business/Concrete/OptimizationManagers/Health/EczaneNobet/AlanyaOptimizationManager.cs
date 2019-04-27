@@ -405,14 +405,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             #region aynı gün nöbet tutan eczaneler
 
-            //nöbet yazılacak tarih aralığı(örn. Ocak ayının tüm günleri)
-            //int cozumOncekiAyi = GetOncekiAy(periyot: 3, cozumAyi: ayBitis);
-            //var cozumOncekiIkiAyi = GetOncekiAy(periyot: 2, cozumAyi: ayBitis);
-
-            //var aktifSonuclar = new List<EczaneNobetSonucListe2>();// _eczaneNobetSonucAktifService.GetSonuclar2(baslangicTarihi, bitisTarihi, nobetUstGrupId);
-            //var ayniAydakiDigerGruplarinSonuclari = _eczaneNobetSonucService.GetSonuclar2(baslangicTarihi, bitisTarihi, nobetUstGrupId);
-            //var ayIcindekiTumSonuclar = aktifSonuclar.Union(ayniAydakiDigerGruplarinSonuclari).ToList();
-            //var ayIcindeCozulenNobetGruplar = ayIcindekiTumSonuclar.Select(s => s.NobetGrupId).Distinct().ToList();
+            #region ikili eczaneler 
 
             //bu alan EczaneNobetCozAktifiGuncelle içinde kullanılıyor.
             var ayIcindeAyniGunNobetTutanEczaneler = new List<EczaneCiftGrup>();
@@ -424,9 +417,11 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             if (!arasindaAyniGunNobetFarkiOlanIkiliEczaneler.PasifMi)
             {
-                indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
+                //indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
                 arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = _ayniGunTutulanNobetService.GetArasinda2FarkOlanIkiliEczaneleri(eczaneNobetGruplar, nobetUstGrupId, (int)arasindaAyniGunNobetFarkiOlanIkiliEczaneler.SagTarafDegeri);
             }
+
+            #endregion
 
             #region önceki aylar aynı gün nöbet tutanlar çözülen ayda aynı gün nöbetçi olmasın
 
@@ -435,7 +430,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var oncekiAylarAyniGunNobet = _nobetUstGrupKisitService.GetDetay("oncekiAylarAyniGunNobet", nobetUstGrupId);
             if (!oncekiAylarAyniGunNobet.PasifMi)
             {
-                indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
+                //indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
                 oncekiAylardaAyniGunNobetTutanEczaneler = _eczaneNobetSonucService.OncekiAylardaAyniGunNobetTutanlar(baslangicTarihi, eczaneNobetSonuclarOncekiAylar, indisId, (int)oncekiAylarAyniGunNobet.SagTarafDegeri);
 
                 var oncekiAylarEczaneGrupTanimlar = oncekiAylardaAyniGunNobetTutanEczaneler.Select(s => new { s.EczaneGrupTanimId, s.EczaneGrupTanimAdi }).Distinct().ToList();
@@ -470,6 +465,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             }
 
             #endregion
+
             var eczaneNobetSonuclarAltGruplaAyniGun = new List<EczaneNobetSonucListe2>();
 
             var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe);
