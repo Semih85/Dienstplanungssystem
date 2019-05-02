@@ -14,6 +14,7 @@ using WM.UI.Mvc.HtmlHelpers;
 using WM.UI.Mvc.Areas.EczaneNobet.Models;
 using System.Text.RegularExpressions;
 using System.Data.Entity.Infrastructure;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -32,6 +33,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetGrupService _nobetGrupService;
         private INobetGorevTipService _nobetGorevTipService;
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public EczaneGrupController(IEczaneGrupService eczaneGrupService,
                                     IEczaneService eczaneService,
@@ -41,7 +43,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                     IUserService userService,
                                     INobetGrupService nobetGrupService,
                                     INobetGorevTipService nobetGorevTipService,
-                                    INobetGrupGorevTipService nobetGrupGorevTipService)
+                                    INobetGrupGorevTipService nobetGrupGorevTipService,
+                                    INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _eczaneGrupService = eczaneGrupService;
             _eczaneService = eczaneService;
@@ -52,6 +55,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _nobetGrupService = nobetGrupService;
             _nobetGorevTipService = nobetGorevTipService;
             _nobetGrupGorevTipService = nobetGrupGorevTipService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
             this.gridMvcHelper = new GridMvcHelper();
         }
         #endregion
@@ -291,13 +295,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public ActionResult Create2(int eczaneGrupTanimId)
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrupId = nobetUstGruplar.Select(s => s.Id).ToList();
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrupId = nobetUstGruplar.Select(s => s.Id).ToList();
+
+            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var gruptakiEczaneler = _eczaneGrupService.GetDetaylarByEczaneGrupTanimId(eczaneGrupTanimId);
 
-            var eczaneler = _eczaneService.GetDetaylar(nobetUstGrupId)
+            var eczaneler = _eczaneService.GetDetaylar(ustGrupSession.Id)
                 .Where(w => w.KapanisTarihi == null
                         && !gruptakiEczaneler.Select(s => s.EczaneId).Contains(w.Id))
                 .OrderBy(f => f.EczaneAdi)

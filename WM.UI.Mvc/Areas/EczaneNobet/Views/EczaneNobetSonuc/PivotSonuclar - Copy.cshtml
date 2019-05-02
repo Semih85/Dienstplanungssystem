@@ -23,179 +23,87 @@
     };
 }
 
-<div class="pos-f-t border border-primary">
-    <div class="collapse" id="navbarToggleExternalContent">
-        <div class="bg-white p-4">
-            <h5 class="h4"><i class="fa fa-pie-chart fa-lg text-danger"></i> Nöbet İstatistik ve Raporları</h5>
-            <span class="text-muted">Bu sayfada aşağıdaki seçenekleri kullanarak nöbet ile ilgili bir çok analiz yapabilirsiniz.</span>
-            @*<ul class="nav nav-pills card-header-tabs" id="pills-tab2" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-dagilim-tab" data-toggle="pill" href="#pills-dagilim" role="tab" aria-controls="pills-dagilim" aria-selected="true">Dağılımlar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-gunFarki-tab" data-toggle="pill" href="#pills-gunFarki" role="tab" aria-controls="pills-gunFarki" aria-selected="true">Gün Farkları</a>
-                    </li>
+<div class="row justify-content-between mb-2">
+    <div class="col">
+        <div class="form-inline">
+            <div class="mb-2">
+                <div class="form-inline">
+                    <h4 class="mr-4">İstatistikler</h4>
 
-                    <li class="nav-item">
-                        <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-nobetBorc-tab" data-toggle="pill" href="#pills-nobetBorc" role="tab" aria-controls="pills-nobetBorc" aria-selected="true">
-                            <span class="d-none d-md-inline">Nöbet</span> Borç
-                        </a>
-                    </li>
+                    <button class="btn btn-dark btn-sm mr-3" title="Excele Aktar" type="button" id="btnExceleAktar" onclick="tableToExcel('testTable', 'Nöbet Yaz')">
+                        <i class="fa fa-file-excel-o text-success"></i> Aktar
+                        <i class="fa fa-download"></i>
+                    </button>
+                </div>
+            </div>
 
-                    <li class="nav-item">
-                        <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-altGrupTakip-tab" data-toggle="pill" href="#pills-altGrupTakip" role="tab" aria-controls="pills-altGrupTakip" aria-selected="true">
-                            Alt Grup
-                        </a>
-                    </li>
+            @Html.Hidden("sure", sure)
 
-                    <li class="nav-item">
-                        <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-ayniGuneYazilanlar-tab" data-toggle="pill" href="#pills-ayniGuneYazilanlar" role="tab" aria-controls="pills-ayniGuneYazilanlar" aria-selected="true">
-                            Aynı Gün <span class="d-none d-md-inline">Nöbet</span>
-                        </a>
-                    </li>
+            @*@using (Ajax.BeginForm(null, null, getAjaxSearch, new { @class = "form-inline mb-2", id = "formTumu" }))*@
 
-                </ul>*@
-        </div>
-    </div>
-    @*<nav class="navbar navbar-light bg-white py-2">
-
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-        </nav>*@
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <span class="navbar-brand" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-            <i class="fa fa-bar-chart fa-lg text-danger"></i>
-        </span>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        @Html.Hidden("sure", sure)
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            @*<ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
-                </ul>*@
-            @using (Ajax.BeginForm("GetSonuclar", "EczaneNobetSonuc", null, new { @class = "form-inline my-2 my-lg-0", id = "formTumu" }))
+            @using (Ajax.BeginForm("GetSonuclar", "EczaneNobetSonuc", null, new { @class = "form-inline mb-2", id = "formTumu" }))
             {
                 @Html.AntiForgeryToken()
 
-                <div class="form-group mr-2 mb-2 mb-lg-0">
+                <div class="form-group mr-2" id="inputTarihAralik">
+                    <label class="d-none d-md-inline mr-2">Tarih Aralığı</label>
+                    <div class="input-group mr-2" style="width:140px;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
+                                <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
+                            </span>
+                        </div>
+                        @Html.TextBoxFor(model => model.BaslangicTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="input-group" style="width:140px;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
+                                <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
+                            </span>
+                        </div>
+                        @Html.TextBoxFor(model => model.BitisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group mr-2">
 
                     @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
                     {
                         @class = "form-control selectpicker",
-                       //data_style = "btn btn-outline-primary",
                        multiple = "true",
-                       data_width = "auto",
+                       //data_width = "auto",
                        data_actions_box = "true",
                        mobile = "true",
                        data_live_search = "true",
-                       data_selected_text_format = "count > 0",
-                       title = "-Nöbet Grubu Seçiniz-"
+                       data_selected_text_format = "count > 1",
+                       title = "Nöbet Grubu Seçiniz..."
                    })
 
                     @*@Html.DropDownList("nobetGrup", nobetGruplar, htmlAttributes:
-                        new
-                        {
-                            @class = "form-control selectpicker",
-                            data_width = "auto",
-                            mobile = "true",
-                            data_live_search = "true"
-                        },
-                        optionLabel: "Tüm Gruplar")*@
+                    new
+                    {
+                        @class = "form-control selectpicker",
+                        data_width = "auto",
+                        mobile = "true",
+                        data_live_search = "true"
+                    },
+                    optionLabel: "Tüm Gruplar")*@
                 </div>
 
-                @*<div class="form-group mr-2 mb-2" id="inputTarihAralik">*@
-                @*<label class="d-none d-md-inline mr-2">Tarih Aralığı</label>*@
-                <div class="input-group mr-2 mb-2 mb-lg-0" style="width:140px;">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text p-2">
-                            <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
-                            <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
-                        </span>
-                    </div>
-                    @Html.TextBoxFor(model => model.BaslangicTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off" })
-                    @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+                <div class="form-group mr-3">
+                    <span class="input-group-btn">
+                        <button type="button" id="submitSorgula" class="btn btn-primary my-2 pull-right"><i class="fa fa-search"></i> Sorgula</button>
+                    </span>
                 </div>
-
-                <div class="input-group mr-2 mb-2 mb-lg-0" style="width:140px;">
-                    @Html.TextBoxFor(model => model.BitisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off" })
-                    <div class="input-group-append">
-                        <span class="input-group-text p-2">
-                            <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
-                            <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
-                        </span>
-                    </div>
-                    @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
-                </div>
-                @*</div>*@
-
-
-                <div class="btn-group mr-3 mb-2 mb-lg-0">
-                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Rapor Grup
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Nöbet Dağılımları</a>
-                        <a class="dropdown-item" href="#">Gün Farkları</a>
-                        <a class="dropdown-item" href="#">Nöbet Borç</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Alt Grup Nöbet Dağılımı</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Aynı Gün Nöbet Dağılımı</a>
-                    </div>
-                </div>
-
-                <div class="btn-group mr-2 mb-2 mb-lg-0">
-                    <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Rapor Seçiniz
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" id="pills-nobetci-tab" data-toggle="pill" href="#pills-nobetci" aria-controls="pills-nobetci" aria-selected="true">Nöbetçi Eczane Listesi</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" id="pills-gun-tab" data-toggle="pill" href="#pills-gun" aria-controls="pills-gun" aria-selected="false">Nöbet Gün Dağılımı</a>
-                        <a class="dropdown-item" href="#">Nöbet Gün Dağılımı (Grafik)</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Nöbet Ay Dağılımı</a>
-                        <a class="dropdown-item" href="#">Nöbet Mevsim Dağılımı</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Nöbet Tarih Dağılımı</a>
-                        <a class="dropdown-item" href="#">Nöbet Farkı</a>
-                        @*<a class="dropdown-item" href="#">Separated link</a>*@
-                    </div>
-                </div>
-
-                @*<div class="form-group mr-3">
-                        <span class="input-group-btn">
-                            <button type="button" id="submitSorgula" class="btn btn-primary my-2 pull-right"><i class="fa fa-search"></i> Sorgula</button>
-                        </span>
-                    </div>*@
             }
 
         </div>
-    </nav>
+    </div>
 </div>
 
 @*<h4>
@@ -221,169 +129,594 @@
 
 </div>
 <!-- #endregion -->
+
 @*<div id="wait" style="position:absolute; display:none; top:150px;">
-        <img src='~/Content/images/orig.gif' />
-    </div>*@
+    <img src='~/Content/images/orig.gif' />
+</div>*@
 
 <!-- #region raporlar -->
 
-<div class="row">
-    <div class="col">
-        <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-nobetci" role="tabpanel" aria-labelledby="pills-nobetci-tab">
+<div class="row" id="raporlar" >
+    <div class="col mt-1">
+
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" id="pills-tab2" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-dagilim-tab" data-toggle="pill" href="#pills-dagilim" role="tab" aria-controls="pills-dagilim" aria-selected="true">Dağılımlar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-gunFarki-tab" data-toggle="pill" href="#pills-gunFarki" role="tab" aria-controls="pills-gunFarki" aria-selected="true">Gün Farkları</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-nobetBorc-tab" data-toggle="pill" href="#pills-nobetBorc" role="tab" aria-controls="pills-nobetBorc" aria-selected="true">
+                        <span class="d-none d-md-inline">Nöbet</span> Borç
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-altGrupTakip-tab" data-toggle="pill" href="#pills-altGrupTakip" role="tab" aria-controls="pills-altGrupTakip" aria-selected="true">
+                        Alt Grup
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-ayniGuneYazilanlar-tab" data-toggle="pill" href="#pills-ayniGuneYazilanlar" role="tab" aria-controls="pills-ayniGuneYazilanlar" aria-selected="true">
+                        Aynı Gün <span class="d-none d-md-inline">Nöbet</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="tab-content mt-2" id="pills-tabContent">
+            <!-- #region dağılımlar -->
+            <div class="tab-pane fade show active" id="pills-dagilim" role="tabpanel" aria-labelledby="pills-dagilim-tab">
                 <div class="row">
-                    <div class="col-sm-12 col-md-12 pt-3">
-                        <h5>
-                            <button type="button" class="btn btn-warning btn-sm mr-2" id="btnAlanlariGizleGosterNobetciEczaneListesi">
-                                <i class="fa fa-unsorted"></i> Alanları Göster
-                            </button>
-                            <span class="mr-4">Nöbetçi Eczane Listesi</span>
-                            <button class="btn btn-dark btn-sm mr-3" title="Excele Aktar" type="button" id="btnExceleAktar" onclick="tableToExcel('testTable', 'Nöbet Yaz')">
-                                <i class="fa fa-file-excel-o text-success"></i> Aktar
-                                <i class="fa fa-download"></i>
-                            </button>
-                        </h5>
-                        <div id="nobetciEczaneListesi">
+                    <div class="col-sm-12">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-nobetci-tab" data-toggle="pill" href="#pills-nobetci" role="tab" aria-controls="pills-nobetci" aria-selected="true">
+                                        <span class="d-none d-md-inline">Nöbetçi Eczaneler</span>
+                                        <span class="d-md-none">Liste</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-gun-tab" data-toggle="pill" href="#pills-gun" role="tab" aria-controls="pills-gun" aria-selected="false">Gün</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-gunDagilimGrafik-tab" data-toggle="pill" href="#pills-gunDagilimGrafik" role="tab" aria-controls="pills-gunDagilimGrafik" aria-selected="false">
+                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                        Gün
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-ay-tab" data-toggle="pill" href="#pills-ay" role="tab" aria-controls="pills-ay" aria-selected="false">Ay</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-mevsim-tab" data-toggle="pill" href="#pills-mevsim" role="tab" aria-controls="pills-mevsim" aria-selected="false">Mevsim</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-tarih-tab" data-toggle="pill" href="#pills-tarih" role="tab" aria-controls="pills-tarih" aria-selected="false">Tarih</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-gunOzetGrafik-tab" data-toggle="pill" href="#pills-gunOzetGrafik" role="tab" aria-controls="pills-gunOzetGrafik" aria-selected="false">
+                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                        Nöbet Farkı
+                                    </a>
+                                </li>
+                                @if (Model.NobetUstGrupId == 5)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-kalibrasyonluNobet-tab" data-toggle="pill" href="#pills-kalibrasyonluNobet" role="tab" aria-controls="pills-kalibrasyonluNobet" aria-selected="false">
+                                            Kalibrasyonlu <span class="d-none d-md-inline">Nöbet</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-nobetDurumlari-tab" data-toggle="pill" href="#pills-nobetDurumlari" role="tab" aria-controls="pills-nobetDurumlari" aria-selected="false">
+                                            <span class="d-none d-md-inline">Nöbet</span> Durum
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-nobetci" role="tabpanel" aria-labelledby="pills-nobetci-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>
+                                            <span class="mr-4">Nöbetçi Eczane Listesi</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterNobetciEczaneListesi">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
+                                        <div id="nobetciEczaneListesi">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-gun" role="tabpanel" aria-labelledby="pills-gun-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>
+                                            <span class="mr-4">Nöbet Gün Dağılımı</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGostergunDegerDagilim">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
+                                        <div id="gunDegerDagilim">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-gunDagilimGrafik" role="tabpanel" aria-labelledby="pills-gunDagilimGrafik-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>
+                                            <span class="mr-4">Nöbet Gün Dağılım Grafiği</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGostergunDagilimGrafik">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
+                                        <div id="gunDagilimGrafik">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-ay" role="tabpanel" aria-labelledby="pills-ay-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>
+                                            <span class="mr-4">Aylık Nöbet Dağılımı</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterAylikDagilim">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
+                                        <div id="aylikDagilim">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-mevsim" role="tabpanel" aria-labelledby="pills-mevsim-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>
+                                            <span class="mr-4">Mevsimsel Nöbet Dağılımı</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterMevsimDagilim">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
+                                        <div id="mevsimDagilim">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-tarih" role="tabpanel" aria-labelledby="pills-tarih-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>Tarihsel Görünüm</h5>
+                                        <div class="alert alert-info alert-dismissible fade show" role="alert" id="tarihVeriSinirUyari">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i> Aşağıdaki Yıl-Ay, Nöbet Grubu, Gün Grubu vb. alanları seçerek <strong>veriyi sınırlandırınız !!!</strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div id="gunlukDagilim">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-gunOzetGrafik" role="tabpanel" aria-labelledby="pills-gunOzetGrafik-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>
+                                            <span class="mr-4">Nöbet Farkları Dağılımı</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGostergunOzetGrafik">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
+                                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i> Bu grafikte nöbet ve gün grubu bazında <strong>en az/çok nöbet sayıları arasındaki farklar gösterilmektedir!!!</strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div id="gunOzetGrafik">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (Model.NobetUstGrupId == 5)
+                            {
+                                <div class="tab-pane fade" id="pills-kalibrasyonluNobet" role="tabpanel" aria-labelledby="pills-kalibrasyonluNobet-tab">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 pt-3">
+                                            <h5>
+                                                <span class="mr-4">Kalibrasyonlu Nöbet Dağılımı</span>
+                                                <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterKalibrasyonluDetayli">
+                                                    Alanları Göster
+                                                </button>
+                                            </h5>
+                                            @*<div class="alert alert-info alert-dismissible fade show" role="alert">
+                                                    <i class="fa fa-info-circle" aria-hidden="true"></i> Bu istatistikte eski ve yeni nöbetlerin <strong>2'şer aylık dönemdeki dağılımı gösterilmektedir!!!</strong>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>*@
+                                            <div id="kalibrasyonluDetayli">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-nobetDurumlari" role="tabpanel" aria-labelledby="pills-nobetDurumlari-tab">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 pt-3">
+                                            <h5>
+                                                <span class="mr-4">Nöbet Durumları</span>
+                                                <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterNobetDurumlari">
+                                                    Alanları Göster
+                                                </button>
+                                            </h5>
+                                            @*<div class="alert alert-info alert-dismissible fade show" role="alert">
+                                                    <i class="fa fa-info-circle" aria-hidden="true"></i> Bu istatistikte <strong>nöbet durumlarının dağılımı gösterilmektedir!!!</strong>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>*@
+                                            <div id="nobetDurumlar">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-gun" role="tabpanel" aria-labelledby="pills-gun-tab">
+            <!-- #endregion -->
+            <!-- #region gün farkları -->
+            <div class="tab-pane fade" id="pills-gunFarki" role="tabpanel" aria-labelledby="pills-gunFarki-tab">
                 <div class="row">
-                    <div class="col-sm-12 col-md-12 pt-3">
-                        <h5>
-                            <button type="button" class="btn btn-warning btn-sm mr-2" id="btnAlanlariGizleGostergunDegerDagilim">
-                                <i class="fa fa-unsorted"></i> Alanları Göster
-                            </button>
-                            <span class="mr-4">Nöbet Gün Dağılımı</span>
-                        </h5>
-                        <div id="gunDegerDagilim">
+                    <div class="col-sm-12 col-md-12">
+                        @*<h5 class="card-title text-center" id="mdo">Gün Farkları</h5>*@
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-gunFarkiGrafik-tab" data-toggle="pill" href="#pills-gunFarkiGrafik" role="tab" aria-controls="pills-gunFarkiGrafik" aria-selected="true">
+                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-ozet-tab" data-toggle="pill" href="#pills-ozet" role="tab" aria-controls="pills-ozet" aria-selected="true">
+                                        <i class="fa fa-table" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-frekans-tab" data-toggle="pill" href="#pills-frekans" role="tab" aria-controls="pills-frekans" aria-selected="false">
+                                        <i class="fa fa-signal" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-dongu-tab" data-toggle="pill" href="#pills-dongu" role="tab" aria-controls="pills-dongu" aria-selected="false">
+                                        <i class="fa fa-repeat" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-detayliArtan-tab" data-toggle="pill" href="#pills-detayliArtan" role="tab" aria-controls="pills-detayliArtan" aria-selected="false">
+                                        <i class="fa fa-list-ul" aria-hidden="true"></i>
+                                        <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-detayliAzalan-tab" data-toggle="pill" href="#pills-detayliAzalan" role="tab" aria-controls="pills-detayliAzalan" aria-selected="false">
+                                        <i class="fa fa-list-ul" aria-hidden="true"></i>
+                                        <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-gunFarkiGrafik" role="tabpanel" aria-labelledby="pills-gunFarkiGrafik-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Gün Farkları Grafiği</h5>
+                                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i> Aşağıdaki diğer (enk., ort., std.sap. vb.) alanları seçerek <strong>istediğiniz türde</strong> sonuçları inceleyebilirsiniz!!!
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div id="gunFarkiGrafik">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-ozet" role="tabpanel" aria-labelledby="pills-ozet-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Gün Farkı Özet Dağılımı</h5>
+                                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i> Aşağıdaki diğer (enk., ort., std.sap. vb.) alanları seçerek <strong>istediğiniz türde</strong> sonuçları inceleyebilirsiniz!!!
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div id="gunFarkiOzet">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-frekans" role="tabpanel" aria-labelledby="pills-frekans-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Gün Farkı Frekans Aralıkları</h5>
+                                        <div id="gunFarkiFrekans">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-dongu" role="tabpanel" aria-labelledby="pills-dongu-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Gün Grup Döngüleri</h5>
+                                        @if (ViewBag.ToplamUzunluk > toplamUzunluk)
+                                        {
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir. Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir. Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        }
+                                        <div id="donguler">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-detayliArtan" role="tabpanel" aria-labelledby="pills-detayliArtan-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        @if (ViewBag.ToplamUzunluk > toplamUzunluk)
+                                        {
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir. Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir. Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        }
+                                        <h5>Gün Farkı Detaylı (Baştan Sona)</h5>
+                                        <div id="gunFarkiDetayli">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-detayliAzalan" role="tabpanel" aria-labelledby="pills-detayliAzalan-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        @if (ViewBag.ToplamUzunluk > toplamUzunluk)
+                                        {
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir. Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir. Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        }
+                                        <h5>Gün Farkı Detaylı (Sondan Başa)</h5>
+                                        <div id="gunFarkiDetayli2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-gunDagilimGrafik" role="tabpanel" aria-labelledby="pills-gunDagilimGrafik-tab">
+            <!-- #endregion -->
+            <!-- #region nöbet borçlar -->
+            <div class="tab-pane fade" id="pills-nobetBorc" role="tabpanel" aria-labelledby="pills-nobetBorc-tab">
                 <div class="row">
-                    <div class="col-sm-12 col-md-12 pt-3">
-                        <h5>
-                            <span class="mr-4">Nöbet Gün Dağılım Grafiği</span>
-                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGostergunDagilimGrafik">
-                                <i class="fa fa-unsorted"></i> Alanları Göster
-                            </button>
-                        </h5>
-                        <div id="gunDagilimGrafik">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-alacakVerecekGrafik-tab" data-toggle="pill" href="#pills-alacakVerecekGrafik" role="tab" aria-controls="pills-alacakVerecekGrafik" aria-selected="true">
+                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-alacakVerecek-tab" data-toggle="pill" href="#pills-alacakVerecek" role="tab" aria-controls="pills-alacakVerecek" aria-selected="true">
+                                        <i class="fa fa-table" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-alacakVerecekListesi-tab" data-toggle="pill" href="#pills-alacakVerecekListesi" role="tab" aria-controls="pills-alacakVerecekListesi" aria-selected="false">
+                                        <i class="fa fa-list-ol" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-planlananVsGerceklesen-tab" data-toggle="pill" href="#pills-planlananVsGerceklesen" role="tab" aria-controls="pills-planlananVsGerceklesen" aria-selected="false">
+                                        <i class="fa fa-list-ol" aria-hidden="true"></i>
+                                        Planlanan Vs Gerceklesen
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="pills-ay" role="tabpanel" aria-labelledby="pills-ay-tab">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 pt-3">
-                        <h5>
-                            <span class="mr-4">Aylık Nöbet Dağılımı</span>
-                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterAylikDagilim">
-                                <i class="fa fa-unsorted"></i> Alanları Göster
-                            </button>
-                        </h5>
-                        <div id="aylikDagilim">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="pills-mevsim" role="tabpanel" aria-labelledby="pills-mevsim-tab">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 pt-3">
-                        <h5>
-                            <span class="mr-4">Mevsimsel Nöbet Dağılımı</span>
-                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterMevsimDagilim">
-                                <i class="fa fa-unsorted"></i> Alanları Göster
-                            </button>
-                        </h5>
-                        <div id="mevsimDagilim">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="pills-tarih" role="tabpanel" aria-labelledby="pills-tarih-tab">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 pt-3">
-                        <h5>Tarihsel Görünüm</h5>
-                        <div class="alert alert-info alert-dismissible fade show" role="alert" id="tarihVeriSinirUyari">
-                            <i class="fa fa-info-circle" aria-hidden="true"></i> Aşağıdaki Yıl-Ay, Nöbet Grubu, Gün Grubu vb. alanları seçerek <strong>veriyi sınırlandırınız !!!</strong>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div id="gunlukDagilim">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="pills-gunOzetGrafik" role="tabpanel" aria-labelledby="pills-gunOzetGrafik-tab">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 pt-3">
-                        <h5>
-                            <span class="mr-4">Nöbet Farkları Dağılımı</span>
-                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGostergunOzetGrafik">
-                                <i class="fa fa-unsorted"></i> Alanları Göster
-                            </button>
-                        </h5>
-                        <div class="alert alert-info alert-dismissible fade show" role="alert">
-                            <i class="fa fa-info-circle" aria-hidden="true"></i> Bu grafikte nöbet ve gün grubu bazında <strong>en az/çok nöbet sayıları arasındaki farklar gösterilmektedir!!!</strong>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div id="gunOzetGrafik">
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-alacakVerecekGrafik" role="tabpanel" aria-labelledby="pills-alacakVerecekGrafik-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Nöbet Borç Alacak/Verecek Grafik</h5>
+                                        <div id="alacakVerecekGrafik">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-alacakVerecek" role="tabpanel" aria-labelledby="pills-alacakVerecek-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Nöbet Borç Alacak/Verecek Özet</h5>
+                                        <div id="alacakVerecekler">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-alacakVerecekListesi" role="tabpanel" aria-labelledby="pills-alacakVerecekListesi-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Nöbet Borç Alacak/Verecek Listesi</h5>
+                                        <div id="alacakVereceklerListe">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-planlananVsGerceklesen" role="tabpanel" aria-labelledby="pills-planlananVsGerceklesen-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>
+                                            Planlanan ve Gerceklesen Nöbetler
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterPlanlananVsGerceklesen">
+                                                Alanları Gizle
+                                            </button>
+                                        </h5>
+                                        <div id="planlananVsGerceklesen">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            @if (Model.NobetUstGrupId == 5)
-            {
-                <div class="tab-pane fade" id="pills-kalibrasyonluNobet" role="tabpanel" aria-labelledby="pills-kalibrasyonluNobet-tab">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 pt-3">
-                            <h5>
-                                <span class="mr-4">Kalibrasyonlu Nöbet Dağılımı</span>
-                                <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterKalibrasyonluDetayli">
-                                    <i class="fa fa-unsorted"></i> Alanları Göster
-                                </button>
-                            </h5>
-                            @*<div class="alert alert-info alert-dismissible fade show" role="alert">
-                                    <i class="fa fa-info-circle" aria-hidden="true"></i> Bu istatistikte eski ve yeni nöbetlerin <strong>2'şer aylık dönemdeki dağılımı gösterilmektedir!!!</strong>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>*@
-                            <div id="kalibrasyonluDetayli">
-                            </div>
+            <!-- #endregion -->
+            <!-- #region alt grup -->
+            <div class="tab-pane fade" id="pills-altGrupTakip" role="tabpanel" aria-labelledby="pills-altGrupTakip-tab">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-altGrup-tab" data-toggle="pill" href="#pills-altGrup" role="tab" aria-controls="pills-altGrup" aria-selected="true">Alt Grup</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-altGrupGunGrupDagilim-tab" data-toggle="pill" href="#pills-altGrupGunGrupDagilim" role="tab" aria-controls="pills-altGrupGunGrupDagilim" aria-selected="false">
+                                        Gün Grup Dağılım
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-altGrupSirali-tab" data-toggle="pill" href="#pills-altGrupSirali" role="tab" aria-controls="pills-altGrupSirali" aria-selected="false">
+                                        Alt Grup Sıralı
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                    </div>
-                </div>
 
-                <div class="tab-pane fade" id="pills-nobetDurumlari" role="tabpanel" aria-labelledby="pills-nobetDurumlari-tab">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 pt-3">
-                            <h5>
-                                <span class="mr-4">Nöbet Durumları</span>
-                                <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterNobetDurumlari">
-                                    <i class="fa fa-unsorted"></i> Alanları Göster
-                                </button>
-                            </h5>
-                            @*<div class="alert alert-info alert-dismissible fade show" role="alert">
-                                    <i class="fa fa-info-circle" aria-hidden="true"></i> Bu istatistikte <strong>nöbet durumlarının dağılımı gösterilmektedir!!!</strong>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>*@
-                            <div id="nobetDurumlar">
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-altGrup" role="tabpanel" aria-labelledby="pills-altGrup-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Alt Grupla Aynı Gün Nöbet Tutma Sayısı</h5>
+                                        <div id="altGrupListesi">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-altGrupGunGrupDagilim" role="tabpanel" aria-labelledby="pills-altGrupGunGrupDagilim-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Alt Grupların Aynı Gün Nöbetlerin Gün Grubu Dağılımı</h5>
+                                        <div id="altGrupGunGrupDagilim">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-altGrupSirali" role="tabpanel" aria-labelledby="pills-altGrupSirali-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Alt Grupla Sıralı Aynı Gün Nöbet Tutma Sayısı</h5>
+                                        <div id="altGrupSirali">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
-            }
+            </div>
+            <!-- #endregion -->
+            <!-- #region aynı gün nöbet -->
+            <div class="tab-pane fade" id="pills-ayniGuneYazilanlar" role="tabpanel" aria-labelledby="pills-ayniGuneYazilanlar-tab">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-ayniGunTumu-tab" data-toggle="pill" href="#pills-ayniGunTumu" role="tab" aria-controls="pills-ayniGunTumu" aria-selected="true">
+                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link px-md-2 px-lg-3" style="padding-left:8px; padding-right:8px;" id="pills-ayniGunTumuTablo-tab" data-toggle="pill" href="#pills-ayniGunTumuTablo" role="tab" aria-controls="pills-ayniGunTumuTablo" aria-selected="false">
+                                        <i class="fa fa-table" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link px-md-2 px-lg-3" style="padding-left:8px; padding-right:8px;" id="pills-esGrup-tab" data-toggle="pill" href="#pills-esGrup" role="tab" aria-controls="pills-esGrup" aria-selected="false">Eş Grup</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+
+                            <div class="tab-pane fade show active" id="pills-ayniGunTumu" role="tabpanel" aria-labelledby="pills-ayniGunTumu-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Tüm Eczanelerin Aynı Gün Nöbet Dağılımı</h5>
+                                        <div id="ayniGunNobetTutanlar">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-ayniGunTumuTablo" role="tabpanel" aria-labelledby="pills-ayniGunTumuTablo-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Tüm Eczanelerin Aynı Gün Nöbet Tutma Sayısı</h5>
+                                        <div id="ayniGunNobetTutanlarTablo">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-esGrup" role="tabpanel" aria-labelledby="pills-esGrup-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Aynı Eş Gruptaki Eczanelerin Aynı Gün Nöbet Durumu</h5>
+                                        <div id="DivTablo" class="w-100"></div>
+                                        <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="...">
+                                            <ul class="navbar-nav">
+                                                <li class="nav-link" id="myPaging">
+                                                </li>
+                                            </ul>
+                                            <div class="nav-item">Toplam Kayıt: <span id="toplamKayitSayisi"></span></div>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- #endregion -->
         </div>
     </div>
 </div>
@@ -411,11 +744,6 @@
     </style>
 
     <style>
-
-        .ui-helper-hidden-accessible {
-            position: absolute;
-            left: -99999999px;
-        }
         /*body {
             font-family: Verdana;
         }*/
@@ -470,12 +798,12 @@
     <script>
 
         function uyariDivOlustur(mesaj, divId, parentDivId) {
-            var uyariMesaj = "<i class='fa fa-info-circle'></i> Bu istatistiği görüntülemek için; <strong>" + mesaj + " bulanmamaktadır...</strong>";
+            var uyariMesaj = "<i class='fa fa-warning'></i> Bu istatistiği görüntülemek için; <strong>" + mesaj + " bulanmamaktadır...</strong>";
 
             if ($('#' + divId).length === 0) {
                 $('<div/>', {
                     id: divId,
-                    class: 'alert alert-info alert-dismissible fade show',
+                    class: 'alert alert-warning alert-dismissible fade show',
                     html: uyariMesaj
                 }).appendTo('#' + parentDivId);
 
@@ -488,8 +816,6 @@
 
         var urlAyniGunNobet = '@Url.Action("GetAyniGunNobetler")';
         var urlEczaneNobetAlacakVerecek = '@Url.Action("GetEczaneNobetAlacakVerecekler")';
-
-        var nobetGrubu = new Array();
 
         var dagilimlar = null;
         var dagilimlarFiltreli = null;
@@ -682,7 +1008,14 @@
 
     $('#submitSorgula').click(function () {
         //alert(1)
-
+        var urlDagilimlar = '@Url.Action("GetSonuclar")';
+        var serializedForm = $('#formTumu').serialize(); 
+        dagilimlar = null;
+        dagilimlarTumu = null;
+        dagilimlarPivot = new Array();
+        //dagilimlarFiltreli = null;
+        //nobetciEczaneler = null;
+        getJsonDagilimlar(urlDagilimlar, serializedForm)
     });
 
     function getJsonDagilimlar(url, formElements) {
@@ -907,8 +1240,8 @@
 
                     //kalibrasyon Eslemeli Nobetler
                     kalibrasyonEslemeliNobetler = JSON.parse(JSON.stringify(dagilimlar.KalibrasyonluToplamlar));
-
-                },
+               
+                },   
                 error: function (data) {
                     alert('Hata. Veri okunamadı!');
                 },
@@ -1221,33 +1554,14 @@
                 //alert('Nöbetçi eczane listesi yok.');
             }
         }
-
-        $('#pills-nobetci-tab').click(function (e) {
+        $('#pills-nobetci-tab').click(function () {
             $('#btnExceleAktar').show();
-
-            if (nobetGrubu.length == 0) {
-                alert("Nöbet grubu seçiniz..")
-                e.preventDefault();
+            if (nobetciEczaneler != null) {
+                nobetciEczaneler;
             }
             else {
-                //alert(1)
-                var urlDagilimlar = '@Url.Action("GetSonuclar")';
-                var serializedForm = $('#formTumu').serialize();
-                dagilimlar = null;
-                dagilimlarTumu = null;
-                dagilimlarPivot = new Array();
-                //dagilimlarFiltreli = null;
-                //nobetciEczaneler = null;
-                getJsonDagilimlar(urlDagilimlar, serializedForm)
-
-                if (nobetciEczaneler != null) {
-                    nobetciEczaneler;
-                }
-                else {
-                    nobetciListesi();
-                }
+                nobetciListesi();
             }
-
         });
 
         //gün dağılım
@@ -2690,26 +3004,27 @@
     <!-- #region arama -->
     <script>
 
+        var nobetGrubu = new Array();
         var baslangicTarihi;
         var bitisTarihi;
 
-        function getNobetGrubu() {
+    function getNobetGrubu() {
             //alert(1)
 
-            nobetGrubu = [];
+        nobetGrubu = [];
 
-            //if ($('#nobetGrupGorevTipId :selected').length == 0) {
-            //    nobetGrubu.push({ Id: -9 });
-            //}
-            //else {
-            $('#nobetGrupGorevTipId :selected').each(function () {
-                nobetGrubu.push({ Id: parseInt($(this).val()) });
-            });
-            //}
-            //alert(2)
-            //console.log(nobetGrubu)
-            return nobetGrubu;// + ' ' + selected.text();
+        if ($('#nobetGrupGorevTipId :selected').length == 0) {
+            nobetGrubu.push({ Id: -1 });
         }
+        else {
+            $('#nobetGrupGorevTipId :selected').each(function() {
+                nobetGrubu.push(parseInt($(this).val()));
+            });
+        }
+        //alert(2)
+        console.log(nobetGrubu)
+        return nobetGrubu;// + ' ' + selected.text();
+    }
 
         function sonucAra() {
             //dağılımlar
@@ -3022,7 +3337,6 @@
 
         $("#nobetGrupGorevTipId").change(function () {
             nobetGrubu = getNobetGrubu();
-            //alert(1)
             //tarihAralik();
             //pivotlariGuncelle();
         });
@@ -3145,7 +3459,7 @@
             //getJsonDagilimlar(urlDagilimlar);
             nobetGrubu = getNobetGrubu();
             //var sure = parseInt($('#sure').val());
-            //console.log(nobetGrubu)
+
             //$("#BaslangicTarihi").datepicker("setDate", new Date());
 
             if (parseInt(s[1]) > 0 || s[1] != null) {
@@ -3157,9 +3471,6 @@
             //if (sure > 0) {
             //    toastr.success('Çözüm Süresi: ' + sure + ' saniye');
             //}
-            //$(".ui-helper-hidden-accessible").hide();
-            //$(".ui-helper-hidden-accessible").remove();
-            //$(".ui-helper-hidden-accessible").addClass("text-white");
             $(document).ajaxStart(function () {
                 $("#wait").show();
             });

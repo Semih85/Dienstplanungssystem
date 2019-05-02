@@ -16,6 +16,7 @@ using WM.UI.Mvc.Areas.EczaneNobet.Models;
 using WM.UI.Mvc.Models;
 using System.IO;
 using QRCoder;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -28,77 +29,34 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private INobetUstGrupService _nobetUstGrupService;
         private IEczaneNobetSonucService _eczaneNobetSonucService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public NobetciEczaneHaritaController(IEczaneService eczaneService,
                                 IUserService userService,
                                 INobetUstGrupService nobetUstGrupService,
                                 IEczaneNobetGrupService eczaneNobetGrupService,
-                                IEczaneNobetSonucService eczaneNobetSonucService)
+                                IEczaneNobetSonucService eczaneNobetSonucService,
+                                INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _eczaneService = eczaneService;
             _nobetUstGrupService = nobetUstGrupService;
             _eczaneNobetSonucService = eczaneNobetSonucService;
             _userService = userService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
         #endregion
         // GET: EczaneNobet/Eczane        
         [Authorize]
         public ActionResult Index(DateTime? tarih)
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
-
-            int gun = 0;
-            int ay = 0;
-            int yil = 0;
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var _tarih = DateTime.Today;
 
-            if (tarih == null)
-            {
-                gun = _tarih.Day;
-                ay = _tarih.Month;
-                yil = _tarih.Year;
-            }
-            else
-            {
-                _tarih = (DateTime)tarih;
-                gun = _tarih.Day;
-                ay = _tarih.Month;
-                yil = _tarih.Year;
-            }
-            //ay = 8;
-            ////gun = 30;
-            //double _enlem = 0;
-            //double _boylam = 0;
-
-            //if (nobetUstGrup.Id == 1)
-            //{
-            //    _enlem = 36.5446673;
-            //    _boylam = 31.9817022;
-            //}
-            //else if (nobetUstGrup.Id == 2)
-            //{
-            //    _enlem = 36.8980543;
-            //    _boylam = 30.6480645;
-            //}
-            //else if (nobetUstGrup.Id == 3)
-            //{
-            //    _enlem = 36.805533;
-            //    _boylam = 34.626287;
-            //}
-            //else if (nobetUstGrup.Id == 4)
-            //{
-            //    _enlem = 40.912811;
-            //    _boylam = 38.38953;
-            //}
-            //else if (nobetUstGrup.Id == 5)
-            //{
-            //    _enlem = 37.0651243;
-            //    _boylam = 36.2463125;
-            //}
             var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(_tarih, nobetUstGrup.Id);
             var IPadres = Request.UserHostAddress;
             // var ekraninBulundugueczane = _eczaneService.GetList().Where(w=>w.IPadress == IPadres);
@@ -143,8 +101,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public ActionResult NobetciEczaneler()
         {
-            var nobetUstGruplar = _nobetUstGrupService.GetDetaylar()
-                .Where(w => w.Id < 6);
+            //var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var nobetUstGruplar = _nobetUstGrupService.GetDetaylar();
+                //.Where(w => w.Id < 6);
 
             ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar.Select(s => new { s.Id, s.Adi }), "Id", "Adi");
 
@@ -169,9 +129,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [Authorize]
         public JsonResult GetNobetcilerByTarih(DateTime tarih)
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var _tarih = DateTime.Today;
 
@@ -183,35 +144,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 _tarih = tarih;
             }
-            //ay = 8;
-            //gun = 30;
+
             double _enlem = nobetUstGrup.Enlem;
             double _boylam = nobetUstGrup.Boylam;
-            //if (nobetUstGrupId == 1)
-            //{
-            //    _enlem = 36.5446673;
-            //    _boylam = 31.9817022;
-            //}
-            //else if (nobetUstGrupId == 2)
-            //{
-            //    _enlem = 36.8980543;
-            //    _boylam = 30.6480645;
-            //}
-            //else if (nobetUstGrupId == 3)
-            //{
-            //    _enlem = 36.805533;
-            //    _boylam = 34.626287;
-            //}
-            //else if (nobetUstGrupId == 4)
-            //{
-            //    _enlem = 40.912811;
-            //    _boylam = 38.38953;
-            //}
-            //else if (nobetUstGrupId == 5)
-            //{
-            //    _enlem = 37.0651243;
-            //    _boylam = 36.2463125;
-            //}
+
             var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(tarih, nobetUstGrup.Id);
             var IPadres = Request.UserHostAddress;
             // var ekraninBulundugueczane = _eczaneService.GetList().Where(w=>w.IPadress == IPadres);
@@ -281,31 +217,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _enlem = 38.84574110292016;// 39.4093233; 
                 _boylam = 35.3869628281249; //34.9375269;
             }
-            //else if (nobetUstGrupId == 1)
-            //{
-            //    _enlem = 36.5446673;
-            //    _boylam = 31.9817022;
-            //}
-            //else if (nobetUstGrupId == 2)
-            //{
-            //    _enlem = 36.8980543;
-            //    _boylam = 30.6480645;
-            //}
-            //else if (nobetUstGrupId == 3)
-            //{
-            //    _enlem = 36.805533;
-            //    _boylam = 34.626287;
-            //}
-            //else if (nobetUstGrupId == 4)
-            //{
-            //    _enlem = 40.912811;
-            //    _boylam = 38.38953;
-            //}
-            //else if (nobetUstGrupId == 5)
-            //{
-            //    _enlem = 37.0651243;
-            //    _boylam = 36.2463125;
-            //}
 
             var nobetciEczaneler = _eczaneNobetSonucService.GetDetaylarGunluk(_tarih, nobetUstGrupId)
                 .Where(w => w.NobetUstGrupId < 6).ToList();
@@ -356,39 +267,14 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public JsonResult GetTumEczaneler()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
-
-            //ay = 8;
-            //gun = 30;
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+     
             double _enlem = nobetUstGrup.Enlem;
             double _boylam = nobetUstGrup.Boylam;
-            //if (nobetUstGrupId == 1)
-            //{
-            //    _enlem = 36.5446673;
-            //    _boylam = 31.9817022;
-            //}
-            //else if (nobetUstGrupId == 2)
-            //{
-            //    _enlem = 36.8980543;
-            //    _boylam = 30.6480645;
-            //}
-            //else if (nobetUstGrupId == 3)
-            //{
-            //    _enlem = 36.805533;
-            //    _boylam = 34.626287;
-            //}
-            //else if (nobetUstGrupId == 4)
-            //{
-            //    _enlem = 40.912811;
-            //    _boylam = 38.38953;
-            //}
-            //else if (nobetUstGrupId == 5)
-            //{
-            //    _enlem = 37.0651243;
-            //    _boylam = 36.2463125;
-            //}
+
             var nobetciEczaneler = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
             var IPadres = Request.UserHostAddress;
             // var ekraninBulundugueczane = _eczaneService.GetList().Where(w=>w.IPadress == IPadres);

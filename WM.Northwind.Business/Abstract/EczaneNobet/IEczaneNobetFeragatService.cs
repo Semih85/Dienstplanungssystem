@@ -20,5 +20,6 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
 
         EczaneNobetFeragatDetay GetDetayById(int eczaneNobetFeragatId);
         List<EczaneNobetFeragatDetay> GetDetaylar();
+        List<EczaneNobetFeragatDetay> GetDetaylar(int nobetUstGrupId);
     }
 }

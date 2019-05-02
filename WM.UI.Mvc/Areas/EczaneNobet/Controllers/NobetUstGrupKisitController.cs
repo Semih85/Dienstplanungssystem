@@ -12,6 +12,7 @@ using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.UI.Mvc.Areas.EczaneNobet.Models;
 using WM.UI.Mvc.Models;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -24,16 +25,19 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IKisitService _kisitService;
         private INobetUstGrupService _nobetUstGrupService;
         private IUserService _userService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public NobetUstGrupKisitController(INobetUstGrupKisitService nobetUstGrupKisitService,
             IKisitService kisitService,
             INobetUstGrupService nobetUstGrupService,
-            IUserService userService)
+            IUserService userService,
+            INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _nobetUstGrupKisitService = nobetUstGrupKisitService;
             _kisitService = kisitService;
             _nobetUstGrupService = nobetUstGrupService;
             _userService = userService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
         #endregion
 
@@ -57,13 +61,16 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public ActionResult KisitAyarla()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
-            //var rolId = rolIdler.FirstOrDefault();
-            //ViewBag.RolId = rolId;
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
-            var kisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id)
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+            ////var rolId = rolIdler.FirstOrDefault();
+            ////ViewBag.RolId = rolId;
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetUstGrupDetay = _nobetUstGrupSessionService.GetNobetUstGrup();
+            //_nobetUstGrupService.GetDetay(nobetUstGrup.Id);
+
+            var kisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupDetay.Id)
                 //.Where(w => nobetUstGruplar.Contains(w.NobetUstGrupId))
                 .OrderBy(o => o.KisitAdiGosterilen).ToList();
 
@@ -113,8 +120,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [HandleError]
         public ActionResult VarsayilanKisitlar()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGrupId = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).FirstOrDefault();
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGrupDetay = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrupId = nobetUstGrupDetay.Id;
+                //_nobetUstGrupService.GetListByUser(user)
+                //.Select(s => s.Id)
+                //.FirstOrDefault();
 
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetVarsayilandanFarkliOlanlar(nobetUstGrupId);
 
@@ -124,7 +135,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 kisit.PasifMi = nobetUstGrupKisit.VarsayilanPasifMi;
                 kisit.SagTarafDegeri = nobetUstGrupKisit.SagTarafDegeriVarsayilan;
                 _nobetUstGrupKisitService.Update(kisit);
-            }           
+            }
 
             TempData["VarsayilanKistlarSonuc"] = true;
 

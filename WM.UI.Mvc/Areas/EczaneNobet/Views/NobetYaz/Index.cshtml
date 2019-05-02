@@ -24,6 +24,7 @@
 
 @Html.Hidden("SonNobetTarihi", Model.SonNobetTarihi.ToShortDateString())
 <!-- #endregion -->
+
 <!-- #region Nöbet Yaz card -->
 
 <div class="container-fluid mt-3">
@@ -50,7 +51,7 @@
                         <div class="col">
                             <!-- #region Nöbet üst grup form -->
 
-                            @if (ViewBag.NobetUstGrupSayisi > 1)
+                            @*@if (ViewBag.NobetUstGrupSayisi > 1)
                             {
                                 using (Ajax.BeginForm(null, null, getAjaxOptions, new { @class = "form", id = "formNobetUstGrup" }))
                                 {
@@ -61,7 +62,7 @@
                                         </div>
                                     </div>
                                 }
-                            }
+                            }*@
 
                             <!-- #endregion -->
                             <!-- #region Model çöz formu -->
@@ -211,12 +212,12 @@
                                     </button>
                                 </div>
 
-                                if (rolId == 1)
+                                @*if (rolId == 1)
                                 {
                                     <button type="button" id="modalButton" class="btn btn-outline-primary mb-3" data-toggle="modal" data-target="#demoCozum">
                                         3 Yıllık Demo Çöz
                                     </button>
-                                }
+                                }*@
                             }
 
                             <!-- #endregion -->
@@ -321,6 +322,7 @@
 </div>
 
 <!-- #endregion -->
+
 <!-- #region modal -->
 <div class="modal" tabindex="-1" id="nobetYazModal" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
     <div class="modal-dialog" role="document">
@@ -1550,6 +1552,7 @@
     </script>
 }
 <!-- #endregion -->
+
 <!-- #region diğer -->
 @*@section SolTaraf*@
 @* sık kullanılanlar *@

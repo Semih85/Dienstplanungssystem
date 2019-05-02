@@ -9,6 +9,7 @@ using WM.Northwind.Business.Abstract.Authorization;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -25,6 +26,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IUserService _userService;
         private IEczaneGrupService _eczaneGrupService;
         private INobetGrupGorevTipTakvimOzelGunService _nobetGrupGorevTipTakvimOzelGunService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public EczaneNobetIstekController(IEczaneNobetIstekService eczaneNobetIstekService,
                                           IEczaneNobetGrupService eczaneNobetGrupService,
@@ -33,7 +35,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                           ITakvimService takvimService,
                                           IUserService userService,
                                           IEczaneGrupService eczaneGrupService,
-                                          INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService
+                                          INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService,
+                                          INobetUstGrupSessionService nobetUstGrupSessionService
             )
         {
             _eczaneNobetIstekService = eczaneNobetIstekService;
@@ -44,6 +47,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _userService = userService;
             _eczaneGrupService = eczaneGrupService;
             _nobetGrupGorevTipTakvimOzelGunService = nobetGrupGorevTipTakvimOzelGunService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
         #endregion
 
@@ -52,11 +56,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             //var eczaneNobetMazerets = db.EczaneNobetMazerets.Include(e => e.Eczane).Include(e => e.Mazeret).Include(e => e.Takvim);
             //eczaneNobetMazerets.ToList()
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id);
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            var model = _eczaneNobetIstekService.GetDetaylar()
-                .Where(s => eczaneler.Contains(s.EczaneId))
+            //var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id);
+
+            var model = _eczaneNobetIstekService.GetDetaylar(nobetUstGrup.Id)
+                //.Where(s => eczaneler.Contains(s.EczaneId))
                 .OrderByDescending(o => o.Tarih).ThenBy(f => f.EczaneAdi);
 
             return View(model);
@@ -82,11 +88,21 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/EczaneNobetIstek/Create
         public ActionResult Create()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
+            //var user = _userService.GetByUserName(User.Identity.Name);
 
-            var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
-            ViewBag.EczaneNobetGrupId = new SelectList(_eczaneNobetGrupService.GetDetaylarByEczaneIdList(eczaneler)
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" }).OrderBy(s => s.Value), "Id", "Value");
+            //var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
+
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            //var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
+
+            ViewBag.EczaneNobetGrupId = new SelectList(_eczaneNobetGrupService.GetMyDrop(eczaneNobetGruplar),
+                //.Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" })
+                //.OrderBy(s => s.Value), 
+                "Id", "Value");
+
             ViewBag.IstekId = new SelectList(_istekService.GetList(), "Id", "Adi");
             ViewBag.HaftaninGunu = new SelectList(_takvimService.GetHaftaninGunleri(), "Id", "Value");
             ViewBag.SecilenHaftaninGunuSayisi = 0;

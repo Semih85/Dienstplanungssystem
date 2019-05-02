@@ -70,6 +70,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<KalibrasyonTipDetay> GetDetaylar(int nobetUstGrupId)
+        {
+            return _kalibrasyonTipDal.GetDetayList(x => nobetUstGrupId == x.NobetUstGrupId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<MyDrop> GetMyDrop(List<KalibrasyonTipDetay> kalibrasyonTipDetaylar)
         {
             return kalibrasyonTipDetaylar.Select(s => new MyDrop { Id = s.Id, Value = $"{s.Adi}" }).ToList();

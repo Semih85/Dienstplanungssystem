@@ -1917,7 +1917,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         {
                             foreach (var yeniEczane in yeniAnahtarListeyeEklenecekEczaneler)
                             {
-                                var yeniEczaneTarih = yeniEczane.BaslangicTarihi < yeniEczane.NobetUstGrupBaslamaTarihi ? yeniEczane.NobetUstGrupBaslamaTarihi : yeniEczane.BaslangicTarihi;
+                                var grupDegitirenEczaneninEskiGruptakiSonNobeti = anahtarListeIlk.SingleOrDefault(x => x.EczaneNobetGrupId == yeniEczane.Id);
+
+                                var yeniEczaneTarih = yeniEczane.BaslangicTarihi < yeniEczane.NobetUstGrupBaslamaTarihi 
+                                    ? yeniEczane.NobetUstGrupBaslamaTarihi 
+                                    : grupDegitirenEczaneninEskiGruptakiSonNobeti != null 
+                                    ? grupDegitirenEczaneninEskiGruptakiSonNobeti.Tarih 
+                                    : yeniEczane.BaslangicTarihi;
 
                                 var takvim = GetDetay(yeniEczaneTarih);
 

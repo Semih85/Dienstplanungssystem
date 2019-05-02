@@ -11,6 +11,7 @@ using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.UI.Mvc.Models;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -22,25 +23,31 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IUserService _userService;
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private INobetUstGrupService _nobetUstGrupService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public EczaneController(IEczaneService eczaneService,
                                 IUserService userService,
                                 IEczaneNobetGrupService eczaneNobetGrupService,
-                                INobetUstGrupService nobetUstGrupService)
+                                INobetUstGrupService nobetUstGrupService,
+                                INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _eczaneService = eczaneService;
             _userService = userService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _nobetUstGrupService = nobetUstGrupService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
 
         // GET: EczaneNobet/Eczane        
         public ActionResult Index()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var model = _eczaneService.GetListByUser(user);
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            return View(model.OrderBy(o => o.AcilisTarihi));
+            var model = _eczaneService.GetDetaylar(ustGrupSession.Id)
+                .OrderBy(o => o.AcilisTarihi).ToList();
+
+            return View(model);
         }
 
         // GET: EczaneNobet/Eczane/Details/5

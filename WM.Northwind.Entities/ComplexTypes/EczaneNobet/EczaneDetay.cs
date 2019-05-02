@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WM.Core.Entities;
+using WM.Northwind.Entities.Concrete;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 
 namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 {
-    public class EczaneDetay : IComplexType
+    public class EczaneDetay : Iletisim, IComplexType
     {
         public int Id { get; set; }
         [Display(Name = "Eczane")]
@@ -32,13 +33,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         [Required(ErrorMessage = "Boylam gereklidir. Bilmiyorsanız 0 giriniz.")]
         public double Boylam { get; set; }
         
-        [Display(Name = "Web Sitesi")]
-        public string WebSitesi { get; set; }
-        [Display(Name = "Mail Adresi")]
-        public string MailAdresi { get; set; }
-        [Display(Name = "Telefon Numarası")]
-        public string TelefonNo { get; set; }
-        public string Adres { get; set; }
         [Display(Name = "Adres Tarifi")]
         public string AdresTarifi { get; set; }
         [Display(Name = "Adres Tarifi Kısa")]

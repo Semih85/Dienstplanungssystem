@@ -44,6 +44,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _eczaneNobetFeragatDal.GetDetayList();
         }
 
+        public List<EczaneNobetFeragatDetay> GetDetaylar(int nobetUstGrupId)
+        {
+            return _eczaneNobetFeragatDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId);
+        }
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetFeragat> GetList()
         {

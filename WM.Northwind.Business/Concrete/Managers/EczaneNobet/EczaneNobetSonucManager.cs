@@ -274,6 +274,21 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipIdList(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList)
+        {
+            return _eczaneNobetSonucDal.GetDetayList(x => (x.Tarih >= baslangicTarihi || baslangicTarihi == null)
+                                                       && (x.Tarih <= bitisTarihi || bitisTarihi == null)
+                                                       && nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId)
+                                                       );
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipIdList(int[] nobetGrupGorevTipIdList)
+        {
+            return _eczaneNobetSonucDal.GetDetayList(x => nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId));
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         [LogAspect(typeof(DatabaseLogger))]
         public List<EczaneNobetSonucDetay2> GetDetaylarGunluk(DateTime nobetTarihi, int nobetUstGrupId)
         {
@@ -379,6 +394,56 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<EczaneNobetSonucListe2> GetSonuclar(int nobetUstGrupId)
         {
             var detaylar = GetDetaylar(nobetUstGrupId);
+
+            if (nobetUstGrupId == 5)
+            {
+                var sonuclar = GetSonuclar(detaylar, nobetUstGrupId);
+
+                var nobetDurumlar = _nobetDurumService.GetDetaylar();
+                //.Where(w => w.NobetDurumTipId != 4).ToList();
+
+                return EczaneNobetSonucOsmaniye(sonuclar, nobetDurumlar);
+            }
+            //var sw = new Stopwatch();
+            //sw.Start();
+            //var sonuclarT = GetSonuclar(detaylar, nobetUstGrupId);
+            //sw.Stop();
+
+            return GetSonuclar(detaylar, nobetUstGrupId); ;
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucListe2> GetSonuclar(int[] nobetGrupGorevTipIdList)
+        {
+            var detaylar = GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipIdList);
+
+            var nobetUstGrupId = detaylar.Select(s => s.NobetUstGrupId).FirstOrDefault();
+
+            if (nobetUstGrupId == 5)
+            {
+                var sonuclar = GetSonuclar(detaylar, nobetUstGrupId);
+
+                var nobetDurumlar = _nobetDurumService.GetDetaylar();
+                //.Where(w => w.NobetDurumTipId != 4).ToList();
+
+                return EczaneNobetSonucOsmaniye(sonuclar, nobetDurumlar);
+            }
+            //var sw = new Stopwatch();
+            //sw.Start();
+            //var sonuclarT = GetSonuclar(detaylar, nobetUstGrupId);
+            //sw.Stop();
+
+            return GetSonuclar(detaylar, nobetUstGrupId); ;
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucListe2> GetSonuclar(int[] nobetGrupGorevTipIdList, DateTime? baslangicTarihi, DateTime? bitisTarihi)
+        {   
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylarByIdList(nobetGrupGorevTipIdList.ToList());
+
+            var detaylar = GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi, nobetGrupGorevTipIdList);
+
+            var nobetUstGrupId = detaylar.Select(s => s.NobetUstGrupId).FirstOrDefault();
 
             if (nobetUstGrupId == 5)
             {

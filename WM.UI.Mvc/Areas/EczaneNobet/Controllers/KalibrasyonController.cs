@@ -10,6 +10,7 @@ using WM.Northwind.Business.Abstract.Authorization;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.UI.Mvc.Models;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -26,6 +27,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
         private INobetUstGrupGunGrupService _nobetUstGrupGunGrupService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public KalibrasyonController(IKalibrasyonService kalibrasyonService,
             IKalibrasyonTipService kalibrasyonTipService,
@@ -33,7 +35,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             INobetUstGrupService nobetUstGrupService,
             IEczaneNobetGrupService eczaneNobetGrupService,
             INobetGrupGorevTipService nobetGrupGorevTipService,
-            INobetUstGrupGunGrupService nobetUstGrupGunGrupService)
+            INobetUstGrupGunGrupService nobetUstGrupGunGrupService,
+            INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _kalibrasyonService = kalibrasyonService;
             _kalibrasyonTipService = kalibrasyonTipService;
@@ -42,6 +45,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _nobetGrupGorevTipService = nobetGrupGorevTipService;
             _nobetUstGrupGunGrupService = nobetUstGrupGunGrupService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
 
         #endregion
@@ -49,10 +53,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/Kalibrasyon
         public ActionResult Index()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            var kalibrasyonlar = _kalibrasyonService.GetDetaylar(nobetUstGruplar);
+            var kalibrasyonlar = _kalibrasyonService.GetDetaylar(nobetUstGrup.Id);
+
             return View(kalibrasyonlar);
         }
 
@@ -74,16 +79,17 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/Kalibrasyon/Create
         public ActionResult Create()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylarByNobetUstGrupIdList(nobetUstGruplar);
+            var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetMyDrop(eczaneNobetGrupList);
             
-            var kalibrasyonTipList = _kalibrasyonTipService.GetDetaylar(nobetUstGruplar);
+            var kalibrasyonTipList = _kalibrasyonTipService.GetDetaylar(nobetUstGrup.Id);
             var kalibrasyonTipler = _kalibrasyonTipService.GetMyDrop(kalibrasyonTipList);
 
-            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylarByNobetUstGupIdList(nobetUstGruplar);
+            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
 
             var nobetUstGrupGunGrupMydrop = _nobetUstGrupGunGrupService.GetMyDrop(nobetUstGrupGunGruplar);
 
@@ -107,16 +113,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
             }
 
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylarByNobetUstGrupIdList(nobetUstGruplar);
+            var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetMyDrop(eczaneNobetGrupList);
 
-            var kalibrasyonTipList = _kalibrasyonTipService.GetDetaylar(nobetUstGruplar);
+            var kalibrasyonTipList = _kalibrasyonTipService.GetDetaylar(nobetUstGrup.Id);
             var kalibrasyonTipler = _kalibrasyonTipService.GetMyDrop(kalibrasyonTipList);
 
-            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylarByNobetUstGupIdList(nobetUstGruplar);
+            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
 
             var nobetUstGrupGunGrupMydrop = _nobetUstGrupGunGrupService.GetMyDrop(nobetUstGrupGunGruplar);
 
@@ -138,17 +143,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 return HttpNotFound();
             }
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
-
-            var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylarByNobetUstGrupIdList(nobetUstGruplar);
+            var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetMyDrop(eczaneNobetGrupList);
 
-            var kalibrasyonTipList = _kalibrasyonTipService.GetDetaylar(nobetUstGruplar);
+            var kalibrasyonTipList = _kalibrasyonTipService.GetDetaylar(nobetUstGrup.Id);
             var kalibrasyonTipler = _kalibrasyonTipService.GetMyDrop(kalibrasyonTipList);
 
-            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylarByNobetUstGupIdList(nobetUstGruplar);
+            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
 
             var nobetUstGrupGunGrupMydrop = _nobetUstGrupGunGrupService.GetMyDrop(nobetUstGrupGunGruplar);
 
@@ -170,16 +173,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _kalibrasyonService.Update(kalibrasyon);
                 return RedirectToAction("Index");
             }
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylarByNobetUstGrupIdList(nobetUstGruplar);
+            var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetMyDrop(eczaneNobetGrupList);
 
-            var kalibrasyonTipList = _kalibrasyonTipService.GetDetaylar(nobetUstGruplar);
+            var kalibrasyonTipList = _kalibrasyonTipService.GetDetaylar(nobetUstGrup.Id);
             var kalibrasyonTipler = _kalibrasyonTipService.GetMyDrop(kalibrasyonTipList);
 
-            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylarByNobetUstGupIdList(nobetUstGruplar);
+            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
 
             var nobetUstGrupGunGrupMydrop = _nobetUstGrupGunGrupService.GetMyDrop(nobetUstGrupGunGruplar);
 

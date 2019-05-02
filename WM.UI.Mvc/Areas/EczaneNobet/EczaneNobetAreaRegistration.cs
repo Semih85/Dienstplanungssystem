@@ -394,6 +394,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                 url: "ayni-gun-tutulan-nobetler",
                 defaults: new { controller = "AyniGunTutulanNobet", action = "Index" }
             );
+
+            context.MapRoute(
+                name: "EczaneNobetKalibrasyon",
+                url: "eczane-nobet-kalibrasyonlar",
+                defaults: new { controller = "Kalibrasyon", action = "Index" }
+            );
+
             /*
                 context.MapRoute(
                     "NobetGrup",

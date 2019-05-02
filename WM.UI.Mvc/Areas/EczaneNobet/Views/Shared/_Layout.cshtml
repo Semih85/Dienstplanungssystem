@@ -100,8 +100,6 @@
 
     @Scripts.Render("~/bundle/scripts")
     @RenderSection("scripts", false)
-    <!-- end GeoTrust Smart Icon tag -->
-
     <script type="text/javascript">
         $(document).ready(function () {
             $("body").tooltip({ selector: '[data-toggle=tooltip]' });
@@ -122,6 +120,13 @@
             //if (isExpanded) {
             //}
         });
+
+         $("#formNobetUstGrupId #NobetUstGrupId").change(function (e) {
+            //alert(2)
+            $( "#formNobetUstGrupId" ).submit();
+            //var secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+            //var secilenEczaneSayisi = $("#EczaneId :selected").length;
+        })
 
     </script>
 </body>

@@ -21,5 +21,6 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<KalibrasyonTipDetay> GetDetaylar();
         List<MyDrop> GetMyDrop(List<KalibrasyonTipDetay> kalibrasyonTipDetaylar);
         List<KalibrasyonTipDetay> GetDetaylar(List<int> nobetUstGrupIdList);
+        List<KalibrasyonTipDetay> GetDetaylar(int nobetUstGrupId);
     }
 }

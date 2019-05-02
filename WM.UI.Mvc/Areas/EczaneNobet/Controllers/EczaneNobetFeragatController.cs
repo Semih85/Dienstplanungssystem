@@ -11,6 +11,7 @@ using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.UI.Mvc.Models;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -25,13 +26,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IUserService _userService;
         private INobetFeragatTipService _nobetFeragatTipService;
         private IEczaneNobetGrupService _eczaneNobetGrupService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public EczaneNobetFeragatController(IEczaneNobetFeragatService eczaneNobetFeragatService,
             IEczaneNobetSonucService eczaneNobetSonucService,
             INobetUstGrupService nobetUstGrupService,
             IUserService userService,
             INobetFeragatTipService nobetFeragatTipService,
-            IEczaneNobetGrupService eczaneNobetGrupService)
+            IEczaneNobetGrupService eczaneNobetGrupService,
+            INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _eczaneNobetFeragatService = eczaneNobetFeragatService;
             _eczaneNobetSonucService = eczaneNobetSonucService;
@@ -39,16 +42,19 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _userService = userService;
             _nobetFeragatTipService = nobetFeragatTipService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         } 
         #endregion
 
         // GET: EczaneNobet/EczaneNobetFeragat
         public ActionResult Index()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
-            var model = _eczaneNobetFeragatService.GetDetaylar()
-                .Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId));
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var model = _eczaneNobetFeragatService.GetDetaylar(nobetUstGrup.Id);
+
             return View(model);
         }
 
@@ -70,10 +76,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/EczaneNobetFeragat/Create
         public ActionResult Create()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
-            var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar()
-                    .Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar(nobetUstGrup.Id)
                     .OrderBy(o => o.TakvimId);
 
             var nobetFeragatTipler = _nobetFeragatTipService.GetList();
@@ -105,11 +112,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _eczaneNobetFeragatService.Insert(eczaneNobetFeragat);
                 return RedirectToAction("Index");
             }
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
-            var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar()
-                    .Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar(nobetUstGrup.Id)
                     .OrderBy(o => o.TakvimId);
+
             var nobetFeragatTipler = _nobetFeragatTipService.GetList();
 
             //var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGruplar.FirstOrDefault())
@@ -135,11 +144,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 return HttpNotFound();
             }
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
-            var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar()
-                    .Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar(nobetUstGrup.Id)
                     .OrderBy(o => o.TakvimId);
+
             var nobetFeragatTipler = _nobetFeragatTipService.GetList();
 
             //var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGruplar.FirstOrDefault())
@@ -169,11 +180,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _eczaneNobetFeragatService.Update(eczaneNobetFeragat);
                 return RedirectToAction("Index");
             }
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
-            var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar()
-                    .Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar(nobetUstGrup.Id)
                     .OrderBy(o => o.TakvimId);
+
             var nobetFeragatTipler = _nobetFeragatTipService.GetList();
 
             //var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGruplar.FirstOrDefault())
@@ -184,6 +197,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetGruplar, "Id", "Value");
             ViewBag.NobetFeragatTipId = new SelectList(nobetFeragatTipler.Select(s => new MyDrop { Id = s.Id, Value = s.Adi }), "Id", "Value");
             ViewBag.EczaneNobetSonucId = new SelectList(eczaneNobetSonuclar.Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.Tarih.ToLongDateString()}" }), "Id", "Value", eczaneNobetFeragat.EczaneNobetSonucId);
+
             return View(eczaneNobetFeragat);
         }
 

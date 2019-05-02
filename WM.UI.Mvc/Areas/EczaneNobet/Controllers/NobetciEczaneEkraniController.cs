@@ -17,6 +17,7 @@ using WM.UI.Mvc.Models;
 using System.IO;
 using QRCoder;
 using WM.Northwind.Entities.Concrete.Authorization;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -30,18 +31,21 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private INobetUstGrupService _nobetUstGrupService;
         private IEczaneNobetSonucService _eczaneNobetSonucService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public NobetciEczaneEkraniController(IEczaneService eczaneService,
                                 IUserService userService,
                                 INobetUstGrupService nobetUstGrupService,
                                 IEczaneNobetGrupService eczaneNobetGrupService,
-                                IEczaneNobetSonucService eczaneNobetSonucService)
+                                IEczaneNobetSonucService eczaneNobetSonucService,
+                                INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _eczaneService = eczaneService;
             _nobetUstGrupService = nobetUstGrupService;
             _eczaneNobetSonucService = eczaneNobetSonucService;
             _userService = userService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
         #endregion
         // GET: EczaneNobet/Eczane        
@@ -65,7 +69,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
             //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
-            int nobetUstGrupId = 0;
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            int nobetUstGrupId = nobetUstGrup.Id;
 
             //nobetUstGrupId = 3;
             //ay = 10;

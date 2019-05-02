@@ -9,6 +9,7 @@ using WM.Northwind.Business.Abstract.Optimization.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.UI.Mvc.Areas.EczaneNobet.Models;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -41,6 +42,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IEczaneNobetMazeretService _eczaneNobetMazeretService;
         private IKalibrasyonService _kalibrasyonService;
         private IEczaneNobetSonucPlanlananService _eczaneNobetSonucPlanlananService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public NobetYazController(IAlanyaOptimizationService alanyaOptimizationService,
                                   IAntalyaMerkezOptimizationService antalyaMerkezOptimizationService,
@@ -65,7 +67,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                   IEczaneNobetMazeretService eczaneNobetMazeretService,
                                   IKalibrasyonService kalibrasyonService,
                                   IZonguldakOptimizationService zonguldakOptimizationService,
-                                  IEczaneNobetSonucPlanlananService eczaneNobetSonucPlanlananService
+                                  IEczaneNobetSonucPlanlananService eczaneNobetSonucPlanlananService,
+                                  INobetUstGrupSessionService nobetUstGrupSessionService
             )
         {
             _alanyaOptimizationService = alanyaOptimizationService;
@@ -92,6 +95,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _kalibrasyonService = kalibrasyonService;
             _zonguldakOptimizationService = zonguldakOptimizationService;
             _eczaneNobetSonucPlanlananService = eczaneNobetSonucPlanlananService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
         #endregion
 
@@ -122,7 +126,17 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var rolId = rolIdler.FirstOrDefault();
 
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+
+            var nobetUstGrup1 = nobetUstGruplar.FirstOrDefault();
+
+            var nobetUstGrup = _nobetUstGrupService.GetDetay(nobetUstGrup1.Id);
+
+            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            if (ustGrupSession.Id != 0)
+            {
+                nobetUstGrup = ustGrupSession;
+            }
 
             var gelecekTarih = DateTime.Now.AddMonths(1);
             var gelecekAy = gelecekTarih.Month;

@@ -80,6 +80,8 @@ namespace WM.UI.Mvc.Controllers
             {
                 var user = _userService.GetByEMailAndPassword(login.LoginItem);
 
+                //Session["nobetUstGrupId"] = 1;
+                
                 if (user != null)
                 {
                     var simdi = DateTime.UtcNow;
@@ -146,6 +148,7 @@ namespace WM.UI.Mvc.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            Session.Clear();
             return RedirectToAction("Index", "Home", new { area = "" });
         }
 

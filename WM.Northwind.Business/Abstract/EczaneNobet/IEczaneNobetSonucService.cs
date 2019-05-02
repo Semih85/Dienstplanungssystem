@@ -58,6 +58,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
 
         List<EczaneNobetSonucListe2> GetSonuclar();
         List<EczaneNobetSonucListe2> GetSonuclar(int nobetUstGrupId);
+        List<EczaneNobetSonucListe2> GetSonuclar(int[] nobetGrupGorevTipIdList);
+        List<EczaneNobetSonucListe2> GetSonuclar(int[] nobetGrupGorevTipIdList, DateTime? baslangicTarihi, DateTime? bitisTarihi);
         List<EczaneNobetSonucListe2> GetSonuclar(int yil, int ay, int nobetUstGrupId);
         List<EczaneNobetSonucListe2> GetSonuclar(int nobetGrupGorevTipId, int gunGrupId);
         List<EczaneNobetSonucListe2> GetSonuclar(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId);

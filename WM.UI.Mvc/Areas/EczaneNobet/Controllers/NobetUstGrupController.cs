@@ -11,6 +11,7 @@ using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.UI.Mvc.Models;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -20,14 +21,17 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetUstGrupService _nobetUstGrupService;
         private IEczaneOdaService _eczaneOdaService;
         private IUserService _userService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public NobetUstGrupController(INobetUstGrupService nobetUstGrupService,
                                       IEczaneOdaService eczaneOdaService,
-                                      IUserService userService)
+                                      IUserService userService,
+                                      INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _nobetUstGrupService = nobetUstGrupService;
             _eczaneOdaService = eczaneOdaService;
             _userService = userService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
 
         // GET: EczaneNobet/NobetUstGrup
@@ -141,6 +145,41 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             NobetUstGrupDetay nobetUstGrup = _nobetUstGrupService.GetDetay(id);
             _nobetUstGrupService.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public PartialViewResult NobetUstGrupSecPartialView()
+        {
+            var user = _userService.GetByUserName(User.Identity.Name);
+
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+
+            var nobetUstGrupId = nobetUstGruplar.FirstOrDefault().Id;
+
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var nobetUstGrupDetay = _nobetUstGrupService.GetDetay(nobetUstGrupId);
+
+            if (nobetUstGrup.Id != 0)
+            {
+                nobetUstGrupDetay = nobetUstGrup;
+            }
+
+            ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar, "Id", "Adi", nobetUstGrupDetay.Id);
+
+            ViewBag.NobetUstGrupSayisi = nobetUstGruplar.Count;
+
+            _nobetUstGrupSessionService.SetNobetUstGrup(nobetUstGrupDetay);
+
+            return PartialView();
+        }
+
+        public ActionResult NobetUstGrupSec(int nobetUstGrupId, string returnUrl)
+        {
+            var nobetUstGrupDetay = _nobetUstGrupService.GetDetay(nobetUstGrupId);
+
+            _nobetUstGrupSessionService.SetNobetUstGrup(nobetUstGrupDetay);
+
+            return (ActionResult)Redirect(returnUrl);
         }
     }
 }

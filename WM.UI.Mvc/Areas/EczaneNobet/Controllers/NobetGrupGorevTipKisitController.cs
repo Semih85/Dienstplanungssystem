@@ -11,6 +11,7 @@ using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.UI.Mvc.Models;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -23,27 +24,31 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetUstGrupKisitService _nobetUstGrupKisitService;
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
         private IUserService _userService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public NobetGrupGorevTipKisitController(INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
             INobetUstGrupService nobetUstGrupService,
             IUserService userService,
             INobetUstGrupKisitService nobetUstGrupKisitService,
-            INobetGrupGorevTipService nobetGrupGorevTipService)
+            INobetGrupGorevTipService nobetGrupGorevTipService,
+            INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
             _nobetUstGrupService = nobetUstGrupService;
             _userService = userService;
             _nobetUstGrupKisitService = nobetUstGrupKisitService;
             _nobetGrupGorevTipService = nobetGrupGorevTipService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
 
         // GET: EczaneNobet/NobetGrupGorevTipKisit
         public ActionResult Index()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
+            //var user = _userService.GetByUserName(User.Identity.Name);
 
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var nobetGrupGorevTipKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrup.Id)
                 .OrderByDescending(o=>o.Id).ToList();
@@ -69,10 +74,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/NobetGrupGorevTipKisit/Create
         public ActionResult Create()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
+            //var user = _userService.GetByUserName(User.Identity.Name);
 
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id);
@@ -84,10 +91,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public ActionResult Create2(int kisitId)
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
+            //var user = _userService.GetByUserName(User.Identity.Name);
 
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id)
@@ -119,10 +128,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _nobetGrupGorevTipKisitService.Insert(nobetGrupGorevTipKisit);
                 return RedirectToAction("Index");
             }
-            var user = _userService.GetByUserName(User.Identity.Name);
+            //var user = _userService.GetByUserName(User.Identity.Name);
 
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id);
@@ -145,10 +155,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 return HttpNotFound();
             }
-            var user = _userService.GetByUserName(User.Identity.Name);
+            //var user = _userService.GetByUserName(User.Identity.Name);
 
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id);
@@ -170,10 +181,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _nobetGrupGorevTipKisitService.Update(nobetGrupGorevTipKisit);
                 return RedirectToAction("Index");
             }
-            var user = _userService.GetByUserName(User.Identity.Name);
+            //var user = _userService.GetByUserName(User.Identity.Name);
 
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id);

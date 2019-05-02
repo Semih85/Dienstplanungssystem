@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Eczane>
+﻿@model IEnumerable<EczaneDetay>
 
 @{
     ViewBag.Title = "Eczaneler | Nöbet Sistemi";
@@ -49,7 +49,7 @@
         <thead>
             <tr>
                 <th style="width:20%">
-                    @Html.DisplayNameFor(model => model.Adi)
+                    @Html.DisplayNameFor(model => model.EczaneAdi)
                 </th>
                 <th style="width:10%">
                     @Html.DisplayNameFor(model => model.TelefonNumarasi)
@@ -71,7 +71,7 @@
             {
                 <tr class="gridtr">
                     <td>
-                        @Html.DisplayFor(modelItem => item.Adi)
+                        @Html.DisplayFor(modelItem => item.EczaneAdi)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.TelefonNumarasi)
@@ -131,7 +131,9 @@
 
     <script>
             $(document).ready(function () {
-                var model = @Html.Raw(Json.Encode(Model.Select(s=>new { s.Adi, s.TelefonNo, s.AcilisTarihi })));
+                var model = @Html.Raw(Json.Encode(Model
+                                .Select(s=>new { s.Id, s.TelefonNo, s.AcilisTarihi })
+                           ));
 
                 sayfalamaYap(model, 15);
 

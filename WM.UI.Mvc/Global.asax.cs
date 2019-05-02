@@ -13,6 +13,7 @@ using WM.Core.CrossCuttingConcerns.Validation.FluentValidation;
 using WM.Core.Utilities.Mvc.Infrastructure;
 using WM.Northwind.Business.DependencyResolvers.Ninject;
 using WM.UI.Mvc.App_Start;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc
 {
@@ -24,7 +25,7 @@ namespace WM.UI.Mvc
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory(new BusinessModule()));
+            ControllerBuilder.Current.SetControllerFactory(new NinjectControllerFactory(new BusinessModule(), new MvcModule()));
 
             FluentValidationModelValidatorProvider.Configure(provider =>
             {

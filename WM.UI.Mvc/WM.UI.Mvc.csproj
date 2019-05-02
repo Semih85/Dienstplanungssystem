@@ -802,6 +802,8 @@
     <Content Include="Areas\EczaneNobet\Views\AyniGunNobetTakipGrupAltGrup\Edit.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\AyniGunNobetTakipGrupAltGrup\Index.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\PivotSonuclarPartialView.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\PivotSonuclar - Copy.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\NobetUstGrup\NobetUstGrupSecPartialView.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -1242,6 +1244,9 @@
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\WMUIMvcContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\INobetUstGrupSessionService.cs" />
+    <Compile Include="Services\MvcModule.cs" />
+    <Compile Include="Services\NobetUstGrupSessionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config">
@@ -1357,6 +1362,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="ExtensionMethods\" />
     <Folder Include="Reports\" />
   </ItemGroup>
   <ItemGroup>
