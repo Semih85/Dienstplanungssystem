@@ -6,11 +6,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
+using WM.Northwind.Entities.Concrete.Enums;
 
 namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 {
     public class EczaneNobetSonucListe2
     {
+        public EczaneNobetSonucListe2()
+        {
+
+        }
+
+        public EczaneNobetSonucListe2(EczaneNobetSonucTuru sonucTuru)
+        {
+            SonucTuru = sonucTuru;
+        }
         public int Id { get; set; }
         [Display(Name = "Eczane")]
         public string EczaneAdi { get; set; }
@@ -79,30 +89,27 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
             : IstekId > 0
             ? "İstek Nöbeti"
             : "Normal Nöbet";
-
         public string EczaneSonucAdi => GetEczaneSonuc(MazeretId, IstekId, EczaneAdi);
         public string AyIkili => GetIkiliAylar(Ay);
         public string Mevsim => GetMevsim(Ay);
-
-        public string SonucTuru { get; set; }
+        public EczaneNobetSonucTuru SonucTuru { get; set; }
+        public string SonucTuruAdi => Enum.GetName(typeof(EczaneNobetSonucTuru), SonucTuru);
         public int NobetGrupGorevTipId { get; set; }
-
         string GetEczaneSonuc(int mazeretId, int istekId, string eczaneAdi)
         {
             if (mazeretId > 0)
             {
-                return $"{eczaneAdi}.m";
+                return $"{eczaneAdi}: mazeret";
             }
             else if (istekId > 0)
             {
-                return $"{eczaneAdi}.i";
+                return $"{eczaneAdi}: istek";
             }
             else
             {
                 return eczaneAdi;
             }
         }
-
         string GetIkiliAylar(int ay)
         {
             if (ay <= 2)
@@ -130,7 +137,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
                 return "11-12";
             }
         }
-
         string GetMevsim(int ay)
         {
             if (ay <= 2)
@@ -154,7 +160,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
                 return "4 Kış";
             }
         }
-
         // This presumes that weeks start with Monday.
         // Week 1 is the 1st week of the year with a Thursday in it.
         public static int GetIso8601WeekOfYear(DateTime time)

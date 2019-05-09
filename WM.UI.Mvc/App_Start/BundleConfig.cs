@@ -174,7 +174,8 @@ namespace WM.UI.Mvc.App_Start
                       ));
 
             // -- bootstrap-datepicker
-            bundles.Add(new StyleBundle("~/bundle/bootstrap-datepicker/style").Include(
+            bundles.Add(new StyleBundle("~/bundle/bootstrap-datepicker/style")
+                .Include(
                       "~/Content/bootstrapDatePicker/bootstrap-datepicker.min.css"));
 
             // -- bootstrap-select
@@ -188,6 +189,11 @@ namespace WM.UI.Mvc.App_Start
             // -- date-time picker
             bundles.Add(new StyleBundle("~/bundle/datetimepicker/style").Include(
                       "~/Content/datetimepicker/bootstrap-datetimepicker.min.css"));
+
+            // -- bootstrap
+            bundles.Add(new StyleBundle("~/bundle/bootstrap/style").Include(
+                      "~/Content/bootstrap.min.css"
+                      ));
         }
         #endregion
     }

@@ -22,5 +22,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int BorcluGunSayisiMax { get; set; }
         public int BorcluGunSayisiMin { get; set; }
         public int BorcluGunSayisiFarki => BorcluGunSayisiMax - BorcluGunSayisiMin;
+
+        public int NobetGorevTipId { get; set; }
     }
 }

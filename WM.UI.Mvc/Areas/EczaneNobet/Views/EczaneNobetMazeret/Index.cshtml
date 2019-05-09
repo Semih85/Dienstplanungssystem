@@ -76,7 +76,9 @@
                                 <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
                             </span>
                         </div>
-                        @Html.TextBox("BaslangicTarihi", null , new { @class = "form-control datepicker mr-2",
+                        @Html.TextBox("BaslangicTarihi", null, new
+                        {
+                            @class = "form-control datepicker mr-2",
                            //data_toggle = "tooltip",
                            //data_placement = "top",
                            //title = "Başlangıç Tarihi",
@@ -91,7 +93,9 @@
                                 <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
                             </span>
                         </div>
-                        @Html.TextBox("BitisTarihi", null, new { @class = "form-control datepicker",
+                        @Html.TextBox("BitisTarihi", null, new
+                        {
+                            @class = "form-control datepicker",
                            //data_toggle = "tooltip",
                            //data_placement = "top",
                            //title = "Bitiş Tarihi",
@@ -221,6 +225,7 @@
     @Styles.Render("~/bundle/pivot/style", "~/bundle/alert_toastr/style")
     @Styles.Render("~/bundle/bootstrap-select/style")
     @Styles.Render("~/bundle/bootstrap-datepicker/style")
+    @Styles.Render("~/bundle/jqueryui/style")
 
     <style>
         .toast-message {
@@ -770,7 +775,7 @@
             $("#selectedEczaneMazeretIstekIDs").val(selectedIDs);
             $("#unSelectedEczaneMazeretIstekIDs").val(unseletedeIDs);
 
-        });        
+        });
         var filtreliMi = false;
         var seciliMi = false;
         const tabloOlustur = () => {
@@ -830,7 +835,7 @@
                 //        //Remove class on checkbox uncheck
                 //    }
 
-                //    alert(chkBox.prop('checked'))             
+                //    alert(chkBox.prop('checked'))
 
                 //    if (chkBox.prop('checked')) {
                 //        selectedIDs.push($(this).val());
@@ -885,7 +890,7 @@
                     //    }
                     //});
                 });
-                $("#delete").show();                
+                $("#delete").show();
             }
             else {
                 //nobetciEczaneler;
@@ -896,7 +901,7 @@
             }
         }
 
-        
+
         $(document).ajaxStart(function () {
             //$("#loading").show();
         });
@@ -925,7 +930,7 @@
                     //var numOfVisibleRows = $('.filtreli').length;
                     //$("#toplamKayitSayisi").text(numOfVisibleRows)
                 });
-                
+
                 if ($(this).val().length == 0) {
                     getPaging(currentPage)
                     filtreliMi = false;

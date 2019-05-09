@@ -39,6 +39,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public virtual List<NobetUstGrupGunGrup> NobetUstGrupGunGruplar { get; set; }
         public virtual List<Eczane> Eczaneler { get; set; }
         public virtual List<KalibrasyonTip> KalibrasyonTipler { get; set; }
+        public virtual List<RaporNobetUstGrup>  RaporNobetUstGruplar { get; set; }
 
     }
 }

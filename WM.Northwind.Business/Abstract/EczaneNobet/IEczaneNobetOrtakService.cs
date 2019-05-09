@@ -8,6 +8,7 @@ using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete;
 using WM.Northwind.Entities.Concrete.Authorization;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
+using WM.Northwind.Entities.Concrete.Enums;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 
 
@@ -36,6 +37,20 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<AyniGunNobetTutanEczane> GetAyniGunNobetTutanAltGrupluEczaneler(List<EczaneNobetSonucListe2> ayniGunNobetTutanEczaneler);
         List<AyniGunNobetTutanEczane> GetAyniGunNobetTutanEczaneler(List<EczaneNobetSonucListe2> ayniGunNobetTutanEczaneler);
         List<AyniGunNobetTutanEczane> GetAyniGunNobetTutanEczanelerGiresun(List<EczaneNobetSonucListe2> ayniGunNobetTutanEczaneler, List<EczaneGrupDetay> eczaneGrupDetaylar);
+
+        List<EczaneNobetSonucListe2> EczaneNobetSonucBirlesim(
+            List<NobetGrupGorevTipGunKuralDetay> nobetGrupGorevTipGunKurallar,
+            List<EczaneNobetSonucDetay2> eczaneNobetSonuclar,
+            List<NobetGrupGorevTipTakvimOzelGunDetay> nobetGrupGorevTipTakvimOzelGunler,
+            List<EczaneNobetMazeretDetay> mazeretler,
+            List<EczaneNobetIstekDetay> istekler,
+            EczaneNobetSonucTuru sonucTuru);
+
+        List<EczaneNobetSonucListe2> EczaneNobetSonucBirlesim(
+            List<NobetGrupGorevTipGunKuralDetay> nobetGrupGorevTipGunKurallar,
+            List<EczaneNobetSonucDetay2> eczaneNobetSonuclar,
+            List<NobetGrupGorevTipTakvimOzelGunDetay> nobetGrupGorevTipTakvimOzelGunler,
+            EczaneNobetSonucTuru sonucTuru);
 
         List<EczaneNobetGrupGunKuralIstatistik> GetEczaneNobetGrupGunKuralIstatistikEczaneBazli(List<EczaneNobetSonucListe2> eczaneNobetSonuc);
 

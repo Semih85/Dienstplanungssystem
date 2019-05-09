@@ -242,7 +242,19 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<INobetOzelGunKategoriService>().To<NobetOzelGunKategoriManager>().InSingletonScope();
             Bind<INobetOzelGunKategoriDal>().To<EfNobetOzelGunKategoriDal>();
 
-            
+            Bind<IRaporService>().To<RaporManager>().InSingletonScope();
+            Bind<IRaporDal>().To<EfRaporDal>();
+
+            Bind<IRaporKategoriService>().To<RaporKategoriManager>().InSingletonScope();
+            Bind<IRaporKategoriDal>().To<EfRaporKategoriDal>();
+
+            Bind<IRaporRolService>().To<RaporRolManager>().InSingletonScope();
+            Bind<IRaporRolDal>().To<EfRaporRolDal>();
+
+            Bind<IRaporNobetUstGrupService>().To<RaporNobetUstGrupManager>().InSingletonScope();
+            Bind<IRaporNobetUstGrupDal>().To<EfRaporNobetUstGrupDal>();
+
+
             #endregion
 
             #region Optimization

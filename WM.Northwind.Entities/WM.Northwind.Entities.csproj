@@ -57,6 +57,7 @@
     <Compile Include="ComplexTypes\EczaneNobet\AyniGunTutulanNobetDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetCozumAnaharListeGecis.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetIstekCoklu.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\RaporDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSonucListeSırali.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneUzaklikMatrisDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\KalibrasyonYatay.cs" />
@@ -69,6 +70,8 @@
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetGrupAltGrupCoklu.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\NobetDurumDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\NobetGrupGorevTipKisitDetay.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\RaporNobetUstGrupDetay.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\RaporRolDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\TakvimOzelGunCoklu.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetTutamazGun.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetGrupSorgu.cs" />
@@ -197,6 +200,8 @@
     <Compile Include="Concrete\EczaneNobet\EczaneNobetDegisim.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetFeragat.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetIstek.cs" />
+    <Compile Include="Concrete\EczaneNobet\Rapor.cs" />
+    <Compile Include="Concrete\EczaneNobet\RaporKategori.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetSonucDemo.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneIlce.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetSonucEski.cs" />
@@ -226,6 +231,8 @@
     <Compile Include="Concrete\EczaneNobet\NobetSonucDemoTip.cs" />
     <Compile Include="Concrete\EczaneNobet\NobetUstGrupGunGrup.cs" />
     <Compile Include="Concrete\EczaneNobet\NobetUstGrupKisit.cs" />
+    <Compile Include="Concrete\EczaneNobet\RaporNobetUstGrup.cs" />
+    <Compile Include="Concrete\EczaneNobet\RaporRol.cs" />
     <Compile Include="Concrete\EczaneNobet\Sehir.cs" />
     <Compile Include="Concrete\EczaneNobet\Ilce.cs" />
     <Compile Include="Concrete\EczaneNobet\Log.cs" />
@@ -253,6 +260,7 @@
     <Compile Include="Concrete\EczaneNobet\UserEczane.cs" />
     <Compile Include="Concrete\EczaneNobet\UserNobetUstGrup.cs" />
     <Compile Include="Concrete\EczaneNobet\UserEczaneOda.cs" />
+    <Compile Include="Concrete\Enums\EczaneNobetSonucTuru.cs" />
     <Compile Include="Concrete\Iletisim.cs" />
     <Compile Include="Concrete\MenuBase.cs" />
     <Compile Include="Concrete\Optimization\Blend\BlendResult.cs" />
@@ -297,8 +305,6 @@
       <Name>WM.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Concrete\Enums\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

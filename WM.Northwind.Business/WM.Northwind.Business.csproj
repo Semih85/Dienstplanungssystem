@@ -82,6 +82,8 @@
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetGrupAltGrupService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetMuafiyetService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetOrtakService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporKategoriService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucPlanlananService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneUzaklikMatrisService.cs" />
     <Compile Include="Abstract\EczaneNobet\IGunGrupService.cs" />
@@ -100,6 +102,8 @@
     <Compile Include="Abstract\EczaneNobet\INobetSonucDemoTipService.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetUstGrupGunGrupService.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetUstGrupKisitService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporNobetUstGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporRolService.cs" />
     <Compile Include="Abstract\Optimization\EczaneNobet\IAlanyaOptimizationService.cs" />
     <Compile Include="Abstract\Optimization\EczaneNobet\IZonguldakOptimizationService.cs" />
     <Compile Include="Abstract\Optimization\EczaneNobet\IBartinOptimizationService.cs" />
@@ -174,6 +178,8 @@
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetFeragatManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetGrupAltGrupManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetMuafiyetManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\RaporKategoriManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\RaporManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSonucDemoManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetOrtakManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSonucPlanlananManager.cs" />
@@ -208,6 +214,8 @@
     <Compile Include="Concrete\Managers\EczaneNobet\NobetSonucDemoTipManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetUstGrupGunGrupManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetUstGrupKisitManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\RaporNobetUstGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\RaporRolManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\SehirManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupKuralManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetKuralManager.cs" />

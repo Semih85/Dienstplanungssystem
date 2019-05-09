@@ -8,6 +8,7 @@ using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.DataAccess.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
+using WM.Northwind.Entities.Concrete.Enums;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -259,7 +260,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                              MazeretTuru = (m?.TakvimId == s.TakvimId && m?.EczaneNobetGrupId == s.EczaneNobetGrupId) ? m.MazeretTuru : null,
                              NobetGorevTipAdi = s.NobetGorevTipAdi,
                              NobetGorevTipId = s.NobetGorevTipId,
-                             SonucTuru = "Taslak"
+                             SonucTuru = EczaneNobetSonucTuru.Taslak
                          }).ToList();
             return liste;
         }
@@ -328,7 +329,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                              MazeretTuru = (m?.TakvimId == s.TakvimId && m?.EczaneNobetGrupId == s.EczaneNobetGrupId) ? m.MazeretTuru : null,
                              NobetGorevTipAdi = s.NobetGorevTipAdi,
                              NobetGorevTipId = s.NobetGorevTipId,
-                             SonucTuru = "Taslak",
+                             SonucTuru = EczaneNobetSonucTuru.Taslak,
                              NobetGrupGorevTipId = s.NobetGrupGorevTipId
                          }).ToList();
             return liste;

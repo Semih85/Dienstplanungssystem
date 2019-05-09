@@ -16,5 +16,6 @@ namespace WM.Northwind.Entities.Concrete.Authorization
         public virtual List<UserRole> UserRoles{ get; set; }
         public virtual List<MenuRole> MenuRoles{ get; set; }
         public virtual List<MenuAltRole> MenuAltRoles{ get; set; }
+        public virtual List<RaporRol>  RaporRoller { get; set; }
     }
 }

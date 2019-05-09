@@ -64,6 +64,8 @@
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetFeragatDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetGrupAltGrupDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetMuafiyetDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporKategoriDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucDemoDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucPlanlananDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneUzaklikMatrisDal.cs" />
@@ -99,6 +101,8 @@
     <Compile Include="Abstract\EczaneNobet\INobetSonucDemoTipDal.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetUstGrupGunGrupDal.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetUstGrupKisitDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporNobetUstGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporRolDal.cs" />
     <Compile Include="Abstract\EczaneNobet\ISehirDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IMenuRoleDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IMenuDal.cs" />
@@ -142,6 +146,8 @@
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetGrupAltGrupDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetIstekDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetMuafiyetDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporKategoriDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSonucDemoDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSonucPlanlananDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneUzaklikMatrisDal.cs" />
@@ -177,6 +183,8 @@
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetSonucDemoTipDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetUstGrupGunGrupDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetUstGrupKisitDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporNobetUstGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporRolDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfSehirDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMenuRoleDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMenuDal.cs" />
@@ -205,6 +213,8 @@
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetDegisimMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetFeragatMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetGrupAltGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporKategoriMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSonucEskiMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSonucPlanlananMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneUzaklikMatrisMap.cs" />
@@ -232,6 +242,8 @@
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetSonucDemoTipMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetUstGrupGunGrupMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetUstGrupKisitMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporNobetUstGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporRolMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\SehirMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MenuAltMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MenuAltRoleMap.cs" />

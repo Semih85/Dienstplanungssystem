@@ -17,6 +17,7 @@ using WM.Northwind.Entities.Concrete.Authorization;
 using WM.Northwind.Business.Abstract.Optimization;
 using WM.Northwind.Business.Abstract.Optimization.EczaneNobet;
 using System.Data.Entity.SqlServer;
+using WM.Northwind.Entities.Concrete.Enums;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -374,7 +375,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                              MazeretId = (m?.TakvimId == s.TakvimId && m?.EczaneNobetGrupId == s.EczaneNobetGrupId) ? m.MazeretId : 0,
                              Mazeret = (m?.TakvimId == s.TakvimId && m?.EczaneNobetGrupId == s.EczaneNobetGrupId) ? m.MazeretAdi : null,
                              MazeretTuru = (m?.TakvimId == s.TakvimId && m?.EczaneNobetGrupId == s.EczaneNobetGrupId) ? m.MazeretTuru : null,
-                             SonucTuru = "Demo"
+                             SonucTuru = EczaneNobetSonucTuru.Demo
                          }).ToList();
 
             return liste;

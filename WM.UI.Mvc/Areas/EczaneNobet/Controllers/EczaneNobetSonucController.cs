@@ -10,6 +10,7 @@ using WM.Northwind.Business.Abstract.Authorization;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
+using WM.Northwind.Entities.Concrete.Enums;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.UI.Mvc.Areas.EczaneNobet.Models;
 using WM.UI.Mvc.Services;
@@ -38,6 +39,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetUstGrupGunGrupService _nobetUstGrupGunGrupService;
         private IEczaneNobetSonucPlanlananService _eczaneNobetSonucPlanlananService;
         private INobetUstGrupSessionService _nobetUstGrupSessionService;
+        private IRaporService _raporService;
+        private IRaporNobetUstGrupService _raporNobetUstGrupService;
+        private IRaporRolService _raporRolService;
+        private INobetGrupGorevTipGunKuralService _nobetGrupGorevTipGunKuralService;
+        private IEczaneNobetMazeretService _eczaneNobetMazeretService;
+        private IEczaneNobetIstekService _eczaneNobetIstekService;
+        private INobetGrupGorevTipTakvimOzelGunService _nobetGrupGorevTipTakvimOzelGunService;
 
         public EczaneNobetSonucController(ITakvimService takvimService,
                                           IEczaneNobetGrupService eczaneNobetGrupService,
@@ -55,7 +63,14 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                           IKalibrasyonService kalibrasyonService,
                                           INobetUstGrupGunGrupService nobetUstGrupGunGrupService,
                                           IEczaneNobetSonucPlanlananService eczaneNobetSonucPlanlananService,
-                                          INobetUstGrupSessionService nobetUstGrupSessionService
+                                          INobetUstGrupSessionService nobetUstGrupSessionService,
+                                          IRaporService raporService,
+                                          IRaporNobetUstGrupService raporNobetUstGrupService,
+                                          IRaporRolService raporRolService,
+                                          INobetGrupGorevTipGunKuralService nobetGrupGorevTipGunKuralService,
+                                          IEczaneNobetMazeretService eczaneNobetMazeretService,
+                                          IEczaneNobetIstekService eczaneNobetIstekService,
+                                          INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService
                                           )
         {
             _takvimService = takvimService;
@@ -76,6 +91,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _nobetUstGrupGunGrupService = nobetUstGrupGunGrupService;
             _eczaneNobetSonucPlanlananService = eczaneNobetSonucPlanlananService;
             _nobetUstGrupSessionService = nobetUstGrupSessionService;
+            _raporService = raporService;
+            _raporNobetUstGrupService = raporNobetUstGrupService;
+            _raporRolService = raporRolService;
+            _nobetGrupGorevTipGunKuralService = nobetGrupGorevTipGunKuralService;
+            _eczaneNobetMazeretService = eczaneNobetMazeretService;
+            _eczaneNobetIstekService = eczaneNobetIstekService;
+            _nobetGrupGorevTipTakvimOzelGunService = nobetGrupGorevTipTakvimOzelGunService;
         }
         #endregion
 
@@ -83,6 +105,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult PivotSonuclar()
         {
             var user = _userService.GetByUserName(User.Identity.Name);
+
+            var rolIdler = _userService.GetUserRoles(user)
+                .OrderBy(s => s.RoleId)
+                .Select(u => u.RoleId).ToArray();
+
+            var rolId = rolIdler.FirstOrDefault();
 
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
 
@@ -123,13 +151,43 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.yilBaslangic = yilBaslangic;
             ViewBag.yilBitis = yilBitis;
             ViewBag.SonuclarGet = 1;
+            
+            var gunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrupId);
 
             ViewBag.nobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi");
+            ViewBag.GunGrupId = new SelectList(gunGruplar, "GunGrupId", "GunGrupAdi");
+
+            ViewBag.NobetGrupGorevTipSayisi = nobetGrupGorevTipler.Count;
 
             if (nobetGrupGorevTipler.Count == 1)
             {
                 ViewBag.nobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi", nobetGrupGorevTipler.Select(s => s.Id).FirstOrDefault());
             }
+
+            var raporNobetUstGruplar = _raporNobetUstGrupService.GetDetaylar(nobetUstGrupId);
+            var raporRoller = _raporRolService.GetDetaylar(rolId);
+
+            var raporlar = (from r1 in raporNobetUstGruplar
+                            from r2 in raporRoller
+                            where r1.RaporId == r2.RaporId
+                            select new RaporDetay
+                            {
+                                Id = r1.RaporId,
+                                Adi = $"R{(r1.RaporId < 10 ? string.Format("0{0}", r1.RaporId) : r1.RaporId.ToString())}. {r1.RaporAdi}",
+                                RaporKategoriAdi = r1.RaporKategoriAdi,
+                                RaporKategoriId = r1.RaporKategoriId
+                            }).ToList();
+
+            //var rplar = _raporService.GetDetaylar()
+            //    .Select(s => new RaporDetay
+            //    {
+            //        Id = s.Id,
+            //        Adi = $"{s.Id}. {s.Adi}",
+            //        RaporKategoriAdi = s.RaporKategoriAdi,
+            //        RaporKategoriId = s.RaporKategoriId
+            //    }).ToList();
+
+            ViewBag.RaporId = new SelectList(raporlar, "Id", "Adi", "RaporKategoriAdi", 1);
 
             var model = new EczaneNobetSonuclarViewModel
             {
@@ -143,6 +201,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 EczaneNobetSonuclar = new EczaneNobetSonucModel(),
                 GunDagilimiMaxMin = new List<NobetGrupGunDagilim>(),
                 NobetUstGrupId = nobetUstGrupId,
+                Raporlar = raporlar
                 //BaslangicTarihi = nobetUstGrup.BaslangicTarihi
             };
             return View(model);
@@ -313,97 +372,83 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return jsonResult;
         }
 
-        public JsonResult GetSonuclar(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi, DateTime? bitisTarihi)
+        public JsonResult GetSonuclar(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi, DateTime? bitisTarihi, int raporId, int gunGrupId = 0)
         {
-            var sw = new Stopwatch();
-            var swToplam = new Stopwatch();
-            sw.Start();
-            swToplam.Start();
+            //var eczaneNobetSonuclarTumu = _eczaneNobetSonucService.GetSonuclar(nobetGrupGorevTipId, baslangicTarihi, bitisTarihi);
+            var nobetGrupGorevTipIdList = nobetGrupGorevTipId.ToList();
 
-            var perf = new List<KeyValuePair<string, TimeSpan>>();
-
-            var nobetGrupGorevTiplerTumu = _nobetGrupGorevTipService.GetDetaylarByIdList(nobetGrupGorevTipId.ToList());
-            perf.Add(new KeyValuePair<string, TimeSpan>("01. nöbet grup törev tip", sw.Elapsed));
-            sw.Restart();
+            var nobetGrupGorevTiplerTumu = _nobetGrupGorevTipService.GetDetaylarByIdList(nobetGrupGorevTipIdList);
 
             var nobetUstGrupId = nobetGrupGorevTiplerTumu.Select(s => s.NobetUstGrupId).FirstOrDefault();
-            //(int)Session["nobetUstGrupId"];
+
             var nobetUstGrup = _nobetUstGrupService.GetDetay(nobetUstGrupId);
 
-            var nobetGrupGorevTipIdList = nobetGrupGorevTiplerTumu
-                .Select(s => s.Id)
-                .ToList();
-            //.Select(s => new MyDrop { Id = s.Id, Value = $"{s.NobetGrupAdi} {s.NobetGorevTipAdi}" }).ToList();
-
-            //var nobetGruplar = nobetGruplarTumu;
-
-            var nobetGrupIdListe = nobetGrupGorevTiplerTumu.Select(s => s.NobetGrupId).Distinct().ToList();
-
-            var eczaneNobetSonuclarTumu = _eczaneNobetSonucService.GetSonuclar(nobetGrupGorevTipId, baslangicTarihi, bitisTarihi);
-
-            perf.Add(new KeyValuePair<string, TimeSpan>("02. sonuçlar", sw.Elapsed));
-            sw.Restart();
+            var sonuclarTumu = new List<EczaneNobetSonucListe2>();
 
             var sonuclar = new List<EczaneNobetSonucListe2>();
 
-            //sonuclar = eczaneNobetSonuclarTumu
-            //        //.Where(w => w.Tarih >= nobetUstGrup.BaslangicTarihi)
-            //        //anahtar listedeki sonuçları görmek için üstteki satırı kapat
-            //        .ToList();                       
+            var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipId.ToList());
 
-            if (nobetUstGrup.BaslamaTarihindenOncekiSonuclarGosterilsinMi)
+            var eczaneNobetSonucDetaylar = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+
+            var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+
+            if (raporId == 26)
             {
-                sonuclar = eczaneNobetSonuclarTumu;
+                var mazeretler = _eczaneNobetMazeretService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+
+                var istekler = _eczaneNobetIstekService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+
+                sonuclarTumu = _eczaneNobetOrtakService
+                    .EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, mazeretler, istekler, EczaneNobetSonucTuru.Kesin);
             }
             else
             {
-                sonuclar = eczaneNobetSonuclarTumu
+                sonuclarTumu = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, EczaneNobetSonucTuru.Kesin);
+            }
+
+            sonuclarTumu = sonuclarTumu.Where(w => w.GunGrupId == gunGrupId || gunGrupId == 0).ToList();
+
+            if (nobetUstGrup.BaslamaTarihindenOncekiSonuclarGosterilsinMi)
+            {
+                sonuclar = sonuclarTumu;
+            }
+            else
+            {
+                sonuclar = sonuclarTumu
                     //.Where(w => w.Tarih < w.NobetGrupGorevTipBaslamaTarihi)//nobetUstGrup.BaslangicTarihi
                     .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)//nobetUstGrup.BaslangicTarihi
                                                                             //anahtar listedeki sonuçları görmek için üstteki satırı kapat
                     .ToList();
             }
-            perf.Add(new KeyValuePair<string, TimeSpan>("05. sonuçlar başlama tarihinden sonra", sw.Elapsed));
-            sw.Restart();
 
-            var eczaneNobetGruplarTumu = _eczaneNobetGrupService.GetAktifEczaneGrupListByNobetGrupGorevTipIdList(nobetGrupGorevTipIdList);
-            perf.Add(new KeyValuePair<string, TimeSpan>("06. eczane nöbet gruplar", sw.Elapsed));
-            sw.Restart();
+            var gunDagilimiMaxMin = new List<NobetGrupGunDagilim>();
+            var gunFarklari = new List<EczaneNobetIstatistikGunFarki>();
+            var gunFarkiFrekanslar = new List<EczaneNobetIstatistikGunFarkiFrekans>();
+            var ayniGunNobetTutanAltGrupluEczaneler = new List<AyniGunNobetTutanEczane>();
 
-            var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplarTumu, eczaneNobetSonuclarTumu);
+            if (raporId == 7)
+            {
+                var eczaneNobetGruplarTumu = _eczaneNobetGrupService.GetAktifEczaneGrupListByNobetGrupGorevTipIdList(nobetGrupGorevTipIdList);
 
-            perf.Add(new KeyValuePair<string, TimeSpan>("07. GetEczaneNobetGrupGunKuralIstatistik", sw.Elapsed));
-            sw.Restart();
+                var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplarTumu, sonuclarTumu);
 
-            var eczaneNobetGrupGunKuralIstatistikYatayTumu = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler);
-            perf.Add(new KeyValuePair<string, TimeSpan>("08. GetEczaneNobetGrupGunKuralIstatistikYatay", sw.Elapsed));
-            sw.Restart();
+                var eczaneNobetGrupGunKuralIstatistikYatayTumu = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler);
 
-            //var ayniGunNobetTutanAltGrupluEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanAltGrupluEczaneler(sonuclar);
-            perf.Add(new KeyValuePair<string, TimeSpan>("10. ayniGunNobetTutanAltGrupluEczaneler", sw.Elapsed));
-            sw.Restart();
-
-            ViewBag.ToplamUzunluk = sonuclar.Count;
-
-            var gunFarklari = _eczaneNobetOrtakService.EczaneNobetIstatistikGunFarkiHesapla(sonuclar); //new List<EczaneNobetIstatistikGunFarki>();
-            perf.Add(new KeyValuePair<string, TimeSpan>("12. gunFarklari", sw.Elapsed));
-            sw.Restart();
-
-            var gunFarkiFrekanslar = _eczaneNobetOrtakService.EczaneNobetIstatistikGunFarkiFrekans(gunFarklari);
-            perf.Add(new KeyValuePair<string, TimeSpan>("13. gunFarkiFrekanslar", sw.Elapsed));
-            sw.Restart();
-
-            var gunDagilimiMaxMin = enSonNobetler//eczaneNobetAlacakVerecek
+                gunDagilimiMaxMin = enSonNobetler//eczaneNobetAlacakVerecek
                 .GroupBy(g => new
                 {
                     g.NobetGrupId,
                     g.NobetGrupAdi,
-                    g.GunGrup
+                    g.GunGrup,
+                    g.NobetGrupGorevTipId,
+                    g.NobetGorevTipId
                 })
                 .Select(s => new NobetGrupGunDagilim
                 {
                     NobetGrupId = s.Key.NobetGrupId,
                     NobetGrupAdi = s.Key.NobetGrupAdi,
+                    NobetGorevTipId = s.Key.NobetGorevTipId,
                     GunGrup = s.Key.GunGrup,
                     //SonNobetTarihi = s.Key.SonNobetTarihi,
                     //SonNobetTarihiAciklama = s.Key.SonNobetTarihiAciklama,
@@ -412,8 +457,19 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     //BorcluGunSayisiMax = s.Max(x => x.BorcluGunSayisi),
                     //BorcluGunSayisiMin = s.Min(x => x.BorcluGunSayisi)
                 }).ToList();
-            perf.Add(new KeyValuePair<string, TimeSpan>("15. gunDagilimiMaxMin", sw.Elapsed));
-            sw.Restart();
+            }
+            else if (raporId > 7 && raporId <= 13)
+            {
+                gunFarklari = _eczaneNobetOrtakService.EczaneNobetIstatistikGunFarkiHesapla(sonuclar);
+
+                gunFarkiFrekanslar = _eczaneNobetOrtakService.EczaneNobetIstatistikGunFarkiFrekans(gunFarklari);
+            }
+            else if (raporId >= 18 && raporId <= 20)
+            {
+                ayniGunNobetTutanAltGrupluEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanAltGrupluEczaneler(sonuclar);
+            }
+
+            ViewBag.ToplamUzunluk = sonuclar.Count;
 
             var model = new EczaneNobetSonucViewJsonModel
             {
@@ -446,351 +502,144 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         NobetGrupGorevTipId = s.NobetGrupGorevTipId,
                         NobetDurumAdi = s.NobetDurumAdi,
                         NobetDurumTipAdi = s.NobetDurumTipAdi,
-                        KalibrasyonDeger = KalibrasyonDegeriToplam(s.EczaneNobetGrupId, s.GunGrupId, 7),
+                        KalibrasyonDeger = KalibrasyonDegeriToplam(s.EczaneNobetGrupId, s.GunGrupId, 7, 5),
                         EczaneNobetGrupBitisTarihi = s.EczaneNobetGrupBitisTarihi,
                         AgirlikDegeri = s.AgirlikDegeri,
                         NobetOzelGunAdi = s.NobetOzelGunAdi,
                         NobetOzelGunKategoriAdi = s.NobetOzelGunKategoriAdi
                     }).ToList(),
-                KalibrasyonluToplamlar = KalibrasyonlaSonuclariBirlestir(),
+                KalibrasyonluToplamlar = KalibrasyonlaSonuclariBirlestir(5, sonuclar),
                 GunFarklariTumSonuclar = gunFarklari,
                 GunFarklariFrekanslar = gunFarkiFrekanslar,
-                //AltGrupAyniGunNobetTutanEczaneler = ayniGunNobetTutanAltGrupluEczaneler,
+                AltGrupAyniGunNobetTutanEczaneler = ayniGunNobetTutanAltGrupluEczaneler,
                 GunDagilimiMaxMin = gunDagilimiMaxMin,
                 NobetUstGrupId = nobetUstGrup.Id
             };
-            perf.Add(new KeyValuePair<string, TimeSpan>("16. model", sw.Elapsed));
-            sw.Restart();
-
-            double KalibrasyonDegeriToplam(int eczaneNobetGrupId, int gunGrupId, int kalibrasyonTipId)
-            {
-                if (nobetUstGrupId == 5)
-                {
-                    var kalibrasyon = _kalibrasyonService.GetDetay(eczaneNobetGrupId, gunGrupId, kalibrasyonTipId);
-
-                    return kalibrasyon == null ? 0 : kalibrasyon.Deger;
-                }
-                else
-                {
-                    return 0;
-                }
-
-            };
-            perf.Add(new KeyValuePair<string, TimeSpan>("17. KalibrasyonDegeriToplam", sw.Elapsed));
-            sw.Restart();
-
-            List<KalibrasyonDetay> KalibrasyonlaSonuclariBirlestir()
-            {
-                if (nobetUstGrupId == 5)
-                {
-                    var kalibrasyonlarTumu = _kalibrasyonService.GetDetaylar(nobetUstGrupId);
-
-                    foreach (var kalibrasyon in kalibrasyonlarTumu)
-                    {
-                        kalibrasyon.Durum = "Eski";
-                    }
-
-                    var kalibrasyonlar = kalibrasyonlarTumu
-                        .Where(w => w.GunGrupId != 3).ToList();
-
-                    var kalibrasyonlarHaftaIci = kalibrasyonlarTumu
-                        .Where(w => w.GunGrupId == 3 && w.KalibrasyonTipId == 7).ToList();
-
-                    var sonuclarKalibrasyonUyumlu = sonuclar
-                        .GroupBy(g => new
-                        {
-                            g.EczaneNobetGrupId,
-                            g.EczaneAdi,
-                            g.AyIkili,
-                            g.GunGrupId,
-                            g.GunGrup
-                        })
-                        .Select(s => new KalibrasyonDetay
-                        {
-                            EczaneNobetGrupId = s.Key.EczaneNobetGrupId,
-                            EczaneAdi = s.Key.EczaneAdi,
-                            KalibrasyonTipAdi = s.Key.AyIkili,
-                            GunGrupId = s.Key.GunGrupId,
-                            GunGrupAdi = s.Key.GunGrup,
-                            Deger = s.Count(),
-                            Durum = "N Yeni"
-                        }).ToList();
-
-                    var sonuclarKalibrasyonUyumluToplam = GetSonuclarAylik(sonuclar);
-
-                    var kalibrasyonVeSonucbirlesim = (from k in kalibrasyonlar
-                                                      .Where(w => w.KalibrasyonTipId < 7)
-                                                      let uyumlu = sonuclarKalibrasyonUyumlu
-                                                          .Where(w => k.EczaneNobetGrupId == w.EczaneNobetGrupId
-                                                                   && k.KalibrasyonTipAdi == w.KalibrasyonTipAdi
-                                                                   && k.GunGrupId == w.GunGrupId).SingleOrDefault()
-                                                      select new KalibrasyonDetay
-                                                      {
-                                                          EczaneNobetGrupId = k.EczaneNobetGrupId,
-                                                          EczaneAdi = k.EczaneAdi,
-                                                          KalibrasyonTipAdi = k.KalibrasyonTipAdi,
-                                                          KalibrasyonTipId = k.KalibrasyonTipId,
-                                                          GunGrupId = k.GunGrupId,
-                                                          GunGrupAdi = k.GunGrupAdi,
-                                                          Deger = k.Deger + (uyumlu == null ? 0 : uyumlu.Deger),
-                                                          NobetGrupId = k.NobetGrupId,
-                                                          NobetGrupAdi = k.NobetGrupAdi,
-                                                          NobetGorevTipAdi = k.NobetGorevTipAdi,
-                                                          Durum = "N Yeni + Eski"
-                                                      }).ToList();
-
-                    var uyumlu1 = sonuclarKalibrasyonUyumlu
-                                                        .Where(w => w.EczaneNobetGrupId == 1082
-                                                                 && w.GunGrupId == 4).Sum(s => s.Deger);
-
-                    var kalibrasyonVeSonucToplam = (from k in kalibrasyonlar
-                                                      .Where(w => w.KalibrasyonTipId == 7)
-                                                    let uyumlu = sonuclarKalibrasyonUyumlu
-                                                        .Where(w => k.EczaneNobetGrupId == w.EczaneNobetGrupId
-                                                                 && k.GunGrupId == w.GunGrupId).Sum(s => s.Deger)
-                                                    select new KalibrasyonDetay
-                                                    {
-                                                        EczaneNobetGrupId = k.EczaneNobetGrupId,
-                                                        EczaneAdi = k.EczaneAdi,
-                                                        KalibrasyonTipAdi = k.KalibrasyonTipAdi,
-                                                        KalibrasyonTipId = k.KalibrasyonTipId,
-                                                        GunGrupId = k.GunGrupId,
-                                                        GunGrupAdi = k.GunGrupAdi,
-                                                        Deger = k.Deger + uyumlu,
-                                                        NobetGrupId = k.NobetGrupId,
-                                                        NobetGrupAdi = k.NobetGrupAdi,
-                                                        NobetGorevTipAdi = k.NobetGorevTipAdi,
-                                                        Durum = "Toplam"
-                                                    }).ToList();
-
-                    var kalibrasyonVeSonucToplamHaftaIci = (from k in kalibrasyonlarHaftaIci
-                                                            let uyumlu = sonuclarKalibrasyonUyumlu
-                                                                .Where(w => k.EczaneNobetGrupId == w.EczaneNobetGrupId
-                                                                         && k.GunGrupId == w.GunGrupId).Sum(s => s.Deger)
-                                                            select new KalibrasyonDetay
-                                                            {
-                                                                EczaneNobetGrupId = k.EczaneNobetGrupId,
-                                                                EczaneAdi = k.EczaneAdi,
-                                                                KalibrasyonTipAdi = k.KalibrasyonTipAdi,
-                                                                KalibrasyonTipId = k.KalibrasyonTipId,
-                                                                GunGrupId = k.GunGrupId,
-                                                                GunGrupAdi = k.GunGrupAdi,
-                                                                Deger = k.Deger + uyumlu,
-                                                                NobetGrupId = k.NobetGrupId,
-                                                                NobetGrupAdi = k.NobetGrupAdi,
-                                                                NobetGorevTipAdi = k.NobetGorevTipAdi,
-                                                                Durum = "Toplam"
-                                                            }).ToList();
-
-                    var kalibrasyonlarHepsi = kalibrasyonlar
-                        .Union(sonuclarKalibrasyonUyumlu)
-                        .Union(sonuclarKalibrasyonUyumluToplam)
-                        .Union(kalibrasyonVeSonucbirlesim)
-                        .Union(kalibrasyonVeSonucToplam)
-                        .Union(kalibrasyonlarHaftaIci)
-                        .Union(kalibrasyonVeSonucToplamHaftaIci)
-                        .ToList();
-
-                    return kalibrasyonlarHepsi;
-                }
-                else
-                {
-                    return new List<KalibrasyonDetay>();
-                }
-            }
-            perf.Add(new KeyValuePair<string, TimeSpan>("18. KalibrasyonlaSonuclariBirlestir", sw.Elapsed));
 
             var jsonResult = Json(model, JsonRequestBehavior.AllowGet);
-            perf.Add(new KeyValuePair<string, TimeSpan>("19. jsonResult", sw.Elapsed));
 
             jsonResult.MaxJsonLength = int.MaxValue;
 
-            sw.Stop();
-            swToplam.Stop();
-
-            var sirali = perf.OrderByDescending(o => o.Value).ToList();
-
             return jsonResult;
         }
-        public JsonResult GetEczaneNobetAlacakVerecekler()
+        public JsonResult GetEczaneNobetAlacakVerecekler(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi, DateTime? bitisTarihi, int raporId, int gunGrupId = 0)
         {
-            var sw = new Stopwatch();
-            var swToplam = new Stopwatch();
-            sw.Start();
-            swToplam.Start();
-
-            var perf = new List<KeyValuePair<string, TimeSpan>>();
-
-            var user = _userService.GetByUserName(User.Identity.Name);
-            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
             var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            var nobetGrupGorevTiplerTumu = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
-            perf.Add(new KeyValuePair<string, TimeSpan>("01. nöbet grup törev tip", sw.Elapsed));
-            sw.Restart();
+            var nobetGrupGorevTipIdList = nobetGrupGorevTipId.ToList();
 
-            var nobetGrupGorevTipIdList = nobetGrupGorevTiplerTumu
-                .Select(s => s.Id)
-                .ToList();
+            var nobetGrupGorevTiplerTumu = _nobetGrupGorevTipService.GetDetaylar(nobetGrupGorevTipIdList);
 
-            var eczaneNobetSonuclarTumu = _eczaneNobetSonucService.GetSonuclar(nobetUstGrup.Id);
+            var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipId.ToList());
 
-            perf.Add(new KeyValuePair<string, TimeSpan>("02. sonuçlar", sw.Elapsed));
-            sw.Restart();
+            var eczaneNobetSonucDetaylar = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
 
-            var eczaneNobetSonuclarPlanlanan = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetUstGrup.Id);
-            perf.Add(new KeyValuePair<string, TimeSpan>("03. sonuçlar planlanan", sw.Elapsed));
-            sw.Restart();
+            var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+
+            var sonuclarTumu = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, EczaneNobetSonucTuru.Kesin)
+                .Where(w => w.GunGrupId == gunGrupId || gunGrupId == 0).ToList();
+
+            var eczaneNobetSonuclarPlanlanan = _eczaneNobetSonucPlanlananService.GetSonuclar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId)
+                .Where(w => w.GunGrupId == gunGrupId || gunGrupId == 0).ToList();
 
             var eczaneNobetSonuclarPlanlananSonrasi = eczaneNobetSonuclarPlanlanan
                 .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
 
-            perf.Add(new KeyValuePair<string, TimeSpan>("04. sonuçlar planlanan başlama tarihinden sonra", sw.Elapsed));
-            sw.Restart();
-
-            var sonuclar = new List<EczaneNobetSonucListe2>();
-
-            //sonuclar = eczaneNobetSonuclarTumu
-            //        //.Where(w => w.Tarih >= nobetUstGrup.BaslangicTarihi)
-            //        //anahtar listedeki sonuçları görmek için üstteki satırı kapat
-            //        .ToList();                       
+            var sonuclar = new List<EczaneNobetSonucListe2>();                  
 
             if (nobetUstGrup.BaslamaTarihindenOncekiSonuclarGosterilsinMi)
             {
-                sonuclar = eczaneNobetSonuclarTumu;
+                sonuclar = sonuclarTumu;
             }
             else
             {
-                sonuclar = eczaneNobetSonuclarTumu
+                sonuclar = sonuclarTumu
                     //.Where(w => w.Tarih < w.NobetGrupGorevTipBaslamaTarihi)//nobetUstGrup.BaslangicTarihi
                     .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)//nobetUstGrup.BaslangicTarihi
                                                                             //anahtar listedeki sonuçları görmek için üstteki satırı kapat
                     .ToList();
             }
-            perf.Add(new KeyValuePair<string, TimeSpan>("05. sonuçlar başlama tarihinden sonra", sw.Elapsed));
-            sw.Restart();
 
             var eczaneNobetGruplarTumu = _eczaneNobetGrupService.GetAktifEczaneGrupListByNobetGrupGorevTipIdList(nobetGrupGorevTipIdList);
-            perf.Add(new KeyValuePair<string, TimeSpan>("06. eczane nöbet gruplar", sw.Elapsed));
-            sw.Restart();
 
-            var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplarTumu, eczaneNobetSonuclarTumu);
-
-            perf.Add(new KeyValuePair<string, TimeSpan>("07. GetEczaneNobetGrupGunKuralIstatistik", sw.Elapsed));
-            sw.Restart();
+            var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplarTumu, sonuclarTumu);
 
             var eczaneNobetGrupGunKuralIstatistikYatayTumu = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler);
-            perf.Add(new KeyValuePair<string, TimeSpan>("08. GetEczaneNobetGrupGunKuralIstatistikYatay", sw.Elapsed));
-            sw.Restart();
-
-            //var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
 
             var eczaneNobetAlacakVerecek = new List<EczaneNobetAlacakVerecek>();
 
-            if (nobetUstGrup.Id == 2)
+            if (raporId >= 14 && raporId <= 16)
             {
-                eczaneNobetAlacakVerecek = _takvimService.EczaneNobetAlacakVerecekHesaplaAntalya(nobetGrupGorevTiplerTumu, eczaneNobetSonuclarPlanlanan, eczaneNobetGruplarTumu, eczaneNobetGrupGunKuralIstatistikYatayTumu);
-            }
-            else
-            {
-                var anahtarListeTumu = eczaneNobetSonuclarTumu
-                    .Where(w => w.Tarih < w.NobetGrupGorevTipBaslamaTarihi).ToList();
-                //eczaneNobetAlacakVerecek = EczaneNobetAlacakVerecekHesapla(nobetUstGrup, nobetGrupIdListe, anahtarListeTumu, eczaneNobetGruplarTumu, eczaneNobetGrupGunKuralIstatistikYatayTumu);
-                eczaneNobetAlacakVerecek = EczaneNobetAlacakVerecekHesapla(nobetGrupGorevTiplerTumu, anahtarListeTumu, eczaneNobetGruplarTumu, eczaneNobetGrupGunKuralIstatistikYatayTumu);
-            }
-            perf.Add(new KeyValuePair<string, TimeSpan>("09. EczaneNobetAlacakVerecekHesapla", sw.Elapsed));
-            sw.Restart();
+                if (nobetUstGrup.Id == 2)
+                {
+                    eczaneNobetAlacakVerecek = _takvimService.EczaneNobetAlacakVerecekHesaplaAntalya(nobetGrupGorevTiplerTumu, eczaneNobetSonuclarPlanlanan, eczaneNobetGruplarTumu, eczaneNobetGrupGunKuralIstatistikYatayTumu);
+                }
+                else
+                {
+                    var anahtarListeTumu = sonuclarTumu
+                        .Where(w => w.Tarih < w.NobetGrupGorevTipBaslamaTarihi).ToList();
+                    //eczaneNobetAlacakVerecek = EczaneNobetAlacakVerecekHesapla(nobetUstGrup, nobetGrupIdListe, anahtarListeTumu, eczaneNobetGruplarTumu, eczaneNobetGrupGunKuralIstatistikYatayTumu);
+                    eczaneNobetAlacakVerecek = EczaneNobetAlacakVerecekHesapla(nobetGrupGorevTiplerTumu, anahtarListeTumu, eczaneNobetGruplarTumu, eczaneNobetGrupGunKuralIstatistikYatayTumu);
+                }
 
-            var eczaneNobetAlacakVerecekKontrol = eczaneNobetAlacakVerecek
-                .Where(w => w.EczaneAdi == "KUMBUL"
-                         //|| w.EczaneAdi == "MÜĞREN"
-                         )
-                .ToList();
+                var eczaneNobetAlacakVerecekKontrol = eczaneNobetAlacakVerecek
+                    .Where(w => w.EczaneAdi == "KUMBUL"
+                             //|| w.EczaneAdi == "MÜĞREN"
+                             )
+                    .ToList();
+            }
 
             var model = new EczaneNobetSonucViewJsonModel
             {
                 EczaneNobetAlacakVerecek = eczaneNobetAlacakVerecek,
                 SonuclarPlanlananVeGercek = sonuclar.Union(eczaneNobetSonuclarPlanlananSonrasi)
             };
-            perf.Add(new KeyValuePair<string, TimeSpan>("16. model", sw.Elapsed));
-            sw.Restart();
 
             var jsonResult = Json(model, JsonRequestBehavior.AllowGet);
-            perf.Add(new KeyValuePair<string, TimeSpan>("19. jsonResult", sw.Elapsed));
 
             jsonResult.MaxJsonLength = int.MaxValue;
 
-            sw.Stop();
-            swToplam.Stop();
-
-            var sirali = perf.OrderByDescending(o => o.Value).ToList();
-
             return jsonResult;
         }
-        public JsonResult GetAyniGunNobetler()
+        public JsonResult GetAyniGunNobetler(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi, DateTime? bitisTarihi, int raporId, int gunGrupId = 0)
         {
-            var sw = new Stopwatch();
-            var swToplam = new Stopwatch();
-            sw.Start();
-            swToplam.Start();
-
-            var perf = new List<KeyValuePair<string, TimeSpan>>();
-
-            //var user = _userService.GetByUserName(User.Identity.Name);
-            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
             var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            //var nobetUstGrupDetay = _nobetUstGrupService.GetDetay(nobetUstGrup.Id);
+            var nobetGrupIdListe = nobetGrupGorevTipId.ToList();
 
-            //var nobetGruplarTumu = _nobetGrupService.GetDetaylarByNobetUstGrupIdList(nobetUstGruplar.Select(x => x.Id).ToList())
-            //    //.Where(w => .Contains(w.NobetUstGrupId))
-            //    .Select(s => new MyDrop { Id = s.Id, Value = s.Adi }).ToList();
+            var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipId.ToList());
 
-            var nobetGrupGorevTiplerTumu = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
-            perf.Add(new KeyValuePair<string, TimeSpan>("01. nöbet grup törev tip", sw.Elapsed));
-            sw.Restart();
+            var eczaneNobetSonucDetaylar = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
 
-            var nobetGrupGorevTipIdList = nobetGrupGorevTiplerTumu
-                .Select(s => s.Id)
-                .ToList();
-            //.Select(s => new MyDrop { Id = s.Id, Value = $"{s.NobetGrupAdi} {s.NobetGorevTipAdi}" }).ToList();
+            var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
 
-            //var nobetGruplar = nobetGruplarTumu;
-
-            var nobetGrupIdListe = nobetGrupGorevTiplerTumu.Select(s => s.NobetGrupId).Distinct().ToList();
-
-            var eczaneNobetSonuclarTumu = _eczaneNobetSonucService.GetSonuclar(nobetUstGrup.Id);
-
-            perf.Add(new KeyValuePair<string, TimeSpan>("02. sonuçlar", sw.Elapsed));
-            sw.Restart();
-
+            var sonuclarTumu = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, EczaneNobetSonucTuru.Kesin)
+                .Where(w => w.GunGrupId == gunGrupId || gunGrupId == 0).ToList();
+            
             var sonuclar = new List<EczaneNobetSonucListe2>();
-
-            //sonuclar = eczaneNobetSonuclarTumu
-            //        //.Where(w => w.Tarih >= nobetUstGrup.BaslangicTarihi)
-            //        //anahtar listedeki sonuçları görmek için üstteki satırı kapat
-            //        .ToList();                       
 
             if (nobetUstGrup.BaslamaTarihindenOncekiSonuclarGosterilsinMi)
             {
-                sonuclar = eczaneNobetSonuclarTumu;
+                sonuclar = sonuclarTumu;
             }
             else
             {
-                sonuclar = eczaneNobetSonuclarTumu
+                sonuclar = sonuclarTumu
                     //.Where(w => w.Tarih < w.NobetGrupGorevTipBaslamaTarihi)//nobetUstGrup.BaslangicTarihi
                     .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)//nobetUstGrup.BaslangicTarihi
                                                                             //anahtar listedeki sonuçları görmek için üstteki satırı kapat
                     .ToList();
             }
 
-            var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(sonuclar);
-            perf.Add(new KeyValuePair<string, TimeSpan>("11. ayniGunNobetTutanEczaneler", sw.Elapsed));
-            sw.Restart();
+            var ayniGunNobetTutanEczaneler = new List<AyniGunNobetTutanEczane>();
 
-            var ayniGunNobetSayisiGrouped = (from s in ayniGunNobetTutanEczaneler
+            var ayniGunNobetSayisiGrouped = new List<AyniGunNobetTutanEczane>();
+
+            if (raporId == 21 || raporId == 22)
+            {
+                ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(sonuclar);
+
+                ayniGunNobetSayisiGrouped = (from s in ayniGunNobetTutanEczaneler
                                              group s by new
                                              {
                                                  s.EczaneBirlesim,
@@ -822,17 +671,22 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                                  //GunGrup = grouped.Key.GunGrup
                                              }).ToList();
 
-            var ayniGunNobetSayisi1denFazlaGrouped = ayniGunNobetSayisiGrouped
-                .Where(w => w.AyniGunNobetSayisi > 1).ToList();
+                var ayniGunNobetSayisi1denFazlaGrouped = ayniGunNobetSayisiGrouped
+                    .Where(w => w.AyniGunNobetSayisi > 1).ToList();
 
-            ayniGunNobetTutanEczaneler = ayniGunNobetTutanEczaneler
-                .Where(w => ayniGunNobetSayisi1denFazlaGrouped.Select(s => s.EczaneBirlesim).Contains(w.EczaneBirlesim)).ToList();
+                ayniGunNobetTutanEczaneler = ayniGunNobetTutanEczaneler
+                    .Where(w => ayniGunNobetSayisi1denFazlaGrouped.Select(s => s.EczaneBirlesim).Contains(w.EczaneBirlesim)).ToList();
+            }
+
 
             ViewBag.ToplamUzunluk = sonuclar.Count;
 
-            var esGrubaAyniGunYazilanNobetler = _eczaneNobetOrtakService.GetEsGrubaAyniGunYazilanNobetler(sonuclar);
-            perf.Add(new KeyValuePair<string, TimeSpan>("14. esGrubaAyniGunYazilanNobetler", sw.Elapsed));
-            sw.Restart();
+            var esGrubaAyniGunYazilanNobetler = new List<EsGrubaAyniGunYazilanNobetler>();
+
+            if (raporId == 23)
+            {
+                esGrubaAyniGunYazilanNobetler = _eczaneNobetOrtakService.GetEsGrubaAyniGunYazilanNobetler(sonuclar);
+            }
 
             var model = new EczaneNobetSonucViewJsonModel
             {
@@ -840,22 +694,147 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 AyniGunNobetTutanEczanelerOzet = ayniGunNobetSayisiGrouped,
                 EsGrubaAyniGunYazilanNobetler = esGrubaAyniGunYazilanNobetler
             };
-            perf.Add(new KeyValuePair<string, TimeSpan>("16. model", sw.Elapsed));
-            sw.Restart();
 
             var jsonResult = Json(model, JsonRequestBehavior.AllowGet);
-            perf.Add(new KeyValuePair<string, TimeSpan>("19. jsonResult", sw.Elapsed));
 
             jsonResult.MaxJsonLength = int.MaxValue;
 
-            sw.Stop();
-            swToplam.Stop();
-
-            var sirali = perf.OrderByDescending(o => o.Value).ToList();
-
             return jsonResult;
         }
+        double KalibrasyonDegeriToplam(int eczaneNobetGrupId, int gunGrupId, int kalibrasyonTipId, int nobetUstGrupId)
+        {
+            if (nobetUstGrupId == 5)
+            {
+                var kalibrasyon = _kalibrasyonService.GetDetay(eczaneNobetGrupId, gunGrupId, kalibrasyonTipId);
 
+                return kalibrasyon == null ? 0 : kalibrasyon.Deger;
+            }
+            else
+            {
+                return 0;
+            }
+
+        }
+
+        List<KalibrasyonDetay> KalibrasyonlaSonuclariBirlestir(int nobetUstGrupId, List<EczaneNobetSonucListe2> sonuclar)
+        {
+            if (nobetUstGrupId == 5)
+            {
+                var kalibrasyonlarTumu = _kalibrasyonService.GetDetaylar(nobetUstGrupId);
+
+                foreach (var kalibrasyon in kalibrasyonlarTumu)
+                {
+                    kalibrasyon.Durum = "Eski";
+                }
+
+                var kalibrasyonlar = kalibrasyonlarTumu
+                    .Where(w => w.GunGrupId != 3).ToList();
+
+                var kalibrasyonlarHaftaIci = kalibrasyonlarTumu
+                    .Where(w => w.GunGrupId == 3 && w.KalibrasyonTipId == 7).ToList();
+
+                var sonuclarKalibrasyonUyumlu = sonuclar
+                    .GroupBy(g => new
+                    {
+                        g.EczaneNobetGrupId,
+                        g.EczaneAdi,
+                        g.AyIkili,
+                        g.GunGrupId,
+                        g.GunGrup
+                    })
+                    .Select(s => new KalibrasyonDetay
+                    {
+                        EczaneNobetGrupId = s.Key.EczaneNobetGrupId,
+                        EczaneAdi = s.Key.EczaneAdi,
+                        KalibrasyonTipAdi = s.Key.AyIkili,
+                        GunGrupId = s.Key.GunGrupId,
+                        GunGrupAdi = s.Key.GunGrup,
+                        Deger = s.Count(),
+                        Durum = "N Yeni"
+                    }).ToList();
+
+                var sonuclarKalibrasyonUyumluToplam = GetSonuclarAylik(sonuclar);
+
+                var kalibrasyonVeSonucbirlesim = (from k in kalibrasyonlar
+                                                  .Where(w => w.KalibrasyonTipId < 7)
+                                                  let uyumlu = sonuclarKalibrasyonUyumlu
+                                                      .Where(w => k.EczaneNobetGrupId == w.EczaneNobetGrupId
+                                                               && k.KalibrasyonTipAdi == w.KalibrasyonTipAdi
+                                                               && k.GunGrupId == w.GunGrupId).SingleOrDefault()
+                                                  select new KalibrasyonDetay
+                                                  {
+                                                      EczaneNobetGrupId = k.EczaneNobetGrupId,
+                                                      EczaneAdi = k.EczaneAdi,
+                                                      KalibrasyonTipAdi = k.KalibrasyonTipAdi,
+                                                      KalibrasyonTipId = k.KalibrasyonTipId,
+                                                      GunGrupId = k.GunGrupId,
+                                                      GunGrupAdi = k.GunGrupAdi,
+                                                      Deger = k.Deger + (uyumlu == null ? 0 : uyumlu.Deger),
+                                                      NobetGrupId = k.NobetGrupId,
+                                                      NobetGrupAdi = k.NobetGrupAdi,
+                                                      NobetGorevTipAdi = k.NobetGorevTipAdi,
+                                                      Durum = "N Yeni + Eski"
+                                                  }).ToList();
+
+                var uyumlu1 = sonuclarKalibrasyonUyumlu
+                                                    .Where(w => w.EczaneNobetGrupId == 1082
+                                                             && w.GunGrupId == 4).Sum(s => s.Deger);
+
+                var kalibrasyonVeSonucToplam = (from k in kalibrasyonlar
+                                                  .Where(w => w.KalibrasyonTipId == 7)
+                                                let uyumlu = sonuclarKalibrasyonUyumlu
+                                                    .Where(w => k.EczaneNobetGrupId == w.EczaneNobetGrupId
+                                                             && k.GunGrupId == w.GunGrupId).Sum(s => s.Deger)
+                                                select new KalibrasyonDetay
+                                                {
+                                                    EczaneNobetGrupId = k.EczaneNobetGrupId,
+                                                    EczaneAdi = k.EczaneAdi,
+                                                    KalibrasyonTipAdi = k.KalibrasyonTipAdi,
+                                                    KalibrasyonTipId = k.KalibrasyonTipId,
+                                                    GunGrupId = k.GunGrupId,
+                                                    GunGrupAdi = k.GunGrupAdi,
+                                                    Deger = k.Deger + uyumlu,
+                                                    NobetGrupId = k.NobetGrupId,
+                                                    NobetGrupAdi = k.NobetGrupAdi,
+                                                    NobetGorevTipAdi = k.NobetGorevTipAdi,
+                                                    Durum = "Toplam"
+                                                }).ToList();
+
+                var kalibrasyonVeSonucToplamHaftaIci = (from k in kalibrasyonlarHaftaIci
+                                                        let uyumlu = sonuclarKalibrasyonUyumlu
+                                                            .Where(w => k.EczaneNobetGrupId == w.EczaneNobetGrupId
+                                                                     && k.GunGrupId == w.GunGrupId).Sum(s => s.Deger)
+                                                        select new KalibrasyonDetay
+                                                        {
+                                                            EczaneNobetGrupId = k.EczaneNobetGrupId,
+                                                            EczaneAdi = k.EczaneAdi,
+                                                            KalibrasyonTipAdi = k.KalibrasyonTipAdi,
+                                                            KalibrasyonTipId = k.KalibrasyonTipId,
+                                                            GunGrupId = k.GunGrupId,
+                                                            GunGrupAdi = k.GunGrupAdi,
+                                                            Deger = k.Deger + uyumlu,
+                                                            NobetGrupId = k.NobetGrupId,
+                                                            NobetGrupAdi = k.NobetGrupAdi,
+                                                            NobetGorevTipAdi = k.NobetGorevTipAdi,
+                                                            Durum = "Toplam"
+                                                        }).ToList();
+
+                var kalibrasyonlarHepsi = kalibrasyonlar
+                    .Union(sonuclarKalibrasyonUyumlu)
+                    .Union(sonuclarKalibrasyonUyumluToplam)
+                    .Union(kalibrasyonVeSonucbirlesim)
+                    .Union(kalibrasyonVeSonucToplam)
+                    .Union(kalibrasyonlarHaftaIci)
+                    .Union(kalibrasyonVeSonucToplamHaftaIci)
+                    .ToList();
+
+                return kalibrasyonlarHepsi;
+            }
+            else
+            {
+                return new List<KalibrasyonDetay>();
+            }
+        }
         private static List<KalibrasyonDetay> GetSonuclarAylik(List<EczaneNobetSonucListe2> sonuclar)
         {
             return sonuclar
