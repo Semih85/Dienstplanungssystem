@@ -64,7 +64,8 @@ namespace WM.UI.Mvc.App_Start
 
             //bootstrap-select
             bundles.Add(new ScriptBundle("~/bundle/bootstrap-select/scripts").Include(
-                     "~/Scripts/bootstrap-select.min.js"));
+                     "~/Scripts/bootstrap-select.min.js",
+                     "~/Scripts/i18n/defaults-tr_TR.min.js"));
 
             //bootstrap-datepicker
             bundles.Add(new ScriptBundle("~/bundle/bootstrap-datepicker/scripts").Include(
