@@ -749,8 +749,6 @@
 
         //$("#raporMasterDiv").empty().html();
 
-        serializedForm = $('#formTumu').serialize();
-
         //dagilimlar = null;
         //dagilimlarTumu = null;
         //dagilimlarPivot = new Array();
@@ -789,6 +787,12 @@
         var ilgiliRaporlarDagilimlar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 18, 19, 20, 24, 25, 26, 27];
         var ilgiliRaporlarAlacakVerecekler = [14, 15, 16, 17];
         var ilgiliRaporlarAyniGunNobetler = [21, 22, 23];
+
+        if (raporId == 27) {
+            $('#GunGrupId').val(2);
+        }
+
+        serializedForm = $('#formTumu').serialize();
 
         if (ilgiliRaporlarDagilimlar.find(x => x == raporId) > 0) {
             getJsonDagilimlar(urlDagilimlar, serializedForm, raporId)
@@ -1353,11 +1357,17 @@
                         $.each($(icRaporDivId + " #testTable tbody tr th"), function (key, value) {
 
                                 //console.log($(this).text());
-                            if ($(this).text().indexOf('Pazar') != -1 || $(this).text().indexOf('Cumartesi') != -1) {
+                            if ($(this).text().indexOf('Pazar') != -1
+                                || $(this).text().indexOf('Cumartesi') != -1
+                                || $(this).text().indexOf('Hafta Sonu') != -1
+                            ) {
                                 $(this).css('background-color', "#C3E6CB");
                             }
                             else if ($(this).text().indexOf('Bayram') != -1) {
                                 $(this).css('background-color', "#F5C6CB");
+                            }
+                            else if ($(this).text().indexOf('Arife') != -1) {
+                                $(this).css('background-color', "#FFEEBA");
                             }
 
                             //table-success: #C3E6CB
@@ -1611,9 +1621,9 @@
 
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
 
-                var bayramlar = $.grep(dagilimlarPivot, function (n, i) {
-                    return n["Gün Grup"] == "Bayram";
-                });
+                //var bayramlar = $.grep(dagilimlarPivot, function (n, i) {
+                //    return n["Gün Grup"] == "Bayram";
+                //});
 
                 var pivotRows = ["Nöbet Grubu", "Eczane"];
                 var pivotCols = ["Gün Tanım", "Özel Gün",];
@@ -1638,7 +1648,7 @@
 
                 gunDagilimBayramlar = $(function table2() {
 
-                    $(icRaporDivId).pivotUI(bayramlar,
+                    $(icRaporDivId).pivotUI(dagilimlarPivot,
                         {
                             rows: pivotRows,
                             cols: pivotCols, //, "GunDeger", "GunTanim"

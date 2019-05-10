@@ -125,7 +125,31 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 nobetUstGrupId = ustGrupSession.Id;
             }
 
+            var nobetGruplar = new List<MyDrop>();
+
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrupId);
+
+            var nobetGorevTipler = nobetGrupGorevTipler.Select(s => s.NobetGorevTipId).Distinct().ToList();
+            //var nobetGrupGorevTipBaslamaSaatleri = nobetGrupGorevTipler.Select(s => s.BaslamaTarihi).Distinct().ToList();
+
+            if (nobetGorevTipler.Count > 1)
+            {
+                nobetGruplar = nobetGrupGorevTipler
+                .Select(s => new MyDrop
+                {
+                    Id = s.Id,
+                    Value = $"{s.Id}, {s.NobetGrupAdi}, {s.NobetGorevTipAdi}"
+                }).ToList();
+            }
+            else
+            {
+                nobetGruplar = nobetGrupGorevTipler
+                .Select(s => new MyDrop
+                {
+                    Id = s.Id,
+                    Value = $"{s.Id}, {s.NobetGrupAdi}"
+                }).ToList();
+            }
 
             var yillar = new int[] { 2018, 2019 }; //sonuclar.Select(s => s.Yil).Distinct().OrderBy(o => o).ToList();
 
@@ -154,14 +178,14 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             
             var gunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrupId);
 
-            ViewBag.nobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi");
+            ViewBag.nobetGrupGorevTipId = new SelectList(nobetGruplar, "Id", "Value");
             ViewBag.GunGrupId = new SelectList(gunGruplar, "GunGrupId", "GunGrupAdi");
 
             ViewBag.NobetGrupGorevTipSayisi = nobetGrupGorevTipler.Count;
 
             if (nobetGrupGorevTipler.Count == 1)
             {
-                ViewBag.nobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi", nobetGrupGorevTipler.Select(s => s.Id).FirstOrDefault());
+                ViewBag.nobetGrupGorevTipId = new SelectList(nobetGruplar, "Id", "Value", nobetGruplar.Select(s => s.Id).FirstOrDefault());
             }
 
             var raporNobetUstGruplar = _raporNobetUstGrupService.GetDetaylar(nobetUstGrupId);
