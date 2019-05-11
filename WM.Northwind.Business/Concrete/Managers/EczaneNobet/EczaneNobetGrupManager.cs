@@ -148,10 +148,58 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<MyDrop> GetMyDrop(List<EczaneNobetGrupDetay> czaneNobetGrupDetaylar)
         {
-            var liste = czaneNobetGrupDetaylar
-                .OrderBy(s => s.EczaneAdi)
-                .ThenBy(t => t.NobetGrupAdi)
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi} ({s.NobetGrupAdi}, {s.NobetGorevTipAdi})" }).ToList();
+            var nobetGruplar = czaneNobetGrupDetaylar.Select(s => s.NobetGrupId).Distinct().ToList();
+            var nobetGorevTipler = czaneNobetGrupDetaylar.Select(s => s.NobetGorevTipAdi).Distinct().ToList();
+
+            var liste = new List<MyDrop>();
+
+            var eczaneNobetGruplar = czaneNobetGrupDetaylar
+              .OrderBy(s => s.EczaneAdi)
+              .ThenBy(t => t.NobetGrupAdi)
+              //.Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi} ({s.NobetGrupAdi}, {s.NobetGorevTipAdi})" })
+              .ToList();
+            if (nobetGorevTipler.Count > 1 && nobetGruplar.Count > 1)
+            {
+                liste = eczaneNobetGruplar
+                .Select(s => new MyDrop
+                {
+                    Id = s.Id,
+                    Value = $"{s.EczaneAdi}, {s.NobetGrupAdi}, {s.NobetGorevTipAdi}"
+                }).ToList();
+            }
+            else if (nobetGorevTipler.Count > 1)
+            {
+                liste = eczaneNobetGruplar
+                .Select(s => new MyDrop
+                {
+                    Id = s.Id,
+                    Value = $"{s.EczaneAdi}, {s.NobetGorevTipAdi}"
+                }).ToList();
+            }
+            else if (nobetGruplar.Count > 1)
+            {
+                liste = eczaneNobetGruplar
+                .Select(s => new MyDrop
+                {
+                    Id = s.Id,
+                    Value = $"{s.EczaneAdi}, {s.NobetGrupAdi}"
+                }).ToList();
+            }
+            else
+            {
+                liste = eczaneNobetGruplar
+                .Select(s => new MyDrop
+                {
+                    Id = s.Id,
+                    Value = $"{s.EczaneAdi}"
+                }).ToList();
+            }
+
+            //liste = liste
+            //    .OrderBy(s => s.EczaneAdi)
+            //    .ThenBy(t => t.NobetGrupAdi)
+            //    //.Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi} ({s.NobetGrupAdi}, {s.NobetGorevTipAdi})" })
+            //    .ToList();
 
             return liste;
         }
