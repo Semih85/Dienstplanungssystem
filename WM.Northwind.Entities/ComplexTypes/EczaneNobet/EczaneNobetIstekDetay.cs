@@ -37,6 +37,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         [Display(Name = "İstek Türü")]
         public string IstekTuru { get; set; }
         public DateTime Tarih { get; set; }
+        public string TarihKisa => Tarih.ToShortDateString();
+        public string TarihUzun => Tarih.ToLongDateString();
 
         [Display(Name = "Açıklama")]
         public string Aciklama { get; set; }

@@ -14,6 +14,7 @@
         UpdateTargetId = "sonuclar",
         InsertionMode = InsertionMode.Replace,
         LoadingElementId = "wait",
+        OnSuccess = "OnSuccess"
     };
 }
 <!-- #endregion -->
@@ -217,6 +218,16 @@
         });
 
         $('.input-daterange').datepicker();
+
+        function OnSuccess() {            
+            var rows = $('#eklenenMazeretlerTablosu tbody .myRow').length;
+            
+            if (rows > 0) {
+                $('#EczaneNobetGrupId').selectpicker('deselectAll');
+                $('#BaslangicTarihi').datepicker("setDate", null);
+                $('#BitisTarihi').datepicker("setDate", null);            
+            }
+        }
 
     </script>
 }

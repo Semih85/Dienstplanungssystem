@@ -127,8 +127,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneGrupDetay> GetDetaylar(List<EczaneNobetIstekDetay> eczaneNobetIstekDetaylar, List<EczaneGrupDetay> eczaneGrupDetayalar)
         {
-            //var istekGirilenEczaneninEsGrubundakiEczaneler = eczaneNobetIstekDetaylar.Where(x => eczaneGrupDetayalar.Select(s => s.EczaneNobetGrupId).Contains(x.EczaneNobetGrupId)).ToList();
-            var istekGirilenEczaneninEsGrubundakiEczaneler = eczaneGrupDetayalar.Where(x => eczaneNobetIstekDetaylar.Select(s => s.EczaneNobetGrupId).Contains(x.EczaneNobetGrupId)).ToList();
+            var istekGirilenEczaneninEsGrubundakiEczaneler = eczaneGrupDetayalar
+                .Where(x => eczaneNobetIstekDetaylar.Select(s => s.EczaneNobetGrupId).Contains(x.EczaneNobetGrupId)).ToList();
 
             return istekGirilenEczaneninEsGrubundakiEczaneler;
         }

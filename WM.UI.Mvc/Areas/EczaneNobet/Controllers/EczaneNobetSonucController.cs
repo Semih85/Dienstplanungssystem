@@ -46,6 +46,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IEczaneNobetMazeretService _eczaneNobetMazeretService;
         private IEczaneNobetIstekService _eczaneNobetIstekService;
         private INobetGrupGorevTipTakvimOzelGunService _nobetGrupGorevTipTakvimOzelGunService;
+        private INobetDurumService _nobetDurumService;
 
         public EczaneNobetSonucController(ITakvimService takvimService,
                                           IEczaneNobetGrupService eczaneNobetGrupService,
@@ -70,7 +71,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                           INobetGrupGorevTipGunKuralService nobetGrupGorevTipGunKuralService,
                                           IEczaneNobetMazeretService eczaneNobetMazeretService,
                                           IEczaneNobetIstekService eczaneNobetIstekService,
-                                          INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService
+                                          INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService,
+                                          INobetDurumService nobetDurumService
                                           )
         {
             _takvimService = takvimService;
@@ -98,6 +100,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _eczaneNobetMazeretService = eczaneNobetMazeretService;
             _eczaneNobetIstekService = eczaneNobetIstekService;
             _nobetGrupGorevTipTakvimOzelGunService = nobetGrupGorevTipTakvimOzelGunService;
+            _nobetDurumService = nobetDurumService;
         }
         #endregion
 
@@ -491,6 +494,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             else if (raporId >= 18 && raporId <= 20)
             {
                 ayniGunNobetTutanAltGrupluEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanAltGrupluEczaneler(sonuclar);
+            }
+            else if (raporId == 25)
+            {
+                var nobetDurumlar = _nobetDurumService.GetDetaylar(nobetUstGrup.Id);
+                //.Where(w => w.NobetDurumTipId != 4).ToList();
+
+                sonuclar = _eczaneNobetSonucService.GetSonuclar(sonuclar, nobetDurumlar);
             }
 
             ViewBag.ToplamUzunluk = sonuclar.Count;

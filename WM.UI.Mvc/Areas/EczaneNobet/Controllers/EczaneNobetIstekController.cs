@@ -116,8 +116,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,EczaneNobetGrupId,IstekId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama")] EczaneNobetIstekCoklu eczaneNobetIstekCoklu)
-        {
-            var user = _userService.GetByUserName(User.Identity.Name);
+        {            
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(eczaneNobetIstekCoklu.EczaneNobetGrupId);
             var nobetUstGrupId = eczaneNobetGruplar.Select(s => s.NobetUstGrupId).Distinct().SingleOrDefault();
 
@@ -143,7 +143,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
 
-            var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
+            var eczaneler = _eczaneService.GetDetaylar(nobetUstGrup.Id).Select(s => s.Id).ToList();
 
             var baslangicTarihi = _takvimService.GetByTarih(eczaneNobetIstekCoklu.BaslangicTarihi);
             var bitisTarihi = _takvimService.GetByTarih(eczaneNobetIstekCoklu.BitisTarihi);
@@ -191,9 +191,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 }
             }
 
-            var eklenecekIstekSayisi = eczaneNobetIstekler.Count;
+            var eklenenEczaneler = new List<EczaneNobetIstekDetay>();
 
-            if (ModelState.IsValid && eklenecekIstekSayisi > 0)
+            if (ModelState.IsValid && eczaneNobetIstekler.Count > 0)
             {
                 var istekGirilenEczaneninEsOlduguEczaneler = _eczaneGrupService.GetDetaylarEczaneninEsOlduguEczaneler(eczaneNobetGruplar.Select(s => s.Id).ToList());
 
@@ -220,6 +220,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     try
                     {
                         _eczaneNobetIstekService.CokluEkle(eczaneNobetIstekler);
+
+                        foreach (var item in eczaneNobetIstekler)
+                        {
+                            eklenenEczaneler.Add(new EczaneNobetIstekDetay
+                            {
+                                EczaneAdi = _eczaneNobetGrupService.GetDetayById(item.EczaneNobetGrupId).EczaneAdi,
+                                Tarih = _takvimService.GetById(item.TakvimId).Tarih
+                            });
+                        }
                     }
                     catch (DbUpdateException ex)
                     {
@@ -242,7 +251,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     }
                 }
 
-                TempData["EklenenIstekSayisi"] = eklenecekIstekSayisi;
+                TempData["EklenenIstekSayisi"] = eklenenEczaneler.Count;
+                TempData["EklenenIstekler"] = eklenenEczaneler;
 
                 return View(eczaneNobetIstekCoklu);
             }
@@ -287,8 +297,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreatePartial([Bind(Include = "Id,EczaneNobetGrupId,IstekId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama")] EczaneNobetIstekCoklu eczaneNobetIstekCoklu)
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(eczaneNobetIstekCoklu.EczaneNobetGrupId);
+
             var nobetUstGrupId = eczaneNobetGruplar.Select(s => s.NobetUstGrupId).Distinct().SingleOrDefault();
 
             if (eczaneNobetIstekCoklu.HaftaninGunu == null)
@@ -350,6 +362,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
             var eklenecekIstekSayisi = eczaneNobetIstekler.Count;
+            var eklenenEczaneler = new List<EczaneNobetIstekDetay>();
 
             if (ModelState.IsValid && eklenecekIstekSayisi > 0)
             {
@@ -387,42 +400,69 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                 var istekGirilenTarihtekiEsgrupOlduguEczaneSayisi = istekGirilenTarihtekiEsgrupOlduguEczanelerTumu.Count;
 
-                if (istekGirilenTarihtekiEsgrupOlduguEczaneSayisi > 0)
+                var esGrupTanimlar = istekGirilenTarihtekiEsgrupOlduguEczanelerTumu.Select(s => new
                 {
-                    ViewBag.IstekGirilenTarihtekiEsgrupOlduguEczaneler = istekGirilenTarihtekiEsgrupOlduguEczanelerTumu;
+                    s.EczaneGrupTanimId,
+                    s.EczaneGrupTanimAdi,
+                    s.AyniGunNobetTutabilecekEczaneSayisi
+                }).Distinct().ToList();
 
-                    return PartialView();
-                }
-                else
+                foreach (var esGrupTanim in esGrupTanimlar)
                 {
-                    try
+                    var gruptakiEczaneler = istekGirilenTarihtekiEsgrupOlduguEczanelerTumu.Where(w => w.EczaneGrupTanimId == esGrupTanim.EczaneGrupTanimId).ToList();
+
+                    if (gruptakiEczaneler.Count > esGrupTanim.AyniGunNobetTutabilecekEczaneSayisi)
                     {
-                        _eczaneNobetIstekService.CokluEkle(eczaneNobetIstekler);
+                        ViewBag.IstekGirilenTarihtekiEsgrupOlduguEczaneler = gruptakiEczaneler;
+
+                        return PartialView();
                     }
-                    catch (DbUpdateException ex)
+                }
+
+                //ViewBag.IstekGirilenTarihtekiEsgrupOlduguEczaneler = istekGirilenTarihtekiEsgrupOlduguEczanelerTumu;
+
+                //return PartialView();
+
+                try
+                {
+                    _eczaneNobetIstekService.CokluEkle(eczaneNobetIstekler);
+
+                    foreach (var item in eczaneNobetIstekler)
                     {
-                        var hata = ex.InnerException.ToString();
-
-                        string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
-
-                        var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
-
-                        if (dublicateRowHatasiMi)
+                        eklenenEczaneler.Add(new EczaneNobetIstekDetay
                         {
-                            //throw new Exception("<strong>Bir eczaneye aynı gün için iki istek kaydı eklenemez...</strong>");
-                            return PartialView("ErrorDublicateRowPartial");
-                        }
-
-                       // throw ex;
-                    }
-                    catch (Exception)
-                    {
-                        return PartialView("ErrorPartial");
-                        //throw ex;
+                            EczaneAdi = _eczaneNobetGrupService.GetDetayById(item.EczaneNobetGrupId).EczaneAdi,
+                            Tarih = _takvimService.GetById(item.TakvimId).Tarih,
+                            Aciklama = item.Aciklama
+                        });
                     }
                 }
+                catch (DbUpdateException ex)
+                {
+                    var hata = ex.InnerException.ToString();
 
-                TempData["EklenenIstekSayisi"] = eklenecekIstekSayisi;
+                    string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+
+                    var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+
+                    if (dublicateRowHatasiMi)
+                    {
+                        //throw new Exception("<strong>Bir eczaneye aynı gün için iki istek kaydı eklenemez...</strong>");
+                        return PartialView("ErrorDublicateRowPartial");
+                    }
+
+                    // throw ex;
+                }
+                catch (Exception)
+                {
+                    return PartialView("ErrorPartial");
+                    //throw ex;
+                }
+
+
+                TempData["EklenenIstekSayisi"] = eklenenEczaneler.Count;
+
+                TempData["EklenenIstekler"] = eklenenEczaneler;
 
                 ViewBag.SecilenHaftaninGunuSayisi = eczaneNobetIstekCoklu.HaftaninGunu.Count();
 

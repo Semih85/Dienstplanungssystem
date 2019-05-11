@@ -374,6 +374,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var sonuclar = new EczaneNobetSonucModel();
 
             var indis = 0;
+
             foreach (var nobetGrupId in nobetGruplar)
             {
                 nobetGruplarSirali.Add(new NobetGruplarCozumSirali { NobetGrupId = nobetGrupId, SiraId = indis });

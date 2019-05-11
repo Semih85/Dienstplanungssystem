@@ -176,6 +176,7 @@
                 @Html.DropDownList("raporId", null, htmlAttributes: new
                 {
                    @class = "form-control selectpicker mr-4 mr-md-2 istatisitkFromInput",
+                   //show_menu_arrow = "true",
                    //multiple = "true",
                    //data_width = "auto",
                    //data_actions_box = "true",
@@ -3253,6 +3254,8 @@
             ayDagilim = null;
             mevsimDagilim = null;
             tarihDagilim = null;
+            nobetDurumDagilim = null;
+            kalibrasyonluNobetDagilim = null;
 
             gunFarkiGrafikVeri = null;
             gunFarkiOzetListesi = null;
@@ -3651,6 +3654,8 @@
         }
 
         $(function () {
+
+            $('.datepicker').datepicker('setStartDate', "01-01-1900");
 
             //alert(sonNobetTarihi)
             var tarih = new Date();

@@ -53,4 +53,30 @@
         </div>
     </div>
 }
+@if (TempData["EklenenMazeretler"] != null)
+{
+    <div class="row mx-1">
+        <div class="col-10">
+            <table class="table table-hover table-sm" id="eklenenMazeretlerTablosu">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Eczane Adı</th>
+                        <th scope="col">Mazeret Tarihi</th>
+                        <th scope="col">Açıklama</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var eczaneNobetMazeret in (List<EczaneNobetMazeretDetay>)TempData["EklenenMazeretler"])
+                    {
+                    <tr class="myRow">
+                        <td>@eczaneNobetMazeret.EczaneAdi</td>
+                        <td>@eczaneNobetMazeret.TarihUzun</td>
+                        <td>@eczaneNobetMazeret.Aciklama</td>
+                    </tr>
+                    }
 
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

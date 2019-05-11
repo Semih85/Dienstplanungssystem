@@ -397,7 +397,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 var nobetDurumlar = _nobetDurumService.GetDetaylar();
                 //.Where(w => w.NobetDurumTipId != 4).ToList();
 
-                return EczaneNobetSonucOsmaniye(sonuclar, nobetDurumlar);
+                return GetSonuclar(sonuclar, nobetDurumlar);
             }
             //var sw = new Stopwatch();
             //sw.Start();
@@ -421,7 +421,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 var nobetDurumlar = _nobetDurumService.GetDetaylar();
                 //.Where(w => w.NobetDurumTipId != 4).ToList();
 
-                return EczaneNobetSonucOsmaniye(sonuclar, nobetDurumlar);
+                return GetSonuclar(sonuclar, nobetDurumlar);
             }
             //var sw = new Stopwatch();
             //sw.Start();
@@ -447,7 +447,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 var nobetDurumlar = _nobetDurumService.GetDetaylar();
                 //.Where(w => w.NobetDurumTipId != 4).ToList();
 
-                return EczaneNobetSonucOsmaniye(sonuclar, nobetDurumlar);
+                return GetSonuclar(sonuclar, nobetDurumlar);
             }
             //var sw = new Stopwatch();
             //sw.Start();
@@ -549,11 +549,15 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return GetSonuclar(sonuclar);
         }
 
-        private List<EczaneNobetSonucListe2> EczaneNobetSonucOsmaniye(List<EczaneNobetSonucListe2> eczaneNobetSonuclar, List<NobetDurumDetay> nobetDurumDetaylar)
+        public List<EczaneNobetSonucListe2> GetSonuclar(List<EczaneNobetSonucListe2> eczaneNobetSonuclar, List<NobetDurumDetay> nobetDurumDetaylar)
         {
+            eczaneNobetSonuclar = eczaneNobetSonuclar
+                .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
+
             var tarihler = eczaneNobetSonuclar
-                .Where(w => w.Tarih >= w.NobetUstGrupBaslamaTarihi)
-                .Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
+                //.Where(w => w.Tarih >= w.NobetUstGrupBaslamaTarihi)
+                .Select(s => new { s.TakvimId, s.Tarih })
+                .Distinct().ToList();
 
             var sonuclar = new List<EczaneNobetSonucListe2>();
 
@@ -562,6 +566,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 var sonuclar2 = eczaneNobetSonuclar
                     .Where(w => w.TakvimId == tarih.TakvimId).ToList();
 
+                if (sonuclar2.Count != 3)               
+                    continue;
+                
                 var altGruplar = sonuclar2
                     .Select(s => new { s.NobetAltGrupId, s.NobetAltGrupAdi }).Distinct()
                     .OrderBy(o => o.NobetAltGrupAdi).ToArray();

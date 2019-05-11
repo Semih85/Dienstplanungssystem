@@ -62,7 +62,33 @@
         </div>
     </div>
 }
+@if (TempData["EklenenIstekler"] != null)
+{
+    <div class="row mx-1">
+        <div class="col-10">
+            <table class="table table-hover table-sm" id="eklenenIsteklerTablosu">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Eczane Adı</th>
+                        <th scope="col">İstek Tarihi</th>
+                        <th scope="col">Açıklama</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var eczaneNobetIstek in (List<EczaneNobetIstekDetay>)TempData["EklenenIstekler"])
+                    {
+                    <tr class="myRow">
+                        <td>@eczaneNobetIstek.EczaneAdi</td>
+                        <td>@eczaneNobetIstek.TarihUzun</td>
+                        <td>@eczaneNobetIstek.Aciklama</td>
+                    </tr>
+                    }
 
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
 @if (esGruptakiEczanelerleCakismaDurumu.Count == 1)
 {
     <div class="row">

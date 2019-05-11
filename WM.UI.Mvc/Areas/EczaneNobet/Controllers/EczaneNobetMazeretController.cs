@@ -363,7 +363,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,EczaneNobetGrupId,MazeretId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama")] EczaneNobetMazeretCoklu eczaneNobetMazeretCoklu)
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             //var haftaninGunleri = Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>().ToList();
             if (eczaneNobetMazeretCoklu.HaftaninGunu == null)
@@ -386,7 +387,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                                     || bayramlar.Select(s => s.TakvimId).Contains(w.TakvimId)).ToList();
             }
 
-            var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
+            var eczaneler = _eczaneService.GetDetaylar(nobetUstGrup.Id).Select(s => s.Id).ToList();
 
             var baslangicTarihi = _takvimService.GetByTarih(eczaneNobetMazeretCoklu.BaslangicTarihi);
             var bitisTarihi = _takvimService.GetByTarih(eczaneNobetMazeretCoklu.BitisTarihi);
@@ -527,7 +528,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         //[HandleException]
         public ActionResult CreatePartial([Bind(Include = "Id,EczaneNobetGrupId,MazeretId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama")] EczaneNobetMazeretCoklu eczaneNobetMazeretCoklu)
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
             //var haftaninGunleri = Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>().ToList();
             if (eczaneNobetMazeretCoklu.HaftaninGunu == null)
             {
@@ -549,7 +551,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                                     || bayramlar.Select(s => s.TakvimId).Contains(w.TakvimId)).ToList();
             }
 
-            var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
+            var eczaneler = _eczaneService.GetDetaylar(nobetUstGrup.Id).Select(s => s.Id).ToList();
 
             var baslangicTarihi = _takvimService.GetByTarih(eczaneNobetMazeretCoklu.BaslangicTarihi);
             var bitisTarihi = _takvimService.GetByTarih(eczaneNobetMazeretCoklu.BitisTarihi);
@@ -592,12 +594,23 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
             var eklenecekMazeretSayisi = eczaneNobetMazeretler.Count;
+            var eklenenEczaneler = new List<EczaneNobetMazeretDetay>();
 
             if (ModelState.IsValid && eklenecekMazeretSayisi > 0)
             {
                 try
                 {
                     _eczaneNobetMazeretService.CokluEkle(eczaneNobetMazeretler);
+
+                    foreach (var item in eczaneNobetMazeretler)
+                    {
+                        eklenenEczaneler.Add(new EczaneNobetMazeretDetay
+                        {
+                            EczaneAdi = _eczaneNobetGrupService.GetDetayById(item.EczaneNobetGrupId).EczaneAdi,
+                            Tarih = _takvimService.GetById(item.TakvimId).Tarih,
+                            Aciklama = item.Aciklama
+                        });
+                    }
                 }
                 catch (DbUpdateException ex)
                 {
@@ -621,7 +634,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     //throw ex;
                 }
 
-                TempData["EklenenMazeretSayisi"] = eklenecekMazeretSayisi;
+                TempData["EklenenMazeretSayisi"] = eklenenEczaneler.Count;
+
+                TempData["EklenenMazeretler"] = eklenenEczaneler;
 
                 ViewBag.SecilenHaftaninGunuSayisi = eczaneNobetMazeretCoklu.HaftaninGunu.Count();
                 //return RedirectToAction("Index");
