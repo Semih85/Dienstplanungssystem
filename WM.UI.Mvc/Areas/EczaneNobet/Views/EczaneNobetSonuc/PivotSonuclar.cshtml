@@ -97,7 +97,7 @@
                     </div>
                     @Html.TextBox("TarihBaslangic", null, new
                     {
-                        @class = "form-control datepicker",
+                        @class = "form-control datepicker istatisitkFromInput",
                        //data_toggle = "tooltip",
                        //data_placement = "top",
                        //title = "Başlangıç Tarihi",
@@ -110,7 +110,7 @@
 
                     @Html.TextBox("TarihBitis", null, new
                     {
-                        @class = "form-control datepicker",
+                        @class = "form-control datepicker istatisitkFromInput",
                        //data_toggle = "tooltip",
                        //data_placement = "top",
                        //title = "Bitiş Tarihi",
@@ -175,7 +175,7 @@
 
                 @Html.DropDownList("raporId", null, htmlAttributes: new
                 {
-                   @class = "form-control selectpicker mr-4 mr-md-2 istatisitkFromInput",
+                   @class = "form-control selectpicker mr-4 mr-md-2 ",
                    //show_menu_arrow = "true",
                    //multiple = "true",
                    //data_width = "auto",
@@ -329,6 +329,8 @@
         var nobetciEczanelerMazeretIstek = null;
         var gunDagilim = null;
         var gunDagilimBayramlar = null;
+        var gunDagilimHaftaIci = null;
+        var ikiliAyDagilim = null;
 
         var dagilimlar = null;
         var dagilimlarFiltreli = null;
@@ -534,7 +536,7 @@
                     nobetUstGrupId = dagilimlar.NobetUstGrupId;
                     //console.log(dagilimlar)
                     //PivotSonuclar
-                    var ilgiliRaporlar = [1, 2, 3, 4, 5, 6, 25, 26, 27];
+                    var ilgiliRaporlar = [1, 2, 3, 4, 5, 6, 25, 26, 27, 28, 29];
 
                     if (ilgiliRaporlar.find(x=> x == raporId) > 0) {
 
@@ -735,327 +737,354 @@
 
         $('.istatisitkFromInput').change(function () {
             pivotSekilleriSifirla();
+            //alert(1)
         });
 
-    $('#submitSorgula').click(function () {
-        //alert(1)
-        if (nobetGrubu.length == 0) {
+        $('#submitSorgula').click(function () {
+            //alert(1)
+            if (nobetGrubu.length == 0) {
 
-            alert("Nöbet grubu seçiniz..")
-            e.preventDefault();
-            //$("#raporId option:selected").prop("selected", false)
-            return false;
+                alert("Nöbet grubu seçiniz..")
+                e.preventDefault();
+                //$("#raporId option:selected").prop("selected", false)
+                return false;
+            }
+
+            //$("#raporMasterDiv").empty().html();
+
+            //dagilimlar = null;
+            //dagilimlarTumu = null;
+            //dagilimlarPivot = new Array();
+
+            pivotSekilleriSifirla();
+
+            icRaporBilsiniGuncelle()
+
+            //$('#raporMasterDiv').clear();
+                //.append('<div id = ' + icRaporDivAdi + '></div>');
+
+            //alert("submitSorgula: " + icRaporDivAdi)
+            divAktifPasif(icRaporDivAdi);
+
+            //$("#submitSorgula").on("click", function(){
+            //        //$(icRaporDivId).pivotUI(mps, JSON.parse($.cookie("pivotConfig")), true);
+            //});
+
+            $('.pasif').hide();
+            $('.aktif').show();
+
+            var ilgiliRaporlarDagilimlar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 18, 19, 20, 24, 25, 26, 27, 28, 29];
+            var ilgiliRaporlarAlacakVerecekler = [14, 15, 16, 17];
+            var ilgiliRaporlarAyniGunNobetler = [21, 22, 23];
+
+            if (raporId == 27) {
+                $('#GunGrupId').val(2);
+            }
+            //else if (raporId == 28) {
+            //    $('#GunGrupId').val(3);
+            //}
+
+            serializedForm = $('#formTumu').serialize();
+
+            if (ilgiliRaporlarDagilimlar.find(x => x == raporId) > 0) {
+                getJsonDagilimlar(urlDagilimlar, serializedForm, raporId)
+            }
+            else if (ilgiliRaporlarAlacakVerecekler.find(x => x == raporId) > 0) {
+                getJsonEczaneNobetAlacakVerecekler(urlEczaneNobetAlacakVerecek, serializedForm, raporId);
+            }
+            else if (ilgiliRaporlarAyniGunNobetler.find(x => x == raporId) > 0) {
+                getJsonAyniGunNobetTutanlar(urlAyniGunNobet, serializedForm, raporId);
+            }
+
+        });
+
+        function icRaporBilsiniGuncelle() {
+            icRaporDivAdi = 'icRapor' + raporId;
+            icRaporDivId = '#' + icRaporDivAdi;
+
+            $('#raporBaslik').text(raporBaslik);
+            //var element = document.getElementById(icRaporDivAdi);
+
+            if (!$(icRaporDivId).length) {
+                //alert(icRaporDivAdi)
+                //alert("boyut: " + $(icRaporDivAdi).length)
+                $('<div/>', {
+                        id: icRaporDivAdi,
+                        class: 'icRapor pasif',
+                        //html: ""
+                    }).appendTo('#' + "raporlar");
+            }
         }
 
-        //$("#raporMasterDiv").empty().html();
+        $('#btnExceleAktar').click(function () {
+            var ilgiliDiv = icRaporDivId + ' > table';
+            tableToExcel('testTable', 'Nöbet Yaz');
+        });
 
-        //dagilimlar = null;
-        //dagilimlarTumu = null;
-        //dagilimlarPivot = new Array();
+        function divAktifPasif(divClass) {
 
-        pivotSekilleriSifirla();
+            divClass = '#' + divClass;
 
-        icRaporDivAdi = 'icRapor' + raporId;
-        icRaporDivId = '#' + icRaporDivAdi;
+            //alert(divClass)
 
-        $('#raporBaslik').text(raporBaslik);
-        //var element = document.getElementById(icRaporDivAdi);
-
-        if (!$(icRaporDivId).length) {
-            //alert(icRaporDivAdi)
-            //alert("boyut: " + $(icRaporDivAdi).length)
-            $('<div/>', {
-                    id: icRaporDivAdi,
-                    class: 'icRapor pasif',
-                    //html: ""
-                }).appendTo('#' + "raporlar");
+            $(divClass).switchClass('pasif', 'aktif');
         }
-
-        //$('#raporMasterDiv').clear();
-            //.append('<div id = ' + icRaporDivAdi + '></div>');
-
-        //alert("submitSorgula: " + icRaporDivAdi)
-        divAktifPasif(icRaporDivAdi);
-
-        //$("#submitSorgula").on("click", function(){
-        //        //$(icRaporDivId).pivotUI(mps, JSON.parse($.cookie("pivotConfig")), true);
-        //});
-
-        $('.pasif').hide();
-        $('.aktif').show();
-
-        var ilgiliRaporlarDagilimlar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 18, 19, 20, 24, 25, 26, 27];
-        var ilgiliRaporlarAlacakVerecekler = [14, 15, 16, 17];
-        var ilgiliRaporlarAyniGunNobetler = [21, 22, 23];
-
-        if (raporId == 27) {
-            $('#GunGrupId').val(2);
-        }
-
-        serializedForm = $('#formTumu').serialize();
-
-        if (ilgiliRaporlarDagilimlar.find(x => x == raporId) > 0) {
-            getJsonDagilimlar(urlDagilimlar, serializedForm, raporId)
-        }
-        else if (ilgiliRaporlarAlacakVerecekler.find(x => x == raporId) > 0) {
-            getJsonEczaneNobetAlacakVerecekler(urlEczaneNobetAlacakVerecek, serializedForm, raporId);
-        }
-        else if (ilgiliRaporlarAyniGunNobetler.find(x => x == raporId) > 0) {
-            getJsonAyniGunNobetTutanlar(urlAyniGunNobet, serializedForm, raporId);
-        }
-
-    });
-
-    $('#btnExceleAktar').click(function () {
-        var ilgiliDiv = icRaporDivId + ' > table';
-        tableToExcel('testTable', 'Nöbet Yaz');
-    });
-
-    function divAktifPasif(divClass) {
-
-        divClass = '#' + divClass;
-
-        //alert(divClass)
-
-        $(divClass).switchClass('pasif', 'aktif');
-
+        
         $("#raporId").on('change', function () {
 
-            $('.icRapor').switchClass('aktif', 'pasif');//.addClass('pasif');
+            raporParamsBelirle();
 
-            //if ($(divClass).hasClass('pasif')) {
-            //    //alert("pasif=> aktif yapılacak")
-            //}
-            //else {
-            //    //alert("aktif=> pasif yapılacak")
-            //    $('.pasif').removeClass('pasif').addClass('aktif');
-            //    $(divClass).removeClass('aktif').addClass('pasif');
-            //}
+            icRaporBilsiniGuncelle()
+
+            $('.icRapor').switchClass('aktif', 'pasif');
+
+            divAktifPasif(icRaporDivAdi);
+            
+            $('.pasif').hide();
+            $('.aktif').show();
+
+            ilgiliRaporuOlustur(raporId)
         });
-    }
 
-    function ilgiliRaporuOlustur(raporId) {
+        function ilgiliRaporuOlustur(raporId) {
 
-            if (raporId == 1) {//r01
-                if (nobetciEczaneler != null) {
-                    nobetciEczaneler;
+            //alert("raporId: " + raporId)
+                if (raporId == 1) {//r01
+                    if (nobetciEczaneler != null) {
+                        nobetciEczaneler;
+                    }
+                    else {
+                        nobetciListesi();
+                    }
                 }
-                else {
-                    nobetciListesi();
+                else if (raporId == 2) {//r02
+                    if (gunDagilim != null) {
+                        gunDagilim;
+                    }
+                    else {
+                        gunDagilimlar();
+                    }
                 }
-            }
-            else if (raporId == 2) {//r02
-                if (gunDagilim != null) {
-                    gunDagilim;
+                else if (raporId == 3) {//r03
+                    if (gunGrafik2 != null) {
+                        gunGrafik2;
+                    }
+                    else {
+                        gunDagilimGrafikler();
+                    }
                 }
-                else {
-                    gunDagilimlar();
+                else if (raporId == 4) {//r04
+                    if (ayDagilim != null) {
+                        ayDagilim;
+                    }
+                    else {
+                        ayDagilimlar();
+                    }
                 }
-            }
-            else if (raporId == 3) {//r03
-                if (gunGrafik2 != null) {
-                    gunGrafik2;
+                else if (raporId == 5) {//r05
+                    if (mevsimDagilim != null) {
+                        mevsimDagilim;
+                    }
+                    else {
+                        mevsimDagilimlar();
+                    }
                 }
-                else {
-                    gunDagilimGrafikler();
+                else if (raporId == 6) {//r06
+                    if (tarihDagilim != null) {
+                        tarihDagilim;
+                    }
+                    else {
+                        tarihDagilimlar();
+                    }
                 }
-            }
-            else if (raporId == 4) {//r04
-                if (ayDagilim != null) {
-                    ayDagilim;
+                else if (raporId == 7) {//r07
+                    if (gunGrafik != null) {
+                        gunGrafik;
+                    }
+                    else {
+                        gunGrafikOlustur();
+                    }
                 }
-                else {
-                    ayDagilimlar();
+                else if (raporId == 8) {//r08
+                    if (gunFarkiGrafikVeri != null) {
+                        gunFarkiGrafikVeri;
+                    }
+                    else {
+                        gunFarkiGrafik();
+                    }
                 }
-            }
-            else if (raporId == 5) {//r05
-                if (mevsimDagilim != null) {
-                    mevsimDagilim;
+                else if (raporId == 9) {//r09
+                    if (gunFarkiOzetListesi != null) {
+                        gunFarkiOzetListesi;
+                    }
+                    else {
+                        gunFarkiOzet();
+                    }
                 }
-                else {
-                    mevsimDagilimlar();
+                else if (raporId == 10) {//r10
+                    if (gunFarkiFrekansListesi != null) {
+                        gunFarkiFrekansListesi;
+                    }
+                    else {
+                        gunFarkiFrekans();
+                    }
                 }
-            }
-            else if (raporId == 6) {//r06
-                if (tarihDagilim != null) {
-                    tarihDagilim;
+                else if (raporId == 11) {//r11
+                    if (gunFarkiDonguListesi != null) {
+                        gunFarkiDonguListesi;
+                    }
+                    else {
+                        donguler();
+                    }
                 }
-                else {
-                    tarihDagilimlar();
+                else if (raporId == 12) {//r12
+                    if (gunFarkiDetayliArtanListesi != null) {
+                        gunFarkiDetayliArtanListesi;
+                    }
+                    else {
+                        gunFarkiDetayliArtanlar();
+                    }
                 }
-            }
-            else if (raporId == 7) {//r07
-                if (gunGrafik != null) {
-                    gunGrafik;
+                else if (raporId == 13) {//r13
+                    if (gunFarkiDetayliAzalanListesi != null) {
+                        gunFarkiDetayliAzalanListesi;
+                    }
+                    else {
+                        gunFarkiDetayliAzalanlar();
+                    }
                 }
-                else {
-                    gunGrafikOlustur();
+                else if (raporId == 14) {//r14
+                    if (alacakVerecekGrafikVeri != null) {
+                        alacakVerecekGrafikVeri;
+                    }
+                    else {
+                        alacakVerecekGrafik();
+                    }
                 }
-            }
-            else if (raporId == 8) {//r08
-                if (gunFarkiGrafikVeri != null) {
-                    gunFarkiGrafikVeri;
+                else if (raporId == 15) {//r15
+                    if (alacakVereceklerOzet != null) {
+                        alacakVereceklerOzet;
+                    }
+                    else {
+                        alacakVerecekOzet();
+                    }
                 }
-                else {
-                    gunFarkiGrafik();
+                else if (raporId == 16) {//r16
+                    if (alacakVereceklerList != null) {
+                        alacakVereceklerList;
+                    }
+                    else {
+                        alacakVerecekListe();
+                    }
                 }
-            }
-            else if (raporId == 9) {//r09
-                if (gunFarkiOzetListesi != null) {
-                    gunFarkiOzetListesi;
+                else if (raporId == 17) {//r17
+                    if (planlananVeGerceklesenNobetListesi != null) {
+                        planlananVeGerceklesenNobetListesi;
+                    }
+                    else {
+                        planlananVeGerceklesenNobetler();
+                    }
                 }
-                else {
-                    gunFarkiOzet();
+                else if (raporId == 18) {//r18
+                    if (altGrupDagilim != null) {
+                        altGrupDagilim;
+                    }
+                    else {
+                        altGrupDagilimlar();
+                    }
                 }
-            }
-            else if (raporId == 10) {//r10
-                if (gunFarkiFrekansListesi != null) {
-                    gunFarkiFrekansListesi;
+                else if (raporId == 19) {//r19
+                    if (altGrupGunGrup != null) {
+                        altGrupGunGrup;
+                    }
+                    else {
+                        altGrupGunGrupDagilimlar();
+                    }
                 }
-                else {
-                    gunFarkiFrekans();
+                else if (raporId == 20) {//r20
+                    if (altGrupSirali != null) {
+                        altGrupSirali;
+                    }
+                    else {
+                        altGrupSiraliDagilimlar();
+                    }
                 }
-            }
-            else if (raporId == 11) {//r11
-                if (gunFarkiDonguListesi != null) {
-                    gunFarkiDonguListesi;
+                else if (raporId == 21) {//r21
+                    if (ayniGunDagilimTablo != null) {
+                        ayniGunDagilimTablo;
+                    }
+                    else {
+                        ayniGunDagilimlarTablo();
+                    }
                 }
-                else {
-                    donguler();
+                else if (raporId == 22) {//r22
+                    if (ayniGunDagilim != null) {
+                        ayniGunDagilim;
+                    }
+                    else {
+                        ayniGunDagilimlar();
+                    }
                 }
-            }
-            else if (raporId == 12) {//r12
-                if (gunFarkiDetayliArtanListesi != null) {
-                    gunFarkiDetayliArtanListesi;
-                }
-                else {
-                    gunFarkiDetayliArtanlar();
-                }
-            }
-            else if (raporId == 13) {//r13
-                if (gunFarkiDetayliAzalanListesi != null) {
-                    gunFarkiDetayliAzalanListesi;
-                }
-                else {
-                    gunFarkiDetayliAzalanlar();
-                }
-            }
-            else if (raporId == 14) {//r14
-                if (alacakVerecekGrafikVeri != null) {
-                    alacakVerecekGrafikVeri;
-                }
-                else {
-                    alacakVerecekGrafik();
-                }
-            }
-            else if (raporId == 15) {//r15
-                if (alacakVereceklerOzet != null) {
-                    alacakVereceklerOzet;
-                }
-                else {
-                    alacakVerecekOzet();
-                }
-            }
-            else if (raporId == 16) {//r16
-                if (alacakVereceklerList != null) {
-                    alacakVereceklerList;
-                }
-                else {
-                    alacakVerecekListe();
-                }
-            }
-            else if (raporId == 17) {//r17
-                if (planlananVeGerceklesenNobetListesi != null) {
-                    planlananVeGerceklesenNobetListesi;
-                }
-                else {
-                    planlananVeGerceklesenNobetler();
-                }
-            }
-            else if (raporId == 18) {//r18
-                if (altGrupDagilim != null) {
-                    altGrupDagilim;
-                }
-                else {
-                    altGrupDagilimlar();
-                }
-            }
-            else if (raporId == 19) {//r19
-                if (altGrupGunGrup != null) {
-                    altGrupGunGrup;
-                }
-                else {
-                    altGrupGunGrupDagilimlar();
-                }
-            }
-            else if (raporId == 20) {//r20
-                if (altGrupSirali != null) {
-                    altGrupSirali;
-                }
-                else {
-                    altGrupSiraliDagilimlar();
-                }
-            }
-            else if (raporId == 21) {//r21
-                if (ayniGunDagilimTablo != null) {
-                    ayniGunDagilimTablo;
-                }
-                else {
-                    ayniGunDagilimlarTablo();
-                }
-            }
-            else if (raporId == 22) {//r22
-                if (ayniGunDagilim != null) {
-                    ayniGunDagilim;
-                }
-                else {
-                    ayniGunDagilimlar();
-                }
-            }
-            else if (raporId == 23) {//r23
+                else if (raporId == 23) {//r23
 
-                AyniGunNobetTutanEsGruplar();
+                    AyniGunNobetTutanEsGruplar();
 
-                //if (alacakVerecekGrafikVeri != null) {
-                //    alacakVerecekGrafikVeri;
-                //}
-                //else {
-                //    alacakVerecekGrafik();
-                //}
+                    //if (alacakVerecekGrafikVeri != null) {
+                    //    alacakVerecekGrafikVeri;
+                    //}
+                    //else {
+                    //    alacakVerecekGrafik();
+                    //}
+                }
+                else if (raporId == 24) {//r24
+                    if (kalibrasyonluNobetDagilim != null) {
+                        kalibrasyonluNobetDagilim;
+                    }
+                    else {
+                        kalibrasyonluNobetDagilimlar();
+                    }
+                }
+                else if (raporId == 25) {//r25
+                    if (nobetDurumDagilim != null) {
+                        nobetDurumDagilim;
+                    }
+                    else {
+                        nobetDurumTabloOlustur();
+                    }
+                }
+                else if (raporId == 26) {//r26
+                    if (nobetciEczanelerMazeretIstek != null) {
+                        nobetciEczanelerMazeretIstek;
+                    }
+                    else {
+                        nobetciListesiMazeretIstek();
+                    }
+                }
+                else if (raporId == 27) {//r27
+                    if (gunDagilimBayramlar != null) {
+                        gunDagilimBayramlar;
+                    }
+                    else {
+                        gunDagilimlarBayramlar();
+                    }
+                }
+                else if (raporId == 28) {//r28
+                    if (gunDagilimHaftaIci != null) {
+                        gunDagilimHaftaIci;
+                    }
+                    else {
+                        gunDagilimlarHaftaIci();
+                    }
+                }
+                else if (raporId == 29) {//r29
+                    if (ikiliAyDagilim != null) {
+                        ikiliAyDagilim;
+                    }
+                    else {
+                        ikiliAyDagilimlar();
+                    }
+                }        
             }
-            else if (raporId == 24) {//r24
-                if (kalibrasyonluNobetDagilim != null) {
-                    kalibrasyonluNobetDagilim;
-                }
-                else {
-                    kalibrasyonluNobetDagilimlar();
-                }
-            }
-            else if (raporId == 25) {//r25
-                if (nobetDurumDagilim != null) {
-                    nobetDurumDagilim;
-                }
-                else {
-                    nobetDurumTabloOlustur();
-                }
-            }
-            else if (raporId == 26) {//r26
-                if (nobetciEczanelerMazeretIstek != null) {
-                    nobetciEczanelerMazeretIstek;
-                }
-                else {
-                    nobetciListesiMazeretIstek();
-                }
-            }
-            else if (raporId == 27) {//r27
-                if (gunDagilimBayramlar != null) {
-                    gunDagilimBayramlar;
-                }
-                else {
-                    gunDagilimlarBayramlar();
-                }
-            }
-        }
 
     </script>
     <!-- #endregion -->
@@ -1522,7 +1551,7 @@
             }
         }
 
-    $('#pills-nobetci-tab').click(function (e) {
+        $('#pills-nobetci-tab').click(function (e) {
 
             $('#btnExceleAktar').show();
 
@@ -1553,8 +1582,6 @@
         //gün dağılım r02
         function gunDagilimlar() {
 
-        var icRaporDivId2 = icRaporDivId;
-
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
 
                 var pivotRows = ["Nöbet Grubu", "Eczane"];
@@ -1576,7 +1603,7 @@
 
                 gunDagilim = $(function table2() {
 
-                    $(icRaporDivId2).pivotUI(dagilimlarPivot,
+                    $(icRaporDivId).pivotUI(dagilimlarPivot,
                         {
                             rows: pivotRows,
                             cols: pivotCols, //, "GunDeger", "GunTanim"
@@ -1588,7 +1615,7 @@
                             onRefresh: function (config) {
                                 //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
                                 //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
-                                PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId2)
+                                PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
                     );
@@ -1654,6 +1681,58 @@
                             cols: pivotCols, //, "GunDeger", "GunTanim"
                             vals: pivotVals,
                             aggregatorName: pivotAggregatorName,
+                            aggregators: pivotAggregators,
+                            renderers: pivotRenderers,
+                            rendererName: pivotRendererName,
+                            onRefresh: function (config) {
+                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
+                                PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
+                            }
+                        }
+                    );
+
+                });
+            }
+            else {
+                var mesaj = "'" + raporBaslik + "'";
+                var divId = 'divUyariRaporlar' + icRaporDivAdi;
+                var parentDivId = icRaporDivAdi;
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Gün dağılımı listesi yok.');
+            }
+        }
+
+        //hafta içi r28
+        function gunDagilimlarHaftaIci() {
+
+            if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
+
+                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotCols = ["Gün Grup", "Gün Tanım"];
+                var pivotRendererName = "Sıcaklık Haritası";
+
+                if (nobetUstGrupId == 4) {
+                    pivotRows = ["Eczane"];
+                    pivotCols = ["Görev Tipi", "Gün Grup", "Gün Tanım"];
+                }
+                else if (nobetUstGrupId == 5) {
+                    pivotRows = ["Eczane"];
+                    pivotCols = ["Gün Grup", "Gün Tanım"];
+                    pivotRendererName = "Sıcaklık Haritası (Sütun)"
+                }
+                //alert("gunDagilimlar" + dagilimlarPivot.length)
+
+                //alert("gunDagilim: " + gunDagilim.legnt)
+
+                gunDagilimHaftaIci = $(function table2() {
+
+                    $(icRaporDivId).pivotUI(dagilimlarPivot,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols, //, "GunDeger", "GunTanim"
+                            vals: ["Eczane"],
+                            aggregatorName: "Say",
                             aggregators: pivotAggregators,
                             renderers: pivotRenderers,
                             rendererName: pivotRendererName,
@@ -1842,7 +1921,7 @@
                     //pivotCols = ["Gün Grup", "Mevsim"];
                 }
                 else if (nobetUstGrupId == 5) {
-                    pivotRows = ["Nöbet Grubu", "Eczane"];
+                    pivotRows = ["Eczane"];
                 }
 
                 mevsimDagilim = $(function table3() {
@@ -1882,6 +1961,51 @@
                 mevsimDagilimlar();
             }
         });
+
+        //ikili aylar dağılım r29
+        function ikiliAyDagilimlar() {
+            //alert("ikiliAyDagilimlar")
+            if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
+
+                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotCols = ["Gün Grup", "Ay İkili"];
+
+                if (nobetUstGrupId == 4) {
+                    pivotRows = ["Görev Tipi", "Eczane"];
+                    //pivotCols = ["Gün Grup", "Mevsim"];
+                }
+                else if (nobetUstGrupId == 5) {
+                    pivotRows = ["Eczane"];
+                }
+
+                ikiliAyDagilim = $(function table3() {
+                    $(icRaporDivId).pivotUI(dagilimlarPivot,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols,
+                            vals: ["Eczane"],
+                            aggregatorName: "Say",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası",
+                            renderers: pivotRenderers,
+                            onRefresh: function (config) {
+                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
+                                PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
+                            }
+                        }
+                    );
+                });
+
+            }
+            else {
+                var mesaj = "'" + raporBaslik + "'";
+                var divId = 'divUyariRaporlar' + icRaporDivAdi;
+                var parentDivId = icRaporDivAdi;
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Ay dağılımı listesi yok.');
+            }
+        }
 
         //tarih dağılım r06
         var tarihDagilim;
@@ -3127,18 +3251,18 @@
             raporBaslik = $('#raporId :selected').text().split(". ")[1];
         }
 
-        $("#raporId").change(function (e) {
-            raporParamsBelirle();
-            //alert("raporId: " + raporBaslik)
-            //alert("raporBaslik: " + raporBaslik)
+        //$("#raporId").change(function (e) {
+        //    raporParamsBelirle();
+        //    //alert("raporId: " + raporBaslik)
+        //    //alert("raporBaslik: " + raporBaslik)
 
-            //baslangicTarihi = null;
-            //$('#BaslangicTarihi').data('datepicker').setDate(null);
-            ////alert("2")
-            //$("#btnSilBaslangicTarihi").hide();
-            //$("#btnSilBaslangicTarihiFiltre").show();
+        //    //baslangicTarihi = null;
+        //    //$('#BaslangicTarihi').data('datepicker').setDate(null);
+        //    ////alert("2")
+        //    //$("#btnSilBaslangicTarihi").hide();
+        //    //$("#btnSilBaslangicTarihiFiltre").show();
 
-        });
+        //});
 
         function getNobetGrubu() {
             //alert(1)
@@ -3249,10 +3373,12 @@
             gunGrafik = null;
             gunDagilim = null;
             gunDagilimBayramlar = null;
+            gunDagilimHaftaIci = null;
             gunDagilim2 = null;
             gunGrafik2 = null;
             ayDagilim = null;
             mevsimDagilim = null;
+            ikiliAyDagilim = null;
             tarihDagilim = null;
             nobetDurumDagilim = null;
             kalibrasyonluNobetDagilim = null;

@@ -77,11 +77,11 @@
                 <tbody>
                     @foreach (var eczaneNobetIstek in (List<EczaneNobetIstekDetay>)TempData["EklenenIstekler"])
                     {
-                    <tr class="myRow">
-                        <td>@eczaneNobetIstek.EczaneAdi</td>
-                        <td>@eczaneNobetIstek.TarihUzun</td>
-                        <td>@eczaneNobetIstek.Aciklama</td>
-                    </tr>
+                        <tr class="myRow">
+                            <td>@eczaneNobetIstek.EczaneAdi</td>
+                            <td>@eczaneNobetIstek.TarihUzun</td>
+                            <td>@eczaneNobetIstek.Aciklama</td>
+                        </tr>
                     }
 
                 </tbody>
@@ -123,33 +123,60 @@ else if (esGruptakiEczanelerleCakismaDurumu.Count > 1)
     <div class="row">
         <div class="col-10 mb-3">
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <i class="fa fa-warning"></i> İstek girmeye çalıştığınız eczane aynı eş grubunda olan aşağıdaki eczaneler <span class="badge badge-light">@esGruptakiEczanelerleCakismaDurumu.Count </span> ile
-                <span class="font-weight-bold">
-                    çakışmaktadır.
-                </span>
+                <i class="fa fa-warning"></i> İstek girmeye çalıştığınız eczaneler <span class="badge badge-light">@esGruptakiEczanelerleCakismaDurumu.Count </span>
+                <strong>aynı eş gruptadır.</strong> Lütfen kontrol ediniz.
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <ul class="list-group">
-                @foreach (var esGruptakiEczane in esGruptakiEczanelerleCakismaDurumu)
-                {
-                    <li class="list-group-item list-group-item-warning">
-                        <span class="badge badge-light">@esGruptakiEczane.EczaneGrupTanimAdi </span> eş grubundaki
-                        <span class="badge badge-light">@esGruptakiEczane.EczaneAdi </span> eczanesi ile
-                        <span class="font-weight-bold">
-                            @if (esGruptakiEczane.ArdisikNobetSayisi > 0)
-                            {
-                                <span class="badge badge-light">@DateTime.Today.AddDays(esGruptakiEczane.ArdisikNobetSayisi) tarihine kadar</span>
-                            }
-                            else
-                            {
-                                <span class="badge badge-light">seçtiğiniz tarih için</span>
-                            }
-                        </span>
-                    </li>
-                }
-            </ul>
+            <table class="table table-hover table-sm" id="esGruptakiEczanelerleCakismalar">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Eş Grup Adı</th>
+                        <th scope="col">Eczane</th>
+                        <th scope="col">Tarih</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var esGruptakiEczane in esGruptakiEczanelerleCakismaDurumu)
+                    {
+                        <tr class="myRow">
+                            <td>@esGruptakiEczane.EczaneGrupTanimAdi</td>
+                            <td>@esGruptakiEczane.EczaneAdi</td>
+                            <td>
+                                @if (esGruptakiEczane.ArdisikNobetSayisi > 0)
+                                {
+                                    <span>@DateTime.Today.AddDays(esGruptakiEczane.ArdisikNobetSayisi) tarihine kadar</span>
+                                }
+                                else
+                                {
+                                    <span>Seçilen tarih</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @*<ul class="list-group">
+                    @foreach (var esGruptakiEczane in esGruptakiEczanelerleCakismaDurumu)
+                    {
+                        <li class="list-group-item list-group-item-warning">
+                            <span class="badge badge-light">@esGruptakiEczane.EczaneGrupTanimAdi </span> eş grubundaki
+                            <span class="badge badge-light">@esGruptakiEczane.EczaneAdi </span> eczanesi ile
+                            <span class="font-weight-bold">
+                                @if (esGruptakiEczane.ArdisikNobetSayisi > 0)
+                                {
+                                    <span class="badge badge-light">@DateTime.Today.AddDays(esGruptakiEczane.ArdisikNobetSayisi) tarihine kadar</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-light">seçtiğiniz tarih için</span>
+                                }
+                            </span>
+                        </li>
+                    }
+                </ul>*@
         </div>
     </div>
 }

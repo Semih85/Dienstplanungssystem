@@ -115,7 +115,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EczaneNobetGrupId,IstekId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama")] EczaneNobetIstekCoklu eczaneNobetIstekCoklu)
+        public ActionResult Create([Bind(Include = "Id,EczaneNobetGrupId,IstekId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama,YinedeEklensinMi")] EczaneNobetIstekCoklu eczaneNobetIstekCoklu)
         {            
             var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(eczaneNobetIstekCoklu.EczaneNobetGrupId);
@@ -295,7 +295,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreatePartial([Bind(Include = "Id,EczaneNobetGrupId,IstekId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama")] EczaneNobetIstekCoklu eczaneNobetIstekCoklu)
+        public ActionResult CreatePartial([Bind(Include = "Id,EczaneNobetGrupId,IstekId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama,YinedeEklensinMi")] EczaneNobetIstekCoklu eczaneNobetIstekCoklu)
         {
             //var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
@@ -407,15 +407,18 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     s.AyniGunNobetTutabilecekEczaneSayisi
                 }).Distinct().ToList();
 
-                foreach (var esGrupTanim in esGrupTanimlar)
+                if (!eczaneNobetIstekCoklu.YinedeEklensinMi)
                 {
-                    var gruptakiEczaneler = istekGirilenTarihtekiEsgrupOlduguEczanelerTumu.Where(w => w.EczaneGrupTanimId == esGrupTanim.EczaneGrupTanimId).ToList();
-
-                    if (gruptakiEczaneler.Count > esGrupTanim.AyniGunNobetTutabilecekEczaneSayisi)
+                    foreach (var esGrupTanim in esGrupTanimlar)
                     {
-                        ViewBag.IstekGirilenTarihtekiEsgrupOlduguEczaneler = gruptakiEczaneler;
+                        var gruptakiEczaneler = istekGirilenTarihtekiEsgrupOlduguEczanelerTumu.Where(w => w.EczaneGrupTanimId == esGrupTanim.EczaneGrupTanimId).ToList();
 
-                        return PartialView();
+                        if (gruptakiEczaneler.Count > esGrupTanim.AyniGunNobetTutabilecekEczaneSayisi)
+                        {
+                            ViewBag.IstekGirilenTarihtekiEsgrupOlduguEczaneler = gruptakiEczaneler;
+
+                            return PartialView();
+                        }
                     }
                 }
 

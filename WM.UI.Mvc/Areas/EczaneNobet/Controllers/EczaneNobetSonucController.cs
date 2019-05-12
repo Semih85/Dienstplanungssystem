@@ -178,7 +178,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.yilBaslangic = yilBaslangic;
             ViewBag.yilBitis = yilBitis;
             ViewBag.SonuclarGet = 1;
-            
+
             var gunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrupId);
 
             ViewBag.nobetGrupGorevTipId = new SelectList(nobetGruplar, "Id", "Value");
@@ -438,7 +438,17 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             if (nobetUstGrup.BaslamaTarihindenOncekiSonuclarGosterilsinMi)
             {
-                sonuclar = sonuclarTumu;
+                if (nobetUstGrup.Id == 5)
+                {
+                    sonuclar = sonuclarTumu
+                        .Where(w => ((w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi && w.GunGrupId != 2)
+                                    || w.GunGrupId == 2)
+                                    && w.EczaneNobetGrupId != 1031).ToList();
+                }
+                else
+                {
+                    sonuclar = sonuclarTumu;
+                }
             }
             else
             {
@@ -503,6 +513,27 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 sonuclar = _eczaneNobetSonucService.GetSonuclar(sonuclar, nobetDurumlar);
             }
 
+            if (nobetUstGrup.Id == 5)
+            {//osmaniye
+                var tarihler = sonuclar.Select(s => s.TakvimId).ToArray();
+
+                foreach (var tarih in tarihler)
+                {
+                    var sonuclarGunluk = sonuclar
+                        .Where(w => w.TakvimId == tarih)
+                        .OrderBy(o => o.EczaneAdi).ToArray();
+
+                    var indis = 1;
+
+                    foreach (var item in sonuclarGunluk)
+                    {
+                        item.NobetGrupAdi = indis.ToString();
+
+                        indis++;
+                    }
+                }
+            }
+
             ViewBag.ToplamUzunluk = sonuclar.Count;
 
             var model = new EczaneNobetSonucViewJsonModel
@@ -542,7 +573,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         NobetOzelGunAdi = s.NobetOzelGunAdi,
                         NobetOzelGunKategoriAdi = s.NobetOzelGunKategoriAdi
                     }).ToList(),
-                KalibrasyonluToplamlar = KalibrasyonlaSonuclariBirlestir(5, sonuclar),
+                KalibrasyonluToplamlar = KalibrasyonlaSonuclariBirlestir(5, sonuclar, gunGrupId),
                 GunFarklariTumSonuclar = gunFarklari,
                 GunFarklariFrekanslar = gunFarkiFrekanslar,
                 AltGrupAyniGunNobetTutanEczaneler = ayniGunNobetTutanAltGrupluEczaneler,
@@ -579,7 +610,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var eczaneNobetSonuclarPlanlananSonrasi = eczaneNobetSonuclarPlanlanan
                 .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
 
-            var sonuclar = new List<EczaneNobetSonucListe2>();                  
+            var sonuclar = new List<EczaneNobetSonucListe2>();
 
             if (nobetUstGrup.BaslamaTarihindenOncekiSonuclarGosterilsinMi)
             {
@@ -649,7 +680,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var sonuclarTumu = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, EczaneNobetSonucTuru.Kesin)
                 .Where(w => w.GunGrupId == gunGrupId || gunGrupId == 0).ToList();
-            
+
             var sonuclar = new List<EczaneNobetSonucListe2>();
 
             if (nobetUstGrup.BaslamaTarihindenOncekiSonuclarGosterilsinMi)
@@ -750,11 +781,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         }
 
-        List<KalibrasyonDetay> KalibrasyonlaSonuclariBirlestir(int nobetUstGrupId, List<EczaneNobetSonucListe2> sonuclar)
+        List<KalibrasyonDetay> KalibrasyonlaSonuclariBirlestir(int nobetUstGrupId, List<EczaneNobetSonucListe2> sonuclar, int gunGrupId = 0)
         {
             if (nobetUstGrupId == 5)
             {
-                var kalibrasyonlarTumu = _kalibrasyonService.GetDetaylar(nobetUstGrupId);
+                var kalibrasyonlarTumu = _kalibrasyonService.GetDetaylar(nobetUstGrupId)
+                    .Where(w => w.EczaneNobetGrupId != 1031).ToList();
 
                 foreach (var kalibrasyon in kalibrasyonlarTumu)
                 {
@@ -862,7 +894,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     .Union(kalibrasyonVeSonucToplamHaftaIci)
                     .ToList();
 
-                return kalibrasyonlarHepsi;
+                return kalibrasyonlarHepsi.Where(w => w.GunGrupId == gunGrupId || gunGrupId == 0).ToList();
             }
             else
             {

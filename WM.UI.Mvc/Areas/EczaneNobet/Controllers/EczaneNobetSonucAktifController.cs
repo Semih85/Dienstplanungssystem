@@ -189,7 +189,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             ViewBag.ToplamUzunluk = tumSonuclar.Count();
 
-
             var gunFarklari = _eczaneNobetOrtakService.EczaneNobetIstatistikGunFarkiHesapla(tumSonuclar)
                 .Where(w => (w.Nobet2Tarih >= baslamaTarihi && w.Nobet2Tarih <= bitisTarihi)).ToList();
 

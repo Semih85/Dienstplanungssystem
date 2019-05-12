@@ -32,5 +32,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 
         [Display(Name = "Açıklama")]
         public string Aciklama { get; set; }
+        public bool YinedeEklensinMi { get; set; }
     }
 }

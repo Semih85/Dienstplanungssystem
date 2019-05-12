@@ -504,9 +504,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public ActionResult AmacFonksiyonKatsayi()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var gelecekTarih = DateTime.Now.AddMonths(1);
             var gelecekAy = gelecekTarih.Month;
@@ -534,9 +535,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             //DateTime baslangicTarihi = new DateTime(2019, 4, 1);
             //DateTime bitisTarihi = new DateTime(2019, 4, 28);
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
 

@@ -48,5 +48,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public DateTime NobetGrupGorevTipBaslamaTarihi { get; set; }
 
         public bool EnErkenTarihteNobetYazilsinMi { get; set; }
+        public DateTime? EczaneKapanmaTarihi { get; set; }
     }
 }
