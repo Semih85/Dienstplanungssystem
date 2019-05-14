@@ -86,6 +86,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucDetay2> GetDetaylarByEczaneNobetGrupId(int eczaneNobetGrupId)
+        {
+            return _eczaneNobetSonucPlanlananDal.GetDetayList(x => x.EczaneNobetGrupId == eczaneNobetGrupId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetSonucDetay2> GetDetaylar(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId)
         {
             return _eczaneNobetSonucPlanlananDal.GetDetayList(x => (x.Tarih >= baslangicTarihi && x.Tarih <= bitisTarihi) && x.NobetUstGrupId == nobetUstGrupId);
@@ -113,6 +119,15 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipId(DateTime? baslangicTarihi, DateTime? bitisTarihi, int nobetGrupGorevTipId)
+        {
+            return _eczaneNobetSonucPlanlananDal
+                .GetDetayList(x => (x.Tarih >= baslangicTarihi || baslangicTarihi == null)
+                                && (x.Tarih <= bitisTarihi || bitisTarihi == null)
+                                && x.NobetGrupGorevTipId == nobetGrupGorevTipId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetSonucListe2> GetSonuclar(int nobetUstGrupId)
         {
             var sonuclar = GetDetaylar(nobetUstGrupId);
@@ -132,6 +147,22 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<EczaneNobetSonucListe2> GetSonuclar(int nobetGrupGorevTipId, int gunGrupId)
         {
             var sonuclar = GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTipId);
+
+            return GetSonuclar(sonuclar).Where(w => w.GunGrupId == gunGrupId).ToList();
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucListe2> GetSonuclar(DateTime? baslangicTarihi, DateTime? bitisTarihi, int nobetGrupGorevTipId, int gunGrupId)
+        {
+            var sonuclar = GetDetaylarByNobetGrupGorevTipId(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+
+            return GetSonuclar(sonuclar).Where(w => w.GunGrupId == gunGrupId).ToList();
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucListe2> GetSonuclarByEczaneNobetGrupId(int eczaneNobetGrupId, int gunGrupId)
+        {
+            var sonuclar = GetDetaylarByEczaneNobetGrupId(eczaneNobetGrupId);
 
             return GetSonuclar(sonuclar).Where(w => w.GunGrupId == gunGrupId).ToList();
         }

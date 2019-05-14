@@ -110,6 +110,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public EczaneNobetGrupDetay GetEczaneninOncekiNobetGrubu(int eczaneId)
+        {
+            return _eczaneNobetGrupDal.GetDetayList(x => x.EczaneId == eczaneId).OrderByDescending(o => o.Id).Skip(1).Take(1).FirstOrDefault() ?? new EczaneNobetGrupDetay();
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetGrupDetay> GetDetaylar()
         {
             return _eczaneNobetGrupDal.GetDetayList();
