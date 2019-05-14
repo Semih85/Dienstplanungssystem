@@ -28,6 +28,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         EczaneNobetGrupDetay GetDetayById(int eczaneNobetGrupId);
         EczaneNobetGrupDetay GetDetayByEczaneId(int eczaneId);
 
+        EczaneNobetGrupDetay GetEczaneninOncekiNobetGrubu(int eczaneId);
+
         List<EczaneNobetGrupDetay> GetDetaylar();
         List<EczaneNobetGrupDetay> GetDetaylar(int nobetGrupId, int eczaneId);
         List<EczaneNobetGrupDetay> GetDetaylar(int nobetUstGrupId);

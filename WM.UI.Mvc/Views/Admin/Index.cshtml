@@ -13,14 +13,17 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-auto">
+
+        </div>
+        @*<div class="col-md-6">
             <h5>Alanya</h5>
             <canvas id="myChart"></canvas>
         </div>
         <div class="col-md-6">
             <h5>Antalya</h5>
             <canvas id="myChartAntalya"></canvas>
-        </div>
+        </div>*@
     </div>
 </div>
 
@@ -31,8 +34,8 @@
     </div>*@
 
 <script>
-    var alanyaNobetGrupEczeneler = @Html.Raw(Json.Encode(ViewBag.NobetGruplarAlanya));
-    var antalyaMerkezNobetGrupEczeneler = @Html.Raw(Json.Encode(ViewBag.NobetGruplarAntalyaMerkez));
+    @*var alanyaNobetGrupEczeneler = @Html.Raw(Json.Encode(ViewBag.NobetGruplarAlanya));
+    var antalyaMerkezNobetGrupEczeneler = @Html.Raw(Json.Encode(ViewBag.NobetGruplarAntalyaMerkez));*@
 
     var ctx2 = document.getElementById("myChart");
     var myChart = new Chart(ctx2, {
