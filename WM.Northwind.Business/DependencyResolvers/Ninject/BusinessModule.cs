@@ -254,6 +254,9 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IRaporNobetUstGrupService>().To<RaporNobetUstGrupManager>().InSingletonScope();
             Bind<IRaporNobetUstGrupDal>().To<EfRaporNobetUstGrupDal>();
 
+            Bind<ILogService>().To<LogManager>().InSingletonScope();
+            Bind<ILogDal>().To<EfLogDal>();
+
 
             #endregion
 

@@ -83,6 +83,7 @@
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetGrupAltGrupService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetMuafiyetService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetOrtakService.cs" />
+    <Compile Include="Abstract\EczaneNobet\ILogService.cs" />
     <Compile Include="Abstract\EczaneNobet\IRaporKategoriService.cs" />
     <Compile Include="Abstract\EczaneNobet\IRaporService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucPlanlananService.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetFeragatManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetGrupAltGrupManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetMuafiyetManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\LogManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\RaporKategoriManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\RaporManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSonucDemoManager.cs" />
