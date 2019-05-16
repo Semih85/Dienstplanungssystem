@@ -69,7 +69,7 @@
             <small class="text-muted">Bu sayfada aşağıdaki seçenekleri kullanarak nöbet ile ilgili bir çok analiz yapabilirsiniz.</small>
         </div>
         <div class="row">
-            <div class="col-md-5 mb-3">
+            <div class="col-md-5">
                 <div class="card border-0">
                     <div class="card-body">
                         <h5 class="card-title"><i class="fa fa-book"></i> Özellikler</h5>
@@ -93,8 +93,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
     <span class="ml-3 font-weight-bold" id="secenekler" style="display:none">Seçenekler</span>
@@ -602,6 +600,7 @@
                                     ["Kalibrasyon Tipi"]: n.KalibrasyonTipAdi,
                                     ["Gün Grup"]: n.GunGrupAdi,
                                     ["Nöbet Grubu"]: n.NobetGrupAdi,
+                                    ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
                                     ["Durum"]: n.Durum,
                                     ["Kalibrasyon Değeri"]: n.Deger
                                 });
@@ -614,6 +613,7 @@
                                     ["Gün Tanım"]: n.GunTanim,
                                     ["Gün Grup"]: n.GunGrup,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
+                                    ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
                                     Eczane: n.Eczane,
                                     Tarih: n.Tarih,
                                     ["Tarih Sıralı"]: n.Tarih2,
@@ -630,6 +630,7 @@
                                     ["Gün Grup"]: n.GunGrup,
                                     ["Görev Tipi"]: n.GorevTipi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
+                                    ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
                                     Eczane: n.Eczane,
                                     Tarih: n.Tarih,
                                     ["Tarih Sıralı"]: n.Tarih2,
@@ -649,6 +650,7 @@
                                     ["Gün Grup"]: n.GunGrup,
                                     ["Görev Tipi"]: n.GorevTipi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
+                                    ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
                                     Eczane: n.Eczane,
                                     Tarih: n.Tarih,
                                     ["Tarih Sıralı"]: n.Tarih2,
@@ -677,6 +679,7 @@
                                     ["Gün Grup"]: n.GunGrup,
                                     ["Görev Tipi"]: n.GorevTipi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
+                                    ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
                                     Eczane: n.Eczane,
                                     Tarih: n.Tarih,
                                     ["Tarih Sıralı"]: n.Tarih2,
@@ -1398,7 +1401,13 @@
                 var pivotCols = ["Nöbet Grubu"];
 
                 if (nobetUstGrupId == 4) {
-                    pivotCols = ["Görev Tipi", "Nöbet Grubu"];
+                    pivotCols = ["Görev Tipi", "Nöbet Grubu Günlük"];
+                }
+                else if (nobetUstGrupId == 5) {
+                    pivotCols = ["Nöbet Grubu Günlük"];
+                }
+                else if (nobetUstGrupId == 9) {
+                    pivotCols = ["Nöbet Grubu Günlük"];
                 }
 
                 nobetciEczaneler = $(icRaporDivId).pivotUI(dagilimlarPivot, {

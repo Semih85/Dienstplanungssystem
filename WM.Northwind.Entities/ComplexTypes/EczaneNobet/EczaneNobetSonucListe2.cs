@@ -26,6 +26,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string EczaneAdi { get; set; }
         [Display(Name = "Nöbet Grubu")]
         public string NobetGrupAdi { get; set; }
+        public string NobetGrupAdiGunluk { get; set; }
         public string NobetGrubu => $"{NobetGrupGorevTipId} {NobetGrupAdi}";
         //NobetUstGrupId == 3 
         //? $"{NobetGrupId} {NobetGrupAdi}"

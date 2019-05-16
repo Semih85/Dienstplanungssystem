@@ -601,7 +601,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                         foreach (var item in sonuclarGunluk)
                         {
-                            item.NobetGrupAdi = indis.ToString();
+                            item.NobetGrupAdiGunluk = indis.ToString();
 
                             indis++;
                         }
@@ -634,6 +634,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     Ay = s.Ay,
                     Hafta = s.Hafta,
                     NobetAltGrubu = s.NobetAltGrupAdi,
+                    NobetGrupAdiGunluk = s.NobetGrupAdiGunluk,
                     EczaneId = s.EczaneId,
                     EczaneNobetGrupId = s.EczaneNobetGrupId,
                     NobetGrupGorevTipId = s.NobetGrupGorevTipId,
@@ -668,6 +669,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     Ay = s.Ay,
                     Hafta = s.Hafta,
                     NobetAltGrubu = s.NobetAltGrupAdi,
+                    NobetGrupAdiGunluk = s.NobetGrupAdiGunluk,
                     EczaneId = s.EczaneId,
                     EczaneNobetGrupId = s.EczaneNobetGrupId,
                     NobetGrupGorevTipId = s.NobetGrupGorevTipId,

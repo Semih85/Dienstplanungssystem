@@ -43,5 +43,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int Hafta { get; set; }
         public string NobetOzelGunAdi { get; set; }
         public string NobetOzelGunKategoriAdi { get; set; }
+        public string NobetGrupAdiGunluk { get; set; }
     }
 }
