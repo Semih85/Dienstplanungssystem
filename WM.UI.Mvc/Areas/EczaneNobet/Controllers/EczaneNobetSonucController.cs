@@ -581,7 +581,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         private void VirgulleAyrilanNobetGruplariniAyir(int nobetUstGrupId, List<EczaneNobetSonucListe2> sonuclar)
         {
-            if (nobetUstGrupId == 5 || nobetUstGrupId == 4)
+            if (nobetUstGrupId == 5 
+                || nobetUstGrupId == 4
+                || nobetUstGrupId == 9)
             {//osmaniye, giresun
                 var tarihler = sonuclar.Select(s => new { s.TakvimId, s.NobetGorevTipId }).Distinct().ToArray();
                 var nobetGorevTipler = tarihler.Select(s => new { s.NobetGorevTipId }).Distinct().ToArray();

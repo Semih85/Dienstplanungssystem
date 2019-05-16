@@ -109,125 +109,127 @@
 
         @Html.Hidden("sure", sure)
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            @using (Ajax.BeginForm("GetSonuclar", "EczaneNobetSonuc", null, new { @class = "form-inline my-2 my-lg-0", id = "formTumu" }))
+        @using (Ajax.BeginForm("GetSonuclar", "EczaneNobetSonuc", null, new { @class = "form-inline my-2 my-lg-0", id = "formTumu" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.BaslangicTarihi)
+            @Html.HiddenFor(model => model.BitisTarihi)
+
+            <div class="input-group input-daterange mb-2 mb-lg-0 mr-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text p-2">
+                        <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
+                        <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" title="Başlangıç Tarihini Sil" />
+                    </span>
+                </div>
+                @Html.TextBox("TarihBaslangic", null, new
+                {
+                    @class = "form-control datepicker istatisitkFromInput",
+                   //data_toggle = "tooltip",
+                   //data_placement = "top",
+                   //title = "Başlangıç Tarihi",
+                   autocomplete = "off",
+                   placeHolder = "Başlangıç",
+                   style = "width:100px;"
+               })
+
+                <div class="input-group-addon mt-1 p-1">-</div>
+
+                @Html.TextBox("TarihBitis", null, new
+                {
+                    @class = "form-control datepicker istatisitkFromInput",
+                   //data_toggle = "tooltip",
+                   //data_placement = "top",
+                   //title = "Bitiş Tarihi",
+                   autocomplete = "off",
+                   placeHolder = "Bitiş",
+                   style = "width:100px;"
+               })
+                <div class="input-group-append">
+                    <span class="input-group-text p-2">
+                        <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
+                        <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" title="Bitiş Tarihini Sil" />
+                    </span>
+                </div>
+            </div>
+
+            @Html.DropDownList("GunGrupId", null, htmlAttributes: new
             {
-                @Html.AntiForgeryToken()
-                @Html.HiddenFor(model => model.BaslangicTarihi)
-                @Html.HiddenFor(model => model.BitisTarihi)
+                @class = "form-control istatisitkFromInput myDropList mr-2 mb-2 mb-md-0",
+                //data_style = "btn btn-outline-primary",
+                //multiple = "true",
+                //data_width = "auto",
+                //data_actions_box = "true",
+                //mobile = "true",
+                //data_live_search = "true",
+                //data_selected_text_format = "count > 0",
+                //title = "-Gün Grupları Seçiniz-",
+                //@style = "border-color:red"
+            }, optionLabel: "Tüm Gün Grupları")
 
-                <div class="input-group input-daterange mb-2 mb-lg-0 mr-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text p-2">
-                            <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
-                            <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" title="Başlangıç Tarihini Sil" />
-                        </span>
-                    </div>
-                    @Html.TextBox("TarihBaslangic", null, new
+            @Html.ListBox("nobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control mb-2 mb-md-0 mr-2", size = 1 }) 
+
+            @*if (ViewBag.NobetGrupGorevTipSayisi > 4)
+            {
+                @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
                     {
-                        @class = "form-control datepicker istatisitkFromInput",
-                       //data_toggle = "tooltip",
-                       //data_placement = "top",
-                       //title = "Başlangıç Tarihi",
-                       autocomplete = "off",
-                       placeHolder = "Başlangıç",
-                       style = "width:100px;"
-                   })
-
-                    <div class="input-group-addon mt-1 p-1">-</div>
-
-                    @Html.TextBox("TarihBitis", null, new
-                    {
-                        @class = "form-control datepicker istatisitkFromInput",
-                       //data_toggle = "tooltip",
-                       //data_placement = "top",
-                       //title = "Bitiş Tarihi",
-                       autocomplete = "off",
-                       placeHolder = "Bitiş",
-                       style = "width:100px;"
-                   })
-                    <div class="input-group-append">
-                        <span class="input-group-text p-2">
-                            <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
-                            <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" title="Bitiş Tarihini Sil" />
-                        </span>
-                    </div>
-                </div>
-
-                @Html.DropDownList("GunGrupId", null, htmlAttributes: new
-                {
-                    @class = "form-control istatisitkFromInput myDropList mr-2 mb-2 mb-md-0",
-                    //data_style = "btn btn-outline-primary",
-                    //multiple = "true",
-                    //data_width = "auto",
-                    //data_actions_box = "true",
-                    //mobile = "true",
-                    //data_live_search = "true",
-                    //data_selected_text_format = "count > 0",
-                    //title = "-Gün Grupları Seçiniz-",
-                    //@style = "border-color:red"
-                }, optionLabel: "Tüm Gün Grupları")
-
-                if (ViewBag.NobetGrupGorevTipSayisi > 4)
-                {
-                    @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
-                        {
-                            @class = "form-control selectpicker istatisitkFromInput myDropList mr-2",
-                           //data_style = "btn btn-outline-primary",
-                           multiple = "true",
-                           //data_width = "auto",
-                           data_actions_box = "true",
-                           mobile = "true",
-                           data_live_search = "true",
-                           data_selected_text_format = "count > 0",
-                           title = "Nöbet Grubu Seçiniz..",
-                        })
-                }
-                else
-                {
-                    @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
-                       {
-                           @class = "form-control selectpicker istatisitkFromInput myDropList mr-2",
-                           //data_style = "btn btn-outline-primary",
-                           multiple = "true",
-                           //data_width = "auto",
-                           data_actions_box = "true",
-                           mobile = "true",
-                           //data_live_search = "true",
-                           data_selected_text_format = "count > 0",
-                           title = "Nöbet Grubu Seçiniz.."
-                       }
-                        //,optionLabel: "-Nöbet Grubu Seçiniz-"
-                        )
-                }
-
-                @Html.DropDownList("raporId", null, htmlAttributes: new
-                {
-                   @class = "form-control selectpicker myDropList mr-4 mr-md-2 ",
-                   //show_menu_arrow = "true",
-                   //multiple = "true",
-                   //data_width = "auto",
-                   //data_actions_box = "true",
-                   //mobile = "true",
-                   data_size = "15",
-                   data_live_search = "true",
-                   //data_selected_text_format = "count > 4",
-                   title = "Rapor Seçiniz...",
-                   data_dropup_auto = "false"
-                   //data_hide_disabled = true
-                })
-
-                <div class="form-group">
-                    <span class="input-group-btn mr-3">
-                        <button type="button" id="submitSorgula" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> Sorgula</button>
-                    </span>
-                    <span id="wait" class="spinner-border text-primary" role="status" style="display:none;">
-                        <span class="sr-only">Loading...</span>
-                    </span>
-                </div>
+                        @class = "form-control selectpicker istatisitkFromInput myDropList mr-2",
+                       //data_style = "btn btn-outline-primary",
+                       multiple = "true",
+                       //data_width = "auto",
+                       data_actions_box = "true",
+                       mobile = "true",
+                       data_live_search = "true",
+                       data_selected_text_format = "count > 0",
+                       title = "Nöbet Grubu Seçiniz..",
+                    })
             }
-        </div>
+            else
+            {
+                @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
+                   {
+                       @class = "form-control selectpicker istatisitkFromInput myDropList mr-2",
+                       //data_style = "btn btn-outline-primary",
+                       multiple = "true",
+                       //data_width = "auto",
+                       data_actions_box = "true",
+                       mobile = "true",
+                       //data_live_search = "true",
+                       data_selected_text_format = "count > 0",
+                       title = "Nöbet Grubu Seçiniz.."
+                   }
+                    //,optionLabel: "-Nöbet Grubu Seçiniz-"
+                    )
+            }*@
+
+            @Html.DropDownList("raporId", null, htmlAttributes: new
+            {
+               @class = "form-control selectpicker myDropList mr-4 mr-md-2 ",
+               //show_menu_arrow = "true",
+               //multiple = "true",
+               //data_width = "auto",
+               //data_actions_box = "true",
+               //mobile = "true",
+               data_size = "15",
+               data_live_search = "true",
+               //data_selected_text_format = "count > 4",
+               title = "Rapor Seçiniz...",
+               data_dropup_auto = "false"
+               //data_hide_disabled = true
+            })
+
+            <div class="form-group">
+                <span class="input-group-btn mt-2 mr-3 mt-md-0">
+                    <button type="button" id="submitSorgula" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> Sorgula</button>
+                </span>
+                <span id="wait" class="spinner-border text-primary" role="status" style="display:none;">
+                    <span class="sr-only">Loading...</span>
+                </span>
+            </div>
+        }
+    </div>
     </nav>
 </div>
 
@@ -1593,11 +1595,12 @@
                     pivotRows = ["Eczane"];
                     pivotCols = ["Görev Tipi", "Gün Grup"];
                 }
-                else if (nobetUstGrupId == 5) {
+                else if (nobetUstGrupId == 5 || nobetUstGrupId == 9) {
                     pivotRows = ["Eczane"];
                     pivotCols = ["Gün Grup"];
                     pivotRendererName = "Sıcaklık Haritası (Sütun)"
                 }
+                
                 //alert("gunDagilimlar" + dagilimlarPivot.length)
 
                 //alert("gunDagilim: " + gunDagilim.legnt)
@@ -1649,9 +1652,8 @@
                 var pivotAggregatorName = "Say";
                 var pivotVals = ["Eczane"];
 
-                if (nobetUstGrupId == 4) {
+                if (nobetUstGrupId == 4 || nobetUstGrupId == 9) {
                     pivotRows = ["Görev Tipi", "Eczane"];
-                    pivotCols = ["Gün Tanım", "Özel Gün"];
                 }
                 else if (nobetUstGrupId == 5) {
                     pivotRows = ["Eczane"];
@@ -1659,6 +1661,9 @@
                     pivotRendererName = "Sıcaklık Haritası"
                     pivotAggregatorName = "Topla (Tamsayı)";
                     pivotVals = ["Gün Ağırlık"];
+                }
+                else if (nobetUstGrupId == 9) {
+                    pivotRows = ["Eczane"];
                 }
 
                 //alert("gunDagilim: " + gunDagilim.legnt)
@@ -1710,6 +1715,9 @@
                     pivotRows = ["Eczane"];
                     pivotCols = ["Gün Grup", "Gün Tanım"];
                     pivotRendererName = "Sıcaklık Haritası (Sütun)"
+                }
+                else if (nobetUstGrupId == 9) {
+                    pivotRows = ["Eczane"];
                 }
                 //alert("gunDagilimlar" + dagilimlarPivot.length)
 
@@ -1841,6 +1849,9 @@
                 else if (nobetUstGrupId == 5) {
                     pivotRows = ["Eczane"];
                 }
+                else if (nobetUstGrupId == 9) {
+                    pivotRows = ["Eczane"];
+                }
 
                 ayDagilim = $(function table3() {
                     $(icRaporDivId).pivotUI(dagilimlarPivot,
@@ -1884,6 +1895,9 @@
                     //pivotCols = ["Gün Grup", "Mevsim"];
                 }
                 else if (nobetUstGrupId == 5) {
+                    pivotRows = ["Eczane"];
+                }
+                else if (nobetUstGrupId == 9) {
                     pivotRows = ["Eczane"];
                 }
 
@@ -1931,6 +1945,9 @@
                 else if (nobetUstGrupId == 5) {
                     pivotRows = ["Eczane"];
                 }
+                else if (nobetUstGrupId == 9) {
+                    pivotRows = ["Eczane"];
+                }
 
                 ikiliAyDagilim = $(function table3() {
                     $(icRaporDivId).pivotUI(dagilimlarPivot,
@@ -1976,6 +1993,12 @@
                 if (nobetUstGrupId == 4) {
                     pivotRows = ["Görev Tipi", "Eczane"];
                     //pivotCols = ["Gün Grup", "Mevsim"];
+                }
+                else if (nobetUstGrupId == 5) {
+                    pivotRows = ["Eczane"];
+                }
+                else if (nobetUstGrupId == 9) {
+                    pivotRows = ["Eczane"];
                 }
                 //else if (nobetUstGrupId == 5) {
                 //    pivotRows = ["Nöbet Grubu", "Eczane"];
@@ -3228,6 +3251,13 @@
             }
         );
 
+        $('#nobetGrupGorevTipId').hover(function () {
+                $(this).attr("size", function() { return this.options.length > 11 ? 11 : this.options.length ; });
+            }, function () {
+                $(this).attr("size", function() { return 1; });
+            }
+        );
+        
         $('#navbarToggleExternalContent').on('shown.bs.collapse', function () {
           $('#secenekler').show()
         })
@@ -3237,13 +3267,7 @@
 
         $('#NobetUstGrupId').change(function () {
             nobetUstGrupId = $(this).val();
-            //alert(nobetUstGrupId)
-
-            //if (nobetUstGrupId == 4) {//giresun
-            //    $('#nobetGrupGorevTipId').selectpicker('selectAll');
-            //    //alert(1)
-            //    //$('#nobetGrupGorevTipId').selectpicker('refresh');
-            //}
+            //alert(nobetUstGrupId)  
         });
         
         $(function () {
@@ -3279,6 +3303,12 @@
 
             nobetGrubu = getNobetGrubu();
             raporParamsBelirle();
+
+            if ($('#nobetGrupGorevTipId option').length < 4) {//giresun
+                //alert($('#nobetGrupGorevTipId option').length)
+                $('#nobetGrupGorevTipId option').prop('selected', true);
+                nobetGrubu = getNobetGrubu();
+            }
 
             //var sure = parseInt($('#sure').val());
             //console.log(nobetGrubu)
