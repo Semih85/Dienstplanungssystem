@@ -280,6 +280,7 @@
     <Content Include="Content\images\EczaneNobetSistemi\digitalEkran.png" />
     <Content Include="Content\images\EczaneNobetSistemi\DijitalEkran_Sistem.jpg" />
     <Content Include="Content\images\EczaneNobetSistemi\nobetciEczanelerHarita.png" />
+    <Content Include="Content\images\pivotAnimation.gif" />
     <Content Include="Content\images\ekran.png" />
     <Content Include="Content\images\eniyiplansuresi.png" />
     <Content Include="Content\images\favicon-16x16.png" />
@@ -1139,6 +1140,8 @@
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetDegisimController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneUzaklikMatrisController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EkranController.cs" />
+    <Compile Include="Areas\EczaneNobet\Models\AyniGunNobetDagilimModel.cs" />
+    <Compile Include="Areas\EczaneNobet\Models\GunFarklariHepsi.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\KalibrasyonController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\NobetciEczaneEkraniController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\NobetciEczaneHaritaController.cs" />
