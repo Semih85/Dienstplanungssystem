@@ -64,28 +64,29 @@
 <div class="pos-f-t border border-primary">
 
     <div class="collapse" id="navbarToggleExternalContent">
-        <div class="bg-white pt-4 px-4">
-            <h5 class="h4"><i class="fa fa-pie-chart fa-lg text-danger"></i> Nöbet İstatistik ve Raporları</h5>
-            <small class="text-muted">Bu sayfada aşağıdaki seçenekleri kullanarak nöbet ile ilgili bir çok analiz yapabilirsiniz.</small>
-        </div>
+
         <div class="row">
             <div class="col-md-5">
+                <div class="bg-white pt-4 px-4">
+                    <h5 class="h4"><i class="fa fa-pie-chart fa-lg text-danger"></i> Nöbet İstatistik ve Raporları</h5>
+                    <small class="text-muted">Bu sayfada aşağıdaki seçenekleri kullanarak nöbet ile ilgili bir çok analiz yapabilirsiniz.</small>
+                </div>
                 <div class="card border-0">
-                    <div class="card-body">
+                    <div class="card-body pb-0">
                         <h5 class="card-title"><i class="fa fa-book"></i> Özellikler</h5>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Aşağıdaki <strong id="bookmarkSecenekler">seçenekleri</strong> kullanarak incelemek istediğiniz raporu <span class="badge badge-primary">sorgulayın</span>.</li>
                             @*<li class="list-group-item">Gelen sonuçlar için hazırlanmış standart raporu seçin.</li>*@
-                            <li class="list-group-item">Rapor alanlarını görüntülemek için <strong id="alanlarKutusu">alanlar</strong> kutusunu işaretleyiniz.</li>
+                            <li class="list-group-item">Rapor alanlarını görüntülemek için <strong id="alanlarKutusu">alanlar</strong> kutusunu işaretleyin.</li>
                             <li class="list-group-item">Dilerseniz her bir raporu <strong>Şekil-1</strong>'deki gibi özelleştirin.</li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col-md-7">
-                <div class="card border-0" style="width: 75%;">
+                <div class="card border-0">
                     <div class="card-body">
-                        <h5 class="card-title"><span><strong>Şekil-1:</strong> Dinamik Raporların Kullanımı</span></h5>
+                        <h5 class="card-title"><span><strong>Şekil-1:</strong> Raporların Özelleştirilmesi</span></h5>
                         <img src="~/Content/images/pivotAnimation.gif" class="card-img-top img-thumbnail" alt="Dinamik Raporlar">
                         @*<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>*@
@@ -107,69 +108,70 @@
 
         @Html.Hidden("sure", sure)
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="form-inline">
 
-        @using (Ajax.BeginForm("GetSonuclar", "EczaneNobetSonuc", null, new { @class = "form-inline my-2 my-lg-0", id = "formTumu" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(model => model.BaslangicTarihi)
-            @Html.HiddenFor(model => model.BitisTarihi)
-
-            <div class="input-group input-daterange mb-2 mb-lg-0 mr-2">
-                <div class="input-group-prepend">
-                    <span class="input-group-text p-2">
-                        <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
-                        <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" title="Başlangıç Tarihini Sil" />
-                    </span>
-                </div>
-                @Html.TextBox("TarihBaslangic", null, new
+                @using (Ajax.BeginForm("GetSonuclar", "EczaneNobetSonuc", null, new { @class = "form-inline mr-md-3 my-2 my-lg-0", id = "formTumu" }))
                 {
-                    @class = "form-control datepicker istatisitkFromInput",
-                   //data_toggle = "tooltip",
-                   //data_placement = "top",
-                   //title = "Başlangıç Tarihi",
-                   autocomplete = "off",
-                   placeHolder = "Başlangıç",
-                   style = "width:100px;"
-               })
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.BaslangicTarihi)
+                    @Html.HiddenFor(model => model.BitisTarihi)
 
-                <div class="input-group-addon mt-1 p-1">-</div>
+                    <div class="input-group input-daterange mb-2 mb-lg-0 mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
+                                <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" title="Başlangıç Tarihini Sil" />
+                            </span>
+                        </div>
+                        @Html.TextBox("TarihBaslangic", null, new
+                        {
+                            @class = "form-control datepicker istatisitkFromInput",
+                           //data_toggle = "tooltip",
+                           //data_placement = "top",
+                           //title = "Başlangıç Tarihi",
+                           autocomplete = "off",
+                           placeHolder = "Başlangıç",
+                           style = "width:100px;"
+                       })
 
-                @Html.TextBox("TarihBitis", null, new
-                {
-                    @class = "form-control datepicker istatisitkFromInput",
-                   //data_toggle = "tooltip",
-                   //data_placement = "top",
-                   //title = "Bitiş Tarihi",
-                   autocomplete = "off",
-                   placeHolder = "Bitiş",
-                   style = "width:100px;"
-               })
-                <div class="input-group-append">
-                    <span class="input-group-text p-2">
-                        <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
-                        <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" title="Bitiş Tarihini Sil" />
-                    </span>
-                </div>
-            </div>
+                        <div class="input-group-addon mt-1 p-1">-</div>
 
-            @Html.DropDownList("GunGrupId", null, htmlAttributes: new
-            {
-                @class = "form-control istatisitkFromInput myDropList mr-2 mb-2 mb-md-0",
-                //data_style = "btn btn-outline-primary",
-                //multiple = "true",
-                //data_width = "auto",
-                //data_actions_box = "true",
-                //mobile = "true",
-                //data_live_search = "true",
-                //data_selected_text_format = "count > 0",
-                //title = "-Gün Grupları Seçiniz-",
-                //@style = "border-color:red"
-            }, optionLabel: "Tüm Gün Grupları")
+                        @Html.TextBox("TarihBitis", null, new
+                        {
+                            @class = "form-control datepicker istatisitkFromInput",
+                           //data_toggle = "tooltip",
+                           //data_placement = "top",
+                           //title = "Bitiş Tarihi",
+                           autocomplete = "off",
+                           placeHolder = "Bitiş",
+                           style = "width:100px;"
+                       })
+                        <div class="input-group-append">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
+                                <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" title="Bitiş Tarihini Sil" />
+                            </span>
+                        </div>
+                    </div>
 
-            @Html.ListBox("nobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control mb-2 mb-md-0 mr-2", size = 1 }) 
+                    @Html.DropDownList("GunGrupId", null, htmlAttributes: new
+                    {
+                        @class = "form-control istatisitkFromInput myDropList mr-2 mb-2 mb-md-0",
+                        //data_style = "btn btn-outline-primary",
+                        //multiple = "true",
+                        //data_width = "auto",
+                        //data_actions_box = "true",
+                        //mobile = "true",
+                        //data_live_search = "true",
+                        //data_selected_text_format = "count > 0",
+                        //title = "-Gün Grupları Seçiniz-",
+                        //@style = "border-color:red"
+                    }, optionLabel: "Tüm Gün Grupları")
 
-            @*if (ViewBag.NobetGrupGorevTipSayisi > 4)
+                    @Html.ListBox("nobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control mb-2 mb-md-0 mr-2", size = 1 })
+
+                    @*if (ViewBag.NobetGrupGorevTipSayisi > 4)
             {
                 @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
                     {
@@ -202,32 +204,40 @@
                     )
             }*@
 
-            @Html.DropDownList("raporId", null, htmlAttributes: new
-            {
-               @class = "form-control selectpicker myDropList mr-4 mr-md-2 ",
-               //show_menu_arrow = "true",
-               //multiple = "true",
-               //data_width = "auto",
-               //data_actions_box = "true",
-               //mobile = "true",
-               data_size = "15",
-               data_live_search = "true",
-               //data_selected_text_format = "count > 4",
-               title = "Rapor Seçiniz...",
-               data_dropup_auto = "false"
-               //data_hide_disabled = true
-            })
+                    @Html.DropDownList("raporId", null, htmlAttributes: new
+                    {
+                       @class = "form-control selectpicker myDropList mr-4 mr-md-2 ",
+                       //show_menu_arrow = "true",
+                       //multiple = "true",
+                       //data_width = "auto",
+                       //data_actions_box = "true",
+                       //mobile = "true",
+                       data_size = "15",
+                       data_live_search = "true",
+                       //data_selected_text_format = "count > 4",
+                       title = "Rapor Seçiniz...",
+                       data_dropup_auto = "false"
+                       //data_hide_disabled = true
+                    })
 
-            <div class="form-group">
-                <span class="input-group-btn mt-2 mr-3 mt-md-0">
-                    <button type="button" id="submitSorgula" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> Sorgula</button>
-                </span>
-                <span id="wait" class="spinner-border text-primary" role="status" style="display:none;">
-                    <span class="sr-only">Loading...</span>
-                </span>
+                    <div class="form-group">
+                        <span class="input-group-btn mt-2 mr-3 mt-md-0">
+                            <button type="button" id="submitSorgula" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> Sorgula</button>
+                        </span>
+                        <span id="wait" class="spinner-border text-primary" role="status" style="display:none;">
+                            <span class="sr-only">Loading...</span>
+                        </span>
+                    </div>
+                }
+
+                <div class="input-group pull-right">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+                    </div>
+                    <input type="text" id="myInput" class="form-control" placeholder="Raporda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+                </div>
             </div>
-        }
-    </div>
+        </div>
     </nav>
 </div>
 
@@ -356,9 +366,10 @@
 
         var nobetciEczaneler = null;
         var nobetciEczanelerMazeretIstek = null;
-        var gunDagilim = null;
+        var gunGrupDagilim = null;
+        var ayDagilim = null;
         var gunDagilimBayramlar = null;
-        var gunDagilimHaftaIci = null;
+        var gunDagilim = null;
         var ikiliAyDagilim = null;
 
         var dagilimlar = null;
@@ -569,7 +580,7 @@
                     dagilimlar = JSON.parse(JSON.stringify(data));
                     //console.log(dagilimlar)
                     //PivotSonuclar
-                    var ilgiliRaporlar = [1, 2, 3, 4, 5, 6, 27, 28, 29];
+                    var ilgiliRaporlar = [1, 2, 3, 4, 5, 6, 28, 29];
 
                     if (raporId == 24) {//kalibrasyonlu nöbet
                         DagilimlariOlustur(dagilimlar, kalibrasyonluNobetler)
@@ -622,27 +633,7 @@
                                     ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi
                                 });
                             });
-                        } else if (raporId == 27) {//bayram
-                             $.each(dagilimlar, function (index, n) {
-                               dagilimlarAktarilacak.push({                                    
-                                    ["Yıl-Ay"]: n.Yıl_Ay,
-                                    ["Gün Tanım"]: n.GunTanim,
-                                    ["Gün Grup"]: n.GunGrup,
-                                    ["Görev Tipi"]: n.GorevTipi,
-                                    ["Nöbet Grubu"]: n.NobetGrubu,
-                                    ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
-                                    Eczane: n.Eczane,
-                                    Tarih: n.Tarih,
-                                    ["Tarih Sıralı"]: n.Tarih2,
-                                    ["Alt Grup Adı"]: n.NobetAltGrubu,
-                                    ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi,
-                                    ["Gün Ağırlık"]: n.AgirlikDegeri,
-                                    ["Özel Gün"]: n.NobetOzelGunAdi,
-                                    ["Özel Gün Ktg."]: n.NobetOzelGunKategoriAdi
-                                });
-                            });
-                        }
-                        else if (raporId == 26) {//mazeret istek
+                        }else if (raporId == 26) {//mazeret istek
                             $.each(dagilimlar, function (index, n) {
                                dagilimlarAktarilacak.push({
                                     ["Yıl-Ay"]: n.Yıl_Ay,
@@ -661,6 +652,26 @@
                                     ["Eczane Sonuç"]: n.EczaneSonucAdi,
                                     ["Alt Grup Adı"]: n.NobetAltGrubu,
                                     ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi
+                                });
+                            });
+                        }
+                        else if (raporId == 27) {//bayram
+                             $.each(dagilimlar, function (index, n) {
+                               dagilimlarAktarilacak.push({
+                                    ["Yıl-Ay"]: n.Yıl_Ay,
+                                    ["Gün Tanım"]: n.GunTanim,
+                                    ["Gün Grup"]: n.GunGrup,
+                                    ["Görev Tipi"]: n.GorevTipi,
+                                    ["Nöbet Grubu"]: n.NobetGrubu,
+                                    ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
+                                    Eczane: n.Eczane,
+                                    Tarih: n.Tarih,
+                                    ["Tarih Sıralı"]: n.Tarih2,
+                                    ["Alt Grup Adı"]: n.NobetAltGrubu,
+                                    ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi,
+                                    ["Gün Ağırlık"]: n.AgirlikDegeri,
+                                    ["Özel Gün"]: n.NobetOzelGunAdi,
+                                    ["Özel Gün Ktg."]: n.NobetOzelGunKategoriAdi
                                 });
                             });
                         }
@@ -702,14 +713,13 @@
                                 });
                             });
                         }
-                           
+
                     }
 
                     //alert(dagilimlarPivot.length)
                     //alert("raporId: " + raporId)
 
                     if (raporId == 7) {
-
                         $.each(dagilimlar, function (index, n) {
                             gunDagilimiMaxMin.push({
                                 ["Gün Grup"]: n.GunGrup,
@@ -881,7 +891,7 @@
 
             //$("#raporMasterDiv").empty().html();
 
-            //pivotSekilleriSifirla();
+            pivotSekilleriSifirla();
 
             icRaporBilsiniGuncelle()
 
@@ -985,11 +995,11 @@
                     }
                 }
                 else if (raporId == 2) {//r02
-                    if (gunDagilim != null) {
-                        gunDagilim;
+                    if (gunGrupDagilim != null) {
+                        gunGrupDagilim;
                     }
                     else {
-                        gunDagilimlar();
+                        gunGrupDagilimlar();
                     }
                 }
                 else if (raporId == 3) {//r03
@@ -1196,11 +1206,11 @@
                     }
                 }
                 else if (raporId == 28) {//r28
-                    if (gunDagilimHaftaIci != null) {
-                        gunDagilimHaftaIci;
+                    if (gunDagilim != null) {
+                        gunDagilim;
                     }
                     else {
-                        gunDagilimlarHaftaIci();
+                        gunDagilimlar();
                     }
                 }
                 else if (raporId == 29) {//r29
@@ -1216,23 +1226,23 @@
         function ilgiliRaporuOlustur2(raporId) {
 
             //alert("raporId: " + raporId)
-                if (raporId == 1) {//r01                    
-                   nobetciListesi();                    
+                if (raporId == 1) {//r01
+                   nobetciListesi();
                 }
                 else if (raporId == 2) {//r02
-                    gunDagilimlar();
+                    gunGrupDagilimlar();
                 }
-                else if (raporId == 3) {//r03                  
-                        gunDagilimGrafikler();                    
+                else if (raporId == 3) {//r03
+                        gunDagilimGrafikler();
                 }
-                else if (raporId == 4) {//r04                
-                        ayDagilimlar();                    
+                else if (raporId == 4) {//r04
+                        ayDagilimlar();
                 }
-                else if (raporId == 5) {//r05              
-                        mevsimDagilimlar();        
+                else if (raporId == 5) {//r05
+                        mevsimDagilimlar();
                 }
-                else if (raporId == 6) {//r06            
-                        tarihDagilimlar();                    
+                else if (raporId == 6) {//r06
+                        tarihDagilimlar();
                 }
                 else if (raporId == 7) {//r07
                         gunGrafikOlustur();
@@ -1306,7 +1316,7 @@
                         gunDagilimlarBayramlar();
                 }
                 else if (raporId == 28) {//r28
-                        gunDagilimlarHaftaIci();
+                        gunDagilimlar();
                 }
                 else if (raporId == 29) {//r29
                         ikiliAyDagilimlar();
@@ -1507,7 +1517,13 @@
                 var pivotCols = ["Nöbet Grubu"];
 
                 if (nobetUstGrupId == 4) {
-                    pivotCols = ["Görev Tipi", "Nöbet Grubu"];
+                    pivotCols = ["Görev Tipi", "Nöbet Grubu Günlük"];
+                }
+                else if (nobetUstGrupId == 5) {
+                    pivotCols = ["Nöbet Grubu Günlük"];
+                }
+                else if (nobetUstGrupId == 9) {
+                    pivotCols = ["Nöbet Grubu Günlük"];
                 }
 
                 nobetciEczanelerMazeretIstek = $(icRaporDivId).pivotUI(dagilimlarMazeretIstekli, {
@@ -1523,15 +1539,43 @@
                         $(icRaporDivId).parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
 
                         //console.log($(icRaporDivId + " #testTable tbody tr").find('.pvtVal').text());
+                        $.each($(icRaporDivId + " #testTable tbody tr th"), function (key, value) {
+
+
+                            //console.log($(this).text());
+                            if ($(this).text().indexOf('Pazar') != -1
+                                || $(this).text().indexOf('Cumartesi') != -1
+                                || $(this).text().indexOf('Hafta Sonu') != -1
+                            ) {
+                                $(this).css('background-color', "#C3E6CB");
+                            }
+                            else if ($(this).text().indexOf('Bayram') != -1) {
+                                $(this).css('background-color', "#F5C6CB");
+                            }
+                            else if ($(this).text().indexOf('Arife') != -1) {
+                                $(this).css('background-color', "#FFEEBA");
+                            }
+
+                            //table-success: #C3E6CB
+                            //table-info: #BEE5EB
+                            //table-danger: #F5C6CB
+                            //table-warning: #FFEEBA
+
+                            //$.each(this.cells, function(k,i){
+                            //    console.log(i);
+                            //});
+
+                            //console.log( key + ": " + this.find('.pvtVal').text() );
+                        });
 
                         $.each($(icRaporDivId + " #testTable tbody tr td"), function (key, value) {
 
                             //console.log($(this).text());
                             if ($(this).text().indexOf('istek') != -1) {
-                                $(this).css('background-color', "#C3E6CB");
+                                $(this).css('background-color', "#DDFFBA");
                             }
                             else if ($(this).text().indexOf('mazeret') != -1) {
-                                $(this).css('background-color', "#F5C6CB");
+                                $(this).css('background-color', "#E4CCEE");
                             }
 
                             //table-success: #C3E6CB
@@ -1592,7 +1636,7 @@
         }
 
         //gün dağılım r02
-        function gunDagilimlar() {
+        function gunGrupDagilimlar() {
 
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
 
@@ -1609,12 +1653,8 @@
                     pivotCols = ["Gün Grup"];
                     pivotRendererName = "Sıcaklık Haritası (Sütun)"
                 }
-                
-                //alert("gunDagilimlar" + dagilimlarPivot.length)
 
-                //alert("gunDagilim: " + gunDagilim.legnt)
-
-                gunDagilim = $(function table2() {
+                gunGrupDagilim = $(function table2() {
 
                     $(icRaporDivId).pivotUI(dagilimlarPivot,
                         {
@@ -1651,10 +1691,6 @@
 
             if (bayramlar != null && bayramlar.length > 0) {
 
-                //var bayramlar = $.grep(dagilimlarPivot, function (n, i) {
-                //    return n["Gün Grup"] == "Bayram";
-                //});
-
                 var pivotRows = ["Nöbet Grubu", "Eczane"];
                 var pivotCols = ["Gün Tanım", "Özel Gün",];
                 var pivotRendererName = "Sıcaklık Haritası";
@@ -1674,9 +1710,7 @@
                 else if (nobetUstGrupId == 9) {
                     pivotRows = ["Eczane"];
                 }
-
-                //alert("gunDagilim: " + gunDagilim.legnt)
-
+                
                 gunDagilimBayramlar = $(function table2() {
 
                     $(icRaporDivId).pivotUI(bayramlar,
@@ -1708,7 +1742,7 @@
         }
 
         //hafta içi r28
-        function gunDagilimlarHaftaIci() {
+        function gunDagilimlar() {
 
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
 
@@ -1728,11 +1762,8 @@
                 else if (nobetUstGrupId == 9) {
                     pivotRows = ["Eczane"];
                 }
-                //alert("gunDagilimlar" + dagilimlarPivot.length)
 
-                //alert("gunDagilim: " + gunDagilim.legnt)
-
-                gunDagilimHaftaIci = $(function table2() {
+                gunDagilim = $(function table2() {
 
                     $(icRaporDivId).pivotUI(dagilimlarPivot,
                         {
@@ -1845,7 +1876,6 @@
         }
 
         //ay dağılım r04
-        var ayDagilim;
         function ayDagilimlar() {
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
 
@@ -2502,7 +2532,7 @@
                 }
 
                 planlananVeGerceklesenNobetListesi = $(icRaporDivId).pivotUI(dagilimlarPlanlananGerceklesen, {
-                    rows: ["Nöbet Grubu", "Gün Grup", "Yıl-Ay", "Eczane"],
+                    rows: ["Nöbet Grubu", "Gün Grup", "Eczane", "Yıl-Ay"],
                     cols: pivotCols,
                     vals: ["Tarih"],
                     aggregatorName: "Benzersiz Değerleri Listele",
@@ -2661,7 +2691,7 @@
     </script>
     <!-- #endregion -->
     <!-- #region aynı gün nöbet -->
-    <script type="text/javascript">        
+    <script type="text/javascript">
 
         //aynı gün nöbet dağılımı grafik r21
         var ayniGunDagilimTablo;
@@ -2690,7 +2720,7 @@
                     );
                 });
             }
-           else {
+            else {
                 //nobetciEczaneler;
                 var mesaj = "'" + raporBaslik + "'";
                 var divId = 'divUyariRaporlar' + icRaporDivAdi;
@@ -2729,7 +2759,7 @@
                     );
                 });
             }
-           else {
+            else {
                 //nobetciEczaneler;
                 var mesaj = "'" + raporBaslik + "'";
                 var divId = 'divUyariRaporlar' + icRaporDivAdi;
@@ -3009,7 +3039,7 @@
 
             dagilimlar = null;
             dagilimlarTumu = null;
-            dagilimlarPivot = new Array();            
+            dagilimlarPivot = new Array();
             dagilimlarMazeretIstekli = new Array();
             bayramlar = new Array();
             nobetDurumlar = new Array();
@@ -3025,9 +3055,9 @@
             nobetciEczaneler = null;
             nobetciEczanelerMazeretIstek = null;
             gunGrafik = null;
-            gunDagilim = null;
+            gunGrupDagilim = null;
             gunDagilimBayramlar = null;
-            gunDagilimHaftaIci = null;
+            gunDagilim = null;
             gunDagilim2 = null;
             gunGrafik2 = null;
             ayDagilim = null;
@@ -3266,7 +3296,7 @@
                 $(this).attr("size", function() { return 1; });
             }
         );
-        
+
         $('#navbarToggleExternalContent').on('shown.bs.collapse', function () {
           $('#secenekler').show()
         })
@@ -3276,9 +3306,20 @@
 
         $('#NobetUstGrupId').change(function () {
             nobetUstGrupId = $(this).val();
-            //alert(nobetUstGrupId)  
+            //alert(nobetUstGrupId)
         });
+
+        //var myDiv = document.getElementById(icRaporDivAdi);
         
+        //if (!table.nodeType) table = myDiv.querySelector(icRaporDivId) //myPivotTableIc2 //myPivotTable.getElementsByTagName('table')[
+
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLocaleLowerCase('tr-TR');
+            $("#testTable tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+            });
+        });
+
         $(function () {
 
             nobetUstGrupId = $('#NobetUstGrupId').val();

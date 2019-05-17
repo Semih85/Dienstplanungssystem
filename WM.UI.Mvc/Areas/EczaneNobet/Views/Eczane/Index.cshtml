@@ -139,13 +139,13 @@
 
                 veriyiGizleLoadingGifiGoster();
                 $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLocaleLowerCase('tr-TR');
-                $("#eczaneTablo tr").filter(function () {
-                    $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
-                });
-                if ($(this).val().length == 0) {
-                    getPaging(currentPage)
-                }
+                    var value = $(this).val().toLocaleLowerCase('tr-TR');
+                    $("#eczaneTablo tr").filter(function () {
+                        $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                    });
+                    if ($(this).val().length == 0) {
+                        getPaging(currentPage)
+                    }
                 });
 
                 $('#btnExceleAktar').click(function () {

@@ -426,7 +426,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 var istekler = _eczaneNobetIstekService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
 
                 var sonuclarMazeretli = _eczaneNobetOrtakService
-                    .EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, mazeretler, istekler, EczaneNobetSonucTuru.Kesin);
+                    .EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, mazeretler, istekler, EczaneNobetSonucTuru.Kesin)
+                    .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
 
                 VirgulleAyrilanNobetGruplariniAyir(nobetUstGrupId, sonuclarMazeretli);
 
@@ -581,7 +582,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         private void VirgulleAyrilanNobetGruplariniAyir(int nobetUstGrupId, List<EczaneNobetSonucListe2> sonuclar)
         {
-            if (nobetUstGrupId == 5 
+            if (nobetUstGrupId == 5
                 || nobetUstGrupId == 4
                 || nobetUstGrupId == 9)
             {//osmaniye, giresun
