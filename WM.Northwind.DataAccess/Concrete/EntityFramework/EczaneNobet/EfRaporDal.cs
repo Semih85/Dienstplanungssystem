@@ -25,7 +25,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         Id = s.Id,
                         Adi = s.Adi,
                         RaporKategoriId = s.RaporKategoriId,
-                        RaporKategoriAdi = s.RaporKategori.Adi
+                        RaporKategoriAdi = s.RaporKategori.Adi,
+                        SiraId = s.SiraId
                     }).SingleOrDefault(filter);
             }
         }
@@ -39,7 +40,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         Id = s.Id,
                         Adi = s.Adi,
                         RaporKategoriId = s.RaporKategoriId,
-                        RaporKategoriAdi = s.RaporKategori.Adi
+                        RaporKategoriAdi = s.RaporKategori.Adi,
+                        SiraId = s.SiraId
                     });
 
                 return filter == null

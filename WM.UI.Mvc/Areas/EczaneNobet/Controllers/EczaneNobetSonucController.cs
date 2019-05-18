@@ -197,6 +197,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var raporlar = (from r1 in raporNobetUstGruplar
                             from r2 in raporRoller
                             where r1.RaporId == r2.RaporId
+                            orderby r1.RaporKategoriId, r1.RaporSiraId
                             select new RaporDetay
                             {
                                 Id = r1.RaporId,

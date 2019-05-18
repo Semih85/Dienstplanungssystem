@@ -13,6 +13,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public int Id { get; set; }
         public string Adi { get; set; }
         public int RaporKategoriId { get; set; }
+        public int SiraId { get; set; }
         public virtual RaporKategori RaporKategori { get; set; }
 
         public virtual List<RaporRol>  RaporRoller { get; set; }

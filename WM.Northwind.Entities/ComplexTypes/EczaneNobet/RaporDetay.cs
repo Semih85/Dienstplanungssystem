@@ -16,6 +16,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string Adi { get; set; }
         public int RaporKategoriId { get; set; }
         public string RaporKategoriAdi { get; set; }
-
+        public int SiraId { get; set; }
     } 
 } 

@@ -31,6 +31,13 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.Adi).IsRequired()
                         .HasMaxLength(250);
             this.Property(t => t.RaporKategoriId).IsRequired();
+            this.Property(t => t.SiraId).IsRequired()
+                 .HasColumnAnnotation("Index",
+                         new IndexAnnotation(
+                                     new IndexAttribute("UN_SiraId")
+                                     {
+                                         IsUnique = true
+                                     }));
             #endregion
 
             #region relationship
