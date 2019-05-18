@@ -25,11 +25,7 @@
 }
 
 <div class="row mb-2">
-    <div class="col">
-        @*<button type="button" class="btn btn-warning btn-sm mr-2" id="btnAlanlariGizleGosterNobetciEczaneListesi">
-                <i class="fa fa-refresh"></i> <span id="btnTextAlanlariGizleGoster">Alanları Göster</span>
-            </button>*@
-
+    <div class="col">        
         <div class="form-inline">
             <div class="custom-control custom-checkbox mr-4 mr-lg-5 mb-2 mb-md-1" id="alanalarDiv">
                 @Html.CheckBox("chkAlanlariGosterGizle", new { @class = "custom-control-input", onchange = "chekBoxDegistir(this);" })
@@ -39,14 +35,11 @@
             @*<div class="alert-info text-center mr-2 mb-2 pl-2 mb-lg-0" style="margin-top:-8px" id="raporKategoriDiv">
                     <span class="font-weight-bold small" id="raporKategoriDivBaslik">Rapor Kategorileri</span>
                     <br id="raporKategoriDivBaslikAltBosluk" />
-
                     @foreach (var raporKategori in raporKategoriler)
                     {
                         var raporKatgoriId = $"raporKategori{raporKategori.RaporKategoriId}";
-
                         <a href="#" id="@raporKatgoriId" class="badge badge-light mr-2 raporKategori">@raporKategori.RaporKategoriAdi</a>
                     }
-
                 </div>*@
 
             <button class="btn btn-outline-dark btn-sm mr-5 mb-2 mb-md-1" type="button" id="btnExceleAktar">
@@ -58,7 +51,6 @@
         </div>
 
     </div>
-
 </div>
 
 <div class="pos-f-t border border-primary">
@@ -76,7 +68,6 @@
                         <h5 class="card-title"><i class="fa fa-book"></i> Özellikler</h5>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Aşağıdaki <strong id="bookmarkSecenekler">seçenekleri</strong> kullanarak incelemek istediğiniz raporu <span class="badge badge-primary">sorgulayın</span>.</li>
-                            @*<li class="list-group-item">Gelen sonuçlar için hazırlanmış standart raporu seçin.</li>*@
                             <li class="list-group-item">Rapor alanlarını görüntülemek için <strong id="alanlarKutusu">alanlar</strong> kutusunu işaretleyin.</li>
                             <li class="list-group-item">Dilerseniz her bir raporu <strong>Şekil-1</strong>'deki gibi özelleştirin.</li>
                         </ul>
@@ -116,6 +107,7 @@
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.BaslangicTarihi)
                     @Html.HiddenFor(model => model.BitisTarihi)
+                    @Html.HiddenFor(model => model.SonNobetTarihi)
 
                     <div class="input-group input-daterange mb-2 mb-lg-0 mr-2">
                         <div class="input-group-prepend">
@@ -211,7 +203,7 @@
                        //multiple = "true",
                        //data_width = "auto",
                        //data_actions_box = "true",
-                       //mobile = "true",
+                       mobile = "true",
                        data_size = "15",
                        data_live_search = "true",
                        //data_selected_text_format = "count > 4",
@@ -1813,7 +1805,7 @@
                         {
                             rows: pivotRows,
                             cols: pivotCols, //, "GunDeger", "GunTanim"
-                            vals: ["Eczane"],
+                            vals: ["Tarih"],
                             aggregatorName: "Say",
                             aggregators: pivotAggregators,
                             rendererName: "Yığılmış Sütun Grafik",
@@ -3143,7 +3135,7 @@
         }
 
         $("#TarihBaslangic").change(function () {
-            if ($("#TarihBaslangic").val() != null) {
+            if ($(this).val() != null) {
                 //alert("BaslangicTarihi != null " + $("#BaslangicTarihi").val())
                 $("#btnSilBaslangicTarihiFiltre").hide();
                 $("#btnSilBaslangicTarihi").show();
@@ -3153,7 +3145,7 @@
         });
 
         $("#TarihBitis").change(function () {
-            if ($("#TarihBitis").val() != null) {
+            if ($(this).val() != null) {
                 $("#btnSilBitisTarihiFiltre").hide();
                 $("#btnSilBitisTarihi").show();
             }
@@ -3320,6 +3312,25 @@
             });
         });
 
+        function tarihDondur2(metin) {
+
+            var tarih = metin.split(' ', 1)[0];
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2];
+            ay = tarihTanim[1];
+            gun = tarihTanim[0];
+
+            if (gun.length != 4) {
+                return yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+
         $(function () {
 
             nobetUstGrupId = $('#NobetUstGrupId').val();
@@ -3341,7 +3352,6 @@
             //alert(baslangicStr)
             //$("#BaslangicTarihi").datepicker("setDate", new Date(baslangicStr));
             $("#TarihBaslangic").datepicker("setDate", new Date());
-            //$("#TarihBaslangic").datepicker("setStartDate", new Date(baslangicStr));
 
             //var bitisStr = tarihDondur2($("#BitisTarihi").val());
 
@@ -3349,12 +3359,17 @@
             //$("#TarihBitis").datepicker("setDate", new Date(bit));
             //$("#TarihBitis").datepicker("setStartDate", new Date(baslangicStr));
 
+            var sonNobetTarihi = tarihDondur2($("#SonNobetTarihi").val());
+            //alert(sonNobetTarihi)
+            var d = new Date(sonNobetTarihi);
+            $("#TarihBitis").datepicker("setDate", new Date(d));
+
             $('.input-daterange').datepicker();
 
             nobetGrubu = getNobetGrubu();
             raporParamsBelirle();
 
-            if ($('#nobetGrupGorevTipId option').length < 4) {//giresun
+            if ($('#nobetGrupGorevTipId option').length < 3) {//giresun
                 //alert($('#nobetGrupGorevTipId option').length)
                 $('#nobetGrupGorevTipId option').prop('selected', true);
                 nobetGrubu = getNobetGrubu();

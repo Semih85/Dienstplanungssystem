@@ -21,5 +21,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Models
         public List<NobetGrupGunDagilim> GunDagilimiMaxMin { get; internal set; }
         public int NobetUstGrupId { get; set; }
         public List<RaporDetay> Raporlar { get; internal set; }
+        public DateTime SonNobetTarihi { get; internal set; }
     }
 }

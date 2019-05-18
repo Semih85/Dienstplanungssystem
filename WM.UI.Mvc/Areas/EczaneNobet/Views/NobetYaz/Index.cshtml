@@ -97,8 +97,6 @@
                                     </div>
                                 </div>
                                 <div class="form-inline mb-2" id="fromTarihAraligi">
-                                    @*<label for="TarihBaslangic" class="ml-1 mr-2 mb-0"><span class="badge badge-light">Başlangıç Tarihi</span></label>
-                                        <label for="TarihBitis" class="ml-4 mb-0"><span class="badge badge-light">Bitiş Tarihi</span></label>*@
                                     <div class="input-group input-daterange mb-2" style="width:260px;">
 
                                         @Html.TextBox("TarihBaslangic", null, new
@@ -131,7 +129,6 @@
                                         <label class="custom-control-label" for="BuAyVeSonrasi">Yıl Sonuna Kadar</label>
                                     </div>
                                 </div>
-                                @*</div>*@
 
                                 <div class="row mb-2">
                                     <div class="col mb-2">
@@ -140,18 +137,10 @@
                                         </small>
                                         <p class="card-text">
                                             <span class="text-muted" id="lblSonNobetTarihi">
-                                                @*<span>Son Nöbet Tarihi :</span>  <span style="margin-left: 4px;">@Model.SonNobetTarihi.ToString("dd.MM.yyyy")</span>*@
                                                 <a id="tarihAraligiSonNobetTarihi" href="#" class="badge badge-primary mr-1" data-toggle="tooltip" data-placement="bottom" title="@sonrakiAy Ayarla">Son Nöbet Tarihi :</a>
                                                 @Model.SonNobetTarihi.ToString("dd.MM.yyyy")
                                             </span>
                                         </p>
-                                        @*<a id="tarihAraligiGelecekAy" href="#" class="badge badge-success mr-4" data-toggle="tooltip" data-placement="top" title="@sonrakiAy Ayını Seç">
-                                                @sonrakiAy
-                                            </a>*@
-                                        @*<p class="card-text text-muted">
-                                                <span style="margin-left: 16px;">Son Nöbet Tarihi :</span>  <span style="margin-left: 4px;">@Model.SonNobetTarihi.ToString("dd.MM.yyyy")</span>
-                                            </p>*@
-                                        @*<a id="tarihAraligiSonNobetTarihi" href="#" class="badge badge-secondary mr-1">Son Nöbet Tarihi :</a> @Model.SonNobetTarihi.ToString("dd.MM.yyyy")*@
                                     </div>
                                 </div>
 

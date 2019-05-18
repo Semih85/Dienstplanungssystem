@@ -135,8 +135,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetGorevTipler = nobetGrupGorevTipler.Select(s => s.NobetGorevTipId).Distinct().ToList();
             //var nobetGrupGorevTipBaslamaSaatleri = nobetGrupGorevTipler.Select(s => s.BaslamaTarihi).Distinct().ToList();
 
-            if (nobetGorevTipler.Count > 1)
-            {
+            if (nobetGorevTipler.Count > 1 && nobetUstGrupId == 4)
+            {                
                 nobetGruplar = nobetGrupGorevTipler
                 .Select(s => new MyDrop
                 {
@@ -218,6 +218,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.RaporId = new SelectList(raporlar, "Id", "Adi", "RaporKategoriAdi", 1);
             ViewBag.NobetUstGrupId = nobetUstGrupId;
 
+            var sonNobetTarihi = _eczaneNobetSonucService.GetSonNobetTarihi(nobetUstGrupId);
+
             var model = new EczaneNobetSonuclarViewModel
             {
                 PivotSonuclar = new List<EczaneNobetSonucListe2>() { new EczaneNobetSonucListe2 { Id = 0 } },// sonuclar,
@@ -230,7 +232,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 EczaneNobetSonuclar = new EczaneNobetSonucModel(),
                 GunDagilimiMaxMin = new List<NobetGrupGunDagilim>(),
                 NobetUstGrupId = nobetUstGrupId,
-                Raporlar = raporlar
+                Raporlar = raporlar,
+                SonNobetTarihi = sonNobetTarihi
                 //BaslangicTarihi = nobetUstGrup.BaslangicTarihi
             };
             return View(model);
