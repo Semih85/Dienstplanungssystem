@@ -398,46 +398,46 @@
     };
     aggregators = (function(tpl) {
       return {
-        "Say": tpl.count(usFmtInt),//Count
-        "Benzersiz Degerleri Say": tpl.countUnique(usFmtInt),//Count Unique Values
-        "Benzersiz Degerleri Listele": tpl.listUnique(", "),//List Unique Values
-        "Topla": tpl.sum(usFmt),//Sum
-        "Topla (Tamsayi)": tpl.sum(usFmtInt),//Integer Sum
-        "Ortalama": tpl.average(usFmt),//Average
-        "Medyan": tpl.median(usFmt),//Median
-        "En Az": tpl.min(usFmt),//Minimum
-        "En Fazla": tpl.max(usFmt),//Maximum
-        "Orneklem Varyansi": tpl["var"](1, usFmt), //Sample Variance
-        "Orneklem Standart Sapmasi": tpl.stdev(1, usFmt), //Sample Standard Deviation
-        "Ilk": tpl.first(usFmt),//First
-        "Son": tpl.last(usFmt),//Last
-        //"Sum over Sum": tpl.sumOverSum(usFmt),
-        //"80% Ust Limit": tpl.sumOverSumBound80(true, usFmt),//80% Upper Bound
-        //"80% Alt Limit": tpl.sumOverSumBound80(false, usFmt),//80% Lower Bound
-        "Genel Toplam % (Topla)": tpl.fractionOf(tpl.sum(), "total", usFmtPct),//Sum as Fraction of Total
-        "Satir Toplam % (Topla)": tpl.fractionOf(tpl.sum(), "row", usFmtPct),//Sum as Fraction of Rows
-        "Sutun Toplam % (Topla)": tpl.fractionOf(tpl.sum(), "col", usFmtPct),//Sum as Fraction of Columns
-        "Genel Toplam % (Say)": tpl.fractionOf(tpl.count(), "total", usFmtPct),//Count as Fraction of Total
-        "Satir Toplam % (Say)": tpl.fractionOf(tpl.count(), "row", usFmtPct),//Count as Fraction of Rows
-        "Sutun Toplam % (Say)": tpl.fractionOf(tpl.count(), "col", usFmtPct)//Count as Fraction of Columns
+          "Count": tpl.count(usFmtInt),
+          "Count Unique Values": tpl.countUnique(usFmtInt),
+          "List Unique Values": tpl.listUnique(", "),
+          "Sum": tpl.sum(usFmt),
+          "Integer Sum": tpl.sum(usFmtInt),
+          "Average": tpl.average(usFmt),
+          "Median": tpl.median(usFmt),
+          "Sample Variance": tpl["var"](1, usFmt),
+          "Sample Standard Deviation": tpl.stdev(1, usFmt),
+          "Minimum": tpl.min(usFmt),
+          "Maximum": tpl.max(usFmt),
+          "First": tpl.first(usFmt),
+          "Last": tpl.last(usFmt),
+          "Sum over Sum": tpl.sumOverSum(usFmt),
+          "80% Upper Bound": tpl.sumOverSumBound80(true, usFmt),
+          "80% Lower Bound": tpl.sumOverSumBound80(false, usFmt),
+          "Sum as Fraction of Total": tpl.fractionOf(tpl.sum(), "total", usFmtPct),
+          "Sum as Fraction of Rows": tpl.fractionOf(tpl.sum(), "row", usFmtPct),
+          "Sum as Fraction of Columns": tpl.fractionOf(tpl.sum(), "col", usFmtPct),
+          "Count as Fraction of Total": tpl.fractionOf(tpl.count(), "total", usFmtPct),
+          "Count as Fraction of Rows": tpl.fractionOf(tpl.count(), "row", usFmtPct),
+          "Count as Fraction of Columns": tpl.fractionOf(tpl.count(), "col", usFmtPct)
       };
     })(aggregatorTemplates);
     renderers = {
-      "Tablo": function(data, opts) {
-        return pivotTableRenderer(data, opts);
-      },
-      "Tablo Cubuk Grafik": function(data, opts) {
-        return $(pivotTableRenderer(data, opts)).barchart();
-      },
-      "Sicaklik Haritasi": function(data, opts) {
-        return $(pivotTableRenderer(data, opts)).heatmap("heatmap", opts);
-      },
-      "Satir Sicaklik Haritasi": function(data, opts) {
-        return $(pivotTableRenderer(data, opts)).heatmap("rowheatmap", opts);
-      },
-      "Sutun Sicaklik Haritasi": function(data, opts) {
-        return $(pivotTableRenderer(data, opts)).heatmap("colheatmap", opts);
-      }
+        "Table": function (data, opts) {
+            return pivotTableRenderer(data, opts);
+        },
+        "Table Barchart": function (data, opts) {
+            return $(pivotTableRenderer(data, opts)).barchart();
+        },
+        "Heatmap": function (data, opts) {
+            return $(pivotTableRenderer(data, opts)).heatmap("heatmap", opts);
+        },
+        "Row Heatmap": function (data, opts) {
+            return $(pivotTableRenderer(data, opts)).heatmap("rowheatmap", opts);
+        },
+        "Col Heatmap": function (data, opts) {
+            return $(pivotTableRenderer(data, opts)).heatmap("colheatmap", opts);
+        }
     };
     locales = {
       en: {

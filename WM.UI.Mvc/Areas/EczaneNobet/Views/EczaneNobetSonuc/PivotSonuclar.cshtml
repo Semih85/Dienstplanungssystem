@@ -667,7 +667,10 @@
                                 });
                             });
                         }
-                        else {
+                        else if (nobetUstGrupId == 4
+                            || nobetUstGrupId == 5
+                            || nobetUstGrupId == 9
+                        ) {
                              $.each(dagilimlar, function (index, n) {
                                dagilimlarAktarilacak.push({
                                     //EczaneNobetGrupId: n.EczaneNobetGrupId,
@@ -683,6 +686,44 @@
                                     ["Görev Tipi"]: n.GorevTipi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
                                     ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
+                                    Eczane: n.Eczane,
+                                    Tarih: n.Tarih,
+                                    ["Tarih Sıralı"]: n.Tarih2,
+                                    ["Ay İkili"]: n.AyIkili,
+                                    Mevsim: n.Mevsim,
+                                    //["Mazerete Nöbet"]: n.MazereteNobet,
+                                    //["Nöbet Tip"]: n.NobetTipId,
+                                    //["Mazeret/İstek"]: n.NobetTipi,
+                                    //["Eczane Sonuç"]: n.EczaneSonucAdi,
+                                    ["Alt Grup"]: n.NobetAltGrubu,
+
+                                    //["Nöbet Durumu"]: n.NobetDurumAdi,
+                                    //["Nöbet Durum Tipi"]: n.NobetDurumTipAdi,
+                                    //["Nöbet Sayısı"]: 1,
+                                    //["Kalibrasyon Değeri"]: n.KalibrasyonDeger,
+                                    ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi,
+                                    //["Gün Ağırlık"]: n.AgirlikDegeri,
+                                    //["Özel Gün"]: n.NobetOzelGunAdi,
+                                    //["Özel Gün Ktg."]: n.NobetOzelGunKategoriAdi
+                                });
+                            });
+                        }
+                        else {
+                             $.each(dagilimlar, function (index, n) {
+                               dagilimlarAktarilacak.push({
+                                    //EczaneNobetGrupId: n.EczaneNobetGrupId,
+                                    //EczaneId: n.EczaneId,
+                                    //["NöbetGrupGörevTipId"]: n.NobetGrupGorevTipId,
+                                    ["Yıl-Ay"]: n.Yıl_Ay,
+                                    //["Yıl"]: n.Yil,
+                                    //Ay: n.Ay,
+                                    //Hafta: n.Hafta,
+                                    //["Gün"]: n.Gun,
+                                    ["Gün Tanım"]: n.GunTanim,
+                                    ["Gün Grup"]: n.GunGrup,
+                                    ["Görev Tipi"]: n.GorevTipi,
+                                    ["Nöbet Grubu"]: n.NobetGrubu,
+                                    //["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
                                     Eczane: n.Eczane,
                                     Tarih: n.Tarih,
                                     ["Tarih Sıralı"]: n.Tarih2,
@@ -1336,36 +1377,48 @@
         var sum = tpl.sum;
         var numberFormat = $.pivotUtilities.numberFormat;
         var intFormat = numberFormat({ digitsAfterDecimal: 0 });
+        var localeStrings = {
+            renderError: "PivotTable sonuçlarını oluştuturken hata oluştu",
+            computeError: "PivotTable sonuçlarını işlerken hata oluştu",
+            uiRenderError: "PivotTable UI sonuçlarını oluştuturken hata oluştu",
+            selectAll: "Tümünü Seç",
+            selectNone: "Tümünü Bırak",
+            tooMany: "(listelemek için fazla)",
+            filterResults: "Sonuçları filtrele",
+            totals: "Toplam",
+            vs: "vs",
+            by: "ile"
+        };
 
         var pivotAggregators = {
             //"Nöbet #": function () { return tpl.count()() }
             //"Average": function () { return tpl.average()(["Age"]) }
-            "Say": $.pivotUtilities.aggregators['Say'],
-            "Benzersiz Değerleri Say": $.pivotUtilities.aggregators['Benzersiz Degerleri Say'],
-            "Benzersiz Değerleri Listele": $.pivotUtilities.aggregators['Benzersiz Degerleri Listele'],
-            "Topla": $.pivotUtilities.aggregators['Topla'],
-            "Topla (Tamsayı)": $.pivotUtilities.aggregators['Topla (Tamsayi)'],
-            "Ortalama": $.pivotUtilities.aggregators['Ortalama'],
-            "En Az": $.pivotUtilities.aggregators['En Az'],
-            "En Fazla": $.pivotUtilities.aggregators['En Fazla'],
-            "Örneklem Varyansı": $.pivotUtilities.aggregators['Orneklem Varyansi'],
-            "Örneklem Standart Sapması": $.pivotUtilities.aggregators['Orneklem Standart Sapmasi'],
-            "İlk": $.pivotUtilities.aggregators['Ilk'],
-            "Son": $.pivotUtilities.aggregators['Son'],
-            "Genel Toplam % (Topla)": $.pivotUtilities.aggregators['Genel Toplam % (Topla)'],
-            "Satır Toplam % (Topla)": $.pivotUtilities.aggregators['Satir Toplam % (Topla)'],
-            "Sütun Toplam % (Topla)": $.pivotUtilities.aggregators['Sutun Toplam % (Topla)'],
-            "Genel Toplam % (Say)": $.pivotUtilities.aggregators['Genel Toplam % (Say)'],
-            "Satır Toplam % (Say)": $.pivotUtilities.aggregators['Satir Toplam % (Say)'],
-            "Sütun Toplam % (Say)": $.pivotUtilities.aggregators['Sutun Toplam % (Say)'],
+            "Say": $.pivotUtilities.aggregators['Count'],
+            "Benzersiz Değerleri Say": $.pivotUtilities.aggregators['Count Unique Values'],
+            "Benzersiz Değerleri Listele": $.pivotUtilities.aggregators['List Unique Values'],
+            "Toplam": $.pivotUtilities.aggregators['Sum'],
+            "Toplam (Tam Sayı)": $.pivotUtilities.aggregators['Integer Sum'],
+            "Ortalama": $.pivotUtilities.aggregators['Average'],
+            "En Az": $.pivotUtilities.aggregators['Minimum'],
+            "En Fazla": $.pivotUtilities.aggregators['Maximum'],
+            "Varyans (Örneklem)": $.pivotUtilities.aggregators['Sample Variance'],
+            "Standart Sapma (Örneklem)": $.pivotUtilities.aggregators['Sample Standard Deviation'],
+            "İlk": $.pivotUtilities.aggregators['First'],
+            "Son": $.pivotUtilities.aggregators['Last'],
+            "Toplam Oranı (Toplam)": $.pivotUtilities.aggregators['Sum as Fraction of Total'],
+            "Satır Oranı (Toplam)": $.pivotUtilities.aggregators['Sum as Fraction of Rows'],
+            "Sütun Oranı (Toplam)": $.pivotUtilities.aggregators['Sum as Fraction of Columns'],
+            "Toplam Oranı (Say)": $.pivotUtilities.aggregators['Count as Fraction of Total'],
+            "Satır Oranı (Say)": $.pivotUtilities.aggregators['Count as Fraction of Rows'],
+            "Sütun Oranı (Say)": $.pivotUtilities.aggregators['Count as Fraction of Columns'],
         };
 
         var pivotRenderers = {
-            "Tablo": $.pivotUtilities.renderers['Tablo'],
-            "Tablo Çubuk Grafik": $.pivotUtilities.renderers['Tablo Cubuk Grafik'],
-            "Sıcaklık Haritası": $.pivotUtilities.renderers['Sicaklik Haritasi'],
-            "Sıcaklık Haritası (Satır)": $.pivotUtilities.renderers['Satir Sicaklik Haritasi'],
-            "Sıcaklık Haritası (Sütun)": $.pivotUtilities.renderers['Sutun Sicaklik Haritasi'],
+            "Tablo": $.pivotUtilities.renderers['Table'],
+            "Tablo (Çubuklar)": $.pivotUtilities.renderers['Table Barchart'],
+            "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap'],
+            "Sıcaklık Haritası (Satır)": $.pivotUtilities.renderers['Row Heatmap'],
+            "Sıcaklık Haritası (Sütun)": $.pivotUtilities.renderers['Col Heatmap'],
         };
 
         var pivotRenderersGrafik = {
@@ -1417,6 +1470,7 @@
                     cols: pivotCols,
                     vals: ["Eczane"],
                     aggregatorName: "Benzersiz Değerleri Listele",
+                    //localeStrings: localeStrings,
                     aggregators: pivotAggregators,
                     //rendererName: "Table",
                     renderers: pivotRenderers,
@@ -1696,7 +1750,7 @@
                     pivotRows = ["Eczane"];
                     pivotCols = ["Gün Tanım", "Özel Gün", "Özel Gün Ktg."];
                     pivotRendererName = "Sıcaklık Haritası"
-                    pivotAggregatorName = "Topla (Tamsayı)";
+                    pivotAggregatorName = "Toplam (Tam Sayı)";
                     pivotVals = ["Gün Ağırlık"];
                 }
                 else if (nobetUstGrupId == 9) {
@@ -1842,7 +1896,7 @@
                             rows: ["Gün Grup"],
                             cols: ["Nöbet Grubu"], //, "GunDeger", "GunTanim"
                             vals: ["Nöbet Sayısı Farkı"],
-                            aggregatorName: "Topla (Tamsayı)",
+                            aggregatorName: "Toplam (Tam Sayı)",
                             aggregators: pivotAggregators,
                             rendererName: "Yığılmış Sütun Grafik",
                             renderers: $.extend(
@@ -2075,7 +2129,7 @@
                             rows: ["Eczane"],
                             cols: ["Gün Grup", "Durum", "Kalibrasyon Tipi"],
                             vals: ["Kalibrasyon Değeri"],
-                            aggregatorName: "Topla (Tamsayı)",
+                            aggregatorName: "Toplam (Tam Sayı)",
                             aggregators: pivotAggregators,
                             rendererName: "Sıcaklık Haritası (Sütun)",
                             renderers: $.extend(
@@ -2246,7 +2300,7 @@
                             rows: pivotRows,
                             cols: pivotCols,
                             vals: ["Eczane Sayısı"],
-                            aggregatorName: "Topla (Tamsayı)",
+                            aggregatorName: "Toplam (Tam Sayı)",
                             aggregators: pivotAggregators,
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
@@ -2329,7 +2383,7 @@
                             rows: pivotRows,
                             cols: pivotCols,
                             vals: ["Gün Farkı"],
-                            aggregatorName: "Topla (Tamsayı)",
+                            aggregatorName: "Toplam (Tam Sayı)",
                             aggregators: pivotAggregators,
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
@@ -2371,7 +2425,7 @@
                             rows: pivotRows,
                             cols: pivotCols,
                             vals: ["Gün Farkı"],
-                            aggregatorName: "Topla (Tamsayı)",
+                            aggregatorName: "Toplam (Tam Sayı)",
                             aggregators: pivotAggregators,
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
@@ -2484,7 +2538,7 @@
                             rows: ["Gün Grup", "Nöbet Grubu", "AnahtarTarih", "Eczane", "SonNöbetTarihi", "NöbetSayısı", "Borç Durumu"],
                             //cols: ["Gün Grup"],
                             vals: ["BorçluGünSayısı"],
-                            aggregatorName: "Topla (Tamsayı)",
+                            aggregatorName: "Toplam (Tam Sayı)",
                             aggregators: pivotAggregators,
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,

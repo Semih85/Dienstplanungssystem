@@ -90,8 +90,9 @@ namespace WM.UI.Mvc.App_Start
             //Pivot
             bundles.Add(new ScriptBundle("~/bundle/pivot/scripts").Include(
                       "~/Scripts/jquery-ui-touch-punch.js",
-                      "~/Scripts/pivot.js"
-                     //"~/Scripts/tips_data.min.js"
+                      "~/Scripts/pivot.js",
+                      "~/Scripts/pivot.tr.js"
+                      //"~/Scripts/tips_data.min.js"
                       ));
 
             //vis
