@@ -28,6 +28,10 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<AyniGunTutulanNobetDetay> IkiliEczaneleriOlustur(List<EczaneNobetGrupDetay> eczaneNobetGruplar);
         void AyniGunNobetTutanlariTabloyaEkle(List<AyniGunNobetTutanEczane> ayniGunNobetTutanEczaneler);
         List<EczaneGrupDetay> GetArasinda2FarkOlanIkiliEczaneleri(List<EczaneNobetGrupDetay> eczaneNobetGruplar, int nobetUstGrupId, int nobetFarki);
+        List<EczaneGrupDetay> ArasindaKritereGoreFarkOlanEczaneler(
+            List<EczaneNobetGrupDetay> eczaneNobetGruplar,
+            List<AyniGunTutulanNobetDetay> ikiliEczanelerTumu,
+            int nobetFarki);
         void IkiliEczaneIstatistiginiSifirla(int nobetUstGrupId);
     }
 }

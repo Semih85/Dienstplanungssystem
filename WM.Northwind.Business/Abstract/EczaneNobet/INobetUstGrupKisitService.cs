@@ -28,5 +28,6 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         bool GetKisitPasifMi(string kisitAdi, int nobetUstGrupId);
         List<NobetUstGrupKisitDetay> GetAktifKisitlar(int nobetUstGrupId);
         int GetDegisenKisitlar(int nobetUstGrupId);
+        NobetUstGrupKisitDetay GetDetay(int kisitId, int nobetUstGrupId);
     }
 }

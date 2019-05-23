@@ -476,23 +476,23 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetSonucListe2> GetSonuclar(List<EczaneNobetSonucDetay2> eczaneNobetSonucDetaylar, int nobetUstGrupId)
         {
-            var sw = new Stopwatch();
-            sw.Start();
+            //var sw = new Stopwatch();
+            //sw.Start();
             var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylar(nobetUstGrupId);
-            var s1 = sw.Elapsed;
-            sw.Restart();
+            //var s1 = sw.Elapsed;
+            //sw.Restart();
             var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGrupId);
-            var s2 = sw.Elapsed;
-            sw.Restart();
+            //var s2 = sw.Elapsed;
+            //sw.Restart();
             var mazeretler = _eczaneNobetMazeretService.GetDetaylar(nobetUstGrupId);
-            var s3 = sw.Elapsed;
-            sw.Restart();
+            //var s3 = sw.Elapsed;
+            //sw.Restart();
             var istekler = _eczaneNobetIstekService.GetDetaylar(nobetUstGrupId);
-            var s4 = sw.Elapsed;
-            sw.Restart();
+            //var s4 = sw.Elapsed;
+            //sw.Restart();
             var sonuclar = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, mazeretler, istekler, EczaneNobetSonucTuru.Kesin);
-            var s5 = sw.Elapsed;
-            sw.Stop();
+            //var s5 = sw.Elapsed;
+            //sw.Stop();
 
             return sonuclar;
         }
@@ -1159,7 +1159,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                .Select(s => new EczaneNobetGrupGunKuralIstatistik
                {
                    NobetUstGrupId = s.Key.NobetUstGrupId,
-                   GunGrup = s.Key.GunGrup,
+                   GunGrupAdi = s.Key.GunGrup,
                    NobetGunKuralId = s.Key.NobetGunKuralId,
                    EczaneNobetGrupId = s.Key.EczaneNobetGrupId,
                    EczaneId = s.Key.EczaneId,
@@ -1185,7 +1185,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 {
                     s.NobetGunKuralId,
                     s.NobetGorevTipId,
-                    s.GunGrup,
+                    s.GunGrupAdi,
                     s.NobetUstGrupId
                 })
                 .Distinct()
@@ -1218,7 +1218,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                             SonNobetTarihi = varsayilanBaslangicNobetTarihi, // eczaneNobetGrup.BaslangicTarihi, 
                             NobetGorevTipId = nobetGunKural.NobetGorevTipId,
                             NobetGunKuralId = nobetGunKural.NobetGunKuralId,
-                            GunGrup = nobetGunKural.GunGrup,
+                            GunGrupAdi = nobetGunKural.GunGrupAdi,
                             NobetGrupId = eczaneNobetGrup.NobetGrupId,
                             NobetSayisi = 1,
                             NobetUstGrupId = nobetGunKural.NobetUstGrupId

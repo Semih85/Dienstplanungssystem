@@ -1574,7 +1574,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             G2NobetGrupAdi = tarihBazliSonuc2.NobetGrupAdi,
                             TakvimId = tarih.TakvimId,
                             Tarih = tarih.Tarih,
-                            GunGrup = tarih.GunGrupAdi
+                            GunGrupAdi = tarih.GunGrupAdi
                         });
                     }
                 }

@@ -8,6 +8,7 @@ using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Business.Abstract.Optimization.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
+using WM.Northwind.Entities.Concrete.Enums;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Health;
 
@@ -38,6 +39,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private INobetUstGrupGunGrupService _nobetUstGrupGunGrupService;
         private INobetUstGrupService _nobetUstGrupService;
         private INobetGrupGorevTipKisitService _nobetGrupGorevTipKisitService;
+        private INobetGrupGorevTipGunKuralService _nobetGrupGorevTipGunKuralService;
+        private INobetGrupGorevTipTakvimOzelGunService _nobetGrupGorevTipTakvimOzelGunService;
 
         public AntalyaMerkezOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -61,7 +64,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     IEczaneNobetSonucPlanlananService eczaneNobetSonucPlanlananService,
                     INobetUstGrupGunGrupService nobetUstGrupGunGrupService,
                     INobetUstGrupService nobetUstGrupService,
-                    INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService
+                    INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
+                    INobetGrupGorevTipGunKuralService nobetGrupGorevTipGunKuralService,
+                    INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -86,6 +91,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _nobetUstGrupGunGrupService = nobetUstGrupGunGrupService;
             _nobetUstGrupService = nobetUstGrupService;
             _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
+            _nobetGrupGorevTipGunKuralService = nobetGrupGorevTipGunKuralService;
+            _nobetGrupGorevTipTakvimOzelGunService = nobetGrupGorevTipTakvimOzelGunService;
         }
         #endregion
 
@@ -164,7 +171,16 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 throw new Exception($"Nöbet başlangıç tarihi <strong>({baslangicTarihi.ToShortDateString()})</strong> üst grup başlama tarihinden <strong>({nobetUstGrupBaslangicTarihi.ToShortDateString()})</strong> küçük olamaz.");
 
             var nobetGruplar = _nobetGrupService.GetDetaylar(nobetGrupIdListe).OrderBy(s => s.Id).ToList();
+
             var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar(nobetUstGrupId);
+
+            //var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipler.Select(s => s.Id).ToList());
+
+            //var eczaneNobetSonucDetaylar = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi, nobetGrupGorevTipler.Select(s => s.Id).ToArray());
+
+            //var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipler);
+
+            //var sonuclarTumu = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, EczaneNobetSonucTuru.Kesin);
 
             var eczaneNobetSonuclarPlanlanan = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetUstGrupId);
             //var planlananNobetler = _eczaneNobetSonucPlanlananService.SiraliNobetYaz(nobetUstGrupId);

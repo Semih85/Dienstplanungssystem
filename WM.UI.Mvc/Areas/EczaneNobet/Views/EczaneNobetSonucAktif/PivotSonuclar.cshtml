@@ -454,6 +454,8 @@
     </script>
 
     <script>
+
+
         var gunFarklari = @Html.Raw(Json.Encode(Model.GunFarklari.Select(s =>
                    new {GünFarkı = s.GunFarki,
                        s.Index,
@@ -467,7 +469,7 @@
                        N2Ay = s.Nobet2Ay,
                        N2Gun = s.Nobet2Gun,
                        Eczane = s.EczaneAdi,
-                       GünGrup = s.GunGrup,
+                       GünGrup = s.GunGrupAdi,
                        NöbetGrubu = s.NobetGrupAdi}).Take(toplamUzunluk)));
 
         var gunFarkiFrekanslar = @Html.Raw(Json.Encode(Model.GunFarklariFrekanslar.Select(s =>
@@ -475,7 +477,7 @@
                    {
                        GünFarkı = s.GunFarki,
                        Eczane = s.EczaneAdi,
-                       GünGrup = s.GunGrup,
+                       GünGrup = s.GunGrupAdi,
                        GörevTipi = s.NobetGorevTipAdi,
                        NöbetGrubu = s.NobetGrupAdi,
                        EczaneSayısı = s.FrekanstakiEczaneSayisi
@@ -499,9 +501,9 @@
                             //"Average": function () { return tpl.average()(["Age"]) }
                         }
                         , renderers: {
-                            "Tablo": $.pivotUtilities.renderers['Table']
-                            , "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart']
-                            , "Sıcaklık Haritası": $.pivotUtilities.renderers['Sicaklik Haritasi']
+                            "Tablo": $.pivotUtilities.renderers['Table'],
+                            "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                            "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
                         },
                         aggregatorName: "Gün Farkı (Enb.)",
                         rendererName: "Sıcaklık Haritası"
@@ -528,9 +530,9 @@
                                 //"Average": function () { return tpl.average()(["Age"]) }
                             }
                             , renderers: {
-                                  "Tablo": $.pivotUtilities.renderers['Table']
-                                , "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart']
-                                , "Sıcaklık Haritası": $.pivotUtilities.renderers['Sicaklik Haritasi']
+                                  "Tablo": $.pivotUtilities.renderers['Table'],
+                                  "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                                  "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
                             },
                             aggregatorName: "Eczane #",
                             rendererName: "Sıcaklık Haritası"
@@ -560,9 +562,9 @@
                                 //"Average": function () { return tpl.average()(["Age"]) }
                             }
                             , renderers: {
-                                "Tablo": $.pivotUtilities.renderers['Table']
-                                , "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart']
-                                , "Sıcaklık Haritası": $.pivotUtilities.renderers['Sicaklik Haritasi']
+                                "Tablo": $.pivotUtilities.renderers['Table'],
+                                "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                                "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
                             },
                             aggregatorName: "GünFarkı #",
                             rendererName: "Sıcaklık Haritası"
@@ -590,9 +592,9 @@
                                 //"Average": function () { return tpl.average()(["Age"]) }
                             }
                             , renderers: {
-                                "Tablo": $.pivotUtilities.renderers['Table']
-                                , "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart']
-                                , "Sıcaklık Haritası": $.pivotUtilities.renderers['Sicaklik Haritasi']
+                                "Tablo": $.pivotUtilities.renderers['Table'],
+                                "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                                "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
                             },
                             aggregatorName: "GünFarkı #",
                             rendererName: "Sıcaklık Haritası"
@@ -620,7 +622,7 @@
             //            , renderers: {
             //                "Tablo": $.pivotUtilities.renderers['Table']
             //                , "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart']
-            //                , "Sıcaklık Haritası": $.pivotUtilities.renderers['Sicaklik Haritasi']
+            //                , "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
             //            },
             //            aggregatorName: "Eczane #",
             //            rendererName: "Sıcaklık Haritası"
@@ -643,14 +645,14 @@
                    new {s.Ay,
                        Eczane = s.EczaneAdi,
                        Gün = s.GunTanim,
-                       GünGrup = s.GunGrup,
+                       GünGrup = s.GunGrupAdi,
                        GörevTipi = s.NobetGorevTipAdi,
 
                        NöbetGrubu = s.NobetGrubu,
                        Yıl = s.Yil,
                        Tarih = s.TarihAciklama,
                        MazeretineYazilanlar = s.Mazeret,
-                       s.SonucTuru}).Take(toplamUzunluk)));
+                       s.SonucTuruAdi}).Take(toplamUzunluk)));
 
 
         var tpl = $.pivotUtilities.aggregatorTemplates;
@@ -667,16 +669,16 @@
             $("#gunDagilim").pivotUI(_sonuclar,
                 {
                     rows: ["NöbetGrubu", "Eczane"],
-                    cols: ["GörevTipi", "SonucTuru", "GünGrup"],
+                    cols: ["GörevTipi", "SonucTuruAdi", "GünGrup"],
                     vals: ["NöbetGrubu"],
                     aggregators: {
                         "Nöbet #": function () { return tpl.count()() }
                         //"Average": function () { return tpl.average()(["Age"]) }
                     }
                     , renderers: {
-                        "Tablo": $.pivotUtilities.renderers['Table']
-                        , "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart']
-                        , "Sıcaklık Haritası": $.pivotUtilities.renderers['Sicaklik Haritasi']
+                        "Tablo": $.pivotUtilities.renderers['Table'],
+                        "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                        "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
                     },
                     aggregatorName: "Nöbet #",
                     rendererName: "Sıcaklık Haritası",
@@ -702,9 +704,9 @@
                                 //"Average": function () { return tpl.average()(["Age"]) }
                             }
                             , renderers: {
-                                "Tablo": $.pivotUtilities.renderers['Table']
-                                , "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart']
-                                , "Sıcaklık Haritası": $.pivotUtilities.renderers['Sicaklik Haritasi']
+                                "Tablo": $.pivotUtilities.renderers['Table'],
+                                "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                                "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
                             },
                             aggregatorName: "Nöbet #",
                             rendererName: "Sıcaklık Haritası"
@@ -733,9 +735,9 @@
                                 //"Average": function () { return tpl.average()(["Age"]) }
                             }
                             , renderers: {
-                                "Tablo": $.pivotUtilities.renderers['Table']
-                                , "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart']
-                                , "Sıcaklık Haritası": $.pivotUtilities.renderers['Sicaklik Haritasi']
+                                "Tablo": $.pivotUtilities.renderers['Table'],
+                                "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                                "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
                             },
                             aggregatorName: "Nöbet #",
                             rendererName: "Sıcaklık Haritası"

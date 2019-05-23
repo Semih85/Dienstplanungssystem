@@ -11,6 +11,7 @@ using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.UI.Mvc.Models;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -24,27 +25,29 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetUstGrupService _nobetUstGrupService;
         private IEczaneNobetOrtakService _eczaneNobetOrtakService;
         private IEczaneNobetSonucService _eczaneNobetSonucService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public AyniGunTutulanNobetController(IAyniGunTutulanNobetService ayniGunTutulanNobetService,
             IUserService userService,
             INobetUstGrupService nobetUstGrupService,
             IEczaneNobetOrtakService eczaneNobetOrtakService,
-            IEczaneNobetSonucService eczaneNobetSonucService)
+            IEczaneNobetSonucService eczaneNobetSonucService,
+            INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _ayniGunTutulanNobetService = ayniGunTutulanNobetService;
             _userService = userService;
             _nobetUstGrupService = nobetUstGrupService;
             _eczaneNobetOrtakService = eczaneNobetOrtakService;
             _eczaneNobetSonucService = eczaneNobetSonucService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
 
         // GET: EczaneNobet/AyniGunTutulanNobet
         [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Index()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);            
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrupId = nobetUstGruplar.Select(s => s.Id).FirstOrDefault();
+            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrupId = ustGrupSession.Id;
 
             var ikiliEczaneler = new List<AyniGunTutulanNobetDetay>();
 
@@ -62,7 +65,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //.ThenBy(t => t.EczaneAdi1)
             //.ThenBy(o => o.NobetGrupAdi2)
             //.ThenBy(t => t.EczaneAdi2).ToList();
-            
+
             ViewBag.IkiliEczaneSayisi = sayi;
 
             return View(ikiliEczaneler);
@@ -70,13 +73,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public ActionResult IkiliEczaneleriOlustur()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrupId = nobetUstGruplar.Select(s => s.Id).FirstOrDefault();
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            var ikiliEczaneler = _ayniGunTutulanNobetService.IkiliEczaneleriOlustur(nobetUstGrupId);
+            var ikiliEczaneler = _ayniGunTutulanNobetService.IkiliEczaneleriOlustur(nobetUstGrup.Id);
 
-           //var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetUstGrupId);
+            //var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetUstGrupId);
             //.OrderBy(o => o.NobetGrupAdi1)
             //.ThenBy(t => t.EczaneAdi1)
             //.ThenBy(o => o.NobetGrupAdi2)
@@ -91,16 +94,16 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         //yoksa ekler varsa günceller
         public ActionResult AyniGunNobetTutanlariTabloyaEkle()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var ikiliEczanelerTumu = _ayniGunTutulanNobetService.GetDetaylar(nobetUstGrup.Id);
 
             var sonuclar = _eczaneNobetSonucService.GetSonuclarUstGrupBaslamaTarihindenSonra(nobetUstGrup.Id);
 
             var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(sonuclar);
-            _ayniGunTutulanNobetService.AyniGunNobetTutanlariTabloyaEkle(ayniGunNobetTutanEczaneler);
+            var ayniGunNobetSayisiGrouped = _eczaneNobetOrtakService.AyniGunTutulanNobetSayisiniHesapla(ayniGunNobetTutanEczaneler);
+
+            _ayniGunTutulanNobetService.AyniGunNobetTutanlariTabloyaEkle(ayniGunNobetSayisiGrouped);
 
             ViewBag.IkiliEczaneSayisi = ikiliEczanelerTumu.Count;
             ViewBag.AyniGunNobetTutanEczaneler = ayniGunNobetTutanEczaneler.Count;
@@ -113,9 +116,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         //istatistiği sıfırlar
         public ActionResult IkiliEczaneIstatistiginiSifirla()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
             var ikiliEczanelerTumu = _ayniGunTutulanNobetService.GetDetaylar(nobetUstGrup.Id);
 
             var ikiliEczanelerSifirdanBuyukler = _ayniGunTutulanNobetService.GetListSifirdanBuyukler(nobetUstGrup.Id);
@@ -128,7 +132,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             return View("Index", ikiliEczaneler);
         }
-        
+
         // GET: EczaneNobet/AyniGunTutulanNobet/Details/5
         public ActionResult Details(int? id)
         {

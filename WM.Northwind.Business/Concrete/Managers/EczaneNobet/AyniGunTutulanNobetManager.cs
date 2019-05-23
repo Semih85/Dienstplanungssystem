@@ -261,6 +261,18 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 EnSonAyniGunNobetTakvimId = 1
                             };
 
+                            #region kontrol
+                            var kontrol = true;
+
+                            if (kontrol)
+                            {
+                                if (eczaneNobetGrup1.EczaneAdi == "ALPER" && eczaneNobetGrup2.EczaneAdi == "GÜLERYÜZ")
+                                {
+
+                                }
+                            }
+                            #endregion
+
                             try
                             {
                                 _ayniGunTutulanNobetDal.Insert(ikiliEczane);
@@ -357,7 +369,16 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             var ikiliEczanelerTumu = GetDetaylar(nobetUstGrupId);
 
-            //var ikiFarkliIkiliEczaneler = new List<AyniGunTutulanNobetDetay>();
+            var eczaneGruplar = ArasindaKritereGoreFarkOlanEczaneler(eczaneNobetGruplar, ikiliEczanelerTumu, nobetFarki);
+
+            return eczaneGruplar;
+        }
+
+        public List<EczaneGrupDetay> ArasindaKritereGoreFarkOlanEczaneler(
+            List<EczaneNobetGrupDetay> eczaneNobetGruplar,
+            List<AyniGunTutulanNobetDetay> ikiliEczanelerTumu,
+            int nobetFarki)
+        {
             var eczaneGruplar = new List<EczaneGrupDetay>();
 
             foreach (var eczaneNobetGrup in eczaneNobetGruplar)
@@ -391,7 +412,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         EczaneGrupTanimId = eczaneGrupTanimId,
                         EczaneId = eczaneNobetGrup.EczaneId,
                         ArdisikNobetSayisi = 0,
-                        NobetUstGrupId = nobetUstGrupId,
+                        NobetUstGrupId = eczaneNobetGrup.NobetUstGrupId,
                         EczaneGrupTanimAdi = bakilanEczaneGrupTanimAdi,
                         EczaneGrupTanimTipAdi = "Tüm eczanelerle aynı gün nöbet",
                         EczaneGrupTanimTipId = -10, //-2,
@@ -432,7 +453,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                             EczaneGrupTanimId = eczaneGrupTanimId,
                             EczaneId = 0,//takipEdilecekEczane.Id,
                             ArdisikNobetSayisi = 0,
-                            NobetUstGrupId = nobetUstGrupId,
+                            NobetUstGrupId = eczaneNobetGrup.NobetUstGrupId,
                             EczaneGrupTanimAdi = bakilanEczaneGrupTanimAdi,
                             EczaneGrupTanimTipAdi = "Tüm eczanelerle aynı gün nöbet",
                             EczaneGrupTanimTipId = -10, //-2,
@@ -470,9 +491,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     {
                         _ayniGunTutulanNobetDal.Update(ikiliEczane);
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
-                        throw new Exception($"{ayniGunNobetTutanEczane.G1Eczane} ve {ayniGunNobetTutanEczane.G2Eczane} eczanesi tabloda bulunmamaktadır!");
+                        throw e;
+                            //new Exception($"{ayniGunNobetTutanEczane.G1Eczane} ve {ayniGunNobetTutanEczane.G2Eczane} eczanesi tabloda bulunmamaktadır!");
                     }
                 }
             }

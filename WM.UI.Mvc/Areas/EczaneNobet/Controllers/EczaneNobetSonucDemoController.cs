@@ -238,7 +238,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var sonuclar = _eczaneNobetSonucDemoService.EczaneNobetIstatistikGunFarkiHesapla(nobetUstGrupId, versiyon);
 
-            var gunGruplar = sonuclar.Select(s => s.GunGrup).Distinct();
+            var gunGruplar = sonuclar.Select(s => s.GunGrupAdi).Distinct();
             var gunGrup = "";
 
             var sekil = 1;
@@ -300,9 +300,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var sonuclar = sonuclarTumu2
                 .Where(w => (w.NobetGrupId == nobetGrup || nobetGrup == 0)
-                         && (w.GunGrup == gunGrup || gunGrup == "")).ToList();
+                         && (w.GunGrupAdi == gunGrup || gunGrup == "")).ToList();
 
-            var gunGruplar = sonuclarTumu2.Select(s => s.GunGrup).Distinct();
+            var gunGruplar = sonuclarTumu2.Select(s => s.GunGrupAdi).Distinct();
 
             //var gunFarkiFrekanslar = new List<EczaneNobetIstatistikGunFarkiFrekans>();
 
