@@ -31,7 +31,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string NobetGrupAdi { get; set; }
         public int EczaneId { get; set; }
         public string EczaneAdi { get; set; }
-        public string GunGrup { get; set; }
+        public string GunGrupAdi { get; set; }
         public int GunFarki { get; set; }
         public int AyFarki => (int)Math.Ceiling((double)GunFarki / 30);
         public int HaftaFarki => (int)Math.Ceiling((double)GunFarki / 7);

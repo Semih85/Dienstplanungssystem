@@ -359,7 +359,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                              GunTanim = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId) ? b.NobetGunKuralAdi : culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),
                              //GunTanim = b?.NobetGunKuralAdi ?? culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),                             
                              //GunTanim = $"{p.NobetGunKuralId}",//.{s.GunTanim}",
-                             GunGrup = s.NobetUstGrupId == 3
+                             GunGrupAdi = s.NobetUstGrupId == 3
                              ? ((b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
                                 ? "Bayram"
                                 : (s.Tarih.DayOfWeek == 0 || (int)s.Tarih.DayOfWeek == 6)
@@ -457,7 +457,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                              GunTanim = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId) ? b.NobetGunKuralAdi : culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),
                              //GunTanim = b?.NobetGunKuralAdi ?? culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),                             
                              //GunTanim = $"{p.NobetGunKuralId}",//.{s.GunTanim}",
-                             GunGrup = s.NobetUstGrupId == 3
+                             GunGrupAdi = s.NobetUstGrupId == 3
                              ? ((b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
                                 ? "Bayram"
                                 : (s.Tarih.DayOfWeek == 0 || (int)s.Tarih.DayOfWeek == 6)

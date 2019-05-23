@@ -1162,7 +1162,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                              && w.NobetGorevTipId == nobetGorevTipId).ToList();
 
                 var anahtarListeGunGrup = anahtarListeTumu
-                    .Where(w => w.GunGrup == gunGrubu
+                    .Where(w => w.GunGrupAdi == gunGrubu
                              && w.NobetGrupId == nobetGrupId
                              && w.NobetGorevTipId == nobetGorevTipId).ToList();
 
@@ -1266,7 +1266,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
                 var anahtarListeGunGrup = anahtarListeTumu
-                    .Where(w => w.GunGrup == gunGrubu
+                    .Where(w => w.GunGrupAdi == gunGrubu
                              && w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
                 var eczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatayTumu
@@ -1363,7 +1363,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             var gunGruplar = anahtarListeTumu
                 //.Where(w => w.GunGrup != "Bayram")
-                .Select(s => s.GunGrup)
+                .Select(s => s.GunGrupAdi)
                 .Distinct().ToList();
 
             foreach (var gunGrup in gunGruplar)
@@ -1372,7 +1372,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 //    continue;
 
                 var anahtarListeGunGrup = anahtarListeTumu
-                  .Where(w => w.GunGrup == gunGrup).ToList();
+                  .Where(w => w.GunGrupAdi == gunGrup).ToList();
 
                 var anahtarListeTumEczaneler = AnahtarListeyiBuGuneTasiAntalya(nobetGrupGorevTipler, eczaneNobetGruplarTumu, eczaneNobetGrupGunKuralIstatistikYatayTumu, anahtarListeGunGrup, gunGrup);
 
@@ -1489,7 +1489,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         EczaneNobetGrupBaslamaTarihi = s.EczaneNobetGrupBaslamaTarihi,
                         EczaneNobetGrupId = s.EczaneNobetGrupId,
                         NobetUstGrupBaslamaTarihi = s.NobetUstGrupBaslamaTarihi,
-                        GunGrup = s.GunGrup,
+                        GunGrup = s.GunGrupAdi,
                         GunGrupId = s.GunGrupId,
                         NobetGrupAdi = s.NobetGrupAdi,
                         NobetGrupId = s.NobetGrupId,
@@ -1519,7 +1519,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
                 var anahtarListeGunGrup = planlananNobetlerBaslamaTarihindenSonra
-                    .Where(w => w.GunGrup == gunGrubu
+                    .Where(w => w.GunGrupAdi == gunGrubu
                              && w.NobetGrupGorevTipId == nobetGrupGorevTip.Id)
                              .ToList();
 
@@ -1762,11 +1762,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
         }
 
-        public void SiraliNobetYazGrupBazindaOncekiGrubaGore(NobetGrupGorevTipDetay nobetGrupGorevTip,
+        public void SiraliNobetYazGrupBazindaYeniAntalIcin(NobetGrupGorevTipDetay nobetGrupGorevTip,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,
             DateTime nobetBitisTarihi)
-        {            
+        {//deneme
             var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTip.Id);
 
             var nobetGrupGunGruplar = nobetGrupGorevTipGunKurallar
@@ -2066,6 +2066,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
         }
 
+        /// <summary>
+        /// orjinal sıralı nöbet yaz
+        /// </summary>
+        /// <param name="nobetGrupGorevTip"></param>
+        /// <param name="eczaneNobetGruplarTumu"></param>
+        /// <param name="nobetBaslangicTarihi"></param>
+        /// <param name="nobetBitisTarihi"></param>
         public void SiraliNobetYazGrupBazinda(NobetGrupGorevTipDetay nobetGrupGorevTip,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,

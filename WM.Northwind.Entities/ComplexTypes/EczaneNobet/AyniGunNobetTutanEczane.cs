@@ -18,7 +18,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int G1EczaneNobetGrupId { get; set; }
         public int G2EczaneNobetGrupId { get; set; }
         public string AltGrupAdi { get; set; }
-        public string GunGrup { get; set; }
+        public string GunGrupAdi { get; set; }
         public int AyniGunNobetSayisi { get; set; }
         public int TakvimId { get; set; }
         public DateTime Tarih { get; set; }
@@ -30,5 +30,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string G2NobetGrupAdi { get; set; }
         public string G2NobetAltGrupAdi { get; set; }
         public string G1NobetAltGrupAdi { get; set; }
+        public int EnSonAyniGunNobetTakvimId { get; set; }
     }
 }

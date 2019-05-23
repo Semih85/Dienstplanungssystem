@@ -265,7 +265,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             var sonuclar = _eczaneNobetSonucService.GetDetaylarUstGrupBaslamaTarihindenOnce(nobetUstGrupId);
             var sonuclarSirali = _eczaneNobetSonucService.GetSonuclar(sonuclar, nobetUstGrupId)
-                .OrderBy(o => o.GunGrup)
+                .OrderBy(o => o.GunGrupAdi)
                 .ThenBy(o => o.Tarih)
                 .ToList();
 

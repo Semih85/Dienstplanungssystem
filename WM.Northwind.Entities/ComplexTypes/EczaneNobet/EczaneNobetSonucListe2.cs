@@ -61,7 +61,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         [Display(Name = "Gün Değer")]
         public int NobetGunKuralId { get; set; }
         [Display(Name = "Gün Grup")]
-        public string GunGrup { get; set; }
+        public string GunGrupAdi { get; set; }
         public int GunGrupId { get; set; }
         [Display(Name = "Ayın Günü")]
         public int Gun { get; set; }
