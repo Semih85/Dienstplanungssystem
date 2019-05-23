@@ -176,11 +176,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         /// <param name="p">KpPesPeseGorevEnAz</param>
         public virtual void PesPeseGorevEnAz(KpPesPeseGorevEnAz p)
         {
-            if (!p.NobetUstGrupKisit.PasifMi 
+            if (!p.NobetUstGrupKisit.PasifMi
                 && p.NobetSayisi > 0 //alanya için ilk nöbette yazılamayacak tarihi yarıya düşürmüştüm. 22.04.2019 dikkatli olmak lazım.
-                //&& (p.NobetUstGrupKisit.NobetUstGrupId == 6 bartın 
-                //&& p.EczaneNobetGrup.EczaneAdi != "BÜYÜK")
-                //enSonNobetTarihi >= nobetUstGrupBaslamaTarihi
+                                     //&& (p.NobetUstGrupKisit.NobetUstGrupId == 6 bartın 
+                                     //&& p.EczaneNobetGrup.EczaneAdi != "BÜYÜK")
+                                     //enSonNobetTarihi >= nobetUstGrupBaslamaTarihi
                 )
             {
                 var tarihAralik = p.Tarihler
@@ -189,6 +189,17 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 if (tarihAralik.Count > 0)
                 {
+                    if (p.NobetUstGrupKisit.NobetUstGrupId == 1)
+                    {//istisna
+                        var istekVarMi = p.EczaneNobetIstekler
+                        .Where(w => tarihAralik.Select(s => s.TakvimId).Contains(w.TakvimId)).ToList();
+
+                        if (istekVarMi.Count > 0)
+                        {
+                            return;
+                        }
+                    }
+
                     var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
                               //+ $"{p.PespeseNobetSayisiAltLimit} gün ("
                               + $"Farklı ay ("
@@ -216,7 +227,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         /// <param name="p">KpHerAyHaftaIciPespeseGorev</param>
         public virtual void HerAyHaftaIciPespeseGorev(KpHerAyHaftaIciPespeseGorev p)
         {
-            if (!p.NobetUstGrupKisit.PasifMi 
+            if (!p.NobetUstGrupKisit.PasifMi
                 && p.OrtamalaNobetSayisi > 1
                 )
             {
@@ -1156,8 +1167,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                       ? bayramlar
                       : haftaIciGunleri;
 
-                    var nobetAltGrubuOlmayanlarinSonuclariGunGruplu = nobetAltGrubuOlmayanlarinSonuclari.Where(w => w.GunGrup == gunGrup).ToList();
-                    var nobetAltGrubuOlanlarinSonuclariGunGruplu = nobetAltGrubuOlanlarinSonuclari.Where(w => w.GunGrup == gunGrup).ToList();
+                    var nobetAltGrubuOlmayanlarinSonuclariGunGruplu = nobetAltGrubuOlmayanlarinSonuclari.Where(w => w.GunGrupAdi == gunGrup).ToList();
+                    var nobetAltGrubuOlanlarinSonuclariGunGruplu = nobetAltGrubuOlanlarinSonuclari.Where(w => w.GunGrupAdi == gunGrup).ToList();
                     var ayniGunAnahtarListeGunGruplu = ayniGunAnahtarListe.Where(w => w.GunGrup == gunGrup).ToList();
 
                     foreach (var eczane in nobetAltGrubuOlmayanlarinEczaneleri)
@@ -1194,7 +1205,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                                                          NobetGrupAdiAltGruplu = g2.NobetGrupAdi,
                                                                          NobetGrupIdAltGrubuOlmayan = g1.NobetGrupId,
                                                                          NobetGrupIdAltGruplu = g2.NobetGrupId,
-                                                                         GunGrup = g1.GunGrup
+                                                                         GunGrup = g1.GunGrupAdi
                                                                      }).ToList();
 
                         if (gunGrup != "Hafta İçi")
@@ -1936,7 +1947,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
         public List<EczaneNobetSonucListe2> GetSonuclarByGunGrup(List<EczaneNobetSonucListe2> sonuclar, string gunGrup)
         {
-            return sonuclar.Where(w => w.GunGrup == gunGrup).ToList();
+            return sonuclar.Where(w => w.GunGrupAdi == gunGrup).ToList();
         }
 
         public List<EczaneNobetSonucListe2> GetSonuclarByGunGrup(List<EczaneNobetSonucListe2> sonuclar, int gunGrupId)

@@ -427,6 +427,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     pesPeseGorevEnAzFarkliAylar.Tarihler = tarihler;
                     pesPeseGorevEnAzFarkliAylar.NobetYazilabilecekIlkTarih = nobetYazilabilecekIlkTarih;
                     pesPeseGorevEnAzFarkliAylar.SonNobetTarihi = eczaneNobetIstatistik.SonNobetTarihi;
+                    pesPeseGorevEnAzFarkliAylar.EczaneNobetIstekler = data.EczaneNobetIstekler
+                        .Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id)
+                        .ToList();//istisna: bayram nöbetleri manuel yazıldığı için eklendi
 
                     PesPeseGorevEnAz(pesPeseGorevEnAzFarkliAylar);
 
