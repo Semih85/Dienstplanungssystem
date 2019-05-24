@@ -475,7 +475,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var oncekiAylardaAyniGunNobetTutanEczaneler = new List<EczaneGrupDetay>();
 
-            var oncekiAylarAyniGunNobet = _nobetUstGrupKisitService.GetDetay("oncekiAylarAyniGunNobet", nobetUstGrupId);
+            var oncekiAylarAyniGunNobet = _nobetUstGrupKisitService.GetDetay(41, nobetUstGrupId);
             if (!oncekiAylarAyniGunNobet.PasifMi)
             {
                 //indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
