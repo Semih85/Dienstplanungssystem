@@ -786,7 +786,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var sonuclarTumu = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, EczaneNobetSonucTuru.Kesin)
                 .Where(w => w.GunGrupId == gunGrupId || gunGrupId == 0).ToList();
 
-            if (raporId == 21 || raporId == 22)
+            if (raporId == 21 
+                || raporId == 22
+                || raporId == 32
+                )
             {
                 var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(sonuclarTumu);
 
