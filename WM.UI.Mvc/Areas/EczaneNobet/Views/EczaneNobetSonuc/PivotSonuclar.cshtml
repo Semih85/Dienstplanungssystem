@@ -428,7 +428,9 @@
                     //alert(1)
                     //aynı Gün Nöbet Tutan Eczaneler
                     if (raporId == 21
-                        || raporId == 32) {
+                        || raporId == 22
+                        || raporId == 32
+                    ) {
                         $.each(ayniGunNobet.AyniGunNobetTutanEczaneler, function (index, s) {
                             ayniGunNobetTutanEczaneler.push({
                                 G1Eczane: s.G1Eczane,
@@ -446,9 +448,9 @@
                             });
                         });
                         ayniGunNobetTutanEczaneler = JSON.parse(JSON.stringify(ayniGunNobetTutanEczaneler));
-                    }
+                    //}
 
-                    if (raporId == 22) {
+                    //if (raporId == 22) {
                         $.each(ayniGunNobet.AyniGunNobetTutanEczanelerOzet, function (index, s) {
                             ayniGunNobetTutanEczanelerOzet.push({
                                 G1Eczane: s.G1Eczane,
