@@ -10,7 +10,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 {
     public class NobetGrupGunDagilim
     {
-        public string GunGrup { get; set; }
+        public string GunGrupAdi { get; set; }
         public int NobetGrupId { get; set; }
         public string NobetGrupAdi { get; set; }
         public string NobetGrubu => $"{NobetGrupId} {NobetGrupAdi}";

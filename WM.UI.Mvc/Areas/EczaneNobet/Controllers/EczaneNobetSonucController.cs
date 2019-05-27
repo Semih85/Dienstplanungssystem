@@ -489,7 +489,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     NobetGrupId = s.Key.NobetGrupId,
                     NobetGrupAdi = s.Key.NobetGrupAdi,
                     NobetGorevTipId = s.Key.NobetGorevTipId,
-                    GunGrup = s.Key.GunGrupAdi,
+                    GunGrupAdi = s.Key.GunGrupAdi,
                     NobetGrupGorevTipId = s.Key.NobetGorevTipId,
                     EczaneNobetGrupId = s.Key.EczaneNobetGrupId,
                     //SonNobetTarihi = s.Key.SonNobetTarihi,
@@ -506,7 +506,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 {
                     g.NobetGrupId,
                     g.NobetGrupAdi,
-                    g.GunGrup,
+                    g.GunGrupAdi,
                     g.NobetGrupGorevTipId,
                     g.NobetGorevTipId
                 })
@@ -516,7 +516,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     NobetGrupAdi = s.Key.NobetGrupAdi,
                     NobetGorevTipId = s.Key.NobetGorevTipId,
                     NobetGrupGorevTipId = s.Key.NobetGorevTipId,
-                    GunGrup = s.Key.GunGrup,
+                    GunGrupAdi = s.Key.GunGrupAdi,
                     //SonNobetTarihi = s.Key.SonNobetTarihi,
                     //SonNobetTarihiAciklama = s.Key.SonNobetTarihiAciklama,
                     //NobetSayisi = s.Sum(x => x.NobetSayisi),
