@@ -92,7 +92,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <span class="navbar-brand" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
               title="Açıklama için tıklayınız.">
-            <i class="fa fa-bar-chart text-danger"></i> İstatistik
+            <i class="fa fa-bar-chart text-danger"></i> @*İstatistik*@
         </span>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -180,37 +180,37 @@
                         </fieldset>
                     </div>
                     @*if (ViewBag.NobetGrupGorevTipSayisi > 4)
-                        {
-                            @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
-                                {
-                                    @class = "form-control selectpicker istatisitkFromInput myDropList mr-2",
-                                   //data_style = "btn btn-outline-primary",
-                                   multiple = "true",
-                                   //data_width = "auto",
-                                   data_actions_box = "true",
-                                   mobile = "true",
-                                   data_live_search = "true",
-                                   data_selected_text_format = "count > 0",
-                                   title = "Nöbet Grubu Seçiniz..",
-                                })
-                        }
-                        else
-                        {
-                            @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
-                               {
-                                   @class = "form-control selectpicker istatisitkFromInput myDropList mr-2",
-                                   //data_style = "btn btn-outline-primary",
-                                   multiple = "true",
-                                   //data_width = "auto",
-                                   data_actions_box = "true",
-                                   mobile = "true",
-                                   //data_live_search = "true",
-                                   data_selected_text_format = "count > 0",
-                                   title = "Nöbet Grubu Seçiniz.."
-                               }
-                                //,optionLabel: "-Nöbet Grubu Seçiniz-"
-                                )
-                        }*@
+            {
+                @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
+                    {
+                        @class = "form-control selectpicker istatisitkFromInput myDropList mr-2",
+                       //data_style = "btn btn-outline-primary",
+                       multiple = "true",
+                       //data_width = "auto",
+                       data_actions_box = "true",
+                       mobile = "true",
+                       data_live_search = "true",
+                       data_selected_text_format = "count > 0",
+                       title = "Nöbet Grubu Seçiniz..",
+                    })
+            }
+            else
+            {
+                @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
+                   {
+                       @class = "form-control selectpicker istatisitkFromInput myDropList mr-2",
+                       //data_style = "btn btn-outline-primary",
+                       multiple = "true",
+                       //data_width = "auto",
+                       data_actions_box = "true",
+                       mobile = "true",
+                       //data_live_search = "true",
+                       data_selected_text_format = "count > 0",
+                       title = "Nöbet Grubu Seçiniz.."
+                   }
+                    //,optionLabel: "-Nöbet Grubu Seçiniz-"
+                    )
+            }*@
                     <div class="form-group mb-2 mb-lg-0 mr-4">
                         <fieldset>
                             @Html.Label("lblRaporId", "Rapor", htmlAttributes: new { @class = "control-label small text-muted", style = "margin-top:-5px" })
@@ -220,36 +220,44 @@
                                //show_menu_arrow = "true",
                                //multiple = "true",
                                //data_width = "auto",
+                               //data_width = "200px",
                                //data_actions_box = "true",
                                mobile = "true",
                                data_size = "15",
                                data_live_search = "true",
                                //data_selected_text_format = "count > 4",
-                               title = "Rapor Seçiniz...",
+                               //title = "Rapor Seçiniz...",
                                data_dropup_auto = "false"
                                //data_hide_disabled = true
                             })
                         </fieldset>
                     </div>
 
-                    <div class="form-group">
-                        <span class="input-group-btn mt-2 mr-3 mt-md-0">
+                    <div class="form-group" style="margin-top:15px;">
+                        <span class="input-group-btn mr-3">
                             <button type="button" id="submitSorgula" class="btn btn-primary"><i class="fa fa-search mr-2"></i>Sorgula</button>
                         </span>
-                        <span id="wait" class="spinner-border text-primary" role="status" style="display:none;">
-                            <span class="sr-only">Loading...</span>
-                        </span>
+
                     </div>
                 }
 
-                <div class="input-group" id="rapordaAra" style="display:none">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
-                    </div>
-                    <input type="text" id="myInput" class="form-control" placeholder="Raporda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
-                </div>
+                <div class="form-group mb-2 mb-lg-0 pull-right mr-2" id="rapordaAra" style="display:none;">
+                    <fieldset>
+                        @Html.Label("lblRapordaAra", "Rapor İçinde Ara", htmlAttributes: new { @class = "control-label small text-muted", style = "margin-top:-5px" })
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+                            </div>
+                            <input type="text" id="myInput" class="form-control" placeholder="Rapor içinde ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+                        </div>
+                    </fieldset>
+                </div>     
+
+                <span id="wait" class="spinner-border text-primary pr-0 mr-0" role="status" style="display:none;">
+                    <span class="sr-only">Loading...</span>
+                </span>
             </div>
-        </div>
+            </div>
     </nav>
 </div>
 
@@ -459,7 +467,7 @@
                                 ["G2 Nöbet Grubu"]: s.G2NobetGrupAdi,
                                 ["G1 Nöbet Alt Grubu"]: s.G1NobetAltGrupAdi,
                                 ["G2 Nöbet Alt Grubu"]: s.G2NobetAltGrupAdi,
-                                ["Gün Grup"]: s.GunGrup,
+                                ["Gün Grup"]: s.GunGrupAdi,
                                 //Grup: s.Grup,
                                 //["Alt Grup"]: s.AltGrupAdi,
                                 ["Aynı Gün Nöbet Sayısı"]: s.AyniGunNobetSayisi,
@@ -479,7 +487,7 @@
                                 ["G2 Nöbet Grubu"]: s.G2NobetGrupAdi,
                                 ["G1 Nöbet Alt Grubu"]: s.G1NobetAltGrupAdi,
                                 ["G2 Nöbet Alt Grubu"]: s.G2NobetAltGrupAdi,
-                                ["Gün Grup"]: s.GunGrup,
+                                ["Gün Grup"]: s.GunGrupAdi,
                                 //Grup: s.Grup,
                                 //["Alt Grup"]: s.AltGrupAdi,
                                 ["Aynı Gün Nöbet Sayısı"]: s.AyniGunNobetSayisi,
@@ -522,7 +530,7 @@
                             alacakVerecekLitesi.push({
                                 Eczane: s.EczaneAdi,
                                 //AnahtarSıra: s.AnahtarSıra,
-                                ["Gün Grup"]: s.GunGrup,
+                                ["Gün Grup"]: s.GunGrupAdi,
                                 ["Nöbet Grubu"]: s.NobetGrupId + ' ' + s.NobetGrupAdi,
                                 AnahtarTarih: s.AnahtarTarihAciklama,
                                 ["Borç Durumu"]: borcDurum(s.BorcluGunSayisi),
@@ -547,7 +555,7 @@
                                 Ay: n.Ay,
                                 //["Gün"]: n.Gun,
                                 ["Gün Tanım"]: n.GunTanim,
-                                ["Gün Grup"]: n.GunGrup,
+                                ["Gün Grup"]: n.GunGrupAdi,
                                 //["Görev Tipi"]: n.GorevTipi,
                                 ["Nöbet Grubu"]: n.NobetGrubu,
                                 Eczane: n.EczaneAdi,
@@ -636,7 +644,7 @@
                                 dagilimlarAktarilacak.push({
                                     ["Yıl-Ay"]: n.Yıl_Ay,
                                     ["Gün Tanım"]: n.GunTanim,
-                                    ["Gün Grup"]: n.GunGrup,
+                                    ["Gün Grup"]: n.GunGrupAdi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
                                     ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
                                     Eczane: n.Eczane,
@@ -652,7 +660,7 @@
                                dagilimlarAktarilacak.push({
                                     ["Yıl-Ay"]: n.Yıl_Ay,
                                     ["Gün Tanım"]: n.GunTanim,
-                                    ["Gün Grup"]: n.GunGrup,
+                                    ["Gün Grup"]: n.GunGrupAdi,
                                     ["Görev Tipi"]: n.GorevTipi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
                                     ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
@@ -674,7 +682,7 @@
                                dagilimlarAktarilacak.push({
                                     ["Yıl-Ay"]: n.Yıl_Ay,
                                     ["Gün Tanım"]: n.GunTanim,
-                                    ["Gün Grup"]: n.GunGrup,
+                                    ["Gün Grup"]: n.GunGrupAdi,
                                     ["Görev Tipi"]: n.GorevTipi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
                                     ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
@@ -704,7 +712,7 @@
                                     //Hafta: n.Hafta,
                                     //["Gün"]: n.Gun,
                                     ["Gün Tanım"]: n.GunTanim,
-                                    ["Gün Grup"]: n.GunGrup,
+                                    ["Gün Grup"]: n.GunGrupAdi,
                                     ["Görev Tipi"]: n.GorevTipi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
                                     ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
@@ -742,7 +750,7 @@
                                     //Hafta: n.Hafta,
                                     //["Gün"]: n.Gun,
                                     ["Gün Tanım"]: n.GunTanim,
-                                    ["Gün Grup"]: n.GunGrup,
+                                    ["Gün Grup"]: n.GunGrupAdi,
                                     ["Görev Tipi"]: n.GorevTipi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
                                     //["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
@@ -777,7 +785,7 @@
                     if (raporId == 7) {
                         $.each(dagilimlar, function (index, n) {
                             gunDagilimiMaxMin.push({
-                                ["Gün Grup"]: n.GunGrup,
+                                ["Gün Grup"]: n.GunGrupAdi,
                                 ["Nöbet Grubu"]: n.NobetGrubu,
                                 ["Nöbet Sayısı (En çok)"]: n.NobetSayisiMax,
                                 ["Nöbet Sayısı (En az)"]: n.NobetSayisiMin,
@@ -801,7 +809,7 @@
                                 ["Ay Farkı"]: n.AyFarki,
                                 ["Gün Farkı"]: n.GunFarki,
                                 Eczane: n.EczaneAdi,
-                                ["Gün Grup"]: n.GunGrup,
+                                ["Gün Grup"]: n.GunGrupAdi,
                                 ["Nöbet Grubu"]: n.NobetGrupAdi,
                                 ["Görev Tipi"]: n.NobetGorevTipAdi,
                                 ["Eczane Sayısı"]: n.FrekanstakiEczaneSayisi,
@@ -831,7 +839,7 @@
                                 N2Ay: s.Nobet2Ay,
                                 N2Gun: s.Nobet2Gun,
                                 Eczane: s.EczaneAdi,
-                                ["Gün Grup"]: s.GunGrup,
+                                ["Gün Grup"]: s.GunGrupAdi,
                                 ["Görev Tipi"]: s.NobetGorevTipAdi,
                                 ["Nöbet Grubu"]: s.NobetGrupAdi
                             });
@@ -861,7 +869,7 @@
                                     //Yıl_Ay: $.datepicker.formatDate('yyyyMM', s.Tarih),
                                     //Tarih = String.Format("{0:yyy MM dd, ddd}", s.Tarih),
                                     //Yıl_Ay = Convert.ToInt32(String.Format("{0:yyyyMM}", s.Tarih)),
-                                    //["Gün Grup"] : s.GunGrup
+                                    //["Gün Grup"] : s.GunGrupAdi
                                 });
                             });
                             altGrupAyniGunNobetTutanEczaneler = JSON.parse(JSON.stringify(altGrupAyniGunNobetTutanEczaneler));
@@ -876,7 +884,7 @@
                                     AltGrup: s.AltGrupAdi,
                                     ["Aynı Gün Nöbet Sayısı"]: s.AyniGunNobetSayisi,
                                     Tarih: s.TarihAciklama,
-                                    ["Gün Grup"]: s.GunGrup,
+                                    ["Gün Grup"]: s.GunGrupAdi,
                                     ["Yıl-Ay"]: s.YilAy
                                 });
                             });
@@ -963,7 +971,7 @@
             $('.pasif').hide();
             $('.aktif').show();//.delay(800).fadeIn("100000");//.show();
             //$("#div2").fadeIn("slow");
-            $('.rapordaAra').show();
+            $('#rapordaAra').show();
             
             var ilgiliRaporlarDagilimlar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 18, 19, 20, 24, 25, 26, 27, 28, 29];
             var ilgiliRaporlarAlacakVerecekler = [14, 15, 16, 17];
@@ -2655,7 +2663,6 @@
     <script type="text/javascript">
         //aynı gün nöbet
 
-        //var ayniGunNobetTutanEczaneler = dagilimlar.AltGrupAyniGunNobetTutanEczaneler;
         //var altGrupAyniGunNobetTutanEczaneler = dagilimlar.AltGrupAyniGunNobetTutanEczaneler;
         //aynı gün nöbet tutanlar
 
