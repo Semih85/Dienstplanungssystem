@@ -1765,7 +1765,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 }
             }
 
-        public void SiraliNobetYazGrupBazindaYeniAntalIcin(NobetGrupGorevTipDetay nobetGrupGorevTip,
+        /// <summary>
+        /// Antalya için *yeni
+        /// </summary>
+        /// <param name="nobetGrupGorevTip"></param>
+        /// <param name="eczaneNobetGruplarTumu"></param>
+        /// <param name="nobetBaslangicTarihi"></param>
+        /// <param name="nobetBitisTarihi"></param>
+        public void SiraliNobetYazGrupBazindaYeni(NobetGrupGorevTipDetay nobetGrupGorevTip,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,
             DateTime nobetBitisTarihi)
