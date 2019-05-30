@@ -77,7 +77,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public DateTime NobetUstGrupBaslamaTarihi { get; set; }
         public DateTime NobetGrupGorevTipBaslamaTarihi { get; set; }
         public string TarihAciklama => String.Format("{0:d MMM yyyy, ddd}", Tarih);
-        public string Tarih2 => String.Format("{0:yyyy MM dd}", Tarih);
+        public string Tarih2 => String.Format("{0:yyyy.MM.dd}", Tarih);
         public string Yıl_Ay => String.Format("{0:yy MM}", Tarih);
         public string GunIkiHane => String.Format("{0:dd}", Tarih);
         public int NobetTipId => MazeretId > 0
