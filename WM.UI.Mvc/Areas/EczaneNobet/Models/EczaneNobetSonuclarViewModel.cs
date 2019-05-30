@@ -22,5 +22,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Models
         public int NobetUstGrupId { get; set; }
         public List<RaporDetay> Raporlar { get; internal set; }
         public DateTime SonNobetTarihi { get; internal set; }
+        public bool KapaliEczaneler { get; internal set; }
     }
 }

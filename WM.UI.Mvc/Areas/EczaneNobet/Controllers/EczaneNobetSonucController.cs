@@ -233,7 +233,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 GunDagilimiMaxMin = new List<NobetGrupGunDagilim>(),
                 NobetUstGrupId = nobetUstGrupId,
                 Raporlar = raporlar,
-                SonNobetTarihi = sonNobetTarihi
+                SonNobetTarihi = sonNobetTarihi,
+                KapaliEczaneler = false
                 //BaslangicTarihi = nobetUstGrup.BaslangicTarihi
             };
             return View(model);
@@ -404,7 +405,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return jsonResult;
         }
 
-        public JsonResult GetSonuclar(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi, DateTime? bitisTarihi, int raporId, int gunGrupId = 0)
+        public JsonResult GetSonuclar(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi, DateTime? bitisTarihi, int raporId, bool kapaliEczaneler, int gunGrupId = 0)
         {
             //var eczaneNobetSonuclarTumu = _eczaneNobetSonucService.GetSonuclar(nobetGrupGorevTipId, baslangicTarihi, bitisTarihi);
             var nobetGrupGorevTipIdList = nobetGrupGorevTipId.ToList();
@@ -419,7 +420,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipId.ToList());
 
-            var eczaneNobetSonucDetaylar = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+            var eczaneNobetSonucDetaylar = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId, kapaliEczaneler);
 
             var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
 
@@ -449,8 +450,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 {
                     sonuclar = sonuclarTumu
                         .Where(w => ((w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi && w.GunGrupId != 2)
-                                    || w.GunGrupId == 2)
-                                    && w.EczaneNobetGrupId != 1031).ToList();
+                                    || w.GunGrupId == 2)).ToList();
                 }
                 else
                 {
@@ -688,7 +688,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
         }
-        public JsonResult GetEczaneNobetAlacakVerecekler(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi, DateTime? bitisTarihi, int raporId, int gunGrupId = 0)
+        public JsonResult GetEczaneNobetAlacakVerecekler(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi, DateTime? bitisTarihi, int raporId, bool kapaliEczaneler, int gunGrupId = 0)
         {
             var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
@@ -698,7 +698,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipIdList);
 
-            var eczaneNobetSonucDetaylar = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+            var eczaneNobetSonucDetaylar = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId, kapaliEczaneler);
 
             var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
 
@@ -772,13 +772,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             return ConvertToJson(eczaneNobetAlacakVerecek);
         }
-        public JsonResult GetAyniGunNobetler(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi, DateTime? bitisTarihi, int raporId, int gunGrupId = 0)
+        public JsonResult GetAyniGunNobetler(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi, DateTime? bitisTarihi, int raporId, bool kapaliEczaneler, int gunGrupId = 0)
         {
             var nobetGrupIdListe = nobetGrupGorevTipId.ToList();
 
             var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupIdListe);
 
-            var eczaneNobetSonucDetaylar = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId)
+            var eczaneNobetSonucDetaylar = _eczaneNobetSonucService.GetDetaylarByNobetGrupGorevTipIdList(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId, kapaliEczaneler)
                 .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
 
             var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
@@ -842,8 +842,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             //if (nobetUstGrupId == 5)
             //{
-            var kalibrasyonlarTumu = _kalibrasyonService.GetDetaylar(nobetUstGrupId)
-                .Where(w => w.EczaneNobetGrupId != 1031).ToList();
+            var kalibrasyonlarTumu = _kalibrasyonService.GetDetaylar(nobetUstGrupId);
+                //.Where(w => w.EczaneNobetGrupId != 1031).ToList();
 
             foreach (var kalibrasyon in kalibrasyonlarTumu)
             {
