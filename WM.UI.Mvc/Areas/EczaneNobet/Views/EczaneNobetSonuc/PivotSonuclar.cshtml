@@ -27,20 +27,25 @@
 <div class="row mb-2">
     <div class="col">
         <div class="form-inline">
-            <div class="custom-control custom-checkbox mr-4 mr-lg-5 mb-2 mb-md-1" id="alanalarDiv">
+            <div class="custom-control custom-checkbox mr-4 mb-2 mb-md-1" id="alanalarDiv">
                 @Html.CheckBox("chkAlanlariGosterGizle", new { @class = "custom-control-input", onchange = "chekBoxDegistir(this);" })
                 <label class="custom-control-label font-weight-bold" for="chkAlanlariGosterGizle" title="Raporlardaki alanları görmek için bu kutucuğu seçiniz.">Alanlar</label>
             </div>
 
+            <div class="custom-control custom-checkbox mr-4 mr-lg-5 mb-2 mb-md-1">
+                @Html.CheckBox("chkKapananEczaneleriGosterGizle", new { @class = "custom-control-input", onchange = "chekBoxDegistirKapaliEczaneler(this);" })
+                <label class="custom-control-label text-secondary" for="chkKapananEczaneleriGosterGizle" title="Nöbet grubundan çıkan eczaneleri listede görmek için bu kutucuğu seçiniz.">Tüm Eczaneler</label>
+            </div>
+
             @*<div class="alert-info text-center mr-2 mb-2 pl-2 mb-lg-0" style="margin-top:-8px" id="raporKategoriDiv">
-                    <span class="font-weight-bold small" id="raporKategoriDivBaslik">Rapor Kategorileri</span>
-                    <br id="raporKategoriDivBaslikAltBosluk" />
-                    @foreach (var raporKategori in raporKategoriler)
-                    {
-                        var raporKatgoriId = $"raporKategori{raporKategori.RaporKategoriId}";
-                        <a href="#" id="@raporKatgoriId" class="badge badge-light mr-2 raporKategori">@raporKategori.RaporKategoriAdi</a>
-                    }
-                </div>*@
+            <span class="font-weight-bold small" id="raporKategoriDivBaslik">Rapor Kategorileri</span>
+            <br id="raporKategoriDivBaslikAltBosluk" />
+            @foreach (var raporKategori in raporKategoriler)
+            {
+                var raporKatgoriId = $"raporKategori{raporKategori.RaporKategoriId}";
+                <a href="#" id="@raporKatgoriId" class="badge badge-light mr-2 raporKategori">@raporKategori.RaporKategoriAdi</a>
+            }
+        </div>*@
 
             <button class="btn btn-outline-dark btn-sm mr-5 mb-2 mb-md-1" type="button" id="btnExceleAktar">
                 <i class="fa fa-file-excel-o text-success"></i> Excele Aktar
@@ -112,13 +117,19 @@
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.BaslangicTarihi)
                     @Html.HiddenFor(model => model.BitisTarihi)
-                    @Html.HiddenFor(model => model.SonNobetTarihi)
+                    @Html.Hidden("SonNobetTarihi", Model.SonNobetTarihi.ToShortDateString())
+                    @Html.HiddenFor(model => model.KapaliEczaneler)
+
                     <div class="form-group mb-2 mb-lg-0 mr-2">
                         <fieldset>
                             @*@Html.Label("lblTarihAraligi", "Tarih Aralığı", htmlAttributes: new { @class = "control-label small text-muted mb-1", style = "margin-top:-5px" })*@
 
                             <label class="control-label mb-1" style="margin-top:-5px" id="lblTarihAraligi">
                                 <span class="text-muted small mr-2">Tarih Aralığı</span>
+                                <a href="#" class="badge badge-info mr-2" data-toggle="tooltip" data-placement="top" id="tarihAraligiSonNobetTarihi" title="Bugün ve son nöbet arasını seç.">
+                                    &ge; Bugün
+                                </a>
+                                <span class="mr-2">&raquo;</span>
                                 <a id="btnOncekiAy" href="#" class="badge badge-primary mr-2" data-toggle="tooltip" data-placement="top" title="Önceki Ay">
                                     1 Ay <i class="fa fa-minus"></i>
                                 </a>
@@ -126,7 +137,7 @@
                                 <a id="btnSonrakiAy" href="#" class="badge badge-primary" data-toggle="tooltip" data-placement="top" title="Sonraki Ay">
                                     1 Ay <i class="fa fa-plus"></i>
                                 </a>
-                            </label>                           
+                            </label>
 
                             <div class="input-group input-daterange mb-2 mb-lg-0 ">
                                 <div class="input-group-prepend">
@@ -201,37 +212,37 @@
                         </fieldset>
                     </div>
                     @*if (ViewBag.NobetGrupGorevTipSayisi > 4)
-                        {
-                            @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
-                                {
-                                    @class = "form-control selectpicker istatisitkFromInput myDropList mr-2",
-                                   //data_style = "btn btn-outline-primary",
-                                   multiple = "true",
-                                   //data_width = "auto",
-                                   data_actions_box = "true",
-                                   mobile = "true",
-                                   data_live_search = "true",
-                                   data_selected_text_format = "count > 0",
-                                   title = "Nöbet Grubu Seçiniz..",
-                                })
-                        }
-                        else
-                        {
-                            @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
-                               {
-                                   @class = "form-control selectpicker istatisitkFromInput myDropList mr-2",
-                                   //data_style = "btn btn-outline-primary",
-                                   multiple = "true",
-                                   //data_width = "auto",
-                                   data_actions_box = "true",
-                                   mobile = "true",
-                                   //data_live_search = "true",
-                                   data_selected_text_format = "count > 0",
-                                   title = "Nöbet Grubu Seçiniz.."
-                               }
-                                //,optionLabel: "-Nöbet Grubu Seçiniz-"
-                                )
-                        }*@
+            {
+                @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
+                    {
+                        @class = "form-control selectpicker istatisitkFromInput myDropList mr-2",
+                       //data_style = "btn btn-outline-primary",
+                       multiple = "true",
+                       //data_width = "auto",
+                       data_actions_box = "true",
+                       mobile = "true",
+                       data_live_search = "true",
+                       data_selected_text_format = "count > 0",
+                       title = "Nöbet Grubu Seçiniz..",
+                    })
+            }
+            else
+            {
+                @Html.DropDownList("nobetGrupGorevTipId", null, htmlAttributes: new
+                   {
+                       @class = "form-control selectpicker istatisitkFromInput myDropList mr-2",
+                       //data_style = "btn btn-outline-primary",
+                       multiple = "true",
+                       //data_width = "auto",
+                       data_actions_box = "true",
+                       mobile = "true",
+                       //data_live_search = "true",
+                       data_selected_text_format = "count > 0",
+                       title = "Nöbet Grubu Seçiniz.."
+                   }
+                    //,optionLabel: "-Nöbet Grubu Seçiniz-"
+                    )
+            }*@
                     <div class="form-group mb-2 mb-lg-0 mr-4">
                         <fieldset>
                             @Html.Label("lblRaporId", "Rapor", htmlAttributes: new { @class = "control-label small text-muted mb-1", style = "margin-top:-5px" })
@@ -1477,7 +1488,20 @@
     </script>
     <!-- #endregion -->
     <!-- #region dağılımlar -->
-    <script type="text/javascript">
+    <script type="text/javascript">        
+
+        $("#tarihAraligiSonNobetTarihi").click(function () {
+            tarihAraligiSec();
+        });
+
+        function chekBoxDegistirKapaliEczaneler(element) {
+            if (element.checked) {                
+                $("#KapaliEczaneler").val(true);
+            }
+            else {
+                $("#KapaliEczaneler").val(false);
+            }
+        }
 
         function chekBoxDegistir(element) {
             if (element.checked) {
@@ -3549,6 +3573,22 @@
             }
         }
 
+        function tarihAraligiSec() {
+            var tarih = new Date();
+
+            //var aydakiGunSayisi = daysInMonth(tarih.getMonth() + 1, tarih.getFullYear());
+            //alert(aydakiGunSayisi)
+
+            //var bsl = baslangicTarihininIlkGununuSec(tarih);
+
+            $("#TarihBaslangic").datepicker("setDate", tarih);
+
+            var sonNobetTarihi = tarihDondur2($("#SonNobetTarihi").val());
+            
+            var d = new Date(sonNobetTarihi);
+            $("#TarihBitis").datepicker("setDate", new Date(d));
+        }
+
         $(function () {
 
             nobetUstGrupId = $('#NobetUstGrupId').val();
@@ -3556,38 +3596,12 @@
             $('.datepicker').datepicker('setStartDate', "01-01-1900");
 
             //alert(sonNobetTarihi)
-            var tarih = new Date();
 
-            //var aydakiGunSayisi = daysInMonth(tarih.getMonth() + 1, tarih.getFullYear());
-            //alert(aydakiGunSayisi)
-
-            var bsl = baslangicTarihininIlkGununuSec(tarih);
-
-            //var bit = bitisTarihininSonGununuSec(tarih);
-            //var baslangicStr = tarihDondur2($("#BaslangicTarihi").val());
-
-            //alert(bsl)
-            //alert(baslangicStr)
-            //$("#BaslangicTarihi").datepicker("setDate", new Date(baslangicStr));
-            $("#TarihBaslangic").datepicker("setDate", new Date());
-
-            //var bitisStr = tarihDondur2($("#BitisTarihi").val());
-
-            //$("#BitisTarihi").datepicker("setDate", new Date(bitisStr));
-            //$("#TarihBitis").datepicker("setDate", new Date(bit));
-            //$("#TarihBitis").datepicker("setStartDate", new Date(baslangicStr));
-
-            var sonNobetTarihi = tarihDondur2($("#SonNobetTarihi").val());
-            //alert(sonNobetTarihi)
-            var d = new Date(sonNobetTarihi);
-            $("#TarihBitis").datepicker("setDate", new Date(d));
-
+            tarihAraligiSec();
             $('.input-daterange').datepicker();
 
             nobetGrubu = getNobetGrubu();
             raporParamsBelirle();
-
-
 
             if ($('#nobetGrupGorevTipId option').length < 3) {//giresun
                 //alert($('#nobetGrupGorevTipId option').length)

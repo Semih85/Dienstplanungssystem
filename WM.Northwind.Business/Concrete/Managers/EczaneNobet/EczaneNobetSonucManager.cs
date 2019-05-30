@@ -278,6 +278,16 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipIdList(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList, bool kapaliEczaneler)
+        {
+            return _eczaneNobetSonucDal.GetDetayList(x => (x.Tarih >= baslangicTarihi || baslangicTarihi == null)
+                                                       && (x.Tarih <= bitisTarihi || bitisTarihi == null)
+                                                       && nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId)
+                                                       && (x.EczaneNobetGrupBitisTarihi == null || kapaliEczaneler)
+                                                       );
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipIdList(int[] nobetGrupGorevTipIdList)
         {
             return _eczaneNobetSonucDal.GetDetayList(x => nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId));
