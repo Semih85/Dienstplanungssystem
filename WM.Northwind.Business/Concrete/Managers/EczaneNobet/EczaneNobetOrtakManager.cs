@@ -2982,6 +2982,38 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return eczaneNobetGrupGunKuralIstatistikYatay;
         }
 
+        public List<EczaneNobetGrupGunGrupIstatistik> GetEczaneNobetGrupGunGrupIstatistik(List<EczaneNobetGrupGunKuralIstatistik> eczaneNobetGrupGunKuralIstatistik)
+        {
+            return eczaneNobetGrupGunKuralIstatistik
+                 .GroupBy(g => new
+                 {
+                     //g.EczaneNobetGrupId,
+                     //g.EczaneNobetGrupBaslamaTarihi,
+                     g.EczaneId,
+                     g.EczaneAdi,
+                     g.NobetGrupAdi,
+                     g.NobetGrupId,
+                     g.GunGrupId,
+                     g.GunGrupAdi,
+                     g.NobetAltGrupId
+                 })
+                 .Select(s => new EczaneNobetGrupGunGrupIstatistik
+                 {
+                     //EczaneNobetGrupId = s.Key.EczaneNobetGrupId,
+                     EczaneId = s.Key.EczaneId,
+                     EczaneAdi = s.Key.EczaneAdi,
+                     NobetGrupId = s.Key.NobetGrupId,
+                     NobetGrupAdi = s.Key.NobetGrupAdi,
+                     //NobetGorevTipId = s.Key.NobetGorevTipId,
+                     NobetAltGrupId = s.Key.NobetAltGrupId,
+                     GunGrupId = s.Key.GunGrupId,
+                     GunGrupAdi = s.Key.GunGrupAdi,
+                     SonNobetTarihi = s.Max(m => m.SonNobetTarihi),
+                     NobetSayisi = s.Sum(m => m.NobetSayisi),
+                     NobetSayisiGercek = s.Sum(m => m.NobetSayisiGercek)
+                 }).ToList();
+        }
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetGrupGunKuralIstatistikYatay> GetEczaneBazliGunKuralIstatistikYatayByGorevTip(List<EczaneNobetGrupGunKuralIstatistik> eczaneNobetGrupGunKuralIstatistik)
         {

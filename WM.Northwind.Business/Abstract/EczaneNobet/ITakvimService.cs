@@ -35,7 +35,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<TakvimNobetGrup> GetTakvimNobetGruplar(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetGrupIdList, int nobetGorevTipId);
         List<TakvimNobetGrup> GetTakvimNobetGruplar(DateTime baslangicTarihi, DateTime bitisTarihi, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler);
         List<TakvimNobetGrup> GetTakvimNobetGruplar(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId);
-
+        TakvimNobetGrup GetTakvimNobetGruplar(DateTime baslangicTarihi, NobetGrupGorevTipDetay nobetGrupGorevTip, int gunGrupId, int gunSayisi);
         List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId);
         List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(DateTime baslangicTarihi, DateTime bitisTarihi, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler, List<int> nobetGunKuralIdList);
 
@@ -60,6 +60,10 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
 
         List<AnahtarListe> AnahtarListeyiBuGuneTasi(List<int> nobetGrupIdListe, int nobetGorevTipId, DateTime nobetUstGrupBaslangicTarihi, List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay, List<EczaneNobetSonucListe2> anahtarListe,
             string gunGrubu);
+
+        List<EczaneNobetGrupGunGrupIstatistik> GetNobetTutamayacaklariGunAraligi(List<EczaneNobetGrupGunGrupIstatistik> eczaneNobetGrupGunGrupIstatistik,
+            List<EczaneNobetGrupDetay> eczaneNobetGrupDetaylar,
+            List<NobetGrupKuralDetay> nobetGrupKuralDetaylar);
 
         List<AnahtarListe> AnahtarListeyiBuGuneTasi(List<NobetGrupGorevTipDetay> nobetGrupGorevTipDetaylar,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,

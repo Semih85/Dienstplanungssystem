@@ -91,6 +91,22 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar2(DateTime? baslangicTarihi, DateTime? bitisTarihi, int nobetGrupGorevTipId)
+        {
+            return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => (x.Tarih >= baslangicTarihi || baslangicTarihi == null)
+                                && (x.Tarih <= bitisTarihi || bitisTarihi == null) 
+                                && x.NobetGrupGorevTipId == nobetGrupGorevTipId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar2ByNobetGrupId(DateTime? baslangicTarihi, DateTime? bitisTarihi, int nobetGrupId)
+        {
+            return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => (x.Tarih >= baslangicTarihi || baslangicTarihi == null)
+                                && (x.Tarih <= bitisTarihi || bitisTarihi == null)
+                                && x.NobetGrupId == nobetGrupId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar(DateTime baslangicTarihi, List<int> nobetGrupIdList, int nobetGorevTipId)
         {
             return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => x.Tarih >= baslangicTarihi

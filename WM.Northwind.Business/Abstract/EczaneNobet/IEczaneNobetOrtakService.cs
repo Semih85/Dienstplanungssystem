@@ -55,6 +55,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetGrupGunKuralIstatistik> GetEczaneNobetGrupGunKuralIstatistikEczaneBazli(List<EczaneNobetSonucListe2> eczaneNobetSonuc);
 
         List<EczaneNobetGrupGunKuralIstatistik> GetEczaneNobetGrupGunKuralIstatistik(List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneNobetSonucListe2> eczaneNobetSonuc);
+        List<EczaneNobetGrupGunGrupIstatistik> GetEczaneNobetGrupGunGrupIstatistik(List<EczaneNobetGrupGunKuralIstatistik> eczaneNobetGrupGunKuralIstatistik);
         List<EczaneNobetGrupGunKuralIstatistik> GetEczaneNobetGrupGunKuralIstatistikEczaneBazli(List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneNobetSonucListe2> eczaneNobetSonuc);
 
         List<EczaneNobetGrupGunKuralIstatistikYatay> GetEczaneNobetGrupGunKuralIstatistikYatay(List<EczaneNobetGrupGunKuralIstatistik> eczaneNobetGrupGunKuralIstatistik);
