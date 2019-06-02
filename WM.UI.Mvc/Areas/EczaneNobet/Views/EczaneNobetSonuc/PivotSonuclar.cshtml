@@ -129,7 +129,7 @@
                                 <a href="#" class="badge badge-info mr-2" data-toggle="tooltip" data-placement="top" id="tarihAraligiSonNobetTarihi" title="Bugün ve son nöbet arasını seç.">
                                     &ge; Bugün
                                 </a>
-                                <span class="mr-2">&#166;</span>
+                                <span class="mr-2 text-danger">&#166;</span>
                                 <a id="btnOncekiAy" href="#" class="badge badge-primary mr-2" data-toggle="tooltip" data-placement="top" title="Önceki Ay">
                                     1 Ay <i class="fa fa-minus"></i>
                                 </a>
@@ -600,7 +600,7 @@
                                 ["Eczane Sonuç"]: n.EczaneSonucAdi,
                                 ["Alt Grup Adı"]: n.NobetAltGrubu,
 
-                                //["Nöbet Sayısı"]: 1,
+                                ["Nöbet Sayısı"]: n.NobetSayisi,
                                 ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi,
                                 ["Sonuç Türü"]: n.SonucTuruAdi
                             });
@@ -935,19 +935,20 @@
                 },
             });
         }
-
+        //"Sistemden alacaklı (Geciken Nöbet)"
+        //"Sisteme borçlu (Erken Nöbet)"
         function borcDurum(borcSayisi) {
 
             var borcluGunSayisi = parseFloat(borcSayisi);
 
             if (borcluGunSayisi == 0) {
-                return "Borç/alacak yok."
+                return "Normal nöbet."
             }
             else if (borcluGunSayisi > 0) {
-                return "Sistemden alacaklı"
+                return "Geciken nöbet (Sistemden alacaklı)"
             }
             else {
-                return "Sisteme borçlu"
+                return "Erken Nöbet (Sisteme borçlu)"
             }
         }
         //var someObj = {
@@ -2721,7 +2722,7 @@
                 }
 
                 planlananVeGerceklesenNobetListesi = $(icRaporDivId).pivotUI(dagilimlarPlanlananGerceklesen, {
-                    rows: ["Nöbet Grubu", "Gün Grup", "Eczane", "Yıl-Ay"],
+                    rows: ["Nöbet Grubu", "Gün Grup", "Eczane", "Nöbet Sayısı", "Yıl-Ay"],
                     cols: pivotCols,
                     vals: ["Tarih"],
                     aggregatorName: "Benzersiz Değerleri Listele",
