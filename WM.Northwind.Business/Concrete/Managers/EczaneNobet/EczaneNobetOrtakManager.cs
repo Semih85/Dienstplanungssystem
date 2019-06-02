@@ -706,7 +706,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                             : (int)(s.NobetSayisiHaftaIci > 0
                                                                    ? (s.SonNobetTarihiHaftaIci - b.SonNobetTarihiHaftaIci).TotalDays
                                                                    : (s.SonNobetTarihiHaftaIci - b.SonNobetTarihiHaftaIci).TotalDays - (b.SonNobetTarihiHaftaIci - nobetUstGrup.BaslangicTarihi).TotalDays),
-                                                           GunGrup = gunGrup.GunGrupAdi,
+                                                           GunGrupAdi = gunGrup.GunGrupAdi,
                                                            GunGrupId = gunGrup.GunGrupId
                                                            //Nobets = b.NobetSayisi,
                                                            //AnahtarSıra = b.Id
@@ -2549,7 +2549,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                    ),
                }).ToList();
 
-            //var eczane = liste.Where(w => w.EczaneAdi == "EFENDİOĞLU").ToList();
+            var eczane = liste.Where(w => w.EczaneAdi == "NOKTA" && w.GunGrupId == 3).ToList();
 
             return liste;
         }
@@ -3217,7 +3217,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 BorcluGunSayisi = s.NobetSayisiHaftaIci > 0
                                                             ? Convert.ToInt32((s.SonNobetTarihiHaftaIci - b.SonNobetTarihi).TotalDays)
                                                             : Convert.ToInt32((s.SonNobetTarihiHaftaIci - b.SonNobetTarihi).TotalDays - (s.SonNobetTarihiHaftaIci - new DateTime(2018, 6, 1)).TotalDays),
-                                GunGrup = "Hafta İçi"
+                                GunGrupAdi = "Hafta İçi"
                             }).ToList();
 
             //var eczane = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.EczaneAdi == "EFENDİOĞLU").ToList();
@@ -4050,7 +4050,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 eczaneNobetAlacakVerecekler = new List<EczaneNobetAlacakVerecek>();
             }
 
-            var gunGruplar = eczaneNobetAlacakVerecekler.Select(s => s.GunGrup).Distinct().ToList();
+            var gunGruplar = eczaneNobetAlacakVerecekler.Select(s => s.GunGrupAdi).Distinct().ToList();
 
             foreach (var nobetGrupGorevTip in nobetGrupGorevTipler)
             {
@@ -4120,7 +4120,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                             foreach (var gunGrup in gunGruplar)
                             {
-                                var nobetBorcDurumuGunGrupBazli = nobetBorcEczaneBazli.SingleOrDefault(w => w.GunGrup == gunGrup);
+                                var nobetBorcDurumuGunGrupBazli = nobetBorcEczaneBazli.SingleOrDefault(w => w.GunGrupAdi == gunGrup);
 
                                 if (nobetBorcDurumuGunGrupBazli == null)
                                     continue;

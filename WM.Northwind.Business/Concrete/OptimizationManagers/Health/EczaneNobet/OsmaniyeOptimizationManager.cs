@@ -230,7 +230,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                                                     BorcluGunSayisi = (int)(s.NobetSayisiHaftaIci > 0
                                                             ? (s.SonNobetTarihiHaftaIci - b.Tarih).TotalDays
                                                             : (s.SonNobetTarihiHaftaIci - b.Tarih).TotalDays - (s.SonNobetTarihiHaftaIci - b.NobetUstGrupBaslamaTarihi).TotalDays),
-                                                    GunGrup = "Hafta İçi"
+                                                    GunGrupAdi = "Hafta İçi"
                                                 }).ToList();
 
             foreach (var eczane in nobetBorcluEczanelerhaftaIci)

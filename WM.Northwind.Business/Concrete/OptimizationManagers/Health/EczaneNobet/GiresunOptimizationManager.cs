@@ -256,7 +256,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                                                   : ((int)(s.NobetSayisiHaftaIci > 0
                                                       ? (s.SonNobetTarihiHaftaIci - b.Tarih).TotalDays
                                                       : (s.SonNobetTarihiHaftaIci - b.Tarih).TotalDays - (s.SonNobetTarihiHaftaIci - b.NobetUstGrupBaslamaTarihi).TotalDays)),
-                                              GunGrup = gunGrup.GunGrupAdi,
+                                              GunGrupAdi = gunGrup.GunGrupAdi,
                                               GunGrupId = gunGrup.GunGrupId
                                           }).ToList();
 

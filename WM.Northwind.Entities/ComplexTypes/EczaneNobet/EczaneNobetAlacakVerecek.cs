@@ -27,7 +27,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public DateTime SonNobetTarihi { get; set; }
         public string AnahtarTarihAciklama => String.Format("{0:yyyy MM dd, ddd}", AnahtarTarih);
         public string SonNobetTarihiAciklama => String.Format("{0:yyyy MM dd, ddd}", SonNobetTarihi);
-        public string GunGrup { get; set; }
+        public string GunGrupAdi { get; set; }
         public int GunGrupId { get; set; }
     }
 }
