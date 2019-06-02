@@ -30,6 +30,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetSonucListe2> GetSonuclar(int nobetUstGrupId, int gunGrupId, int alinacakEczaneSayisi);
         List<EczaneNobetSonucListe2> GetSonuclarByEczaneNobetGrupId(int eczaneNobetGrupId, int gunGrupId);
         List<EczaneNobetSonucListe2> GetSonuclar(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList);
+        List<EczaneNobetSonucListe2> GetSonuclar(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList, bool kapaliEczaneler);
         List<EczaneNobetSonucListe2> GetSonuclar(DateTime? baslangicTarihi, DateTime? bitisTarihi, int nobetGrupGorevTipId, int gunGrupId);
         void CokluSil(int[] ids);
         void CokluEkle(List<EczaneNobetCozum> eczaneNobetCozumler);

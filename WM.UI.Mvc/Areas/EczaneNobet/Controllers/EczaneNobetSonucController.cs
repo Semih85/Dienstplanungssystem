@@ -705,11 +705,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var sonuclarTumu = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, EczaneNobetSonucTuru.Kesin)
                 .Where(w => w.GunGrupId == gunGrupId || gunGrupId == 0).ToList();
 
-            var eczaneNobetSonuclarPlanlanan = _eczaneNobetSonucPlanlananService.GetSonuclar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId)
+            var eczaneNobetSonuclarPlanlanan = _eczaneNobetSonucPlanlananService.GetSonuclar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId, kapaliEczaneler)
                 .Where(w => w.GunGrupId == gunGrupId || gunGrupId == 0).ToList();
 
-            var eczaneNobetSonuclarPlanlananSonrasi = eczaneNobetSonuclarPlanlanan
-                .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
+            var eczaneNobetGruplarTumu = _eczaneNobetGrupService.GetAktifEczaneGrupListByNobetGrupGorevTipIdList(nobetGrupGorevTipIdList);
+
+            var eczaneNobetSonuclarPlanlananSonrasi = eczaneNobetSonuclarPlanlanan;
+            //.Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
+
+            NobetleriSirala(eczaneNobetSonuclarPlanlananSonrasi, eczaneNobetGruplarTumu, 0);
 
             var sonuclar = new List<EczaneNobetSonucListe2>();
 
@@ -726,7 +730,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     .ToList();
             }
 
-            var eczaneNobetGruplarTumu = _eczaneNobetGrupService.GetAktifEczaneGrupListByNobetGrupGorevTipIdList(nobetGrupGorevTipIdList);
+            NobetleriSirala(sonuclar, eczaneNobetGruplarTumu, 1);
 
             var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplarTumu, sonuclarTumu);
 
@@ -760,6 +764,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             if (raporId == 17)
             {
                 var plVsGerc = sonuclar.Union(eczaneNobetSonuclarPlanlananSonrasi);
+                    //.Where(w => w.NobetSayisi > 0).ToList();
 
                 return ConvertToJson(plVsGerc);
             }
@@ -772,6 +777,28 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             return ConvertToJson(eczaneNobetAlacakVerecek);
         }
+
+        private void NobetleriSirala(List<EczaneNobetSonucListe2> sonuclar, List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu, int indis)
+        {
+            foreach (var eczaneNobetGrup in eczaneNobetGruplarTumu)
+            {
+                var sonuclarEczaneBazliSitali = sonuclar
+                    .Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id)
+                    .OrderBy(o => o.GunGrupId)
+                    .ThenBy(o => o.Tarih)
+                    .ToList();
+
+                var sonucIndis = indis;
+
+                foreach (var sonuc in sonuclarEczaneBazliSitali)
+                {
+                    sonuc.NobetSayisi = sonucIndis;
+
+                    sonucIndis++;
+                }
+            }
+        }
+
         public JsonResult GetAyniGunNobetler(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi, DateTime? bitisTarihi, int raporId, bool kapaliEczaneler, int gunGrupId = 0)
         {
             var nobetGrupIdListe = nobetGrupGorevTipId.ToList();
@@ -786,7 +813,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var sonuclarTumu = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, EczaneNobetSonucTuru.Kesin)
                 .Where(w => w.GunGrupId == gunGrupId || gunGrupId == 0).ToList();
 
-            if (raporId == 21 
+            if (raporId == 21
                 || raporId == 22
                 || raporId == 32
                 )
@@ -821,7 +848,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             return ConvertToJson(new List<EczaneNobetSonucListe2>());
         }
-        
+
 
         double KalibrasyonDegeriToplam(int eczaneNobetGrupId, int gunGrupId, int kalibrasyonTipId, int nobetUstGrupId)
         {
@@ -843,7 +870,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //if (nobetUstGrupId == 5)
             //{
             var kalibrasyonlarTumu = _kalibrasyonService.GetDetaylar(nobetUstGrupId);
-                //.Where(w => w.EczaneNobetGrupId != 1031).ToList();
+            //.Where(w => w.EczaneNobetGrupId != 1031).ToList();
 
             foreach (var kalibrasyon in kalibrasyonlarTumu)
             {
@@ -1065,7 +1092,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                                  : (int)(s.NobetSayisiHaftaIci > 0
                                                         ? (s.SonNobetTarihiHaftaIci - b.Tarih).TotalDays
                                                         : (s.SonNobetTarihiHaftaIci - b.Tarih).TotalDays - (s.SonNobetTarihiHaftaIci - b.NobetUstGrupBaslamaTarihi).TotalDays),
-                                                GunGrup = b.GunGrup,
+                                                GunGrupAdi = b.GunGrup,
                                                 //Nobets = b.NobetSayisi,
                                                 AnahtarSıra = b.Id
                                             }).ToList();
@@ -1160,7 +1187,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                                     : (int)(s.NobetSayisiHaftaIci > 0
                                                            ? (s.SonNobetTarihiHaftaIci - b.Tarih).TotalDays
                                                            : (s.SonNobetTarihiHaftaIci - b.Tarih).TotalDays - (s.SonNobetTarihiHaftaIci - b.NobetUstGrupBaslamaTarihi).TotalDays),
-                                                   GunGrup = b.GunGrup,
+                                                   GunGrupAdi = b.GunGrup,
                                                    //Nobets = b.NobetSayisi,
                                                    AnahtarSıra = b.Id
                                                }).ToList();

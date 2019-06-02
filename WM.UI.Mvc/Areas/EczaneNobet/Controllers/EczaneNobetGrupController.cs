@@ -195,7 +195,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                         var planlananNobetlerinYazilacagiNobetGrubu = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
 
-                        _takvimService.SiraliNobetYazGrupBazinda(planlananNobetlerinYazilacagiNobetGrubu, gruptakiEczaneler, baslangicTarihi, planlananNobetlerinYazilacagiSonTarih);
+                        _takvimService.SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(planlananNobetlerinYazilacagiNobetGrubu, gruptakiEczaneler, baslangicTarihi, planlananNobetlerinYazilacagiSonTarih);
 
                         #endregion
                     }
@@ -306,7 +306,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     var planlananNobetlerinYazilacagiNobetGrubu = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrup.NobetGrupGorevTipId);
 
-                    _takvimService.SiraliNobetYazGrupBazinda(planlananNobetlerinYazilacagiNobetGrubu, gruptakiEczaneler, baslangicTarihi, planlananNobetlerinYazilacagiSonTarih);
+                    _takvimService.SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(planlananNobetlerinYazilacagiNobetGrubu, gruptakiEczaneler, baslangicTarihi, planlananNobetlerinYazilacagiSonTarih);
 
                     #endregion
                 }

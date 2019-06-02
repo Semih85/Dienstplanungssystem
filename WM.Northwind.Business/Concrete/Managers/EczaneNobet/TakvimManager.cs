@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WM.Core.Aspects.PostSharp.CacheAspects;
+using WM.Core.Aspects.PostSharp.TranstionAspects;
 using WM.Core.CrossCuttingConcerns.Caching.Microsoft;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.DataAccess.Abstract.EczaneNobet;
@@ -1544,7 +1545,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                         ? (s.SonNobetTarihiHaftaIci - b.Tarih).TotalDays
                                                         : 0//(s.SonNobetTarihiHaftaIci - b.Tarih).TotalDays - (s.SonNobetTarihiHaftaIci - b.EczaneNobetGrupBaslamaTarihi).TotalDays
                                                         ),
-                                                GunGrup = b.GunGrup,
+                                                GunGrupAdi = b.GunGrup,
                                                 //Nobets = b.NobetSayisi,
                                                 AnahtarSıra = b.NobetSayisi
                                             }).ToList();
@@ -1564,7 +1565,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 var kontrol = true;
 
                 if (kontrol
-                    && eczaneNobetGrup.EczaneAdi == "GÜLAY")
+                    && eczaneNobetGrup.EczaneAdi == "SEVDA")
                 {
 
                 }
@@ -1629,6 +1630,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         #endregion
 
         #region sıralı nöbet yaz
+        [TransactionScopeAspect]
         public void SiraliNobetYaz(List<NobetGrupGorevTipDetay> nobetGrupGorevTipler,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,
@@ -1867,7 +1869,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         /// <param name="eczaneNobetGruplarTumu"></param>
         /// <param name="nobetBaslangicTarihi"></param>
         /// <param name="nobetBitisTarihi"></param>
-        public void SiraliNobetYazGrupBazindaYeni(NobetGrupGorevTipDetay nobetGrupGorevTip,
+        public void SiraliNobetYazGrupBazindaYeniV1(NobetGrupGorevTipDetay nobetGrupGorevTip,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,
             DateTime nobetBitisTarihi)
@@ -1888,6 +1890,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                     var yeniAnahtarListeyeEklenecekEczaneler = eczaneNobetGruplarTumu
                         .Where(w => w.BaslangicTarihi >= nobetBaslangicTarihi).ToList();
+
                     var oncekiNobetTarihleri = new List<TakvimDetay>();
 
                     foreach (var yeniEczane in yeniAnahtarListeyeEklenecekEczaneler)
@@ -1918,7 +1921,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                     if (oncekiNobetTarihleri.Count > 0)
                     {
-                        var silinecekNobetlerPlanlanan = _eczaneNobetSonucPlanlananService.GetSonuclar(oncekiNobetTarihleri.Min(x => x.Tarih), null, nobetGrupGorevTip.Id, gunGrup.GunGrupId)
+                        var enKucukTarih = oncekiNobetTarihleri.Min(x => x.Tarih);
+
+                        nobetBaslangicTarihi = enKucukTarih;
+
+                        ilgiliTarihler = GetTakvimNobetGruplarByNobetGrupGorevTipId(nobetBaslangicTarihi, nobetBitisTarihi, nobetGrupGorevTip.Id, gunGrup.GunGrupId)
+                            .OrderBy(o => o.Tarih).ToList();
+
+                        var silinecekNobetlerPlanlanan = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetBaslangicTarihi, null, nobetGrupGorevTip.Id, gunGrup.GunGrupId)
                              //.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id)
                              .Select(s => s.Id).ToArray();
 
@@ -2171,6 +2181,337 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
         }
 
+        [TransactionScopeAspect]
+        public void SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(NobetGrupGorevTipDetay nobetGrupGorevTip,
+            List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
+            DateTime nobetBaslangicTarihi,
+            DateTime nobetBitisTarihi)
+        {//deneme2
+            #region yeni eczanenin gruba giriş tarihinden sonraki planlanan nöbetler siindi
+
+            //var silinecekNobetlerPlanlanan = _eczaneNobetSonucPlanlananService.GetDetaylarByNobetGrupGorevTipId(nobetBaslangicTarihi, null, nobetGrupGorevTip.Id)
+            //     .Select(s => s.Id).ToArray();
+
+            //_eczaneNobetSonucPlanlananService.CokluSil(silinecekNobetlerPlanlanan);
+
+            #endregion
+
+            var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTip.Id);
+
+            var nobetGrupGunGruplar = nobetGrupGorevTipGunKurallar
+                .Select(s => new
+                {
+                    s.GunGrupId,
+                    s.GunGrupAdi
+                }).Distinct()
+                .OrderByDescending(o => o.GunGrupId).ToList();
+
+            foreach (var gunGrup in nobetGrupGunGruplar
+                //.Where(w => w.GunGrupId == 3)
+                )
+            {
+
+                var sonuclarTumu = new List<EczaneNobetCozum>();
+
+                //var anahtarListeIlk = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetGrupGorevTip.Id, gunGrup.GunGrupId)
+                //    .Where(w => w.Tarih < w.NobetUstGrupBaslamaTarihi).OrderBy(o => o.Tarih).ToList();
+                var yeniAnahtarListeyeEklenecekEczaneler = eczaneNobetGruplarTumu
+                    .Where(w => w.BaslangicTarihi >= nobetBaslangicTarihi).ToList();
+
+                var oncekiNobetTarihleri = new List<TakvimDetay>();
+
+                foreach (var yeniEczane in yeniAnahtarListeyeEklenecekEczaneler)
+                {
+                    var eczaneninOncekiNobetGrubu = _eczaneNobetGrupService.GetEczaneninOncekiNobetGrubu(yeniEczane.EczaneId);
+
+                    var grupDegitirenEczaneninEskiGruptakiSonNobeti = GetGrupDegistirenEczaneninEskiGruptakiSonNobeti(gunGrup.GunGrupId, eczaneninOncekiNobetGrubu.Id);
+
+                    var yeniEczaneIlkNobetTarihi = IlkNobetTarihiniBelirle(yeniEczane, grupDegitirenEczaneninEskiGruptakiSonNobeti);
+
+                    if (yeniEczaneIlkNobetTarihi != null)
+                    {
+                        oncekiNobetTarihleri.Add(yeniEczaneIlkNobetTarihi);
+                    }
+                }
+
+                var ilgiliTarihler = new List<TakvimNobetGrup>();
+
+                if (oncekiNobetTarihleri.Count > 0)
+                {
+                    var enKucukTarih = oncekiNobetTarihleri.Min(x => x.Tarih);
+
+                    nobetBaslangicTarihi = enKucukTarih;
+
+                    ilgiliTarihler = GetTakvimNobetGruplarByNobetGrupGorevTipId(nobetBaslangicTarihi, nobetBitisTarihi, nobetGrupGorevTip.Id, gunGrup.GunGrupId)
+                        .OrderBy(o => o.Tarih).ToList();
+
+                    var silinecekNobetlerPlanlanan = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetBaslangicTarihi, null, nobetGrupGorevTip.Id, gunGrup.GunGrupId)
+                         //.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id)
+                         .Select(s => s.Id).ToArray();
+
+                    _eczaneNobetSonucPlanlananService.CokluSil(silinecekNobetlerPlanlanan);
+                }
+                else
+                {
+                    ilgiliTarihler = GetTakvimNobetGruplarByNobetGrupGorevTipId(nobetBaslangicTarihi, nobetBitisTarihi, nobetGrupGorevTip.Id, gunGrup.GunGrupId)
+                    .OrderBy(o => o.Tarih).ToList();
+                }
+
+                var anahtarListeIlk = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetGrupGorevTip.Id, gunGrup.GunGrupId)
+                    .OrderBy(o => o.Tarih).ToList();
+
+                var sonNobetci = anahtarListeIlk.LastOrDefault();
+
+                var sonNobetcininOncekiNobeti = anahtarListeIlk
+                       .Where(w => w.Tarih < sonNobetci.Tarih
+                                && w.EczaneNobetGrupId == sonNobetci.EczaneNobetGrupId)
+                                .LastOrDefault() ?? new EczaneNobetSonucListe2();
+
+                anahtarListeIlk = anahtarListeIlk
+                    .Where(w => (w.Tarih > sonNobetcininOncekiNobeti.Tarih && w.Tarih <= sonNobetci.Tarih))
+                    .OrderBy(o => o.Tarih).ToList();
+
+                var alinacakEczaneSayisi = ilgiliTarihler.Count;
+
+                var tekrarEdecekDonguSayisi = 1;
+
+                if (alinacakEczaneSayisi > anahtarListeIlk.Count)
+                {
+                    alinacakEczaneSayisi = anahtarListeIlk.Count;
+
+                    var bolum = (int)Math.Ceiling((double)ilgiliTarihler.Count / alinacakEczaneSayisi);
+
+                    tekrarEdecekDonguSayisi = bolum;// ilgiliTarihlerByNobetGrup.Count % alinacakEczaneSayisi == 0 ? bolum + 1 : bolum;
+                }
+
+                var tarihIndis = 0;
+
+                var nobetYazilacakTarihSayisi = ilgiliTarihler.Count;
+
+                for (int tekrarSayisi = 0; tekrarSayisi < tekrarEdecekDonguSayisi; tekrarSayisi++)
+                {
+                    var anahtarListe = new List<EczaneNobetSonucListe2>();
+
+                    var tarih = ilgiliTarihler[tarihIndis];
+
+                    var baslangicTarihi = tekrarSayisi == 0 ? nobetBaslangicTarihi : tarih.Tarih;
+
+                    if (tekrarSayisi == 0)
+                    {
+                        anahtarListe = anahtarListeIlk;
+                    }
+                    else
+                    {
+                        anahtarListe = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetGrupGorevTip.Id, gunGrup.GunGrupId).OrderBy(o => o.Tarih).ToList();
+                    }
+
+                    if (tekrarSayisi == tekrarEdecekDonguSayisi - 1 && tekrarSayisi > 0)
+                    {
+                        var kalanTarihSayisi = ilgiliTarihler.Where(w => w.Tarih > baslangicTarihi).Count() - anahtarListe.Count;
+
+                        alinacakEczaneSayisi = kalanTarihSayisi < 0 ? 0 : kalanTarihSayisi;
+                    }
+
+                    if (sonuclarTumu.Count < nobetYazilacakTarihSayisi && tekrarSayisi == tekrarEdecekDonguSayisi - 1 && tekrarSayisi > 0)
+                    {
+                        alinacakEczaneSayisi = nobetYazilacakTarihSayisi - sonuclarTumu.Count;
+                    }
+
+                    var sonrakiTarihIndex = alinacakEczaneSayisi;
+
+                    if (tekrarSayisi > 0)
+                    {
+                        sonrakiTarihIndex += sonuclarTumu.Count;
+                    }
+
+                    var bitisTarihi = ilgiliTarihler[sonrakiTarihIndex - 1].Tarih;
+
+                    var eczaneNobetGruplar = eczaneNobetGruplarTumu
+                        .Where(w => (w.BitisTarihi >= bitisTarihi || w.BitisTarihi == null)
+                        ).ToList();
+
+                    //son Anahtar Listede Olan EczaneNobetGruplarda olmayan Eczaneler (yeni anahtar listede olmayacak eczaneler)
+                    var kapanmadanDolayiYeniAnahtarListedencikarilacakEczaneler = anahtarListe
+                        .Where(w => !eczaneNobetGruplar.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
+
+                    //anahtar listeden kapanan eczaneyi çıkardık
+                    anahtarListe = anahtarListe
+                        .Where(w => !kapanmadanDolayiYeniAnahtarListedencikarilacakEczaneler.Select(s => s.EczaneNobetGrupId).Contains(w.EczaneNobetGrupId)).ToList();
+
+                    sonNobetci = anahtarListe
+                           .Where(w => w.GunGrupId == gunGrup.GunGrupId).LastOrDefault();
+
+                    sonNobetcininOncekiNobeti = anahtarListe
+                           .Where(w => w.GunGrupId == gunGrup.GunGrupId
+                                    && w.Tarih < sonNobetci.Tarih
+                                    && w.EczaneNobetGrupId == sonNobetci.EczaneNobetGrupId)
+                                    .LastOrDefault() ?? new EczaneNobetSonucListe2();
+
+                    var anahtarListeTumu = anahtarListe
+                        .Where(w => w.GunGrupId == gunGrup.GunGrupId
+                                 && (w.Tarih > sonNobetcininOncekiNobeti.Tarih && w.Tarih <= sonNobetci.Tarih)
+                                 )
+                                 .OrderBy(o => o.Tarih)
+                                 .ToList();
+
+                    //ihtiyaç kadar çekildi
+                    anahtarListe = anahtarListeTumu
+                        .Take(alinacakEczaneSayisi)
+                        .ToList();
+
+                    if (alinacakEczaneSayisi > anahtarListe.Count)
+                    {
+                        alinacakEczaneSayisi = anahtarListe.Count;
+                    }
+
+                    //son Anahtar Listede Olmayan EczaneNobetGruplarda olan Eczaneler (yeni anahtar listeye eklenecek eczaneler - yeni eklenenler bakılan tarih aralığında ise)
+                    yeniAnahtarListeyeEklenecekEczaneler = eczaneNobetGruplar
+                        .Where(w => !anahtarListeTumu.Select(s => s.EczaneNobetGrupId).Contains(w.Id)
+                                && (w.BaslangicTarihi >= baslangicTarihi 
+                                //&& w.BaslangicTarihi <= bitisTarihi
+                                )
+                                ).ToList();
+
+                    var eczaneNobetCozumAnaharListeGecis = new List<EczaneNobetCozumAnaharListeGecis>();
+
+                    #region kontrol
+
+                    var kontrol = true;
+
+                    if (kontrol)
+                    {
+                        var eczaneKontrolEdilecek = eczaneNobetGruplar.Where(w => w.EczaneAdi == "MÜĞREN");
+
+                        if (eczaneKontrolEdilecek.Count() > 0)
+                        {
+                        }
+                    }
+
+                    #endregion
+
+                    foreach (var yeniEczane in yeniAnahtarListeyeEklenecekEczaneler)
+                    {
+                        var eczaneninOncekiNobetGrubu = _eczaneNobetGrupService.GetEczaneninOncekiNobetGrubu(yeniEczane.EczaneId);
+
+                        var grupDegitirenEczaneninEskiGruptakiSonNobeti = new EczaneNobetSonucListe2();
+
+                        if (eczaneninOncekiNobetGrubu.Id > 0)
+                        {
+                            grupDegitirenEczaneninEskiGruptakiSonNobeti = _eczaneNobetSonucPlanlananService
+                                .GetSonuclarByEczaneNobetGrupId(eczaneninOncekiNobetGrubu.Id, gunGrup.GunGrupId)
+                                .OrderByDescending(o => o.Tarih).FirstOrDefault();
+                        }
+
+                        //var grupDegitirenEczaneninEskiGruptakiSonNobeti = anahtarListeIlk.SingleOrDefault(x => x.EczaneId == yeniEczane.EczaneId);
+                        var yeniEczaneTarih = IlkNobetTarihiniBelirle(yeniEczane, grupDegitirenEczaneninEskiGruptakiSonNobeti);
+
+                        //var yeniEczaneTarih = yeniEczane.BaslangicTarihi < yeniEczane.NobetUstGrupBaslamaTarihi
+                        //    ? yeniEczane.NobetUstGrupBaslamaTarihi
+                        //    : grupDegitirenEczaneninEskiGruptakiSonNobeti.EczaneNobetGrupId != 0
+                        //    ? grupDegitirenEczaneninEskiGruptakiSonNobeti.Tarih
+                        //    : yeniEczane.BaslangicTarihi;
+
+                        //var takvim = GetDetay(yeniEczaneTarih);
+
+                        //oncekiNobetTarihleri2.Add(takvim);
+
+                        eczaneNobetCozumAnaharListeGecis.Add(new EczaneNobetCozumAnaharListeGecis
+                        {
+                            EczaneNobetGrupId = yeniEczane.Id,
+                            NobetGorevTipId = yeniEczane.NobetGorevTipId,
+                            TakvimId = yeniEczaneTarih.TakvimId,
+                            Tarih = yeniEczaneTarih.Tarih,
+                            EczaneTipId = 0//anahtar tarihte yeni eklenen eczane varsa liste kayacak
+                        });
+                    }
+
+
+                    for (int i = 0; i < alinacakEczaneSayisi; i++)
+                    {
+                        tarih = ilgiliTarihler[tarihIndis];
+
+                        eczaneNobetCozumAnaharListeGecis.Add(new EczaneNobetCozumAnaharListeGecis
+                        {
+                            EczaneNobetGrupId = anahtarListe[i].EczaneNobetGrupId,
+                            NobetGorevTipId = anahtarListe[i].NobetGorevTipId,
+                            TakvimId = tarih.TakvimId,
+                            Tarih = tarih.Tarih,
+                            EczaneTipId = 1
+                        });
+
+                        tarihIndis++;
+                    }
+
+                    var siraliAnahtarListeSon = eczaneNobetCozumAnaharListeGecis
+                            .OrderBy(o => o.Tarih)
+                            .ThenBy(o => o.EczaneTipId)
+                            .Take(alinacakEczaneSayisi)
+                            .ToList();
+
+                    var k = sonuclarTumu.Count;
+
+                    var araCozum = new List<EczaneNobetCozum>();
+
+                    for (int i = 0; i < alinacakEczaneSayisi; i++)
+                    {
+                        araCozum.Add(new EczaneNobetCozum
+                        {
+                            EczaneNobetGrupId = siraliAnahtarListeSon[i].EczaneNobetGrupId,
+                            NobetGorevTipId = siraliAnahtarListeSon[i].NobetGorevTipId,
+                            TakvimId = ilgiliTarihler[k].TakvimId
+                        });
+
+                        k++;
+                    }
+
+                    sonuclarTumu.AddRange(araCozum);
+
+                    _eczaneNobetSonucPlanlananService.CokluEkle(araCozum);
+
+                    if (sonuclarTumu.Count < nobetYazilacakTarihSayisi && tekrarSayisi == tekrarEdecekDonguSayisi - 1 && tekrarSayisi > 0)
+                    {
+                        tekrarEdecekDonguSayisi++;
+                    }
+                }
+            }
+        }
+
+        private TakvimDetay IlkNobetTarihiniBelirle(EczaneNobetGrupDetay yeniEczane, EczaneNobetSonucListe2 grupDegitirenEczaneninEskiGruptakiSonNobeti)
+        {
+            int grupDegitirenEczaneninEskiGruptakiSonNobetiId;
+
+            if (grupDegitirenEczaneninEskiGruptakiSonNobeti == null)
+            {
+                grupDegitirenEczaneninEskiGruptakiSonNobetiId = 0;
+            }
+            else
+            {
+                grupDegitirenEczaneninEskiGruptakiSonNobetiId = grupDegitirenEczaneninEskiGruptakiSonNobeti.Id;
+            }
+
+            var yeniEczaneIlkNobetTarihi = yeniEczane.BaslangicTarihi < yeniEczane.NobetUstGrupBaslamaTarihi
+                ? yeniEczane.NobetUstGrupBaslamaTarihi
+                : grupDegitirenEczaneninEskiGruptakiSonNobetiId > 0
+                ? grupDegitirenEczaneninEskiGruptakiSonNobeti.Tarih
+                : yeniEczane.BaslangicTarihi;
+
+            return GetDetay(yeniEczaneIlkNobetTarihi);
+        }
+
+        private EczaneNobetSonucListe2 GetGrupDegistirenEczaneninEskiGruptakiSonNobeti(int gunGrupId, int oncekiEczaneNobetGrupId)
+        {
+            var grupDegitirenEczaneninEskiGruptakiSonNobeti = new EczaneNobetSonucListe2();
+
+            if (oncekiEczaneNobetGrupId > 0)
+            {
+                grupDegitirenEczaneninEskiGruptakiSonNobeti = _eczaneNobetSonucPlanlananService
+                    .GetSonuclarByEczaneNobetGrupId(oncekiEczaneNobetGrupId, gunGrupId)
+                    .OrderByDescending(o => o.Tarih).FirstOrDefault();
+            }
+
+            return grupDegitirenEczaneninEskiGruptakiSonNobeti;
+        }
+
         /// <summary>
         /// orjinal sıralı nöbet yaz
         /// </summary>
@@ -2227,7 +2568,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                     var tekrarEdecekDonguSayisi = 1;
 
-                    if (ilgiliTarihler.Count > anahtarListeIlk.Count)
+                    if (alinacakEczaneSayisi > anahtarListeIlk.Count)
                     {
                         alinacakEczaneSayisi = anahtarListeIlk.Count;
 
@@ -2236,21 +2577,21 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         tekrarEdecekDonguSayisi = bolum;// ilgiliTarihlerByNobetGrup.Count % alinacakEczaneSayisi == 0 ? bolum + 1 : bolum;
                     }
 
-                    var j = 0;
+                    var tarihIndis = 0;
 
                     var nobetYazilacakTarihSayisi = ilgiliTarihler.Count;
 
-                    var gecis = new List<EczaneNobetCozumAnaharListeGecis>();
+                    //var gecis = new List<EczaneNobetCozumAnaharListeGecis>();
 
-                    for (int d = 0; d < tekrarEdecekDonguSayisi; d++)
+                    for (int tekrarSayisi = 0; tekrarSayisi < tekrarEdecekDonguSayisi; tekrarSayisi++)
                     {
                         var anahtarListe = new List<EczaneNobetSonucListe2>();
 
-                        var tarih = ilgiliTarihler[j];
+                        var tarih = ilgiliTarihler[tarihIndis];
 
-                        var baslangicTarihi = d == 0 ? nobetBaslangicTarihi : tarih.Tarih;
+                        var baslangicTarihi = tekrarSayisi == 0 ? nobetBaslangicTarihi : tarih.Tarih;
 
-                        if (d == 0)
+                        if (tekrarSayisi == 0)
                         {
                             anahtarListe = anahtarListeIlk;
                         }
@@ -2259,21 +2600,21 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                             anahtarListe = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetGrupGorevTip.Id, gunGrup.GunGrupId).OrderBy(o => o.Tarih).ToList();
                         }
 
-                        if (d == tekrarEdecekDonguSayisi - 1 && d > 0)
+                        if (tekrarSayisi == tekrarEdecekDonguSayisi - 1 && tekrarSayisi > 0)
                         {
                             var kalanTarihSayisi = ilgiliTarihler.Where(w => w.Tarih > baslangicTarihi).Count() - anahtarListe.Count;
 
                             alinacakEczaneSayisi = kalanTarihSayisi < 0 ? 0 : kalanTarihSayisi;
                         }
 
-                        if (sonuclarTumu.Count < nobetYazilacakTarihSayisi && d == tekrarEdecekDonguSayisi - 1 && d > 0)
+                        if (sonuclarTumu.Count < nobetYazilacakTarihSayisi && tekrarSayisi == tekrarEdecekDonguSayisi - 1 && tekrarSayisi > 0)
                         {
                             alinacakEczaneSayisi = nobetYazilacakTarihSayisi - sonuclarTumu.Count;
                         }
 
                         var sonrakiTarihIndex = alinacakEczaneSayisi;
 
-                        if (d > 0)
+                        if (tekrarSayisi > 0)
                         {
                             sonrakiTarihIndex += sonuclarTumu.Count;
                         }
@@ -2367,7 +2708,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                         for (int i = 0; i < alinacakEczaneSayisi; i++)
                         {
-                            tarih = ilgiliTarihler[j];
+                            tarih = ilgiliTarihler[tarihIndis];
 
                             eczaneNobetCozumAnaharListeGecis.Add(new EczaneNobetCozumAnaharListeGecis
                             {
@@ -2378,7 +2719,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 EczaneTipId = 1
                             });
 
-                            j++;
+                            tarihIndis++;
                         }
 
                         var siraliAnahtarListeSon = eczaneNobetCozumAnaharListeGecis
@@ -2387,7 +2728,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 .Take(alinacakEczaneSayisi)
                                 .ToList();
 
-                        gecis.AddRange(siraliAnahtarListeSon);
+                        //gecis.AddRange(siraliAnahtarListeSon);
 
                         var k = sonuclarTumu.Count;
 
@@ -2409,7 +2750,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                         _eczaneNobetSonucPlanlananService.CokluEkle(araCozum);
 
-                        if (sonuclarTumu.Count < nobetYazilacakTarihSayisi && d == tekrarEdecekDonguSayisi - 1 && d > 0)
+                        if (sonuclarTumu.Count < nobetYazilacakTarihSayisi && tekrarSayisi == tekrarEdecekDonguSayisi - 1 && tekrarSayisi > 0)
                         {
                             tekrarEdecekDonguSayisi++;
                         }
