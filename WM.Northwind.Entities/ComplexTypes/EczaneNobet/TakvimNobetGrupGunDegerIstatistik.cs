@@ -44,5 +44,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string GunGrupAdi { get; set; }
         public int GunGrupId { get; set; }
         public DateTime? NobetGunKuralKapanmaTarihi { get; set; }
+        public string NobetGorevTipAdi { get; set; }
+        public string NobetGrupAdi { get; set; }
     }
 }

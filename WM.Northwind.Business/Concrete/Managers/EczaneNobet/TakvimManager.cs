@@ -816,6 +816,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 {
                     g.NobetGrupGorevTipId,
                     g.NobetGrupId,
+                    g.NobetGrupAdi,
+                    g.NobetGorevTipAdi,
                     g.NobetGunKuralId,
                     g.NobetGunKuralAdi,
                     g.NobetGorevTipId,
@@ -829,6 +831,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     NobetGrupId = s.Key.NobetGrupId,
                     NobetGorevTipId = s.Key.NobetGorevTipId,
                     NobetGunKuralId = s.Key.NobetGunKuralId,
+                    NobetGrupAdi = s.Key.NobetGrupAdi,
+                    NobetGorevTipAdi = s.Key.NobetGorevTipAdi,
                     NobetGunKuralAdi = s.Key.NobetGunKuralAdi,
                     GunGrupAdi = s.Key.GunGrupAdi,
                     GunGrupId = s.Key.GunGrupId,
