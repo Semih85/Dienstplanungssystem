@@ -23,6 +23,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         NobetGrupGorevTipTakvimOzelGunDetay GetDetayById(int nobetGrupGorevTipTakvimOzelGunId);
         List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar();
         List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar(int nobetUstGrupId);
+        List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar(int nobetUstGrupId, int nobetGrupGorevTipId = 0, int nobetOzelGunId = 0);
         List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar(List<int> nobetUstGrupIdList);
         List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId);
         List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar(DateTime baslangicTarihi, List<int> nobetGrupIdList, int nobetGorevTipId);

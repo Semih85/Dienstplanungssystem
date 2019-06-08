@@ -84,10 +84,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetOzelGunler = _nobetOzelGunService.GetList()
                 .Where(w => w.Id == nobetOzelGunId || nobetOzelGunId == 0);
 
-            var bayramlar = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGrup.Id)
-                .Where(w => (w.NobetGrupGorevTipId == nobetGrupGorevTipId || nobetGrupGorevTipId == 0)
-                         && (w.NobetOzelGunId == nobetOzelGunId || nobetOzelGunId == 0)
-                ).OrderBy(o => o.Tarih).ToList();
+            var bayramlar = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGrup.Id, (int)nobetGrupGorevTipId, (int)nobetOzelGunId)
+                //.Where(w => (w.NobetGrupGorevTipId == nobetGrupGorevTipId || nobetGrupGorevTipId == 0)
+                //         && (w.NobetOzelGunId == nobetOzelGunId || nobetOzelGunId == 0))
+            .OrderBy(o => o.Tarih).ToList();
 
             ViewBag.NobetOzelGunId = new SelectList(nobetOzelGunler, "Id", "Adi");
             ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "Adi");
@@ -111,10 +111,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            var bayramlar = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGrup.Id)
-                .Where(w => (w.NobetGrupGorevTipId == nobetGrupGorevTipId || nobetGrupGorevTipId == 0)
-                         && (w.NobetOzelGunId == nobetOzelGunId || nobetOzelGunId == 0)
-                ).OrderBy(o => o.Tarih).ToList();
+            var bayramlar = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGrup.Id, (int)nobetGrupGorevTipId, (int)nobetOzelGunId)
+                //.Where(w => (w.NobetGrupGorevTipId == nobetGrupGorevTipId || nobetGrupGorevTipId == 0)
+                //         && (w.NobetOzelGunId == nobetOzelGunId || nobetOzelGunId == 0))
+                .OrderBy(o => o.Tarih).ToList();
 
             ViewBag.SilinenBayramSayisi = silinecekBayramids.Length;
 
