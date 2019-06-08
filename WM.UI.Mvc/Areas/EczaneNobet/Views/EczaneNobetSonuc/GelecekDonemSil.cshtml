@@ -78,21 +78,21 @@
                         @Html.ListBox("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control mb-2", size = $"{(ViewBag.grupSayisi > 11 ? 11 : ViewBag.grupSayisi)}" }) @*$"{ViewBag.grupSayisi}"*@
 
                         @*@Html.ListBox("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control selectpicker",
-                                multiple = "true",
-                                //data_width = "auto",
-                                data_actions_box = "true",
-                                mobile = "true",
-                                data_live_search = "true",
-                                //data_selected_text_format = "count > 4",
-                                title = "Tüm Gruplar"
-                            })*@
+                        multiple = "true",
+                        //data_width = "auto",
+                        data_actions_box = "true",
+                        mobile = "true",
+                        data_live_search = "true",
+                        //data_selected_text_format = "count > 4",
+                        title = "Tüm Gruplar"
+                    })*@
                     </div>
                 </div>
 
                 @*<div class="form-group mr-2 mb-4">
-                        <label class="form-control-label font-weight-bold text-secondary mr-sm-2">Nöbet Grubu: </label>
-                        @Html.DropDownList("NobetGrupId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "---Tümü---")
-                    </div>*@
+                <label class="form-control-label font-weight-bold text-secondary mr-sm-2">Nöbet Grubu: </label>
+                @Html.DropDownList("NobetGrupId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "---Tümü---")
+            </div>*@
 
                 <div class="form-group row">
                     <div class="col-sm-10">
@@ -101,15 +101,17 @@
                 </div>
 
                 @*<div class="form-groupmb-1" id="btnSil">
-                        <button type="submit" class="btn btn-danger mr-3" onclick="return confirm('Bu nöbetleri kalıcı olarak silmek istediğinizden emin misiniz?');">Nöbetleri Sil</button>
-                    </div>*@
+                <button type="submit" class="btn btn-danger mr-3" onclick="return confirm('Bu nöbetleri kalıcı olarak silmek istediğinizden emin misiniz?');">Nöbetleri Sil</button>
+            </div>*@
             }
 
-
-
-            <div id="wait" style="display:none; position:absolute;">
+            @*<div id="wait" style="display:none; position:absolute;">
                 <img src='~/Content/images/orig.gif' />
-            </div>
+            </div>*@
+
+            <span id="wait" class="spinner-border text-danger pr-0 mr-0" role="status" style="display:none">
+                <span class="sr-only">Loading...</span>
+            </span>
 
             <div id="silinenKayitMesaj">
 
