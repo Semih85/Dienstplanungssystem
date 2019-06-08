@@ -32,7 +32,7 @@
     </div>
     <div class="col-md-8">
         <div class="btn-group" role="group" aria-label="Basic example">
-            <a class="btn btn-warning btn-sm mr-4" href="@Url.Action("Create", null, new { area= "EczaneNobet" })">
+            <a class="btn btn-info btn-sm mr-4" href="@Url.Action("Create", null, new { area= "EczaneNobet" })">
                 <span class="fa fa-plus">
                 </span> <span class="d-none d-sm-inline"> Yeni</span> Mazeret
             </a>
@@ -54,66 +54,82 @@
 @*<hr />*@
 
 <div class="collapse" id="collapseKriterler">
-    <div class="row">
-        <div class="col my-2">
+    <div class="container-fluid">
 
-            @using (Ajax.BeginForm("GetMazeretler", "EczaneNobetMazeret", null, new { @class = "form-inline mr-md-5 my-2 my-lg-0", id = "formTumu" }))
-            {
-                <div class="form-group mr-2">
-                    @Html.DropDownList("NobetGrupGorevTipId",
-                   null,
-                   htmlAttributes: new {
-                       @class = "form-control selectpicker",
-                       data_width = "auto",
-                       mobile = "true",
-                       multiple = "true",
-                       data_actions_box = "true",
-                       data_live_search = "true",
-                       title = "Nöbet Grubu Seçiniz.."}
-                   //optionLabel: "Tüm Gruplar"
-                   )
-                </div>
+        <div class="row">
+            <div class="col my-2 py-1 border border-primary">
 
-                <div class="form-group mr-3">
-                    @Html.DropDownList("EczaneNobetMazeretIstekTipId", null, htmlAttributes: new
-                                   {
-                                       @class = "form-control mr-1"
-                                   }, optionLabel: "Mazeret ve İstek")
-                </div>
-                <div class="form-inline" id="fromTarihAraligi">
-                    <div class="input-group input-daterange mr-3" style="width:350px;">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text p-2">
-                                <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
-                                <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
-                            </span>
+                @using (Ajax.BeginForm("GetMazeretler", "EczaneNobetMazeret", null, new { @class = "form-inline mr-md-5 my-2 my-lg-1", id = "formTumu" }))
+                {
+                    <a id="tumunuSecKaldir" href="#" class="badge badge-primary mr-2 mb-3 mb-md-0" data-toggle="tooltip" data-placement="top" title="Tüm Grupları Seç/Kaldır">
+                        Tümü
+                    </a>
+                    <div class="form-group mr-3" id="frmGrupNobetGrupGorevTipId">
+                        @Html.ListBox("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control  ", size = 1 })
+
+                        @*@Html.DropDownList("NobetGrupGorevTipId",
+                        null,
+                        htmlAttributes: new
+                             {
+                            @class = "form-control selectpicker",
+                            data_width = "auto",
+                            mobile = "true",
+                            multiple = "true",
+                            data_actions_box = "true",
+                            data_live_search = "true",
+                            title = "Nöbet Grubu Seçiniz.."
+                             }
+                        //optionLabel: "Tüm Gruplar"
+                        )*@
+                    </div>
+
+                    <div class="form-group mr-3">
+                        @Html.DropDownList("EczaneNobetMazeretIstekTipId", null, htmlAttributes: new
+                                       {
+                                           @class = "form-control mr-1"
+                                       }, optionLabel: "Mazeret ve İstek")
+                    </div>
+                    <div class="form-inline mb-3 mb-md-0" id="fromTarihAraligi">
+                        <div class="input-group input-daterange mr-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text p-2">
+                                    <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
+                                    <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
+                                </span>
+                            </div>
+                            @Html.TextBox("BaslangicTarihi", null, new
+                            {
+                               @class = "form-control datepicker mr-2",
+                               //data_toggle = "tooltip",
+                               //data_placement = "top",
+                               //title = "Başlangıç Tarihi",
+                               autocomplete = "off",
+                               placeHolder = "Başlama Tarihi",
+                               style = "width:100px;"
+                           })
+
+                            <div class="input-group-addon mr-2 mt-1 p-1">-</div>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text p-2">
+                                    <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
+                                    <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
+                                </span>
+                            </div>
+                            @Html.TextBox("BitisTarihi", null, new
+                            {
+                                @class = "form-control datepicker",
+                               //data_toggle = "tooltip",
+                               //data_placement = "top",
+                               //title = "Bitiş Tarihi",
+                               autocomplete = "off",
+                               placeHolder = "Bitiş Tarihi",
+                               style = "width:100px;"
+                           })
+
                         </div>
-                        @Html.TextBox("BaslangicTarihi", null, new
-                        {
-                           @class = "form-control datepicker mr-2",
-                           //data_toggle = "tooltip",
-                           //data_placement = "top",
-                           //title = "Başlangıç Tarihi",
-                           autocomplete = "off",
-                           placeHolder = "Başlama Tarihi"
-                       })
 
-                        <div class="input-group-addon mr-2 mt-1 p-1">-</div>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text p-2">
-                                <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
-                                <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
-                            </span>
-                        </div>
-                        @Html.TextBox("BitisTarihi", null, new
-                        {
-                            @class = "form-control datepicker",
-                           //data_toggle = "tooltip",
-                           //data_placement = "top",
-                           //title = "Bitiş Tarihi",
-                           autocomplete = "off",
-                           placeHolder = "Bitiş Tarihi"
-                       })
+                        @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
 
                     </div>
 
@@ -121,46 +137,43 @@
                         <span class="input-group-btn mr-3">
                             <button type="button" id="submitSorgula" class="btn btn-primary"><i class="fa fa-search mr-2"></i>Sorgula</button>
                         </span>
-
                     </div>
+
                     <span id="loading" class="spinner-border text-primary pr-0 mr-0" role="status" style="display:none;">
                         <span class="sr-only">Loading...</span>
                     </span>
-                    @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
-                    @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
 
-                </div>
+                }
 
-            }
-
-            @if (TempData["EklenenMazeretSayisi"] != null)
-            {
-                <div class="row justify-content-sm-center">
-                    <div class="col-12">
-                        <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
-                            <i class="fa fa-check"></i> @TempData["EklenenMazeretSayisi"] günlük mazeret eklenmiştir.
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                @if (TempData["EklenenMazeretSayisi"] != null)
+                {
+                    <div class="row justify-content-sm-center">
+                        <div class="col-12">
+                            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                                <i class="fa fa-check"></i> @TempData["EklenenMazeretSayisi"] günlük mazeret eklenmiştir.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
 </div>
 
 @*<div class="row">
-    <div class="col-lg-3">
-    </div>
-    <div class="col-lg-4">
-        <div id="loading" align="center" style="margin-top: 10%; display:none">
-            <img src="~/Content/images/orig.gif" />
+        <div class="col-lg-3">
         </div>
-    </div>
-    <div class="col-lg-4">
-    </div>
-</div>*@
+        <div class="col-lg-4">
+            <div id="loading" align="center" style="margin-top: 10%; display:none">
+                <img src="~/Content/images/orig.gif" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+        </div>
+    </div>*@
 
 <div class="row" id="div1" style="visibility:hidden">
     <div class="col-sm-12">
@@ -272,6 +285,7 @@
         var eczaneNobetMazeretIstekTipId;
         var baslangicTarihi;
         var bitisTarihi;
+        var secilenGrupSayisi;
 
         var dagilimlar;
         var mazeretSonuclar = new Array();
@@ -482,8 +496,54 @@
             }
         }
 
+        function getNobetGrubu() {
+            //alert(1)
+
+            nobetGrubu = [];
+
+            //else {
+            $('#NobetGrupGorevTipId :selected').each(function () {
+                nobetGrubu.push({ Id: parseInt($(this).val()) });
+            });
+
+            if ($('#NobetGrupGorevTipId option').length == 1) {
+                $('#frmGrupNobetGrupGorevTipId').hide()
+                $('#tumunuSecKaldir').hide()                
+                $('#lblnobetGrupGorevTipId').hide()
+            }
+
+            secilenGrupSayisi = nobetGrubu.length;
+            //}
+            //alert(2)
+            //console.log(nobetGrubu)
+            return nobetGrubu;// + ' ' + selected.text();
+        }
+
+        $('#NobetGrupGorevTipId').hover(function () {
+            $(this).attr("size", function () { return this.options.length > 11 ? 11 : this.options.length; });
+        }, function () {
+            $(this).attr("size", function () { return 1; });
+        }
+        );
+
+        var tumuSeciliMi = false;
+
+        $('#tumunuSecKaldir').click(function () {
+            if (tumuSeciliMi == false && secilenGrupSayisi == 0) {
+                tumuSeciliMi = true;
+                $('#NobetGrupGorevTipId option').prop('selected', true);
+            }
+            else {
+                tumuSeciliMi = false;
+                $('#NobetGrupGorevTipId option').prop('selected', false);
+            }
+            nobetGrubu = getNobetGrubu();
+        });
+
         $("#NobetGrupGorevTipId").change(function () {
             //nobetGrubu = getNobetGrupId();
+            nobetGrubu = getNobetGrubu();
+
             mazeretIstekTipIdGetir();
             //alert(nobetGrubu)
             //tarihAraligi();
@@ -513,13 +573,19 @@
                 $('.selectpicker').selectpicker('val', '');
             }
 
-            secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+            //secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
 
-            if (secilenGrupSayisi == 0) {
-                alert("Lütfen nöbet grubu seçiniz")
-                e.preventDefault();
-                return false;
-            };
+            //if (secilenGrupSayisi == 0) {
+            //    alert("Lütfen nöbet grubu seçiniz")
+            //    e.preventDefault();
+            //    return false;
+            //};
+
+            if ($('#NobetGrupGorevTipId :selected').length == 0) {
+                $('#NobetGrupGorevTipId option').prop('selected', true);
+            }
+
+            getNobetGrubu()
             //if (secilenEczaneSayisi == 0) {
             //    alert("Lütfen en az 1 eczane seçiniz...")
             //    e.preventDefault();
@@ -818,7 +884,7 @@
             if (mazeretSonuclarFiltreli.length > 0) {
                 //alert(mazeretSonuclar.length)
                 //<input type='checkbox' id='checkAll'/>
-                tablo = "<table id='gridT' class='table table-hover table-striped table-bordered table-sm text-left'>";
+                tablo = "<table id='gridT' class='table table-hover table-striped table-responsive-sm table-sm text-left'>";
                 tablo += "<thead class='thead-light'>"
                     + "<tr>"
                     + "<th style='width:1%'>Seç</th>"
@@ -950,8 +1016,9 @@
 
         $(function () {
             //getJsonDagilimlar(urlDagilimlar);
-            nobetGrubu = getNobetGrupId();
-            
+            //nobetGrubu = getNobetGrupId();
+            nobetGrubu = getNobetGrubu();
+
             var tarih = new Date();
 
             $("#BaslangicTarihi").datepicker("setDate", tarih);
