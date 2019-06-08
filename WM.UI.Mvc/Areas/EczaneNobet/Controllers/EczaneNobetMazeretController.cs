@@ -87,6 +87,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.EczaneNobetMazeretIstekTipId = new SelectList(eczaneNobetMezaretIstekTipler, "Id", "Value", 0);
             // ViewBag.EczaneNobetMazeretIstekTipId = new SelectList(items: eczaneNobetMezaretIstekTipler, dataValueField: "Id", dataTextField: "Adi", selectedValue: 0);
             //ViewData["Sonuclar"] = 1;
+
+            ViewBag.NobetUstGrupId = nobetUstGrup.Id;
             return View();
         }
 

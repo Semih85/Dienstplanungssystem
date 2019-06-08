@@ -25,6 +25,7 @@
 }
 <!-- #endregion -->
 
+@Html.Hidden("NobetUstGrupId", (int)ViewBag.NobetUstGrupId)
 
 <div class="row mb-2">
     <div class="col-md-4 mb-2">
@@ -286,7 +287,7 @@
         var baslangicTarihi;
         var bitisTarihi;
         var secilenGrupSayisi;
-
+        var nobetUstGrupId;
         var dagilimlar;
         var mazeretSonuclar = new Array();
         var mazeretSonuclarFiltreli = new Array();
@@ -630,7 +631,7 @@
 
         function uyariDivOlustur(mesaj, divId, parentDivId) {
 
-            var uyariMesaj = "<i class='fa fa-warning'></i> Bu raporu görüntülemek için; <strong>" + mesaj + " bulanmamaktadır...</strong>";
+            var uyariMesaj = "<i class='fa fa-info'></i> Bu raporu görüntülemek için <strong>" + mesaj + " bulanmamaktadır...</strong>";
 
             if ($('#' + divId).length === 0) {
 
@@ -792,16 +793,30 @@
                     });
                 });
 
+                var pivotRows = ["NöbetGrubu", "Eczane"];
+                var pivotCols = ["Tip", "YılAy"];
+
+                if (nobetUstGrupId == 4) {
+                    pivotRows = ["NöbetGrubu", "Görev Tipi", "Eczane"];
+                    //pivotCols = ["Gün Grup", "Mevsim"];
+                }
+                else if (nobetUstGrupId == 5) {
+                    pivotRows = ["NöbetGrubu", "Görev Tipi", "Eczane"];
+                }
+                else if (nobetUstGrupId == 9) {
+                    pivotRows = ["NöbetGrubu", "Görev Tipi", "Eczane"];
+                }
+
                 mazeretListe = $("#mazeretIstatistik").pivotUI(mazeretSonuclarPivot, {
-                    rows: ["NöbetGrubu", "Görev Tipi", "Eczane"],
-                    cols: ["YılAy", "Tip"], //, "GunDeger", "GunTanim"
+                    rows: pivotRows,
+                    cols: pivotCols, //, "GunDeger", "GunTanim"
                     vals: ["Tarih"],
                     aggregatorName: "Say",
-                    rendererName: "Sicaklik Haritasi",
+                    rendererName: "Sıcaklık haritası",
                     onRefresh: function (config) {
                         $("#mazeretIstatistik").parent().find('.pvtAggregator').hide();
-                        $("#mazeretIstatistik").parent().find('.pvtAttrDropdown').hide();
-                        $("#mazeretIstatistik").parent().find('.pvtRenderer').hide();
+                        //$("#mazeretIstatistik").parent().find('.pvtAttrDropdown').hide();
+                        //$("#mazeretIstatistik").parent().find('.pvtRenderer').hide();
                     }
                 });
             }
@@ -1052,6 +1067,8 @@
             $("#collapseKriterler").collapse('show');
 
         });
+
+        nobetUstGrupId = $("#NobetUstGrupId").val()
 
         $('#btnExceleAktar').click(function () {
             // alert('ConfirmSubmit')
