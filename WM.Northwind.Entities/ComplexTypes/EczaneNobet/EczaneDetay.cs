@@ -14,7 +14,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
     {
         public int Id { get; set; }
         [Display(Name = "Eczane")]
-        public string EczaneAdi { get; set; }   
+        public string EczaneAdi { get; set; }
+        public string EczaneAdiUzun => $"{EczaneAdi} Eczanesi";
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Açılış Tarihi")]
@@ -32,7 +33,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public double Enlem { get; set; }
         [Required(ErrorMessage = "Boylam gereklidir. Bilmiyorsanız 0 giriniz.")]
         public double Boylam { get; set; }
-        
+
         [Display(Name = "Adres Tarifi")]
         public string AdresTarifi { get; set; }
         [Display(Name = "Adres Tarifi Kısa")]
