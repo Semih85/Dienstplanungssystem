@@ -30,6 +30,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetMazeretDetay> GetDetaylar(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId);
         List<EczaneNobetMazeretDetay> GetDetaylar(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetGrupIdList);
         List<EczaneNobetMazeretDetay> GetDetaylar(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList);
+        List<EczaneNobetMazeretDetay> GetDetaylar(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList, int nobetUstGrupId);
         List<EczaneNobetMazeretDetay> GetDetaylarNobetGrupId(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetGrupId);
 
         List<EczaneNobetMazeretDetay> GetDetaylarByEczaneIdList(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> ecznaneIdList);

@@ -32,11 +32,11 @@
     </div>
     <div class="col-md-8">
         <div class="btn-group" role="group" aria-label="Basic example">
-            <a class="btn btn-success btn-sm mr-4" href="@Url.Action("Create", null, new { area= "EczaneNobet" })">
+            <a class="btn btn-warning btn-sm mr-4" href="@Url.Action("Create", null, new { area= "EczaneNobet" })">
                 <span class="fa fa-plus">
                 </span> <span class="d-none d-sm-inline"> Yeni</span> Mazeret
             </a>
-            <a class="btn btn-primary btn-sm mr-4" href="@Url.Action("Create", "EczaneNobetIstek", new { area= "EczaneNobet" })">
+            <a class="btn btn-success btn-sm mr-4" href="@Url.Action("Create", "EczaneNobetIstek", new { area= "EczaneNobet" })">
                 <span class="fa fa-plus"></span>
                 <span class="d-none d-sm-inline"> Yeni</span> İstek
             </a>
@@ -56,10 +56,22 @@
 <div class="collapse" id="collapseKriterler">
     <div class="row">
         <div class="col my-2">
-            <div class="form-inline">
 
+            @using (Ajax.BeginForm("GetMazeretler", "EczaneNobetMazeret", null, new { @class = "form-inline mr-md-5 my-2 my-lg-0", id = "formTumu" }))
+            {
                 <div class="form-group mr-2">
-                    @Html.DropDownList("NobetGrupId", null, htmlAttributes: new { @class = "form-control selectpicker", data_width = "auto", mobile = "true", data_live_search = "true" }, optionLabel: "Tüm Gruplar")
+                    @Html.DropDownList("NobetGrupGorevTipId",
+                   null,
+                   htmlAttributes: new {
+                       @class = "form-control selectpicker",
+                       data_width = "auto",
+                       mobile = "true",
+                       multiple = "true",
+                       data_actions_box = "true",
+                       data_live_search = "true",
+                       title = "Nöbet Grubu Seçiniz.."}
+                   //optionLabel: "Tüm Gruplar"
+                   )
                 </div>
 
                 <div class="form-group mr-3">
@@ -69,7 +81,7 @@
                                    }, optionLabel: "Mazeret ve İstek")
                 </div>
                 <div class="form-inline" id="fromTarihAraligi">
-                    <div class="input-group input-daterange" style="width:350px;">
+                    <div class="input-group input-daterange mr-3" style="width:350px;">
                         <div class="input-group-prepend">
                             <span class="input-group-text p-2">
                                 <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
@@ -78,7 +90,7 @@
                         </div>
                         @Html.TextBox("BaslangicTarihi", null, new
                         {
-                            @class = "form-control datepicker mr-2",
+                           @class = "form-control datepicker mr-2",
                            //data_toggle = "tooltip",
                            //data_placement = "top",
                            //title = "Başlangıç Tarihi",
@@ -104,12 +116,22 @@
                        })
 
                     </div>
+
+                    <div class="form-group">
+                        <span class="input-group-btn mr-3">
+                            <button type="button" id="submitSorgula" class="btn btn-primary"><i class="fa fa-search mr-2"></i>Sorgula</button>
+                        </span>
+
+                    </div>
+                    <span id="loading" class="spinner-border text-primary pr-0 mr-0" role="status" style="display:none;">
+                        <span class="sr-only">Loading...</span>
+                    </span>
                     @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
                     @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
 
                 </div>
 
-            </div>
+            }
 
             @if (TempData["EklenenMazeretSayisi"] != null)
             {
@@ -128,17 +150,17 @@
     </div>
 </div>
 
-<div class="row">
+@*<div class="row">
     <div class="col-lg-3">
     </div>
     <div class="col-lg-4">
-        <div id="loading" align="center" style="margin-top: 10%">
+        <div id="loading" align="center" style="margin-top: 10%; display:none">
             <img src="~/Content/images/orig.gif" />
         </div>
     </div>
     <div class="col-lg-4">
     </div>
-</div>
+</div>*@
 
 <div class="row" id="div1" style="visibility:hidden">
     <div class="col-sm-12">
@@ -264,7 +286,7 @@
         }
         function getNobetGrupId() {
             //alert(1)
-            var selected = $("#NobetGrupId :selected").select();
+            var selected = $("#NobetGrupGorevTipId :selected").select();
             return selected.text();
         }
         function sonucAra() {
@@ -283,7 +305,7 @@
                 $("#btnSilBaslangicTarihi").show();
             }
             mazeretIstekTipIdGetir();
-            tarihAraligi();
+            //tarihAraligi();
             //pivotlariGuncelle();
         });
         $("#BitisTarihi").change(function () {
@@ -298,7 +320,7 @@
                 $("#btnSilBitisTarihiFiltre").show();
             }
             mazeretIstekTipIdGetir();
-            tarihAraligi();
+            //tarihAraligi();
             //pivotlariGuncelle();
         });
         $("#btnSilBaslangicTarihi").click(function () {
@@ -351,7 +373,7 @@
 
         $("#EczaneNobetMazeretIstekTipId").change(function () {
             mazeretIstekTipIdGetir();
-            tarihAraligi();
+            //tarihAraligi();
             //pivotlariGuncelle();
         });
 
@@ -460,11 +482,11 @@
             }
         }
 
-        $("#NobetGrupId").change(function () {
-            nobetGrubu = getNobetGrupId();
+        $("#NobetGrupGorevTipId").change(function () {
+            //nobetGrubu = getNobetGrupId();
             mazeretIstekTipIdGetir();
             //alert(nobetGrubu)
-            tarihAraligi();
+            //tarihAraligi();
         });
         $("#submitSorgula").click(function (e) {
 
@@ -480,7 +502,7 @@
             }
 
             secilenEczaneSayisi = $("#EczaneId :selected").length;
-            var secilenNobetGrubu = $("#formNobetGrup #NobetGrupId").val();
+            var secilenNobetGrubu = $("#formNobetGrup #NobetGrupGorevTipId").val();
             //alert(secilenEczaneSayisi)
 
             if (secilenNobetGrubu > 0 && secilenEczaneSayisi == 0) {
@@ -491,6 +513,13 @@
                 $('.selectpicker').selectpicker('val', '');
             }
 
+            secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+
+            if (secilenGrupSayisi == 0) {
+                alert("Lütfen nöbet grubu seçiniz")
+                e.preventDefault();
+                return false;
+            };
             //if (secilenEczaneSayisi == 0) {
             //    alert("Lütfen en az 1 eczane seçiniz...")
             //    e.preventDefault();
@@ -501,6 +530,10 @@
             //    e.preventDefault();
             //    return false;
             //};
+
+            serializedForm = $('#formTumu').serialize();
+
+            getJsonDagilimlar(urlDagilimlar, serializedForm);
 
             $("#delete").show();
 
@@ -553,7 +586,7 @@
         function veriyiGizleLoadingGifiGoster() {
             document.getElementById("div1").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
             // document.getElementById("div_searching").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
-            document.getElementById("loading").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
+            //$("#loading").show();//sayfa yüklenirken loading gif i gösterilir
             acilisiGeciktir()
         }
         function acilisiGeciktir() {
@@ -566,15 +599,17 @@
             //alert(1)
             document.getElementById("div1").style.visibility = "visible";//tablo gösterilir
             // document.getElementById("div_searching").style.visibility = "visible";//sayfa yüklenirken tablo gizlenir
-            document.getElementById("loading").style.visibility = "hidden";//gif gizlenir
-            document.getElementById("loading").style.display = "none";//gif yer kaplamasın
+            //document.getElementById("loading").style.visibility = "hidden";//gif gizlenir
+            //$("#loading").hide();//gif yer kaplamasın
         }
 
-        function getJsonDagilimlar(url) {
+        function getJsonDagilimlar(url, formElements) {
+            mazeretSonuclar = new Array();
             $.ajax({
                 dataType: "json",
                 url: url,
                 type: "get",
+                data: formElements,
                 success: function (data) {
 
                     dagilimlar = JSON.parse(JSON.stringify(data));
@@ -603,9 +638,9 @@
 
                     mazeretSonuclarFiltreli = mazeretSonuclar;
                     //istatistikOlustur();
-                    d = new Date();
-                    $('#BaslangicTarihi').data('datepicker').setDate(d);
-                    $('#BitisTarihi').data('datepicker').setDate(null);
+                    //d = new Date();
+                    //$('#BaslangicTarihi').data('datepicker').setDate(d);
+                    //$('#BitisTarihi').data('datepicker').setDate(null);
                     $("#btnSilBitisTarihi").hide();
                     $("#btnSilBitisTarihiFiltre").show();
                     tabloOlustur();
@@ -903,19 +938,24 @@
 
 
         $(document).ajaxStart(function () {
-            //$("#loading").show();
+            $("#loading").show();
         });
         $(document).ajaxComplete(function () {
-            //$("#loading").hide();
-            $("#collapseKriterler").collapse('show');
+            $("#loading").hide();
+            //$("#collapseKriterler").collapse('show');
             //alert(mazeretSonuclar.length)
             //sayfalamaYap(mazeretSonuclar, 10);
             //getPaging(currentPage)
         });
 
         $(function () {
-            getJsonDagilimlar(urlDagilimlar);
+            //getJsonDagilimlar(urlDagilimlar);
             nobetGrubu = getNobetGrupId();
+            
+            var tarih = new Date();
+
+            $("#BaslangicTarihi").datepicker("setDate", tarih);
+
             //var sayi = 0;
             $("#myInput").on("keyup", function (data) {
 
@@ -941,6 +981,9 @@
                 }
             });
             $('.input-daterange').datepicker();
+
+            $("#collapseKriterler").collapse('show');
+
         });
 
         $('#btnExceleAktar').click(function () {
