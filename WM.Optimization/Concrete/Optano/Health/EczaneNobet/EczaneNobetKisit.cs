@@ -1645,6 +1645,27 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             return toplamNobetSayisi;
         }
 
+        public List<NobetGunKuralNobetSayisi> GetNobetGunKuralNobetSayilari(List<TakvimNobetGrupGunDegerIstatistik> nobetGunKuralIstatistikler,
+            EczaneNobetGrupGunKuralIstatistikYatay eczaneNobetIstatistik)
+        {
+            var nobetGunKuralNobetSayilari = new List<NobetGunKuralNobetSayisi>();
+
+            foreach (var gunKural in nobetGunKuralIstatistikler)
+            {
+                int toplamNobetSayisi = GetToplamGunKuralNobetSayisi(eczaneNobetIstatistik, gunKural.NobetGunKuralId);
+
+                nobetGunKuralNobetSayilari.Add(new NobetGunKuralNobetSayisi
+                {
+                    GunGrupId = gunKural.GunGrupId,
+                    GunGrupAdi = gunKural.GunGrupAdi,
+                    NobetGunKuralAdi = gunKural.NobetGunKuralAdi,
+                    NobetGunKuralId = gunKural.NobetGunKuralId,
+                    NobetSayisi = toplamNobetSayisi
+                });
+            }
+
+            return nobetGunKuralNobetSayilari;
+        }
         public class NobetGunKuralDetay
         {
             public List<int> FazlaNobetTutacakEczaneler { get; set; }

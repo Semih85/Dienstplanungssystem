@@ -52,6 +52,8 @@ namespace WM.Optimization.Abstract.Health
         double OrtalamaNobetSayisi(int talepEdilenToplamNobetciSayisi, int gruptakiNobetciSayisi);
 
         int GetToplamGunKuralNobetSayisi(EczaneNobetGrupGunKuralIstatistikYatay eczaneNobetIstatistik, int nobetGunKuralId);
+        List<NobetGunKuralNobetSayisi> GetNobetGunKuralNobetSayilari(List<TakvimNobetGrupGunDegerIstatistik> nobetGunKuralIstatistikler,
+            EczaneNobetGrupGunKuralIstatistikYatay eczaneNobetIstatistik);
 
         List<EczaneGrupDetay> GetEczaneGruplarByEczaneGrupTanimTipId(List<EczaneGrupDetay> eczaneGruplar, int eczaneGrupTanimTipId);
         List<EczaneNobetSonucListe2> GetSonuclarByGunGrup(List<EczaneNobetSonucListe2> sonuclar, string gunGrup);
