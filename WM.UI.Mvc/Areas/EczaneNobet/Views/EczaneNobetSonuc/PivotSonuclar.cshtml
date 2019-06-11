@@ -38,14 +38,14 @@
             </div>
 
             @*<div class="alert-info text-center mr-2 mb-2 pl-2 mb-lg-0" style="margin-top:-8px" id="raporKategoriDiv">
-                <span class="font-weight-bold small" id="raporKategoriDivBaslik">Rapor Kategorileri</span>
-                <br id="raporKategoriDivBaslikAltBosluk" />
-                @foreach (var raporKategori in raporKategoriler)
-                {
-                    var raporKatgoriId = $"raporKategori{raporKategori.RaporKategoriId}";
-                    <a href="#" id="@raporKatgoriId" class="badge badge-light mr-2 raporKategori">@raporKategori.RaporKategoriAdi</a>
-                }
-            </div>*@
+                    <span class="font-weight-bold small" id="raporKategoriDivBaslik">Rapor Kategorileri</span>
+                    <br id="raporKategoriDivBaslikAltBosluk" />
+                    @foreach (var raporKategori in raporKategoriler)
+                    {
+                        var raporKatgoriId = $"raporKategori{raporKategori.RaporKategoriId}";
+                        <a href="#" id="@raporKatgoriId" class="badge badge-light mr-2 raporKategori">@raporKategori.RaporKategoriAdi</a>
+                    }
+                </div>*@
 
         </div>
 
@@ -68,8 +68,12 @@
             <i class="fa fa-unsorted"></i> Filtre
         </button>
 
+        <a href="@Url.Action("Index", "NobetciEczaneHarita")" target="_blank" class="card-link pull-right mr-4" data-toggle="tooltip" data-placement="top" title="Nöbetçi Eczaneler Harita">
+            <i class="fa fa-map-pin" aria-hidden="true"></i> Harita
+        </a>
+
     </div>
-    </div>
+</div>
 
 <div class="pos-f-t border border-primary">
 
@@ -111,7 +115,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <span class="navbar-brand" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"
-                  title="Açıklama için tıklayınız.">
+                  title="Açıklama için tıklayınız." id="navbarBrand">
                 <i class="fa fa-bar-chart fa-lg text-danger"></i> @*İstatistik*@
             </span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,7 +141,11 @@
                                 @*@Html.Label("lblTarihAraligi", "Tarih Aralığı", htmlAttributes: new { @class = "control-label small text-muted mb-1", style = "margin-top:-5px" })*@
 
                                 <label class="control-label mb-1" style="margin-top:-5px" id="lblTarihAraligi">
-                                    <span class="text-muted small mr-2">Tarih Aralığı</span>
+                                    @*<img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px;" class="mr-2" id="btnSilBaslangicTarihi" title="Başlangıç Tarihini Sil" />*@
+
+                                    <span class="text-muted small mr-2">
+                                        <i class="fa fa-close" aria-hidden="true" style="display:none; color:darkmagenta" id="btnSilTarihAraligi" title="Tarih Aralığını Sil"></i> Tarih Aralığı
+                                    </span>
                                     <a href="#" class="badge badge-info mr-2" data-toggle="tooltip" data-placement="top" id="tarihAraligiSonNobetTarihi" title="Bugün ve son nöbet arasını seç.">
                                         &ge; Bugün
                                     </a>
@@ -1145,6 +1153,12 @@
             ilgiliRaporuOlustur(raporId)
 
             $('.aktif').show();
+
+            //$('input[aria-label="Search"]').focus();
+
+            //var element = document.querySelector('[aria-label="Search"]');
+
+            //element.focus();
         });
 
         function ilgiliRaporuOlustur(raporId) {
@@ -3339,6 +3353,21 @@
             return new Date(yil, ay - 1, gun);
         }
 
+        $("#btnSilTarihAraligi").click(function () {
+            baslangicTarihi = null;
+            $('#TarihBaslangic').data('datepicker').setDate(null);
+            //alert("2")
+            $("#btnSilBaslangicTarihi").hide();
+            $("#btnSilBaslangicTarihiFiltre").show();
+
+            bitisTarihi = null;
+            $('#TarihBitis').data('datepicker').setDate(null);
+            $("#btnSilBitisTarihi").hide();
+            $("#btnSilBitisTarihiFiltre").show();
+
+            $("#btnSilTarihAraligi").hide();
+        });
+
         $("#btnSilBaslangicTarihi").click(function () {
             baslangicTarihi = null;
             $('#TarihBaslangic').data('datepicker').setDate(null);
@@ -3393,6 +3422,7 @@
                 //alert("BaslangicTarihi != null " + $("#BaslangicTarihi").val())
                 $("#btnSilBaslangicTarihiFiltre").hide();
                 $("#btnSilBaslangicTarihi").show();
+                $("#btnSilTarihAraligi").show();
             }
             var d = tarihiTrdenCevir(this.value);
             $('#BaslangicTarihi').val(d);
@@ -3402,6 +3432,7 @@
             if ($(this).val() != null) {
                 $("#btnSilBitisTarihiFiltre").hide();
                 $("#btnSilBitisTarihi").show();
+                $("#btnSilTarihAraligi").show();
             }
             var d = tarihiTrdenCevir(this.value);
             $('#BitisTarihi').val(d);
@@ -3665,6 +3696,9 @@
 
             $("#collapseKriterler").collapse('show');
 
+            $('#btnSilTarihAraligi, #btnSilBaslangicTarihi, #btnSilBitisTarihi, #navbarBrand').css('cursor','pointer');
+            //$('#btnSilBaslangicTarihi').css('cursor','pointer');
+            //$('#btnSilBitisTarihi').css('cursor','pointer');
         });
     </script>
     <!-- #endregion -->
