@@ -8,22 +8,27 @@
     <span class="mr-4">Amaç Fonksiyon Katsayıları</span>
 </h4>
 
-<div class="form-inline" id="fromTarihAraligi">
+@using (Ajax.BeginForm("GetAmacFonksiyonuKatsayilari", "NobetYaz", null, new { @class = "form-inline mr-md-5 my-2 my-lg-0", id = "formTumu" }))
+{
+
     @Html.Hidden("SonNobetTarihi", Model.SonNobetTarihi.ToShortDateString())
 
-    <div class="input-group input-daterange mr-3" style="width:350px;">
+    <div class="input-group input-daterange mr-3">
         <div class="input-group-prepend">
             <span class="input-group-text p-2">
                 <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
                 <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
             </span>
         </div>
-        @Html.TextBox("BaslangicTarihi", null , new { @class = "form-control datepicker mr-2",
+        @Html.TextBox("BaslangicTarihi", null, new
+        {
+            @class = "form-control datepicker mr-2",
            //data_toggle = "tooltip",
            //data_placement = "top",
            //title = "Başlangıç Tarihi",
            autocomplete = "off",
-           placeHolder = "Başlama Tarihi"
+           placeHolder = "Başlama Tarihi",
+           style = "width:100px;"
        })
 
         <div class="input-group-addon mr-2 mt-1 p-1">-</div>
@@ -33,20 +38,42 @@
                 <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
             </span>
         </div>
-        @Html.TextBox("BitisTarihi", null, new { @class = "form-control datepicker",
+        @Html.TextBox("BitisTarihi", null, new
+        {
+            @class = "form-control datepicker",
            //data_toggle = "tooltip",
            //data_placement = "top",
            //title = "Bitiş Tarihi",
            autocomplete = "off",
-           placeHolder = "Bitiş Tarihi"
+           placeHolder = "Bitiş Tarihi",
+           style = "width:100px;"
        })
 
     </div>
 
+    <div class="form-group mr-3">
+        @*@Html.LabelFor(model => model.EczaneId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+
+        @Html.DropDownList("NobetGrupGorevTipId", null, htmlAttributes: new
+        {
+            @class = "form-control selectpicker",
+           multiple = "true",
+           //data_width = "auto",
+           data_actions_box = "true",
+           mobile = "true",
+           data_live_search = "true",
+           data_selected_text_format = "count > 4",
+           title = "Nöbet Grubu Seçiniz..."
+       })
+        @*@Html.ValidationMessageFor(model => model.EczaneId, "", new { @class = "text-danger" })*@
+
+    </div>
+
+
     @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
     @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
 
-    <button type="button" id="btnGetAmacFonksinu" class="btn btn-primary btn-sm mr-5">
+    <button type="button" id="btnGetAmacFonksiyonu" class="btn btn-primary btn-sm mr-5">
         Amaç Fonk kats hesapla
     </button>
 
@@ -59,8 +86,7 @@
         <i class="fa fa-download"></i>
     </button>
 
-</div>
-
+}
 
 <div class="row mt-3">
     <div class="col-sm-12">
@@ -79,6 +105,8 @@
 
     @Styles.Render("~/bundle/pivot/style")
     @Styles.Render("~/bundle/bootstrap-datepicker/style")
+    @Styles.Render("~/bundle/bootstrap-select/style")
+    @Styles.Render("~/bundle/jqueryui/style")
 
     <style>
         .toast-message {
@@ -91,10 +119,14 @@
     @Scripts.Render("~/bundle/ajax")
     @Scripts.Render("~/bundle/queryui/scripts", "~/bundle/pivot/scripts")
     @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @*@Scripts.Render("~/bundle/queryui/scripts")*@
 
     <script>
 
-        var pivotAlanlariGosterKalibrasyonluDetayli = false;
+        var pivotAlanlariGosterKalibrasyonluDetayli = true;
+        var nobetGrubu = new Array();
+        var secilenGrupSayisi = 0;
 
         $('#btnAlanlariGizleGosterKalibrasyonluDetayli').click(function () {
             //alert(pivotAlanlariGosterNobetciListesi)
@@ -148,26 +180,41 @@
         var dagilimlar;
         var nobetUstGrupId;
         var nobetUstGrupId;
+        var serializedForm;
 
         var urlAmacFonksiyonuKatsayilar = '@Url.Action("GetAmacFonksiyonuKatsayilari")';
 
-        $("#btnGetAmacFonksinu").click(function () {
+        $("#btnGetAmacFonksiyonu").click(function () {
 
             var basTarih = $('#BaslangicTarihi').val();
             var bitTarih = $('#BitisTarihi').val();
 
-            getJsonDagilimlar(urlAmacFonksiyonuKatsayilar, basTarih, bitTarih);
+            nobetGrubu = getNobetGrubu();
+
+            if (secilenGrupSayisi == 0) {
+
+                alert("Nöbet grubu seçiniz..")
+                e.preventDefault();
+                //$("#raporId option:selected").prop("selected", false)
+                return false;
+            }
+
+            serializedForm = $('#formTumu').serialize();
+
+            //alert(serializedForm)
+            getJsonDagilimlar(urlAmacFonksiyonuKatsayilar, serializedForm);
         });
 
-        function getJsonDagilimlar(url, t1, t2) {
+        function getJsonDagilimlar(url, formElements) {
             $("#LoadingImage").show();
             $.ajax({
                 dataType: "json",
                 url: url,
-                data: {
-                    baslangicTarihi: t1,
-                    bitisTarihi: t2
-                },
+                data: formElements,
+                //data: {
+                //    baslangicTarihi: t1,
+                //    bitisTarihi: t2
+                //},
                 type: "get",
                 success: function (data) {
                     $("#LoadingImage").hide();
@@ -240,7 +287,7 @@
                 //});
                 var pivotRows = ["NobetGrupAdi", "EczaneAdi"];
                 var pivotCols = ["Tarih2", "GunGrupAdi"];
-                var pivotRendererName = "Sicaklik Haritasi";
+                var pivotRendererName = "Sıcaklık haritası";
 
                 if (nobetUstGrupId == 5 || nobetUstGrupId == 6) {
                     pivotRows = ["EczaneAdi"];
@@ -250,7 +297,7 @@
                     rows: pivotRows,
                     cols: pivotCols,
                     vals: ["AmacFonksiyonKatsayi"],
-                    aggregatorName: "Topla",
+                    aggregatorName: "Toplam",
                     rendererName: pivotRendererName,
                     onRefresh: function (config) {
                         //$("#amacFonkKatsayilar").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
@@ -283,6 +330,31 @@
                 var parentDivId = 'amacFonkKatsayilar';
                 uyariDivOlustur(mesaj, divId, parentDivId);
             }
+        }
+
+        function getNobetGrubu() {
+            //alert(1)
+
+            nobetGrubu = [];
+
+            //if ($('#nobetGrupGorevTipId :selected').length == 0) {
+            //    nobetGrubu.push({ Id: -9 });
+            //}
+            //else {
+            $('#NobetGrupGorevTipId :selected').each(function () {
+                nobetGrubu.push({ Id: parseInt($(this).val()) });
+            });
+
+            if ($('#NobetGrupGorevTipId option').length == 1) {
+                $('#NobetGrupGorevTipId').hide()
+                //$('#lblnobetGrupGorevTipId').hide()
+            }
+
+            secilenGrupSayisi = nobetGrubu.length;
+            //}
+            //alert(2)
+            //console.log(nobetGrubu)
+            return nobetGrubu;// + ' ' + selected.text();
         }
 
         $(function () {
@@ -328,6 +400,9 @@
             $('.input-daterange').datepicker();
 
             nobetUstGrupId = @Model.NobetUstGrupId;
+
+            //nobetGrubu = getNobetGrubu();
+
         });
 
         function tarihDondur2(metin) {
