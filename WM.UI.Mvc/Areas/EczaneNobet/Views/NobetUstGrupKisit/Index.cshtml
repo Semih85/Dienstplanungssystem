@@ -63,7 +63,7 @@
                 @Html.DisplayName("Std")
                 @*@Html.DisplayNameFor(model => model.SagTarafDegeri)*@
             </th>
-            <th >
+            <th style="width:5%">
                 @Html.DisplayName("Std Vrs")
                 @*@Html.DisplayNameFor(model => model.SagTarafDegeri)*@
             </th>
@@ -87,7 +87,7 @@
         {
             <tr>
                 <td>
-                    <span>K</span>@Html.DisplayFor(modelItem => item.KisitId)
+                    @(item.KisitId < 10 ? $"K0{item.KisitId}" : $"K{item.KisitId}")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.KisitKategoriAdi)

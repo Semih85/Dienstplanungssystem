@@ -277,7 +277,7 @@
                                                         var labelYaziTersi = "";
                                                         var badgeTip = "badge badge-primary";
                                                         var renk = "#007bff";
-                                                        var kisitNumarasi = $"K{item.KisitId}";
+                                                        var kisitNumarasi = item.KisitId < 10 ? $"K0{item.KisitId}" : $"K{item.KisitId}";
                                                         var haricKuralIdList = new int[4] {11,//eczaneGrup
                                                             35, //pespeseHaftaIciAyniGunNobet,
                                                             39, //nobetBorcOdeme
