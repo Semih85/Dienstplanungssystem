@@ -29,11 +29,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NobetUstGrupGunGrupAdi)
+            @Html.DisplayNameFor(model => model.GunGrupAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NobetUstGrupGunGrupAdi)
+            @Html.DisplayFor(model => model.GunGrupAdi)
         </dd>
 
         <dt>
@@ -59,8 +59,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Sil" class="btn btn-danger" />
+            @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
         </div>
     }
 </div>
