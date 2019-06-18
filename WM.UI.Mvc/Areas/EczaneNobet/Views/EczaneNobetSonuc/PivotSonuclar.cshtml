@@ -317,6 +317,18 @@
 
 <div class="row mt-2">
     <div class="col-sm-12 col-md-12" id="raporlar">
+        <div class="btn-toolbar mb-1" role="toolbar" aria-label="Toolbar with button groups">
+            <div id="raporButonlar" role="group" class="btn-group mr-3" aria-label="İlk group">
+
+            </div>
+
+            <div role="group" class="btn-group" aria-label="İkinci group">
+                <div class="custom-control custom-checkbox mr-3 pt-1" id="chkPivotTableTransposeDiv" style="display:none">
+                    @Html.CheckBox("chkPivotTableTranspose", new { @class = "custom-control-input", onchange = "chkPivotTableTransposeDegistir(this);" })
+                    <label class="custom-control-label font-weight-bold" for="chkPivotTableTranspose" title="Tablonun transpozunu al.">Satır/Sütun değiştir</label>
+                </div>
+            </div>
+        </div>
         @*<div id="raporMasterDiv" class="pasif"></div>*@
     </div>
 </div>
@@ -406,22 +418,26 @@
     <script>
 
         function uyariDivOlustur(mesaj, divAdi, parentDivId) {
-            var uyariMesaj = "<i class='fa fa-info fa-lg mr-2'></i> "
-                + "<strong>" + mesaj + "</strong>"
-                + " raporunu görüntülemek için lütfen <strong>'Sorgula' butonuna basınız...</strong>";
 
-            if ($('#' + divAdi).length === 0) {
-                $('<div/>', {
-                    id: divAdi,
-                    class: 'alert alert-info alert-dismissible fade show',
-                    html: uyariMesaj
-                }).prependTo('#' + parentDivId);
+            $('.istatisitkFromInput').change(function () {                
+                //alert(1)
+                var uyariMesaj = "<i class='fa fa-info fa-lg mr-2'></i> "
+                    + "<strong>" + mesaj + "</strong>"
+                    + " raporunu görüntülemek için lütfen <strong>'Sorgula' butonuna basınız...</strong>";
 
-                var node = $('<span aria-hidden="true" />').html("&times;");
-                $('<button type="button" class="close" data-dismiss="alert" aria-label="Close" />')
-                    .prependTo('#' + divAdi)
-                    .prepend(node);
-            }
+                if ($('#' + divAdi).length === 0) {
+                    $('<div/>', {
+                        id: divAdi,
+                        class: 'alert alert-info alert-dismissible fade show',
+                        html: uyariMesaj
+                    }).prependTo('#' + parentDivId);
+
+                    var node = $('<span aria-hidden="true" />').html("&times;");
+                    $('<button type="button" class="close" data-dismiss="alert" aria-label="Close" />')
+                        .prependTo('#' + divAdi)
+                        .prepend(node);
+                }
+            });
         }
 
         var urlDagilimlar = '@Url.Action("GetSonuclar")';
@@ -435,6 +451,8 @@
         var bitisTarihi;
         var raporId;
         var raporBaslik;
+        var transpose = false;
+        var pivotOverride = false;
 
         var nobetciEczaneler = null;
         var nobetciEczanelerMazeretIstek = null;
@@ -476,6 +494,7 @@
 
         var ayniGunNobet = null;
         var ayniGunNobetTutanEczaneler = new Array();
+        var ayniGunNobetTutanEczanelerDinamik = new Array();
         var ayniGunNobetTutanEczanelerOzet = new Array();
         var altGrupAyniGunNobetTutanEczaneler = new Array();
         var altGrupSiraliAyniGunNobetTutanEczaneler = new Array();
@@ -503,20 +522,60 @@
                 success: function (data) {
 
                     ayniGunNobet = JSON.parse(JSON.stringify(data));
-                    //alert(1)
+                    //alert(ayniGunNobet.length)
                     //aynı Gün Nöbet Tutan Eczaneler
-                    if (raporId == 21
-                        || raporId == 22
+                    if ((raporId >= 21 && raporId == 22)
                         || raporId == 32
-                    ) {
-                        $.each(ayniGunNobet.AyniGunNobetTutanEczaneler, function (index, s) {
+                    )
+                    {
+                        $.each(ayniGunNobet, function (index, s) {
                             ayniGunNobetTutanEczaneler.push({
-                                G1Eczane: s.G1Eczane,
-                                G2Eczane: s.G2Eczane,
-                                ["G1 Nöbet Grubu"]: s.G1NobetGrupAdi,
-                                ["G2 Nöbet Grubu"]: s.G2NobetGrupAdi,
-                                ["G1 Nöbet Alt Grubu"]: s.G1NobetAltGrupAdi,
-                                ["G2 Nöbet Alt Grubu"]: s.G2NobetAltGrupAdi,
+                                G1Eczane: s.EczaneAdi1,
+                                G2Eczane: s.EczaneAdi2,
+                                ["G1 Nöbet Grubu"]: s.NobetGrupAdi1,
+                                ["G2 Nöbet Grubu"]: s.NobetGrupAdi2,
+                                ["G1 Nöbet Alt Grubu"]: s.NobetAltGrupAdi1,
+                                ["G2 Nöbet Alt Grubu"]: s.NobetAltGrupAdi2,
+                                //["Gün Grup"]: s.GunGrupAdi,
+                                //Grup: s.Grup,
+                                //["Alt Grup"]: s.AltGrupAdi,
+                                ["Aynı Gün Nöbet Sayısı"]: s.AyniGunNobetSayisi,
+                                ["Son Nöbet Tarihi"]: s.TarihAciklama,
+                                ["Son Yıl-Ay"]: s.YilAy
+                            });
+                        });
+                        ayniGunNobetTutanEczaneler = JSON.parse(JSON.stringify(ayniGunNobetTutanEczaneler));
+                    //}
+
+                    //if (raporId == 22) {
+                        //$.each(ayniGunNobet.AyniGunNobetTutanEczanelerOzet, function (index, s) {
+                        //    ayniGunNobetTutanEczanelerOzet.push({
+                        //        G1Eczane: s.G1Eczane,
+                        //        G2Eczane: s.G2Eczane,
+                        //        ["G1 Nöbet Grubu"]: s.G1NobetGrupAdi,
+                        //        ["G2 Nöbet Grubu"]: s.G2NobetGrupAdi,
+                        //        ["G1 Nöbet Alt Grubu"]: s.G1NobetAltGrupAdi,
+                        //        ["G2 Nöbet Alt Grubu"]: s.G2NobetAltGrupAdi,
+                        //        ["Gün Grup"]: s.GunGrupAdi,
+                        //        //Grup: s.Grup,
+                        //        //["Alt Grup"]: s.AltGrupAdi,
+                        //        ["Aynı Gün Nöbet Sayısı"]: s.AyniGunNobetSayisi,
+                        //        //["Nöbet Tarihi"]: s.TarihAciklama,
+                        //        //["Yıl-Ay"]: s.YilAy
+                        //    });
+                        //});
+                        //ayniGunNobetTutanEczanelerOzet = JSON.parse(JSON.stringify(ayniGunNobetTutanEczanelerOzet));
+                    }
+
+                    if (raporId == 33) {
+                         $.each(ayniGunNobet, function (index, s) {
+                            ayniGunNobetTutanEczanelerDinamik.push({
+                                G1Eczane: s.EczaneAdi1,
+                                G2Eczane: s.EczaneAdi2,
+                                ["G1 Nöbet Grubu"]: s.NobetGrupAdi1,
+                                ["G2 Nöbet Grubu"]: s.NobetGrupAdi2,
+                                ["G1 Nöbet Alt Grubu"]: s.NobetAltGrupAdi1,
+                                ["G2 Nöbet Alt Grubu"]: s.NobetAltGrupAdi2,
                                 ["Gün Grup"]: s.GunGrupAdi,
                                 //Grup: s.Grup,
                                 //["Alt Grup"]: s.AltGrupAdi,
@@ -525,27 +584,7 @@
                                 ["Yıl-Ay"]: s.YilAy
                             });
                         });
-                        ayniGunNobetTutanEczaneler = JSON.parse(JSON.stringify(ayniGunNobetTutanEczaneler));
-                    //}
-
-                    //if (raporId == 22) {
-                        $.each(ayniGunNobet.AyniGunNobetTutanEczanelerOzet, function (index, s) {
-                            ayniGunNobetTutanEczanelerOzet.push({
-                                G1Eczane: s.G1Eczane,
-                                G2Eczane: s.G2Eczane,
-                                ["G1 Nöbet Grubu"]: s.G1NobetGrupAdi,
-                                ["G2 Nöbet Grubu"]: s.G2NobetGrupAdi,
-                                ["G1 Nöbet Alt Grubu"]: s.G1NobetAltGrupAdi,
-                                ["G2 Nöbet Alt Grubu"]: s.G2NobetAltGrupAdi,
-                                ["Gün Grup"]: s.GunGrupAdi,
-                                //Grup: s.Grup,
-                                //["Alt Grup"]: s.AltGrupAdi,
-                                ["Aynı Gün Nöbet Sayısı"]: s.AyniGunNobetSayisi,
-                                //["Nöbet Tarihi"]: s.TarihAciklama,
-                                //["Yıl-Ay"]: s.YilAy
-                            });
-                        });
-                        ayniGunNobetTutanEczanelerOzet = JSON.parse(JSON.stringify(ayniGunNobetTutanEczanelerOzet));
+                        ayniGunNobetTutanEczanelerDinamik = JSON.parse(JSON.stringify(ayniGunNobetTutanEczanelerDinamik));
                     }
 
                     if (raporId == 23) {
@@ -979,17 +1018,19 @@
 
         var icRaporDivAdi = "";
         var icRaporDivId = "";
+        var butonRaporId = "";
+        var raporKodu = "";
 
         //$('#raporKategoriDiv').hover(function () {
         //    $('#raporKategoriDivBaslik').toggle();
         //    $('#raporKategoriDivBaslikAltBosluk').toggle();
         //});
 
-        var inputlarDegistiMi = false;
+        var inputlarDegistiMi = 0;
 
         $('.istatisitkFromInput').change(function () {
             pivotSekilleriSifirla();
-            inputlarDegistiMi = true;
+            inputlarDegistiMi ++;
             //alert(1)
         });
 
@@ -1050,6 +1091,37 @@
             nobetGrubu = getNobetGrubu();
         });
 
+        function createInput() {
+
+            var myButton = $(butonRaporId);
+
+            //alert("butonRaporId: " + butonRaporId)
+
+            //alert("myButton.length: " + myButton.length)
+
+            if (myButton.length == 0) {
+                 var r=$('<input/>').attr({
+                     type: "button",
+                     class: "btn btn-light btn-sm pasifBtn myBtnRapor mr-1",
+                     id: 'btn' + raporKodu,
+                     value: raporKodu,
+                     title: raporBaslik,
+                     onclick: "myRaporBtnClick(this.value)"
+                 });
+
+                $("#raporButonlar").append(r);
+            }
+        }
+
+        function raporKoduOlustur(raporId) {
+            if (raporId < 10) {
+                return "R0" + raporId
+            }
+            else {
+                return "R" + raporId
+            }
+        }
+
         $('#submitSorgula').click(function () {
             //alert(1)
             if (secilenGrupSayisi == 0) {
@@ -1066,8 +1138,12 @@
 
             icRaporBilsiniGuncelle()
 
+            createInput();
+
             //$('#raporMasterDiv').clear();
                 //.append('<div id = ' + icRaporDivAdi + '></div>');
+
+            btnRaporAktifPasif(butonRaporId);
 
             //alert("submitSorgula: " + icRaporDivAdi)
             divAktifPasif(icRaporDivAdi);
@@ -1083,7 +1159,7 @@
 
             var ilgiliRaporlarDagilimlar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 18, 19, 20, 24, 25, 26, 27, 28, 29];
             var ilgiliRaporlarAlacakVerecekler = [14, 15, 16, 17];
-            var ilgiliRaporlarAyniGunNobetler = [21, 22, 23, 32];
+            var ilgiliRaporlarAyniGunNobetler = [21, 22, 23, 32, 33];
 
             if (raporId == 27) {
                 $('#GunGrupId').val(2);
@@ -1109,7 +1185,10 @@
         function icRaporBilsiniGuncelle() {
             icRaporDivAdi = 'icRapor' + raporId;
             icRaporDivId = '#' + icRaporDivAdi;
+            raporKodu = raporKoduOlustur(raporId);
+            butonRaporId = "#btn" + raporKodu;
 
+            //alert("butonRaporId: " + butonRaporId)
             $('#raporBaslik').text(raporBaslik);
             //var element = document.getElementById(icRaporDivAdi);
 
@@ -1138,21 +1217,58 @@
             $(divClass).switchClass('pasif', 'aktif');
         }
 
-        $("#raporId").on('change', function () {
+        function btnRaporAktifPasif(btnId) {
+            $('.myBtnRapor').switchClass('aktifBtn', 'pasifBtn');
+            $('.myBtnRapor').switchClass('btn-primary', 'btn-light');
+
+            $(btnId).switchClass('pasifBtn', 'aktifBtn');
+            $(btnId).switchClass('btn-light', 'btn-primary');
+        }
+
+        function myRaporBtnClick(element) {
+
+            //alert(element)
+            var res = element.split("R");
+            //alert(res[1])
+            $('#raporId').selectpicker('val', parseInt(res[1]));
+
+            gerekliIslemleriYap()
+        };
+
+        function gerekliIslemleriYap() {
+
+            //alert("gerekliIslemleriYap")
 
             raporParamsBelirle();
 
             icRaporBilsiniGuncelle()
 
+            if (raporId == 32) {
+                $('#chkPivotTableTransposeDiv').show();
+            }
+            else {
+                $('#chkPivotTableTransposeDiv').hide();
+            }
+
             $('.icRapor').switchClass('aktif', 'pasif');
 
             divAktifPasif(icRaporDivAdi);
+
+            //alert("btnId: " + butonRaporId)
+            createInput();
+
+            btnRaporAktifPasif(butonRaporId);
 
             $('.pasif').hide();
 
             ilgiliRaporuOlustur(raporId)
 
             $('.aktif').show();
+        }
+
+        $("#raporId").on('change', function () {
+
+            gerekliIslemleriYap();
 
             //$('input[aria-label="Search"]').focus();
 
@@ -1407,6 +1523,14 @@
                         ayniGunDagilimlarTabloCapraz();
                     }
                 }
+                else if (raporId == 33) {//r33
+                    if (ayniGunDagilimTabloCaprazDinamik != null) {
+                        ayniGunDagilimTabloCaprazDinamik;
+                    }
+                    else {
+                        ayniGunDagilimlarTabloCapraz();
+                    }
+                }
             }
 
         function ilgiliRaporuOlustur2(raporId) {
@@ -1510,6 +1634,9 @@
                 else if (raporId == 32) {//r32
                         ayniGunDagilimlarTabloCapraz();
                 }
+                else if (raporId == 33) {//r33
+                        ayniGunDagilimlarTabloCapraz();
+                }
             }
     </script>
     <!-- #endregion -->
@@ -1538,6 +1665,28 @@
             }
             //alert("pivotAlanlariGoster: " + pivotAlanlariGoster)
             //alert("dagilimlarPivot: " + dagilimlarPivot.length)
+            ilgiliRaporuOlustur2(raporId)
+        }
+
+        function chkPivotTableTransposeDegistir(element) {
+
+            if (element.checked) {
+                transpose = true;
+            }
+            else {
+                transpose = false;
+            }
+
+            pivotOverride = true;
+
+            //alert("pivotAlanlariGoster: " + pivotAlanlariGoster)
+            //alert("dagilimlarPivot: " + dagilimlarPivot.length)
+            //ayniGunDagilimTabloCapraz = null;
+            //$(icRaporDivId).html();
+            //ayniGunDagilimTablo = null;
+
+            //ayniGunNobetTutanEczaneler = null;
+            //pivotSekilleriSifirla();
             ilgiliRaporuOlustur2(raporId)
         }
 
@@ -1602,16 +1751,16 @@
 
         function PivotAlanlariGosterGizle(pivotAlanlariGosterGizle, divId) {
             if (pivotAlanlariGosterGizle) {
-                $(divId).parent().find('.pvtAxisContainer').show();
-                $(divId).parent().find('.pvtAttrDropdown').show();
-                $(divId).parent().find('.pvtRenderer').show();
-                $(divId).parent().find('.pvtVals').show();
+                $(divId).find('.pvtAxisContainer').show();
+                $(divId).find('.pvtAttrDropdown').show();
+                $(divId).find('.pvtRenderer').show();
+                $(divId).find('.pvtVals').show();
             }
             else {
-                $(divId).parent().find('.pvtAxisContainer').hide();
-                $(divId).parent().find('.pvtAttrDropdown').hide();
-                $(divId).parent().find('.pvtRenderer').hide();
-                $(divId).parent().find('.pvtVals').hide();
+                $(divId).find('.pvtAxisContainer').hide();
+                $(divId).find('.pvtAttrDropdown').hide();
+                $(divId).find('.pvtRenderer').hide();
+                $(divId).find('.pvtVals').hide();
             }
         }
 
@@ -1645,7 +1794,7 @@
                     renderers: pivotRenderers,
                     onRefresh: function (config) {
 
-                        $(icRaporDivId).parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                        $(icRaporDivId).find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
 
                         //console.log($(icRaporDivId + " #testTable tbody tr").find('.pvtVal').text());
 
@@ -1683,18 +1832,18 @@
                         //alert(0)
 
                         if (pivotAlanlariGoster) {
-                            $(icRaporDivId).parent().find('.pvtAggregator').show();
-                            $(icRaporDivId).parent().find('.pvtAxisContainer').show();
-                            $(icRaporDivId).parent().find('.pvtAttrDropdown').show();
-                            $(icRaporDivId).parent().find('.pvtRenderer').show();
-                            $(icRaporDivId).parent().find('.pvtVals').show();
+                            $(icRaporDivId).find('.pvtAggregator').show();
+                            $(icRaporDivId).find('.pvtAxisContainer').show();
+                            $(icRaporDivId).find('.pvtAttrDropdown').show();
+                            $(icRaporDivId).find('.pvtRenderer').show();
+                            $(icRaporDivId).find('.pvtVals').show();
                         }
                         else {
-                            $(icRaporDivId).parent().find('.pvtAggregator').hide();
-                            $(icRaporDivId).parent().find('.pvtAxisContainer').hide();
-                            $(icRaporDivId).parent().find('.pvtAttrDropdown').hide();
-                            $(icRaporDivId).parent().find('.pvtRenderer').hide();
-                            $(icRaporDivId).parent().find('.pvtVals').hide();
+                            $(icRaporDivId).find('.pvtAggregator').hide();
+                            $(icRaporDivId).find('.pvtAxisContainer').hide();
+                            $(icRaporDivId).find('.pvtAttrDropdown').hide();
+                            $(icRaporDivId).find('.pvtRenderer').hide();
+                            $(icRaporDivId).find('.pvtVals').hide();
                         }
 
                         //$('#raporMasterDiv .pvtAttrDropdown option').each(function () {
@@ -1751,7 +1900,7 @@
                     renderers: pivotRenderers,
                     onRefresh: function (config) {
 
-                        $(icRaporDivId).parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                        $(icRaporDivId).find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
 
                         //console.log($(icRaporDivId + " #testTable tbody tr").find('.pvtVal').text());
                         $.each($(icRaporDivId + " #testTable tbody tr th"), function (key, value) {
@@ -1811,18 +1960,18 @@
                         //alert(0)
 
                         if (pivotAlanlariGoster == false) {
-                            $(icRaporDivId).parent().find('.pvtAggregator').hide();
-                            $(icRaporDivId).parent().find('.pvtAxisContainer').hide();
-                            $(icRaporDivId).parent().find('.pvtAttrDropdown').hide();
-                            $(icRaporDivId).parent().find('.pvtRenderer').hide();
-                            $(icRaporDivId).parent().find('.pvtVals').hide();
+                            $(icRaporDivId).find('.pvtAggregator').hide();
+                            $(icRaporDivId).find('.pvtAxisContainer').hide();
+                            $(icRaporDivId).find('.pvtAttrDropdown').hide();
+                            $(icRaporDivId).find('.pvtRenderer').hide();
+                            $(icRaporDivId).find('.pvtVals').hide();
                         }
                         else {
-                            $(icRaporDivId).parent().find('.pvtAggregator').show();
-                            $(icRaporDivId).parent().find('.pvtAxisContainer').show();
-                            $(icRaporDivId).parent().find('.pvtAttrDropdown').show();
-                            $(icRaporDivId).parent().find('.pvtRenderer').show();
-                            $(icRaporDivId).parent().find('.pvtVals').show();
+                            $(icRaporDivId).find('.pvtAggregator').show();
+                            $(icRaporDivId).find('.pvtAxisContainer').show();
+                            $(icRaporDivId).find('.pvtAttrDropdown').show();
+                            $(icRaporDivId).find('.pvtRenderer').show();
+                            $(icRaporDivId).find('.pvtVals').show();
                         }
 
                         //$('#raporMasterDiv .pvtAttrDropdown option').each(function () {
@@ -1881,8 +2030,6 @@
                             renderers: pivotRenderers,
                             rendererName: pivotRendererName,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -1938,8 +2085,6 @@
                             renderers: pivotRenderers,
                             rendererName: pivotRendererName,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -1990,8 +2135,6 @@
                             renderers: pivotRenderers,
                             rendererName: pivotRendererName,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2037,8 +2180,6 @@
                                 pivotRenderersGrafik
                             ),
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2073,8 +2214,6 @@
                                 pivotRenderersGrafik
                             ),
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2118,8 +2257,6 @@
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2166,8 +2303,6 @@
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2214,8 +2349,6 @@
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2268,9 +2401,7 @@
                             aggregators: pivotAggregators,
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
-                            onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
+                            onRefresh: function (config) {                                
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2306,7 +2437,7 @@
                                 pivotRenderersGrafik
                             ),
                             onRefresh: function (config) {
-                                $(icRaporDivId).parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                $(icRaporDivId).find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
                                 //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
@@ -2335,9 +2466,7 @@
                             aggregators: pivotAggregators,
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
-                            onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
+                            onRefresh: function (config) {                                
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2389,8 +2518,6 @@
                                 pivotRenderersGrafik
                             ),
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         });
@@ -2433,8 +2560,6 @@
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         });
@@ -2474,8 +2599,6 @@
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2515,8 +2638,6 @@
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2557,8 +2678,6 @@
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2599,8 +2718,6 @@
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2641,8 +2758,6 @@
                                 pivotRenderersGrafik
                             ),
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2677,8 +2792,6 @@
                                 pivotRenderersGrafik
                             ),
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2712,8 +2825,6 @@
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2755,7 +2866,7 @@
                     //rendererName: "Table",
                     renderers: pivotRenderers,
                     onRefresh: function (config) {
-                        $(icRaporDivId).parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                        $(icRaporDivId).find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
                         //alert(0)
                         //pivotAlanlariGosterPlanlanaGerceklesen = true;
                         PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
@@ -2812,8 +2923,6 @@
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2853,8 +2962,6 @@
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2884,8 +2991,6 @@
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2918,7 +3023,7 @@
                             rows: ["G1Eczane", "G2Eczane"],//"G2 Nöbet Grubu",
                             cols: ["Yıl-Ay"],
                             vals: ["Aynı Gün Nöbet Sayısı"],
-                            aggregatorName: "Say",
+                            aggregatorName: "Toplam (tam sayı)",
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             //renderers: $.extend(
@@ -2926,8 +3031,6 @@
                             //    $.pivotUtilities.c3_renderers
                             //)
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2945,18 +3048,54 @@
             }
         }
 
-        //aynı gün nöbet dağılımı grafik r32
+        //aynı gün nöbet dağılımı grafik r32, 33
         var ayniGunDagilimTabloCapraz;
+        var ayniGunDagilimTabloCaprazDinamik;
         function ayniGunDagilimlarTabloCapraz() {
             //alert(3)
-            if (ayniGunNobetTutanEczaneler.length > 0) {
-                ayniGunDagilimTabloCapraz = $(function table8() {
-                    $(icRaporDivId).pivotUI(ayniGunNobetTutanEczaneler,
+            var ayniGunNobetCapraz = new Array();
+
+            //alert("ayniGunNobetTutanEczanelerDinamik: " + ayniGunNobetTutanEczanelerDinamik.length)
+            if (raporId == 32) {
+                ayniGunNobetCapraz = ayniGunNobetTutanEczaneler;
+                ayniGunDagilimTablo = ayniGunDagilimTabloCapraz;
+            }
+            else if (raporId == 33) {
+                ayniGunNobetCapraz = ayniGunNobetTutanEczanelerDinamik;
+                ayniGunDagilimTablo = ayniGunDagilimTabloCaprazDinamik;
+            }
+
+            //alert(ayniGunNobetCapraz.length)
+
+            if (ayniGunNobetCapraz.length > 0) {
+
+                var pivotRows = ["G1 Nöbet Grubu", "G1Eczane"];
+                var pivotCols = ["G2 Nöbet Grubu", "G2Eczane"];
+
+                var pivotRowsAktif; //= pivotRows;
+                var pivotColsAktif; //= pivotCols;
+
+                //alert("transpose: " + transpose)
+
+                if (transpose) {
+                    pivotRowsAktif = pivotCols;
+                    pivotColsAktif = pivotRows;
+                }
+                else {
+                    pivotRowsAktif = pivotRows;
+                    pivotColsAktif = pivotCols;
+                }
+
+                //alert("pivotRowsAktif: " + pivotRowsAktif)
+                //alert("pivotColsAktif: " + pivotColsAktif)
+
+                ayniGunDagilimTablo = $(function table8() {
+                    $(icRaporDivId).pivotUI(ayniGunNobetCapraz,
                         {
-                            rows: ["G1 Nöbet Grubu", "G1Eczane"],//"G2 Nöbet Grubu",
-                            cols: ["G2 Nöbet Grubu", "G2Eczane"],
+                            rows: pivotRowsAktif,//"G2 Nöbet Grubu",
+                            cols: pivotColsAktif,
                             vals: ["Aynı Gün Nöbet Sayısı"],
-                            aggregatorName: "Say",
+                            aggregatorName: "Toplam (tam sayı)",
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
                             //renderers: $.extend(
@@ -2964,11 +3103,10 @@
                             //    $.pivotUtilities.c3_renderers
                             //)
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
-                        }
+                        },
+                        pivotOverride
                     );
                 });
             }
@@ -2988,10 +3126,10 @@
         function ayniGunDagilimlar() {
             //alert(5)
             //alert("ayniGunNobetTutanEczanelerOzet.length: " + ayniGunNobetTutanEczanelerOzet.length)
-            if (ayniGunNobetTutanEczanelerOzet.length > 0) {
+            if (ayniGunNobetTutanEczaneler.length > 0) {
                 //alert(6)
                 ayniGunDagilim = $(function table8() {
-                    $(icRaporDivId).pivotUI(ayniGunNobetTutanEczanelerOzet,
+                    $(icRaporDivId).pivotUI(ayniGunNobetTutanEczaneler,
                         {
                             rows: ["Aynı Gün Nöbet Sayısı"],
                             cols: ["G1 Nöbet Grubu"],
@@ -3003,8 +3141,6 @@
                                 $.pivotUtilities.c3_renderers
                             ),
                             onRefresh: function (config) {
-                                //$("#raporMasterDiv").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                                //$("#raporMasterDiv").parent().find('.pvtAggregator').hide();
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -3310,6 +3446,7 @@
             ayniGunNobet = null;
             ayniGunNobetTutanEczanelerOzet = new Array();
             ayniGunNobetTutanEczaneler = new Array();
+            ayniGunNobetTutanEczanelerDinamik = new Array();
 
             nobetciEczaneler = null;
             nobetciEczanelerMazeretIstek = null;
