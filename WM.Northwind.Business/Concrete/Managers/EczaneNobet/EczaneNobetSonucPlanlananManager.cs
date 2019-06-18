@@ -98,6 +98,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucDetay2> GetDetaylar(int[] nobetGrupGorevTipIdList)
+        {
+            return _eczaneNobetSonucPlanlananDal
+                .GetDetayList(x => nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId));
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetSonucDetay2> GetDetaylar(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList)
         {
             return _eczaneNobetSonucPlanlananDal
@@ -183,6 +190,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var sonuclar = GetDetaylar(baslangicTarihi, bitisTarihi, nobetUstGrupId);
 
             return GetSonuclar(sonuclar, baslangicTarihi, bitisTarihi, nobetUstGrupId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucListe2> GetSonuclar(int[] nobetGrupGorevTipIdList)
+        {
+            var sonuclar = GetDetaylar(nobetGrupGorevTipIdList);
+
+            return GetSonuclar(sonuclar);
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]

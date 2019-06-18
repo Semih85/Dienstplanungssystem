@@ -79,6 +79,20 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
         [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public void Delete(int[] ids)
+        {
+            var liste = new List<EczaneNobetSonuc>();
+
+            foreach (var id in ids)
+            {
+                liste.Add(new EczaneNobetSonuc { Id = id });
+            }
+
+            _eczaneNobetSonucDal.Delete(liste);
+        }
+
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(EczaneNobetSonuc eczaneNobetSonuc)
         {
             _eczaneNobetSonucDal.Insert(eczaneNobetSonuc);

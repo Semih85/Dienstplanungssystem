@@ -24,6 +24,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void Insert(EczaneNobetSonuc sonuc);
         void Update(EczaneNobetSonuc sonuc);
         void Delete(int Id);
+        void Delete(int[] ids);
         void CokluSil(int[] ids);
         void CokluEkle(List<EczaneNobetCozum> eczaneNobetCozumler);
         DateTime GetSonNobetTarihi(int nobetUstGrupId);
