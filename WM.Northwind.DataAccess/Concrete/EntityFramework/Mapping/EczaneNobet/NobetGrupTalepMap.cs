@@ -34,13 +34,21 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
                                          IsUnique = true,
                                          Order = 1
                                      }));
-            this.Property(t => t.NobetciSayisi).IsRequired()
+            this.Property(t => t.NobetGrupGorevTipId).IsRequired()
                         .HasColumnAnnotation("Index",
                          new IndexAnnotation(
                                      new IndexAttribute("UN_NobetGrupTalepler")
                                      {
                                          IsUnique = true,
                                          Order = 2
+                                     }));
+            this.Property(t => t.NobetciSayisi).IsRequired()
+                        .HasColumnAnnotation("Index",
+                         new IndexAnnotation(
+                                     new IndexAttribute("UN_NobetGrupTalepler")
+                                     {
+                                         IsUnique = true,
+                                         Order = 3
                                      }));
             this.Property(t => t.NobetGrupGorevTipId).IsRequired();
 
