@@ -1479,8 +1479,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 anahtarListeTumEczanelerHepsi.AddRange(anahtarListeTumEczaneler);
             }
 
-            //var kontrol1 = eczaneNobetGrupGunKuralIstatistikYatayTumu.Where(w => w.EczaneAdi == "AYDIN").ToList();
-            //var kontrol3 = anahtarListeTumEczanelerHepsi.Where(w => w.EczaneAdi == "AYDIN").ToList();
+            //var kontrol1 = eczaneNobetGrupGunKuralIstatistikYatayTumu.Where(w => w.EczaneAdi == "YALÇIN").ToList();
+            //var kontrol3 = anahtarListeTumEczanelerHepsi.Where(w => w.EczaneAdi == "YALÇIN").ToList();
 
             var eczaneNobetAlacakVerecek = (from s in eczaneNobetGrupGunKuralIstatistikYatayTumu
                                             from b in anahtarListeTumEczanelerHepsi
@@ -1554,7 +1554,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                 AnahtarSıra = b.NobetSayisi
                                             }).ToList();
 
-            //var kontrol2 = eczaneNobetAlacakVerecek.Where(w => w.EczaneAdi == "AYDIN").ToList();
+            //var kontrol2 = eczaneNobetAlacakVerecek.Where(w => w.EczaneAdi == "YALÇIN").ToList();
 
             return eczaneNobetAlacakVerecek;
         }
