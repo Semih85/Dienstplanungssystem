@@ -35,9 +35,9 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EsGrubaAyniGunYazilanNobetler> GetEsGrubaAyniGunYazilanNobetler(List<EczaneNobetSonucListe2> eczaneNobetSonuclar);
 
         List<AyniGunNobetTutanEczane> GetAyniGunNobetTutanAltGrupluEczaneler(List<EczaneNobetSonucListe2> ayniGunNobetTutanEczaneler);
-        List<AyniGunNobetTutanEczane> GetAyniGunNobetTutanEczaneler(List<EczaneNobetSonucListe2> ayniGunNobetTutanEczaneler);
+        List<AyniGunTutulanNobetDetay> GetAyniGunNobetTutanEczaneler(List<EczaneNobetSonucListe2> ayniGunNobetTutanEczaneler);
         List<AyniGunNobetTutanEczane> GetAyniGunNobetTutanEczanelerGiresun(List<EczaneNobetSonucListe2> ayniGunNobetTutanEczaneler, List<EczaneGrupDetay> eczaneGrupDetaylar);
-        List<AyniGunNobetTutanEczane> AyniGunTutulanNobetSayisiniHesapla(List<AyniGunNobetTutanEczane> ayniGunNobetTutanEczaneler);
+        List<AyniGunTutulanNobetDetay> AyniGunTutulanNobetSayisiniHesapla(List<AyniGunTutulanNobetDetay> ayniGunNobetTutanEczaneler);
         List<EczaneNobetSonucListe2> EczaneNobetSonucBirlesim(
             List<NobetGrupGorevTipGunKuralDetay> nobetGrupGorevTipGunKurallar,
             List<EczaneNobetSonucDetay2> eczaneNobetSonuclar,
