@@ -10,6 +10,7 @@ using WM.Northwind.Business.Abstract.Authorization;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.UI.Mvc.Models;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -21,36 +22,40 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IAyniGunNobetTakipGrupAltGrupService _ayniGunNobetTakipGrupAltGrupService;
         private IUserService _userService;
         private INobetUstGrupService _nobetUstGrupService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
-        public AyniGunNobetTakipGrupAltGrupController(IAyniGunNobetTakipGrupAltGrupService ayniGunNobetTakipGrupAltGrupService,
+        public AyniGunNobetTakipGrupAltGrupController(
+            IAyniGunNobetTakipGrupAltGrupService ayniGunNobetTakipGrupAltGrupService,
             IUserService userService,
-            INobetUstGrupService nobetUstGrupService)
+            INobetUstGrupService nobetUstGrupService,
+            INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _ayniGunNobetTakipGrupAltGrupService = ayniGunNobetTakipGrupAltGrupService;
             _userService = userService;
             _nobetUstGrupService = nobetUstGrupService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
 
         // GET: EczaneNobet/AyniGunNobetTakipGrupAltGrup
         public ActionResult Index()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            var ayniGunNobetTakipGrupAltGruplar = _ayniGunNobetTakipGrupAltGrupService
-                .GetDetaylar(nobetUstGruplar.Select(s => s.Id).ToList());
+            var ayniGunNobetTakipGrupAltGruplar = _ayniGunNobetTakipGrupAltGrupService.GetDetaylar(nobetUstGrup.Id);
 
             return View(ayniGunNobetTakipGrupAltGruplar);
         }
 
         // GET: EczaneNobet/AyniGunNobetTakipGrupAltGrup/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AyniGunNobetTakipGrupAltGrup ayniGunNobetTakipGrupAltGrup = db.AyniGunNobetTakipGrupAltGrups.Find(id);
+            var ayniGunNobetTakipGrupAltGrup = _ayniGunNobetTakipGrupAltGrupService.GetDetayById(id);
             if (ayniGunNobetTakipGrupAltGrup == null)
             {
                 return HttpNotFound();
@@ -75,24 +80,24 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.AyniGunNobetTakipGrupAltGrups.Add(ayniGunNobetTakipGrupAltGrup);
-                db.SaveChanges();
+                _ayniGunNobetTakipGrupAltGrupService.Insert(ayniGunNobetTakipGrupAltGrup);
                 return RedirectToAction("Index");
             }
 
             ViewBag.NobetAltGrupId = new SelectList(db.NobetAltGrups, "Id", "Adi", ayniGunNobetTakipGrupAltGrup.NobetAltGrupId);
             ViewBag.NobetGrupGorevTipId = new SelectList(db.NobetGrupGorevTips, "Id", "Id", ayniGunNobetTakipGrupAltGrup.NobetGrupGorevTipId);
+
             return View(ayniGunNobetTakipGrupAltGrup);
         }
 
         // GET: EczaneNobet/AyniGunNobetTakipGrupAltGrup/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AyniGunNobetTakipGrupAltGrup ayniGunNobetTakipGrupAltGrup = db.AyniGunNobetTakipGrupAltGrups.Find(id);
+            var ayniGunNobetTakipGrupAltGrup = _ayniGunNobetTakipGrupAltGrupService.GetDetayById(id);
             if (ayniGunNobetTakipGrupAltGrup == null)
             {
                 return HttpNotFound();
@@ -111,8 +116,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ayniGunNobetTakipGrupAltGrup).State = EntityState.Modified;
-                db.SaveChanges();
+                _ayniGunNobetTakipGrupAltGrupService.Update(ayniGunNobetTakipGrupAltGrup);
                 return RedirectToAction("Index");
             }
             ViewBag.NobetAltGrupId = new SelectList(db.NobetAltGrups, "Id", "Adi", ayniGunNobetTakipGrupAltGrup.NobetAltGrupId);
@@ -121,13 +125,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/AyniGunNobetTakipGrupAltGrup/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AyniGunNobetTakipGrupAltGrup ayniGunNobetTakipGrupAltGrup = db.AyniGunNobetTakipGrupAltGrups.Find(id);
+            var ayniGunNobetTakipGrupAltGrup = _ayniGunNobetTakipGrupAltGrupService.GetDetayById(id);
             if (ayniGunNobetTakipGrupAltGrup == null)
             {
                 return HttpNotFound();
@@ -140,9 +144,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            AyniGunNobetTakipGrupAltGrup ayniGunNobetTakipGrupAltGrup = db.AyniGunNobetTakipGrupAltGrups.Find(id);
-            db.AyniGunNobetTakipGrupAltGrups.Remove(ayniGunNobetTakipGrupAltGrup);
-            db.SaveChanges();
+            var ayniGunNobetTakipGrupAltGrup = _ayniGunNobetTakipGrupAltGrupService.GetDetayById(id);
+            _ayniGunNobetTakipGrupAltGrupService.Delete(id);
             return RedirectToAction("Index");
         }
 

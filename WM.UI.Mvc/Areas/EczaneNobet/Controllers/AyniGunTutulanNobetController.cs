@@ -20,7 +20,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
     [Authorize]
     public class AyniGunTutulanNobetController : Controller
     {
-        private WMUIMvcContext db = new WMUIMvcContext();
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
         private IUserService _userService;
         private INobetUstGrupService _nobetUstGrupService;
@@ -158,13 +157,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/AyniGunTutulanNobet/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AyniGunTutulanNobet ayniGunTutulanNobet = db.AyniGunTutulanNobets.Find(id);
+            var ayniGunTutulanNobet = _ayniGunTutulanNobetService.GetDetayById(id);
             if (ayniGunTutulanNobet == null)
             {
                 return HttpNotFound();
@@ -187,8 +186,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.AyniGunTutulanNobets.Add(ayniGunTutulanNobet);
-                db.SaveChanges();
+                _ayniGunTutulanNobetService.Insert(ayniGunTutulanNobet);
                 return RedirectToAction("Index");
             }
 
@@ -196,13 +194,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/AyniGunTutulanNobet/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AyniGunTutulanNobet ayniGunTutulanNobet = db.AyniGunTutulanNobets.Find(id);
+            var ayniGunTutulanNobet = _ayniGunTutulanNobetService.GetDetayById(id);
             if (ayniGunTutulanNobet == null)
             {
                 return HttpNotFound();
@@ -219,21 +217,20 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(ayniGunTutulanNobet).State = EntityState.Modified;
-                db.SaveChanges();
+                _ayniGunTutulanNobetService.Update(ayniGunTutulanNobet);
                 return RedirectToAction("Index");
             }
             return View(ayniGunTutulanNobet);
         }
 
         // GET: EczaneNobet/AyniGunTutulanNobet/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            if (id < 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AyniGunTutulanNobet ayniGunTutulanNobet = db.AyniGunTutulanNobets.Find(id);
+            var ayniGunTutulanNobet = _ayniGunTutulanNobetService.GetDetayById(id);
             if (ayniGunTutulanNobet == null)
             {
                 return HttpNotFound();
@@ -246,19 +243,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            AyniGunTutulanNobet ayniGunTutulanNobet = db.AyniGunTutulanNobets.Find(id);
-            db.AyniGunTutulanNobets.Remove(ayniGunTutulanNobet);
-            db.SaveChanges();
+            var ayniGunTutulanNobet = _ayniGunTutulanNobetService.GetDetayById(id);
+            _ayniGunTutulanNobetService.Delete(id);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
