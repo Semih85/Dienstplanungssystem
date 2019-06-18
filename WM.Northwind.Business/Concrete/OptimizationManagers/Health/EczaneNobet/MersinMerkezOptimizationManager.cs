@@ -346,8 +346,11 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             if (!ikiliEczaneAyniGunNobet.PasifMi)
             {
-                indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
-                arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = _ayniGunTutulanNobetService.GetArasinda2FarkOlanIkiliEczaneleri(eczaneNobetGruplar, nobetUstGrupId, (int)ikiliEczaneAyniGunNobet.SagTarafDegeri);
+                //indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
+                arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = _ayniGunTutulanNobetService.GetArasinda2FarkOlanIkiliEczaneleri(
+                    eczaneNobetGruplar,
+                    nobetGrupGorevTipler.Select(s => s.Id).ToArray(),
+                    (int)ikiliEczaneAyniGunNobet.SagTarafDegeri);
             }
 
             #endregion
@@ -723,9 +726,11 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                         //return EczaneNobetCozAktifiGuncelle(data);
                         sonuclar = EczaneNobetCozAktifiGuncelle(data);
                     }
-                    var sonuclarTumu = _eczaneNobetSonucService.GetSonuclarUstGrupBaslamaTarihindenSonra(eczaneNobetModelCoz.NobetUstGrupId);
-                    var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(sonuclarTumu);
-                    _ayniGunTutulanNobetService.AyniGunNobetTutanlariTabloyaEkle(ayniGunNobetTutanEczaneler);
+                    //var sonuclarTumu = _eczaneNobetSonucService.GetSonuclarUstGrupBaslamaTarihindenSonra(eczaneNobetModelCoz.NobetUstGrupId);
+                    //var sonuclarTumu = _eczaneNobetSonucAktifService.GetSonuclar2(eczaneNobetModelCoz.NobetUstGrupId);
+                    //var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(sonuclarTumu);
+                    //var ayniGunNobetSayisiGrouped = _eczaneNobetOrtakService.AyniGunTutulanNobetSayisiniHesapla(ayniGunNobetTutanEczaneler);
+                    //_ayniGunTutulanNobetService.AyniGunNobetSayisiniGuncelle(ayniGunNobetSayisiGrouped, azaltilsinMi: false);
                     return sonuclar;
                 }
                 else

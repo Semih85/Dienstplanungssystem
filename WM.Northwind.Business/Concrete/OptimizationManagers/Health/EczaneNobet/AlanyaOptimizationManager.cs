@@ -177,6 +177,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             return yeniSonuclar;
         }
 
+        //[TransactionScopeAspect]
         public EczaneNobetSonucModel EczaneNobetCozSonuclaraEkle(AlanyaDataModel data)
         {
             var yeniSonuclar = _eczaneNobetAlanyaOptimization.Solve(data);
@@ -403,70 +404,35 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var eczaneNobetGrupAltGruplar = _eczaneNobetGrupAltGrupService.GetDetaylar(nobetUstGrupId);
 
-            #region aynı gün nöbet tutan eczaneler
-
-            #region ikili eczaneler 
+            #region aynı gün nöbet tutan eczaneler            
 
             //bu alan EczaneNobetCozAktifiGuncelle içinde kullanılıyor.
             var ayIcindeAyniGunNobetTutanEczaneler = new List<EczaneCiftGrup>();
 
-            var arasindaAyniGunNobetFarkiOlanIkiliEczaneler = _nobetUstGrupKisitService.GetDetay(45, nobetUstGrupId);
+            #region ikili eczaneler
+
+            //ikiliEczaneAyniGunNobet
+            var ikiliEczaneAyniGunNobet = _nobetUstGrupKisitService.GetDetay(45, nobetUstGrupId);
             var arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = new List<EczaneGrupDetay>();
 
-            var indisId = 0;
-
-            if (!arasindaAyniGunNobetFarkiOlanIkiliEczaneler.PasifMi)
+            if (!ikiliEczaneAyniGunNobet.PasifMi)
             {
-                //indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
-                var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(eczaneNobetSonuclarOncekiAylar);
-                var ayniGunNobetSayisiGrouped = _eczaneNobetOrtakService.AyniGunTutulanNobetSayisiniHesapla(ayniGunNobetTutanEczaneler)
-                    .Where(w => w.AyniGunNobetSayisi >= arasindaAyniGunNobetFarkiOlanIkiliEczaneler.SagTarafDegeri).ToList();
-                
-                //var cc = _ayniGunTutulanNobetService.ArasindaKritereGoreFarkOlanEczaneler(eczaneNobetGruplar, ayniGunNobetSayisiGrouped, (int)arasindaAyniGunNobetFarkiOlanIkiliEczaneler.SagTarafDegeri)
-                //bu koda bakılacak. 
+                arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = _ayniGunTutulanNobetService.GetArasinda2FarkOlanIkiliEczaneleri(
+                    eczaneNobetGruplar,
+                    nobetGrupGorevTipler.Select(s => s.Id).ToArray(),
+                    (int)ikiliEczaneAyniGunNobet.SagTarafDegeri);
 
-                foreach (var ayniGunNobet in ayniGunNobetSayisiGrouped)
+                var kontrol = true;
+
+                if (kontrol)
                 {
-                    var bakilanEczane1 = _eczaneNobetGrupService.GetDetayById(ayniGunNobet.G1EczaneNobetGrupId);
+                    //839: bilge
+                    var ss1 = arasindaAyniGun2NobetFarkiOlanIkiliEczaneler
+                        .Where(w => w.EczaneGrupTanimId == 2839).ToList();
 
-                    arasindaAyniGun2NobetFarkiOlanIkiliEczaneler.Add(new EczaneGrupDetay
-                    {
-                        EczaneGrupTanimId = Convert.ToInt32(ayniGunNobet.EczaneBirlesim),
-                        EczaneId = bakilanEczane1.EczaneId,
-                        ArdisikNobetSayisi = 0,
-                        NobetUstGrupId = nobetUstGrupId,
-                        EczaneGrupTanimAdi = $"{ayniGunNobet.G1Eczane}-{ayniGunNobet.G2Eczane}",
-                        EczaneGrupTanimTipAdi = "Tüm eczanelerle aynı gün nöbet",
-                        EczaneGrupTanimTipId = -10, //-2,
-                        NobetGrupId = bakilanEczane1.NobetGrupId,
-                        EczaneAdi = bakilanEczane1.EczaneAdi,
-                        NobetGrupAdi = bakilanEczane1.NobetGrupAdi,
-                        EczaneNobetGrupId = bakilanEczane1.Id,
-                        AyniGunNobetTutabilecekEczaneSayisi = 1
-                        //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
-                    });
-
-                    var bakilanEczane2 = _eczaneNobetGrupService.GetDetayById(ayniGunNobet.G2EczaneNobetGrupId);
-
-                    arasindaAyniGun2NobetFarkiOlanIkiliEczaneler.Add(new EczaneGrupDetay
-                    {
-                        EczaneGrupTanimId = Convert.ToInt32(ayniGunNobet.EczaneBirlesim),
-                        EczaneId = bakilanEczane2.EczaneId,
-                        ArdisikNobetSayisi = 0,
-                        NobetUstGrupId = nobetUstGrupId,
-                        EczaneGrupTanimAdi = $"{ayniGunNobet.G1Eczane}-{ayniGunNobet.G2Eczane}",
-                        EczaneGrupTanimTipAdi = "Tüm eczanelerle aynı gün nöbet",
-                        EczaneGrupTanimTipId = -10, //-2,
-                        NobetGrupId = bakilanEczane2.NobetGrupId,
-                        EczaneAdi = bakilanEczane2.EczaneAdi,
-                        NobetGrupAdi = bakilanEczane2.NobetGrupAdi,
-                        EczaneNobetGrupId = bakilanEczane2.Id,
-                        AyniGunNobetTutabilecekEczaneSayisi = 1
-                        //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
-                    });
+                    var ss2 = arasindaAyniGun2NobetFarkiOlanIkiliEczaneler
+                        .Where(w => w.EczaneGrupTanimId == 3839).ToList();
                 }
-
-                //arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = _ayniGunTutulanNobetService.GetArasinda2FarkOlanIkiliEczaneleri(eczaneNobetGruplar, nobetUstGrupId, (int)arasindaAyniGunNobetFarkiOlanIkiliEczaneler.SagTarafDegeri);
             }
 
             #endregion
@@ -481,7 +447,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 //indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
                 oncekiAylardaAyniGunNobetTutanEczaneler = _eczaneNobetSonucService.OncekiAylardaAyniGunNobetTutanlar(baslangicTarihi,
                     eczaneNobetSonuclarOncekiAylar,
-                    indisId,
+                    0,
                     (int)oncekiAylarAyniGunNobet.SagTarafDegeri);
 
                 var oncekiAylarEczaneGrupTanimlar = oncekiAylardaAyniGunNobetTutanEczaneler.Select(s => new { s.EczaneGrupTanimId, s.EczaneGrupTanimAdi }).Distinct().ToList();
@@ -534,6 +500,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             //        nobetUstGrupKisitlar.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId).SagTarafDegeri = grupBazliKisit.SagTarafDegeri;
             //    }
             //}
+
 
             var alanyaDataModel = new AlanyaDataModel()
             {
@@ -592,6 +559,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             return alanyaDataModel;
         }
 
+        //[TransactionScopeAspect]
         [LogAspect(typeof(DatabaseLogger))]
         [SecuredOperation(Roles = "Admin,Oda,Üst Grup")]
         public EczaneNobetSonucModel ModelCoz(EczaneNobetModelCoz eczaneNobetModelCoz)
@@ -881,9 +849,11 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                         //return EczaneNobetCozAktifiGuncelle(data);
                         sonuclar = EczaneNobetCozAktifiGuncelle(data);
                     }
-                    var sonuclarTumu = _eczaneNobetSonucService.GetSonuclarUstGrupBaslamaTarihindenSonra(eczaneNobetModelCoz.NobetUstGrupId);
-                    var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(sonuclarTumu);
-                    _ayniGunTutulanNobetService.AyniGunNobetTutanlariTabloyaEkle(ayniGunNobetTutanEczaneler);
+                    //var sonuclarTumu = _eczaneNobetSonucService.GetSonuclarUstGrupBaslamaTarihindenSonra(eczaneNobetModelCoz.NobetUstGrupId);
+                    ////var sonuclarTumu = _eczaneNobetSonucAktifService.GetSonuclar2(eczaneNobetModelCoz.NobetUstGrupId);
+                    ////var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(sonuclarTumu);
+                    ////var ayniGunNobetSayisiGrouped = _eczaneNobetOrtakService.AyniGunTutulanNobetSayisiniHesapla(ayniGunNobetTutanEczaneler);
+                    ////_ayniGunTutulanNobetService.AyniGunNobetTutanlariTabloyaEkle(ayniGunNobetSayisiGrouped, azaltilsinMi: false);
                     return sonuclar;
                 }
                 else
@@ -896,3 +866,71 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         }
     }
 }
+
+/*
+ #region ikili eczaneler -- eski 17_06_2019 10:06
+
+            //bu alan EczaneNobetCozAktifiGuncelle içinde kullanılıyor.
+            var ayIcindeAyniGunNobetTutanEczaneler = new List<EczaneCiftGrup>();
+
+            var arasindaAyniGunNobetFarkiOlanIkiliEczaneler = _nobetUstGrupKisitService.GetDetay(45, nobetUstGrupId);
+            var arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = new List<EczaneGrupDetay>();
+
+            var indisId = 0;
+
+            if (!arasindaAyniGunNobetFarkiOlanIkiliEczaneler.PasifMi)
+            {
+                //indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
+                var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(eczaneNobetSonuclarOncekiAylar);
+                var ayniGunNobetSayisiGrouped = _eczaneNobetOrtakService.AyniGunTutulanNobetSayisiniHesapla(ayniGunNobetTutanEczaneler)
+                    .Where(w => w.AyniGunNobetSayisi >= arasindaAyniGunNobetFarkiOlanIkiliEczaneler.SagTarafDegeri).ToList();
+                
+                //var cc = _ayniGunTutulanNobetService.ArasindaKritereGoreFarkOlanEczaneler(eczaneNobetGruplar, ayniGunNobetSayisiGrouped, (int)arasindaAyniGunNobetFarkiOlanIkiliEczaneler.SagTarafDegeri)
+                //bu koda bakılacak. 
+
+                foreach (var ayniGunNobet in ayniGunNobetSayisiGrouped)
+                {
+                    var bakilanEczane1 = _eczaneNobetGrupService.GetDetayById(ayniGunNobet.EczaneNobetGrupId1);
+
+                    arasindaAyniGun2NobetFarkiOlanIkiliEczaneler.Add(new EczaneGrupDetay
+                    {
+                        EczaneGrupTanimId = Convert.ToInt32(ayniGunNobet.EczaneBirlesim),
+                        EczaneId = bakilanEczane1.EczaneId,
+                        ArdisikNobetSayisi = 0,
+                        NobetUstGrupId = nobetUstGrupId,
+                        EczaneGrupTanimAdi = $"{ayniGunNobet.EczaneAdi1}-{ayniGunNobet.EczaneAdi2}",
+                        EczaneGrupTanimTipAdi = "Tüm eczanelerle aynı gün nöbet",
+                        EczaneGrupTanimTipId = -10, //-2,
+                        NobetGrupId = bakilanEczane1.NobetGrupId,
+                        EczaneAdi = bakilanEczane1.EczaneAdi,
+                        NobetGrupAdi = bakilanEczane1.NobetGrupAdi,
+                        EczaneNobetGrupId = bakilanEczane1.Id,
+                        AyniGunNobetTutabilecekEczaneSayisi = 1
+                        //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
+                    });
+
+                    var bakilanEczane2 = _eczaneNobetGrupService.GetDetayById(ayniGunNobet.EczaneNobetGrupId2);
+
+                    arasindaAyniGun2NobetFarkiOlanIkiliEczaneler.Add(new EczaneGrupDetay
+                    {
+                        EczaneGrupTanimId = Convert.ToInt32(ayniGunNobet.EczaneBirlesim),
+                        EczaneId = bakilanEczane2.EczaneId,
+                        ArdisikNobetSayisi = 0,
+                        NobetUstGrupId = nobetUstGrupId,
+                        EczaneGrupTanimAdi = $"{ayniGunNobet.EczaneAdi1}-{ayniGunNobet.EczaneAdi2}",
+                        EczaneGrupTanimTipAdi = "Tüm eczanelerle aynı gün nöbet",
+                        EczaneGrupTanimTipId = -10, //-2,
+                        NobetGrupId = bakilanEczane2.NobetGrupId,
+                        EczaneAdi = bakilanEczane2.EczaneAdi,
+                        NobetGrupAdi = bakilanEczane2.NobetGrupAdi,
+                        EczaneNobetGrupId = bakilanEczane2.Id,
+                        AyniGunNobetTutabilecekEczaneSayisi = 1
+                        //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
+                    });
+                }
+
+                //arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = _ayniGunTutulanNobetService.GetArasinda2FarkOlanIkiliEczaneleri(eczaneNobetGruplar, nobetUstGrupId, (int)arasindaAyniGunNobetFarkiOlanIkiliEczaneler.SagTarafDegeri);
+            }
+
+            #endregion
+     */

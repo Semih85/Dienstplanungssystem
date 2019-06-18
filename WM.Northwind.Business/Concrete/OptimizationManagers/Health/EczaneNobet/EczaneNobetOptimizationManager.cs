@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WM.Core.Aspects.PostSharp.LogAspects;
+using WM.Core.Aspects.PostSharp.TranstionAspects;
 using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Business.Abstract.Optimization;
@@ -12,6 +13,7 @@ using WM.Northwind.DataAccess.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Authorization;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
+using WM.Northwind.Entities.Concrete.Enums;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Health;
 
@@ -112,24 +114,26 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _eczaneNobetSonucService.CokluEkle(eczaneNobetSonucAktifler);
         }
 
+        [TransactionScopeAspect]
         public void Kesinlestir(int[] nobetGrupIdList, DateTime baslangicTarihi, DateTime bitisTarihi)
         {
+            var nobetGrup = _nobetGrupService.GetDetaylar(nobetGrupIdList.ToList()).FirstOrDefault();
+
             var eczaneNobetSonucAktifler = _eczaneNobetSonucAktifService.GetCozumler(nobetGrupIdList, baslangicTarihi, bitisTarihi);
+            var sonuclar = _eczaneNobetSonucAktifService.GetSonuclar2(nobetGrup.NobetUstGrupId);
+
             _eczaneNobetSonucService.CokluEkle(eczaneNobetSonucAktifler);
 
-            var nobetUstGrup = _nobetGrupService.GetDetaylar(nobetGrupIdList.ToList()).FirstOrDefault();
-
-            if (nobetUstGrup.Id == 1 //alanya
-                || nobetUstGrup.Id == 3 //mersin
-                || nobetUstGrup.Id == 9 //çorum
+            if (nobetGrup.NobetUstGrupId == 1    //alanya
+                || nobetGrup.NobetUstGrupId == 3 //mersin
+                || nobetGrup.NobetUstGrupId == 9 //çorum
                 )
             {
-                var sonuclar = _eczaneNobetSonucService.GetSonuclarUstGrupBaslamaTarihindenSonra(nobetGrupIdList);
-
+                //var sonuclar = _eczaneNobetSonucService.GetSonuclarUstGrupBaslamaTarihindenSonra(nobetGrupIdList);
                 var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(sonuclar);
                 var ayniGunNobetSayisiGrouped = _eczaneNobetOrtakService.AyniGunTutulanNobetSayisiniHesapla(ayniGunNobetTutanEczaneler);
 
-                _ayniGunTutulanNobetService.AyniGunNobetTutanlariTabloyaEkle(ayniGunNobetSayisiGrouped);
+                _ayniGunTutulanNobetService.AyniGunNobetSayisiniGuncelle(ayniGunNobetSayisiGrouped, AyniGunNobetEklemeTuru.Arttır);
             }
         }
 
