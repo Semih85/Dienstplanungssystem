@@ -262,6 +262,7 @@
     <Compile Include="Concrete\EczaneNobet\UserEczane.cs" />
     <Compile Include="Concrete\EczaneNobet\UserNobetUstGrup.cs" />
     <Compile Include="Concrete\EczaneNobet\UserEczaneOda.cs" />
+    <Compile Include="Concrete\Enums\AyniGunNobetEklemeTuru.cs" />
     <Compile Include="Concrete\Enums\EczaneNobetSonucTuru.cs" />
     <Compile Include="Concrete\Iletisim.cs" />
     <Compile Include="Concrete\MenuBase.cs" />
