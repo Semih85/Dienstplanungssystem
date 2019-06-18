@@ -1369,7 +1369,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                                                        NobetGrupIdAltGruplu = g2.NobetGrupId
                                                                    }).ToList();
 
-                            #region bir eczane bir grup ile aynı gün nöbet tutatsa, (tarih aralığı içinde ve kümülatif en fazla)
+                            #region bir eczane bir grup ile aynı gün nöbet tutarsa, (tarih aralığı içinde ve kümülatif en fazla)
 
                             var kisitAdiBase = $"{altGruplarlaAyniGunNobetTutma.KisitTanim} {nobetAltGrup.NobetGrupAdi}, {eczaneNobetGrup.EczaneAdi} ";
 
