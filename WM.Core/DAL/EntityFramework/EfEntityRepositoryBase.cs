@@ -24,12 +24,38 @@ namespace WM.Core.DAL.EntityFramework
             }
         }
 
+        public virtual void Insert(List<TEntity> entities)
+        {
+            using (var context = new TContext())
+            {
+                foreach (var entity in entities)
+                {
+                    var addedEntity = context.Entry(entity);
+                    addedEntity.State = EntityState.Added;
+                }
+                context.SaveChanges();
+            }
+        }
+
         public virtual void Delete(TEntity entity)
         {
             using (var context = new TContext())
             {
                 var deletedEntity = context.Entry(entity);
                 deletedEntity.State = EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
+
+        public virtual void Delete(List<TEntity> entities)
+        {
+            using (var context = new TContext())
+            {
+                foreach (var entity in entities)
+                {
+                    var deletedEntity = context.Entry(entity);
+                    deletedEntity.State = EntityState.Deleted;
+                }
                 context.SaveChanges();
             }
         }
@@ -62,7 +88,20 @@ namespace WM.Core.DAL.EntityFramework
                 context.SaveChanges();
             }
         }
-        
+
+        public virtual void Update(List<TEntity> entities)
+        {
+            using (var context = new TContext())
+            {                
+                foreach (var entity in entities)
+                {
+                    var updatedEntity = context.Entry(entity);
+                    updatedEntity.State = EntityState.Modified;
+                }
+                context.SaveChanges();
+            }
+        }
+
     }
 
 }

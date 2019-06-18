@@ -16,9 +16,15 @@ namespace WM.Core.DAL
 
         void Insert(T entity);
 
+        void Insert(List<T> entities);
+
         void Update(T entity);
 
+        void Update(List<T> entities);
+
         void Delete(T entity);
+
+        void Delete(List<T> entities);
 
     }
 }
