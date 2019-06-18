@@ -15,6 +15,9 @@
     <thead class="thead-light">
         <tr>
             <th>
+                @Html.DisplayName("Id")
+            </th>
+            <th>
                 @Html.DisplayName("Görev Tipi")
             </th>
             <th>
@@ -32,6 +35,9 @@
     @foreach (var item in Model)
     {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
             </td>
