@@ -25,22 +25,27 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                     {
                         Id = s.Id,
                         EnSonAyniGunNobetTakvimId = s.EnSonAyniGunNobetTakvimId,
+                        NobetUstGrupId = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
+                        NobetUstGrupAdi = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.Adi,
+
+                        NobetAltGrupAdi1 = s.EczaneNobetGrupl.EczaneNobetGrupAltGrup.NobetAltGrup.Adi,
+                        NobetAltGrupAdi2 = s.EczaneNobetGrup2.EczaneNobetGrupAltGrup.NobetAltGrup.Adi,
 
                         EczaneNobetGrupId1 = s.EczaneNobetGrupl.Id,
                         EczaneId1 = s.EczaneNobetGrupl.EczaneId,
                         EczaneAdi1 = s.EczaneNobetGrupl.Eczane.Adi,
                         NobetGrupId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrupId,
                         NobetGrupAdi1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.Adi,
-                        NobetUstGrupId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
-                        NobetUstGrupAdi1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
+                        //NobetUstGrupId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
+                        //NobetUstGrupAdi1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
 
                         EczaneNobetGrupId2 = s.EczaneNobetGrup2.Id,
                         EczaneId2 = s.EczaneNobetGrup2.EczaneId,
                         EczaneAdi2 = s.EczaneNobetGrup2.Eczane.Adi,
                         NobetGrupId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrupId,
                         NobetGrupAdi2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.Adi,
-                        NobetUstGrupId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
-                        NobetUstGrupAdi2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
+                        //NobetUstGrupId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
+                        //NobetUstGrupAdi2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
 
                         EnSonAyniGunNobetTarihi = s.Takvim.Tarih,
                         AyniGunNobetSayisi = s.AyniGunNobetSayisi,
@@ -57,22 +62,29 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                     {
                         Id = s.Id,
                         EnSonAyniGunNobetTakvimId = s.EnSonAyniGunNobetTakvimId,
+                        NobetUstGrupId = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
+                        NobetUstGrupAdi = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.Adi,
+
+                        NobetAltGrupAdi1 = s.EczaneNobetGrupl.EczaneNobetGrupAltGrup.NobetAltGrup.Adi,
+                        NobetAltGrupAdi2 = s.EczaneNobetGrup2.EczaneNobetGrupAltGrup.NobetAltGrup.Adi,
 
                         EczaneNobetGrupId1 = s.EczaneNobetGrupl.Id,
                         EczaneId1 = s.EczaneNobetGrupl.EczaneId,
                         EczaneAdi1 = s.EczaneNobetGrupl.Eczane.Adi,
                         NobetGrupId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrupId,
+                        NobetGrupGorevTipId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.Id,
                         NobetGrupAdi1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.Adi,
-                        NobetUstGrupId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
-                        NobetUstGrupAdi1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
+                        //NobetUstGrupId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
+                        //NobetUstGrupAdi1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
 
                         EczaneNobetGrupId2 = s.EczaneNobetGrup2.Id,
                         EczaneId2 = s.EczaneNobetGrup2.EczaneId,
                         EczaneAdi2 = s.EczaneNobetGrup2.Eczane.Adi,
                         NobetGrupId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrupId,
+                        NobetGrupGorevTipId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.Id,
                         NobetGrupAdi2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.Adi,
-                        NobetUstGrupId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
-                        NobetUstGrupAdi2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
+                        //NobetUstGrupId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
+                        //NobetUstGrupAdi2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
 
                         EnSonAyniGunNobetTarihi = s.Takvim.Tarih,
 
@@ -83,6 +95,48 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                 return filter == null
                     ? liste.ToList()
                     : liste.Where(filter).ToList();
+            }
+        }
+
+        public void UpdateAyniGunNobetSayisi(List<AyniGunTutulanNobet> ayniGunTutulanNobetler)
+        {
+            using (var ctx = new EczaneNobetContext())
+            {
+                //var liste = ctx.AyniGunTutulanNobetler.Where(x => entities.Select(s => s.Id).Contains(x.Id)).ToArray();
+
+                foreach (var ayniGunTutulanNobet in ayniGunTutulanNobetler)
+                {
+                    var guncellenecekKayit = ctx.AyniGunTutulanNobetler.SingleOrDefault(x => x.Id == ayniGunTutulanNobet.Id);
+
+                    if (guncellenecekKayit != null)
+                    {
+                        guncellenecekKayit.AyniGunNobetSayisi = ayniGunTutulanNobet.AyniGunNobetSayisi;
+                    }
+                }
+
+                ctx.SaveChanges();
+            }
+        }
+
+        public void UpdateTumKolonlar(List<AyniGunTutulanNobet> ayniGunTutulanNobetler)
+        {
+            using (var ctx = new EczaneNobetContext())
+            {
+                //var liste = ctx.AyniGunTutulanNobetler.Where(x => entities.Select(s => s.Id).Contains(x.Id)).ToArray();
+
+                foreach (var ayniGunTutulanNobet in ayniGunTutulanNobetler)
+                {
+                    var guncellenecekKayit = ctx.AyniGunTutulanNobetler.SingleOrDefault(x => x.Id == ayniGunTutulanNobet.Id);
+
+                    if (guncellenecekKayit != null)
+                    {
+                        guncellenecekKayit.EnSonAyniGunNobetTakvimId = ayniGunTutulanNobet.EnSonAyniGunNobetTakvimId;
+                        guncellenecekKayit.AyniGunNobetSayisi = ayniGunTutulanNobet.AyniGunNobetSayisi;
+                        guncellenecekKayit.AyniGunNobetTutamayacaklariGunSayisi = ayniGunTutulanNobet.AyniGunNobetTutamayacaklariGunSayisi;
+                    }
+                }
+
+                ctx.SaveChanges();
             }
         }
     }

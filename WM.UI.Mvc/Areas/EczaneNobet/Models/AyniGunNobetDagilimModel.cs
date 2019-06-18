@@ -5,7 +5,7 @@ namespace WM.UI.Mvc
 {
     class AyniGunNobetDagilimModel
     {
-        public List<AyniGunNobetTutanEczane> AyniGunNobetTutanEczaneler { get; set; }
-        public List<AyniGunNobetTutanEczane> AyniGunNobetTutanEczanelerOzet { get; set; }
+        public List<AyniGunTutulanNobetDetay> AyniGunNobetTutanEczaneler { get; set; }
+        public List<AyniGunTutulanNobetDetay> AyniGunNobetTutanEczanelerOzet { get; set; }
     }
 }

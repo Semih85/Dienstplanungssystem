@@ -12,5 +12,7 @@ namespace WM.Northwind.DataAccess.Abstract.EczaneNobet
 {
     public interface IAyniGunTutulanNobetDal : IEntityRepository<AyniGunTutulanNobet>, IEntityDetayRepository<AyniGunTutulanNobetDetay>
     {
+        void UpdateAyniGunNobetSayisi(List<AyniGunTutulanNobet> ayniGunTutulanNobetler);
+        void UpdateTumKolonlar(List<AyniGunTutulanNobet> ayniGunTutulanNobetler);
     }
 }

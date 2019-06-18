@@ -10,6 +10,7 @@ using WM.Northwind.Business.Abstract.Authorization;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
+using WM.Northwind.Entities.Concrete.Enums;
 using WM.UI.Mvc.Models;
 using WM.UI.Mvc.Services;
 
@@ -49,26 +50,49 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
             var nobetUstGrupId = ustGrupSession.Id;
 
-            var ikiliEczaneler = new List<AyniGunTutulanNobetDetay>();
+            //var ikiliEczaneler = new List<AyniGunTutulanNobetDetay>();
 
             //Bir üst grupta çok sayıda ikili olduğu için bu listeyi view'a direkt olarak göndermiyoruz. 
-            var ikiliEczaneler2 = _ayniGunTutulanNobetService.GetDetaylar(nobetUstGrupId);
+            var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetUstGrupId);
 
-            var sayi = ikiliEczaneler2.Count;
+            var sayi = ikiliEczaneler.Count;
 
-            if (sayi == 0)
-            {
-                ikiliEczaneler = ikiliEczaneler2;
-            }
+            //if (sayi == 0)
+            //{
+            //    ikiliEczaneler = ikiliEczaneler2;
+            //}
 
             //.OrderBy(o => o.NobetGrupAdi1)
             //.ThenBy(t => t.EczaneAdi1)
             //.ThenBy(o => o.NobetGrupAdi2)
             //.ThenBy(t => t.EczaneAdi2).ToList();
 
-            ViewBag.IkiliEczaneSayisi = sayi;
+            var ayniGunNobetSayilari = ikiliEczaneler
+                .Select(s => new
+                {
+                    Id = s.AyniGunNobetSayisi,
+                    Value = $"{s.AyniGunNobetSayisi} nöbet"
+                })
+                .Distinct()
+                .OrderBy(o => o.Id).ToList();
 
-            return View(ikiliEczaneler);
+            ViewBag.IkiliEczaneSayisi = sayi;
+            ViewBag.AyniGunNobetSayisi = new SelectList(ayniGunNobetSayilari, "Id", "Value");
+
+            return View();
+        }
+
+        public JsonResult AyniGunNobetTutanlarinListesi(int ayniGunNobetSayisi)
+        {
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetUstGrup.Id, ayniGunNobetSayisi);
+
+            var jsonResult = Json(ikiliEczaneler, JsonRequestBehavior.AllowGet);
+
+            jsonResult.MaxJsonLength = int.MaxValue;
+
+            return jsonResult;
         }
 
         public ActionResult IkiliEczaneleriOlustur()
@@ -103,7 +127,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(sonuclar);
             var ayniGunNobetSayisiGrouped = _eczaneNobetOrtakService.AyniGunTutulanNobetSayisiniHesapla(ayniGunNobetTutanEczaneler);
 
-            _ayniGunTutulanNobetService.AyniGunNobetTutanlariTabloyaEkle(ayniGunNobetSayisiGrouped);
+            _ayniGunTutulanNobetService.AyniGunNobetSayisiniGuncelle(ayniGunNobetSayisiGrouped, AyniGunNobetEklemeTuru.Eşitle);
 
             ViewBag.IkiliEczaneSayisi = ikiliEczanelerTumu.Count;
             ViewBag.AyniGunNobetTutanEczaneler = ayniGunNobetTutanEczaneler.Count;

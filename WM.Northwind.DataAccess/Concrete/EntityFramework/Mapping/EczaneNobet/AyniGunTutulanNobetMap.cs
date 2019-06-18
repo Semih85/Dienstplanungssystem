@@ -24,29 +24,37 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.EczaneNobetGrupId2).HasColumnName("EczaneNobetGrupId2");
             this.Property(t => t.EnSonAyniGunNobetTakvimId).HasColumnName("EnSonAyniGunNobetTakvimId");
             this.Property(t => t.AyniGunNobetSayisi).HasColumnName("AyniGunNobetSayisi");
+            //this.Property(t => t.NobetUstGrupId).HasColumnName("NobetUstGrupId");
             this.Property(t => t.AyniGunNobetTutamayacaklariGunSayisi).HasColumnName("AyniGunNobetTutamayacaklariGunSayisi");
             #endregion
 
             #region properties
             this.Property(t => t.Id)
-                        .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity); 
+                        .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(t => t.Id).IsRequired();
+            //this.Property(t => t.NobetUstGrupId).IsRequired();
+                 //.HasColumnAnnotation("Index",
+                 //       new IndexAnnotation(
+                 //                    new IndexAttribute("Ix_NobetUstGrupId")
+                 //                    { IsClustered = true }
+                 //                    ));
+
             this.Property(t => t.EczaneNobetGrupId1).IsRequired()
                         .HasColumnAnnotation("Index",
                          new IndexAnnotation(
                                      new IndexAttribute("Un_AyniGunTutulanNobetler")
-                                      {
-                                                  IsUnique = true,
-                                                  Order = 1
-                                      }));
+                                     {
+                                         IsUnique = true,
+                                         Order = 1
+                                     }));
             this.Property(t => t.EczaneNobetGrupId2).IsRequired()
                         .HasColumnAnnotation("Index",
                          new IndexAnnotation(
                                      new IndexAttribute("Un_AyniGunTutulanNobetler")
-                                      {
-                                                  IsUnique = true,
-                                                  Order = 2
-                                      }));
+                                     {
+                                         IsUnique = true,
+                                         Order = 2
+                                     }));
             //this.Property(t => t.EnSonAyniGunNobetTakvimId).IsRequired()
             //            .HasColumnAnnotation("Index",
             //             new IndexAnnotation(
@@ -62,16 +70,20 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             #region relationship
             this.HasRequired(t => t.EczaneNobetGrupl)
                         .WithMany(et => et.AyniGunTutulanNobetler1)
-                        .HasForeignKey(t =>t.EczaneNobetGrupId1)
+                        .HasForeignKey(t => t.EczaneNobetGrupId1)
                         .WillCascadeOnDelete(false);
             this.HasRequired(t => t.EczaneNobetGrup2)
                         .WithMany(et => et.AyniGunTutulanNobetler2)
-                        .HasForeignKey(t =>t.EczaneNobetGrupId2)
+                        .HasForeignKey(t => t.EczaneNobetGrupId2)
                         .WillCascadeOnDelete(false);
             this.HasRequired(t => t.Takvim)
                         .WithMany(et => et.AyniGunTutulanNobetler)
-                        .HasForeignKey(t =>t.EnSonAyniGunNobetTakvimId)
+                        .HasForeignKey(t => t.EnSonAyniGunNobetTakvimId)
                         .WillCascadeOnDelete(false);
+            //this.HasRequired(t => t.NobetUstGrup)
+            //            .WithMany(et => et.AyniGunTutulanNobetler)
+            //            .HasForeignKey(t => t.NobetUstGrupId)
+            //            .WillCascadeOnDelete(false);
             #endregion
         }
     }
