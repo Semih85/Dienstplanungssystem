@@ -31,15 +31,20 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string KisitAciklama { get; set; }
         [Display(Name = "Kısıt Kategori")]
         public string KisitKategoriAdi { get; set; }
+
+        public string KisitOnEk => KisitId < 10
+            ? $"K0{KisitId}"
+            : $"K{KisitId}";
+
         public string KisitKategorisi => KisitId > 0
             ? $"{(KisitKategoriAdi == "A Genel" ? KisitKategoriAdi.Substring(2) : KisitKategoriAdi)}"
             : "";
 
         public string KisitTanim => KisitId > 0
-            ? $"K{KisitId} ({KisitKategorisi}, {KisitAdiGosterilen}) &raquo;"
+            ? $"{KisitOnEk} ({KisitKategorisi}, {KisitAdiGosterilen}) &raquo;"
             : "";
 
-        public string KisitAdiUzun => $"K{KisitId} ({KisitKategorisi}, {KisitAdiGosterilen})";
+        public string KisitAdiUzun => $"{KisitOnEk} ({KisitKategorisi}, {KisitAdiGosterilen})";
 
         public int KisitKategoriId { get; set; }
         public int NobetGrupGorevtipKisitSayisi { get; set; }

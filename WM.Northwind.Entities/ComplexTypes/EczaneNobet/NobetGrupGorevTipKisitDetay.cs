@@ -39,6 +39,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int KisitKategoriId { get; set; }
         public string AciklamaUstGrup { get; set; }
         public string KisitKategorisi { get; set; }
-        public string KisitKodu => $"K{KisitId} ({KisitKategorisi}, {KisitAdiGosterilen})";
+        public string KisitKodu => KisitId < 10 
+            ? $"K0{KisitId} ({KisitKategorisi}, {KisitAdiGosterilen})"
+            : $"K{KisitId} ({KisitKategorisi}, {KisitAdiGosterilen})";
     }
 }
