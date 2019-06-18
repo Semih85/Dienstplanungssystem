@@ -33,7 +33,14 @@ namespace WM.Northwind.DataAccess.Migrations
 
             if (guncelle)
             {
-                VeriEkleGuncelle(context);
+                //var ayniGunTutulanNobetler = new List<AyniGunTutulanNobet>()
+                //                {
+                //                    new AyniGunTutulanNobet(){ NobetUstGrupId = 1 },
+                //                };
+
+                //context.AyniGunTutulanNobetler.AddOrUpdate(s => new { s.NobetUstGrupId }, ayniGunTutulanNobetler.ToArray());
+                //context.SaveChanges();
+                //VeriEkleGuncelle(context);
             }
         }
 

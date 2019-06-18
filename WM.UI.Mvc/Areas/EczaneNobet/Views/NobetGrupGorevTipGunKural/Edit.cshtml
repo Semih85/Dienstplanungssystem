@@ -63,7 +63,7 @@
 
         <div class="form-row ml-2 mb-3">
             <div class="form-group col-md-2">
-                @Html.LabelFor(model => model.NobetciSayisi,"Nöbetçi Sayısı / Gün", htmlAttributes: new { @class = "control-label" })
+                @Html.LabelFor(model => model.NobetciSayisi, "Nöbetçi Sayısı / Gün", htmlAttributes: new { @class = "control-label" })
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text p-2">
@@ -92,4 +92,41 @@
     @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
     @Scripts.Render("~/bundle/validation/scripts")
 
+
+    <script>
+
+        function tarihDondur2(metin) {
+
+            var tarih = metin.split(' ', 1)[0];
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2];
+            ay = tarihTanim[1];
+            gun = tarihTanim[0];
+
+            if (gun.length != 4) {
+                return yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+
+        $(function () {
+            //var bit = bitisTarihininSonGununuSec(tarih);
+            $('.datepicker').datepicker('setStartDate', "01-01-1900");
+
+            var bsl = tarihDondur2($("#BaslangicTarihi").val());
+            //var baslangicStr = tarihDondur2($("#BaslangicTarihi").val());
+
+            //alert(bsl)
+            //alert(baslangicStr)
+            //$("#BaslangicTarihi").datepicker("setDate", new Date(baslangicStr));
+            $("#BaslangicTarihi").datepicker("setDate", new Date(bsl));
+            //$("#TarihBaslangic").datepicker("setStartDate", new Date(baslangicStr));
+        });
+
+    </script>    
 }
