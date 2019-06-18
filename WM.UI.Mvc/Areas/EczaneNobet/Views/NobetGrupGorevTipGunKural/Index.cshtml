@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<NobetGrupGorevTipGunKuralDetay>
 
 @{
-    ViewBag.Title = "Haftanın Günleri | Nöbet Sistemi";
+    ViewBag.Title = "Nöbet Gün Kurallar | Nöbet Sistemi";
 }
 
 <!-- #region ajaxOptions -->
@@ -29,16 +29,21 @@
 <!-- #endregion -->
 
 <div class="row justify-content-between mb-2">
-    <div class="col-md-4 mb-2">
+    <div class="col-md-6 mb-2">
         <div class="form-inline">
-            <h4 class="mr-5">Gün Kurallar</h4>
-            <div class="form-group mr-5">
+            <h4 class="mr-5">Nöbet Gün Kurallar</h4>
+            <div class="form-group mr-3 mr-lg-5">
                 <a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
             </div>
-            <button class="btn btn-dark btn-sm" type="button" id="btnExceleAktar">
+            <button class="btn btn-dark btn-sm mr-3 mr-lg-5" type="button" id="btnExceleAktar">
                 <i class="fa fa-file-excel-o text-success"></i> Excele Aktar
                 <i class="fa fa-download"></i>
             </button>
+
+            <button type="button" class="btn btn-primary" title="Nöbet Yaz" data-toggle="modal" data-target="#nobetGunKurallarAciklama">
+                <i class="fa fa-info-circle"></i> Açıklama
+            </button>
+
         </div>
     </div>
 
@@ -52,7 +57,43 @@
     </div>
 </div>
 
-<div class="form-inline">
+<div class="modal" tabindex="-1" id="nobetGunKurallarAciklama" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        @* modal-lg *@
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <h5 class="modal-title">Nöbet Gün Kural Açıklama !</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Nöbet gruplarının <strong>gün grupları</strong> ve <strong>günlük nöbetçi sayıları</strong> bu sayfada yapılmaktadır.
+                </p>
+                <p>
+                    <span class="font-weight-bold text-success">
+                        @*<i class="fa fa-check" aria-hidden="true"></i>*@
+                        Aktif
+                    </span> olarak belirlenen günlerde nöbetler <strong>grup ortalamasına göre</strong> takip edilmektedir.
+                </p>
+                <p>
+                    İstediğiniz bir günü <strong class="text-success">Aktif</strong> ya da <strong class="text-danger">Pasif</strong> olarak değiştirmek için <strong>Nöbet Grubu</strong> ve <strong>Gün</strong> seçeneklerini kullanarak <strong>Güncelle</strong> butonu ile güncelleyiniz.
+                </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger"
+                        @*onclick="return confirm('Çözüm iptal edilecek. Emin misiniz?');"*@
+                        id="btnModeliKapat" data-dismiss="modal">
+                    İptal
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-inline border border-primary pt-2 pl-2">
 
     @using (Ajax.BeginForm(null, null, getAjaxOptionsSorgu, new { @class = "form-inline", id = "formSorgu" }))
     {
@@ -62,7 +103,7 @@
         </div>
 
         <div class="form-group mr-2 mb-2 mb-md-2">
-            <label class="form-control-label font-weight-bold text-secondary mr-sm-2">Gün:</label>
+            <label class="form-control-label font-weight-bold text-secondary mr-sm-2">Gün Kuralı:</label>
             @Html.DropDownList("NobetGunKuralId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "---Tümü---")
         </div>
     }
@@ -86,7 +127,7 @@
 
 </div>
 
-<div class="alert-light" role="alert">
+<div class="alert-light mb-2" role="alert">
     Listeyi görmek için <strong>nöbet grubunu</strong> seçiniz.
 </div>
 
@@ -105,73 +146,73 @@
     @Scripts.Render("~/bundle/pager")
 
     <script>
-            $(document).ready(function () {
+        $(document).ready(function () {
 
-                $("#myInput").on("keyup", function () {
+            $("#myInput").on("keyup", function () {
                 var value = $(this).val().toLocaleLowerCase('tr-TR');
-                    $("#eczaneTablo tr").filter(function () {
+                $("#eczaneTablo tr").filter(function () {
                     $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
                 });
                 if ($(this).val().length == 0) {
                     getPaging(currentPage)
                 }
-                });
-
-                $('#btnExceleAktar').click(function () {
-                    // alert('ConfirmSubmit')
-                    $("#gridT > tbody > tr").each(function (i, el) {
-                        $(this).css('display', 'table-row');
-                    });
-                    exportToExcel();
-                    //location.reload();
-                    //sayfalamaYap(model, 15);
-                });
-                function exportToExcel() {
-                    var htmls = "";
-                    var uri = 'data:application/vnd.ms-excel;base64,';
-                    var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
-                    var base64 = function (s) {
-                        return window.btoa(unescape(encodeURIComponent(s)))
-                    };
-
-                    var format = function (s, c) {
-                        return s.replace(/{(\w+)}/g, function (m, p) {
-                            return c[p];
-                        })
-                    };
-
-                    htmls = $("table").html();
-
-                    var ctx = {
-                        worksheet: 'Worksheet',
-                        table: htmls
-                    }
-
-                    var link = document.createElement("a");
-                    link.download = "NobetGunKurallar.xls";
-                    link.href = uri + base64(format(template, ctx));
-                    link.click();
-                }
             });
 
-            function veriyiGizleLoadingGifiGoster() {
-                document.getElementById("div1").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
-                // document.getElementById("div_searching").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
-                document.getElementById("loading").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
-                acilisiGeciktir()
+            $('#btnExceleAktar').click(function () {
+                // alert('ConfirmSubmit')
+                $("#gridT > tbody > tr").each(function (i, el) {
+                    $(this).css('display', 'table-row');
+                });
+                exportToExcel();
+                //location.reload();
+                //sayfalamaYap(model, 15);
+            });
+            function exportToExcel() {
+                var htmls = "";
+                var uri = 'data:application/vnd.ms-excel;base64,';
+                var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+                var base64 = function (s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                };
+
+                var format = function (s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) {
+                        return c[p];
+                    })
+                };
+
+                htmls = $("table").html();
+
+                var ctx = {
+                    worksheet: 'Worksheet',
+                    table: htmls
+                }
+
+                var link = document.createElement("a");
+                link.download = "NobetGunKurallar.xls";
+                link.href = uri + base64(format(template, ctx));
+                link.click();
             }
-            function acilisiGeciktir() {
-                setTimeout(
-                    loadingGifiGizleVeriyiGoster, /* Request next message  */
-                    200 /* ..after ms seconds */
-                );
-            }
-            function loadingGifiGizleVeriyiGoster() {
-                document.getElementById("div1").style.visibility = "visible";//tablo gösterilir
-                // document.getElementById("div_searching").style.visibility = "visible";//sayfa yüklenirken tablo gizlenir
-                document.getElementById("loading").style.visibility = "hidden";//gif gizlenir
-                document.getElementById("loading").style.display = "none";//gif yer kaplamasın
-            }
+        });
+
+        function veriyiGizleLoadingGifiGoster() {
+            document.getElementById("div1").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
+            // document.getElementById("div_searching").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
+            document.getElementById("loading").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
+            acilisiGeciktir()
+        }
+        function acilisiGeciktir() {
+            setTimeout(
+                loadingGifiGizleVeriyiGoster, /* Request next message  */
+                200 /* ..after ms seconds */
+            );
+        }
+        function loadingGifiGizleVeriyiGoster() {
+            document.getElementById("div1").style.visibility = "visible";//tablo gösterilir
+            // document.getElementById("div_searching").style.visibility = "visible";//sayfa yüklenirken tablo gizlenir
+            document.getElementById("loading").style.visibility = "hidden";//gif gizlenir
+            document.getElementById("loading").style.display = "none";//gif yer kaplamasın
+        }
 
     </script>
 
@@ -194,15 +235,15 @@
     </script>
 
     <script>
-        //setTimeout(function () { $('.alert').fadeOut(500); }, 10000);
+                        //setTimeout(function () { $('.alert').fadeOut(500); }, 10000);
 
-        //$('#tblNobetGrupGunKurallar').on('click', '.clickable-row', function (event) {
-        //    if ($(this).hasClass('alert-info')) {
-        //        $(this).removeClass('alert-info');
-        //    } else {
-        //        $(this).addClass('alert-info').siblings().removeClass('alert-info');
-        //    }
-        //});
+                        //$('#tblNobetGrupGunKurallar').on('click', '.clickable-row', function (event) {
+                        //    if ($(this).hasClass('alert-info')) {
+                        //        $(this).removeClass('alert-info');
+                        //    } else {
+                        //        $(this).addClass('alert-info').siblings().removeClass('alert-info');
+                        //    }
+                        //});
 
     </script>
 }
