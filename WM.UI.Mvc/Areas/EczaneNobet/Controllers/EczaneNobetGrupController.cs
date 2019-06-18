@@ -208,10 +208,16 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 var nobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
                 var nobetUstGrupId = nobetGrupGorevTip.NobetUstGrupId;
 
-                if (nobetUstGrupId == 1 || nobetUstGrupId == 3)
+                if (nobetUstGrupId == 1 
+                    || nobetUstGrupId == 3
+                    )
                 {//anlanya ya da mersin için
                     var eklenenIkiliEczaneler = _ayniGunTutulanNobetService.IkiliEczaneleriOlustur(eczaneNobetGrupDetaylar);
                 }
+                //else if (nobetUstGrupId == 1)
+                //{
+
+                //}
 
                 ViewBag.EklenenEczaneSayisi = eklenecekEczaneSayisi;
                 ViewBag.EklenenNobetGrupAdi = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId).NobetGrupAdi;
