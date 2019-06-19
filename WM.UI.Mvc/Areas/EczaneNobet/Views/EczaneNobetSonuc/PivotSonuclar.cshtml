@@ -27,13 +27,13 @@
 <div class="row mb-2">
     <div class="col">
         <div class="btn-group" role="group">
-            <div class="custom-control custom-checkbox mr-3 mb-2 mb-md-1" id="alanalarDiv">
+            <div class="custom-control custom-checkbox mr-3 mb-2 mb-md-1" id="alanlarDiv">
                 @Html.CheckBox("chkAlanlariGosterGizle", new { @class = "custom-control-input", onchange = "chekBoxDegistir(this);" })
                 <label class="custom-control-label font-weight-bold" for="chkAlanlariGosterGizle" title="Raporlardaki alanları görmek için bu kutucuğu seçiniz.">Alanlar</label>
             </div>
 
             <div class="custom-control custom-checkbox mr-3 mb-2 mb-md-1">
-                @Html.CheckBox("chkKapananEczaneleriGosterGizle", new { @class = "custom-control-input", onchange = "chekBoxDegistirKapaliEczaneler(this);" })
+                @Html.CheckBox("chkKapananEczaneleriGosterGizle", new { @class = "custom-control-input istatisitkFromInput", onchange = "chekBoxDegistirKapaliEczaneler(this);" })
                 <label class="custom-control-label text-secondary" for="chkKapananEczaneleriGosterGizle" title="Nöbet grubundan çıkan eczaneleri listede görmek için bu kutucuğu seçiniz.">Tüm Eczaneler</label>
             </div>
 
@@ -1648,24 +1648,39 @@
         });
 
         function chekBoxDegistirKapaliEczaneler(element) {
-            if (element.checked) {
-                $("#KapaliEczaneler").val(true);
-            }
-            else {
-                $("#KapaliEczaneler").val(false);
-            }
+
+            //var myButton = $(butonRaporId);
+
+            //if (myButton.length != 0) {
+                if (element.checked) {
+                    $("#KapaliEczaneler").val(true);
+                }
+                else {
+                    $("#KapaliEczaneler").val(false);
+                }
+            //}
         }
 
         function chekBoxDegistir(element) {
-            if (element.checked) {
-                pivotAlanlariGoster = true;
+
+            var myButton = $(butonRaporId);
+
+            //alert("butonRaporId: " + butonRaporId)
+
+            //alert("myButton.length: " + myButton.length)
+
+            if (myButton.length != 0) {
+
+                if (element.checked) {
+                    pivotAlanlariGoster = true;
+                }
+                else {
+                    pivotAlanlariGoster = false;
+                }
+                //alert("pivotAlanlariGoster: " + pivotAlanlariGoster)
+                //alert("dagilimlarPivot: " + dagilimlarPivot.length)
+                ilgiliRaporuOlustur2(raporId)
             }
-            else {
-                pivotAlanlariGoster = false;
-            }
-            //alert("pivotAlanlariGoster: " + pivotAlanlariGoster)
-            //alert("dagilimlarPivot: " + dagilimlarPivot.length)
-            ilgiliRaporuOlustur2(raporId)
         }
 
         function chkPivotTableTransposeDegistir(element) {
@@ -3691,9 +3706,9 @@
         }
 
         $('#alanlarKutusu').hover(function () {
-                $('#alanalarDiv').addClass('alert-danger');
+                $('#alanlarDiv').addClass('alert-danger');
             }, function () {
-                $('#alanalarDiv').removeClass('alert-danger');
+                $('#alanlarDiv').removeClass('alert-danger');
             }
         );
 
@@ -3772,6 +3787,8 @@
         $(function () {
 
             nobetUstGrupId = $('#NobetUstGrupId').val();
+
+            //alert(nobetUstGrupId)
 
             $('.datepicker').datepicker('setStartDate', "01-01-1900");
 
