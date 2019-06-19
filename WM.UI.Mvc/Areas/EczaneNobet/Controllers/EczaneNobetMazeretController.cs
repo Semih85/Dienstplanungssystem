@@ -661,9 +661,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     foreach (var item in eczaneNobetMazeretler)
                     {
+                        var eczane = _eczaneNobetGrupService.GetDetayById(item.EczaneNobetGrupId);
+
                         eklenenEczaneler.Add(new EczaneNobetMazeretDetay
                         {
-                            EczaneAdi = _eczaneNobetGrupService.GetDetayById(item.EczaneNobetGrupId).EczaneAdi,
+                            NobetGorevTipAdi = eczane.NobetGorevTipAdi,
+                            EczaneAdi = eczane.EczaneAdi,
                             Tarih = _takvimService.GetById(item.TakvimId).Tarih,
                             Aciklama = item.Aciklama
                         });
