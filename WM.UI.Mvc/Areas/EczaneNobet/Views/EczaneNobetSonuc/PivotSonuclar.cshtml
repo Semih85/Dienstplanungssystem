@@ -421,9 +421,13 @@
 
             $('.istatisitkFromInput').change(function () {                
                 //alert(1)
-                var uyariMesaj = "<i class='fa fa-info fa-lg mr-2'></i> "
-                    + "<strong>" + mesaj + "</strong>"
-                    + " raporunu görüntülemek için lütfen <strong>'Sorgula' butonuna basınız...</strong>";
+                var uyariMesaj = "<i class='fa fa-info-circle mr-2'></i>"
+                    + "Sorgu kriterleri değişti. "
+                    + "<strong>"
+                    + mesaj
+                    + " raporunu güncellemek için "
+                    + " lütfen tekrar 'Sorgula' butonuna basınız..."
+                    + "</strong > ";
 
                 if ($('#' + divAdi).length === 0) {
                     $('<div/>', {
@@ -1669,14 +1673,16 @@
 
             //alert("myButton.length: " + myButton.length)
 
+            if (element.checked) {
+                pivotAlanlariGoster = true;
+                //alert(pivotAlanlariGoster)
+            }
+            else {
+                pivotAlanlariGoster = false;
+            }
+
             if (myButton.length != 0) {
 
-                if (element.checked) {
-                    pivotAlanlariGoster = true;
-                }
-                else {
-                    pivotAlanlariGoster = false;
-                }
                 //alert("pivotAlanlariGoster: " + pivotAlanlariGoster)
                 //alert("dagilimlarPivot: " + dagilimlarPivot.length)
                 ilgiliRaporuOlustur2(raporId)
@@ -1844,7 +1850,7 @@
                         //    console.log($(icRaporDivId + " #testTable tbody tr").find('.pvtVal').text().split(": ")[1])
                         //    $(icRaporDivId + " #testTable tbody tr").find('.pvtVal').css('color', 'red');
                         //}
-                        //alert(0)
+                        //alert(pivotAlanlariGoster)
 
                         if (pivotAlanlariGoster) {
                             $(icRaporDivId).find('.pvtAggregator').show();
