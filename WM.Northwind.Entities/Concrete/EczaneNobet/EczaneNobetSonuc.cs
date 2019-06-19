@@ -19,7 +19,6 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public virtual EczaneNobetGrup EczaneNobetGrup { get; set; }
         public virtual EczaneNobetFeragat EczaneNobetFeragat { get; set; }
         public virtual Takvim Takvim { get; set; }
-
         public virtual List<EczaneNobetDegisim> EczaneNobetDegisimler { get; set; }
 
     }

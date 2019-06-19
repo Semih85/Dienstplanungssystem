@@ -24,13 +24,10 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public DateTime? BitisTarihi { get; set; }
         [Display(Name = "Açıklama")]
         public string Aciklama { get; set; }
-
         public bool EnErkenTarihteNobetYazilsinMi { get; set; }
 
         public virtual Eczane Eczane { get; set; }
-        //public virtual NobetGrup NobetGrup { get; set; }
         public virtual NobetGrupGorevTip NobetGrupGorevTip { get; set; }
-
         public virtual EczaneNobetGrupAltGrup EczaneNobetGrupAltGrup { get; set; }
         public virtual List<EczaneNobetSonuc> EczaneNobetSonuclar { get; set; }
         public virtual List<EczaneNobetSonucAktif> EczaneNobetSonucAktifler { get; set; }
@@ -38,7 +35,6 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public virtual List<EczaneNobetSonucPlanlanan> EczaneNobetSonucPlanlananlar { get; set; }
         public virtual List<AyniGunTutulanNobet> AyniGunTutulanNobetler1 { get; set; }
         public virtual List<AyniGunTutulanNobet> AyniGunTutulanNobetler2 { get; set; }
-
         public virtual List<EczaneNobetMazeret> EczaneNobetMazeretler { get; set; }
         public virtual List<EczaneNobetIstek> EczaneNobetIstekler { get; set; }
         public virtual List<EczaneNobetDegisim> EczaneNobetDegisimler { get; set; }

@@ -21,9 +21,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public virtual List<NobetGrupTalep> NobetGrupTalepler { get; set; }
         public virtual List<EczaneNobetSonucPlanlanan> EczaneNobetSonucPlanlananlar { get; set; }
         public virtual List<AyniGunTutulanNobet> AyniGunTutulanNobetler { get; set; }
-
         public virtual List<Bayram> Bayramlar { get; set; }
-
         public virtual List<NobetGrupGorevTipTakvimOzelGun> NobetGrupGorevTipTakvimOzelGunler { get; set; }
     }
 }
