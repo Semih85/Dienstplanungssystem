@@ -94,11 +94,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public ActionResult EczaneNobetMazeretPartialView(int nobetGrupId = 0, int eczaneId = 0, DateTime? MazeretTarihi = null)
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetGruplar = _nobetGrupService.GetListByUser(user)
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var nobetGruplar = _nobetGrupService.GetDetaylar(nobetUstGrup.Id)
                 .Where(w => w.Id == nobetGrupId || nobetGrupId == 0).ToList();
 
-            var eczaneNobetMazeretler = _eczaneNobetMazeretService.GetDetaylar()
+            var eczaneNobetMazeretler = _eczaneNobetMazeretService.GetDetaylar(nobetUstGrup.Id)
                 .Where(w => nobetGruplar.Select(n => n.Id).Contains(w.NobetGrupId)
                    && (w.EczaneId == eczaneId || eczaneId == 0)
                    && (w.Tarih == MazeretTarihi || MazeretTarihi == null))
