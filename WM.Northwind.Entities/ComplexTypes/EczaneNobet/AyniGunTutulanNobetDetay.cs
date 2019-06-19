@@ -45,5 +45,10 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string TarihAciklama => String.Format("{0:yyy MM dd, ddd}", EnSonAyniGunNobetTarihi);
         public string YilAy => String.Format("{0:yy-MM}", EnSonAyniGunNobetTarihi);
         public string EczaneBirlesim => $"{EczaneNobetGrupId1}-{EczaneNobetGrupId2}";
+
+        public string NobetGorevTipAdi2 { get; set; }
+        public string NobetGorevTipAdi1 { get; set; }
+        public int NobetGorevTipId1 { get; set; }
+        public int NobetGorevTipId2 { get; set; }
     }
 }

@@ -26,7 +26,7 @@ namespace WM.Optimization.Abstract.Health
         void NobetGorevTipineGoreDagilimYap(KpGorevTipineGorevDagilim kisitParametreModel);        
         void IstenenEczanelerinNobetGunleriniKisitla(KpIstenenEczanelerinNobetGunleriniKisitla kpIstenenEczanelerinNobetGunleriniKisitla);
         void AyIcindeSadece1KezAyniGunNobetTutulsun(KpAyIcindeSadece1KezAyniGunNobet ayIcindeSadece1KezAyniGunNobetKisitParametreModel);
-
+        void AyIcindeSadece1KezAyniGunNobetTutulsunEczaneBazli(KpAyIcindeSadece1KezAyniGunNobet ayIcindeSadece1KezAyniGunNobetKisitParametreModel);
         void AyIcindeSadece1KezAyniGunNobetTutulsunGiresunAltGrup(KpAyIcindeSadece1KezAyniGunNobetGiresunAltGrup p);
 
         void AyIcindeSadece1KezAyniGunNobetTutulsun(KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
@@ -64,6 +64,7 @@ namespace WM.Optimization.Abstract.Health
         List<NobetUstGrupKisitDetay> GetKisitlarNobetGrupBazli(List<NobetUstGrupKisitDetay> kisitlarUstGrupBazli, List<NobetGrupGorevTipKisitDetay> kisitlarGrupBazli);
         void NobetGrupBuyuklugunuTakvimeEkle(List<TakvimNobetGrup> tarihler, int eczaneSayisi);
         double GetArdisikBosGunSayisi(int pespeseNobetSayisi, double altLimit);
+        List<AyniGunTutulanNobetDetay> GetAyniGunNobetTutanEczaneler(List<EczaneNobetTarihAralik> sonuclar);
     }
 }
 

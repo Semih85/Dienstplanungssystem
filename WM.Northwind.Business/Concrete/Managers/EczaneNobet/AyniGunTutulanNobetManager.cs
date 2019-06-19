@@ -172,8 +172,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             var nobetUstGrupId = eczaneNobetGruplar.Select(s => s.NobetUstGrupId).Distinct().FirstOrDefault();
 
-            if (nobetUstGrupId == 5)
-            {//Osmaniye
+            if (nobetUstGrupId == 4 || nobetUstGrupId == 5)
+            {//giresun, Osmaniye
+
+                if (nobetUstGrupId == 4)
+                {
+                    eczaneNobetGruplar = eczaneNobetGruplar.Where(w => w.NobetGorevTipId == 2).ToList();
+                }
+
                 var eczaneNobetGruplarSirali = eczaneNobetGruplar.OrderBy(o => o.Id).ToList();
 
                 var altGruplar = eczaneNobetGruplarSirali
@@ -191,13 +197,16 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         var eczaneNobetGruplar2 = eczaneNobetGruplar
                             .Where(w => w.NobetAltGrupId > eczaneNobetGrup1.NobetAltGrupId).ToList();
 
-                        if (altGrup.NobetAltGrupAdi.StartsWith("B"))
+                        if (nobetUstGrupId == 5)
                         {
-                            eczaneNobetGruplar2 = eczaneNobetGruplar2.Where(w => !w.NobetAltGrupAdi.StartsWith("B")).ToList();
-                        }
-                        else if (altGrup.NobetAltGrupAdi.StartsWith("D"))
-                        {
-                            eczaneNobetGruplar2 = eczaneNobetGruplar2.Where(w => !w.NobetAltGrupAdi.StartsWith("D")).ToList();
+                            if (altGrup.NobetAltGrupAdi.StartsWith("B"))
+                            {
+                                eczaneNobetGruplar2 = eczaneNobetGruplar2.Where(w => !w.NobetAltGrupAdi.StartsWith("B")).ToList();
+                            }
+                            else if (altGrup.NobetAltGrupAdi.StartsWith("D"))
+                            {
+                                eczaneNobetGruplar2 = eczaneNobetGruplar2.Where(w => !w.NobetAltGrupAdi.StartsWith("D")).ToList();
+                            }
                         }
                         //else if (altGrup.NobetAltGrupAdi.StartsWith("A"))
                         //{
@@ -213,6 +222,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
             else if (nobetUstGrupId == 6 || nobetUstGrupId == 9)
             {//bartın, Çorum 
+           
                 var eczaneNobetGruplar1 = eczaneNobetGruplar.OrderBy(o => o.Id).ToArray();
 
                 foreach (var eczaneNobetGrup1 in eczaneNobetGruplar1)

@@ -36,6 +36,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         EczaneAdi1 = s.EczaneNobetGrupl.Eczane.Adi,
                         NobetGrupId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrupId,
                         NobetGrupAdi1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.Adi,
+                        NobetGorevTipId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGorevTipId,
+                        NobetGorevTipAdi1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGorevTip.Adi,
                         //NobetUstGrupId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         //NobetUstGrupAdi1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
 
@@ -44,6 +46,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         EczaneAdi2 = s.EczaneNobetGrup2.Eczane.Adi,
                         NobetGrupId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrupId,
                         NobetGrupAdi2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.Adi,
+                        NobetGorevTipId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGorevTipId,
+                        NobetGorevTipAdi2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGorevTip.Adi,
                         //NobetUstGrupId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         //NobetUstGrupAdi2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
 
@@ -74,6 +78,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetGrupId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrupId,
                         NobetGrupGorevTipId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.Id,
                         NobetGrupAdi1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.Adi,
+                        NobetGorevTipId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGorevTipId,
+                        NobetGorevTipAdi1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGorevTip.Adi,
                         //NobetUstGrupId1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         //NobetUstGrupAdi1 = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
 
@@ -83,6 +89,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetGrupId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrupId,
                         NobetGrupGorevTipId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.Id,
                         NobetGrupAdi2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.Adi,
+                        NobetGorevTipId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGorevTipId,
+                        NobetGorevTipAdi2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGorevTip.Adi,
                         //NobetUstGrupId2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         //NobetUstGrupAdi2 = s.EczaneNobetGrup2.NobetGrupGorevTip.NobetGrup.NobetUstGrup.Adi,
 

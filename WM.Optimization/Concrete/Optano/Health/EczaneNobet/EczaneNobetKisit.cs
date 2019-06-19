@@ -710,6 +710,70 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         }
 
         /// <summary>
+        /// Eczane ikilileri tarih aralığı içinde sadece 1 kez aynı gün nöbet tutsun
+        /// </summary>
+        /// <param name="p">AyIcindeSadece1KezAyniGunNobetKisitParametreModel</param>
+        public virtual void AyIcindeSadece1KezAyniGunNobetTutulsunEczaneBazli(KpAyIcindeSadece1KezAyniGunNobet p)
+        {
+            if (!p.NobetUstGrupKisit.PasifMi)
+            {
+                var tarihAraligi = p.Tarihler.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
+                var indis = 1;
+               
+                foreach (var ikiliEczane in p.IkiliEczaneler)
+                {
+                    var kararIndexIkiliEczaneler = p.EczaneNobetTarihAralik
+                             .Where(e => e.EczaneId == ikiliEczane.EczaneId1 || e.EczaneId == ikiliEczane.EczaneId2).ToList();
+
+                    if (kararIndexIkiliEczaneler.Count > 0)
+                    {
+                        foreach (var tarih in tarihAraligi.Take(p.Tarihler.Count - 1))
+                        {
+                            var tarihler2 = tarihAraligi.Where(w => w.Tarih > tarih.Tarih).ToList();
+
+                            foreach (var tarih2 in tarihler2)
+                            {
+                                var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
+                                                 $" [Std. 3] {indis}";
+
+                                var ikiliEczaneler = $"{ikiliEczane.EczaneAdi1}-{ikiliEczane.EczaneAdi2}";
+                                var ikiliTarihler = $"{tarih.Tarih.ToShortDateString()}-{tarih2.Tarih.ToShortDateString()}";
+
+                                var kisitAdi = IsimleriBirlestir(kisitTanim, ikiliEczaneler, ikiliTarihler);
+
+                                var kararIndex = kararIndexIkiliEczaneler
+                                        .Where(e => e.TakvimId == tarih.TakvimId || e.TakvimId == tarih2.TakvimId).ToList();
+
+                                #region kontrol
+                                var kontrol = true;
+
+                                if (kontrol)
+                                {
+                                    var ss = new string[] { "İSTİKAMET", "KURTOĞLU" };
+                                    var sayi = kararIndex.Where(w => w.EczaneAdi == "İSTİKAMET" || w.EczaneAdi == "KURTOĞLU").Count();
+
+                                    if (sayi > 0)
+                                    {
+                                    }
+                                }
+                                #endregion
+
+                                var std = 3;
+                                var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                                var cns = Constraint.LessThanOrEqual(exp, std);
+                                cns.LowerBound = 0;
+
+                                p.Model.AddConstraint(cns, kisitAdi);
+
+                                indis++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Eczane ikilileri tarih aralığı içinde sadece 1 kez aynı gün nöbet tutsun (değişken dönüşümlü)
         /// </summary>
         /// <param name="p"></param>
@@ -2172,6 +2236,56 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             }
 
             return altLimit;
+        }
+
+        public List<AyniGunTutulanNobetDetay> GetAyniGunNobetTutanEczaneler(List<EczaneNobetTarihAralik> sonuclar)
+        {
+            var sonuclarTarihler = sonuclar
+                .Select(s => new
+                {
+                    s.TakvimId,
+                    s.Tarih,
+                    s.GunGrupId,
+                    s.GunGrupAdi
+                }).Distinct().ToList();
+
+            var ayniGunNobetTutanEczaneler = new List<AyniGunTutulanNobetDetay>();
+
+            foreach (var tarih in sonuclarTarihler)
+            {
+                var tarihBazliSonuclar = sonuclar
+                    .Where(w => w.TakvimId == tarih.TakvimId)
+                    .OrderBy(o => o.EczaneNobetGrupId)
+                    .ToList();
+
+                foreach (var tarihBazliSonuc in tarihBazliSonuclar.Take(tarihBazliSonuclar.Count - 1).ToList())
+                {
+                    var tarihBazliSonuclar2 = tarihBazliSonuclar
+                        .Where(w => w.EczaneNobetGrupId > tarihBazliSonuc.EczaneNobetGrupId).ToList();
+
+                    foreach (var tarihBazliSonuc2 in tarihBazliSonuclar2)
+                    {
+                        ayniGunNobetTutanEczaneler.Add(new AyniGunTutulanNobetDetay
+                        {
+                            //AltGrupAdi = "Kendisi",
+                            //Grup = "Çorum-Merkez",
+                            EczaneAdi1 = tarihBazliSonuc.EczaneAdi,
+                            EczaneAdi2 = tarihBazliSonuc2.EczaneAdi,
+                            EczaneId1 = tarihBazliSonuc.EczaneId,
+                            EczaneId2 = tarihBazliSonuc2.EczaneId,
+                            //EczaneNobetGrupId1 = tarihBazliSonuc.EczaneNobetGrupId,
+                            //EczaneNobetGrupId2 = tarihBazliSonuc2.EczaneNobetGrupId,
+                            NobetGrupAdi1 = tarihBazliSonuc.NobetGrupAdi,
+                            NobetGrupAdi2 = tarihBazliSonuc2.NobetGrupAdi,
+                            EnSonAyniGunNobetTakvimId = tarih.TakvimId,
+                            EnSonAyniGunNobetTarihi = tarih.Tarih,
+                            GunGrupAdi = tarih.GunGrupAdi
+                        });
+                    }
+                }
+            }
+
+            return ayniGunNobetTutanEczaneler;
         }
         #endregion        
     }
