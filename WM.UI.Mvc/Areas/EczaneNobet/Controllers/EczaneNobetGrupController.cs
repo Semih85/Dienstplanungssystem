@@ -277,10 +277,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                 var eklenenNobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrup.NobetGrupGorevTipId);
 
-                _eczaneNobetGrupService.Update(eczaneNobetGrup);
-
                 var bitisTarihiDegistiMi = degisecekEczaneNobetGrupOncekiHali.BitisTarihi != eczaneNobetGrup.BitisTarihi;
                 //var baslangicTarihiDegistiMi = degisecekEczaneNobetGrupOncekiHali.BaslangicTarihi != eczaneNobetGrup.BaslangicTarihi;
+
+                _eczaneNobetGrupService.Update(eczaneNobetGrup);
 
                 if (eklenenNobetGrupGorevTip.NobetUstGrupId == 2
                     && (bitisTarihiDegistiMi 
@@ -293,7 +293,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     var gruptakiEczaneler = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(eczaneNobetGrup.NobetGrupGorevTipId);
 
-                    var baslangicTarihi = eczaneNobetGrup.BaslangicTarihi;
+                    var baslangicTarihi = eczaneNobetGrup.BaslangicTarihi < degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi 
+                        ? degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi
+                        : eczaneNobetGrup.BaslangicTarihi;
 
                     //if (baslangicTarihiDegistiMi)
                     //{
@@ -316,6 +318,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     #endregion
                 }
+                //else
+                //{
+                //    _eczaneNobetGrupService.Update(eczaneNobetGrup);
+                //}
 
                 return RedirectToAction("Index");
             }
