@@ -1322,23 +1322,27 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         var ayniGunNobetSayisi1denFazlaGrouped = (from s in ayniGunNobetTutanEczaneler
                                                                   group s by new
                                                                   {
-                                                                      s.EczaneBirlesim,
-                                                                      s.G1Eczane,
-                                                                      s.G2Eczane,
-                                                                      s.G1EczaneNobetGrupId,
-                                                                      s.G2EczaneNobetGrupId,
-                                                                      s.Grup,
-                                                                      s.AltGrupAdi
+                                                                      //s.EczaneBirlesim,
+                                                                      s.EczaneAdi1,
+                                                                      s.EczaneAdi2,
+                                                                      s.EczaneId1,
+                                                                      s.EczaneId2
+                                                                      //s.EczaneNobetGrupId1,
+                                                                      //s.EczaneNobetGrupId2,
+                                                                      //s.Grup,
+                                                                      //s.AltGrupAdi
                                                                   } into grouped
                                                                   //where grouped.Count() > 1
-                                                                  select new AyniGunNobetTutanEczane
+                                                                  select new AyniGunTutulanNobetDetay
                                                                   {
-                                                                      Grup = grouped.Key.Grup,
-                                                                      G1Eczane = grouped.Key.G1Eczane,
-                                                                      G2Eczane = grouped.Key.G2Eczane,
-                                                                      G1EczaneNobetGrupId = grouped.Key.G1EczaneNobetGrupId,
-                                                                      G2EczaneNobetGrupId = grouped.Key.G2EczaneNobetGrupId,
-                                                                      AltGrupAdi = grouped.Key.AltGrupAdi,
+                                                                      //Grup = grouped.Key.Grup,
+                                                                      EczaneAdi1 = grouped.Key.EczaneAdi1,
+                                                                      EczaneAdi2 = grouped.Key.EczaneAdi2,
+                                                                      EczaneId1 = grouped.Key.EczaneId1,
+                                                                      EczaneId2 = grouped.Key.EczaneId2,
+                                                                      //EczaneNobetGrupId1 = grouped.Key.EczaneNobetGrupId1,
+                                                                      //EczaneNobetGrupId2 = grouped.Key.EczaneNobetGrupId2,
+                                                                      //AltGrupAdi = grouped.Key.AltGrupAdi,
                                                                       AyniGunNobetSayisi = grouped.Count(),
                                                                       //Tarih = grouped.Key.Tarih,
                                                                       //TakvimId = s.TakvimId,
@@ -1535,53 +1539,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             return results;
         }
 
-        private List<AyniGunNobetTutanEczane> GetAyniGunNobetTutanEczaneler(List<EczaneNobetTarihAralik> sonuclar)
-        {
-            var sonuclarTarihler = sonuclar
-                .Select(s => new
-                {
-                    s.TakvimId,
-                    s.Tarih,
-                    s.GunGrupId,
-                    s.GunGrupAdi
-                }).Distinct().ToList();
-
-            var ayniGunNobetTutanEczaneler = new List<AyniGunNobetTutanEczane>();
-
-            foreach (var tarih in sonuclarTarihler)
-            {
-                var tarihBazliSonuclar = sonuclar
-                    .Where(w => w.TakvimId == tarih.TakvimId)
-                    .OrderBy(o => o.EczaneNobetGrupId)
-                    .ToList();
-
-                foreach (var tarihBazliSonuc in tarihBazliSonuclar.Take(tarihBazliSonuclar.Count - 1).ToList())
-                {
-                    var tarihBazliSonuclar2 = tarihBazliSonuclar
-                        .Where(w => w.EczaneNobetGrupId > tarihBazliSonuc.EczaneNobetGrupId).ToList();
-
-                    foreach (var tarihBazliSonuc2 in tarihBazliSonuclar2)
-                    {
-                        ayniGunNobetTutanEczaneler.Add(new AyniGunNobetTutanEczane
-                        {
-                            AltGrupAdi = "Kendisi",
-                            Grup = "Çorum-Merkez",
-                            G1Eczane = tarihBazliSonuc.EczaneAdi,
-                            G2Eczane = tarihBazliSonuc2.EczaneAdi,
-                            G1EczaneNobetGrupId = tarihBazliSonuc.EczaneNobetGrupId,
-                            G2EczaneNobetGrupId = tarihBazliSonuc2.EczaneNobetGrupId,
-                            G1NobetGrupAdi = tarihBazliSonuc.NobetGrupAdi,
-                            G2NobetGrupAdi = tarihBazliSonuc2.NobetGrupAdi,
-                            TakvimId = tarih.TakvimId,
-                            Tarih = tarih.Tarih,
-                            GunGrupAdi = tarih.GunGrupAdi
-                        });
-                    }
-                }
-            }
-
-            return ayniGunNobetTutanEczaneler;
-        }
+        
     }
 
 }

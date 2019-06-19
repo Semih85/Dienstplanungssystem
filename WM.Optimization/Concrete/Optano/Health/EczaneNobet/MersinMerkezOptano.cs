@@ -1807,20 +1807,23 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         //};
                         //AyIcindeSadece1KezAyniGunNobetTutulsun(kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
 
-                        solution = solver.Solve(model);
-
-                        modelStatus = solution.ModelStatus;
-
-                        if (modelStatus != ModelStatus.Feasible)
+                        if (!NobetUstGrupKisit(data.Kisitlar, "k10").PasifMi)
                         {
-                            //data.CalismaSayisi++;
+                            solution = solver.Solve(model);
 
-                            if (data.CalismaSayisi == calismaSayisiEnFazla)
+                            modelStatus = solution.ModelStatus;
+
+                            if (modelStatus != ModelStatus.Feasible)
                             {
-                                results.Celiskiler = CeliskileriEkle(solution);
-                            }
+                                //data.CalismaSayisi++;
 
-                            throw new Exception($"Uygun çözüm bulunamadı! k10 aynı gün 2 kez nöbet.");
+                                if (data.CalismaSayisi == calismaSayisiEnFazla)
+                                {
+                                    results.Celiskiler = CeliskileriEkle(solution);
+                                }
+
+                                throw new Exception($"Uygun çözüm bulunamadı! k10 aynı gün 2 kez nöbet.");
+                            }
                         }
 
                         // import the results back into the model 
