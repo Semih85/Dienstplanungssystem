@@ -58,7 +58,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string NobetGorevTipAdi { get; set; }
         public int NobetGorevTipId { get; set; }
         [Display(Name = "Gün")]
-        public string GunTanim { get; set; }
+        public string NobetGunKuralAdi { get; set; }
         [Display(Name = "Gün Değer")]
         public int NobetGunKuralId { get; set; }
         [Display(Name = "Gün Grup")]

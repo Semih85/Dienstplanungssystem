@@ -356,7 +356,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                              NobetGrupId = s.NobetGrupId,
                              //NobetSonucDemoTipId = s.NobetSonucDemoTipId,
                              NobetGunKuralId = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId) ? b.NobetGunKuralId : (int)s.Tarih.DayOfWeek,
-                             GunTanim = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId) ? b.NobetGunKuralAdi : culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),
+                             NobetGunKuralAdi = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId) ? b.NobetGunKuralAdi : culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),
                              //GunTanim = b?.NobetGunKuralAdi ?? culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),                             
                              //GunTanim = $"{p.NobetGunKuralId}",//.{s.GunTanim}",
                              GunGrupAdi = s.NobetUstGrupId == 3
@@ -454,7 +454,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                              NobetGrupId = s.NobetGrupId,
                              //NobetSonucDemoTipId = s.NobetSonucDemoTipId,
                              NobetGunKuralId = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId) ? b.NobetGunKuralId : (int)s.Tarih.DayOfWeek,
-                             GunTanim = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId) ? b.NobetGunKuralAdi : culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),
+                             NobetGunKuralAdi = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId) ? b.NobetGunKuralAdi : culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),
                              //GunTanim = b?.NobetGunKuralAdi ?? culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),                             
                              //GunTanim = $"{p.NobetGunKuralId}",//.{s.GunTanim}",
                              GunGrupAdi = s.NobetUstGrupId == 3

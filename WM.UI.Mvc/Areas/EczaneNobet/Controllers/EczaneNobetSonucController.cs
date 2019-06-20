@@ -392,7 +392,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         Yıl_Ay = s.Yıl_Ay,
                         Gun = s.GunIkiHane,
                         Eczane = s.EczaneAdi,
-                        GunTanim = s.GunTanim,
+                        NobetGunKuralAdi = s.NobetGunKuralAdi,
                         GunGrupAdi = s.GunGrupAdi,
                         NobetGrubu = s.NobetGrubu,
                         Tarih = s.TarihAciklama,
@@ -633,7 +633,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     Yıl_Ay = s.Yıl_Ay,
                     Gun = s.GunIkiHane,
                     Eczane = s.EczaneAdi,
-                    GunTanim = s.GunTanim,
+                    NobetGunKuralAdi = s.NobetGunKuralAdi,
                     GunGrupAdi = s.GunGrupAdi,
                     NobetGrubu = s.NobetGrubu,
                     GorevTipi = s.NobetGorevTipAdi,
@@ -668,7 +668,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     Yıl_Ay = s.Yıl_Ay,
                     Gun = s.GunIkiHane,
                     Eczane = s.EczaneAdi,
-                    GunTanim = s.GunTanim,
+                    NobetGunKuralAdi = s.NobetGunKuralAdi,
                     GunGrupAdi = s.GunGrupAdi,
                     NobetGrubu = s.NobetGrubu,
                     GorevTipi = s.NobetGorevTipAdi,
@@ -1698,7 +1698,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     EczaneAdi = s.EczaneAdi,
                     NobetGrupAdi = s.NobetGrupAdi,
                     NobetGunKuralId = s.NobetGunKuralId,
-                    GunTanim = s.GunTanim,
+                    NobetGunKuralAdi = s.NobetGunKuralAdi,
                     Gun = s.Gun
                 }).ToList();
 

@@ -647,7 +647,7 @@
                                 ["Yıl"]: n.Yil,
                                 Ay: n.Ay,
                                 //["Gün"]: n.Gun,
-                                ["Gün Tanım"]: n.GunTanim,
+                                ["Gün Tanım"]: n.NobetGunKuralAdi,
                                 ["Gün Grup"]: n.GunGrupAdi,
                                 //["Görev Tipi"]: n.GorevTipi,
                                 ["Nöbet Grubu"]: n.NobetGrubu,
@@ -736,7 +736,7 @@
                              $.each(dagilimlar, function (index, n) {
                                 dagilimlarAktarilacak.push({
                                     ["Yıl-Ay"]: n.Yıl_Ay,
-                                    ["Gün Tanım"]: n.GunTanim,
+                                    ["Gün Tanım"]: n.NobetGunKuralAdi,
                                     ["Gün Grup"]: n.GunGrupAdi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
                                     ["Nöbet Grubu Günlük"]: n.NobetGrupAdiGunluk,
@@ -752,7 +752,7 @@
                             $.each(dagilimlar, function (index, n) {
                                dagilimlarAktarilacak.push({
                                     ["Yıl-Ay"]: n.Yıl_Ay,
-                                    ["Gün Tanım"]: n.GunTanim,
+                                    ["Gün Tanım"]: n.NobetGunKuralAdi,
                                     ["Gün Grup"]: n.GunGrupAdi,
                                     ["Görev Tipi"]: n.GorevTipi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
@@ -774,7 +774,7 @@
                              $.each(dagilimlar, function (index, n) {
                                dagilimlarAktarilacak.push({
                                     ["Yıl-Ay"]: n.Yıl_Ay,
-                                    ["Gün Tanım"]: n.GunTanim,
+                                    ["Gün Tanım"]: n.NobetGunKuralAdi,
                                     ["Gün Grup"]: n.GunGrupAdi,
                                     ["Görev Tipi"]: n.GorevTipi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
@@ -804,7 +804,7 @@
                                     //Ay: n.Ay,
                                     //Hafta: n.Hafta,
                                     //["Gün"]: n.Gun,
-                                    ["Gün Tanım"]: n.GunTanim,
+                                    ["Gün Tanım"]: n.NobetGunKuralAdi,
                                     ["Gün Grup"]: n.GunGrupAdi,
                                     ["Görev Tipi"]: n.GorevTipi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
@@ -842,7 +842,7 @@
                                     //Ay: n.Ay,
                                     //Hafta: n.Hafta,
                                     //["Gün"]: n.Gun,
-                                    ["Gün Tanım"]: n.GunTanim,
+                                    ["Gün Tanım"]: n.NobetGunKuralAdi,
                                     ["Gün Grup"]: n.GunGrupAdi,
                                     ["Görev Tipi"]: n.GorevTipi,
                                     ["Nöbet Grubu"]: n.NobetGrubu,
@@ -2044,7 +2044,7 @@
                     $(icRaporDivId).pivotUI(dagilimlarPivot,
                         {
                             rows: pivotRows,
-                            cols: pivotCols, //, "GunDeger", "GunTanim"
+                            cols: pivotCols, //, "GunDeger", "NobetGunKuralAdi"
                             vals: ["Eczane"],
                             aggregatorName: "Say",
                             aggregators: pivotAggregators,
@@ -2099,7 +2099,7 @@
                     $(icRaporDivId).pivotUI(bayramlar,
                         {
                             rows: pivotRows,
-                            cols: pivotCols, //, "GunDeger", "GunTanim"
+                            cols: pivotCols, //, "GunDeger", "NobetGunKuralAdi"
                             vals: pivotVals,
                             aggregatorName: pivotAggregatorName,
                             aggregators: pivotAggregators,
@@ -2149,7 +2149,7 @@
                     $(icRaporDivId).pivotUI(dagilimlarPivot,
                         {
                             rows: pivotRows,
-                            cols: pivotCols, //, "GunDeger", "GunTanim"
+                            cols: pivotCols, //, "GunDeger", "NobetGunKuralAdi"
                             vals: ["Eczane"],
                             aggregatorName: "Say",
                             aggregators: pivotAggregators,
@@ -2191,7 +2191,7 @@
                     $(icRaporDivId).pivotUI(dagilimlarPivot,
                         {
                             rows: pivotRows,
-                            cols: pivotCols, //, "GunDeger", "GunTanim"
+                            cols: pivotCols, //, "GunDeger", "NobetGunKuralAdi"
                             vals: ["Tarih"],
                             aggregatorName: "Say",
                             aggregators: pivotAggregators,
@@ -2225,7 +2225,7 @@
                     $(icRaporDivId).pivotUI(gunDagilimiMaxMin,
                         {
                             rows: ["Gün Grup"],
-                            cols: ["Nöbet Grubu"], //, "GunDeger", "GunTanim"
+                            cols: ["Nöbet Grubu"], //, "GunDeger", "NobetGunKuralAdi"
                             vals: ["Nöbet Sayısı Farkı"],
                             aggregatorName: "Toplam (Tam Sayı)",
                             aggregators: pivotAggregators,

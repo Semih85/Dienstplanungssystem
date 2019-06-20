@@ -241,7 +241,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                              NobetGunKuralId = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
                              ? b.NobetGunKuralId
                              : (int)s.Tarih.DayOfWeek + 1,
-                             GunTanim = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
+                             NobetGunKuralAdi = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
                              ? b.NobetGunKuralAdi
                              : culture.DateTimeFormat.GetDayName(s.Tarih.DayOfWeek),
                              GunGrupAdi = s.NobetUstGrupId == 3

@@ -14,7 +14,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int Yil { get; set; }
         public int Ay { get; set; }
         public string Gun { get; set; }
-        public string GunTanim { get; set; }
+        public string NobetGunKuralAdi { get; set; }
         public string GunGrupAdi { get; set; }
         public string NobetGrubu { get; set; }
         public string NobetAltGrubu { get; set; }

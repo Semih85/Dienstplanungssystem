@@ -644,7 +644,7 @@
         var _sonuclar = @Html.Raw(Json.Encode(Model.TumSonuclar.Select(s =>
                    new {s.Ay,
                        Eczane = s.EczaneAdi,
-                       Gün = s.GunTanim,
+                       Gün = s.NobetGunKuralAdi,
                        GünGrup = s.GunGrupAdi,
                        GörevTipi = s.NobetGorevTipAdi,
 
