@@ -16,7 +16,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int NobetGrupGorevTipId { get; set; }
         [Display(Name = "Eczane")]
         public int[] EczaneId { get; set; }
-        [Display(Name = "Başlangıç Tarihi")]
+        [Display(Name = "Açıklama")]
         public string Aciklama { get; set; }
         [Display(Name = "Başlangıç Tarihi")]
         public DateTime BaslangicTarihi { get; set; }
