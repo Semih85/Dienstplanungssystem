@@ -41,6 +41,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private INobetGrupGorevTipKisitService _nobetGrupGorevTipKisitService;
         private INobetGrupGorevTipGunKuralService _nobetGrupGorevTipGunKuralService;
         private INobetGrupGorevTipTakvimOzelGunService _nobetGrupGorevTipTakvimOzelGunService;
+        private IKalibrasyonService _kalibrasyonService;
 
         public AntalyaMerkezOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -66,7 +67,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     INobetUstGrupService nobetUstGrupService,
                     INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
                     INobetGrupGorevTipGunKuralService nobetGrupGorevTipGunKuralService,
-                    INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService
+                    INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService,
+                    IKalibrasyonService kalibrasyonService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -93,6 +95,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
             _nobetGrupGorevTipGunKuralService = nobetGrupGorevTipGunKuralService;
             _nobetGrupGorevTipTakvimOzelGunService = nobetGrupGorevTipTakvimOzelGunService;
+            _kalibrasyonService = kalibrasyonService;
         }
         #endregion
 
@@ -375,7 +378,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 TakvimNobetGrupGunDegerIstatistikler = takvimNobetGrupGunDegerIstatistikler,
                 EczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatay,
                 EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
-                NobetGrupGorevTipKisitlar = grupBazliKisitlar
+                NobetGrupGorevTipKisitlar = grupBazliKisitlar,
+                Kalibrasyonlar = _kalibrasyonService.GetKalibrasyonlarYatay(nobetUstGrupId)
+
             };
 
             var sure_toplam = stopwatch.Elapsed;

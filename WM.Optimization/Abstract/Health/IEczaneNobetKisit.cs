@@ -65,6 +65,8 @@ namespace WM.Optimization.Abstract.Health
         void NobetGrupBuyuklugunuTakvimeEkle(List<TakvimNobetGrup> tarihler, int eczaneSayisi);
         double GetArdisikBosGunSayisi(int pespeseNobetSayisi, double altLimit);
         List<AyniGunTutulanNobetDetay> GetAyniGunNobetTutanEczaneler(List<EczaneNobetTarihAralik> sonuclar);
+
+        KalibrasyonYatay GetKalibrasyonDegeri(List<KalibrasyonYatay> eczaneKalibrasyon);
     }
 }
 
