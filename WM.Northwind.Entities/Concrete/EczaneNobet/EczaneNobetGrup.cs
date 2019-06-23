@@ -28,7 +28,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
 
         public virtual Eczane Eczane { get; set; }
         public virtual NobetGrupGorevTip NobetGrupGorevTip { get; set; }
-        public virtual EczaneNobetGrupAltGrup EczaneNobetGrupAltGrup { get; set; }
+        public virtual List<EczaneNobetGrupAltGrup> EczaneNobetGrupAltGruplar { get; set; }
         public virtual List<EczaneNobetSonuc> EczaneNobetSonuclar { get; set; }
         public virtual List<EczaneNobetSonucAktif> EczaneNobetSonucAktifler { get; set; }
         public virtual List<EczaneNobetSonucDemo> EczaneNobetSonucDemolar { get; set; }

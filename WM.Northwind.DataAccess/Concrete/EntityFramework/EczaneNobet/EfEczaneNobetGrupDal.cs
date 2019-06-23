@@ -37,8 +37,12 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetGorevTipAdi = s.NobetGrupGorevTip.NobetGorevTip.Adi,
                         NobetGorevTipId = s.NobetGrupGorevTip.NobetGorevTipId,
                         NobetGrupGorevTipId = s.NobetGrupGorevTipId,
-                        NobetAltGrupAdi = s.EczaneNobetGrupAltGrup.NobetAltGrup.Adi,
-                        NobetAltGrupId = s.EczaneNobetGrupAltGrup.NobetAltGrupId,
+                        NobetAltGrupAdi = s.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault() != null
+                        ? s.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault().NobetAltGrup.Adi
+                        : "",
+                        NobetAltGrupId = s.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault() != null
+                        ? s.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault().NobetAltGrup.Id
+                        : 0,
                         NobetUstGrupBaslamaTarihi = s.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
                         NobetGrupGorevTipBaslamaTarihi = s.NobetGrupGorevTip.BaslamaTarihi,
                         EnErkenTarihteNobetYazilsinMi = s.EnErkenTarihteNobetYazilsinMi
@@ -68,8 +72,13 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetGorevTipAdi = s.NobetGrupGorevTip.NobetGorevTip.Adi,
                         NobetGorevTipId = s.NobetGrupGorevTip.NobetGorevTipId,
                         NobetGrupGorevTipId = s.NobetGrupGorevTipId,
-                        NobetAltGrupAdi = s.EczaneNobetGrupAltGrup.NobetAltGrup.Adi,
-                        NobetAltGrupId = s.EczaneNobetGrupAltGrup.NobetAltGrupId,
+
+                        NobetAltGrupAdi = s.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault() != null
+                        ? s.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault().NobetAltGrup.Adi
+                        : "",
+                        NobetAltGrupId = s.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault() != null
+                        ? s.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault().NobetAltGrup.Id
+                        : 0,
                         NobetUstGrupBaslamaTarihi = s.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
                         NobetGrupGorevTipBaslamaTarihi = s.NobetGrupGorevTip.BaslamaTarihi,
                         EnErkenTarihteNobetYazilsinMi = s.EnErkenTarihteNobetYazilsinMi

@@ -38,11 +38,11 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
                         NobetGrupGorevTipBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.BaslamaTarihi,
                         NobetGrupGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTipId,
-                        NobetAltGrupId = s.EczaneNobetGrup.EczaneNobetGrupAltGrup != null
-                        ? s.EczaneNobetGrup.EczaneNobetGrupAltGrup.NobetAltGrupId
+                        NobetAltGrupId = s.EczaneNobetGrup.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault() != null
+                        ? s.EczaneNobetGrup.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault().NobetAltGrupId
                         : 0,
-                        NobetAltGrupAdi = s.EczaneNobetGrup.EczaneNobetGrupAltGrup != null
-                        ? s.EczaneNobetGrup.EczaneNobetGrupAltGrup.NobetAltGrup.Adi
+                        NobetAltGrupAdi = s.EczaneNobetGrup.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault() != null
+                        ? s.EczaneNobetGrup.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault().NobetAltGrup.Adi
                         : "Aalt grup yok",
                         YayimlandiMi = s.YayimlandiMi
                     }).SingleOrDefault(filter);
@@ -60,7 +60,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                 var liste = from s in ctx.EczaneNobetSonuclar
                             where s.EczaneNobetFeragat.NobetFeragatTipId != 2
                             let eczaneNobetGrup = s.EczaneNobetFeragat.NobetFeragatTipId == 4 ? s.EczaneNobetFeragat.EczaneNobetGrup : s.EczaneNobetGrup
-                            select (new EczaneNobetSonucDetay2
+                            let eczaneNobetGrupAltGrup = eczaneNobetGrup.EczaneNobetGrupAltGruplar
+                            .Where(w => w.BaslangicTarihi <= s.Takvim.Tarih && (s.Takvim.Tarih <= w.BitisTarihi || w.BitisTarihi == null)).FirstOrDefault()
+                            select new EczaneNobetSonucDetay2
                             {
                                 Id = s.Id,
                                 EczaneAdi = eczaneNobetGrup.Eczane.Adi,
@@ -79,14 +81,10 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                                 NobetUstGrupBaslamaTarihi = eczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
                                 NobetGrupGorevTipBaslamaTarihi = eczaneNobetGrup.NobetGrupGorevTip.BaslamaTarihi,
                                 NobetGrupGorevTipId = eczaneNobetGrup.NobetGrupGorevTipId,
-                                NobetAltGrupId = eczaneNobetGrup.EczaneNobetGrupAltGrup != null
-                                ? eczaneNobetGrup.EczaneNobetGrupAltGrup.NobetAltGrupId
-                                : 0,
-                                NobetAltGrupAdi = eczaneNobetGrup.EczaneNobetGrupAltGrup != null
-                                ? eczaneNobetGrup.EczaneNobetGrupAltGrup.NobetAltGrup.Adi
-                                : "Aalt grup yok",
+                                NobetAltGrupId = eczaneNobetGrupAltGrup != null ? eczaneNobetGrupAltGrup.NobetAltGrupId : 0,
+                                NobetAltGrupAdi = eczaneNobetGrupAltGrup != null ? eczaneNobetGrupAltGrup.NobetAltGrup.Adi : "Aalt grup yok",
                                 YayimlandiMi = s.YayimlandiMi
-                            });
+                            };
 
                 return filter == null
                    ? liste.ToList()

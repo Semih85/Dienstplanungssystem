@@ -38,12 +38,12 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
                         NobetGrupGorevTipBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.BaslamaTarihi,
                         NobetGrupGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTipId,
-                        NobetAltGrupId = s.EczaneNobetGrup.EczaneNobetGrupAltGrup != null
-                        ? s.EczaneNobetGrup.EczaneNobetGrupAltGrup.NobetAltGrupId
-                        : 0,
-                        NobetAltGrupAdi = s.EczaneNobetGrup.EczaneNobetGrupAltGrup != null
-                        ? s.EczaneNobetGrup.EczaneNobetGrupAltGrup.NobetAltGrup.Adi
-                        : "Aalt grup yok"
+                        //NobetAltGrupId = s.EczaneNobetGrup.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).SingleOrDefault() != null
+                        //? s.EczaneNobetGrup.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).SingleOrDefault().NobetAltGrupId
+                        //: 0,
+                        //NobetAltGrupAdi = s.EczaneNobetGrup.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).SingleOrDefault() != null
+                        //? s.EczaneNobetGrup.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).SingleOrDefault().NobetAltGrup.Adi
+                        //: "Aalt grup yok"
                     }).SingleOrDefault(filter);
             }
         }
@@ -51,32 +51,30 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
         {
             using (var ctx = new EczaneNobetContext())
             {
-                var liste = ctx.EczaneNobetSonucPlanlananlar
-                   .Select(s => new EczaneNobetSonucDetay2
-                   {
-                       Id = s.Id,
-                       EczaneAdi = s.EczaneNobetGrup.Eczane.Adi,
-                       EczaneId = s.EczaneNobetGrup.EczaneId,
-                       EczaneNobetGrupBaslamaTarihi = s.EczaneNobetGrup.BaslangicTarihi,
-                       EczaneNobetGrupBitisTarihi = s.EczaneNobetGrup.BitisTarihi,
-                       EczaneNobetGrupId = s.EczaneNobetGrupId,
-                       NobetGorevTipAdi = s.NobetGorevTip.Adi,
-                       NobetGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGorevTipId,
-                       NobetGrupAdi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Adi,
-                       NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrupId,
-                       NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
-                       TakvimId = s.TakvimId,
-                       Tarih = s.Takvim.Tarih,
-                       NobetUstGrupBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
-                       NobetGrupGorevTipBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.BaslamaTarihi,
-                       NobetGrupGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTipId,
-                       NobetAltGrupId = s.EczaneNobetGrup.EczaneNobetGrupAltGrup != null
-                        ? s.EczaneNobetGrup.EczaneNobetGrupAltGrup.NobetAltGrupId
-                        : 0,
-                       NobetAltGrupAdi = s.EczaneNobetGrup.EczaneNobetGrupAltGrup != null
-                        ? s.EczaneNobetGrup.EczaneNobetGrupAltGrup.NobetAltGrup.Adi
-                        : "Aalt grup yok"
-                   });
+                var liste = from s in ctx.EczaneNobetSonucPlanlananlar
+                            //let eczaneNobetGrupAltGrup = s.EczaneNobetGrup.EczaneNobetGrupAltGruplar
+                            //.Where(w => w.BaslangicTarihi <= s.Takvim.Tarih && (s.Takvim.Tarih <= w.BitisTarihi || w.BitisTarihi == null)).FirstOrDefault()
+                            select new EczaneNobetSonucDetay2
+                            {
+                                Id = s.Id,
+                                EczaneAdi = s.EczaneNobetGrup.Eczane.Adi,
+                                EczaneId = s.EczaneNobetGrup.EczaneId,
+                                EczaneNobetGrupBaslamaTarihi = s.EczaneNobetGrup.BaslangicTarihi,
+                                EczaneNobetGrupBitisTarihi = s.EczaneNobetGrup.BitisTarihi,
+                                EczaneNobetGrupId = s.EczaneNobetGrupId,
+                                NobetGorevTipAdi = s.NobetGorevTip.Adi,
+                                NobetGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGorevTipId,
+                                NobetGrupAdi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Adi,
+                                NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrupId,
+                                NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
+                                TakvimId = s.TakvimId,
+                                Tarih = s.Takvim.Tarih,
+                                NobetUstGrupBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
+                                NobetGrupGorevTipBaslamaTarihi = s.EczaneNobetGrup.NobetGrupGorevTip.BaslamaTarihi,
+                                NobetGrupGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTipId,
+                                //NobetAltGrupId = eczaneNobetGrupAltGrup != null ? eczaneNobetGrupAltGrup.NobetAltGrupId : 0,
+                                //NobetAltGrupAdi = eczaneNobetGrupAltGrup != null ? eczaneNobetGrupAltGrup.NobetAltGrup.Adi : "Aalt grup yok",
+                            };
 
                 return filter == null
                     ? liste.ToList()
