@@ -98,6 +98,18 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylarVerilenTarihtenSonrasi(DateTime baslangicTarihi, int nobetGrupGorevTipId)
+        {
+            return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => x.Tarih >= baslangicTarihi && x.NobetGrupGorevTipId == nobetGrupGorevTipId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylarVerilenTarihtenOncesi(DateTime baslangicTarihi, int nobetGrupGorevTipId)
+        {
+            return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => x.Tarih <= baslangicTarihi && x.NobetGrupGorevTipId == nobetGrupGorevTipId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylar2(DateTime? baslangicTarihi, DateTime? bitisTarihi, int nobetGrupGorevTipId)
         {
             return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => (x.Tarih >= baslangicTarihi || baslangicTarihi == null)

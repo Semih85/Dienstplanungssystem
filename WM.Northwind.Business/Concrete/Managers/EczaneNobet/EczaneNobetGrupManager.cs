@@ -296,6 +296,20 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public int GetEczaneninGrubaGirdigiTarihtekiEczaneSayisi(int eczaneNobetGrupId)
+        {
+            var eczaneNobetGrupBilgileri = GetDetayById(eczaneNobetGrupId);
+
+            var baslangicTarihi = eczaneNobetGrupBilgileri.BaslangicTarihi < eczaneNobetGrupBilgileri.NobetGrupGorevTipBaslamaTarihi 
+                ? eczaneNobetGrupBilgileri.NobetGrupGorevTipBaslamaTarihi 
+                : eczaneNobetGrupBilgileri.BaslangicTarihi;
+
+            return _eczaneNobetGrupDal.GetDetayList(w => w.NobetGrupGorevTipId == eczaneNobetGrupBilgileri.NobetGrupGorevTipId
+                && (w.BaslangicTarihi <= baslangicTarihi && (baslangicTarihi <= w.BitisTarihi || w.BitisTarihi == null))
+            ).Count();
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetGrupDetay> GetAktifEczaneNobetGrup(int nobetGrupId)
         {
             return _eczaneNobetGrupDal.GetDetayList(x => x.NobetGrupId == nobetGrupId && x.BitisTarihi == null);

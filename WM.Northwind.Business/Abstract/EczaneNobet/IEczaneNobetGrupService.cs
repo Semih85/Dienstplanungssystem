@@ -55,5 +55,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
 
         List<MyDrop> GetMyDrop(List<EczaneNobetGrupDetay> czaneNobetGrupDetaylar);
         List<EczaneNobetGrupDetay> GetDetaylarByNobetUstGrupIdList(List<int> nobetUstGrupIdList);
+
+        int GetEczaneninGrubaGirdigiTarihtekiEczaneSayisi(int eczaneNobetGrupId);
     }
 }
