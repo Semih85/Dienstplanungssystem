@@ -8,11 +8,9 @@ using WM.Core.Entities;
 
 namespace WM.Northwind.Entities.Concrete.EczaneNobet
 {
-    public class GunGrup : GunGrupBase, IEntity
+    public class GunGrupBase : IEntity
     {
-        //public int Id { get; set; }
-        //public string Adi { get; set; }
-
-        public virtual List<NobetUstGrupGunGrup> NobetUstGrupGunGruplar { get; set; }
+        public int Id { get; set; }
+        public string Adi { get; set; }
     }
 }
