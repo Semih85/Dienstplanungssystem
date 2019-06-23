@@ -97,6 +97,13 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
             DateTime nobetBitisTarihi,
             EczaneNobetGrup eczaneNobetGrup);
 
+        void SiraliNobetYazGunGrupBazinda(
+            NobetGrupGorevTipDetay nobetGrupGorevTip,
+            List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
+            DateTime nobetBaslangicTarihi,
+            DateTime nobetBitisTarihi,
+            int gunGrupId);
+
         List<EczaneNobetCozum> SiraliNobetYazGrupBazindaEczaneNobetSonuclar(NobetGrupGorevTipDetay nobetGrupGorevTip,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,

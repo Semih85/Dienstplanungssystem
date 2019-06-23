@@ -2237,7 +2237,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [TransactionScopeAspect]
-        private void SiraliNobetYazGunGrupBazinda(
+        public void SiraliNobetYazGunGrupBazinda(
             NobetGrupGorevTipDetay nobetGrupGorevTip,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,
