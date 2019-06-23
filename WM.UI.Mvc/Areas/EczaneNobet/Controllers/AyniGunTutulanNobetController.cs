@@ -145,7 +145,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
             var ikiliEczanelerTumu = _ayniGunTutulanNobetService.GetDetaylar(nobetUstGrup.Id);
 
-            var ikiliEczanelerSifirdanBuyukler = _ayniGunTutulanNobetService.GetListSifirdanBuyukler(nobetUstGrup.Id);
+            var ikiliEczanelerSifirdanBuyukler = _ayniGunTutulanNobetService.GetListSifirdanFarkli(nobetUstGrup.Id);
             _ayniGunTutulanNobetService.IkiliEczaneIstatistiginiSifirla(nobetUstGrup.Id);
 
             ViewBag.IkiliEczaneSayisi = ikiliEczanelerTumu.Count;

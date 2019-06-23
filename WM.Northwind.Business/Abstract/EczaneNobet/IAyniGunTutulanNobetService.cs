@@ -16,6 +16,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<AyniGunTutulanNobet> GetList();
         List<AyniGunTutulanNobet> GetList(int nobetUstGrupId);
         List<AyniGunTutulanNobet> GetListSifirdanBuyukler(int nobetUstGrupId);
+        List<AyniGunTutulanNobet> GetListSifirdanFarkli(int nobetUstGrupId);
         //List<AyniGunTutulanNobet> GetByCategory(int categoryId);
         void Insert(AyniGunTutulanNobet ayniGunTutulanNobet);
         void Update(AyniGunTutulanNobet ayniGunTutulanNobet);

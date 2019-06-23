@@ -28,8 +28,12 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupId = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         NobetUstGrupAdi = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.Adi,
 
-                        NobetAltGrupAdi1 = s.EczaneNobetGrupl.EczaneNobetGrupAltGrup.NobetAltGrup.Adi,
-                        NobetAltGrupAdi2 = s.EczaneNobetGrup2.EczaneNobetGrupAltGrup.NobetAltGrup.Adi,
+                        NobetAltGrupAdi1 = s.EczaneNobetGrupl.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault() != null
+                        ? s.EczaneNobetGrupl.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault().NobetAltGrup.Adi
+                        : "",
+                        NobetAltGrupAdi2 = s.EczaneNobetGrup2.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault() != null
+                        ? s.EczaneNobetGrupl.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault().NobetAltGrup.Adi
+                        : "",
 
                         EczaneNobetGrupId1 = s.EczaneNobetGrupl.Id,
                         EczaneId1 = s.EczaneNobetGrupl.EczaneId,
@@ -69,8 +73,12 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupId = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         NobetUstGrupAdi = s.EczaneNobetGrupl.NobetGrupGorevTip.NobetGrup.Adi,
 
-                        NobetAltGrupAdi1 = s.EczaneNobetGrupl.EczaneNobetGrupAltGrup.NobetAltGrup.Adi,
-                        NobetAltGrupAdi2 = s.EczaneNobetGrup2.EczaneNobetGrupAltGrup.NobetAltGrup.Adi,
+                        NobetAltGrupAdi1 = s.EczaneNobetGrupl.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault() != null
+                        ? s.EczaneNobetGrupl.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault().NobetAltGrup.Adi
+                        : "",
+                        NobetAltGrupAdi2 = s.EczaneNobetGrup2.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault() != null
+                        ? s.EczaneNobetGrupl.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault().NobetAltGrup.Adi
+                        : "",
 
                         EczaneNobetGrupId1 = s.EczaneNobetGrupl.Id,
                         EczaneId1 = s.EczaneNobetGrupl.EczaneId,

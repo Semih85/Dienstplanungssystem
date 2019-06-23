@@ -645,14 +645,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             var ikiliEczanelerTumu = GetListSifirdanFarkli(nobetUstGrupId);
 
-            //foreach (var ikiliEczane in ikiliEczanelerTumu)
-            //{
-            //    ikiliEczane.EnSonAyniGunNobetTakvimId = 1;
-            //    ikiliEczane.AyniGunNobetSayisi = 0;
-            //    ikiliEczane.AyniGunNobetTutamayacaklariGunSayisi = 0;
+            foreach (var ikiliEczane in ikiliEczanelerTumu)
+            {
+                ikiliEczane.EnSonAyniGunNobetTakvimId = 1;
+                ikiliEczane.AyniGunNobetSayisi = 0;
+                ikiliEczane.AyniGunNobetTutamayacaklariGunSayisi = 0;
 
-            //    _ayniGunTutulanNobetDal.Update(ikiliEczane);
-            //}
+               //_ayniGunTutulanNobetDal.Update(ikiliEczane);
+            }
 
             _ayniGunTutulanNobetDal.UpdateTumKolonlar(ikiliEczanelerTumu);
         }
