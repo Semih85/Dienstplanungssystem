@@ -30,12 +30,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int eczaneNobetGrupAltGrupId)
         {
-            _eczaneNobetGrupAltGrupDal.Delete(new EczaneNobetGrupAltGrup { EczaneNobetGrupId = eczaneNobetGrupAltGrupId });
+            _eczaneNobetGrupAltGrupDal.Delete(new EczaneNobetGrupAltGrup { Id = eczaneNobetGrupAltGrupId });
         }
 
         public EczaneNobetGrupAltGrup GetById(int eczaneNobetGrupAltGrupId)
         {
-            return _eczaneNobetGrupAltGrupDal.Get(x => x.EczaneNobetGrupId == eczaneNobetGrupAltGrupId);
+            return _eczaneNobetGrupAltGrupDal.Get(x => x.Id == eczaneNobetGrupAltGrupId);
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
@@ -58,7 +58,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
         public EczaneNobetGrupAltGrupDetay GetDetayById(int eczaneNobetGrupAltGrupId)
         {
-            return _eczaneNobetGrupAltGrupDal.GetDetay(x => x.EczaneNobetGrupId == eczaneNobetGrupAltGrupId);
+            return _eczaneNobetGrupAltGrupDal.GetDetay(x => x.Id == eczaneNobetGrupAltGrupId);
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]

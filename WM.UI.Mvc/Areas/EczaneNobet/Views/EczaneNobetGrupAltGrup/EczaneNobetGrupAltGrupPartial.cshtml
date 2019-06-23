@@ -3,12 +3,18 @@
 <hr />
 <table class="table table-hover table-sm">
     <thead class="thead-light">
-        <tr>            
+        <tr>
             <th>
                 @Html.DisplayName("Nöbet Grubu")
             </th>
             <th>
                 @Html.DisplayName("Eczane")
+            </th>
+            <th>
+                @Html.DisplayName("Başlama Tarihi")
+            </th>
+            <th>
+                @Html.DisplayName("Bitiş Tarihi")
             </th>
             <th>
                 @Html.DisplayName("Alt Grup")
@@ -25,6 +31,12 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EczaneAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BaslangicTarihi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BitisTarihi)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NobetAltGrupAdi)

@@ -12,6 +12,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 {
     public class EczaneNobetGrupAltGrupDetay: IComplexType
  { 
+        public int Id { get; set; }
         public int EczaneNobetGrupId { get; set; }
         public int EczaneId { get; set; }
         public int NobetGrupId { get; set; }
@@ -24,5 +25,12 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string NobetGrupAdi { get; set; }
         public string NobetGorevTipAdi { get; set; }
         public string NobetAltGrupAdi { get; set; }
+
+        [Display(Name = "Açıklama")]
+        public string Aciklama { get; set; }
+        [Display(Name = "Başlangıç Tarihi")]
+        public DateTime BaslangicTarihi { get; set; }
+        [Display(Name = "Bitiş Tarihi")]
+        public DateTime? BitisTarihi { get; set; }
     } 
 } 

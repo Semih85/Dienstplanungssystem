@@ -125,7 +125,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EczaneNobetGrupId,NobetAltGrupId")] EczaneNobetGrupAltGrupCoklu eczaneNobetGrupAltGrupCoklu)
+        public ActionResult Create([Bind(Include = "Id,EczaneNobetGrupId,NobetAltGrupId,BaslangicTarihi,BitisTarihi,Aciklama")] EczaneNobetGrupAltGrupCoklu eczaneNobetGrupAltGrupCoklu)
         {
             if (ModelState.IsValid)
             {
@@ -136,7 +136,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     eczaneNobetGrupAltGruplar.Add(new EczaneNobetGrupAltGrup
                     {
                         EczaneNobetGrupId = eczaneNobetGrupId,
-                        NobetAltGrupId = eczaneNobetGrupAltGrupCoklu.NobetAltGrupId
+                        NobetAltGrupId = eczaneNobetGrupAltGrupCoklu.NobetAltGrupId,
+                        BaslangicTarihi = eczaneNobetGrupAltGrupCoklu.BaslangicTarihi,
+                        BitisTarihi = eczaneNobetGrupAltGrupCoklu.BitisTarihi,
+                        Aciklama = eczaneNobetGrupAltGrupCoklu.Aciklama
                     });
                 }
 
@@ -229,7 +232,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EczaneNobetGrupId,NobetAltGrupId")] EczaneNobetGrupAltGrup eczaneNobetGrupAltGrup)
+        public ActionResult Edit([Bind(Include = "Id,EczaneNobetGrupId,NobetAltGrupId,BaslangicTarihi,BitisTarihi,Aciklama")] EczaneNobetGrupAltGrup eczaneNobetGrupAltGrup)
         {
             if (ModelState.IsValid)
             {

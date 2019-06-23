@@ -34,6 +34,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                 return ctx.EczaneNobetGrupAltGruplar
                     .Select(s => new EczaneNobetGrupAltGrupDetay
                     {
+                        Id = s.Id,
                         EczaneNobetGrupId = s.EczaneNobetGrupId,
                         NobetAltGrupId = s.NobetAltGrupId,
                         NobetAltGrupAdi = s.NobetAltGrup.Adi,
@@ -44,7 +45,10 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         NobetGorevTipAdi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGorevTip.Adi,
                         NobetGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGorevTipId,
-                        NobetGrupGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTipId
+                        NobetGrupGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTipId,
+                        BaslangicTarihi = s.BaslangicTarihi,
+                        BitisTarihi = s.BitisTarihi,
+                        Aciklama = s.Aciklama
                     }).SingleOrDefault(filter);
             }
         }
@@ -55,6 +59,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                 var liste = ctx.EczaneNobetGrupAltGruplar
                     .Select(s => new EczaneNobetGrupAltGrupDetay
                     {
+                        Id = s.Id,
                         EczaneNobetGrupId = s.EczaneNobetGrupId,
                         NobetAltGrupId = s.NobetAltGrupId,
                         NobetAltGrupAdi = s.NobetAltGrup.Adi,
@@ -65,7 +70,10 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         NobetGorevTipAdi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGorevTip.Adi,
                         NobetGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGorevTipId,
-                        NobetGrupGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTipId
+                        NobetGrupGorevTipId = s.EczaneNobetGrup.NobetGrupGorevTipId,
+                        BaslangicTarihi = s.BaslangicTarihi,
+                        BitisTarihi = s.BitisTarihi,
+                        Aciklama = s.Aciklama
                     });
 
                 return filter == null
