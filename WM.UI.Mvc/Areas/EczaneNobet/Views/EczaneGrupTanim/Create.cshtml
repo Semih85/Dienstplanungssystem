@@ -116,7 +116,8 @@
 }
 
 @section Scripts{
-    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @*@Scripts.Render("~/bundle/bootstrap-datepicker/scripts")*@
+    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
     @Scripts.Render("~/bundle/validation/scripts")
 
     <script>
@@ -131,6 +132,7 @@
         });
 
         $(function () {
+            $('.datepicker').datepicker('setStartDate', "01-01-1900");
 
             if ($("#NobetUstGrupId option").length > 1) {
                 $("#frmGrpNobetUstGrup").show();

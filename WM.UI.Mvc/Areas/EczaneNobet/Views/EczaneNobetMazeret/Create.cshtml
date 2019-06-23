@@ -34,7 +34,9 @@
         <div class="form-group">
             @*@Html.LabelFor(model => model.EczaneNobetGrupId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
-                @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new { @class = "form-control selectpicker",
+                @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new
+                {
+                    @class = "form-control selectpicker",
                multiple = "true",
                data_live_search = "true",
                data_actions_box = "true",
@@ -62,7 +64,9 @@
                             <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
                         </span>
                     </div>
-                    @Html.TextBox("BaslangicTarihi", null , new { @class = "form-control datepicker mr-2",
+                    @Html.TextBox("BaslangicTarihi", null, new
+                    {
+                        @class = "form-control datepicker mr-2",
                        //data_toggle = "tooltip",
                        //data_placement = "top",
                        //title = "Başlangıç Tarihi",
@@ -77,7 +81,9 @@
                             <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
                         </span>
                     </div>
-                    @Html.TextBox("BitisTarihi", null, new { @class = "form-control datepicker mr-3",
+                    @Html.TextBox("BitisTarihi", null, new
+                    {
+                        @class = "form-control datepicker mr-3",
                        //data_toggle = "tooltip",
                        //data_placement = "top",
                        //title = "Bitiş Tarihi",
@@ -91,8 +97,8 @@
             </div>
         </div>
 
-        
-        <div class="form-group">            
+
+        <div class="form-group">
 
             @Html.LabelFor(model => model.HaftaninGunu, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -136,9 +142,10 @@
 
 @section Scripts{
     @Scripts.Render("~/bundle/ajax")
-    @Scripts.Render("~/bundle/validation/scripts")
     @Scripts.Render("~/bundle/bootstrap-select/scripts")
-    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @*@Scripts.Render("~/bundle/bootstrap-datepicker/scripts")*@
+    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
+    @Scripts.Render("~/bundle/validation/scripts")
 
     <script>
 
@@ -154,7 +161,7 @@
         });
 
         $('#EczaneNobetGrupId').selectpicker();
-            
+
         $("#BitisTarihi").change(function () {
 
             var baslangicStr = $("#BaslangicTarihi").val();
@@ -173,7 +180,7 @@
         });
 
         $("#formSubmitButton").click(function (e) {
-            
+
             var bitisTarihi = $('#BitisTarihi').val();
             var baslangicTarihi = $('#BaslangicTarihi').val();
 
@@ -201,7 +208,7 @@
             var basTarihi = new Date(baslangicTarihi);
             var bitTarihi = new Date(bitisTarihi);
 
-            var secilenGunSayisi = new Date(bitTarihi - basTarihi); 
+            var secilenGunSayisi = new Date(bitTarihi - basTarihi);
 
             days = secilenGunSayisi / 1000 / 60 / 60 / 24;
 
@@ -219,13 +226,13 @@
 
         $('.input-daterange').datepicker();
 
-        function OnSuccess() {            
+        function OnSuccess() {
             var rows = $('#eklenenMazeretlerTablosu tbody .myRow').length;
-            
+
             if (rows > 0) {
                 $('#EczaneNobetGrupId').selectpicker('deselectAll');
                 $('#BaslangicTarihi').datepicker("setDate", null);
-                $('#BitisTarihi').datepicker("setDate", null);            
+                $('#BitisTarihi').datepicker("setDate", null);
             }
         }
 

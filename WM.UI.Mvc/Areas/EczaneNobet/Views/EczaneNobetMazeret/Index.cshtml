@@ -65,23 +65,25 @@
                     <a id="tumunuSecKaldir" href="#" class="badge badge-primary mr-2 mb-3 mb-md-0" data-toggle="tooltip" data-placement="top" title="Tüm Grupları Seç/Kaldır">
                         Tümü
                     </a>
+                    @Html.HiddenFor(model => model.BaslangicTarihi)
+                    @Html.HiddenFor(model => model.BitisTarihi)
+
                     <div class="form-group mr-3" id="frmGrupNobetGrupGorevTipId">
                         @Html.ListBox("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control  ", size = 1 })
-
                         @*@Html.DropDownList("NobetGrupGorevTipId",
-                        null,
-                        htmlAttributes: new
-                             {
-                            @class = "form-control selectpicker",
-                            data_width = "auto",
-                            mobile = "true",
-                            multiple = "true",
-                            data_actions_box = "true",
-                            data_live_search = "true",
-                            title = "Nöbet Grubu Seçiniz.."
-                             }
-                        //optionLabel: "Tüm Gruplar"
-                        )*@
+                            null,
+                            htmlAttributes: new
+                                 {
+                                @class = "form-control selectpicker",
+                                data_width = "auto",
+                                mobile = "true",
+                                multiple = "true",
+                                data_actions_box = "true",
+                                data_live_search = "true",
+                                title = "Nöbet Grubu Seçiniz.."
+                                 }
+                            //optionLabel: "Tüm Gruplar"
+                            )*@
                     </div>
 
                     <div class="form-group mr-3">
@@ -98,7 +100,7 @@
                                     <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
                                 </span>
                             </div>
-                            @Html.TextBox("BaslangicTarihi", null, new
+                            @Html.TextBox("TarihBaslangic", null, new
                             {
                                @class = "form-control datepicker mr-2",
                                //data_toggle = "tooltip",
@@ -116,7 +118,7 @@
                                     <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
                                 </span>
                             </div>
-                            @Html.TextBox("BitisTarihi", null, new
+                            @Html.TextBox("TarihBitis", null, new
                             {
                                 @class = "form-control datepicker",
                                //data_toggle = "tooltip",
@@ -275,9 +277,11 @@
     @Scripts.Render("~/bundle/ajax")
     @Scripts.Render("~/bundle/bootstrap-select/scripts")
     @Scripts.Render("~/bundle/queryui/scripts", "~/bundle/pivot/scripts", "~/bundle/alert_toastr/scripts")
-    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @*@Scripts.Render("~/bundle/bootstrap-datepicker/scripts")*@
+    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
     @Scripts.Render("~/bundle/pager")
-
+    @*<script src="~/Scripts/globalize/date.js"></script>*@
+    <script src="~/Scripts/jquery.validate.globalize.js"></script>
     <script>
 
         var nobetGrup;
@@ -313,8 +317,19 @@
             });
         }
 
+        function tarihiTrdenCevir(metin) {
+
+            var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2];
+            ay = tarihTanim[1];
+            gun = tarihTanim[0];
+
+            return yil + "." + ay + "." + gun;
+        }
+
         $("#BaslangicTarihi").change(function () {
-            //alert(1)
+            alert($("#BaslangicTarihi").val())
             if ($("#BaslangicTarihi").val() != null) {
                 $("#btnSilBaslangicTarihiFiltre").hide();
                 $("#btnSilBaslangicTarihi").show();
@@ -323,6 +338,7 @@
             //tarihAraligi();
             //pivotlariGuncelle();
         });
+
         $("#BitisTarihi").change(function () {
             //alert($("#BitisTarihi").val())
             if ($("#BitisTarihi").val() != null) {
@@ -338,19 +354,56 @@
             //tarihAraligi();
             //pivotlariGuncelle();
         });
+
+        //$("#btnSilBaslangicTarihi").click(function () {
+        //    baslangicTarihi = null;
+        //    $('#BaslangicTarihi').data('datepicker').setDate(null);
+        //    $("#btnSilBaslangicTarihi").hide();
+        //    $("#btnSilBaslangicTarihiFiltre").show();
+        //    //tarihAraligi();
+        //});
+        //$("#btnSilBitisTarihi").click(function () {
+        //    bitisTarihi = null;
+        //    $('#BitisTarihi').data('datepicker').setDate(null);
+        //    $("#btnSilBitisTarihi").hide();
+        //    $("#btnSilBitisTarihiFiltre").show();
+        //    //tarihAraligi();
+        //});
+
+        $("#TarihBaslangic").change(function () {
+            if ($(this).val() != null) {
+                //alert("BaslangicTarihi != null " + $("#BaslangicTarihi").val())
+                $("#btnSilBaslangicTarihiFiltre").hide();
+                $("#btnSilBaslangicTarihi").show();
+                $("#btnSilTarihAraligi").show();
+            }
+            var d = tarihiTrdenCevir(this.value);
+            $('#BaslangicTarihi').val(d);
+        });
+
+        $("#TarihBitis").change(function () {
+            if ($(this).val() != null) {
+                $("#btnSilBitisTarihiFiltre").hide();
+                $("#btnSilBitisTarihi").show();
+                $("#btnSilTarihAraligi").show();
+            }
+            var d = tarihiTrdenCevir(this.value);
+            $('#BitisTarihi').val(d);
+        });
+
         $("#btnSilBaslangicTarihi").click(function () {
             baslangicTarihi = null;
-            $('#BaslangicTarihi').data('datepicker').setDate(null);
+            $('#TarihBaslangic').data('datepicker').setDate(null);
+            //alert("2")
             $("#btnSilBaslangicTarihi").hide();
             $("#btnSilBaslangicTarihiFiltre").show();
-            //tarihAraligi();
         });
+
         $("#btnSilBitisTarihi").click(function () {
             bitisTarihi = null;
-            $('#BitisTarihi').data('datepicker').setDate(null);
+            $('#TarihBitis').data('datepicker').setDate(null);
             $("#btnSilBitisTarihi").hide();
             $("#btnSilBitisTarihiFiltre").show();
-            //tarihAraligi();
         });
 
         function eczaneDdlSecileniGetir() {
@@ -509,7 +562,7 @@
 
             if ($('#NobetGrupGorevTipId option').length == 1) {
                 $('#frmGrupNobetGrupGorevTipId').hide()
-                $('#tumunuSecKaldir').hide()                
+                $('#tumunuSecKaldir').hide()
                 $('#lblnobetGrupGorevTipId').hide()
             }
 
@@ -597,6 +650,13 @@
             //    e.preventDefault();
             //    return false;
             //};
+
+            //alert($('#BaslangicTarihi').value())
+            //var b = tarihiTrdenCevir($('#BaslangicTarihi').value);
+            //$('#BaslangicTarihi').val(b);
+
+            //var t = tarihiTrdenCevir($('#BitisTarihi').value);
+            //$('#BitisTarihi').val(t);
 
             serializedForm = $('#formTumu').serialize();
 
@@ -1036,7 +1096,10 @@
 
             var tarih = new Date();
 
-            $("#BaslangicTarihi").datepicker("setDate", tarih);
+            //$("#BaslangicTarihi").datepicker("setDate", tarih);
+
+            $("#TarihBaslangic").datepicker("setDate", tarih);
+            $('#btnSilTarihAraligi, #btnSilBaslangicTarihi, #btnSilBitisTarihi, #navbarBrand').css('cursor','pointer');
 
             //var sayi = 0;
             $("#myInput").on("keyup", function (data) {

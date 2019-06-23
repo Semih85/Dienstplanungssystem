@@ -121,9 +121,41 @@
 }
 
 @section Scripts{
-    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @*@Scripts.Render("~/bundle/bootstrap-datepicker/scripts")*@
+    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
     @Scripts.Render("~/bundle/validation/scripts")
 
+    <script>
+        $(function () {
+            $('.datepicker').datepicker('setStartDate', "01-01-1900");
+            var baslangicStr = tarihDondur2($("#BaslangicTarihi").val());
+
+            $("#BaslangicTarihi").datepicker("setDate", baslangicStr);
+
+        });
+
+        function tarihDondur2(metin) {
+
+            var tarih = metin.split(' ', 1)[0];
+            //alert(tarih)
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2] * 1;
+            //alert(yil)
+            ay = tarihTanim[1] * 1;
+            gun = tarihTanim[0] * 1;
+
+            if (gun.length != 4) {
+
+                return new Date(yil, ay - 1, gun);//yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+    </script>
     @*<script>
             $(".datepicker").datepicker({
                 dateFormat: "dd.mm.yy",
