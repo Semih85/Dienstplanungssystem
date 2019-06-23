@@ -1,11 +1,11 @@
-﻿@model IEnumerable<WM.Northwind.Entities.Concrete.EczaneNobet.EczaneNobetSonucPlanlanan>
-
-
+﻿
 @{
     ViewBag.Title = "Planlanan Nöbetler | Nöbet Sistemi";
 }
 
-<h4>Planlanan Nöbetler</h4>
+<h4>Planlanan Nöbetler 
+    <span class="text-danger">Nakil Eczaneye Göre</span>
+    </h4>
 
 <hr />
 <div class="row">
@@ -19,19 +19,24 @@
                 @Html.DropDownList("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "Tüm Nöbet Grupları")
 
                 @*@Html.DropDownList("NobetGrupGorevTipId",
-                    null,
-                    htmlAttributes: new
-                         {
-                        @class = "form-control selectpicker",
-                        data_width = "auto",
-                        mobile = "true",
-                        multiple = "true",
-                        data_actions_box = "true",
-                        data_live_search = "true",
-                        title = "Nöbet Grubu Seçiniz.."
-                         }
-                    //optionLabel: "Tüm Gruplar"
-                    )*@
+                null,
+                htmlAttributes: new
+                     {
+                    @class = "form-control selectpicker",
+                    data_width = "auto",
+                    mobile = "true",
+                    multiple = "true",
+                    data_actions_box = "true",
+                    data_live_search = "true",
+                    title = "Nöbet Grubu Seçiniz.."
+                     }
+                //optionLabel: "Tüm Gruplar"
+                )*@
+            </div>
+
+            <div class="form-group mr-3">
+                @Html.DropDownList("GunGrupId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "Tüm Gün Gruplar")
+
             </div>
 
             <div class="form-inline mb-3 mb-md-0" id="fromTarihAraligi">
@@ -74,7 +79,7 @@
                 </div>
 
                 @*@Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
-                    @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })*@
+                @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })*@
 
             </div>
 
@@ -464,7 +469,7 @@
     <script>
 
         var mazeretListe;
-        var urlDagilimlar = '@Url.Action("PlanlanaNobetleriYaz")';
+        var urlDagilimlar = '@Url.Action("PlanlanaNobetleriYazNakilEczaneyeGore")';
 
         function uyariDivOlustur(mesaj, divId, parentDivId) {
 
@@ -872,6 +877,7 @@
             //nobetGrubu = getNobetGrupId();
             nobetGrubu = getNobetGrubu();
             $('.datepicker').datepicker('setStartDate', "01-01-1900");
+            $('#btnSilTarihAraligi, #btnSilBaslangicTarihi, #btnSilBitisTarihi, #navbarBrand').css('cursor','pointer');
 
             var tarih = new Date();
 
@@ -880,8 +886,6 @@
             var tarihBitis = new Date(2020,11,31);
 
             $("#BitisTarihi").datepicker("setDate", tarihBitis);
-
-            $('#btnSilTarihAraligi, #btnSilBaslangicTarihi, #btnSilBitisTarihi, #navbarBrand').css('cursor','pointer');
 
             //var sayi = 0;
             $("#myInput").on("keyup", function (data) {
