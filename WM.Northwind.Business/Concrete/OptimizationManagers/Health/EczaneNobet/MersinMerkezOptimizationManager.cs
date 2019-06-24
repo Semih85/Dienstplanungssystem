@@ -159,6 +159,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar(nobetUstGrupId); //nobetGrupIdListe
             //.Where(w => !(w.EczaneNobetGrupId == 301 && w.TakvimId == 88)).ToList();
             //.Where(w => w.Tarih.Year > 2017).ToList();
+
             var eczaneNobetMazeretNobettenDusenler = new List<EczaneNobetMazeretSayilari>();
 
             var mazeret = _nobetUstGrupKisitService.GetKisitPasifMi("mazeret", nobetUstGrupId);
@@ -172,8 +173,13 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetSonuclarCozulenGruplar = eczaneNobetSonuclar
                 .Where(w => eczaneNobetGruplar.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
 
-            var eczaneNobetSonuclarOncekiAylar = eczaneNobetSonuclarCozulenGruplar
+            var eczaneNobetSonuclarBaslamaTarihindenSonrasi = eczaneNobetSonuclarCozulenGruplar
                 .Where(w => w.Tarih >= nobetUstGrupBaslangicTarihi).ToList();
+
+            var son3Ay = baslangicTarihi.AddMonths(-3);
+
+            var eczaneNobetSonuclarSon3Ay = eczaneNobetSonuclarCozulenGruplar
+                .Where(w => w.Tarih >= son3Ay).ToList();
 
             var sonuclarKontrol = _eczaneNobetSonucService.GetSonuclar(baslangicTarihi, bitisTarihi, eczaneNobetSonuclarCozulenGruplar);
 
@@ -182,7 +188,11 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplar, eczaneNobetSonuclarCozulenGruplar);
 
+            var enSonNobetlerSon3Ay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplar, eczaneNobetSonuclarSon3Ay);
+
             var eczaneNobetGrupGunKuralIstatistikYatay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler);
+
+            var eczaneNobetGrupGunKuralIstatistikYataySon3Ay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetlerSon3Ay);
 
             var grupluEczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar(baslangicTarihi, bitisTarihi, eczaneNobetSonuclar);
 
@@ -261,7 +271,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 .Where(w => w.MazeretId != 3)
                 .ToList();
 
-            var takvimNobetGrupGunDegerIstatistikler = _takvimService.GetTakvimNobetGrupGunDegerIstatistikler(nobetUstGrupBaslangicTarihi, bitisTarihi, nobetGrupIdListe, nobetGorevTipId);
+            var takvimNobetGrupGunDegerIstatistikler = _takvimService.GetTakvimNobetGrupGunDegerIstatistikler(nobetUstGrupBaslangicTarihi, bitisTarihi, nobetGrupGorevTipler);
 
             var eczaneNobetGrupAltGruplarYenisehir2 = _eczaneNobetGrupAltGrupService.GetDetaylarByNobetGrupId(21);
             var eczaneNobetGrupAltGruplarToroslar1 = _eczaneNobetGrupAltGrupService.GetDetaylarByNobetGrupId(15);
@@ -345,6 +355,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             #region ikili eczaneler
 
             var ikiliEczaneAyniGunNobet = _nobetUstGrupKisitService.GetDetay("ikiliEczaneAyniGunNobet", nobetUstGrupId);
+
             var arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = new List<EczaneGrupDetay>();
 
             if (!ikiliEczaneAyniGunNobet.PasifMi)
@@ -359,13 +370,19 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             #endregion
 
             #region önceki aylar aynı gün nöbet tutanlar çözülen ayda aynı gün nöbetçi olmasın
+
             var oncekiAylardaAyniGunNobetTutanEczaneler = new List<EczaneGrupDetay>();
 
             var oncekiAylarAyniGunNobet = _nobetUstGrupKisitService.GetDetay("oncekiAylarAyniGunNobet", nobetUstGrupId);
+
             if (!oncekiAylarAyniGunNobet.PasifMi && (int)oncekiAylarAyniGunNobet.SagTarafDegeri > 0)
             {
                 indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
-                oncekiAylardaAyniGunNobetTutanEczaneler = _eczaneNobetSonucService.OncekiAylardaAyniGunNobetTutanlar(baslangicTarihi, eczaneNobetSonuclarOncekiAylar, indisId, (int)oncekiAylarAyniGunNobet.SagTarafDegeri);
+                oncekiAylardaAyniGunNobetTutanEczaneler = _eczaneNobetSonucService.OncekiAylardaAyniGunNobetTutanlar(
+                    baslangicTarihi,
+                    eczaneNobetSonuclarBaslamaTarihindenSonrasi,
+                    indisId,
+                    (int)oncekiAylarAyniGunNobet.SagTarafDegeri);
             }
 
             #endregion
@@ -377,7 +394,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetIsteklerSonrakiDonem = _eczaneNobetIstekService.GetDetaylarByNobetGrupIdList(sonrakiAy, bitisTarihiSonrakiAy, nobetGrupIdListe)
                 .Where(w => eczaneNobetGruplar.Select(s => s.EczaneId).Contains(w.EczaneId)).ToList();
 
-            var sonrakiDonemAyniGunNobetIstekGirilenler = _eczaneNobetIstekService.SonrakiAylardaAyniGunIstekGirilenEczaneler(eczaneNobetIsteklerSonrakiDonem); 
+            var sonrakiDonemAyniGunNobetIstekGirilenler = _eczaneNobetIstekService.SonrakiAylardaAyniGunIstekGirilenEczaneler(eczaneNobetIsteklerSonrakiDonem);
             #endregion
 
             var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe);
@@ -425,6 +442,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneNobetGrupGunKuralIstatistikler = enSonNobetler,
                 TakvimNobetGrupGunDegerIstatistikler = takvimNobetGrupGunDegerIstatistikler,
                 EczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatay,
+                EeczaneNobetGrupGunKuralIstatistikYataySon3Ay = eczaneNobetGrupGunKuralIstatistikYataySon3Ay,
                 EczaneNobetGrupAltGruplar = new List<EczaneNobetGrupAltGrupDetay>(), //eczaneNobetGrupAltGruplar,
                 EczaneNobetAltGrupTarihAralik = eczaneNobetAltGrupTarihAralik,
 
