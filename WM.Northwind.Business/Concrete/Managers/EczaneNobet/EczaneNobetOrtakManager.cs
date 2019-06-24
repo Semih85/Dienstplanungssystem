@@ -2548,7 +2548,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                    ),
                }).ToList();
 
-            var eczane = liste.Where(w => w.EczaneAdi == "NOKTA" && w.GunGrupId == 3).ToList();
+            //var eczane = liste
+            //    .Where(w => w.EczaneAdi == "ALBİSTAN" 
+            //    //&& w.GunGrupId == 3
+            //    ).ToList();
 
             return liste;
         }
@@ -2593,7 +2596,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                    ),
                }).ToList();
 
-            //var eczane = liste.Where(w => w.EczaneAdi == "EFENDİOĞLU").ToList();
+            //var eczane = liste.Where(w => w.EczaneAdi == "ALBİSTAN").ToList();
 
             return liste;
         }
@@ -2621,8 +2624,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             //var eczaneSonucuOlan2 = enSonNobetler.Where(w => w.EczaneAdi == "ATA").ToList();
 
-            var varsayilanBaslangicNobetTarihi = new DateTime(2008, 1, 15);
-
             foreach (var nobetGunKural in sonucuOlanGunler)
             {
                 var nobetDurumlari = enSonNobetler
@@ -2646,13 +2647,15 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 {
                     foreach (var eczaneNobetGrup in sonucuOlmayanlar)
                     {
+                        var varsayilanBaslangicNobetTarihi = new DateTime(2008, 1, 15);
+
                         #region Kontrol
 
                         var kontrol = false;
 
                         if (kontrol)
                         {
-                            if (eczaneNobetGrup.Id == 1090)//"UNCALI EBRU"
+                            if (eczaneNobetGrup.EczaneAdi == "ALBİSTAN")
                             {
                             }
                         }
@@ -2699,7 +2702,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 }
             }
 
-            //var eczaneTumu = enSonNobetler.Where(w => w.EczaneAdi == "ADA").ToList();
+            //var eczaneTumu = enSonNobetler.Where(w => w.EczaneAdi == "ALBİSTAN").ToList();
 
             return enSonNobetler;
         }
@@ -2877,7 +2880,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                  }).ToList();
 
-            //var eczane = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.EczaneAdi == "ALYA").ToList();
+            //var eczane = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.EczaneAdi == "ALBİSTAN").ToList();
 
             return eczaneNobetGrupGunKuralIstatistikYatay;
         }
@@ -3086,7 +3089,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                  }).ToList();
 
-            //var eczane = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.EczaneAdi == "ALYA").ToList();
+            //var eczane = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.EczaneAdi == "ALBİSTAN").ToList();
 
             return eczaneNobetGrupGunKuralIstatistikYatay;
         }
