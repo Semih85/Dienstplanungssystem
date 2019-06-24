@@ -51,7 +51,7 @@
         {
             <tr>
                 <td>
-                    <span>K</span>@Html.DisplayFor(modelItem => item.Id)
+                    <span>K</span>@(item.Id < 10 ? $"0{item.Id}" : item.Id.ToString())
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Adi)
