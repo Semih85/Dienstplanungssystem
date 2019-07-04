@@ -2452,7 +2452,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         public KalibrasyonYatay GetKalibrasyonDegeri(List<KalibrasyonYatay> eczaneKalibrasyon)
         {
             return eczaneKalibrasyon
-                .Where(w => w.KalibrasyonTipId == 8).SingleOrDefault() ?? new KalibrasyonYatay();
+                .Where(w => w.KalibrasyonTipId == 8 || w.KalibrasyonTipId == 10).SingleOrDefault() ?? new KalibrasyonYatay();
         }
 
         #endregion        

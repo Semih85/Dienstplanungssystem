@@ -133,6 +133,92 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                           .Select(s1 => s1.Deger).SingleOrDefault()
                          }).ToList();
             }
+            else if (nobetUstGrupId == 2)
+            {
+                liste = (from k in kalibrasyonlar
+                         group k by new
+                         {
+                             k.EczaneNobetGrupId,
+                             k.EczaneAdi,
+                             k.KalibrasyonTipId,
+                             k.KalibrasyonTipAdi
+                         } into s
+                         let klbr = kalibrasyonlar
+                                          .Where(w => w.EczaneNobetGrupId == s.Key.EczaneNobetGrupId
+                                                   && w.KalibrasyonTipId == s.Key.KalibrasyonTipId
+                                                   && w.KalibrasyonTipId < 9)
+                         let klbrToplam = kalibrasyonlar
+                                .Where(w => w.EczaneNobetGrupId == s.Key.EczaneNobetGrupId
+                                         && w.KalibrasyonTipId == 9)
+                         select new KalibrasyonYatay
+                         {
+                             EczaneNobetGrupId = s.Key.EczaneNobetGrupId,
+                             EczaneAdi = s.Key.EczaneAdi,
+                             KalibrasyonTipId = s.Key.KalibrasyonTipId,
+                             KalibrasyonTipAdi = s.Key.KalibrasyonTipAdi,
+                             KalibrasyonCumartesi = klbr
+                                          .Where(w => w.GunGrupId == 4)
+                                          .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonPazar = klbr
+                                          .Where(w => w.GunGrupId == 1)
+                                          .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonHaftaIci = klbr
+                                          .Where(w => w.GunGrupId == 3)
+                                          .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonToplamCumartesi = klbrToplam
+                                          .Where(w => w.GunGrupId == 4)
+                                                   .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonToplamPazar = klbrToplam
+                                          .Where(w => w.GunGrupId == 1)
+                                                   .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonToplamHaftaIci = klbrToplam
+                                          .Where(w => w.GunGrupId == 3)
+                                          .Select(s1 => s1.Deger).SingleOrDefault()
+                         }).ToList();
+            }
+            else if (nobetUstGrupId == 3)
+            {
+                liste = (from k in kalibrasyonlar
+                         group k by new
+                         {
+                             k.EczaneNobetGrupId,
+                             k.EczaneAdi,
+                             k.KalibrasyonTipId,
+                             k.KalibrasyonTipAdi
+                         } into s
+                         let klbr = kalibrasyonlar
+                                          .Where(w => w.EczaneNobetGrupId == s.Key.EczaneNobetGrupId
+                                                   && w.KalibrasyonTipId == s.Key.KalibrasyonTipId
+                                                   && w.KalibrasyonTipId < 10)
+                         let klbrToplam = kalibrasyonlar
+                                .Where(w => w.EczaneNobetGrupId == s.Key.EczaneNobetGrupId
+                                         && w.KalibrasyonTipId == 10)
+                         select new KalibrasyonYatay
+                         {
+                             EczaneNobetGrupId = s.Key.EczaneNobetGrupId,
+                             EczaneAdi = s.Key.EczaneAdi,
+                             KalibrasyonTipId = s.Key.KalibrasyonTipId,
+                             KalibrasyonTipAdi = s.Key.KalibrasyonTipAdi,
+                             KalibrasyonCumartesi = klbr
+                                          .Where(w => w.GunGrupId == 4)
+                                          .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonPazar = klbr
+                                          .Where(w => w.GunGrupId == 1)
+                                          .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonHaftaIci = klbr
+                                          .Where(w => w.GunGrupId == 3)
+                                          .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonToplamCumartesi = klbrToplam
+                                          .Where(w => w.GunGrupId == 4)
+                                                   .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonToplamPazar = klbrToplam
+                                          .Where(w => w.GunGrupId == 1)
+                                                   .Select(s1 => s1.Deger).SingleOrDefault(),
+                             KalibrasyonToplamHaftaIci = klbrToplam
+                                          .Where(w => w.GunGrupId == 3)
+                                          .Select(s1 => s1.Deger).SingleOrDefault()
+                         }).ToList();
+            }
             else if (nobetUstGrupId == 5)
             {
                 liste = (from k in kalibrasyonlar
@@ -175,6 +261,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                           .Where(w => w.GunGrupId == 3)
                                           .Select(s1 => s1.Deger).SingleOrDefault()
                          }).ToList();
+            }
+            else
+            {
+                throw new Exception("Üst gruba kalibrasyon tanımlanmamış.");
             }
 
 
