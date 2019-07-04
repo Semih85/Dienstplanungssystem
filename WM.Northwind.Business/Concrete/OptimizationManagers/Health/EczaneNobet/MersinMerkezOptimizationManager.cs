@@ -340,6 +340,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     {
                         16,//Toroslar-1,
                     };
+
                 var altGrubuOlanNobetGruplarToroslar = new List<int>
                     {
                         15//Toroslar-2
@@ -349,6 +350,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     .AltGruplarlaSiraliNobetListesiniOlusturMersin(eczaneNobetSonuclarAltGruplaAyniGunToroslar, eczaneNobetGruplarAltGruplaAyniGunToroslar, eczaneNobetGrupAltGruplarToroslar1,
                     altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, 1,
                     ayniGunNobetTutmasiTakipEdilecekGruplarToroslar, altGrubuOlanNobetGruplarToroslar, 0, (int)altGruplarlaAyniGunNobetTutmaToroslar.SagTarafDegeri);
+
                 #endregion
             }
 

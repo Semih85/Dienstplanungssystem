@@ -405,8 +405,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 foreach (var digerNobetGrup in digerNobetGruplari)
                 {
                     var bakilanEczaneninIkilileri2 = bakilanEczaneninIkilileri
-                        .Where(w => w.NobetGrupId1 == digerNobetGrup
-                                 || w.NobetGrupId2 == digerNobetGrup).ToArray();
+                        .Where(w => w.NobetGrupId1 == digerNobetGrup || w.NobetGrupId2 == digerNobetGrup).ToArray();
 
                     bakilanEczane.AyniGunNobetSayisiEnBuyuk = bakilanEczaneninIkilileri2.Max(x => x.AyniGunNobetSayisi);
                     bakilanEczane.AyniGunNobetSayisiEnKucuk = bakilanEczaneninIkilileri2.Min(x => x.AyniGunNobetSayisi);

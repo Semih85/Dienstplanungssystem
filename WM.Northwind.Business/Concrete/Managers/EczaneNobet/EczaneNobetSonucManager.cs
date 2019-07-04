@@ -325,7 +325,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<EczaneNobetSonucDetay2> GetDetaylar(DateTime baslamaTarihi, int nobetGrupGorevTipId)
         {
             var sonuclar = _eczaneNobetSonucDal.GetDetayList(x => x.Tarih >= baslamaTarihi
-            && (x.NobetUstGrupId == nobetGrupGorevTipId));
+            && (x.NobetGrupGorevTipId == nobetGrupGorevTipId));
 
             return sonuclar;
             //sonuclar.Count == 0
