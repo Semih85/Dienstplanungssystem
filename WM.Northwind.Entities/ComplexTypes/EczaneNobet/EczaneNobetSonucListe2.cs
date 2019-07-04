@@ -97,6 +97,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public EczaneNobetSonucTuru SonucTuru { get; set; }
         public string SonucTuruAdi => Enum.GetName(typeof(EczaneNobetSonucTuru), SonucTuru);
         public int NobetGrupGorevTipId { get; set; }
+        public DateTime? NobetAltGrupKapanmaTarihi { get; set; }
+
         string GetEczaneSonuc(int mazeretId, int istekId, string eczaneAdi)
         {
             if (mazeretId > 0)

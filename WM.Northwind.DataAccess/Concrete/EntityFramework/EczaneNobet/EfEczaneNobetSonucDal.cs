@@ -83,6 +83,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                                 NobetGrupGorevTipId = eczaneNobetGrup.NobetGrupGorevTipId,
                                 NobetAltGrupId = eczaneNobetGrupAltGrup != null ? eczaneNobetGrupAltGrup.NobetAltGrupId : 0,
                                 NobetAltGrupAdi = eczaneNobetGrupAltGrup != null ? eczaneNobetGrupAltGrup.NobetAltGrup.Adi : "Aalt grup yok",
+                                NobetAltGrupKapanmaTarihi = eczaneNobetGrupAltGrup != null ? eczaneNobetGrupAltGrup.NobetAltGrup.BitisTarihi : null,
                                 YayimlandiMi = s.YayimlandiMi
                             };
 
