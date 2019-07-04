@@ -13,6 +13,8 @@ using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Samples;
 using WM.Core.Aspects.PostSharp.TranstionAspects;
+using WM.Core.Aspects.PostSharp.LogAspects;
+using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -28,7 +30,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _eczaneNobetDegisimDal = eczaneNobetDegisimDal;
             //_eczaneNobetSonucService = eczaneNobetSonucService;
         }
+
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        [LogAspect(typeof(DatabaseLogger))]
         public void Delete(int eczaneNobetDegisimId)
         {
             _eczaneNobetDegisimDal.Delete(new EczaneNobetDegisim { Id = eczaneNobetDegisimId });
@@ -49,16 +53,21 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _eczaneNobetDegisimDal.GetList();
         }
+
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        [LogAspect(typeof(DatabaseLogger))]
         public void Insert(EczaneNobetDegisim eczaneNobetDegisim)
         {
             _eczaneNobetDegisimDal.Insert(eczaneNobetDegisim);
         }
+
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        [LogAspect(typeof(DatabaseLogger))]
         public void Update(EczaneNobetDegisim eczaneNobetDegisim)
         {
             _eczaneNobetDegisimDal.Update(eczaneNobetDegisim);
         }
+
         public EczaneNobetDegisimDetay GetDetayById(int eczaneNobetDegisimId)
         {
             return _eczaneNobetDegisimDal.GetDetay(x => x.Id == eczaneNobetDegisimId);
@@ -73,8 +82,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetDegisimDetay> GetDetaylar(int nobetUstGrupId)
         {
-            return _eczaneNobetDegisimDal.GetDetayList(x=> x.NobetUstGrupId == nobetUstGrupId);
+            return _eczaneNobetDegisimDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId);
         }
-
     }
 }
