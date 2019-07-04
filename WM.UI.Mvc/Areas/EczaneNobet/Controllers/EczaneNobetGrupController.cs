@@ -29,6 +29,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
         private ITakvimService _takvimService;
         private INobetUstGrupSessionService _nobetUstGrupSessionService;
+        private IEczaneNobetSonucPlanlananService _eczaneNobetSonucPlanlananService;
+        private INobetUstGrupGunGrupService _nobetUstGrupGunGrupService;
 
         public EczaneNobetGrupController(IEczaneNobetGrupService eczaneNobetGrupService,
                                          IEczaneService eczaneService,
@@ -37,7 +39,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                          IUserService userService,
                                          IAyniGunTutulanNobetService ayniGunTutulanNobetService,
                                          ITakvimService takvimService,
-                                         INobetUstGrupSessionService nobetUstGrupSessionService)
+                                         INobetUstGrupSessionService nobetUstGrupSessionService,
+                                         IEczaneNobetSonucPlanlananService eczaneNobetSonucPlanlananService,
+                                         INobetUstGrupGunGrupService nobetUstGrupGunGrupService)
         {
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _eczaneService = eczaneService;
@@ -47,6 +51,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _ayniGunTutulanNobetService = ayniGunTutulanNobetService;
             _takvimService = takvimService;
             _nobetUstGrupSessionService = nobetUstGrupSessionService;
+            _eczaneNobetSonucPlanlananService = eczaneNobetSonucPlanlananService;
+            _nobetUstGrupGunGrupService = nobetUstGrupGunGrupService;
         }
         #endregion
 
@@ -208,7 +214,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 var nobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
                 var nobetUstGrupId = nobetGrupGorevTip.NobetUstGrupId;
 
-                if (nobetUstGrupId == 1 
+                if (nobetUstGrupId == 1
                     || nobetUstGrupId == 3
                     )
                 {//anlanya ya da mersin için
@@ -283,7 +289,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _eczaneNobetGrupService.Update(eczaneNobetGrup);
 
                 if (eklenenNobetGrupGorevTip.NobetUstGrupId == 2
-                    && (bitisTarihiDegistiMi 
+                    && (bitisTarihiDegistiMi
                     //|| baslangicTarihiDegistiMi
                     )
                     )
@@ -293,9 +299,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     var gruptakiEczaneler = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(eczaneNobetGrup.NobetGrupGorevTipId);
 
-                    var baslangicTarihi = eczaneNobetGrup.BaslangicTarihi < degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi 
+                    var baslangicTarihi = eczaneNobetGrup.BaslangicTarihi < degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi
                         ? degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi
                         : eczaneNobetGrup.BaslangicTarihi;
+
+                    var baslangicTarihiVarsayilan = baslangicTarihi;
 
                     //if (baslangicTarihiDegistiMi)
                     //{
@@ -304,7 +312,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     //        : eczaneNobetGrup.BaslangicTarihi;
                     //}
 
-                    if (bitisTarihiDegistiMi 
+                    if (bitisTarihiDegistiMi
                         && eczaneNobetGrup.BitisTarihi != null)
                     {
                         baslangicTarihi = (DateTime)eczaneNobetGrup.BitisTarihi;
@@ -314,7 +322,33 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     var planlananNobetlerinYazilacagiNobetGrubu = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrup.NobetGrupGorevTipId);
 
-                    _takvimService.SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(planlananNobetlerinYazilacagiNobetGrubu, gruptakiEczaneler, baslangicTarihi, planlananNobetlerinYazilacagiSonTarih);
+                    //if (eczaneNobetGrup.BitisTarihi == null)
+                    //{
+                    var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(degisecekEczaneNobetGrupOncekiHali.NobetUstGrupId)
+                            .OrderByDescending(o => o.GunGrupId).ToList();
+
+                    foreach (var gunGrup in nobetUstGrupGunGruplar)
+                    {
+                        var planlananSonNobetTarihi = _eczaneNobetSonucPlanlananService
+                                .GetSonuclarByEczaneNobetGrupId(eczaneNobetGrup.Id, gunGrup.GunGrupId)
+                                .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)
+                                .OrderByDescending(o => o.Tarih).FirstOrDefault();
+
+                        baslangicTarihi = planlananSonNobetTarihi != null ? planlananSonNobetTarihi.Tarih : baslangicTarihiVarsayilan;
+
+                        _takvimService.SiraliNobetYazGunGrupBazinda(
+                            planlananNobetlerinYazilacagiNobetGrubu,
+                            gruptakiEczaneler,
+                            baslangicTarihi,
+                            planlananNobetlerinYazilacagiSonTarih,
+                            gunGrup.GunGrupId);
+                    }
+                    //}
+                    //else
+                    //{
+                    //    _takvimService.SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(planlananNobetlerinYazilacagiNobetGrubu, gruptakiEczaneler, baslangicTarihi, planlananNobetlerinYazilacagiSonTarih);
+                    //}
+
 
                     #endregion
                 }
