@@ -1264,12 +1264,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaEczaneGruplar);
 
             var esGrubaAyniGunNobetYazmaOncekiAylar = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
+            esGrubaAyniGunNobetYazmaOncekiAylar.EczaneNobetTarihAralik = data.EczaneNobetTarihAralik.Where(w => w.HaftaIciMi).ToList();
+            esGrubaAyniGunNobetYazmaOncekiAylar.Tarihler = data.TarihAraligi.Where(w => w.GunGrupId == 3).ToList();
             esGrubaAyniGunNobetYazmaOncekiAylar.NobetUstGrupKisit = oncekiAylarAyniGunNobet;
             esGrubaAyniGunNobetYazmaOncekiAylar.EczaneGruplar = data.OncekiAylardaAyniGunNobetTutanEczaneler;
 
             EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaOncekiAylar);
 
             var esGrubaAyniGunNobetYazmaIkiliEczaneler = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
+            esGrubaAyniGunNobetYazmaIkiliEczaneler.EczaneNobetTarihAralik = data.EczaneNobetTarihAralik.Where(w => w.HaftaIciMi).ToList();
+            esGrubaAyniGunNobetYazmaIkiliEczaneler.Tarihler = data.TarihAraligi.Where(w => w.GunGrupId == 3).ToList();
             esGrubaAyniGunNobetYazmaIkiliEczaneler.NobetUstGrupKisit = ikiliEczaneAyniGunNobet;
             esGrubaAyniGunNobetYazmaIkiliEczaneler.EczaneGruplar = data.ArasindaAyniGun2NobetFarkiOlanIkiliEczaneler;
 
@@ -1352,7 +1356,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             //var kisitSayisi = model.ConstraintsCount;
 
             return model;
-        }        
+        }
 
         public EczaneNobetSonucModel Solve(AlanyaDataModel data)
         {
