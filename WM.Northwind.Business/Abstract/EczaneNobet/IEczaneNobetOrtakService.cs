@@ -38,6 +38,15 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<AyniGunTutulanNobetDetay> GetAyniGunNobetTutanEczaneler(List<EczaneNobetSonucListe2> ayniGunNobetTutanEczaneler);
         List<AyniGunNobetTutanEczane> GetAyniGunNobetTutanEczanelerGiresun(List<EczaneNobetSonucListe2> ayniGunNobetTutanEczaneler, List<EczaneGrupDetay> eczaneGrupDetaylar);
         List<AyniGunTutulanNobetDetay> AyniGunTutulanNobetSayisiniHesapla(List<AyniGunTutulanNobetDetay> ayniGunNobetTutanEczaneler);
+        //List<EczaneNobetSonucListe2> EczaneNobetSonucBirlesim(
+        //    List<NobetGrupGorevTipGunKuralDetay> nobetGrupGorevTipGunKurallar,
+        //    List<EczaneNobetSonucDetay2> eczaneNobetSonuclar,
+        //    List<NobetGrupGorevTipTakvimOzelGunDetay> nobetGrupGorevTipTakvimOzelGunler,
+        //    List<EczaneNobetMazeretDetay> mazeretler,
+        //    List<EczaneNobetIstekDetay> istekler,
+        //    List<EczaneUzaklikMatrisDetay> eczaneMesafeler,
+        //    EczaneNobetSonucTuru sonucTuru);
+
         List<EczaneNobetSonucListe2> EczaneNobetSonucBirlesim(
             List<NobetGrupGorevTipGunKuralDetay> nobetGrupGorevTipGunKurallar,
             List<EczaneNobetSonucDetay2> eczaneNobetSonuclar,

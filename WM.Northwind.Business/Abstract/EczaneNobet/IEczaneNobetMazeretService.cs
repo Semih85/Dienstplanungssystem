@@ -38,6 +38,6 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetMazeretSayilari> GetEczaneNobetMazeretSayilari(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetGrupIdList);
         List<EczaneNobetMazeretSayilari> GetEczaneNobetMazeretSayilari(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetGrupId);
 
-
+        List<EczaneNobetMazeretDetay> GetDetaylarByNobetGrupGorevTipId(DateTime? baslangicTarihi, DateTime? bitisTarihi, int nobetGrupGorevTipId);
     }
 }

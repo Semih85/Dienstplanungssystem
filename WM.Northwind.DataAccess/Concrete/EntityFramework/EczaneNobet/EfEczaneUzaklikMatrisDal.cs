@@ -22,11 +22,13 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                 return ctx.EczaneUzaklikMatrisler
                     .Select(s => new EczaneUzaklikMatrisDetay
                     {
+                        Id = s.Id,
                         EczaneIdFrom = s.EczaneIdFrom,
                         EczaneIdTo = s.EczaneIdTo,
-                        Id = s.Id,
                         Mesafe = s.Mesafe,
-                        NobetUstGrupId = s.EczaneFrom.NobetUstGrupId
+                        NobetUstGrupId = s.EczaneFrom.NobetUstGrupId,
+                        EczaneAdiFrom = s.EczaneFrom.Adi,
+                        EczaneAdiTo = s.EczaneTo.Adi
                     }).SingleOrDefault(filter);
             }
         }
@@ -37,11 +39,13 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                 var liste = ctx.EczaneUzaklikMatrisler
                     .Select(s => new EczaneUzaklikMatrisDetay
                     {
+                        Id = s.Id,
                         EczaneIdFrom = s.EczaneIdFrom,
                         EczaneIdTo = s.EczaneIdTo,
-                        Id = s.Id,
                         Mesafe = s.Mesafe,
-                        NobetUstGrupId = s.EczaneFrom.NobetUstGrupId
+                        NobetUstGrupId = s.EczaneFrom.NobetUstGrupId,
+                        EczaneAdiFrom = s.EczaneFrom.Adi,
+                        EczaneAdiTo = s.EczaneTo.Adi
                     });
 
                 return filter == null

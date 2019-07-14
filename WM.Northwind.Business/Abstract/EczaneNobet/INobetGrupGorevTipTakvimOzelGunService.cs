@@ -38,5 +38,6 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylarNobetGrupGorevTipBaslamaTarihindenSonra(NobetGrupGorevTipDetay nobetGrupGorevTip);
         List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylarVerilenTarihtenSonrasi(DateTime baslangicTarihi, int nobetGrupGorevTipId);
         List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylarVerilenTarihtenOncesi(DateTime baslangicTarihi, int nobetGrupGorevTipId);
+        List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylarNobetGrupGorevTipBaslamaTarihindenSonra(int nobetGrupGorevTipId);
     }
 }

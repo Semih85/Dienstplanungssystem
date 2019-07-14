@@ -20,5 +20,9 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         EczaneUzaklikMatrisDetay GetDetayById(int eczaneUzaklikMatrisId);
         List <EczaneUzaklikMatrisDetay> GetDetaylar();
         List<EczaneUzaklikMatrisDetay> GetDetaylar(int nobetUstGrupId);
+        List<EczaneUzaklikMatrisDetay> GetDetaylar(int nobetUstGrupId, int mesafeKriteri);
+        List<EczaneUzaklikMatrisDetay> GetDetaylarByEczaneId(int eczaneId);
+        List<EczaneUzaklikMatrisDetay> GetDetaylarByEczaneId(int eczaneId, int mesafe);
+        List<EczaneGrupDetay> GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(int mesafeKriter, List<EczaneUzaklikMatrisDetay> eczaneMesafeler);
     }
 }

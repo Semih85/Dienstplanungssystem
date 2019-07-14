@@ -198,6 +198,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             );
         }
 
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetGrupGorevTipTakvimOzelGunDetay> GetDetaylarNobetGrupGorevTipBaslamaTarihindenSonra(int nobetGrupGorevTipId)
+        {
+            return _nobetGrupGorevTipTakvimOzelGunDal.GetDetayList(x => x.Tarih >= x.NobetGrupGorevTipBaslamaTarihi
+            && x.NobetGrupGorevTipId == nobetGrupGorevTipId
+            );
+        }
+
         [TransactionScopeAspect]
         [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
