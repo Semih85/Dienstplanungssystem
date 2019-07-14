@@ -514,7 +514,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var istekler = _eczaneNobetIstekService.GetDetaylar(nobetUstGrupId);
             //var s4 = sw.Elapsed;
             //sw.Restart();
-            var sonuclar = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, mazeretler, istekler, EczaneNobetSonucTuru.Kesin);
+            var sonuclar = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(
+                nobetGrupGorevTipGunKurallar,
+                eczaneNobetSonucDetaylar,
+                nobetGrupGorevTipTakvimOzelGunler,
+                mazeretler,
+                istekler,
+                EczaneNobetSonucTuru.Kesin);
             //var s5 = sw.Elapsed;
             //sw.Stop();
 
@@ -531,7 +537,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var mazeretler = _eczaneNobetMazeretService.GetDetaylar(nobetUstGrupId);
             var istekler = _eczaneNobetIstekService.GetDetaylar(nobetUstGrupId);
 
-            var liste = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, mazeretler, istekler, EczaneNobetSonucTuru.Kesin);
+            var liste = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(
+                nobetGrupGorevTipGunKurallar,
+                eczaneNobetSonucDetaylar,
+                nobetGrupGorevTipTakvimOzelGunler,
+                mazeretler,
+                istekler,
+                EczaneNobetSonucTuru.Kesin);
 
             return liste;
         }
@@ -546,7 +558,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var istekler = _eczaneNobetIstekService.GetDetaylar(nobetUstGrupId);
             //var culture = new CultureInfo("tr-TR");
 
-            var liste = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(nobetGrupGorevTipGunKurallar, eczaneNobetSonucDetaylar, nobetGrupGorevTipTakvimOzelGunler, mazeretler, istekler, EczaneNobetSonucTuru.Kesin);
+            var liste = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(
+                nobetGrupGorevTipGunKurallar,
+                eczaneNobetSonucDetaylar,
+                nobetGrupGorevTipTakvimOzelGunler,
+                mazeretler,
+                istekler,
+                EczaneNobetSonucTuru.Kesin);
 
             return liste;
         }
