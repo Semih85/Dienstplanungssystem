@@ -10,13 +10,14 @@ using WM.Northwind.Entities.Concrete.EczaneNobet;
 
 namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 {
-    public class EczaneUzaklikMatrisDetay: IComplexType
- { 
+    public class EczaneUzaklikMatrisDetay : IComplexType
+    {
         public int Id { get; set; }
         public int EczaneIdFrom { get; set; }
+        public string EczaneAdiFrom { get; set; }
         public int EczaneIdTo { get; set; }
+        public string EczaneAdiTo { get; set; }
         public int NobetUstGrupId { get; set; }
         public int Mesafe { get; set; }
-
-    } 
-} 
+    }
+}
