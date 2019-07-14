@@ -179,62 +179,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 //&& w.EczaneAdi == "ÖZGÜR"
                 ).ToList();
 
-            #region mesafeler
 
-            var mesafeler = _eczaneUzaklikMatrisService.GetDetaylar();
-
-            var mesafeKontrolEczaneler = new List<EczaneGrupDetay>();
-
-            var eczanelerArasiMesafeyiKoru = _nobetUstGrupKisitService.GetDetay("eczanelerArasiMesafeyiKoru", nobetUstGrupId);
-
-            var mesafeKriter = eczanelerArasiMesafeyiKoru.SagTarafDegeri;
-
-            var eczaneMesafeler = mesafeler
-                        .Where(w => w.Mesafe <= mesafeKriter).ToList();
-
-            foreach (var eczaneMesafe in eczaneMesafeler)
-            {
-                var eczaneFrom = _eczaneService.GetDetayById(eczaneMesafe.EczaneIdFrom);
-                var eczaneTo = _eczaneService.GetDetayById(eczaneMesafe.EczaneIdTo);
-
-                var bakilanEczaneGrupTanimAdi = $"{eczaneMesafe.Id}, {eczaneFrom.EczaneAdi}-{eczaneTo.EczaneAdi} {eczaneMesafe.Mesafe} < {mesafeKriter}";
-
-                mesafeKontrolEczaneler.Add(new EczaneGrupDetay
-                {
-                    EczaneGrupTanimId = eczaneMesafe.Id,
-                    EczaneId = eczaneFrom.Id,
-                    ArdisikNobetSayisi = 0,
-                    NobetUstGrupId = 9,
-                    EczaneGrupTanimAdi = bakilanEczaneGrupTanimAdi,
-                    EczaneGrupTanimTipAdi = $"Mesafeler aynı gün nöbet ",
-                    EczaneGrupTanimTipId = 1,
-                    NobetGrupId = 1,
-                    EczaneAdi = eczaneFrom.EczaneAdi,
-                    NobetGrupAdi = "çç",
-                    EczaneNobetGrupId = eczaneFrom.Id,
-                    AyniGunNobetTutabilecekEczaneSayisi = 1
-                    //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
-                });
-
-                mesafeKontrolEczaneler.Add(new EczaneGrupDetay
-                {
-                    EczaneGrupTanimId = eczaneMesafe.Id,
-                    EczaneId = eczaneTo.Id,
-                    ArdisikNobetSayisi = 0,
-                    NobetUstGrupId = 9,
-                    EczaneGrupTanimAdi = bakilanEczaneGrupTanimAdi,
-                    EczaneGrupTanimTipAdi = $"Mesafeler aynı gün nöbet ",
-                    EczaneGrupTanimTipId = 1,
-                    NobetGrupId = 1,
-                    EczaneAdi = eczaneTo.EczaneAdi,
-                    NobetGrupAdi = "çç",
-                    EczaneNobetGrupId = eczaneTo.Id,
-                    AyniGunNobetTutabilecekEczaneSayisi = 1
-                    //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
-                });
-            }
-
-            #endregion
 
             var nobetGorevTipId = 7;
             if (!nobetGorevTipler.Contains(nobetGorevTipId))
@@ -404,6 +349,24 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             #region mesafeler
 
+            #region mesafe kontrol
+
+            var eczanelerArasiMesafeyiKoru = _nobetUstGrupKisitService.GetDetay("eczanelerArasiMesafeyiKoru", nobetUstGrupId);
+
+            var mesafeKriter = (int)eczanelerArasiMesafeyiKoru.SagTarafDegeri;
+
+            var mesafeler = _eczaneUzaklikMatrisService.GetDetaylar(nobetUstGrupId);
+
+            var eczaneMesafeler = mesafeler.Where(w => w.Mesafe <= mesafeKriter).ToList();
+
+            var mesafeKontrolEczaneler = _eczaneUzaklikMatrisService.GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(mesafeKriter, eczaneMesafeler);
+
+            #endregion
+
+            #region ikili eczaneler
+
+            //mesafe kriterinden büyük olanlar (birbirleri ile aynı gün nöbet tutabilirler ama 1 ayda 2 kez üst üste tutamazlar.)
+
             var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetGrupIdListe);
             var ikiliEczanelerMesafe = new List<AyniGunTutulanNobetDetay>();
 
@@ -415,7 +378,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 ikiliEczanelerMesafe.Add(new AyniGunTutulanNobetDetay
                 {
                     Id = mesafe.Id,
-                    EczaneAdi1 = eczaneFrom.EczaneAdi,
+                    EczaneAdi1 = mesafe.EczaneAdiFrom,
                     EczaneAdi2 = eczaneTo.EczaneAdi,
                     EczaneNobetGrupId1 = eczaneFrom.Id,
                     EczaneNobetGrupId2 = eczaneTo.Id
@@ -444,7 +407,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             //        _takvimService.GetIkiliEczaneNobetTarihAralik(baslangicTarihi, bitisTarihi, nobetGorevTipId, nobetGrupIdListe)
             //.Where(w => eczaneNobetGruplarTumu.Select(s => s.EczaneId).Contains(w.EczaneId1)
             //         || eczaneNobetGruplarTumu.Select(s => s.EczaneId).Contains(w.EczaneId2)
-            //).ToList();
+            //).ToList(); 
+
+            #endregion
 
             #endregion
 
@@ -503,7 +468,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _eczaneNobetOrtakService.KurallariKontrolEtIstek(nobetUstGrupId, eczaneNobetIstekler, nobetGrupKurallar);
 
             return corumDataModel;
-        }
+        }        
 
         [LogAspect(typeof(DatabaseLogger))]
         [SecuredOperation(Roles = "Admin,Oda,Üst Grup")]
