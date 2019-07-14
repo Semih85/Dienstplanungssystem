@@ -832,6 +832,8 @@
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonucPlanlanan\Index.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonucPlanlanan\EczaneNobetSonucPlanlananPartialView.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonucPlanlanan\IndexNakilEczaneyeGore.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\AlternatifNobetciOnerileri.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\AlternatifNobetcilerPartial.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

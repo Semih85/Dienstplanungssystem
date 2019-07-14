@@ -18,6 +18,7 @@
                     @Html.DisplayName("Eczane")
                 </th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -37,7 +38,16 @@
                         @Html.DisplayFor(modelItem => item.EczaneAdi)
                     </td>
                     <td>
-                        @Html.ActionLink("Nöbet Değiştir", "UpdateSonuclarInsertDegisim", new { eczaneNobetSonucId = item.Id }) 
+                        <a class="alert-link" target="_blank"
+                           href="@Url.RouteUrl("UpdateSonuclarInsertDegisim", new { eczaneNobetSonucId = item.Id } )">
+                            Nöbet Değiştir
+                        </a>
+                    </td>
+                    <td>
+                        <a class="alert-link" target="_blank"
+                           href="@Url.RouteUrl("AlternatifNobetciOnerileri", new { eczaneNobetSonucId = item.Id } )">
+                            Alternatif Nöbetçi Eczaneler
+                        </a>
                     </td>
                 </tr>
             }

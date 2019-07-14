@@ -59,6 +59,8 @@
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetCozumAnaharListeGecis.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetGrupGunGrupIstatistik.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetIstekCoklu.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSonucDetayMazeretli.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\AlternatifOlasiNobetciEczaneler.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\GunGrupBase.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\RaporDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSonucListeSırali.cs" />

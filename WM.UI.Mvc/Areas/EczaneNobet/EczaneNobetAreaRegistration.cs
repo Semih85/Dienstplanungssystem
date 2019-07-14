@@ -324,6 +324,18 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
             );
 
             context.MapRoute(
+                name: "AlternatifNobetciOnerileri",
+                url: "alternatif-nobetci-eczaneler/{eczaneNobetSonucId}",
+                defaults: new { controller = "EczaneNobetSonuc", action = "AlternatifNobetciOnerileri", eczaneNobetSonucId = UrlParameter.Optional }
+            );
+
+            context.MapRoute(
+                name: "UpdateSonuclarInsertDegisim",
+                url: "sonuclari-guncelle-degisimlere-ekle/{eczaneNobetSonucId}",
+                defaults: new { controller = "EczaneNobetSonuc", action = "UpdateSonuclarInsertDegisim", eczaneNobetSonucId = UrlParameter.Optional }
+            );
+            
+            context.MapRoute(
                 name: "NobetciEczaneHarita",
                 url: "nobetci-eczane-harita",
                 defaults: new { controller = "NobetciEczaneHarita", action = "Index" }

@@ -1,0 +1,191 @@
+﻿@model IEnumerable<AlternatifOlasiNobetciEczaneler>
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-hover table-bordered table-sm">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayName("Eczane")
+                </th>
+                <th>
+                    @Html.DisplayName("Mazereti")
+                </th>
+                @if ((int)ViewBag.MesafeKriter > 0)
+                {
+                    <th>
+                        @Html.DisplayName("Mesafe (m)")
+                    </th>
+                }
+                <th>
+                    @Html.DisplayName("Nöbet Tarihi (Önceki)")
+                </th>
+                <th>
+                    @Html.DisplayName("Nöbet Tarihi (Sonraki)")
+                </th>
+                <th>
+                    Nöbet Sayısı (<span class="text-danger">@ViewBag.GunGrupAdi</span>)
+                </th>
+                <th>
+                    @Html.DisplayName("Nöbet Sayısı (Toplam)")
+                </th>
+
+                @*<th></th>
+                    <th></th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.Mazereti != "yok")
+                {
+                    <tr class="table-danger">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EczaneAdi)
+                        </td>
+                        <td>
+                            <span class="font-weight-bold">@item.Mazereti</span>
+                        </td>
+                        @if ((int)ViewBag.MesafeKriter > 0)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Mesafe)
+                            </td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OncekiNobet)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SonrakiNobet)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetSayisiGunGrup)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetSayisiToplam)
+                        </td>
+                        @*<td>
+                                @Html.ActionLink("Nöbet Değiştir", "UpdateSonuclarInsertDegisim", new { eczaneNobetSonucId = item.Id })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Alternatif Nöbetçi Eczaneler", "AlternatifNobetciOnerileri", new { eczaneNobetSonucId = item.Id })
+                            </td>*@
+                    </tr>
+                }
+                else if (item.NobetSayisiToplam == ViewBag.NobetSayisiToplamEnAz && item.NobetSayisiGunGrup == ViewBag.NobetSayisiGunGrupEnAz)
+                {
+                    <tr style="background-color:#DDFFBA">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EczaneAdi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Mazereti)
+                        </td>
+                        @if ((int)ViewBag.MesafeKriter > 0)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Mesafe)
+                            </td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OncekiNobet)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SonrakiNobet)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetSayisiGunGrup)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetSayisiToplam)
+                        </td>
+                        @*<td>
+                                @Html.ActionLink("Nöbet Değiştir", "UpdateSonuclarInsertDegisim", new { eczaneNobetSonucId = item.Id })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Alternatif Nöbetçi Eczaneler", "AlternatifNobetciOnerileri", new { eczaneNobetSonucId = item.Id })
+                            </td>*@
+                    </tr>
+                }
+                else if (item.NobetSayisiToplam == ViewBag.NobetSayisiToplamEnAz)
+                {
+                    <tr style="background-color:#C6E5A7">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EczaneAdi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Mazereti)
+                        </td>
+                        @if ((int)ViewBag.MesafeKriter > 0)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Mesafe)
+                            </td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OncekiNobet)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SonrakiNobet)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetSayisiGunGrup)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetSayisiToplam)
+                        </td>
+                        @*<td>
+                                @Html.ActionLink("Nöbet Değiştir", "UpdateSonuclarInsertDegisim", new { eczaneNobetSonucId = item.Id })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Alternatif Nöbetçi Eczaneler", "AlternatifNobetciOnerileri", new { eczaneNobetSonucId = item.Id })
+                            </td>*@
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EczaneAdi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Mazereti)
+                        </td>
+                        @if ((int)ViewBag.MesafeKriter > 0)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Mesafe)
+                            </td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OncekiNobet)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SonrakiNobet)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetSayisiGunGrup)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetSayisiToplam)
+                        </td>
+                        @*<td>
+                                @Html.ActionLink("Nöbet Değiştir", "UpdateSonuclarInsertDegisim", new { eczaneNobetSonucId = item.Id })
+                            </td>
+                            <td>
+                                @Html.ActionLink("Alternatif Nöbetçi Eczaneler", "AlternatifNobetciOnerileri", new { eczaneNobetSonucId = item.Id })
+                            </td>*@
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        Alternatif nöbetçi eczane bulunmamaktadır.
+    </div>
+}
+
