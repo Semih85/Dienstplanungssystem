@@ -759,9 +759,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                         //return EczaneNobetCozAktifiGuncelle(data);
                         sonuclar = EczaneNobetCozAktifiGuncelle(data);
                     }
-                    var sonuclarTumu = _eczaneNobetSonucService.GetSonuclarUstGrupBaslamaTarihindenSonra(eczaneNobetModelCoz.NobetUstGrupId);
-                    var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(sonuclarTumu);
-                    _ayniGunTutulanNobetService.AyniGunNobetTutanlariTabloyaEkle(ayniGunNobetTutanEczaneler);
+                    //var sonuclarTumu = _eczaneNobetSonucService.GetSonuclarUstGrupBaslamaTarihindenSonra(eczaneNobetModelCoz.NobetUstGrupId);
+                    //var ayniGunNobetTutanEczaneler = _eczaneNobetOrtakService.GetAyniGunNobetTutanEczaneler(sonuclarTumu);
+                    //_ayniGunTutulanNobetService.AyniGunNobetTutanlariTabloyaEkle(ayniGunNobetTutanEczaneler);
                     return sonuclar;
                 }
                 else
