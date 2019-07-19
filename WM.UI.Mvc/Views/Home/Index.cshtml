@@ -136,24 +136,17 @@
 
         <div class="row mb-md-0">
 
-            <div class="col-lg-8 text-center mb-2 mt-2">
+            <div class="col-12 text-center mb-2 mt-2">
                 <h4>Ücretsiz demo için bize <a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> ulaşın. Hemen başlayalım.</h4>
             </div>
 
-            <div class="col-lg-4 text-center mb-2">
+            @*<div class="col-lg-4 text-center mb-2">
                 <div class="alert alert-success fade show px-0" role="alert">
-                    @*alert-dismissible*@
-                    @*WhatsApp ve Telefon Destek Hattı*@
-                    <i class="fa fa-question-circle"></i> Yardım
-                    <i class="fa fa-phone"></i>
-                    <a href="Tel:+905452710985" class="alert-link" style="text-decoration:none;">(0)545 - 271 09 85</a>
-
-
-                    @*<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>*@
+                    <i class="fa fa-question-circle fa-lg" title="Bize mesaj ya da e-posta yazın sizi arayalım."></i> Yardım
+                    <a href="Tel:+905452710985" class="alert-link" style="text-decoration:none;">(+90) 545 - 271 09 85</a>
+                    <i class="fa fa-whatsapp fa-lg"></i>
                 </div>
-            </div>
+            </div>*@
         </div>
 
 
@@ -401,7 +394,7 @@
                 <div class="seviye text-dark">Eczane</div>
             </div>
             <div class="col-md-3 mb-3">
-                <div style="display:none" id="eczaneSayisiSabit">13500</div>
+                <div style="display:none" id="eczaneSayisiSabit">16300</div>
                 <div class="counter circle bg-light font-weight-bold text-dark" id="eczaneSayisi">0</div>
                 <div id="nobetSistemi"></div>
                 <div class="seviye text-dark">Yazılan Nöbet</div>
@@ -662,7 +655,7 @@
             if (inteczaneSayim < inteczaneSayisiSabit) {
                 setTimeout(
                     eczaneSayisiSaydir,
-                    15
+                    11
                 );
             }
             else {
