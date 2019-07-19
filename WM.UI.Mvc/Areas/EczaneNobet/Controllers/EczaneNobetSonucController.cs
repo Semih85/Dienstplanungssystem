@@ -1807,10 +1807,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         Mazereti = mazereti != null ? mazereti.MazeretAdi : "yok",
                         OncekiNobetTarihi = oncekiNobetler.Count > 0
                                 ? oncekiNobetler.OrderByDescending(o => o.Tarih).FirstOrDefault().Tarih
-                                : yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.OrderByDescending(o => o.Tarih).FirstOrDefault().Tarih,
+                                : DateTime.Today, //yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.OrderByDescending(o => o.Tarih).FirstOrDefault().Tarih,
                         SonrakiNobetTarihi = sonrakiNobetler.Count > 0
                                 ? sonrakiNobetler.OrderBy(o => o.Tarih).FirstOrDefault().Tarih
-                                : yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.OrderBy(o => o.Tarih).FirstOrDefault().Tarih,
+                                : DateTime.Today, //yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.OrderBy(o => o.Tarih).FirstOrDefault().Tarih,
                         NobetSayisiToplam = yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.Count,
                         NobetSayisiGunGrup = yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.Where(w => w.GunGrupId == feragatEdenNobetciEczaneDetay.GunGrupId).Count()
                     });
@@ -1852,7 +1852,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     var sonrakiNobetler = yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.Where(w => w.Tarih > nobetTarihi).ToList();
 
-                    alternatifOlasiEczaneler.Add(new AlternatifOlasiNobetciEczaneler
+                    var olasiNobetciEczane = new AlternatifOlasiNobetciEczaneler
                     {
                         Tarih = nobetTarihi,
                         EczaneAdi = uygunEczane.EczaneAdi,
@@ -1860,13 +1860,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         Mazereti = mazereti != null ? mazereti.MazeretAdi : "yok",
                         OncekiNobetTarihi = oncekiNobetler.Count > 0
                                 ? oncekiNobetler.OrderByDescending(o => o.Tarih).FirstOrDefault().Tarih
-                                : yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.OrderByDescending(o => o.Tarih).FirstOrDefault().Tarih,
+                                : DateTime.Today,// yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.OrderByDescending(o => o.Tarih).FirstOrDefault().Tarih,
                         SonrakiNobetTarihi = sonrakiNobetler.Count > 0
                                 ? sonrakiNobetler.OrderBy(o => o.Tarih).FirstOrDefault().Tarih
-                                : yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.OrderBy(o => o.Tarih).FirstOrDefault().Tarih,
+                                : DateTime.Today,// yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.OrderBy(o => o.Tarih).FirstOrDefault().Tarih,
                         NobetSayisiToplam = yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.Count,
                         NobetSayisiGunGrup = yerineNobetTutabilecekEczanelerinSonuclariBakilanEczane.Where(w => w.GunGrupId == feragatEdenNobetciEczaneDetay.GunGrupId).Count()
-                    });
+                    };
+
+                    alternatifOlasiEczaneler.Add(olasiNobetciEczane);
                 }
             }
             else

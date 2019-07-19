@@ -16,8 +16,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string Mazereti { get; set; }
         public DateTime? OncekiNobetTarihi { get; set; }
         public DateTime? SonrakiNobetTarihi { get; set; }
-        public string OncekiNobet => OncekiNobetTarihi != null ? $"{((DateTime)OncekiNobetTarihi).ToString("dd MMM yyyy, ddd.")} ({(Tarih - (DateTime)OncekiNobetTarihi).TotalDays} gün)" : "-";
-        public string SonrakiNobet => SonrakiNobetTarihi != null ? $"{((DateTime)SonrakiNobetTarihi).ToString("dd MMM yyyy, ddd.")} ({((DateTime)SonrakiNobetTarihi - Tarih).TotalDays} gün)" : "-";
+        public string OncekiNobet => OncekiNobetTarihi != DateTime.Today ? $"{((DateTime)OncekiNobetTarihi).ToString("dd MMM yyyy, ddd.")} ({(Tarih - (DateTime)OncekiNobetTarihi).TotalDays} gün)" : "-";
+        public string SonrakiNobet => SonrakiNobetTarihi != DateTime.Today ? $"{((DateTime)SonrakiNobetTarihi).ToString("dd MMM yyyy, ddd.")} ({((DateTime)SonrakiNobetTarihi - Tarih).TotalDays} gün)" : "-";
         public int Mesafe { get; set; }
         public DateTime Tarih { get; set; }
         public int NobetSayisiToplam { get; set; }
