@@ -4488,9 +4488,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
         }
 
-
-
-
         #region kısıt kontrol
 
         public void KurallariKontrolEtHaftaIciEnAzEnCok(int nobetUstGrupId, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetSonuclarYatay)
