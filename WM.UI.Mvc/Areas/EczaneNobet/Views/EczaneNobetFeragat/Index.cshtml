@@ -16,7 +16,7 @@
 <hr />
 
 <div class="modal" tabindex="-1" id="aciklamaModal" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header alert-info">
                 <h5 class="modal-title"><i class="fa fa-info-circle"></i> Nöbet Feragat</h5>
@@ -25,24 +25,67 @@
                 </button>
             </div>
             <div class="modal-body">
+                <p>
+                    Feragat kaydı oluşturulurken
+                    <span class="badge badge-warning">feragat eden eczane</span> ve varsa
+                    <span class="badge badge-success">yeni nöbetçi</span> için aşağıdaki gibi <strong>5 farklı senaryo</strong> söz konusu olabilmektedir.
+                </p>
+                <h4>Feragat Senaryoları</h4>
+                <hr class="bg-info" />
                 <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">1</span> Normal feragat</h6>
                 <p>
-                    Feragat edilen bir nöbet tutmuş olarak sayılmaya devam eder.
-                    <br />
-                    Bu nöbet değiştirilirse artık feragat edenin nöbeti sayılmaz.
+                    <ul>
+                        <li><mark>Feragat tipi</mark> "normal nöbet" seçilerek feragat kaydı eklenir.</li>
+                    </ul>
+                    <footer class="blockquote-footer">Nöbet Sayılma Durumu: <span class="badge badge-warning">feragat eden eczane</span> </footer>
                 </p>
-                <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">2</span> Her iki nöbetçinin de nöbeti sayıl<span class="text-danger">ma</span>sın</h6>
+
+                <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">2</span> Sadece <span class="text-primary">feragat eden eczanenin</span> nöbeti sayılsın</h6>
                 <p>
-                    Feragat tipi bu şekilde seçilirse her iki nöbetçi için de bu nöbet sayılmaz.
+                    <ul>
+                        <li><mark>Feragat tipi</mark> "sadece feragat edenin nöbeti sayılsın" seçilirek feragat kayıdı eklenir.</li>
+                        <li>Sonrasında nöbet değişimi ile yeni nöbetçi belirlenir.</li>
+                    </ul>
+
+                    <footer class="blockquote-footer">Nöbet Sayılma Durumu: <span class="badge badge-warning">feragat eden eczane</span> </footer>
+                    @*<footer class="blockquote-footer">Bu durumda <strong>sadece <span class="badge badge-warning">feragat eden eczanenin</span> nöbeti sayılır.</strong> Ancak nöbet listesinde yeni nöbetçi görünür.</footer>*@
                 </p>
-                <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">3</span> Her iki nöbetçinin de nöbeti sayılsın</h6>
-                <p>Feragat eden ile yeni nöbetçinin nöbetlerinin sayılması için listeden gerçek nöbetçi ekleyiniz.</p>
-                <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">4</span> Sadece feragat eden nöbetçinin nöbeti sayılsın</h6>
+
+                <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">3</span> Sadece <span class="text-primary">yeni nöbetçinin</span> nöbeti sayılsın</h6>
                 <p>
-                    Önce feragat girilecek, sonra nöbet değişimi ile diğer nöbetçi belirlenecek.
-                    Sonuçta sadece feragat eden nöbetçinin nöbeti sayılmış olacak.
-                    Feragat eden eczanenin yerine nöbet tutan eczanenin sistemde kaydı olacak.
+                    <ul>
+                        <li><mark>Feragat tipi</mark> "normal nöbet" seçilerek feragat kaydı eklenir.</li>
+                        <li>Sonrasında nöbet değişimi ile yeni nöbetçi belirlenir. @*<strong class="alert-info">normal nöbet değişimi</strong>*@</li>
+                    </ul>
+                    <footer class="blockquote-footer">Nöbet Sayılma Durumu: <span class="badge badge-success">yeni nöbetçi eczane</span> </footer>
+                    @*<footer class="blockquote-footer">Bu durumda feragat edenin nöbeti sayılmaz. <strong>Sadece <span class="badge badge-success">yeni nöbetçinin</span> nöbeti sayılır.</strong></footer>*@
+
                 </p>
+
+                <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">4</span> <span class="text-primary">Her iki nöbetçinin</span> de nöbeti <u><span class="text-danger">sayılmasın</span></u></h6>
+                <p>
+                    <ul>
+                        <li><mark>Feragat tipi</mark> "her iki nöbetçinin de nöbeti sayılmasın" olarak seçilirek feragat kaydı eklenir.</li>
+                        <li>Sonrasında nöbet değişimi ile yeni nöbetçi belirlenir.</li>
+                    </ul>
+
+                    @*<footer class="blockquote-footer">Bu durumda her iki nöbetçi için de bu nöbet sayılmaz.</footer>*@
+
+                    <footer class="blockquote-footer">Nöbet Sayılma Durumu: <span class="badge badge-danger">hiçbiri</span> </footer>
+                </p>
+
+                <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">5</span> <span class="text-primary">Her iki nöbetçinin</span> de nöbeti sayılsın</h6>
+                <p>
+                    <ul>
+                        <li><mark>Feragat tipi</mark> "normal nöbet" seçilerek feragat kaydı eklenir.</li>
+                        <li>Program menüsünden Sonuç > Nöbet Ekle sayfası kullanılarak yeni nöbetçi eklenir.</li>
+                    </ul>
+
+                    <footer class="blockquote-footer">Nöbet Sayılma Durumu: <span class="badge badge-warning">feragat eden eczane</span> ve <span class="badge badge-success">yeni nöbetçi eczane</span> </footer>
+                    @*<footer class="blockquote-footer">Bu durumda her iki nöbetçi için de bu nöbet sayılır.</footer>*@
+                </p>
+
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Kapat</button>
