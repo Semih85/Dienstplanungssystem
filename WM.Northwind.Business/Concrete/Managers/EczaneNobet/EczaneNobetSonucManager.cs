@@ -508,18 +508,18 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGrupId);
             //var s2 = sw.Elapsed;
             //sw.Restart();
-            var mazeretler = _eczaneNobetMazeretService.GetDetaylar(nobetUstGrupId);
+            //var mazeretler = _eczaneNobetMazeretService.GetDetaylar(nobetUstGrupId);
             //var s3 = sw.Elapsed;
             //sw.Restart();
-            var istekler = _eczaneNobetIstekService.GetDetaylar(nobetUstGrupId);
+            //var istekler = _eczaneNobetIstekService.GetDetaylar(nobetUstGrupId);
             //var s4 = sw.Elapsed;
             //sw.Restart();
             var sonuclar = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(
                 nobetGrupGorevTipGunKurallar,
                 eczaneNobetSonucDetaylar,
                 nobetGrupGorevTipTakvimOzelGunler,
-                mazeretler,
-                istekler,
+                //mazeretler,
+                //istekler,
                 EczaneNobetSonucTuru.Kesin);
             //var s5 = sw.Elapsed;
             //sw.Stop();
@@ -534,15 +534,15 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylar(nobetUstGrupId);
             var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGrupId);
-            var mazeretler = _eczaneNobetMazeretService.GetDetaylar(nobetUstGrupId);
-            var istekler = _eczaneNobetIstekService.GetDetaylar(nobetUstGrupId);
+            //var mazeretler = _eczaneNobetMazeretService.GetDetaylar(nobetUstGrupId);
+            //var istekler = _eczaneNobetIstekService.GetDetaylar(nobetUstGrupId);
 
             var liste = _eczaneNobetOrtakService.EczaneNobetSonucBirlesim(
                 nobetGrupGorevTipGunKurallar,
                 eczaneNobetSonucDetaylar,
                 nobetGrupGorevTipTakvimOzelGunler,
-                mazeretler,
-                istekler,
+                //mazeretler,
+                //istekler,
                 EczaneNobetSonucTuru.Kesin);
 
             return liste;
