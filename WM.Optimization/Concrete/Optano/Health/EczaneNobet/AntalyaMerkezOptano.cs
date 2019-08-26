@@ -166,7 +166,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var ustLimitKontrol = ustLimit * 0.95; //0.81 
 
                 //pazar
-                var pazarNobetiYazilabilecekIlkAy = (int)Math.Ceiling((double)gruptakiEczaneSayisi / 5) - 1;
+                var pazarNobetiYazilabilecekIlkAy = Math.Ceiling((double)gruptakiEczaneSayisi / 5) - 1;
+
+                pazarNobetiYazilabilecekIlkAy = GetArdisikBosGunSayisi(pespeseNobetSayisiPazar, pazarNobetiYazilabilecekIlkAy);
 
                 #endregion
 
@@ -312,7 +314,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     var eczaneNobetIstatistik = eczaneNobetGrupGunKuralIstatistikler
                         .Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id).SingleOrDefault() ?? new EczaneNobetGrupGunKuralIstatistikYatay();
 
-                    var yazilabilecekIlkPazarTarihi = eczaneNobetIstatistik.SonNobetTarihiPazar.AddMonths(pazarNobetiYazilabilecekIlkAy - 1);
+                    //var yazilabilecekIlkPazarTarihi = eczaneNobetIstatistik.SonNobetTarihiPazar.AddMonths((int)pazarNobetiYazilabilecekIlkAy - 1);
+                    var yazilabilecekIlkPazarTarihi = eczaneNobetIstatistik.SonNobetTarihiPazar.AddDays(pazarNobetiYazilabilecekIlkAy);
                     var yazilabilecekIlkHaftaIciTarihi = eczaneNobetIstatistik.SonNobetTarihiHaftaIci.AddDays(altLimit);
                     var nobetYazilabilecekIlkTarih = eczaneNobetIstatistik.SonNobetTarihi.AddDays(pespeseNobetSayisi);
 
@@ -421,13 +424,19 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli
                     };
 
+                    #region tüm tarih aralığı
+
                     var ortalamaEnFazlaTumTarihAraligi = (KpTarihAraligiOrtalamaEnFazla)kpTarihAraligiOrtalamaEnFazla.Clone();
                     ortalamaEnFazlaTumTarihAraligi.Tarihler = tarihler;
                     ortalamaEnFazlaTumTarihAraligi.GunSayisi = gunSayisi;
                     ortalamaEnFazlaTumTarihAraligi.OrtalamaNobetSayisi = ortalamaNobetSayisi;
                     ortalamaEnFazlaTumTarihAraligi.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k19");
 
-                    TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaTumTarihAraligi);
+                    TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaTumTarihAraligi); 
+
+                    #endregion
+
+                    #region hafta içi
 
                     var ortalamaEnFazlaHaftaIici = (KpTarihAraligiOrtalamaEnFazla)kpTarihAraligiOrtalamaEnFazla.Clone();
                     ortalamaEnFazlaHaftaIici.Tarihler = haftaIciGunleri;
@@ -435,7 +444,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     ortalamaEnFazlaHaftaIici.OrtalamaNobetSayisi = ortamalaNobetSayisiHaftaIci;
                     ortalamaEnFazlaHaftaIici.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k32");
 
-                    TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaHaftaIici);
+                    TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaHaftaIici); 
+
+                    #endregion
+
+                    #region bayram
 
                     var ortalamaEnFazlaBayram = (KpTarihAraligiOrtalamaEnFazla)kpTarihAraligiOrtalamaEnFazla.Clone();
                     ortalamaEnFazlaBayram.Tarihler = bayramlar;
@@ -444,6 +457,20 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     ortalamaEnFazlaBayram.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k14");
 
                     TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaBayram);
+
+                    #endregion
+
+                    #region pazar
+
+                    var ortalamaEnFazlaPazar = (KpTarihAraligiOrtalamaEnFazla)kpTarihAraligiOrtalamaEnFazla.Clone();
+                    ortalamaEnFazlaPazar.Tarihler = pazarGunleri;
+                    ortalamaEnFazlaPazar.GunSayisi = pazarSayisi;
+                    ortalamaEnFazlaPazar.OrtalamaNobetSayisi = ortamalaNobetSayisiPazar;
+                    ortalamaEnFazlaPazar.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k23");
+
+                    TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaPazar); 
+
+                    #endregion
 
                     #endregion
 
