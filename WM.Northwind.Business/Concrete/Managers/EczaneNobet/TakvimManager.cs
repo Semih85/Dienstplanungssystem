@@ -2453,7 +2453,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 {
                     var eczaneninOncekiNobetGrubu = _eczaneNobetGrupService.GetEczaneninOncekiNobetGrubu(yeniEczane.EczaneId);
 
-                    int grupBuyuklukleriArasindakiFark = GetNobetGrupBuyuklukleriArasindakiFark(yeniEczane, eczaneninOncekiNobetGrubu);
+                    int grupBuyuklukleriArasindakiFark = 0;// GetNobetGrupBuyuklukleriArasindakiFark(yeniEczane, eczaneninOncekiNobetGrubu);
 
                     var grupDegistirenEczaneninEskiGruptakiSonNobeti = new EczaneNobetSonucListe2();
 
@@ -2614,7 +2614,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             {
                 var eczaneninOncekiNobetGrubu = _eczaneNobetGrupService.GetEczaneninOncekiNobetGrubu(yeniEczane.EczaneId);
 
-                int grupBuyuklukleriArasindakiFark = GetNobetGrupBuyuklukleriArasindakiFark(yeniEczane, eczaneninOncekiNobetGrubu);
+                int grupBuyuklukleriArasindakiFark = 0;// GetNobetGrupBuyuklukleriArasindakiFark(yeniEczane, eczaneninOncekiNobetGrubu);
 
                 var grupDegitirenEczaneninEskiGruptakiSonNobeti = GetGrupDegistirenEczaneninEskiGruptakiSonNobeti(gunGrupId, eczaneninOncekiNobetGrubu.Id);
 
