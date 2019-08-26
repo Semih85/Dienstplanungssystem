@@ -199,7 +199,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetGrupIdListe, baslangicTarihi, bitisTarihi)
                 .Where(w => !eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneNobetGrupId).Contains(w.Id)).ToList();
-            //var sure_eczaneNobetGruplar = stopwatch.Elapsed;
+            var sure_eczaneNobetGruplar = stopwatch.Elapsed;
 
             #region planlanan nöbetler - sıralı nöbet yazma (gün grubu bazında)
             //baslangicTarihi = new DateTime(2018, 6, 1);
@@ -220,14 +220,13 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetSonuclarCozulenGruplarPlanlanan = eczaneNobetSonuclarPlanlanan
                 .Where(w => eczaneNobetGruplar.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
 
-            var eczaneNobetSonuclarCozulenGruplarPlanlananBaslangicSonrasi = eczaneNobetSonuclarPlanlanan
-                .Where(w => eczaneNobetGruplar.Select(s => s.Id).Contains(w.EczaneNobetGrupId)
-                && w.Tarih >= nobetUstGrupBaslangicTarihi).ToList();
+            var eczaneNobetSonuclarCozulenGruplarPlanlananBaslangicSonrasi = eczaneNobetSonuclarCozulenGruplarPlanlanan
+                .Where(w => w.Tarih >= nobetUstGrupBaslangicTarihi).ToList();
 
-            //var sure_eczaneNobetSonuclarCozulenGrup = stopwatch.Elapsed;
+            var sure_eczaneNobetSonuclarCozulenGrup = stopwatch.Elapsed;
 
             var eczaneNobetSonuclarOncekiAylar = eczaneNobetSonuclarCozulenGruplar
-                .Where(w => w.Tarih >= nobetUstGrupBaslangicTarihi).ToList();
+                .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
 
             var sonuclarKontrol = _eczaneNobetSonucService.GetSonuclar(baslangicTarihi, bitisTarihi, eczaneNobetSonuclarCozulenGruplar);
 
@@ -239,7 +238,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplar, eczaneNobetSonuclarCozulenGruplar);
             //var enSonNobetlerPlanlanan = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplar, eczaneNobetSonuclarCozulenGruplarPlanlanan);
-            //var sure_enSonNobetler = stopwatch.Elapsed;
+            var sure_enSonNobetler = stopwatch.Elapsed;
 
             var eczaneNobetGrupGunKuralIstatistikYatay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler);
             //var eczaneNobetGrupGunKuralIstatistikYatayPlanlanan = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetlerPlanlanan);
