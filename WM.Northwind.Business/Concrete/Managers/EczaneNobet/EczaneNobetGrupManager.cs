@@ -140,6 +140,19 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetGrupDetay> GetDetaylarByNobetGrupGorevTipler(List<int> nobetGrupGorevTipIdList, bool tumEczaneler)
+        {
+            if (tumEczaneler)
+            {
+                return _eczaneNobetGrupDal.GetDetayList(x => nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId));
+            }
+            else
+            {
+                return _eczaneNobetGrupDal.GetDetayList(x => nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId) && x.BitisTarihi == null);
+            }
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetGrupDetay> GetDetaylarByNobetGrupGorevTipler(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetGrupGorevTipIdList)
         {
             return _eczaneNobetGrupDal.GetDetayList(x => nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId)
@@ -300,8 +313,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             var eczaneNobetGrupBilgileri = GetDetayById(eczaneNobetGrupId);
 
-            var baslangicTarihi = eczaneNobetGrupBilgileri.BaslangicTarihi < eczaneNobetGrupBilgileri.NobetGrupGorevTipBaslamaTarihi 
-                ? eczaneNobetGrupBilgileri.NobetGrupGorevTipBaslamaTarihi 
+            var baslangicTarihi = eczaneNobetGrupBilgileri.BaslangicTarihi < eczaneNobetGrupBilgileri.NobetGrupGorevTipBaslamaTarihi
+                ? eczaneNobetGrupBilgileri.NobetGrupGorevTipBaslamaTarihi
                 : eczaneNobetGrupBilgileri.BaslangicTarihi;
 
             return _eczaneNobetGrupDal.GetDetayList(w => w.NobetGrupGorevTipId == eczaneNobetGrupBilgileri.NobetGrupGorevTipId
