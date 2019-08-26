@@ -726,7 +726,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var eczaneNobetSonuclarPlanlanan = _eczaneNobetSonucPlanlananService.GetSonuclar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId, kapaliEczaneler)
                 .Where(w => w.GunGrupId == gunGrupId || gunGrupId == 0).ToList();
 
-            var eczaneNobetGruplarTumu = _eczaneNobetGrupService.GetAktifEczaneGrupListByNobetGrupGorevTipIdList(nobetGrupGorevTipIdList);
+            var eczaneNobetGruplarTumu = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipIdList, kapaliEczaneler);//GetAktifEczaneGrupListByNobetGrupGorevTipIdList
 
             var eczaneNobetSonuclarPlanlananSonrasi = eczaneNobetSonuclarPlanlanan;
             //.Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
@@ -798,21 +798,27 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         private void NobetleriSirala(List<EczaneNobetSonucListe2> sonuclar, List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu, int indis)
         {
-            foreach (var eczaneNobetGrup in eczaneNobetGruplarTumu)
+            var gunGruplar = sonuclar.Select(s => new { s.GunGrupId, s.GunGrupAdi }).Distinct().ToArray();
+
+            foreach (var gunGrup in gunGruplar)
             {
-                var sonuclarEczaneBazliSitali = sonuclar
-                    .Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id)
-                    .OrderBy(o => o.GunGrupId)
-                    .ThenBy(o => o.Tarih)
-                    .ToList();
-
-                var sonucIndis = indis;
-
-                foreach (var sonuc in sonuclarEczaneBazliSitali)
+                foreach (var eczaneNobetGrup in eczaneNobetGruplarTumu)
                 {
-                    sonuc.NobetSayisi = sonucIndis;
+                    var sonuclarEczaneBazliSitali = sonuclar
+                        .Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id
+                                 && w.GunGrupId == gunGrup.GunGrupId)
+                        .OrderBy(o => o.GunGrupId)
+                        .ThenBy(o => o.Tarih)
+                        .ToList();
 
-                    sonucIndis++;
+                    var sonucIndis = indis;
+
+                    foreach (var sonuc in sonuclarEczaneBazliSitali)
+                    {
+                        sonuc.NobetSayisi = sonucIndis;
+
+                        sonucIndis++;
+                    }
                 }
             }
         }
