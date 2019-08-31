@@ -2244,6 +2244,21 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             DateTime nobetBitisTarihi,
             int gunGrupId)
         {
+            var kontrol = true;
+            var kontrolEdilecekEczane = new string[] {
+                "BULVAR",
+                "KUMBUL", "IŞIN", "LOTUS"
+            };
+
+            if (kontrol)
+            {
+                var ilgiliEczane = eczaneNobetGruplarTumu.Where(w => kontrolEdilecekEczane.Contains(w.EczaneAdi));
+
+                if (ilgiliEczane.Count() > 0)
+                {
+                }
+            }
+
             var sonuclarTumu = new List<EczaneNobetCozum>();
 
             var baslangicTarihiIlk = nobetBaslangicTarihi;
@@ -2424,25 +2439,21 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 #region kontrol
 
-                var kontrol = true;
-
                 if (kontrol)
                 {
-                    var eczane = "MÜĞREN";
-
-                    var eczaneKontrolEdilecek = iterasyonBaslangicindaKapanmamisEczaneNobetGruplar.Where(w => w.EczaneAdi == eczane);
+                    var eczaneKontrolEdilecek = iterasyonBaslangicindaKapanmamisEczaneNobetGruplar.Where(w => kontrolEdilecekEczane.Contains(w.EczaneAdi));
 
                     if (eczaneKontrolEdilecek.Count() > 0)
                     {
                     }
 
-                    var eczaneKontrolEdilecekYeniEczane = anahtarListeyeEklenecekYeniAcilanEczaneler.Where(w => w.EczaneAdi == eczane);
+                    var eczaneKontrolEdilecekYeniEczane = anahtarListeyeEklenecekYeniAcilanEczaneler.Where(w => kontrolEdilecekEczane.Contains(w.EczaneAdi));
 
                     if (eczaneKontrolEdilecekYeniEczane.Count() > 0)
                     {
                     }
 
-                    var anahtarListedeVarMi = sonAnahtarListe.Where(w => w.EczaneAdi == eczane);
+                    var anahtarListedeVarMi = sonAnahtarListe.Where(w => kontrolEdilecekEczane.Contains(w.EczaneAdi));
                 }
 
                 #endregion
@@ -2486,7 +2497,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                     var eczaneSiradaki = _eczaneNobetGrupService.GetDetayById(sonAnahtarListe[i].EczaneNobetGrupId);
 
-                    if (eczaneSiradaki.EczaneAdi == "AVDANLIOĞLU")
+                    if (kontrol && kontrolEdilecekEczane.Contains(eczaneSiradaki.EczaneAdi))
                     {
                     }
 
@@ -2541,6 +2552,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 sonuclarTumu.AddRange(araCozum);
 
+                #region çoklu ekle
                 try
                 {
                     _eczaneNobetSonucPlanlananService.CokluEkle(araCozum);
@@ -2564,6 +2576,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 {
                     throw ex;
                 }
+                #endregion
 
                 if (sonuclarTumu.Count < nobetYazilacakTarihSayisi && iterasyonSayisi == toplamIterasyonSayisi - 1 && iterasyonSayisi > 0)
                 {
