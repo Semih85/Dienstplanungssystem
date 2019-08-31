@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -397,7 +398,34 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             EczaneNobetGrupDetay eczaneNobetGrup = _eczaneNobetGrupService.GetDetayById(id);
-            _eczaneNobetGrupService.Delete(id);
+
+            try
+            {
+                _eczaneNobetGrupService.Delete(id);
+            }
+            catch (DbUpdateException ex)
+            {
+                var hata = ex.InnerException.ToString();
+
+                string[] referansKayitHatasi = { "The DELETE statement conflicted with the REFERENCE constraint", "with unique index" };
+
+                var referansKayitHatasiMi = referansKayitHatasi.Any(h => hata.Contains(h));
+
+                if (referansKayitHatasiMi)
+                {
+                    throw new Exception($"Gruptan silmek istediğiniz <strong>{eczaneNobetGrup.EczaneAdi} eczanesine ait başka kayıtlar bulunmaktadır.</strong> " +
+                        "Lütfen bu kayıtları sildikten sonra tekrar deneyiniz..." +
+                        "<br /> " +
+                        "<strong >(Önce referans kayıtlar silinmelidir!)</strong>", ex);
+                }
+
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
             return RedirectToAction("Index");
         }
 
