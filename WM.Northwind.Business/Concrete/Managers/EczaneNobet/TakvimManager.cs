@@ -2357,7 +2357,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                               )
                     .OrderBy(o => o.BitisTarihi).ToList();
 
-                #region anahtar listeden kapanan eczaneyi çıkardık
+                #region anahtar listeden kapanan eczaneyi çıkardık -- eski
+
                 //foreach (var eczaneNobetGrup in iterasyonBaslangicindaKapanmamisEczaneNobetGruplar)
                 //{
                 //    if (eczaneNobetGrup.EczaneAdi == "AVDANLIOĞLU")
@@ -2417,7 +2418,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 #endregion
 
-                //anahtar liste ihtiyaç kadar çekildi
+                #region anahtar listeden gerekli eczane sayısı kadar eczane sıraya alındı
+
                 sonAnahtarListe = iterasyondaKullanilacakAnahtarListe
                     .Take(alinacakEczaneSayisi)
                     .ToList();
@@ -2426,6 +2428,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 {
                     alinacakEczaneSayisi = sonAnahtarListe.Count;
                 }
+
+                #endregion
 
                 //son Anahtar Listede Olmayan EczaneNobetGruplarda olan Eczaneler (yeni anahtar listeye eklenecek eczaneler - yeni eklenenler bakılan tarih aralığında ise)
                 anahtarListeyeEklenecekYeniAcilanEczaneler = iterasyonBaslangicindaKapanmamisEczaneNobetGruplar
@@ -2458,7 +2462,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 #endregion
 
-                #region yeni eczaneler son anahtar listede araya giriyor..
+                #region yeni eczaneler son anahtar listede araya giriyor.
 
                 foreach (var yeniEczane in anahtarListeyeEklenecekYeniAcilanEczaneler)
                 {
@@ -2489,6 +2493,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 #endregion
 
+                #region kapanan eczaneler son anahtar listeden çıkarılıyor.
+
                 var eksilenEczaneSayisi = 0;
 
                 for (int i = 0; i < alinacakEczaneSayisi; i++)
@@ -2518,7 +2524,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     {
                         eksilenEczaneSayisi++;
                     }
-                }
+                } 
+
+                #endregion
 
                 var alinacakEczaneSayisiSon = 0;
 
@@ -2552,7 +2560,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 sonuclarTumu.AddRange(araCozum);
 
-                #region çoklu ekle
+                #region son sıralı listeyi veri tabanına çoklu olarak ekle.
+
                 try
                 {
                     _eczaneNobetSonucPlanlananService.CokluEkle(araCozum);
@@ -2576,12 +2585,17 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 {
                     throw ex;
                 }
+
                 #endregion
+
+                #region iterasyon bitiş şartı
 
                 if (sonuclarTumu.Count < nobetYazilacakTarihSayisi && iterasyonSayisi == toplamIterasyonSayisi - 1 && iterasyonSayisi > 0)
                 {
                     toplamIterasyonSayisi++;
                 }
+
+                #endregion
             }
         }
 
