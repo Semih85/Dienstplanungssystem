@@ -30,7 +30,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     ? ""
                     : p.NobetGrupGorevTip.NobetGrupAdi;
 
-                var kisitAdi = IsimleriBirlestir("K0 (Talep):", nobetGrupBilgisi, $"{tarih.Tarih.ToShortDateString()} tarihindeki talep edilen nöbetçi sayısı: ", tarih.TalepEdilenNobetciSayisi.ToString());
+                var kisitAdi = IsimleriBirlestir("K0 (Talep):", nobetGrupBilgisi, $"{tarih.Tarih.ToShortDateString()}-{tarih.NobetGunKuralAdi} tarihindeki talep edilen nöbetçi sayısı: ", tarih.TalepEdilenNobetciSayisi.ToString());
 
                 var kararIndex = p.EczaneNobetTarihAralikTumu
                     .Where(k => k.TakvimId == tarih.TakvimId).ToList();
