@@ -2749,15 +2749,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                     int grupBuyuklukleriArasindakiFark = 0;// GetNobetGrupBuyuklukleriArasindakiFark(yeniEczane, eczaneninOncekiNobetGrubu);
 
-                    //var grupDegistirenEczaneninEskiGruptakiSonNobeti = new EczaneNobetSonucListe2();
-
-                    //if (eczaneninOncekiNobetGrubu.Id > 0)
-                    //{
-                    //    grupDegistirenEczaneninEskiGruptakiSonNobeti = _eczaneNobetSonucPlanlananService
-                    //        .GetSonuclarByEczaneNobetGrupId(eczaneninOncekiNobetGrubu.Id, gunGrupId)
-                    //        .OrderByDescending(o => o.Tarih).FirstOrDefault();
-                    //}
-
                     var grupDegistirenEczaneninEskiGruptakiSonNobeti = GetGrupDegistirenEczaneninEskiGruptakiSonNobeti(gunGrupId, eczaneninOncekiNobetGrubu.Id);
 
                     var yeniEczaneTarih = IlkNobetTarihiniBelirle(yeniEczane, grupDegistirenEczaneninEskiGruptakiSonNobeti, gunGrupId, grupBuyuklukleriArasindakiFark);
