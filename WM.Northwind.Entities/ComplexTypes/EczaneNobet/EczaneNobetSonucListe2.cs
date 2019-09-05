@@ -10,7 +10,7 @@ using WM.Northwind.Entities.Concrete.Enums;
 
 namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 {
-    public class EczaneNobetSonucListe2
+    public class EczaneNobetSonucListe2: ICloneable
     {
         public EczaneNobetSonucListe2()
         {
@@ -181,6 +181,11 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 
             // Return the week of our adjusted day
             return CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(time, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 
