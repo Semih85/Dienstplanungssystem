@@ -614,7 +614,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         {
                         }
 
-                        herAyEnFazlaIlgiliKisit = GetNobetGunKuralIlgiliKisit(data.NobetUstGrupKisitlar, gunKural.NobetGunKuralId);
+                        herAyEnFazlaIlgiliKisit = GetNobetGunKuralIlgiliKisitTarihAraligi(data.NobetUstGrupKisitlar, gunKural.NobetGunKuralId);
 
                         var tarihAralik = nobetGunKuralTarihler.Where(w => w.NobetGunKuralId == gunKural.NobetGunKuralId).SingleOrDefault() ?? new NobetGunKuralTarihAralik();
 

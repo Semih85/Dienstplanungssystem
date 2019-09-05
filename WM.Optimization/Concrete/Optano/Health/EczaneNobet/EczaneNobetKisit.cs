@@ -2299,23 +2299,58 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             return (double)deger;
         }
 
-        public NobetUstGrupKisitDetay GetNobetGunKuralIlgiliKisit(List<NobetUstGrupKisitDetay> kisitlarAktif, int nobetGunKuralId)
+        public NobetUstGrupKisitDetay GetNobetGunKuralIlgiliKisitTarihAraligi(List<NobetUstGrupKisitDetay> kisitlarAktif, int nobetGunKuralId)
         {
             NobetUstGrupKisitDetay herAyEnFazlaIlgiliKisit;
 
             switch (nobetGunKuralId)
             {
-                case 1:
+                case 1://pazar
                     herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k23");
                     break;
-                case 7:
+                case 7://cumartesi
                     herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k38");
                     break;
-                case 6:
+                case 6://cuma
                     herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k43");
                     break;
-                default:
+                default://h. içi diğer
                     herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k42");
+                    break;
+            }
+
+            return herAyEnFazlaIlgiliKisit;
+        }
+
+        public NobetUstGrupKisitDetay GetNobetGunKuralIlgiliKisitKumulatif(List<NobetUstGrupKisitDetay> kisitlarAktif, int nobetGunKuralId)
+        {
+            NobetUstGrupKisitDetay herAyEnFazlaIlgiliKisit;
+
+            switch (nobetGunKuralId)
+            {
+                case 1://pazar
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k57");
+                    break;
+                case 2://pazartesi
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k74");
+                    break;
+                case 3://salı
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k75");
+                    break;
+                case 4://çarşamba
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k76");
+                    break;
+                case 5://perşembe
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k77");
+                    break;
+                case 6://cuma
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k20");
+                    break;
+                case 7://cumartesi
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k21");
+                    break;
+                default://h. içi diğer
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k34");
                     break;
             }
 
