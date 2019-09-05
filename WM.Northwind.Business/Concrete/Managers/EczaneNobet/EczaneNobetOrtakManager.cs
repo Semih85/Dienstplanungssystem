@@ -4408,6 +4408,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var sonNobetTarihindenBalilanTariheKadarGecenGunSayisi = (bakilanTarih - sonNobetTarihi).TotalDays;
             double sonNobetTarihindenSonraGecenGunSayisi = 1;
 
+            if (borcluNobetSayisi < 0)
+            {
+                borcluNobetSayisi = 0;
+            }
+
             if (tipAdi == "dini"
                 || tipAdi == "milli"
                 || tipAdi == "bayram"
@@ -4433,6 +4438,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             double toplamFark = fark;
 
+            #region eski 
             //borcluNobetSayisi = borcluNobetSayisi < 0 ? 0 : borcluNobetSayisi;
             //borcluNobetSayisi = borcluNobetSayisi > 30 ? 30 : borcluNobetSayisi;
 
@@ -4466,6 +4472,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             //    toplamFark = fark + ilkTarihtenSonrakiGecenGunSayisi * 2;
 
             //    toplamFark = toplamFark < 0 ? 1 : toplamFark;
+            //} 
+            #endregion
+
+            //if (sonNobetTarihi == bakilanTarih)
+            //{//buraya planlanan nöbet tarihi getirilse daha iyi olabilir. detaylı düşünmek lazım. 05.09.2019
+            //    toplamFark = 0;
             //}
 
             if (ozelKatsayi > 1)
