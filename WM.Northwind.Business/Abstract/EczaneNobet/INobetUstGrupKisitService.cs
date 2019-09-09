@@ -24,7 +24,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<NobetUstGrupKisitDetay> GetDetaylar();
         List<NobetUstGrupKisitDetay> GetDetaylar(int nobetUstGrupId);
         List<NobetUstGrupKisitDetay> GetVarsayilandanFarkliOlanlar(int nobetUstGrupId);
-
+        bool GetVarsayilandanFarkliMi(int nobetUstGrupKisitId);
         bool GetKisitPasifMi(string kisitAdi, int nobetUstGrupId);
         List<NobetUstGrupKisitDetay> GetAktifKisitlar(int nobetUstGrupId);
         int GetDegisenKisitlar(int nobetUstGrupId);

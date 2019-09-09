@@ -80,6 +80,17 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             );
         }
 
+        public bool GetVarsayilandanFarkliMi(int nobetUstGrupKisitId)
+        {
+            var sonuc = _nobetUstGrupKisitDal.GetDetay(x => x.Id == nobetUstGrupKisitId
+            && (x.SagTarafDegeri != x.SagTarafDegeriVarsayilan
+             || x.PasifMi != x.VarsayilanPasifMi
+             || x.NobetGrupGorevtipKisitSayisi > 0
+             ));
+
+            return sonuc != null ? true : false;
+        }
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetUstGrupKisitDetay> GetAktifKisitlar(int nobetUstGrupId)
         {
