@@ -49,6 +49,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int KisitKategoriId { get; set; }
         public int NobetGrupGorevtipKisitSayisi { get; set; }
 
+        public bool DegerPasifMi { get; set; }
+
         public object Clone()
         {
             return this.MemberwiseClone();

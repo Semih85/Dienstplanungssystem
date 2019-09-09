@@ -16,6 +16,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public string Aciklama { get; set; }
         public DateTime OlusturmaTarihi { get; set; }
         public int KisitKategoriId { get; set; }
+        public bool DegerPasifMi { get; set; }
 
         public KisitKategori KisitKategori { get; set; }
         public virtual List<NobetUstGrupKisit> NobetUstGrupKisitlar { get; set; }

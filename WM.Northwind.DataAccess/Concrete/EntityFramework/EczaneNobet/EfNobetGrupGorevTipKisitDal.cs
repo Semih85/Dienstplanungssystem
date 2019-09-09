@@ -47,7 +47,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetGrupAdi = s.NobetGrupGorevTip.NobetGrup.Adi,
                         NobetGrupGorevTipId = s.NobetGrupGorevTipId,
                         NobetGrupId = s.NobetGrupGorevTip.NobetGrupId,
-                        KisitKategorisi = s.NobetUstGrupKisit.Kisit.KisitKategori.Adi
+                        KisitKategorisi = s.NobetUstGrupKisit.Kisit.KisitKategori.Adi,
+                        DegerPasifMi = s.NobetUstGrupKisit.Kisit.DegerPasifMi
                     }).SingleOrDefault(filter);
             }
         }
@@ -83,7 +84,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetGrupAdi = s.NobetGrupGorevTip.NobetGrup.Adi,
                         NobetGrupGorevTipId = s.NobetGrupGorevTipId,
                         NobetGrupId = s.NobetGrupGorevTip.NobetGrupId,
-                        KisitKategorisi = s.NobetUstGrupKisit.Kisit.KisitKategori.Adi
+                        KisitKategorisi = s.NobetUstGrupKisit.Kisit.KisitKategori.Adi,
+                        DegerPasifMi = s.NobetUstGrupKisit.Kisit.DegerPasifMi
                     });
 
                 return filter == null

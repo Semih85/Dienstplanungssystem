@@ -42,5 +42,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string KisitKodu => KisitId < 10 
             ? $"K0{KisitId} ({KisitKategorisi}, {KisitAdiGosterilen})"
             : $"K{KisitId} ({KisitKategorisi}, {KisitAdiGosterilen})";
+        public bool DegerPasifMi { get; set; }
     }
 }

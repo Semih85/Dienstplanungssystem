@@ -19,5 +19,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int KisitKategoriId { get; set; }
         public string KisitKategoriAdi { get; set; }
         public string KisitAdi => $"K{(Id < 10 ? '0' + Id : Id)} {KisitKategoriAdi}, {AdiGosterilen}";
+        public bool DegerPasifMi { get; set; }
     }
 }

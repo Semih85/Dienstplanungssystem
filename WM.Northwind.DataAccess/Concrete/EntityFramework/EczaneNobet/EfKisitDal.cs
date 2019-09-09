@@ -28,7 +28,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                             AdiGosterilen = s.AdiGosterilen,
                             KisitKategoriAdi = s.KisitKategori.Adi,
                             KisitKategoriId = s.KisitKategoriId,
-                            OlusturmaTarihi = s.OlusturmaTarihi
+                            OlusturmaTarihi = s.OlusturmaTarihi,
+                            DegerPasifMi = s.DegerPasifMi
                         }).SingleOrDefault(filter);
             }
         }
@@ -46,7 +47,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                             AdiGosterilen = s.AdiGosterilen,
                             KisitKategoriAdi = s.KisitKategori.Adi,
                             KisitKategoriId = s.KisitKategoriId,
-                            OlusturmaTarihi = s.OlusturmaTarihi
+                            OlusturmaTarihi = s.OlusturmaTarihi,
+                            DegerPasifMi = s.DegerPasifMi
                         });
 
                 return filter == null

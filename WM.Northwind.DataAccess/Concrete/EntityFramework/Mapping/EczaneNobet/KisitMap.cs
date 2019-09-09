@@ -25,6 +25,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.KisitKategoriId).HasColumnName("KisitKategoriId");
             this.Property(t => t.Aciklama).HasColumnName("Aciklama");
             this.Property(t => t.OlusturmaTarihi).HasColumnName("OlusturmaTarihi");
+            this.Property(t => t.DegerPasifMi).HasColumnName("DegerPasifMi");
             #endregion
 
             #region properties
