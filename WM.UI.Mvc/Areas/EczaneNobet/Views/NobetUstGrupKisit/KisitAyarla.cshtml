@@ -61,14 +61,14 @@
 
             @if (varsayilandanFarkliKisitSayisi > 0)
             {
-                <div class="alert alert-warning alert-dismissible fade show py-2 mr-2 mr-md-4 px-3 mb-2 mb-lg-0" id="varsayilanKisitUyari" role="alert">
-                    <i class="fa fa-warning"></i>
-                    <a href="#" id="varsayilandanFarkliKisitlar" class="alert-link text-dark">Varsayılandan farklı <span id="varsayilandanFarkliKisitSayisiText">@varsayilandanFarkliKisitSayisi</span> kural</a>
-                    @*<span class="alert-link" id="varsayilandanFarkliKisitlar"> </span>*@  bulunmaktadır.
-                    @*<button type="button" class="close py-2" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>*@
-                </div>
+        <div class="alert alert-warning alert-dismissible fade show py-2 mr-2 mr-md-4 px-3 mb-2 mb-lg-0" id="varsayilanKisitUyari" role="alert">
+            <i class="fa fa-warning"></i>
+            <a href="#" id="varsayilandanFarkliKisitlar" class="alert-link text-dark"> <span id="varsayilandanFarkliKisitSayisiText">@varsayilandanFarkliKisitSayisi</span> kural</a>
+            @*<span class="alert-link" id="varsayilandanFarkliKisitlar"> </span>*@ varsayılandan farklıdır.
+            @*<button type="button" class="close py-2" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>*@
+        </div>
 
                 <a class="btn btn-warning mb-2 mb-lg-0" href="@Url.Action("VarsayilanKisitlar", null, new { area = "EczaneNobet" })" onclick="return confirm('Varsayılan ayarlara dönmek istediğinizden emin misiniz?');">
                     <span class="fa fa-refresh"></span> Varsayılan Ayarlara Dön
