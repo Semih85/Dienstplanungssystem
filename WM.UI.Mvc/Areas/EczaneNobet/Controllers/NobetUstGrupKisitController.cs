@@ -82,6 +82,67 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return View(model);
         }
 
+        [ChildActionOnly]
+        public PartialViewResult KuralKategorilerPartialView(string tabId, string kisitTuru, IEnumerable<NobetUstGrupKisitDetay> nobetUstGrupKisitDetaylar)
+        {
+            var model = new KuralKategorilerPartialViewModel()
+            {
+                TabId = tabId,
+                KisitTuru = kisitTuru,
+                NobetUstGrupKisitDetaylar = nobetUstGrupKisitDetaylar
+            };
+
+            return PartialView(model);
+        }
+
+        public JsonResult EditAjax(int id, bool pasifMi, double sagTarafDegeri)
+        {
+            //var kisit = _nobetUstGrupKisitService.GetDetayById(id);
+            var kisitOrj = _nobetUstGrupKisitService.GetById(id);
+
+            //TempData["KisitDuzenleSonuc"] = $"Kısıt: {kisit.KisitId} ({kisit.KisitKategoriAdi} / {kisit.KisitAdiGosterilen})";
+
+            //TempData["KisitDuzenleSonuc0"] = kisit.KisitId;
+            //TempData["KisitDuzenleSonuc1"] = kisit.KisitKategoriAdi;
+            //TempData["KisitDuzenleSonuc2"] = kisit.KisitAdiGosterilen;
+
+            kisitOrj.PasifMi = !pasifMi;
+            kisitOrj.SagTarafDegeri = sagTarafDegeri;
+
+            try
+            {
+                _nobetUstGrupKisitService.Update(kisitOrj);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetVarsayilandanFarkliOlanlar(kisitOrj.NobetUstGrupId);
+
+            var varsayilandanFarkliMi = _nobetUstGrupKisitService.GetVarsayilandanFarkliMi(id);
+
+            var sonuc = "Kural başarı ile güncellendi.";
+
+            var guncellenenDurumlar = new GuncellenenNobetUstGrupKuralJsonModel
+            {
+                Mesaj = sonuc,
+                VarsayilandanFarkliMi = varsayilandanFarkliMi,
+                DegisenKisitSayisi = nobetUstGrupKisitlar.Count
+            };
+
+            return ConvertToJson(guncellenenDurumlar);
+        }
+
+        private JsonResult ConvertToJson(object sonuclar)
+        {
+            var jsonResult = Json(sonuclar, JsonRequestBehavior.AllowGet);
+
+            jsonResult.MaxJsonLength = int.MaxValue;
+
+            return jsonResult;
+        }
+
         public ActionResult KisitAyarla2()
         {
             var user = _userService.GetByUserName(User.Identity.Name);
@@ -123,9 +184,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //var user = _userService.GetByUserName(User.Identity.Name);
             var nobetUstGrupDetay = _nobetUstGrupSessionService.GetNobetUstGrup();
             var nobetUstGrupId = nobetUstGrupDetay.Id;
-                //_nobetUstGrupService.GetListByUser(user)
-                //.Select(s => s.Id)
-                //.FirstOrDefault();
+            //_nobetUstGrupService.GetListByUser(user)
+            //.Select(s => s.Id)
+            //.FirstOrDefault();
 
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetVarsayilandanFarkliOlanlar(nobetUstGrupId);
 
@@ -285,7 +346,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                 //TempData["KisitDuzenleSonuc"] = $"Kısıt: {kisit.KisitId} ({kisit.KisitKategoriAdi} / {kisit.KisitAdiGosterilen})";
 
-                TempData["KisitDuzenleSonuc0"] = kisit.KisitId;
+                TempData["KisitDuzenleSonuc0"] = kisit.KisitId < 10 ? $"0{kisit.KisitId}" : $"{kisit.KisitId}";
                 TempData["KisitDuzenleSonuc1"] = kisit.KisitKategoriAdi;
                 TempData["KisitDuzenleSonuc2"] = kisit.KisitAdiGosterilen;
 
