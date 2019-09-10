@@ -20,6 +20,7 @@
     var cardIdKuralId = $"card{item.Id}";
     var varsayilandanFarkliMi = false;
     var degerPasifMi = "none";
+    var grupBazliKisitSayisiSpanId =$"spanGrupBazliKisitSayisi{item.Id}"; 
 
     if ((item.PasifMi != item.VarsayilanPasifMi
         || item.SagTarafDegeri != item.SagTarafDegeriVarsayilan
@@ -49,6 +50,7 @@
     var cardHeaderAciklamaButtonRenk = "badge badge-light";
     var labelYaziRengi = "text-primary";
     var cardBottomAlert = "alert-warning";
+    var grupBazliKisitSayisi = "badge-secondary";
     var labelYazi = "Aktif";
     var labelYaziTersi = "";
     var badgeTip = "badge badge-primary";
@@ -93,6 +95,12 @@
     {
         degerPasifMi = "";
     }
+
+    if (item.NobetGrupGorevtipKisitSayisi > 0)
+    {
+        grupBazliKisitSayisi = "badge-danger";
+    }
+
     //col-md-4
     <div class="col-sm-6 col-xl-3 mb-2 pb-0" , id="@divId">
 
@@ -210,7 +218,7 @@
                     }
 
                     <button type="button" title="Kuralı Güncelle" class="btn @btnTip mr-2 formGondermeButonu" id="@formBtnId" onclick="kuralDegistirButonaBas(this, @formId)" style="display: @degerPasifMi">
-                        <i class="fa fa-save" aria-hidden="true"></i><span class="d-none d-md-inline"> Kaydet</span>
+                        <i class="fa fa-save" aria-hidden="true"></i><span class="d-none d-md-inline"> Güncelle</span>
                     </button>
 
                     if (varsayilandanFarkliMi)
@@ -229,7 +237,7 @@
 
                     <span>
                         <a href="@Url.Action("Index", "NobetGrupGorevTipKisit")" class="alert-link " target="_blank">
-                            <span class="text-dark">Gruba özel kurallar</span> <span class="badge badge-secondary" title="Gruba özel kural sayısı">@item.NobetGrupGorevtipKisitSayisi</span>
+                            <span class="text-dark">Gruba özel kurallar</span> <span class="badge @grupBazliKisitSayisi grupBazliKisitSayi" id="@grupBazliKisitSayisiSpanId" title="Gruba özel kural sayısı">@item.NobetGrupGorevtipKisitSayisi</span>
                         </a>
                         @*<span class="badge badge-secondary" title="@item.NobetGrupGorevtipKisitSayisi adet nöbet grubu.">@item.NobetGrupGorevtipKisitSayisi</span>*@
                     </span>

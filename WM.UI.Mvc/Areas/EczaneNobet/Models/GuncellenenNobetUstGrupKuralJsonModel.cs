@@ -8,5 +8,6 @@ namespace WM.UI.Mvc
         public string Mesaj { get; set; }
         public bool VarsayilandanFarkliMi { get; set; }
         public int DegisenKisitSayisi { get; set; }
+        public int GrupBazliKisitSayisi { get; internal set; }
     }
 }

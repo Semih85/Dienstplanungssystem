@@ -453,14 +453,29 @@
                     var sonuclar = JSON.parse(JSON.stringify(data));
                     //alert(sonuclar)
                     //alert("VarsayilandanFarkliMi " + sonuclar.VarsayilandanFarkliMi)
+                    var kuralId = + formId.id.substring(9);
 
                     if (sonuclar.VarsayilandanFarkliMi) {
-                        $('#card' + formId.id.substring(9) + ' .formBtnUyari').show().text(" *Farklı");
+                        $('#card' + kuralId + ' .formBtnUyari').show().text(" *Farklı");
                     }
                     else {
-                        $('#card' + formId.id.substring(9) + ' .formBtnUyari').hide();
+                        $('#card' + kuralId + ' .formBtnUyari').hide();
                     }
 
+                    //alert("sonuclar.GrupBazliKisitSayisi: " + sonuclar.GrupBazliKisitSayisi)
+                    //alert("sonuclar.GrupBazliKisitSayisi tt: " + $('#spanGrupBazliKisitSayisi' + kuralId).text())
+
+                    $('#spanGrupBazliKisitSayisi' + kuralId).text(sonuclar.GrupBazliKisitSayisi)
+
+                    if (sonuclar.GrupBazliKisitSayisi > 0) {
+                        $('#spanGrupBazliKisitSayisi' + kuralId).removeClass("badge-secondary");
+                        $('#spanGrupBazliKisitSayisi' + kuralId).addClass("badge-danger");
+                    }
+                    else {                        
+                        $('#spanGrupBazliKisitSayisi' + kuralId).removeClass("badge-danger");
+                        $('#spanGrupBazliKisitSayisi' + kuralId).addClass("badge-secondary");
+                    }
+                    
                     if (sonuclar.DegisenKisitSayisi > 0) {
                        $('#varsayilandanFarkliKisitSayisiText').text(sonuclar.DegisenKisitSayisi)
                        $('#varsayilanKisitUyari').show()

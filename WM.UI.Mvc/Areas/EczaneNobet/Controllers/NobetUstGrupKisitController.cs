@@ -124,11 +124,14 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var sonuc = "Kural başarı ile güncellendi.";
 
+            var kisit = _nobetUstGrupKisitService.GetDetayById(id);
+
             var guncellenenDurumlar = new GuncellenenNobetUstGrupKuralJsonModel
             {
                 Mesaj = sonuc,
                 VarsayilandanFarkliMi = varsayilandanFarkliMi,
-                DegisenKisitSayisi = nobetUstGrupKisitlar.Count
+                DegisenKisitSayisi = nobetUstGrupKisitlar.Count,
+                GrupBazliKisitSayisi = kisit.NobetGrupGorevtipKisitSayisi
             };
 
             return ConvertToJson(guncellenenDurumlar);
