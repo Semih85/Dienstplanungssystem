@@ -61,14 +61,14 @@
 
             @if (varsayilandanFarkliKisitSayisi > 0)
             {
-        <div class="alert alert-warning alert-dismissible fade show py-2 mr-2 mr-md-4 px-3 mb-2 mb-lg-0" id="varsayilanKisitUyari" role="alert">
-            <i class="fa fa-warning"></i>
-            <a href="#" id="varsayilandanFarkliKisitlar" class="alert-link text-dark"> <span id="varsayilandanFarkliKisitSayisiText">@varsayilandanFarkliKisitSayisi</span> kural</a>
-            @*<span class="alert-link" id="varsayilandanFarkliKisitlar"> </span>*@ varsayılandan farklıdır.
-            @*<button type="button" class="close py-2" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>*@
-        </div>
+                <div class="alert alert-warning alert-dismissible fade show py-2 mr-2 mr-md-4 px-3 mb-2 mb-lg-0" id="varsayilanKisitUyari" role="alert">
+                    <i class="fa fa-warning"></i>
+                    <a href="#" id="varsayilandanFarkliKisitlar" class="alert-link text-dark"> <span id="varsayilandanFarkliKisitSayisiText">@varsayilandanFarkliKisitSayisi</span> kural</a>
+                    @*<span class="alert-link" id="varsayilandanFarkliKisitlar"> </span>*@ varsayılandan farklıdır.
+                    @*<button type="button" class="close py-2" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>*@
+                </div>
 
                 <a class="btn btn-warning mb-2 mb-lg-0" href="@Url.Action("VarsayilanKisitlar", null, new { area = "EczaneNobet" })" onclick="return confirm('Varsayılan ayarlara dönmek istediğinizden emin misiniz?');">
                     <span class="fa fa-refresh"></span> Varsayılan Ayarlara Dön
@@ -176,8 +176,10 @@
 
                         kisitNu++;
 
-                        var digerKisitlar = kisitlar2.Where(w => !w.KisitAciklama.StartsWith("WD"));
-                        var haftaninGunleri = kisitlar2.Where(w => w.KisitAciklama.StartsWith("WD"));
+                        var digerKisitlar = kisitlar2.Where(w => !w.KisitAciklama.StartsWith("GK")
+                        && !w.KisitAdiGosterilen.EndsWith("(son 3 ay)"));
+                        var haftaninGunleri = kisitlar2.Where(w => w.KisitAciklama.StartsWith("GK"));
+                        var sonUcAy = kisitlar2.Where(w => w.KisitAdiGosterilen.EndsWith("(son 3 ay)"));
 
                         <div class="card">
                             <div class="card-header border-info bg-transparent p-1" id="@kisitKategorisiBaslik">
@@ -244,20 +246,39 @@
 
                                     </div>
 
-                                    <div class="row">
-                                        <div class="col">
-                                            @if (haftaninGunleri.Count() > 0)
-                                            {
-                                                <h6>Haftanın Günleri</h6>
-                                            }
+                                    @if (haftaninGunleri.Count() > 0)
+                                    {
+                                        <hr />
+
+                                        <div class="card border-0">
+                                            <div class="card-body py-1">
+                                                <strong class="card-title">Nöbet Gün Kuralları</strong>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="row">
+                                        <div class="row">
 
-                                        @Html.Action("KuralKategorilerPartialView", new { tabId = tabId, kisitTuru = kisitTuru, nobetUstGrupKisitDetaylar = haftaninGunleri })
+                                            @Html.Action("KuralKategorilerPartialView", new { tabId = tabId, kisitTuru = kisitTuru, nobetUstGrupKisitDetaylar = haftaninGunleri })
 
-                                    </div>
+                                        </div>
+                                    }
+
+                                    @if (sonUcAy.Count() > 0)
+                                    {
+                                        <hr />
+
+                                        <div class="card border-0">
+                                            <div class="card-body py-1">
+                                                <strong class="card-title">Son 3 Ay</strong>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+
+                                            @Html.Action("KuralKategorilerPartialView", new { tabId = tabId, kisitTuru = kisitTuru, nobetUstGrupKisitDetaylar = sonUcAy })
+
+                                        </div>
+                                    }
 
                                 </div>
 
@@ -468,14 +489,14 @@
                     $('#spanGrupBazliKisitSayisi' + kuralId).text(sonuclar.GrupBazliKisitSayisi)
 
                     if (sonuclar.GrupBazliKisitSayisi > 0) {
-                        $('#spanGrupBazliKisitSayisi' + kuralId).removeClass("badge-secondary");
+                        $('#spanGrupBazliKisitSayisi' + kuralId).removeClass("badge-light");
                         $('#spanGrupBazliKisitSayisi' + kuralId).addClass("badge-danger");
                     }
-                    else {                        
+                    else {
                         $('#spanGrupBazliKisitSayisi' + kuralId).removeClass("badge-danger");
-                        $('#spanGrupBazliKisitSayisi' + kuralId).addClass("badge-secondary");
+                        $('#spanGrupBazliKisitSayisi' + kuralId).addClass("badge-light");
                     }
-                    
+
                     if (sonuclar.DegisenKisitSayisi > 0) {
                        $('#varsayilandanFarkliKisitSayisiText').text(sonuclar.DegisenKisitSayisi)
                        $('#varsayilanKisitUyari').show()
