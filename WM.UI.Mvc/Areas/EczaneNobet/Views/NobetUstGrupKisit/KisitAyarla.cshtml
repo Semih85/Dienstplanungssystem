@@ -176,8 +176,8 @@
 
                         kisitNu++;
 
-                        var digerKisitlar = kisitlar2.Where(w => !w.KisitAdiGosterilen.StartsWith("WD"));
-                        var haftaninGunleri = kisitlar2.Where(w => w.KisitAdiGosterilen.StartsWith("WD"));
+                        var digerKisitlar = kisitlar2.Where(w => !w.KisitAciklama.StartsWith("WD"));
+                        var haftaninGunleri = kisitlar2.Where(w => w.KisitAciklama.StartsWith("WD"));
 
                         <div class="card">
                             <div class="card-header border-info bg-transparent p-1" id="@kisitKategorisiBaslik">
@@ -483,6 +483,15 @@
                     else {
                        $('#varsayilanKisitUyari').hide()
                     }
+
+                    if (sonuclar.SagTarafDegeri != sonuclar.SagTarafDegeriVarayilan) {
+
+                    }
+
+                    if (sonuclar.PasifMi != sonuclar.PasifMiVarayilan) {
+
+                    }
+
                     //alert(data)
                     //dagilimlar = JSON.parse(JSON.stringify(data));
 
