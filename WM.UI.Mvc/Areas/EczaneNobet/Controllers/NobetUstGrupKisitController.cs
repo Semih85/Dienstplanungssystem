@@ -131,7 +131,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 Mesaj = sonuc,
                 VarsayilandanFarkliMi = varsayilandanFarkliMi,
                 DegisenKisitSayisi = nobetUstGrupKisitlar.Count,
-                GrupBazliKisitSayisi = kisit.NobetGrupGorevtipKisitSayisi
+                GrupBazliKisitSayisi = kisit.NobetGrupGorevtipKisitSayisi,
+                SagTarafDegeri = kisit.SagTarafDegeri,
+                SagTarafDegeriVarsayilan = kisit.SagTarafDegeriVarsayilan,
+                PasifMi = kisit.PasifMi,
+                PasifMiVarsayilan = kisit.VarsayilanPasifMi
             };
 
             return ConvertToJson(guncellenenDurumlar);

@@ -9,5 +9,9 @@ namespace WM.UI.Mvc
         public bool VarsayilandanFarkliMi { get; set; }
         public int DegisenKisitSayisi { get; set; }
         public int GrupBazliKisitSayisi { get; internal set; }
+        public double SagTarafDegeri { get; internal set; }
+        public double SagTarafDegeriVarsayilan { get; internal set; }
+        public bool PasifMi { get; internal set; }
+        public bool PasifMiVarsayilan { get; internal set; }
     }
 }
