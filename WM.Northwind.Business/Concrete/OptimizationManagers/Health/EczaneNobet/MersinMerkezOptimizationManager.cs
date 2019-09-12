@@ -444,7 +444,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneNobetGrupGunKuralIstatistikler = enSonNobetler,
                 TakvimNobetGrupGunDegerIstatistikler = takvimNobetGrupGunDegerIstatistikler,
                 EczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatay,
-                EeczaneNobetGrupGunKuralIstatistikYataySon3Ay = eczaneNobetGrupGunKuralIstatistikYataySon3Ay,
+                EczaneNobetGrupGunKuralIstatistikYataySon3Ay = eczaneNobetGrupGunKuralIstatistikYataySon3Ay,
                 EczaneNobetGrupAltGruplar = new List<EczaneNobetGrupAltGrupDetay>(), //eczaneNobetGrupAltGruplar,
                 EczaneNobetAltGrupTarihAralik = eczaneNobetAltGrupTarihAralik,
 

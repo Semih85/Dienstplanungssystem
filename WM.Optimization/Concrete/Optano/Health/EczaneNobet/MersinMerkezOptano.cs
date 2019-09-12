@@ -208,7 +208,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var eczaneNobetGrupGunKuralIstatistikler = data.EczaneNobetGrupGunKuralIstatistikYatay
                     .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                var eczaneNobetGrupGunKuralIstatistiklerSon3Ay = data.EeczaneNobetGrupGunKuralIstatistikYataySon3Ay
+                var eczaneNobetGrupGunKuralIstatistiklerSon3Ay = data.EczaneNobetGrupGunKuralIstatistikYataySon3Ay
                     .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
                 var gruptakiEczaneSayisi = eczaneNobetGruplar.Select(s => s.EczaneId).Count();
@@ -941,6 +941,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #endregion
 
+                    #region son 3 ay
+
                     #region son 3 ay toplam 
 
                     var kpKumulatifToplamEnFazlaSon3Ay = (KpKumulatifToplam)kpKumulatifToplam.Clone();
@@ -990,6 +992,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazlaPazarSon3Ay.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifPazarSon3Ay;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaPazarSon3Ay);
+
+                    #endregion 
 
                     #endregion
 

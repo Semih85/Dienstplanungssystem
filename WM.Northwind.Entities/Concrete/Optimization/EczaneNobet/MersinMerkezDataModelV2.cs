@@ -70,6 +70,6 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public int CalismaSayisiLimit { get; set; }
         public int TimeLimit { get; set; }
         public List<KalibrasyonYatay> Kalibrasyonlar { get; set; }
-        public List<EczaneNobetGrupGunKuralIstatistikYatay> EeczaneNobetGrupGunKuralIstatistikYataySon3Ay { get; set; }
+        public List<EczaneNobetGrupGunKuralIstatistikYatay> EczaneNobetGrupGunKuralIstatistikYataySon3Ay { get; set; }
     }
 }
