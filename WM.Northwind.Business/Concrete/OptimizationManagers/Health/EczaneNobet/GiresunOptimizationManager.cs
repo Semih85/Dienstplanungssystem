@@ -193,6 +193,11 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetSonuclarCozulenGruplar = eczaneNobetSonuclar
                 .Where(w => eczaneNobetGruplarTumu.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
 
+            var son3Ay = baslangicTarihi.AddMonths(-3);
+
+            var eczaneNobetSonuclarSon3Ay = eczaneNobetSonuclarCozulenGruplar
+                .Where(w => w.Tarih >= son3Ay).ToList();
+
             var sonuclarKontrol = _eczaneNobetSonucService.GetSonuclar(baslangicTarihi, bitisTarihi, eczaneNobetSonuclarCozulenGruplar);
 
             if (sonuclarKontrol.Count > 0)
@@ -200,9 +205,11 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var tarihAralik = _takvimService.GetTakvimNobetGruplar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipler);
             var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplarTumu, eczaneNobetSonuclarCozulenGruplar);
+            var enSonNobetlerSon3Ay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplarTumu, eczaneNobetSonuclarSon3Ay);
 
             var eczaneNobetGrupGunKuralIstatistikYatay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler);
             var eczaneBazliGunKuralIstatistikYatay = _eczaneNobetOrtakService.GetEczaneBazliGunKuralIstatistikYatay(enSonNobetler);
+            var eczaneNobetGrupGunKuralIstatistikYataySon3Ay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetlerSon3Ay);
 
             //var bak = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.NobetGorevTipId == 2).ToList();
 
@@ -517,6 +524,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneNobetGrupGunKuralIstatistikler = enSonNobetler,
                 TakvimNobetGrupGunDegerIstatistikler = takvimNobetGrupGunDegerIstatistikler,
                 EczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatay,
+                EczaneNobetGrupGunKuralIstatistikYataySon3Ay = eczaneNobetGrupGunKuralIstatistikYataySon3Ay,
                 EczaneBazliGunKuralIstatistikYatay = eczaneBazliGunKuralIstatistikYatay,
                 EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
                 NobetGrupGorevTipKisitlar = grupBazliKisitlar,
