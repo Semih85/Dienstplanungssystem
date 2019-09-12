@@ -2332,16 +2332,31 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k57");
                     break;
                 case 2://pazartesi
-                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k74");
-                    break;
-                case 3://salı
                     herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k75");
                     break;
-                case 4://çarşamba
+                case 3://salı
                     herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k76");
                     break;
-                case 5://perşembe
+                case 4://çarşamba
                     herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k77");
+                    break;
+                case 5://perşembe
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k78");
+                    break;
+                case 8://dini bayram
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k79");
+                    break;
+                case 9://milli bayram
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k80");
+                    break;
+                case 10://arefe
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k81");
+                    break;
+                case 11://31 aralık
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k82");
+                    break;
+                case 12://1 ocak
+                    herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k83");
                     break;
                 case 6://cuma
                     herAyEnFazlaIlgiliKisit = NobetUstGrupKisit(kisitlarAktif, "k20");
