@@ -177,9 +177,10 @@
                         kisitNu++;
 
                         var digerKisitlar = kisitlar2.Where(w => !w.KisitAciklama.StartsWith("GK")
-                        && !w.KisitAdiGosterilen.EndsWith("(son 3 ay)"));
+                        //&& !w.KisitAdiGosterilen.EndsWith("(son 3 ay)")
+                        );
                         var haftaninGunleri = kisitlar2.Where(w => w.KisitAciklama.StartsWith("GK"));
-                        var sonUcAy = kisitlar2.Where(w => w.KisitAdiGosterilen.EndsWith("(son 3 ay)"));
+                        //var sonUcAy = kisitlar2.Where(w => w.KisitAdiGosterilen.EndsWith("(son 3 ay)"));
 
                         <div class="card">
                             <div class="card-header border-info bg-transparent p-1" id="@kisitKategorisiBaslik">
@@ -263,7 +264,7 @@
                                         </div>
                                     }
 
-                                    @if (sonUcAy.Count() > 0)
+                                    @*@if (sonUcAy.Count() > 0)
                                     {
                                         <hr />
 
@@ -278,7 +279,7 @@
                                             @Html.Action("KuralKategorilerPartialView", new { tabId = tabId, kisitTuru = kisitTuru, nobetUstGrupKisitDetaylar = sonUcAy })
 
                                         </div>
-                                    }
+                                    }*@
 
                                 </div>
 
