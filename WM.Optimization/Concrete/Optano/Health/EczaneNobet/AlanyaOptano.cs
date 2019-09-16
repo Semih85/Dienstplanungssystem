@@ -894,46 +894,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #endregion
 
-                    //#region Toplam Cuma Max Hedef
-
-                    //var kpKumulatifToplamEnFazlaCuma = (KpKumulatifToplam)kpKumulatifToplam.Clone();
-
-                    //kpKumulatifToplamEnFazlaCuma.Tarihler = cumaGunleri;
-                    //kpKumulatifToplamEnFazlaCuma.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k20");
-                    //kpKumulatifToplamEnFazlaCuma.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiCuma;
-                    //kpKumulatifToplamEnFazlaCuma.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifCuma;
-
-                    //KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaCuma);
-
-                    //#endregion
-
-                    //#region Toplam Cumartesi Max Hedef
-
-                    //var kpKumulatifToplamEnFazlaCumartesi = (KpKumulatifToplam)kpKumulatifToplam.Clone();
-
-                    //kpKumulatifToplamEnFazlaCumartesi.Tarihler = cumartesiGunleri;
-                    //kpKumulatifToplamEnFazlaCumartesi.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k21");
-                    //kpKumulatifToplamEnFazlaCumartesi.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiCumartesi;
-                    //kpKumulatifToplamEnFazlaCumartesi.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifCumartesi;
-
-                    //KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaCumartesi);
-
-                    //#endregion
-
-                    //#region Toplam Pazar Max Hedef
-
-                    //var kpKumulatifToplamEnFazlaPazar = (KpKumulatifToplam)kpKumulatifToplam.Clone();
-
-                    //kpKumulatifToplamEnFazlaPazar.Tarihler = pazarGunleri;
-                    //kpKumulatifToplamEnFazlaPazar.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k57");
-                    //kpKumulatifToplamEnFazlaPazar.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiPazar;
-                    //kpKumulatifToplamEnFazlaPazar.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifPazar;
-
-                    //KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaPazar);
-
-                    //#endregion
-
-
                     #endregion
 
                     #region en az
