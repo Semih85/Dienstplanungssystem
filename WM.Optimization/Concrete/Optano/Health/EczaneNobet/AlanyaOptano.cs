@@ -268,6 +268,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 {
                     var tarihler2 = tarihler.Where(w => w.NobetGunKuralId == item.NobetGunKuralId).ToList();
                     var gunKuralGunSayisi = tarihler2.Count;
+                    var kumulatifToplamNobetSayisiNobetGunKural = GetKumulatifToplamNobetSayisi(eczaneNobetGrupGunKuralIstatistikler, item.NobetGunKuralId);
 
                     nobetGunKuralTarihler.Add(new NobetGunKuralTarihAralik
                     {
@@ -279,7 +280,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         GunSayisi = gunKuralGunSayisi,
                         OrtalamaNobetSayisi = OrtalamaNobetSayisi(tarihler2.Sum(s => s.TalepEdilenNobetciSayisi), gruptakiEczaneSayisi),
                         KumulatifGunSayisi = item.GunSayisi,
-                        KumulatifOrtalamaNobetSayisi = OrtalamaNobetSayisi(item.TalepEdilenNobetciSayisi, gruptakiEczaneSayisi)
+                        KumulatifOrtalamaNobetSayisi = OrtalamaNobetSayisi(item.TalepEdilenNobetciSayisi + kumulatifToplamNobetSayisiNobetGunKural, gruptakiEczaneSayisi)
                     });
                 }
 
