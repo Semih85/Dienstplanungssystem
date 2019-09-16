@@ -26,18 +26,21 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetUstGrupService _nobetUstGrupService;
         private IUserService _userService;
         private INobetUstGrupSessionService _nobetUstGrupSessionService;
+        private INobetGrupGorevTipService _nobetGrupGorevTipService;
 
         public NobetUstGrupKisitController(INobetUstGrupKisitService nobetUstGrupKisitService,
             IKisitService kisitService,
             INobetUstGrupService nobetUstGrupService,
             IUserService userService,
-            INobetUstGrupSessionService nobetUstGrupSessionService)
+            INobetUstGrupSessionService nobetUstGrupSessionService,
+            INobetGrupGorevTipService nobetGrupGorevTipService)
         {
             _nobetUstGrupKisitService = nobetUstGrupKisitService;
             _kisitService = kisitService;
             _nobetUstGrupService = nobetUstGrupService;
             _userService = userService;
             _nobetUstGrupSessionService = nobetUstGrupSessionService;
+            _nobetGrupGorevTipService = nobetGrupGorevTipService;
         }
         #endregion
 
@@ -73,6 +76,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var kisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupDetay.Id)
                 //.Where(w => nobetUstGruplar.Contains(w.NobetUstGrupId))
                 .OrderBy(o => o.KisitAdiGosterilen).ToList();
+
+            var nobetGrupGorevTipSayisi = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrupDetay.Id).Count();
+
+            TempData["NobetGrupGorevTipSayisi"] = nobetGrupGorevTipSayisi;
 
             var model = new KisitAyarlaViewModel
             {
