@@ -134,16 +134,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 if (p.EnAzMi)
                 {
                     if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
-                        p.KumulatifOrtalamaGunKuralSayisi = p.NobetUstGrupKisit.SagTarafDegeri;
+                        p.KumulatifOrtalamaNobetSayisi = p.NobetUstGrupKisit.SagTarafDegeri;
                 }
                 else
                 {
                     //if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
-                        p.KumulatifOrtalamaGunKuralSayisi += p.NobetUstGrupKisit.SagTarafDegeri;
+                        p.KumulatifOrtalamaNobetSayisi += p.NobetUstGrupKisit.SagTarafDegeri;
                 }
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
-                    $" [Std. {p.KumulatifOrtalamaGunKuralSayisi}" +
+                    $" [Std. {p.KumulatifOrtalamaNobetSayisi}" +
                     $"{(p.GunKuralAdi == null ? "" : $" - {p.GunKuralAdi}")}]"
                     ;
 
@@ -151,7 +151,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, p.EczaneNobetGrup.EczaneAdi);
 
-                var fark = p.KumulatifOrtalamaGunKuralSayisi - p.ToplamNobetSayisi;
+                var fark = p.KumulatifOrtalamaNobetSayisi - p.ToplamNobetSayisi;
 
                 var std = fark < 0 ? 0 : fark;
                 var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));

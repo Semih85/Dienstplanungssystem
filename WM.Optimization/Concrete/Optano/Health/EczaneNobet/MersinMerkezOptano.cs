@@ -752,7 +752,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             EczaneNobetGrup = eczaneNobetGrup,
                             EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
                             NobetUstGrupKisit = kumulatifEnFazlaIlgiliGunkural, //gunKuralKumulatifToplamEnFazla,
-                            KumulatifOrtalamaGunKuralSayisi = kumulatifOrtalamaGunKuralNobetSayisi,
+                            KumulatifOrtalamaNobetSayisi = kumulatifOrtalamaGunKuralNobetSayisi,
                             ToplamNobetSayisi = gunKuralNobetSayisi,
                             GunKuralAdi = $"WD-{nobetGunKural.NobetGunKuralAdi}",
                             KararDegiskeni = _x
@@ -825,7 +825,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                     EczaneNobetGrup = eczaneNobetGrup,
                                     EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
                                     NobetUstGrupKisit = gunKuralKumulatifToplamEnFazla,
-                                    KumulatifOrtalamaGunKuralSayisi = kumulatifOrtalamaGunKuralNobetSayisi,
+                                    KumulatifOrtalamaNobetSayisi = kumulatifOrtalamaGunKuralNobetSayisi,
                                     ToplamNobetSayisi = gunKuralNobetSayisi,
                                     GunKuralAdi = $"k44 {gunKural.NobetGunKuralAdi}",
                                     KararDegiskeni = _x
@@ -910,7 +910,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                     EczaneNobetGrup = eczaneNobetGrup,
                                     EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
                                     NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k5"),
-                                    KumulatifOrtalamaGunKuralSayisi = yillikOrtalamaGunKuralSayisi,
+                                    KumulatifOrtalamaNobetSayisi = yillikOrtalamaGunKuralSayisi,
                                     ToplamNobetSayisi = toplamBayramNobetSayisi,
                                     GunKuralAdi = "Bayram",
                                     KararDegiskeni = _x
@@ -935,7 +935,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazla.Tarihler = tarihler;
                     kpKumulatifToplamEnFazla.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k2");
                     kpKumulatifToplamEnFazla.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiToplam;
-                    kpKumulatifToplamEnFazla.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatif;
+                    kpKumulatifToplamEnFazla.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatif;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazla);
 
@@ -950,7 +950,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazlaSon3Ay.Tarihler = tarihler;
                     kpKumulatifToplamEnFazlaSon3Ay.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k68");
                     kpKumulatifToplamEnFazlaSon3Ay.ToplamNobetSayisi = eczaneNobetIstatistikSon3Ay.NobetSayisiToplam;
-                    kpKumulatifToplamEnFazlaSon3Ay.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifSon3Ay;
+                    kpKumulatifToplamEnFazlaSon3Ay.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifSon3Ay;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaSon3Ay);
 
@@ -963,7 +963,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazlaHaftaIciSon3Ay.Tarihler = haftaIciGunleri;
                     kpKumulatifToplamEnFazlaHaftaIciSon3Ay.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k69");
                     kpKumulatifToplamEnFazlaHaftaIciSon3Ay.ToplamNobetSayisi = eczaneNobetIstatistikSon3Ay.NobetSayisiHaftaIci;
-                    kpKumulatifToplamEnFazlaHaftaIciSon3Ay.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifHaftaIciSon3Ay;
+                    kpKumulatifToplamEnFazlaHaftaIciSon3Ay.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifHaftaIciSon3Ay;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaHaftaIciSon3Ay);
 
@@ -976,7 +976,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazlaCumartesiSon3Ay.Tarihler = cumartesiGunleri;
                     kpKumulatifToplamEnFazlaCumartesiSon3Ay.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k70");
                     kpKumulatifToplamEnFazlaCumartesiSon3Ay.ToplamNobetSayisi = eczaneNobetIstatistikSon3Ay.NobetSayisiCumartesi;
-                    kpKumulatifToplamEnFazlaCumartesiSon3Ay.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifCumartesiSon3Ay;
+                    kpKumulatifToplamEnFazlaCumartesiSon3Ay.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifCumartesiSon3Ay;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaCumartesiSon3Ay);
 
@@ -989,7 +989,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazlaPazarSon3Ay.Tarihler = pazarGunleri;
                     kpKumulatifToplamEnFazlaPazarSon3Ay.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k71");
                     kpKumulatifToplamEnFazlaPazarSon3Ay.ToplamNobetSayisi = eczaneNobetIstatistikSon3Ay.NobetSayisiPazar;
-                    kpKumulatifToplamEnFazlaPazarSon3Ay.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifPazarSon3Ay;
+                    kpKumulatifToplamEnFazlaPazarSon3Ay.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifPazarSon3Ay;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaPazarSon3Ay);
 
@@ -1007,7 +1007,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazlaHaftaIciKalibrasyonlu.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k54");//k16
                     kpKumulatifToplamEnFazlaHaftaIciKalibrasyonlu.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiHaftaIci
                         + (int)eczaneToplamKalibrasyon.KalibrasyonToplamHaftaIci;
-                    kpKumulatifToplamEnFazlaHaftaIciKalibrasyonlu.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifHaftaIci;
+                    kpKumulatifToplamEnFazlaHaftaIciKalibrasyonlu.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifHaftaIci;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaHaftaIciKalibrasyonlu);
 
@@ -1019,10 +1019,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     kpKumulatifToplamEnFazlaPazarToplamKalibrasyonlu.Tarihler = pazarGunleri;
                     kpKumulatifToplamEnFazlaPazarToplamKalibrasyonlu.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k55");//k57
-                    kpKumulatifToplamEnFazlaPazarToplamKalibrasyonlu.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifPazar;
+                    kpKumulatifToplamEnFazlaPazarToplamKalibrasyonlu.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifPazar;
                     kpKumulatifToplamEnFazlaPazarToplamKalibrasyonlu.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiPazar
                         + (int)eczaneToplamKalibrasyon.KalibrasyonToplamPazar;
-                    kpKumulatifToplamEnFazlaPazarToplamKalibrasyonlu.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifPazar;
+                    kpKumulatifToplamEnFazlaPazarToplamKalibrasyonlu.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifPazar;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaPazarToplamKalibrasyonlu);
 
@@ -1035,7 +1035,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazlaCumaVeCumartesi.Tarihler = cumaVeCumartesiGunleri;
                     kpKumulatifToplamEnFazlaCumaVeCumartesi.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k25");
                     kpKumulatifToplamEnFazlaCumaVeCumartesi.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiCuma + eczaneNobetIstatistik.NobetSayisiCumartesi;
-                    kpKumulatifToplamEnFazlaCumaVeCumartesi.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifCumaVeCumartesi;
+                    kpKumulatifToplamEnFazlaCumaVeCumartesi.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifCumaVeCumartesi;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaCumaVeCumartesi);
 
@@ -1048,7 +1048,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazlaCumartesiVePazar.Tarihler = cumartesiVePazarGunleri;
                     kpKumulatifToplamEnFazlaCumartesiVePazar.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k50");
                     kpKumulatifToplamEnFazlaCumartesiVePazar.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiPazar + eczaneNobetIstatistik.NobetSayisiCumartesi;
-                    kpKumulatifToplamEnFazlaCumartesiVePazar.KumulatifOrtalamaGunKuralSayisi = ortalamaNobetSayisiKumulatifPazar;
+                    kpKumulatifToplamEnFazlaCumartesiVePazar.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifPazar;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaCumartesiVePazar);
 

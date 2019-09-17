@@ -11,7 +11,7 @@ namespace WM.Optimization.Entities.KisitParametre
         public EczaneNobetGrupDetay EczaneNobetGrup { get; set; }
         public List<EczaneNobetTarihAralik> EczaneNobetTarihAralik { get; set; }
         public NobetUstGrupKisitDetay NobetUstGrupKisit { get; set; }
-        public double KumulatifOrtalamaGunKuralSayisi { get; set; }
+        public double KumulatifOrtalamaNobetSayisi { get; set; }
         public int ToplamNobetSayisi { get; set; }
         public bool EnAzMi { get; set; }
         public string GunKuralAdi { get; set; }
