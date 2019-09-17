@@ -138,7 +138,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 }
                 else
                 {
-                    if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
+                    //if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
                         p.KumulatifOrtalamaGunKuralSayisi += p.NobetUstGrupKisit.SagTarafDegeri;
                 }
 
@@ -2370,6 +2370,56 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             }
 
             return herAyEnFazlaIlgiliKisit;
+        }
+
+        public int GetKumulatifToplamNobetSayisi(List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikler, int nobetGunKuralId)
+        {
+            var kumulatifToplamNobetSayisiNobetGunKural = 0;
+
+            switch (nobetGunKuralId)
+            {
+                case 1://pazar
+                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiPazar);
+                    break;
+                case 2://pazartesi
+                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiPazartesi);
+                    break;
+                case 3://salı
+                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiSali);
+                    break;
+                case 4://çarşamba
+                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiCarsamba);
+                    break;
+                case 5://perşembe
+                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiPersembe);
+                    break;
+                case 8://dini bayram
+                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiDiniBayram);
+                    break;
+                case 9://milli bayram
+                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiMilliBayram);
+                    break;
+                case 10://arefe
+                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiArife);
+                    break;
+                //case 11://31 aralık
+                //    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiPazar);
+                //    break;
+                //case 12://1 ocak
+                //    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiPazar);
+                //    break;
+                case 6://cuma
+                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiCuma);
+                    break;
+                case 7://cumartesi
+                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiCumartesi);
+                    break;
+                default://h. içi diğer
+                    kumulatifToplamNobetSayisiNobetGunKural = 0; //eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiPazar);
+                    break;
+            }
+
+            return kumulatifToplamNobetSayisiNobetGunKural;
         }
 
         public List<NobetUstGrupKisitDetay> GetKisitlarNobetGrupBazli(List<NobetUstGrupKisitDetay> kisitlarUstGrupBazli, List<NobetGrupGorevTipKisitDetay> kisitlarGrupBazli)
