@@ -845,7 +845,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return GetTakvimNobetGrupGunKuralIstatistik(tarihler);
         }
         private List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunKuralIstatistik(List<TakvimNobetGrup> takvimNobetGruplar)
-        {
+        {//alanya için bakılacak
+            //var bayramlar = takvimNobetGruplar.Where(w => w.GunGrupId == 2).ToList();
+
             return takvimNobetGruplar
                 .GroupBy(g => new
                 {
