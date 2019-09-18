@@ -109,13 +109,25 @@
                 <div class="d-inline">
                     <span title="@kisitNumarasi kuralı '@labelYazi.ToLower()'" class="@badgeTip kuralId">@kisitNumarasi</span>
 
+                    <a class="@cardHeaderAciklamaButtonRenk" data-toggle="collapse" href="@id" role="button" title="Kural Açıklaması" aria-expanded="false"
+                       aria-controls="@id.Substring(1)">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        @*<span class="d-none d-md-inline"> Açıklama</span>*@
+                        @*<span data-toggle="tooltip" data-placement="top" title="Kural Açıklaması"></span>*@
+                    </a>
+
                     @if (varsayilandanFarkliMi)
                     {
-                        <i class="fa fa-warning text-danger formBtnUyari text-danger" id="@formBtnUyariId" title="Bu kural varsayılandan farklıdır." aria-hidden="true">*Farklı</i>
+                        <span class="formBtnUyari badge badge-danger" id="@formBtnUyariId" title="Bu kural varsayılandan farklıdır.">
+                            <i class="fa fa-warning" aria-hidden="true"></i>
+                            <span>
+                                *Farklı
+                            </span>
+                        </span>
                     }
                     else
                     {
-                        <i class="fa fa-warning text-danger formBtnUyari" id="@formBtnUyariId" style="display:none" title="Bu kural varsayılandan farklıdır." aria-hidden="true"></i>
+                        <i class="fa fa-warning text-danger formBtnUyari mt-1" id="@formBtnUyariId" style="display:none" title="Bu kural varsayılandan farklıdır." aria-hidden="true"></i>
                     }
 
                     <div class="custom-control custom-switch pull-right">
@@ -231,43 +243,34 @@
 
                 }
 
-                <hr style="margin-top:5px; margin-bottom:10px; display: @degerPasifMi" />
-
-
+                @if (Convert.ToInt32(TempData["NobetGrupGorevTipSayisi"]) > 1)
+                {
                     <div class="row">
                         <div class="col d-inline mb-1">
+                            <hr style="margin-top:5px; margin-bottom:10px; display: @degerPasifMi" />
 
-                            @if (Convert.ToInt32(TempData["NobetGrupGorevTipSayisi"]) > 1)
+                            <span>
+                                <a href="@Url.Action("Index", "NobetGrupGorevTipKisit")" class="card-link " target="_blank">
+                                    <span>Grp: </span> <span class="badge @grupBazliKisitSayisi grupBazliKisitSayi" id="@grupBazliKisitSayisiSpanId" title="Gruba özel kural sayısı"> @item.NobetGrupGorevtipKisitSayisi</span>
+                                </a>
+                                @*<span class="badge badge-secondary" title="@item.NobetGrupGorevtipKisitSayisi adet nöbet grubu.">@item.NobetGrupGorevtipKisitSayisi</span>*@
+                            </span>
+
+                            @if (!haricKuralIdList.Contains(item.KisitId))
                             {
-                                <span>
-                                    <a href="@Url.Action("Index", "NobetGrupGorevTipKisit")" class="card-link " target="_blank">
-                                        <span>Grp: </span> <span class="badge @grupBazliKisitSayisi grupBazliKisitSayi" id="@grupBazliKisitSayisiSpanId" title="Gruba özel kural sayısı"> @item.NobetGrupGorevtipKisitSayisi</span>
-                                    </a>
-                                    @*<span class="badge badge-secondary" title="@item.NobetGrupGorevtipKisitSayisi adet nöbet grubu.">@item.NobetGrupGorevtipKisitSayisi</span>*@
-                                </span>
-
-                                if (!haricKuralIdList.Contains(item.KisitId))
-                                {
-                                    <a class="card-link" title="Gruba özel kural ekle" target="_blank"
-                                       href="@Url.Action("Create2", "NobetGrupGorevTipKisit", new { kisitId = item.KisitId, area= "EczaneNobet" })">
-                                        ekle <span class="fa fa-plus"></span>
-                                    </a>
-                                }
+                                <a class="card-link pull-right" title="Gruba özel kural ekle" target="_blank"
+                                   href="@Url.Action("Create2", "NobetGrupGorevTipKisit", new { kisitId = item.KisitId, area= "EczaneNobet" })">
+                                    Ekle <span class="fa fa-plus"></span>
+                                </a>
                             }
-
-                            <a class="@cardHeaderAciklamaButtonRenk pull-right mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false"
-                               aria-controls="@id.Substring(1)">
-                                <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                <span class="d-none d-md-inline"> Açıklama</span>
-                                @*<span data-toggle="tooltip" data-placement="top" title="Kural Açıklaması"></span>*@
-                            </a>
                         </div>
                     </div>
+                }
 
                 <div class="collapse" id="@id.Substring(1)">
-                    <div class="alert alert-info fade show mt-2" role="alert">
+                    <div class="alert alert-info fade show" role="alert">
 
-                        <h6 class="mr-2 mr-lg-1 font-weight-bold">@kisitKategoriAdi / @item.KisitAdiGosterilen:</h6>
+                        @*<h6 class="mr-2 mr-lg-1 font-weight-bold">@kisitKategoriAdi / @item.KisitAdiGosterilen:</h6>*@
 
                         <p>
                             <i class="fa fa-info-circle"></i> @item.KisitAciklama
