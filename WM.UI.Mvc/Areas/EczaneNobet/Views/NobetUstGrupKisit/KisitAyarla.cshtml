@@ -227,15 +227,27 @@
                                         <div class="collapse" id="kumulatifOrtalamaAciklama">
 
                                             <div class="alert alert-info" role="alert">
-                                                <i class="fa fa-info-circle" aria-hidden="true"></i>
-                                                Bu kategoride belirtilen <span class="badge badge-light">Kümülatif</span> ibaresi gruba nöbet yazılmaya başlanan tarihten itibaren tüm nöbetlerin ortalaması ile nöbet yazmak için seçilen tarih aralığınıdığındaki ortalama nöbet sayısının toplamıdır.
-                                                Bu kategorideki kurallar
-                                                @*title="Ortalama Nöbet Sayısı = Tarih aralığındaki talep edilen toplam nöbetçi sayısı / Gruptaki nöbetçi sayısı"*@
-                                                <b>
-                                                    <span class="badge badge-light">Değer=0</span> olduğunda ortalama nöbet sayılarının yukarı yuvarlanmış (örn.: ortama = 5,01 ise değer = 6'dır.)
-                                                </b>
-                                                halidir.
-                                                Kümülatif ortalama nöbet sayıları <span class="badge badge-light">#Değer</span> alanları değiştirilerek artırılabilmektedir.
+                                                <p>
+                                                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                                    Bu kategoride belirtilen <span class="badge badge-light">Kümülatif</span> ibaresi gruba nöbet yazılmaya başlanan tarihten itibaren tüm nöbetlerin ortalaması ile nöbet yazmak için seçilen tarih aralığınıdığındaki ortalama nöbet sayısının toplamıdır.
+                                                    Bu kategorideki kurallar
+                                                    @*title="Ortalama Nöbet Sayısı = Tarih aralığındaki talep edilen toplam nöbetçi sayısı / Gruptaki nöbetçi sayısı"*@
+                                                    <b>
+                                                        <span class="badge badge-light">Değer=0</span> olduğunda ortalama nöbet sayılarının yukarı yuvarlanmış (örn.: ortama = 5,01 ise değer = 6'dır.)
+                                                    </b>
+                                                    halidir.
+                                                    Kümülatif ortalama nöbet sayıları <span class="badge badge-light">#Değer</span> alanları değiştirilerek artırılabilmektedir.
+                                                </p>
+
+                                                <p>
+                                                    Zamanla nöbet grubuna sonradan katılan/ayrılan eczaneler nedeniyle hesaplanan ortalama değerlerde sapma olabilmektedir. Örneğin; her ay 30 gün ve nöbet grubu 30 kişilik olsun. Ocak ayı nöbet ortalaması 1'dir. Ocak-Şubat iki aylık nöbet ortalaması ise 2'dir. Şubat sonu itibariyle her eczaneye 2 nöbet gelmesi beklenir. Ancak;
+                                                </p>
+
+                                                <ol>
+                                                    <li>Şubat ayında gruba yeni bir eczane <strong>katılması</strong> halinde kümülatif ortamala <math /> 60/31 = 1,93 olacaktır. Bu durumda ortamala 1 artırılmaılır. </li>
+                                                    <li>Şubat ayında gruba yeni bir eczane <strong>ayrılması</strong> halinde kümülatif ortamala <math /> 60/29 = 2,07 olacaktır. Bu durumda ortamala 1 azaltılmalıdır. </li>
+                                                </ol>
+
                                             </div>
 
                                         </div>
@@ -249,7 +261,7 @@
 
                                     @if (haftaninGunleri.Count() > 0)
                                     {
-                                        <hr />
+                                        <hr class="my-1" />
 
                                         <div class="card border-0">
                                             <div class="card-body py-1">
@@ -265,21 +277,21 @@
                                     }
 
                                     @*@if (sonUcAy.Count() > 0)
-                                    {
-                                        <hr />
+                                        {
+                                            <hr />
 
-                                        <div class="card border-0">
-                                            <div class="card-body py-1">
-                                                <strong class="card-title">Son 3 Ay</strong>
+                                            <div class="card border-0">
+                                                <div class="card-body py-1">
+                                                    <strong class="card-title">Son 3 Ay</strong>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="row">
+                                            <div class="row">
 
-                                            @Html.Action("KuralKategorilerPartialView", new { tabId = tabId, kisitTuru = kisitTuru, nobetUstGrupKisitDetaylar = sonUcAy })
+                                                @Html.Action("KuralKategorilerPartialView", new { tabId = tabId, kisitTuru = kisitTuru, nobetUstGrupKisitDetaylar = sonUcAy })
 
-                                        </div>
-                                    }*@
+                                            </div>
+                                        }*@
 
                                 </div>
 
