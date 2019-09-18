@@ -81,7 +81,7 @@ namespace WM.UI.Mvc.Controllers
                 var user = _userService.GetByEMailAndPassword(login.LoginItem);
 
                 //Session["nobetUstGrupId"] = 1;
-                
+
                 if (user != null)
                 {
                     var simdi = DateTime.UtcNow;
@@ -95,16 +95,19 @@ namespace WM.UI.Mvc.Controllers
                     var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
                     var roller = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleName).ToArray();
 
-                    AuthenticationHelper
-                        .CreateAuthCookie(
-                            new Guid(),
-                            user.UserName,
-                            user.Email,
-                            utcExpires,
-                            roller,
-                            login.LoginItem.RememberMe,
-                            user.FirstName,
-                            user.LastName);
+                    if (rolIdler.Count() > 0)
+                    {
+                        AuthenticationHelper
+                            .CreateAuthCookie(
+                                new Guid(),
+                                user.UserName,
+                                user.Email,
+                                utcExpires,
+                                roller,
+                                login.LoginItem.RememberMe,
+                                user.FirstName,
+                                user.LastName);
+                    }
 
                     var url = RedirectToAction("Index", "NobetYaz", new { area = "EczaneNobet" });
 
@@ -125,6 +128,7 @@ namespace WM.UI.Mvc.Controllers
                         //    url = RedirectToAction("Index", "NobetUstGrupYonetim", new { area = "EczaneNobet", userId = user.Id });
                         //    break;
                         default:
+                            url = RedirectToAction("Unauthorized", "Account", new { area = "" });
                             break;
                     }
 
@@ -143,6 +147,11 @@ namespace WM.UI.Mvc.Controllers
                 return View(login);
             }
 
+        }
+
+        public ActionResult Unauthorized()
+        {
+            return View();
         }
 
         public ActionResult Logout()
