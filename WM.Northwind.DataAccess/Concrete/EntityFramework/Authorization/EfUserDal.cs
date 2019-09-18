@@ -16,6 +16,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Authorization
             {
                 var result = (from ur in context.UserRoles
                               where ur.UserId == user.Id
+                                 && ur.BitisTarihi == null
                               select new UserRoleItem
                               {
                                   RoleId = ur.RoleId,
@@ -25,5 +26,24 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Authorization
                 return result;
             }
         }
+
+        public List<UserRoleItem> GetByUserName(string userName)
+        {
+            using (var context = new EczaneNobetContext())
+            {
+                var result = (from ur in context.UserRoles
+                              where ur.User.UserName == userName
+                                 && ur.BitisTarihi == null
+                              select new UserRoleItem
+                              {
+                                  RoleId = ur.RoleId,
+                                  RoleName = ur.Role.Name
+                              })
+                              .ToList();
+                return result;
+            }
+        }
+
+        
     }
 }

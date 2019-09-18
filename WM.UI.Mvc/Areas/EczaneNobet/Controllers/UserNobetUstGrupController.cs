@@ -64,7 +64,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,NobetUstGrupId,UserId")] UserNobetUstGrup userNobetUstGrup)
+        public ActionResult Create([Bind(Include = "Id,NobetUstGrupId,UserId,BaslamaTarihi,BitisTarihi")] UserNobetUstGrup userNobetUstGrup)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,NobetUstGrupId,UserId")] UserNobetUstGrup userNobetUstGrup)
+        public ActionResult Edit([Bind(Include = "Id,NobetUstGrupId,UserId,BaslamaTarihi,BitisTarihi")] UserNobetUstGrup userNobetUstGrup)
         {
             if (ModelState.IsValid)
             {

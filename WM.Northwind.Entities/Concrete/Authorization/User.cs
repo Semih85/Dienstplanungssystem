@@ -37,6 +37,11 @@ namespace WM.Northwind.Entities.Concrete.Authorization
         [RegularExpression(@"^[a-zA-Z0-9_&.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9]{2,5}$", ErrorMessage = "Lütfen geçerli bir e-posta adresi yazınız..!")]
         public string Email { get; set; }
 
+        [Display(Name = "Başlama Tarihi")]
+        public DateTime BaslamaTarihi { get; set; }
+        [Display(Name = "Bitiş Tarihi")]
+        public DateTime? BitisTarihi { get; set; }
+
         public virtual List<UserRole> UserRoles { get; set; }
         public virtual List<UserEczaneOda> UserEczaneOdalar { get; set; }
         public virtual List<UserNobetUstGrup> UserNobetUstGruplar { get; set; }

@@ -26,7 +26,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         KullaniciAdi = s.User.UserName,
                         EczaneOdaAdi = s.EczaneOda.Adi,
                         EczaneOdaId = s.EczaneOdaId,
-                        UserId=s.UserId
+                        UserId=s.UserId,
+                        BaslamaTarihi = s.BaslamaTarihi,
+                        BitisTarihi = s.BitisTarihi
                     }).SingleOrDefault(filter);
             }
         }
@@ -43,7 +45,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                           KullaniciAdi = s.User.UserName,
                           EczaneOdaAdi = s.EczaneOda.Adi,
                           EczaneOdaId = s.EczaneOdaId,
-                          UserId = s.UserId
+                          UserId = s.UserId,
+                          BaslamaTarihi = s.BaslamaTarihi,
+                          BitisTarihi = s.BitisTarihi
                       }).ToList()
                    : ctx.UserEczaneOdalar
                       .Select(s => new UserEczaneOdaDetay
@@ -52,7 +56,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                           KullaniciAdi = s.User.UserName,
                           EczaneOdaAdi = s.EczaneOda.Adi,
                           EczaneOdaId = s.EczaneOdaId,
-                          UserId = s.UserId
+                          UserId = s.UserId,
+                          BaslamaTarihi = s.BaslamaTarihi,
+                          BitisTarihi = s.BitisTarihi
                       })
                       .Where(filter)
                       .ToList();

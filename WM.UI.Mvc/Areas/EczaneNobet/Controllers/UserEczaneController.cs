@@ -76,7 +76,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EczaneId,UserId")] UserEczane userEczane)
+        public ActionResult Create([Bind(Include = "Id,EczaneId,UserId,BaslamaTarihi,BitisTarihi")] UserEczane userEczane)
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +113,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,EczaneId,UserId")] UserEczane userEczane)
+        public ActionResult Edit([Bind(Include = "Id,EczaneId,UserId,BaslamaTarihi,BitisTarihi")] UserEczane userEczane)
         {
             if (ModelState.IsValid)
             {

@@ -63,7 +63,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,RoleId,UserId")] UserRole userRole)
+        public ActionResult Create([Bind(Include = "Id,RoleId,UserId,BaslangicTarihi,BitisTarihi")] UserRole userRole)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,RoleId,UserId")] UserRole userRole)
+        public ActionResult Edit([Bind(Include = "Id,RoleId,UserId,BaslamaTarihi,BitisTarihi")] UserRole userRole)
         {
             if (ModelState.IsValid)
             {

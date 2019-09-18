@@ -23,7 +23,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Authorization
                         KullaniciAdi = s.User.UserName,
                         RoleName = s.Role.Name,
                         RoleId = s.RoleId,
-                        UserId = s.UserId
+                        UserId = s.UserId,
+                        BaslamaTarihi = s.BaslamaTarihi,
+                        BitisTarihi = s.BitisTarihi
                     }).SingleOrDefault(filter);
             }
         }
@@ -40,7 +42,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Authorization
                         KullaniciAdi = s.User.UserName,
                         RoleName = s.Role.Name,
                         RoleId = s.RoleId,
-                        UserId = s.UserId
+                        UserId = s.UserId,
+                        BaslamaTarihi = s.BaslamaTarihi,
+                        BitisTarihi = s.BitisTarihi
                     }).ToList()
                    : ctx.UserRoles
                     .Select(s => new UserRoleDetay
@@ -49,7 +53,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Authorization
                         KullaniciAdi = s.User.UserName,
                         RoleName = s.Role.Name,
                         RoleId = s.RoleId,
-                        UserId = s.UserId
+                        UserId = s.UserId,
+                        BaslamaTarihi = s.BaslamaTarihi,
+                        BitisTarihi = s.BitisTarihi
                     })
                     .Where(filter)
                     .ToList();

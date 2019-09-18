@@ -24,12 +24,17 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.Authorization
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.RoleId).HasColumnName("RoleId");
             this.Property(t => t.UserId).HasColumnName("UserId");
+            this.Property(t => t.BaslamaTarihi).HasColumnName("BaslamaTarihi");
+            this.Property(t => t.BitisTarihi).HasColumnName("BitisTarihi");
 
             #endregion
 
             #region Properties
             this.Property(t => t.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            this.Property(t => t.BaslamaTarihi).IsRequired();
+            this.Property(t => t.BitisTarihi).IsOptional();
 
             this.Property(t => t.RoleId)
                .IsRequired()

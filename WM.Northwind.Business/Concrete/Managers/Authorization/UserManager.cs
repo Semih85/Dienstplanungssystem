@@ -48,7 +48,7 @@ namespace WM.Northwind.Business.Concrete.Managers.Authorization
 
         public User GetByUserName(string userName)
         {
-            return _userDal.Get(u => u.UserName == userName);
+            return _userDal.Get(u => u.UserName == userName && u.BitisTarihi == null);
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]

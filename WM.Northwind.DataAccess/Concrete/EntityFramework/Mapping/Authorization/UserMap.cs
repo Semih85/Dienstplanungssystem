@@ -19,6 +19,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.Authorization
             this.HasKey(t => t.Id);
 
             #region Table & Column Mappings
+
             this.ToTable(@"Users", @"Yetki");
             //this.ToTable("Users");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -27,12 +28,17 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.Authorization
             this.Property(t => t.LastName).HasColumnName("LastName");
             this.Property(t => t.Password).HasColumnName("Password");
             this.Property(t => t.UserName).HasColumnName("UserName");
+            this.Property(t => t.BaslamaTarihi).HasColumnName("BaslamaTarihi");
+            this.Property(t => t.BitisTarihi).HasColumnName("BitisTarihi");
 
             #endregion
 
             #region Properties
             this.Property(t => t.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            this.Property(t => t.BaslamaTarihi).IsRequired();
+            this.Property(t => t.BitisTarihi).IsOptional();
 
             this.Property(t => t.Email)
                 .IsRequired()

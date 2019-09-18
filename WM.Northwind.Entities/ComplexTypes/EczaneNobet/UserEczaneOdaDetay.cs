@@ -19,5 +19,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         [Display(Name = "Açıklama")]
         public int EczaneOdaId { get; set; }
         public int UserId { get; set; }
+        public DateTime BaslamaTarihi { get; set; }
+        public DateTime? BitisTarihi { get; set; }
     }
 }
