@@ -176,7 +176,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetSonuclarBaslamaTarihindenSonrasi = eczaneNobetSonuclarCozulenGruplar
                 .Where(w => w.Tarih >= nobetUstGrupBaslangicTarihi).ToList();
 
-            var son3Ay = baslangicTarihi.AddMonths(-3);
+            var son3Ay = baslangicTarihi.AddMonths(-2);
 
             var eczaneNobetSonuclarSon3Ay = eczaneNobetSonuclarCozulenGruplar
                 .Where(w => w.Tarih >= son3Ay).ToList();

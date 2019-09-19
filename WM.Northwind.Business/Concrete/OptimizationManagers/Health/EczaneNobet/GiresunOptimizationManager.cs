@@ -193,7 +193,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetSonuclarCozulenGruplar = eczaneNobetSonuclar
                 .Where(w => eczaneNobetGruplarTumu.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
 
-            var son3Ay = baslangicTarihi.AddMonths(-3);
+            var son3Ay = baslangicTarihi.AddMonths(-2);
 
             var eczaneNobetSonuclarSon3Ay = eczaneNobetSonuclarCozulenGruplar
                 .Where(w => w.Tarih >= son3Ay).ToList();
@@ -338,7 +338,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var eczaneNobetTarihAralikTumu = eczaneNobetTarihAralik1.Union(eczaneNobetTarihAralik2).ToList();
 
-            var kd = eczaneNobetTarihAralikTumu.Where(w => w.EczaneAdi == "AHSEN").ToList();
+            //var kd = eczaneNobetTarihAralikTumu.Where(w => w.EczaneAdi == "AHSEN").ToList();
 
             var eczaneNobetTarihAralik = _eczaneNobetOrtakService.AmacFonksiyonuKatsayisiBelirle(eczaneNobetTarihAralikTumu, eczaneNobetGrupGunKuralIstatistikYatay);
 
