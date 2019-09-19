@@ -2393,6 +2393,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 case 5://perşembe
                     kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiPersembe);
                     break;
+                case 6://cuma
+                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiCuma);
+                    break;
+                case 7://cumartesi
+                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiCumartesi);
+                    break;
                 case 8://dini bayram
                     kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiDiniBayram);
                     break;
@@ -2408,18 +2414,42 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 //case 12://1 ocak
                 //    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiPazar);
                 //    break;
-                case 6://cuma
-                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiCuma);
-                    break;
-                case 7://cumartesi
-                    kumulatifToplamNobetSayisiNobetGunKural = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiCumartesi);
-                    break;
                 default://h. içi diğer
                     kumulatifToplamNobetSayisiNobetGunKural = 0; //eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiPazar);
                     break;
             }
 
             return kumulatifToplamNobetSayisiNobetGunKural;
+        }
+
+        public List<NobetGunKuralTarihAralik> OrtalamaNobetSayilariniHesapla(List<TakvimNobetGrup> tarihler,
+            int gruptakiEczaneSayisi,
+            List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikler,
+            List<TakvimNobetGrupGunDegerIstatistik> nobetGunKuralIstatistikler)
+        {
+            var nobetGunKuralTarihler = new List<NobetGunKuralTarihAralik>();
+
+            foreach (var nobetGunKural in nobetGunKuralIstatistikler)
+            {
+                var tarihlerNobetGunKuralBazli = tarihler.Where(w => w.NobetGunKuralId == nobetGunKural.NobetGunKuralId).ToList();
+                var gunKuralGunSayisi = tarihlerNobetGunKuralBazli.Count;
+                var kumulatifToplamNobetSayisiNobetGunKural = GetKumulatifToplamNobetSayisi(eczaneNobetGrupGunKuralIstatistikler, nobetGunKural.NobetGunKuralId);
+
+                nobetGunKuralTarihler.Add(new NobetGunKuralTarihAralik
+                {
+                    GunGrupId = nobetGunKural.GunGrupId,
+                    GunGrupAdi = nobetGunKural.GunGrupAdi,
+                    NobetGunKuralId = nobetGunKural.NobetGunKuralId,
+                    NobetGunKuralAdi = nobetGunKural.NobetGunKuralAdi,
+                    TakvimNobetGruplar = tarihlerNobetGunKuralBazli,
+                    GunSayisi = gunKuralGunSayisi,
+                    OrtalamaNobetSayisi = OrtalamaNobetSayisi(tarihlerNobetGunKuralBazli.Sum(s => s.TalepEdilenNobetciSayisi), gruptakiEczaneSayisi),
+                    KumulatifGunSayisi = nobetGunKural.GunSayisi,
+                    KumulatifOrtalamaNobetSayisi = OrtalamaNobetSayisi(nobetGunKural.TalepEdilenNobetciSayisi + kumulatifToplamNobetSayisiNobetGunKural, gruptakiEczaneSayisi)
+                });
+            }
+
+            return nobetGunKuralTarihler;
         }
 
         public List<NobetUstGrupKisitDetay> GetKisitlarNobetGrupBazli(List<NobetUstGrupKisitDetay> kisitlarUstGrupBazli, List<NobetGrupGorevTipKisitDetay> kisitlarGrupBazli)

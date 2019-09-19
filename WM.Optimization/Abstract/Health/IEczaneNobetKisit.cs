@@ -69,6 +69,11 @@ namespace WM.Optimization.Abstract.Health
         KalibrasyonYatay GetKalibrasyonDegeri(List<KalibrasyonYatay> eczaneKalibrasyon);
 
         int GetKumulatifToplamNobetSayisi(List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikler, int nobetGunKuralId);
+
+        List<NobetGunKuralTarihAralik> OrtalamaNobetSayilariniHesapla(List<TakvimNobetGrup> tarihler,
+            int gruptakiEczaneSayisi,
+            List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikler,
+            List<TakvimNobetGrupGunDegerIstatistik> nobetGunKuralIstatistikler);
     }
 }
 
