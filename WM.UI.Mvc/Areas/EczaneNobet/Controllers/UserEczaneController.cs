@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using WM.Northwind.Business.Abstract.Authorization;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -17,28 +18,32 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IEczaneService _eczaneService;
         private IUserService _userService;
         private INobetUstGrupService _nobetUstGrupService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public UserEczaneController(IUserEczaneService userEczaneService,
                                     IUserNobetUstGrupService userNobetUstGrupService,
                                     IEczaneService eczaneService,
                                     IUserService userService,
-                                    INobetUstGrupService nobetUstGrupService)
+                                    INobetUstGrupService nobetUstGrupService,
+                                    INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _userEczaneService = userEczaneService;
             _userNobetUstGrupService = userNobetUstGrupService;
             _eczaneService = eczaneService;
             _userService = userService;
             _nobetUstGrupService = nobetUstGrupService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
         #endregion
 
         // GET: EczaneNobet/UserEczane
         public ActionResult Index()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            var userEczaneler = _userEczaneService.GetDetaylar(nobetUstGruplar.Select(s => s.Id).ToList());
+            var userEczaneler = _userEczaneService.GetDetaylar(ustGrupSession.Id);
 
             return View(userEczaneler);
         }
@@ -61,13 +66,16 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/UserEczane/Create
         public ActionResult Create()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var eczaneler = _eczaneService.GetListByUser(user).Select(s => new { s.Id, s.Adi }).OrderBy(w => w.Adi);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(nobetUstGruplar.Select(s => s.Id).ToList());
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var eczaneler = _eczaneService.GetList(ustGrupSession.Id).Select(s => new { s.Id, s.Adi }).OrderBy(w => w.Adi);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(ustGrupSession.Id);
 
             ViewBag.EczaneId = new SelectList(eczaneler, "Id", "Adi");
-            ViewBag.UserId = new SelectList(userNobetUstGruplar.Select(s => new { s.Id, s.KullaniciAdi }), "Id", "KullaniciAdi");
+            ViewBag.UserId = new SelectList(userNobetUstGruplar.Select(s => new { s.UserId, s.KullaniciAdi }), "UserId", "KullaniciAdi");
+
             return View();
         }
 
@@ -84,8 +92,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EczaneId = new SelectList(_eczaneService.GetList().Select(s => new { s.Id, s.Adi }), "Id", "Adi", userEczane.EczaneId);
-            ViewBag.UserId = new SelectList(_userService.GetList().Select(s => new { s.Id, s.UserName }), "Id", "UserName", userEczane.UserId);
+            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var eczaneler = _eczaneService.GetList(ustGrupSession.Id).Select(s => new { s.Id, s.Adi }).OrderBy(w => w.Adi);
+            var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(ustGrupSession.Id);
+
+            ViewBag.EczaneId = new SelectList(eczaneler, "Id", "Adi", userEczane.EczaneId);
+            ViewBag.UserId = new SelectList(userNobetUstGruplar.Select(s => new { s.UserId, s.KullaniciAdi }), "UserId", "KullaniciAdi", userEczane.UserId);
             return View(userEczane);
         }
 
@@ -101,10 +114,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 return HttpNotFound();
             }
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var eczaneler = _eczaneService.GetListByUser(user).Select(s => new { s.Id, s.Adi }).OrderBy(w => w.Adi);
-            ViewBag.EczaneId = new SelectList(eczaneler, "Id", "Adi", userEczane.EczaneId);
-            ViewBag.UserId = new SelectList(_userService.GetList().Select(s => new { s.Id, s.UserName }), "Id", "UserName", userEczane.UserId);
+            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var eczaneler = _eczaneService.GetList(ustGrupSession.Id).Select(s => new { s.Id, s.Adi }).OrderBy(w => w.Adi);
+            var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(ustGrupSession.Id);
+
+            ViewBag.EczaneId = new SelectList(eczaneler, "Id", "Adi");
+            ViewBag.UserId = new SelectList(userNobetUstGruplar.Select(s => new { s.UserId, s.KullaniciAdi }), "UserId", "KullaniciAdi");
             return View(userEczane);
         }
 
@@ -120,8 +136,14 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _userEczaneService.Update(userEczane);
                 return RedirectToAction("Index");
             }
-            ViewBag.EczaneId = new SelectList(_eczaneService.GetList().Select(s => new { s.Id, s.Adi }), "Id", "Adi", userEczane.EczaneId);
-            ViewBag.UserId = new SelectList(_userService.GetList().Select(s => new { s.Id, s.UserName }), "Id", "UserName", userEczane.UserId);
+            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+
+            var eczaneler = _eczaneService.GetList(ustGrupSession.Id).Select(s => new { s.Id, s.Adi }).OrderBy(w => w.Adi);
+            var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(ustGrupSession.Id);
+
+            ViewBag.EczaneId = new SelectList(eczaneler, "Id", "Adi", userEczane.EczaneId);
+            ViewBag.UserId = new SelectList(userNobetUstGruplar.Select(s => new { s.UserId, s.KullaniciAdi }), "UserId", "KullaniciAdi", userEczane.UserId);
+
             return View(userEczane);
         }
 
