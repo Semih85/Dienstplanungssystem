@@ -21,12 +21,14 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
     {
         private IEczaneService _eczaneService;
         private IUserService _userService;
+        private IUserEczaneService _userEczaneService;
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private INobetUstGrupService _nobetUstGrupService;
         private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public EczaneController(IEczaneService eczaneService,
                                 IUserService userService,
+                                IUserEczaneService userEczaneService,
                                 IEczaneNobetGrupService eczaneNobetGrupService,
                                 INobetUstGrupService nobetUstGrupService,
                                 INobetUstGrupSessionService nobetUstGrupSessionService)
@@ -36,16 +38,29 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _nobetUstGrupService = nobetUstGrupService;
             _nobetUstGrupSessionService = nobetUstGrupSessionService;
+            _userEczaneService = userEczaneService;
         }
 
         // GET: EczaneNobet/Eczane        
         public ActionResult Index()
         {
-            //var user = _userService.GetByUserName(User.Identity.Name);
+            var user = _userService.GetByUserName(User.Identity.Name);
             var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
 
-            var model = _eczaneService.GetDetaylar(ustGrupSession.Id)
+            var eczaneler = _eczaneService.GetDetaylar(ustGrupSession.Id)
                 .OrderBy(o => o.AcilisTarihi).ToList();
+
+            var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+            var rolId = rolIdler.FirstOrDefault();
+
+            var model = eczaneler;
+
+            if (rolIdler.Count() == 1 && rolId == 4)
+            {
+                var userEczaneler = _userEczaneService.GetDetaylarByUserId(user.Id);
+
+                model = eczaneler.Where(w => userEczaneler.Select(s => s.EczaneId).Contains(w.Id)).ToList();
+            }
 
             return View(model);
         }
@@ -97,8 +112,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                 var eczaneNobetGrupCoklu = new EczaneNobetGrupCoklu
                 {
-                     EczaneId = eczaneler,
-                     BaslangicTarihi = eczane.AcilisTarihi,                     
+                    EczaneId = eczaneler,
+                    BaslangicTarihi = eczane.AcilisTarihi,
                 };
 
                 TempData["EklenecekEczane"] = eczaneNobetGrupCoklu;
