@@ -77,6 +77,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<UserEczaneDetay> GetDetaylarByUserId(int userId)
+        {
+            return _userEczaneDal.GetDetayList(w => w.UserId == userId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public UserEczaneDetay GetDetayById(int userEczaneId)
         {
             return _userEczaneDal.GetDetay(x => x.Id == userEczaneId);
@@ -92,6 +98,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<UserEczaneDetay> GetDetaylar(List<int> nobetUstGrupIdList)
         {
             return _userEczaneDal.GetDetayList(x => nobetUstGrupIdList.Contains(x.NobetUstGrupId));
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<UserEczaneDetay> GetDetaylar(int nobetUstGrupId)
+        {
+            return _userEczaneDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId);
         }
     }
 }
