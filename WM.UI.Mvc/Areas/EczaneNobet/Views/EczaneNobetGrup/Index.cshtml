@@ -123,10 +123,11 @@
                         @Html.DisplayFor(modelItem => item.EnErkenTarihteNobetYazilsinMi)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.BaslangicTarihi)
+                        @($"{item.BaslangicTarihi.ToString("dd.MM.yyyy, ddd.")}")
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.BitisTarihi)
+                        @($"{(item.BitisTarihi == null ? "" : ((DateTime)item.BitisTarihi).ToString("dd.MM.yyyy, ddd."))}")
+                        @*@Html.DisplayFor(modelItem => item.BitisTarihi)*@
                     </td>
                     <td>
                         @if (item.BitisTarihi != null)
