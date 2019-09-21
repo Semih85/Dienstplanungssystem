@@ -737,7 +737,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         if (nobetTutamazGunler.Count() > 0
                             && nobetTutulabilenGunKuralId == nobetGunKural.NobetGunKuralId
                             && nobetGunKural.GunGrupId == 3)
-                            continue;//istikamet cuma günü diğerlerinden fazla tutabilir
+                            continue;
+                        //sadece hafta içi tutabilen eczane için gün kural limiti olmayack.
+                        //örn.: istikamet cuma günü diğerlerinden fazla tutabilir.
 
                         var kumulatifOrtalamaGunKuralNobetSayisi = tarihAralik.KumulatifOrtalamaNobetSayisi;
 
@@ -1363,17 +1365,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 MazereteGorevYazma(mazereteGorevYazmaKisit);
 
                 #endregion
-
-                //var ayIcindeSadece1KezAyniGunNobetKisit = new KpAyIcindeSadece1KezAyniGunNobetGiresunAltGrup
-                //{
-                //    Model = model,
-                //    EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
-                //    EczaneNobetGrupAltGrupDetaylar = data.EczaneNobetGrupAltGruplar.Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList(),
-                //    NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k10"),
-                //    Tarihler = tarihAraligi,
-                //    KararDegiskeni = _x
-                //};
-                //AyIcindeSadece1KezAyniGunNobetTutulsunGiresunAltGrup(ayIcindeSadece1KezAyniGunNobetKisit);
 
                 #region bazı eczanelerin nöbet günlerini kısıtla
 
