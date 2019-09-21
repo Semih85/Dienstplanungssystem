@@ -119,6 +119,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: Index
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Index()
         {
             var user = _userService.GetByUserName(User.Identity.Name);
