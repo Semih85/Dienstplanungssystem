@@ -1049,7 +1049,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #endregion
 
-                    #region Kümülatif hafta içi en az
+                    #region Kümülatif hafta içi en az - son 3 ay
 
                     var kpKumulatifToplamEnAzHaftaIciSon3Ay = (KpKumulatifToplam)kpKumulatifToplam.Clone();
 
