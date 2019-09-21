@@ -119,15 +119,21 @@
                     @if (varsayilandanFarkliMi)
                     {
                         <span class="formBtnUyari badge badge-danger" id="@formBtnUyariId" title="Bu kural varsayılandan farklıdır.">
-                            <i class="fa fa-warning" aria-hidden="true"></i>
                             <span>
+                                <i class="fa fa-warning" aria-hidden="true"></i>
                                 *Farklı
                             </span>
                         </span>
                     }
                     else
                     {
-                        <i class="fa fa-warning text-danger formBtnUyari mt-1" id="@formBtnUyariId" style="display:none" title="Bu kural varsayılandan farklıdır." aria-hidden="true"></i>
+                        <span class="formBtnUyari badge badge-danger" id="@formBtnUyariId" style="display:none" title="Bu kural varsayılandan farklıdır.">
+                            <span>
+                                <i class="fa fa-warning" aria-hidden="true"></i>
+                                @**Farklı*@
+                            </span>
+                        </span>
+                        @*<i class="fa fa-warning text-danger formBtnUyari mt-1" id="@formBtnUyariId" style="display:none" title="Bu kural varsayılandan farklıdır." aria-hidden="true"></i>*@
                     }
 
                     <div class="custom-control custom-switch pull-right">
