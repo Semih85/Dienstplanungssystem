@@ -348,7 +348,7 @@
         });
 
         $("#varsayilandanFarkliKisitlar").click(function () {
-            $("#myInput").val("*f");
+            $("#myInput").val("lı!");
             $("#myInput").keyup();
         });
 
@@ -490,10 +490,11 @@
                     var kuralId = + formId.id.substring(9);
 
                     if (sonuclar.VarsayilandanFarkliMi) {
-                        $('#card' + kuralId + ' .formBtnUyari').show();
+                        $('#card' + kuralId + ' .formBtnUyari').show().text("*Farklı");
                     }
                     else {
-                        $('#card' + kuralId + ' .formBtnUyari').hide();
+                        $('#card' + kuralId + ' .formBtnUyari').hide().text("");
+                        //$('#card' + kuralId + ' .formBtnUyari').hide().text("");
                     }
 
                     //alert("sonuclar.GrupBazliKisitSayisi: " + sonuclar.GrupBazliKisitSayisi)

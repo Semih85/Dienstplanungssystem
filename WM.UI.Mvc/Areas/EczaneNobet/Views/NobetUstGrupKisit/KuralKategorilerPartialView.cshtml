@@ -107,34 +107,40 @@
         <div class="card mb-2 border-bottom" id="@cardIdKuralId" style="min-width:198px;">
             <div class="card-header p-2 @cardHeaderRenk">
                 <div class="d-inline">
-                    <span title="@kisitNumarasi kuralı '@labelYazi.ToLower()'" class="@badgeTip kuralId">@kisitNumarasi</span>
+                    
+                    <a data-toggle="collapse" href="@id" title="@kisitNumarasi kuralı '@labelYazi.ToLower()'" class="@badgeTip kuralId"><i class="fa fa-info-circle" aria-hidden="true"></i> @kisitNumarasi</a>
 
-                    <a class="@cardHeaderAciklamaButtonRenk" data-toggle="collapse" href="@id" role="button" title="Kural Açıklaması" aria-expanded="false"
-                       aria-controls="@id.Substring(1)">
-                        <i class="fa fa-info-circle" aria-hidden="true"></i>
-                        @*<span class="d-none d-md-inline"> Açıklama</span>*@
-                        @*<span data-toggle="tooltip" data-placement="top" title="Kural Açıklaması"></span>*@
-                    </a>
+                    @*<a class="@cardHeaderAciklamaButtonRenk" data-toggle="collapse" href="@id" role="button" title="Kural Açıklaması" aria-expanded="false"
+        aria-controls="@id.Substring(1)" style="width:30px;">
+         <i class="fa fa-info-circle" aria-hidden="true"></i>
+         @*<span class="d-none d-md-inline"> Açıklama</span>*@
+                    @*<span data-toggle="tooltip" data-placement="top" title="Kural Açıklaması"></span>*
+        </a>*@
 
                     @if (varsayilandanFarkliMi)
                     {
                         <span class="formBtnUyari badge badge-danger" id="@formBtnUyariId" title="Bu kural varsayılandan farklıdır.">
-                            <span>
-                                <i class="fa fa-warning" aria-hidden="true"></i>
-                                *Farklı
-                            </span>
+                            <i class="fa fa-warning" aria-hidden="true"></i>
+                            Farklı!
                         </span>
                     }
                     else
                     {
                         <span class="formBtnUyari badge badge-danger" id="@formBtnUyariId" style="display:none" title="Bu kural varsayılandan farklıdır.">
-                            <span>
-                                <i class="fa fa-warning" aria-hidden="true"></i>
-                                @**Farklı*@
-                            </span>
+                            <i class="fa fa-warning" aria-hidden="true"></i>
+
                         </span>
                         @*<i class="fa fa-warning text-danger formBtnUyari mt-1" id="@formBtnUyariId" style="display:none" title="Bu kural varsayılandan farklıdır." aria-hidden="true"></i>*@
                     }
+
+                    @*@if (varsayilandanFarkliMi)
+        {
+            <i class="fa fa-warning text-danger formBtnUyari" id="@formBtnUyariId" title="Bu kural varsayılandan farklıdır." aria-hidden="true">*Farklı</i>
+        }
+        else
+        {
+            <i class="fa fa-warning text-danger formBtnUyari" id="@formBtnUyariId" style="display:none" title="Bu kural varsayılandan farklıdır." aria-hidden="true"></i>
+        }*@
 
                     <div class="custom-control custom-switch pull-right">
 
