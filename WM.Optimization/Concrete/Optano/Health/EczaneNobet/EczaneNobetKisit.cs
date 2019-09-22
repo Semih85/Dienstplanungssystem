@@ -2434,6 +2434,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var tarihlerNobetGunKuralBazli = tarihler.Where(w => w.NobetGunKuralId == nobetGunKural.NobetGunKuralId).ToList();
                 var gunKuralGunSayisi = tarihlerNobetGunKuralBazli.Count;
                 var kumulatifToplamNobetSayisiNobetGunKural = GetKumulatifToplamNobetSayisi(eczaneNobetGrupGunKuralIstatistikler, nobetGunKural.NobetGunKuralId);
+                var tarihAraligiIcindekiTalepEdilenNobetciSayisi = tarihlerNobetGunKuralBazli.Sum(s => s.TalepEdilenNobetciSayisi);
 
                 nobetGunKuralTarihler.Add(new NobetGunKuralTarihAralik
                 {
@@ -2443,9 +2444,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     NobetGunKuralAdi = nobetGunKural.NobetGunKuralAdi,
                     TakvimNobetGruplar = tarihlerNobetGunKuralBazli,
                     GunSayisi = gunKuralGunSayisi,
-                    OrtalamaNobetSayisi = OrtalamaNobetSayisi(tarihlerNobetGunKuralBazli.Sum(s => s.TalepEdilenNobetciSayisi), gruptakiEczaneSayisi),
+                    OrtalamaNobetSayisi = OrtalamaNobetSayisi(tarihAraligiIcindekiTalepEdilenNobetciSayisi, gruptakiEczaneSayisi),
                     KumulatifGunSayisi = nobetGunKural.GunSayisi,
-                    KumulatifOrtalamaNobetSayisi = OrtalamaNobetSayisi(nobetGunKural.TalepEdilenNobetciSayisi + kumulatifToplamNobetSayisiNobetGunKural, gruptakiEczaneSayisi)
+                    KumulatifOrtalamaNobetSayisi = OrtalamaNobetSayisi(//nobetGunKural.TalepEdilenNobetciSayisi 
+                                                                        kumulatifToplamNobetSayisiNobetGunKural + tarihAraligiIcindekiTalepEdilenNobetciSayisi
+                                                                        , gruptakiEczaneSayisi)
                 });
             }
 
