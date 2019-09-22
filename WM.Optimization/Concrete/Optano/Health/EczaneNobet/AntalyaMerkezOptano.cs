@@ -271,7 +271,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var nobetGunKuralIstatistikler = data.TakvimNobetGrupGunDegerIstatistikler
                                       .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
                                                //&& tarihler.Select(s => s.NobetGunKuralId).Distinct().Contains(w.NobetGunKuralId)
-                                               ).ToList();
+                                               )
+                                      .OrderBy(o => o.NobetGunKuralId).ToList();
 
                 var nobetGunKuralTarihler = OrtalamaNobetSayilariniHesapla(tarihler, gruptakiEczaneSayisi, eczaneNobetGrupGunKuralIstatistikler, nobetGunKuralIstatistikler);
 
