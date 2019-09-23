@@ -339,7 +339,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         .Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id).ToList();
 
                     var eczaneToplamKalibrasyon = eczaneKalibrasyon
-                        .Where(w => w.KalibrasyonTipId == 7).SingleOrDefault();
+                        .Where(w => w.KalibrasyonTipId == 7).SingleOrDefault() ?? new KalibrasyonYatay();
 
                     var eczaneNobetTarihAralikEczaneBazli = eczaneNobetTarihAralikGrupBazli
                         .Where(e => e.EczaneNobetGrupId == eczaneNobetGrup.Id).ToList();
