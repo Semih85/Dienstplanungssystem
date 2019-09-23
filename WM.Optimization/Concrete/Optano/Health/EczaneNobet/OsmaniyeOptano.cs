@@ -320,7 +320,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     if (kontrol)
                     {
                         var kontrolEdilecekEczaneler = new string[] {
-                            "ÖZGEN",
+                            "ÖZEN",
                             //"EZGİ",
                             //"DEVA",
                             //"ELİF", "AYDINLAR", "DERYA", "KARABIÇAK"
@@ -908,7 +908,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     foreach (var kalibrasyonTip in kalibrasyonTipler.Where(w => w.KalibrasyonTipId < 7).ToList())
                     {
                         var eczaneKalibrasyonCumartesi = eczaneKalibrasyon
-                            .Where(w => w.KalibrasyonTipId == kalibrasyonTip.KalibrasyonTipId).SingleOrDefault();
+                            .Where(w => w.KalibrasyonTipId == kalibrasyonTip.KalibrasyonTipId).SingleOrDefault() ?? new KalibrasyonYatay();
 
                         var cumartesiNobetler = eczaneNobetSonuclar
                             .Where(w => w.AyIkili == kalibrasyonTip.KalibrasyonTipAdi
@@ -937,7 +937,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     foreach (var kalibrasyonTip in kalibrasyonTipler.Where(w => w.KalibrasyonTipId < 7).ToList())
                     {
                         var eczaneKalibrasyonu = eczaneKalibrasyon
-                            .Where(w => w.KalibrasyonTipId == kalibrasyonTip.KalibrasyonTipId).SingleOrDefault();
+                            .Where(w => w.KalibrasyonTipId == kalibrasyonTip.KalibrasyonTipId).SingleOrDefault() ?? new KalibrasyonYatay();
 
                         var pazarNobetler = eczaneNobetSonuclar
                             .Where(w => w.AyIkili == kalibrasyonTip.KalibrasyonTipAdi
