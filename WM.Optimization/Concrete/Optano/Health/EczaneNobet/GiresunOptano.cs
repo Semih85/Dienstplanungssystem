@@ -2199,7 +2199,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                         var ayniGunNobetTutanEczaneler = GetAyniGunNobetTutanEczaneler(sonuclar);
 
-
                         var ayniGunNobetSayisi1denFazlaGrouped = (from s in ayniGunNobetTutanEczaneler
                                                                   group s by new
                                                                   {
