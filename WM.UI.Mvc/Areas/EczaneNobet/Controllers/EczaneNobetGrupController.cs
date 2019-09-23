@@ -215,10 +215,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 var nobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
                 var nobetUstGrupId = nobetGrupGorevTip.NobetUstGrupId;
 
-                if (nobetUstGrupId == 1
-                    || nobetUstGrupId == 3
+                if (nobetUstGrupId == 1   //alanya
+                    || nobetUstGrupId == 3//mersin
+                    || nobetUstGrupId == 4//giresun
+                    || nobetUstGrupId == 5//osmaniye
                     )
-                {//anlanya ya da mersin için
+                {
                     var eklenenIkiliEczaneler = _ayniGunTutulanNobetService.IkiliEczaneleriOlustur(eczaneNobetGrupDetaylar);
                 }
                 //else if (nobetUstGrupId == 1)
