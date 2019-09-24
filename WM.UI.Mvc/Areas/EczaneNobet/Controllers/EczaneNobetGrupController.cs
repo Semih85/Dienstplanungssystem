@@ -316,19 +316,19 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     //}
 
                     if (bitisTarihiDegistiMi
-                        && eczaneNobetGrup.BitisTarihi != null)
+                        && EczaneGruptaKapaniyorMu(eczaneNobetGrup))
                     {
                         baslangicTarihi = (DateTime)eczaneNobetGrup.BitisTarihi;
                     }
 
-                    var planlananNobetlerinYazilacagiSonTarih = new DateTime(2020, 12, 31);
+                    var sonTarih = baslangicTarihi.AddYears(1);
+
+                    var planlananNobetlerinYazilacagiSonTarih = new DateTime(sonTarih.Year, 12, 31);
 
                     var planlananNobetlerinYazilacagiNobetGrubu = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrup.NobetGrupGorevTipId);
 
-                    //if (eczaneNobetGrup.BitisTarihi == null)
-                    //{
                     var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(degisecekEczaneNobetGrupOncekiHali.NobetUstGrupId)
-                            .OrderByDescending(o => o.GunGrupId).ToList();
+                            .OrderBy(o => o.GunGrupId).ToList();
 
                     foreach (var gunGrup in nobetUstGrupGunGruplar)
                     {
@@ -337,7 +337,14 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                 .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)
                                 .OrderByDescending(o => o.Tarih).FirstOrDefault();
 
-                        baslangicTarihi = planlananSonNobetTarihi != null ? planlananSonNobetTarihi.Tarih : baslangicTarihiVarsayilan;
+                        if (EczaneGruptaKapaniyorMu(eczaneNobetGrup))
+                        {
+                            baslangicTarihi = (DateTime)eczaneNobetGrup.BitisTarihi;
+                        }
+                        else
+                        {
+                            baslangicTarihi = planlananSonNobetTarihi != null ? planlananSonNobetTarihi.Tarih : baslangicTarihiVarsayilan;
+                        }
 
                         _takvimService.SiraliNobetYazGunGrupBazinda(
                             planlananNobetlerinYazilacagiNobetGrubu,
@@ -346,19 +353,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                             planlananNobetlerinYazilacagiSonTarih,
                             gunGrup.GunGrupId);
                     }
-                    //}
-                    //else
-                    //{
-                    //    _takvimService.SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(planlananNobetlerinYazilacagiNobetGrubu, gruptakiEczaneler, baslangicTarihi, planlananNobetlerinYazilacagiSonTarih);
-                    //}
-
 
                     #endregion
                 }
-                //else
-                //{
-                //    _eczaneNobetGrupService.Update(eczaneNobetGrup);
-                //}
 
                 return RedirectToAction("Index");
             }
@@ -376,6 +373,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi", eczaneNobetGrup.NobetGrupGorevTipId);
 
             return View(eczaneNobetGrup);
+        }
+
+        private bool EczaneGruptaKapaniyorMu(EczaneNobetGrup eczaneNobetGrup)
+        {
+            return eczaneNobetGrup.BitisTarihi != null;
         }
 
         // GET: EczaneNobet/EczaneNobetGrup/Delete/5
