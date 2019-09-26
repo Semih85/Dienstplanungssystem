@@ -111,6 +111,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         public EczaneNobetSonucModel EczaneNobetCozAktifiGuncelleIteratif(AlanyaDataModel data)
         {
             var mevcutSonuclar = _eczaneNobetSonucAktifService.GetSonuclar2(data.NobetUstGrupId);
+
             var guncellenecekSonuclar = mevcutSonuclar
                 .Where(x => data.NobetGruplar.Select(s => s.Id).Contains(x.NobetGrupId))
                 .Select(s => s.Id).ToArray();
