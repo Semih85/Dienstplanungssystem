@@ -24,6 +24,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         #region ctor
         private IEczaneNobetOrtakService _eczaneNobetOrtakService;
         private IEczaneNobetSonucService _eczaneNobetSonucService;
+        private IEczaneNobetSonucAktifService _eczaneNobetSonucAktifService;
         private ITakvimService _takvimService;
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private IEczaneGrupService _eczaneGrupService;
@@ -54,6 +55,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public EczaneNobetSonucController(ITakvimService takvimService,
                                           IEczaneNobetGrupService eczaneNobetGrupService,
                                           IEczaneNobetSonucService eczaneNobetSonucService,
+                                          IEczaneNobetSonucAktifService eczaneNobetSonucAktifService,
                                           INobetGrupGorevTipService nobetGrupGorevTipService,
                                           INobetGorevTipService nobetGorevTipService,
                                           IEczaneGrupService eczaneGrupService,
@@ -84,6 +86,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _takvimService = takvimService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _eczaneNobetSonucService = eczaneNobetSonucService;
+            _eczaneNobetSonucAktifService = eczaneNobetSonucAktifService;
             _nobetGrupGorevTipService = nobetGrupGorevTipService;
             _nobetGorevTipService = nobetGorevTipService;
             _eczaneGrupService = eczaneGrupService;
@@ -1479,6 +1482,17 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 TempData["SilinenAy"] = $"{baslangicTarihi}-{bitisTarihi}";
             }
 
+            var silinecekNobetAktifSonuclar = _eczaneNobetSonucAktifService.GetDetaylar2(nobetUstGrup.Id).Select(s => s.Id).ToArray();
+
+            try
+            {
+                _eczaneNobetSonucAktifService.CokluSil(silinecekNobetAktifSonuclar);
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Aktif sonuçlar silinemedi!", e.InnerException);
+            }
+
             if (silinecekKayitSayisi > 0)
             {
                 try
@@ -1496,9 +1510,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         //_eczaneNobetSonucPlanlananService.CokluSil(silinecekNobetlerPlanlanan);
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-                    throw new Exception("Silme işlemi başarısız...");
+                    throw new Exception("Nöbetler silinemedi!", e.InnerException);
                 }
 
                 if (nobetUstGrup.Id == 1    //alanya
