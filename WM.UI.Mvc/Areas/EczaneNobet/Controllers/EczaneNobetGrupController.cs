@@ -198,7 +198,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                         var baslangicTarihi = eczaneNobetGrupDetaylar.Min(s => s.BaslangicTarihi);
 
-                        var planlananNobetlerinYazilacagiSonTarih = new DateTime(2020, 12, 31);
+                        var sonTarih = baslangicTarihi.AddYears(1);
+
+                        var planlananNobetlerinYazilacagiSonTarih = new DateTime(sonTarih.Year, 12, 31);
 
                         var planlananNobetlerinYazilacagiNobetGrubu = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
 
@@ -284,78 +286,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 var degisecekEczaneNobetGrupOncekiHali = _eczaneNobetGrupService.GetDetayById(eczaneNobetGrup.Id);
 
-                var eklenenNobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrup.NobetGrupGorevTipId);
-
-                var bitisTarihiDegistiMi = degisecekEczaneNobetGrupOncekiHali.BitisTarihi != eczaneNobetGrup.BitisTarihi;
-                //var baslangicTarihiDegistiMi = degisecekEczaneNobetGrupOncekiHali.BaslangicTarihi != eczaneNobetGrup.BaslangicTarihi;
-
                 _eczaneNobetGrupService.Update(eczaneNobetGrup);
 
-                if (eklenenNobetGrupGorevTip.NobetUstGrupId == 2
-                    && (bitisTarihiDegistiMi
-                    //|| baslangicTarihiDegistiMi
-                    )
-                    )
-                {//antalya'da planlanan nöbetleri yazmak için
-                 //grupta eczaneler var. grup yeni değil. tekli olarak eklenen eczaneler için planlanan nöbetler yeniden yazılacak.
-                    #region planlanan nöbetler - sıralı nöbet yazma (gün grubu bazında)
-
-                    var gruptakiEczaneler = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(eczaneNobetGrup.NobetGrupGorevTipId);
-
-                    var baslangicTarihi = eczaneNobetGrup.BaslangicTarihi < degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi
-                        ? degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi
-                        : eczaneNobetGrup.BaslangicTarihi;
-
-                    var baslangicTarihiVarsayilan = baslangicTarihi;
-
-                    //if (baslangicTarihiDegistiMi)
-                    //{
-                    //    baslangicTarihi = eczaneNobetGrup.BaslangicTarihi < degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi 
-                    //        ? degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi
-                    //        : eczaneNobetGrup.BaslangicTarihi;
-                    //}
-
-                    if (bitisTarihiDegistiMi
-                        && EczaneGruptaKapaniyorMu(eczaneNobetGrup))
-                    {
-                        baslangicTarihi = (DateTime)eczaneNobetGrup.BitisTarihi;
-                    }
-
-                    var sonTarih = baslangicTarihi.AddYears(1);
-
-                    var planlananNobetlerinYazilacagiSonTarih = new DateTime(sonTarih.Year, 12, 31);
-
-                    var planlananNobetlerinYazilacagiNobetGrubu = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrup.NobetGrupGorevTipId);
-
-                    var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(degisecekEczaneNobetGrupOncekiHali.NobetUstGrupId)
-                            .OrderBy(o => o.GunGrupId).ToList();
-
-                    foreach (var gunGrup in nobetUstGrupGunGruplar)
-                    {
-                        var planlananSonNobetTarihi = _eczaneNobetSonucPlanlananService
-                                .GetSonuclarByEczaneNobetGrupId(eczaneNobetGrup.Id, gunGrup.GunGrupId)
-                                .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)
-                                .OrderByDescending(o => o.Tarih).FirstOrDefault();
-
-                        if (EczaneGruptaKapaniyorMu(eczaneNobetGrup))
-                        {
-                            baslangicTarihi = (DateTime)eczaneNobetGrup.BitisTarihi;
-                        }
-                        else
-                        {
-                            baslangicTarihi = planlananSonNobetTarihi != null ? planlananSonNobetTarihi.Tarih : baslangicTarihiVarsayilan;
-                        }
-
-                        _takvimService.SiraliNobetYazGunGrupBazinda(
-                            planlananNobetlerinYazilacagiNobetGrubu,
-                            gruptakiEczaneler,
-                            baslangicTarihi,
-                            planlananNobetlerinYazilacagiSonTarih,
-                            gunGrup.GunGrupId);
-                    }
-
-                    #endregion
-                }
+                PlanlananNobetleriYazdir(eczaneNobetGrup, degisecekEczaneNobetGrupOncekiHali);
 
                 return RedirectToAction("Index");
             }
@@ -375,9 +308,86 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return View(eczaneNobetGrup);
         }
 
-        private bool EczaneGruptaKapaniyorMu(EczaneNobetGrup eczaneNobetGrup)
+        public void PlanlananNobetleriYazdir(EczaneNobetGrup eczaneNobetGrup, EczaneNobetGrupDetay degisecekEczaneNobetGrupOncekiHali)
         {
-            return eczaneNobetGrup.BitisTarihi != null;
+            #region planlanan nöbet yazdırma seçenekleri
+
+            var eklenenNobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrup.NobetGrupGorevTipId);
+
+            var bitisTarihiDegistiMi = degisecekEczaneNobetGrupOncekiHali.BitisTarihi != eczaneNobetGrup.BitisTarihi;
+            //var baslangicTarihiDegistiMi = degisecekEczaneNobetGrupOncekiHali.BaslangicTarihi != eczaneNobetGrup.BaslangicTarihi;
+
+            if (eklenenNobetGrupGorevTip.NobetUstGrupId == 2
+                && (bitisTarihiDegistiMi
+                //|| baslangicTarihiDegistiMi
+                )
+                )
+            {//antalya'da planlanan nöbetleri yazmak için
+             //grupta eczaneler var. grup yeni değil. tekli olarak eklenen eczaneler için planlanan nöbetler yeniden yazılacak.
+                #region planlanan nöbetler - sıralı nöbet yazma (gün grubu bazında)
+
+                var gruptakiEczaneler = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(eczaneNobetGrup.NobetGrupGorevTipId);
+
+                var baslangicTarihi = eczaneNobetGrup.BaslangicTarihi < degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi
+                    ? degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi
+                    : eczaneNobetGrup.BaslangicTarihi;
+
+                var baslangicTarihiVarsayilan = baslangicTarihi;
+
+                //if (baslangicTarihiDegistiMi)
+                //{
+                //    baslangicTarihi = eczaneNobetGrup.BaslangicTarihi < degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi 
+                //        ? degisecekEczaneNobetGrupOncekiHali.NobetGrupGorevTipBaslamaTarihi
+                //        : eczaneNobetGrup.BaslangicTarihi;
+                //}
+
+                if (bitisTarihiDegistiMi
+                    && EczaneGruptaKapaniyorMu(eczaneNobetGrup.BitisTarihi))
+                {
+                    baslangicTarihi = (DateTime)eczaneNobetGrup.BitisTarihi;
+                }
+
+                var sonTarih = baslangicTarihi.AddYears(1);
+
+                var planlananNobetlerinYazilacagiSonTarih = new DateTime(sonTarih.Year, 12, 31);
+
+                var planlananNobetlerinYazilacagiNobetGrubu = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrup.NobetGrupGorevTipId);
+
+                var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(degisecekEczaneNobetGrupOncekiHali.NobetUstGrupId)
+                        .OrderBy(o => o.GunGrupId).ToList();
+
+                foreach (var gunGrup in nobetUstGrupGunGruplar)
+                {
+                    if (EczaneGruptaKapaniyorMu(eczaneNobetGrup.BitisTarihi))
+                    {
+                        baslangicTarihi = (DateTime)eczaneNobetGrup.BitisTarihi;
+                    }
+                    else
+                    {
+                        var planlananSonNobetTarihi = _eczaneNobetSonucPlanlananService.GetSonuclarByEczaneNobetGrupId(eczaneNobetGrup.Id, gunGrup.GunGrupId)
+                            .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)
+                            .OrderByDescending(o => o.Tarih).FirstOrDefault();
+
+                        baslangicTarihi = planlananSonNobetTarihi != null ? planlananSonNobetTarihi.Tarih : baslangicTarihiVarsayilan;
+                    }
+
+                    _takvimService.SiraliNobetYazGunGrupBazinda(
+                        planlananNobetlerinYazilacagiNobetGrubu,
+                        gruptakiEczaneler,
+                        baslangicTarihi,
+                        planlananNobetlerinYazilacagiSonTarih,
+                        gunGrup.GunGrupId);
+                }
+
+                #endregion
+            }
+
+            #endregion
+        }
+
+        private bool EczaneGruptaKapaniyorMu(DateTime? eczaneNobetGrupAyrilisTarihi)
+        {//ayrılış tarihi null değilse eczane grupta kapanır.
+            return eczaneNobetGrupAyrilisTarihi != null;
         }
 
         // GET: EczaneNobet/EczaneNobetGrup/Delete/5
@@ -401,10 +411,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            EczaneNobetGrupDetay eczaneNobetGrup = _eczaneNobetGrupService.GetDetayById(id);
+            var eczaneNobetGrupDetay = _eczaneNobetGrupService.GetDetayById(id);
+            //EczaneNobetGrup eczaneNobetGrup = _eczaneNobetGrupService.GetById(id);
 
             try
             {
+                //PlanlananNobetleriYazdir(eczaneNobetGrup);
+
                 _eczaneNobetGrupService.Delete(id);
             }
             catch (DbUpdateException ex)
@@ -417,10 +430,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                 if (referansKayitHatasiMi)
                 {
-                    throw new Exception($"Gruptan silmek istediğiniz <strong>{eczaneNobetGrup.EczaneAdi} eczanesine ait başka kayıtlar bulunmaktadır.</strong> " +
+                    throw new Exception($"Gruptan silmek istediğiniz <strong>{eczaneNobetGrupDetay.EczaneAdi} eczanesine ait başka kayıtlar bulunmaktadır.</strong> " +
                         "Lütfen bu kayıtları sildikten sonra tekrar deneyiniz..." +
                         "<br /> " +
-                        "<strong >(Önce referans kayıtlar silinmelidir!)</strong>", ex);
+                        "<strong >(Önce referans kayıtlar silinmelidir!)</strong>", ex.InnerException);
                 }
 
                 throw ex;
