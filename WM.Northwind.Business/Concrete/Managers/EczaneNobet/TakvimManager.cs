@@ -2218,7 +2218,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
             else
             {
-                throw new Exception("Nöbet yazılacak tarih aralığı yok!");
+                return false;
+                //throw new Exception("Nöbet yazılacak tarih aralığı yok!");
             }
         }
 
