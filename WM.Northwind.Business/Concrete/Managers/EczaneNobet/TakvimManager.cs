@@ -1963,20 +1963,20 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             #endregion
 
             #region nöbet yazılacak tarih aralığını belirle
-
-            var baslangicTarihiIlk = nobetBaslangicTarihi;
-
+            
             var anahtarListeyeEklenecekYeniAcilanEczaneler = eczaneNobetGruplarTumu
                 .Where(w => w.BaslangicTarihi >= nobetBaslangicTarihi
                          && w.BaslangicTarihi >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
 
-            var oncekiNobetTarihleri = GetYeniAcilanEczanelerinPlanlanacakIlkNobetTarihleri(gunGrupId, anahtarListeyeEklenecekYeniAcilanEczaneler);
+            var nakilEczanelerinOncekiNobetTarihleri = GetYeniAcilanEczanelerinPlanlanacakIlkNobetTarihleri(gunGrupId, anahtarListeyeEklenecekYeniAcilanEczaneler);
 
-            nobetBaslangicTarihi = IterasyonBaslangicTarihiniGuncelle(nobetBaslangicTarihi, oncekiNobetTarihleri);
+            var sonNobetlerinEnKucugu = IterasyonBaslangicTarihiniGuncelle(nobetBaslangicTarihi, nakilEczanelerinOncekiNobetTarihleri);
 
-            nobetBaslangicTarihi = IterasyonBaslangicTarihiniGuncelle(nobetBaslangicTarihi, nobetGrupGorevTip.BaslamaTarihi);
+            var iterasyonBaslangicTarihiIlk = IterasyonBaslangicTarihiniGuncelle(sonNobetlerinEnKucugu, nobetGrupGorevTip.BaslamaTarihi);
 
-            var nobetYazilacakTarihAraligi = GetTakvimNobetGruplarByNobetGrupGorevTipId(nobetBaslangicTarihi, nobetBitisTarihi, nobetGrupGorevTip.Id, gunGrupId)
+            nobetBaslangicTarihi = iterasyonBaslangicTarihiIlk;
+
+            var nobetYazilacakTarihAraligi = GetTakvimNobetGruplarByNobetGrupGorevTipId(iterasyonBaslangicTarihiIlk, nobetBitisTarihi, nobetGrupGorevTip.Id, gunGrupId)
                 .OrderBy(o => o.Tarih).ToList();
 
             var alinacakEczaneSayisi = nobetYazilacakTarihAraligi.Count;
@@ -1985,7 +1985,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             NobetYazilacakTarihAraligiVarMi(nobetYazilacakTarihSayisi);
 
-            var iterasyonBitisTarihi = nobetYazilacakTarihAraligi[alinacakEczaneSayisi - 1].Tarih;
+            //var iterasyonBitisTarihi = nobetYazilacakTarihAraligi[alinacakEczaneSayisi - 1].Tarih;
 
             #endregion
 
@@ -2222,6 +2222,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
         }
 
+        /// <summary>
+        /// Nakil eczanelerin önceki gruplarındaki son nöbetlerinin en küçüğü
+        /// </summary>
+        /// <param name="nobetBaslangicTarihi"></param>
+        /// <param name="oncekiNobetTarihleri"></param>
+        /// <returns></returns>
         private DateTime IterasyonBaslangicTarihiniGuncelle(DateTime nobetBaslangicTarihi, List<TakvimDetay> oncekiNobetTarihleri)
         {
             if (oncekiNobetTarihleri.Count > 0)
@@ -2234,6 +2240,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return nobetBaslangicTarihi;
         }
 
+        /// <summary>
+        /// Nöbet yazılacak ilk tarih nöbet grup başlama tarihten küçük olamaz.
+        /// </summary>
+        /// <param name="nobetBaslangicTarihi"></param>
+        /// <param name="nobetGrupGorevTipBaslangicTarihi"></param>
+        /// <returns></returns>
         private DateTime IterasyonBaslangicTarihiniGuncelle(DateTime nobetBaslangicTarihi, DateTime nobetGrupGorevTipBaslangicTarihi)
         {
             nobetBaslangicTarihi = nobetBaslangicTarihi < nobetGrupGorevTipBaslangicTarihi ? nobetGrupGorevTipBaslangicTarihi : nobetBaslangicTarihi;
