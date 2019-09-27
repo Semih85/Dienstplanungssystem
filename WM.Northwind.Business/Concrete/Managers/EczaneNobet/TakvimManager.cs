@@ -1903,6 +1903,20 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
         }
 
+        #region önceki nöbet grubuna göre
+
+        [TransactionScopeAspect]
+        public void SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(NobetGrupGorevTipDetay nobetGrupGorevTip,
+            List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
+            DateTime nobetBaslangicTarihi,
+            DateTime nobetBitisTarihi,
+            EczaneNobetGrup eczaneNobetGrup)
+        {
+            _eczaneNobetGrupService.Update(eczaneNobetGrup);
+
+            SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(nobetGrupGorevTip, eczaneNobetGruplarTumu, nobetBaslangicTarihi, nobetBitisTarihi);
+        }
+
         public void SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(NobetGrupGorevTipDetay nobetGrupGorevTip,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
             DateTime nobetBaslangicTarihi,
@@ -1948,7 +1962,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             #endregion
 
-            var sonuclarTumu = new List<EczaneNobetCozum>();
+            #region nöbet yazılacak tarih aralığını belirle
 
             var baslangicTarihiIlk = nobetBaslangicTarihi;
 
@@ -1965,6 +1979,16 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var nobetYazilacakTarihAraligi = GetTakvimNobetGruplarByNobetGrupGorevTipId(nobetBaslangicTarihi, nobetBitisTarihi, nobetGrupGorevTip.Id, gunGrupId)
                 .OrderBy(o => o.Tarih).ToList();
 
+            var alinacakEczaneSayisi = nobetYazilacakTarihAraligi.Count;
+
+            var nobetYazilacakTarihSayisi = nobetYazilacakTarihAraligi.Count;
+
+            NobetYazilacakTarihAraligiVarMi(nobetYazilacakTarihSayisi);
+
+            var iterasyonBitisTarihi = nobetYazilacakTarihAraligi[alinacakEczaneSayisi - 1].Tarih;
+
+            #endregion
+
             #region planlanan nöbetlerden eski kayıtları sil
 
             var silinecekNobetlerPlanlanan = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetBaslangicTarihi, null, nobetGrupGorevTip.Id, gunGrupId)
@@ -1975,16 +1999,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             #endregion
 
-            var alinacakEczaneSayisi = nobetYazilacakTarihAraligi.Count;
+            #region planlanan nöbetleri iteratif olarak yaz
 
             var tarihIndis = 0;
 
-            var nobetYazilacakTarihSayisi = nobetYazilacakTarihAraligi.Count;
-
-            if (!NobetYazilacakTarihAraligiVarMi(nobetYazilacakTarihSayisi))
-                return;
-
-            var iterasyonBitisTarihi = nobetYazilacakTarihAraligi[alinacakEczaneSayisi - 1].Tarih;
+            var sonuclarTumu = new List<EczaneNobetCozum>();
 
             while (alinacakEczaneSayisi > 0)
             {
@@ -2181,23 +2200,26 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 #endregion
 
                 alinacakEczaneSayisi = nobetYazilacakTarihSayisi - sonuclarTumu.Count;
-            }
+            } 
 
+            #endregion
         }
 
-        private bool NobetYazilanTarihGruptanCikisTarihindenKucukMu(DateTime nobetYazilanTarih, DateTime? siradakiEczaneninGruptanCikisTarihi)
+        bool NobetYazilanTarihGruptanCikisTarihindenKucukMu(DateTime nobetYazilanTarih, DateTime? siradakiEczaneninGruptanCikisTarihi)
         {
             return nobetYazilanTarih < siradakiEczaneninGruptanCikisTarihi || siradakiEczaneninGruptanCikisTarihi == null;
         }
 
-        private bool YazilanNobetSayisiOlmasiGerekendenKucukMu(List<EczaneNobetCozum> sonuclarTumu, int nobetYazilacakTarihSayisi)
+        bool NobetYazilacakTarihAraligiVarMi(int nobetYazilacakTarihSayisi)
         {
-            return sonuclarTumu.Count < nobetYazilacakTarihSayisi;
-        }
-
-        private bool IlkOlmayanSonIterasyonMu(int toplamIterasyonSayisi, int iterasyonSayisi)
-        {
-            return iterasyonSayisi == toplamIterasyonSayisi - 1 && iterasyonSayisi > 0;
+            if (nobetYazilacakTarihSayisi > 0)
+            {
+                return true;
+            }
+            else
+            {
+                throw new Exception("Nöbet yazılacak tarih aralığı yok!");
+            }
         }
 
         private DateTime IterasyonBaslangicTarihiniGuncelle(DateTime nobetBaslangicTarihi, List<TakvimDetay> oncekiNobetTarihleri)
@@ -2240,91 +2262,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
 
             return oncekiNobetTarihleri;
-        }
-
-        private List<EczaneNobetSonucListe2> GetEnSonAnahtarListe(int nobetGrupGorevTipId, int gunGrupId, List<EczaneNobetSonucListe2> anahtarListeOnceki, int iterasyonSayisi)
-        {
-            var anahtarListe = new List<EczaneNobetSonucListe2>();
-
-            if (iterasyonSayisi == 0)
-            {
-                anahtarListe = anahtarListeOnceki;
-            }
-            else
-            {
-                anahtarListe = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetGrupGorevTipId, gunGrupId).OrderBy(o => o.Tarih).ToList();
-            }
-
-            return anahtarListe;
-        }
-
-        private DateTime GetIterasyonBaslangicTarihi(DateTime nobetBaslangicTarihi, int iterasyonSayisi, TakvimNobetGrup iterasyonSirasindakiIlkTarih)
-        {
-            return iterasyonSayisi == 0 ? nobetBaslangicTarihi : iterasyonSirasindakiIlkTarih.Tarih;
-        }
-
-        bool NobetYazilacakTarihAraligiVarMi(int nobetYazilacakTarihSayisi)
-        {
-            if (nobetYazilacakTarihSayisi > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Daha önceki anahtar liste kullanılarak sonraki dönemde kaç tur nöbet yazılacağı belirlenir.
-        /// </summary>
-        /// <param name="ilgiliTarihler"></param>
-        /// <param name="anahtarListeIlk"></param>
-        /// <param name="alinacakEczaneSayisi"></param>
-        /// <returns></returns>
-        private int IterasyonSayisiniHesapla(List<TakvimNobetGrup> ilgiliTarihler, List<EczaneNobetSonucListe2> anahtarListeIlk, int alinacakEczaneSayisi)
-        {
-            int toplamIterasyonSayisi = 1;
-
-            if (alinacakEczaneSayisi > anahtarListeIlk.Count)
-            {
-                alinacakEczaneSayisi = anahtarListeIlk.Count;
-
-                var bolum = (int)Math.Ceiling((double)ilgiliTarihler.Count / alinacakEczaneSayisi);
-
-                toplamIterasyonSayisi = bolum;// ilgiliTarihlerByNobetGrup.Count % alinacakEczaneSayisi == 0 ? bolum + 1 : bolum;
-            }
-
-            return toplamIterasyonSayisi;
-        }
-
-        private int GetNobetGrupBuyuklukleriArasindakiFark(EczaneNobetGrupDetay eczaneNobetGrubuSonraki, EczaneNobetGrupDetay eczaneNobetGrubuOnceki)
-        {
-            var grupBuyuklukleriArasindakiFark = 0;
-
-            if (eczaneNobetGrubuOnceki.Id > 0)
-            {
-                var nobetGrupBuyukluguOnceki = _eczaneNobetGrupService.GetEczaneninGrubaGirdigiTarihtekiEczaneSayisi(eczaneNobetGrubuOnceki.Id);
-
-                var nobetGrupBuyukluguSonraki = _eczaneNobetGrupService.GetEczaneninGrubaGirdigiTarihtekiEczaneSayisi(eczaneNobetGrubuSonraki.Id);
-
-                grupBuyuklukleriArasindakiFark = nobetGrupBuyukluguOnceki - nobetGrupBuyukluguSonraki;
-            }
-
-            return grupBuyuklukleriArasindakiFark;
-        }
-
-        [TransactionScopeAspect]
-        public void SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(NobetGrupGorevTipDetay nobetGrupGorevTip,
-            List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
-            DateTime nobetBaslangicTarihi,
-            DateTime nobetBitisTarihi,
-            EczaneNobetGrup eczaneNobetGrup)
-        {//deneme2
-
-            _eczaneNobetGrupService.Update(eczaneNobetGrup);
-
-            SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(nobetGrupGorevTip, eczaneNobetGruplarTumu, nobetBaslangicTarihi, nobetBitisTarihi);
         }
 
         private TakvimDetay IlkNobetTarihiniBelirle(
@@ -2418,6 +2355,81 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             return grupDegitirenEczaneninEskiGruptakiSonNobeti;
         }
+
+        #endregion
+
+        #region eski
+        private List<EczaneNobetSonucListe2> GetEnSonAnahtarListe(int nobetGrupGorevTipId, int gunGrupId, List<EczaneNobetSonucListe2> anahtarListeOnceki, int iterasyonSayisi)
+        {
+            var anahtarListe = new List<EczaneNobetSonucListe2>();
+
+            if (iterasyonSayisi == 0)
+            {
+                anahtarListe = anahtarListeOnceki;
+            }
+            else
+            {
+                anahtarListe = _eczaneNobetSonucPlanlananService.GetSonuclar(nobetGrupGorevTipId, gunGrupId).OrderBy(o => o.Tarih).ToList();
+            }
+
+            return anahtarListe;
+        }
+
+        private DateTime GetIterasyonBaslangicTarihi(DateTime nobetBaslangicTarihi, int iterasyonSayisi, TakvimNobetGrup iterasyonSirasindakiIlkTarih)
+        {
+            return iterasyonSayisi == 0 ? nobetBaslangicTarihi : iterasyonSirasindakiIlkTarih.Tarih;
+        }
+
+        private bool YazilanNobetSayisiOlmasiGerekendenKucukMu(List<EczaneNobetCozum> sonuclarTumu, int nobetYazilacakTarihSayisi)
+        {
+            return sonuclarTumu.Count < nobetYazilacakTarihSayisi;
+        }
+
+        private bool IlkOlmayanSonIterasyonMu(int toplamIterasyonSayisi, int iterasyonSayisi)
+        {
+            return iterasyonSayisi == toplamIterasyonSayisi - 1 && iterasyonSayisi > 0;
+        }
+
+        /// <summary>
+        /// Daha önceki anahtar liste kullanılarak sonraki dönemde kaç tur nöbet yazılacağı belirlenir.
+        /// </summary>
+        /// <param name="ilgiliTarihler"></param>
+        /// <param name="anahtarListeIlk"></param>
+        /// <param name="alinacakEczaneSayisi"></param>
+        /// <returns></returns>
+        private int IterasyonSayisiniHesapla(List<TakvimNobetGrup> ilgiliTarihler, List<EczaneNobetSonucListe2> anahtarListeIlk, int alinacakEczaneSayisi)
+        {
+            int toplamIterasyonSayisi = 1;
+
+            if (alinacakEczaneSayisi > anahtarListeIlk.Count)
+            {
+                alinacakEczaneSayisi = anahtarListeIlk.Count;
+
+                var bolum = (int)Math.Ceiling((double)ilgiliTarihler.Count / alinacakEczaneSayisi);
+
+                toplamIterasyonSayisi = bolum;// ilgiliTarihlerByNobetGrup.Count % alinacakEczaneSayisi == 0 ? bolum + 1 : bolum;
+            }
+
+            return toplamIterasyonSayisi;
+        }
+
+        private int GetNobetGrupBuyuklukleriArasindakiFark(EczaneNobetGrupDetay eczaneNobetGrubuSonraki, EczaneNobetGrupDetay eczaneNobetGrubuOnceki)
+        {
+            var grupBuyuklukleriArasindakiFark = 0;
+
+            if (eczaneNobetGrubuOnceki.Id > 0)
+            {
+                var nobetGrupBuyukluguOnceki = _eczaneNobetGrupService.GetEczaneninGrubaGirdigiTarihtekiEczaneSayisi(eczaneNobetGrubuOnceki.Id);
+
+                var nobetGrupBuyukluguSonraki = _eczaneNobetGrupService.GetEczaneninGrubaGirdigiTarihtekiEczaneSayisi(eczaneNobetGrubuSonraki.Id);
+
+                grupBuyuklukleriArasindakiFark = nobetGrupBuyukluguOnceki - nobetGrupBuyukluguSonraki;
+            }
+
+            return grupBuyuklukleriArasindakiFark;
+        }
+
+        #endregion
 
         /// <summary>
         /// orjinal sıralı nöbet yaz
