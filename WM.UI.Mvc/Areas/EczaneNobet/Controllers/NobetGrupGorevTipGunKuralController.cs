@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -153,7 +154,30 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
-                _nobetGrupGorevTipGunKuralService.Insert(nobetGrupGorevTipGunKural);
+                try
+                {
+                    _nobetGrupGorevTipGunKuralService.Insert(nobetGrupGorevTipGunKural);
+                }
+                catch (DbUpdateException ex)
+                {
+                    var hata = ex.InnerException.ToString();
+
+                    string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+
+                    var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+
+                    if (dublicateRowHatasiMi)
+                    {
+                        throw new Exception("<strong>Bir Nöbet Grubu için iki kural eklenemez...</strong>");
+                    }
+
+                    throw ex;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
                 return RedirectToAction("Index");
             }
 

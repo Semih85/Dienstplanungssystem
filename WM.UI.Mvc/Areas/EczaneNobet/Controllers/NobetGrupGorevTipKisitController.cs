@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -51,7 +52,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
 
             var nobetGrupGorevTipKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrup.Id)
-                .OrderByDescending(o=>o.Id).ToList();
+                .OrderByDescending(o => o.Id).ToList();
 
             return View(nobetGrupGorevTipKisitlar);
         }
@@ -125,7 +126,30 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
-                _nobetGrupGorevTipKisitService.Insert(nobetGrupGorevTipKisit);
+                try
+                {
+                    _nobetGrupGorevTipKisitService.Insert(nobetGrupGorevTipKisit);
+                }
+                catch (DbUpdateException ex)
+                {
+                    var hata = ex.InnerException.ToString();
+
+                    string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+
+                    var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+
+                    if (dublicateRowHatasiMi)
+                    {
+                        throw new Exception("<strong>Bir Nöbet Grubu için iki kural kaydı eklenemez...</strong>");
+                    }
+
+                    throw ex;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+
                 return RedirectToAction("Index");
             }
             //var user = _userService.GetByUserName(User.Identity.Name);
