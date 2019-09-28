@@ -185,8 +185,8 @@
 
         $("#formSubmitButton").click(function (e) {
 
-            var bitisTarihi = $('#BitisTarihi').val();
-            var baslangicTarihi = $('#BaslangicTarihi').val();
+            var bitisTarihi = tarihDondur2($('#BitisTarihi').val());
+            var baslangicTarihi = tarihDondur2($('#BaslangicTarihi').val());
 
             if (baslangicTarihi != "" && bitisTarihi != "") {
                 if (bitisTarihi < baslangicTarihi) {
@@ -244,5 +244,25 @@
                 $('#divYinedeEklensinMi').show();
             }
         }
+
+        function tarihDondur2(metin) {
+
+            var tarih = metin.split(' ', 1)[0];
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2];
+            ay = tarihTanim[1];
+            gun = tarihTanim[0];
+
+            if (gun.length != 4) {
+                return yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+
     </script>
 }
