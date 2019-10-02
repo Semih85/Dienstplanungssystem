@@ -4,9 +4,12 @@
     Layout = "~/Areas/EczaneNobet/Views/Shared/_Layout.cshtml";
 }
 
-<div class="page-header">
-    <h4>Yeni Kullanıcı Ekle</h4>
-</div>
+@{
+    ViewBag.Title = "Yeni Kullanıcı Ekle |  Nöbet Yaz";
+}
+
+<h4>Yeni Kullanıcı Ekle</h4>
+
 <hr />
 @using (Html.BeginForm())
 {
@@ -36,6 +39,35 @@
         @Html.PasswordFor(model => model.User.Password, new { @class = "form-control", @placeholder = "İlk parolayı yazınız..." })
         @Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
     </div>
+
+    <div class="form-row">
+
+        <div class="form-group col-md-4 ml-3">
+            @*@Html.LabelFor(model => model.AcilisTarihi, htmlAttributes: new { @class = "control-label" })*@
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text p-2">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                </div>
+                @Html.TextBoxFor(model => model.User.BaslamaTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Başlama Tarihi" })
+            </div>
+            @Html.ValidationMessageFor(model => model.User.BaslamaTarihi, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4 ml-3">
+            @*@Html.LabelFor(model => model.KapanisTarihi, htmlAttributes: new { @class = "control-label" })*@
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text p-2">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                </div>
+                @Html.TextBoxFor(model => model.User.BitisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Bitiş Tarihi" })
+            </div>
+            @Html.ValidationMessageFor(model => model.User.BitisTarihi, "", new { @class = "text-danger" })
+        </div>
+    </div>
     @*<div class="form-group">
             @Html.LabelFor(model => model.PasswordVreify, new { @class = "control-label" })
             @Html.PasswordFor(model => model.PasswordVreify, new { @class = "form-control", @placeholder = "parolasını tekrar yazınız..." })
@@ -50,10 +82,29 @@
     @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-outline-warning" })
 }
 
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
 
 @section Scripts{
-    @*<script src="https://code.jquery.com/jquery-1.10.2.js"
-        integrity="sha256-it5nQKHTz+34HijZJQkpNBIHsjpV8b6QzMJs9tmOBSo="
-        crossorigin="anonymous"></script>*@
+    @*@Scripts.Render("~/bundle/bootstrap-datepicker/scripts")*@
+    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
+    @Scripts.Render("~/bundle/ajax")
     @Scripts.Render("~/bundle/validation/scripts")
+    @*@Scripts.Render("~/bundle/globalize/scripts")*@
+
+    <script>
+        $(function () {
+            //var d = new Date();
+            //var strDate = d.getFullYear() + "." + (d.getMonth() + 1) + "." + d.getDate();
+            //$("#AcilisTarihi").val(strDate);
+            $('.datepicker').datepicker('setStartDate', "01-01-1900");
+
+            var baslangicStr = tarihDondur2($("#BaslamaTarihi").val());
+
+            $("#BaslamaTarihi").datepicker("setDate", new Date());
+        });
+
+    </script>
 }
+
