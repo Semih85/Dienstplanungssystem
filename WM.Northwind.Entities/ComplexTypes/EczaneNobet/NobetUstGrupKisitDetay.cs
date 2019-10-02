@@ -41,7 +41,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
             : "";
 
         public string KisitTanim => KisitId > 0
-            ? $"{KisitOnEk} ({KisitKategorisi}, {KisitAdiGosterilen}) &raquo;"
+            ? $"{KisitOnEk}, {KisitKategorisi}, {KisitAdiGosterilen},"
             : "";
 
         public string KisitAdiUzun => $"{KisitOnEk} ({KisitKategorisi}, {KisitAdiGosterilen})";
