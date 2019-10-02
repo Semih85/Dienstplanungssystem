@@ -15,6 +15,7 @@ using WM.UI.Mvc.Models;
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
     [Authorize]
+    [HandleError]
     public class UserEczaneOdaController : Controller
     {
         private IUserEczaneOdaService _userEczaneOdaService;

@@ -13,6 +13,7 @@ using WM.UI.Mvc.Models;
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
     [Authorize]
+    [HandleError]
     public class UserRoleController : Controller
     {
         private IUserRoleService _userRoleService;
@@ -63,7 +64,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,RoleId,UserId,BaslangicTarihi,BitisTarihi")] UserRole userRole)
+        public ActionResult Create([Bind(Include = "Id,RoleId,UserId,BaslamaTarihi,BitisTarihi")] UserRole userRole)
         {
             if (ModelState.IsValid)
             {
