@@ -642,7 +642,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         kumulatifToplamEnFazla.KumulatifOrtalamaNobetSayisi = kumulatifOrtalamaGunKuralNobetSayisi;
                         kumulatifToplamEnFazla.ToplamNobetSayisi = gunKuralNobetSayisi;
                         kumulatifToplamEnFazla.NobetUstGrupKisit = kumulatifEnFazlaIlgiliGunkural;
-                        kumulatifToplamEnFazla.GunKuralAdi = nobetGunKural.NobetGunKuralAdi;
+                        //kumulatifToplamEnFazla.GunKuralAdi = nobetGunKural.NobetGunKuralAdi;
 
                         KumulatifToplamEnFazla(kumulatifToplamEnFazla);
 
@@ -1439,6 +1439,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     var mesaj = ex.Message;
 
                     var iterasyonMesaj = "";
+
                     if (data.CozumItereasyon.IterasyonSayisi > 0)
                     {
                         iterasyonMesaj = $"<br/>Aynı gün nöbet: Çözüm esnasında ay içinde aynı gün nöbet tutan eczaneler;" +
@@ -1447,66 +1448,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             ;
                     }
 
-                    string cozulenNobetGruplar = null;
+                    string cozulenNobetGruplar = CozulenGruplariYazdir(data.NobetGrupGorevTipler);
 
-                    var ilkGrup = data.NobetGruplar.Select(s => s.Adi).FirstOrDefault();
+                    var celiskiler = results.Celiskiler.Split('*');
 
-                    foreach (var i in data.NobetGruplar.Select(s => s.Adi))
-                    {
-                        if (i == ilkGrup)
-                        {
-                            cozulenNobetGruplar += i;
-                        }
-                        else
-                        {
-                            cozulenNobetGruplar += $", {i}";
-                        }
-                    }
-
-                    //$"<strong><span class='text-danger'>Çözüm bulunamadı.</strong> "
-                    //      + "<br/> "
-                    //      +
-
-                    var celiskiler = new string[1000];
-
-                    if (results.Celiskiler != null)
-                    {
-                        celiskiler = results.Celiskiler.Split('*');
-                    }
-
-                    mesaj = "Aşağıdaki açıklamalara göre <a href=\"/EczaneNobet/NobetUstGrupKisit/KisitAyarla\" class=\"card-link\" target=\"_blank\">nöbet ayarlarında</a> bazı değişiklikler yaparak <strong>tekrar çözmelisiniz..</strong>"
-                          + "<hr /> "
-                          + $"<strong>Kontrol edilecek kurallar <span class='badge badge-warning'>{celiskiler[1]}</span></strong>"
-                          + "<br /> "
-                          + celiskiler[0];
-
-                    mesaj += $"<strong>Nöbet seçenekleri:</strong>" +
-                        $"<br />Nöbet Grupları: {cozulenNobetGruplar}" +
-                        $"<br />Tarih Aralığı: <strong>{data.BaslangicTarihi.ToShortDateString()}-{data.BitisTarihi.ToShortDateString()}</strong>" +
-                        $"<hr/> " +
-                        $"<strong>Çalışma adımları <span class='badge badge-info'>{data.CalismaSayisi}</span></strong>" +
-                        $"{iterasyonMesaj} "
-                        ;
-
-                    var calismaAdimlari = new string[10]
-                        {
-                            "Çözüm bulunamadı.",
-                            //"Tekrar çözüm denendi.",
-                            "kumulatifOrtalamaGunKuralSayisi 1 artırıldı.",
-                            "haftaIciOrtalama (satır ortalaması) 1 artırıldı.",
-                            "haftaIciOrtalama (satır ortalaması) 2 artırıldı.",
-                            "Ayda en fazla 1 gorev kaldırıldı!",
-                            "Farklı ay peşpeşe görev gevşetildi!",
-                            "Ayda en fazla 1 gorev kaldırıldı ve Farklı Ay Peşpeşe Görev gevşetildi!",
-                            "Cuma ve cumartesi en fazla 3 olmadı 4 olarak gevşetildi!",
-                            "Farklı ay peşpeşe görev sayısı en çok 5 olarak gevşetildi!",
-                            "default"
-                        };
-
-                    for (int i = 0; i < data.CalismaSayisi; i++)
-                    {
-                        mesaj += "<br /> " + i + " " + calismaAdimlari[i];
-                    }
+                    mesaj = CeliskileriTabloyaAktar(data.BaslangicTarihi, data.BitisTarihi, data.CalismaSayisi, iterasyonMesaj, cozulenNobetGruplar, celiskiler);
 
                     throw new Exception(mesaj);
                 }

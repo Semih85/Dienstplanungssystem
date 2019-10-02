@@ -30,7 +30,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     ? ""
                     : p.NobetGrupGorevTip.NobetGrupAdi;
 
-                var kisitAdi = IsimleriBirlestir("K0 (Talep):", nobetGrupBilgisi, $"{tarih.Tarih.ToShortDateString()}-{tarih.NobetGunKuralAdi} tarihindeki talep edilen nöbetçi sayısı: ", tarih.TalepEdilenNobetciSayisi.ToString());
+                var kisitAdi = IsimleriBirlestir("K00, Talep"
+                    , tarih.NobetGunKuralAdi
+                    , tarih.Tarih.ToShortDateString()
+                    , nobetGrupBilgisi
+                    , $"Değer: ", tarih.TalepEdilenNobetciSayisi.ToString()
+                    );
 
                 var kararIndex = p.EczaneNobetTarihAralikTumu
                     .Where(k => k.TakvimId == tarih.TakvimId).ToList();
@@ -69,7 +74,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
                     $" {p.KuralAciklama}" +
-                    $" [Std. {enAzNobetSayisi}"
+                    $" Değer: {enAzNobetSayisi}"
                     ;
 
                 var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
@@ -101,8 +106,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     p.OrtalamaNobetSayisi += p.NobetUstGrupKisit.SagTarafDegeri;
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
-                    $" [Std. {p.OrtalamaNobetSayisi}" +
-                    $"{(p.GunKuralAdi == null ? "" : $"- {p.GunKuralAdi}")}]"
+                    $" Değer: {p.OrtalamaNobetSayisi}" +
+                    $"{(p.GunKuralAdi == null ? "" : $"- {p.GunKuralAdi}")}"
                     ;
 
                 var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
@@ -139,19 +144,19 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 else
                 {
                     //if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
-                        p.KumulatifOrtalamaNobetSayisi += p.NobetUstGrupKisit.SagTarafDegeri;
+                    p.KumulatifOrtalamaNobetSayisi += p.NobetUstGrupKisit.SagTarafDegeri;
                 }
 
+                var fark = p.KumulatifOrtalamaNobetSayisi - p.ToplamNobetSayisi;
+
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
-                    $" [Std. {p.KumulatifOrtalamaNobetSayisi}" +
-                    $"{(p.GunKuralAdi == null ? "" : $" - {p.GunKuralAdi}")}]"
+                    $" Değer: {fark}={p.KumulatifOrtalamaNobetSayisi}-{p.ToplamNobetSayisi}" +
+                    $"{(p.GunKuralAdi == null ? "" : $" - {p.GunKuralAdi}")}"
                     ;
 
                 var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
 
                 var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, p.EczaneNobetGrup.EczaneAdi);
-
-                var fark = p.KumulatifOrtalamaNobetSayisi - p.ToplamNobetSayisi;
 
                 var std = fark < 0 ? 0 : fark;
                 var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
@@ -200,11 +205,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         }
                     }
 
-                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
+                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
                               //+ $"{p.PespeseNobetSayisiAltLimit} gün ("
                               + $"Farklı ay ("
-                              + $"{p.SonNobetTarihi.ToShortDateString()} - {p.NobetYazilabilecekIlkTarih.ToShortDateString()} ({(int)(p.NobetYazilabilecekIlkTarih - p.SonNobetTarihi).TotalDays} gün)"
-                              + $"]";
+                              + $"{p.SonNobetTarihi.ToShortDateString()}-{p.NobetYazilabilecekIlkTarih.ToShortDateString()})-"
+                              + $"{(int)(p.NobetYazilabilecekIlkTarih - p.SonNobetTarihi).TotalDays} gün"
+                              + $"";
 
                     var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
 
@@ -266,7 +272,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     //var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
                     //         + $"{p.PespeseNobetSayisiAltLimit} gün ("
                     //         + $"{pespeseGunlerdenKalanlar.Count})"
-                    //         + $"{(p.GunKuralAdi == null ? "" : $"- {p.GunKuralAdi}")}]";
+                    //         + $"{(p.GunKuralAdi == null ? "" : $"- {p.GunKuralAdi}")}";
 
                     //var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
 
@@ -294,10 +300,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         //+28 pazar günü gibi birşey olmalı
                         indis++;
 
-                        var kisitTanim2 = $"{p.NobetUstGrupKisit.KisitTanim} ["
+                        var kisitTanim2 = $"{p.NobetUstGrupKisit.KisitTanim} "
                           + $"{(int)p.PespeseNobetSayisiAltLimit} gün ("
                           + $"{altLimit.ToShortDateString()} - {ustLimit.ToShortDateString()})"
-                          + $"{(p.GunKuralAdi == null ? "" : $"- {p.GunKuralAdi}")}]";
+                          + $"{(p.GunKuralAdi == null ? "" : $"- {p.GunKuralAdi}")}";
 
                         var nobetGrupBilgisi2 = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
 
@@ -338,10 +344,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     var altLimit = tarih.Tarih;
                     var ustLimit = tarih.Tarih.AddDays(p.PespeseNobetSayisi);
 
-                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
+                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
                         + $"{p.PespeseNobetSayisi} gün ("
                         + $"{altLimit.ToShortDateString()} - {ustLimit.ToShortDateString()})"
-                        + $"]";
+                        + $"";
 
                     var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
 
@@ -370,9 +376,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             {
                 var ilgiliTarihler = p.Tarihler.Where(w => w.NobetGunKuralId == p.SonNobet.NobetGunKuralId).ToList();
 
-                var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
+                var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
                      + $"son nöbet günü: {p.SonNobet.NobetGunKuralAdi}"
-                     + $"]";
+                     + $"";
 
                 var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
 
@@ -485,9 +491,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                 foreach (var tarih in tarihAraligi)
                                 {//ayni_es_gruptaki_eczaneler_ayni_gun_birlikte_nobet_tutmasin
 
-                                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
+                                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
                                       + $"{tarih.Tarih.ToShortDateString()}"
-                                      + $"]";
+                                      + $"";
 
                                     var nobetGrupBilgisi = eczaneGrupTanim.EczaneGrupTanimAdi;
 
@@ -514,9 +520,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                     foreach (var tarih in gruptakiEczanelerinNobetTarihleri)
                                     {//ayni_es_gruptaki_eczaneler_ayni_gun_birlikte_nobet_tutmasin_oncelikli_cozum
 
-                                        var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} [Öncelikli çözüm "
+                                        var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
+                                            + $" Öncelikli çözüm, "
                                             + $"{tarih.Tarih.ToShortDateString()}"
-                                            + $"]";
+                                            + $"";
 
                                         var nobetGrupBilgisi = eczaneGrupTanim.EczaneGrupTanimAdi;
 
@@ -548,9 +555,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                     var altLimit = tarih.Tarih;
                                     var ustLimit = tarih.Tarih.AddDays(ardisikNobetSayisi);
 
-                                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
-                                       + $"{altLimit.ToShortDateString()} - {ustLimit.ToShortDateString()} ({(int)(ustLimit - altLimit).TotalDays} gün)"
-                                       + $"]";
+                                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
+                                       + $"{altLimit.ToShortDateString()} - {ustLimit.ToShortDateString()}"
+                                       + $"({(int)(ustLimit - altLimit).TotalDays} gün)"
+                                       + $"";
 
                                     var nobetGrupBilgisi = eczaneGrupTanim.EczaneGrupTanimAdi;
 
@@ -577,9 +585,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                         var altLimit = tarih.Tarih.AddDays(-ardisikNobetSayisi);
                                         var ustLimit = tarih.Tarih.AddDays(ardisikNobetSayisi);
 
-                                        var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} [Öncelikli çözüm "
+                                        var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
+                                           + $"Öncelikli çözüm "
                                            + $"{altLimit.ToShortDateString()} - {ustLimit.ToShortDateString()} ({(int)(ustLimit - altLimit).TotalDays} gün)"
-                                           + $"]";
+                                           + $"";
 
                                         var nobetGrupBilgisi = eczaneGrupTanim.EczaneGrupTanimAdi;
 
@@ -656,7 +665,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var tarihAraligi = p.Tarihler.Select(s => new { s.TakvimId, TarihKisa = s.Tarih.ToShortDateString(), s.Tarih }).Distinct().ToArray();
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
-                     $" [Std. 3] "
+                     $" Değer: 3 "
                      //+ $"{i}"
                      ;
 
@@ -830,7 +839,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 //            foreach (var tarih2 in tarihler2)
                 //            {
                 //                var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
-                //                                 $" [Std. 3] {indis}";
+                //                                 $" Değer: 3] {indis}";
 
                 //                var ikiliEczaneler = $"{ikiliEczane.EczaneAdi1}-{ikiliEczane.EczaneAdi2}";
                 //                var ikiliTarihler = $"{tarih.Tarih.ToShortDateString()}-{tarih2.Tarih.ToShortDateString()}";
@@ -894,7 +903,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             foreach (var tarih2 in tarihler2)
                             {
                                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
-                                                 $" [Std. 3] {indis}";
+                                                 $" Değer: 3 {indis}";
 
                                 var ikiliEczaneler = $"{ikiliEczane.EczaneAdi1}-{ikiliEczane.EczaneAdi2}";
                                 var ikiliTarihler = $"{tarih.Tarih.ToShortDateString()}-{tarih2.Tarih.ToShortDateString()}";
@@ -1020,7 +1029,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             if (!p.NobetUstGrupKisit.PasifMi)
             {
-                var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({p.NobetUstGrupKisit.KisitKategorisi}, {p.NobetUstGrupKisit.KisitAdiGosterilen}):"; //, {eczaneNobetGrup.EczaneAdi}";
+                var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({p.NobetUstGrupKisit.KisitKategorisi} {p.NobetUstGrupKisit.KisitAdiGosterilen}):"; //, {eczaneNobetGrup.EczaneAdi}";
 
                 var tarihAraligi = p.Tarihler.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
 
@@ -1100,10 +1109,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 foreach (var eczaneNobetMazeret in p.EczaneNobetMazeretler)
                 {
-                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
-                     + $"m{indis}. Mazeret tarihi: {eczaneNobetMazeret.Tarih.ToShortDateString()}"
+                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
+                     //+ $"m{indis}. " +
+                     + $"Mazeret tarihi: {eczaneNobetMazeret.Tarih.ToShortDateString()}"
                      //+ $"{eczaneNobetMazeret.MazeretAdi}"
-                     + $"]";
+                     + $"";
 
                     var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(eczaneNobetMazeret);
 
@@ -1133,10 +1143,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             {
                 foreach (var eczaneNobetIstek in p.EczaneNobetIstekler)
                 {
-                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} ["
+                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
                          + $"istek tarihi: {eczaneNobetIstek.Tarih.ToShortDateString()}"
                          //+ $"{eczaneNobetIstek.IstekAdi}"
-                         + $"]";
+                         + $"";
 
                     var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(eczaneNobetIstek);
 
@@ -1173,7 +1183,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 {
                     var nobetTutamazGunler = p.EczaneNobetTutamazGunler.Where(w => w.EczaneNobetGrupId == eczaneNobetGrup).ToList();
 
-                    var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({p.NobetUstGrupKisit.KisitKategorisi}, {p.NobetUstGrupKisit.KisitAdiGosterilen}): {eczaneNobetGrup}";
+                    var kisitAdi = $"K{p.NobetUstGrupKisit.KisitId} ({p.NobetUstGrupKisit.KisitKategorisi} {p.NobetUstGrupKisit.KisitAdiGosterilen}): {eczaneNobetGrup}";
 
                     var kararIndex = p.EczaneNobetTarihAralik
                         .Where(e => e.EczaneNobetGrupId == eczaneNobetGrup
@@ -2203,7 +2213,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
         public string CeliskileriEkle(Solution solution)
         {
-            var celiskiler = "<ul class='list-group list-group-flush mt-2 mb-3'>";
+            var celiskiler = "<table class='table table-hover table-bordered table-striped table-sm mt-2 mb-3'>";
 
             if (solution.ConflictingSet.ConstraintsLB.Count() > 1000)
             {
@@ -2224,14 +2234,113 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             var celisikKurallarTekListe = celisikKurallar.Distinct().OrderBy(o => o).ToList();
 
+            celiskiler += "<tr>";
+            //celiskiler += "<thead>";
+            //celiskiler += "<tr>";
+            //celiskiler += $"<td>Sonuc</td>";
+            //celiskiler += "</tr>";
+            //celiskiler += "</thead>";
+
+            celiskiler += "<tbody id='kuralCeliski'>";
+            var indis = 0;
+
+            string GetIndisSayisi(int index)
+            {
+                return index < 10 ? $"0{index}" : index.ToString();
+            }
+
             foreach (var kisit in celisikKurallarTekListe)
             {
-                celiskiler += $"<li class='list-group-item list-group-item-action py-1'>{kisit}</li>";
+                indis++;
+
+                celiskiler += "<tr class='gridtr'>";
+
+                var kisitAdi = kisit.Split(',').ToArray();
+
+                celiskiler += $"<td>{GetIndisSayisi(indis)}</td>";
+
+                foreach (var item in kisitAdi)
+                {
+                    celiskiler += $"<td>{item.Trim()}</td>";
+                }
+
+                celiskiler += "</tr>";
             }
-            celiskiler += "</ul>";
+            celiskiler += "</tbody>";
+
+            celiskiler += "</tr>";
+            celiskiler += "</table>";
             celiskiler += $"*{celisikKurallarTekListe.Count}";
 
             return celiskiler;
+        }
+        public string CeliskileriTabloyaAktar(DateTime baslangicTarihi, DateTime bitisTarihi, int calismaSayisi, string iterasyonMesaj, string cozulenNobetGruplar, string[] celiskiler)
+        {
+            string mesaj;
+            mesaj = "Tabloya göre "
+                        + "<a href=\"/EczaneNobet/NobetUstGrupKisit/KisitAyarla\" class=\"card-link\" target=\"_blank\">nöbet ayarlarını</a> "
+                        + "kontrol edip <strong> nöbetleri tekrar yazdırmalısınız...</strong>"
+                        //+ "<br /> "
+                        ;
+
+            mesaj += $"<span class='pull-right'>Tarih Aralığı: <strong><mark>{baslangicTarihi.ToShortDateString()} - {bitisTarihi.ToShortDateString()}</mark></strong></span>"
+                        + "<br /> ";
+
+            mesaj += //$"<strong>Nöbet seçenekleri:</strong>" +
+                        $"Nöbet Grupları:"
+                        + $"<strong><mark>{cozulenNobetGruplar}</mark></strong>"
+                        + $"<br /> "
+                        ;
+
+            //mesaj += $"<span class='mr-2'>Toplam kayıt: <strong><mark>{celiskiler[1]}</mark></strong></span>";
+
+            mesaj += celiskiler[0];
+
+            var calismaAdimlari = new string[10]
+                {
+                            "Çözüm bulunamadı.",
+                            //"Tekrar çözüm denendi.",
+                            "kumulatifOrtalamaGunKuralSayisi 1 artırıldı.",
+                            "haftaIciOrtalama (satır ortalaması) 1 artırıldı.",
+                            "haftaIciOrtalama (satır ortalaması) 2 artırıldı.",
+                            "Ayda en fazla 1 gorev kaldırıldı!",
+                            "Farklı ay peşpeşe görev gevşetildi!",
+                            "Ayda en fazla 1 gorev kaldırıldı ve Farklı Ay Peşpeşe Görev gevşetildi!",
+                            "Cuma ve cumartesi en fazla 3 olmadı 4 olarak gevşetildi!",
+                            "Farklı ay peşpeşe görev sayısı en çok 5 olarak gevşetildi!",
+                            "default"
+                };
+
+            mesaj += $"<strong>Çalışma adımları <span class='badge badge-info'>{calismaSayisi}</span></strong>" +
+                $"{iterasyonMesaj} ";
+
+            for (int i = 0; i < calismaSayisi; i++)
+            {
+                mesaj += "<br /> " + i + " " + calismaAdimlari[i];
+            }
+
+            return mesaj;
+        }
+
+        public string CozulenGruplariYazdir(List<NobetGrupGorevTipDetay> nobetGrupGorevTipDetaylar)
+        {
+            string cozulenNobetGruplar = null;
+
+            var ilkGrup = nobetGrupGorevTipDetaylar.Select(s => s.NobetGrupAdi).FirstOrDefault();
+
+            foreach (var i in nobetGrupGorevTipDetaylar.Select(s => s.NobetGrupAdi))
+            {
+                if (i == ilkGrup)
+                {
+                    cozulenNobetGruplar += i;
+                }
+                else
+                {
+                    cozulenNobetGruplar += $", {i}";
+                }
+            }
+
+            return cozulenNobetGruplar;
         }
 
         private string NobetGrupBilgisiDuzenle(EczaneNobetGrupDetay eczaneNobetGrupDetay)
@@ -2585,7 +2694,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         public KalibrasyonYatay GetKalibrasyonDegeri(List<KalibrasyonYatay> eczaneKalibrasyon)
         {
             return eczaneKalibrasyon
-                .Where(w => w.KalibrasyonTipId == 8 || w.KalibrasyonTipId == 10).SingleOrDefault() ?? new KalibrasyonYatay();
+                .Where(w => w.KalibrasyonTipId > 7).SingleOrDefault() ?? new KalibrasyonYatay();
         }
 
         #endregion        
