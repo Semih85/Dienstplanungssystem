@@ -915,7 +915,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #endregion
 
-                    #region Toplam cuma cumartesi max hedefler
+                    #region Toplam cuma ve cumartesi max hedefler
 
                     var kpKumulatifToplamEnFazlaCumaVeCumartesi = (KpKumulatifToplam)kpKumulatifToplam.Clone();
 

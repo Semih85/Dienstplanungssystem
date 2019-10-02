@@ -815,7 +815,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #endregion
 
-                    #region Toplam cuma cumartesi max hedefler
+                    #region Toplam cuma ve cumartesi max hedefler
 
                     var kpKumulatifToplamEnFazlaCumaVeCumartesi = (KpKumulatifToplam)kpKumulatifToplam.Clone();
 
@@ -838,45 +838,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazlaCumartesiVePazar.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifPazar;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaCumartesiVePazar);
-
-                    #endregion
-
-                    #region Toplam Cuma Max Hedef
-
-                    var kpKumulatifToplamEnFazlaCuma = (KpKumulatifToplam)kpKumulatifToplam.Clone();
-
-                    kpKumulatifToplamEnFazlaCuma.Tarihler = cumaGunleri;
-                    kpKumulatifToplamEnFazlaCuma.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k20");
-                    kpKumulatifToplamEnFazlaCuma.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiCuma;
-                    kpKumulatifToplamEnFazlaCuma.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifCuma;
-
-                    KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaCuma);
-
-                    #endregion
-
-                    #region Toplam Cumartesi Max Hedef
-
-                    var kpKumulatifToplamEnFazlaCumartesi = (KpKumulatifToplam)kpKumulatifToplam.Clone();
-
-                    kpKumulatifToplamEnFazlaCumartesi.Tarihler = cumartesiGunleri;
-                    kpKumulatifToplamEnFazlaCumartesi.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k21");
-                    kpKumulatifToplamEnFazlaCumartesi.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiCumartesi;
-                    kpKumulatifToplamEnFazlaCumartesi.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifCumartesi;
-
-                    KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaCumartesi);
-
-                    #endregion
-
-                    #region Toplam Pazar Max Hedef
-
-                    var kpKumulatifToplamEnFazlaPazar = (KpKumulatifToplam)kpKumulatifToplam.Clone();
-
-                    kpKumulatifToplamEnFazlaPazar.Tarihler = pazarGunleri;
-                    kpKumulatifToplamEnFazlaPazar.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k57");
-                    kpKumulatifToplamEnFazlaPazar.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiPazar;
-                    kpKumulatifToplamEnFazlaPazar.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifPazar;
-
-                    KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaPazar);
 
                     #endregion
 
