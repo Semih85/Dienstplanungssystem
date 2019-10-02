@@ -47,17 +47,17 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/NobetUstGrupKisit
         public ActionResult Index()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
-            var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
-            var rolId = rolIdler.FirstOrDefault();
-            ViewBag.RolId = rolId;
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
+            //var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+            //var rolId = rolIdler.FirstOrDefault();
+            //ViewBag.RolId = rolId;
+            var nobetUstGrupDetay = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
-            var model = _nobetUstGrupKisitService.GetDetaylar()
-                .Where(w => nobetUstGruplar.Contains(w.NobetUstGrupId))
-                .OrderByDescending(o => o.PasifMi)
-                .ThenBy(o => o.NobetUstGrupId)
-                .ThenBy(r => r.KisitAdi);
+            var model = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupDetay.Id)
+                //.OrderByDescending(o => o.PasifMi)
+                //.ThenBy(o => o.NobetUstGrupId)
+                .OrderBy(r => r.KisitAdi);
 
             return View(model);
         }
