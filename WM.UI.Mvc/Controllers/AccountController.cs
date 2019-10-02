@@ -15,6 +15,7 @@ using WM.Northwind.Entities.Concrete.Authorization;
 using System.Text.RegularExpressions;
 using System.Text;
 using WM.Northwind.Business.Abstract.EczaneNobet;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Controllers
 {
@@ -23,27 +24,32 @@ namespace WM.UI.Mvc.Controllers
         private IUserService _userService;
         private IUserNobetUstGrupService _userNobetUstGrupService;
         private INobetUstGrupService _nobetUstGrupService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public AccountController(IUserService userService,
             IUserNobetUstGrupService userNobetUstGrupService,
-            INobetUstGrupService nobetUstGrupService)
+            INobetUstGrupService nobetUstGrupService,
+            INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _userService = userService;
             _userNobetUstGrupService = userNobetUstGrupService;
             _nobetUstGrupService = nobetUstGrupService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
 
         [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
-            var rolId = rolIdler.FirstOrDefault();
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+            //var rolId = rolIdler.FirstOrDefault();
 
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(nobetUstGruplar.Select(s => s.Id).ToList());
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            //var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(nobetUstGruplar.Select(s => s.Id).ToList());
 
-            var kullanicilar = _userService.GetList(userNobetUstGruplar.Select(s => s.Id).ToList())
+            //var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var kullanicilar = _userService.GetList()
                 .OrderBy(o => o.UserName)
                 .ToList();
             //var liste = new List<User>();
@@ -216,6 +222,17 @@ namespace WM.UI.Mvc.Controllers
                             $"</td>" +
                             $"<td>" +
                                 $"{Model.User.Password}" +
+                            $"</td>" +
+                        $"</tr>" +
+                        $"<tr>" +
+                            $"<td>" +
+                                $"<b>Başlama Tarihi</b>" +
+                            $"</td>" +
+                            $"<td>" +
+                                $":" +
+                            $"</td>" +
+                            $"<td>" +
+                                $"{Model.User.BaslamaTarihi}" +
                             $"</td>" +
                         $"</tr>" +
                     $"</table>"
