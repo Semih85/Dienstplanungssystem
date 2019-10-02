@@ -54,7 +54,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult Index()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var kalibrasyonlar = _kalibrasyonService.GetDetaylar(nobetUstGrup.Id);
 
@@ -81,7 +81,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
             //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetMyDrop(eczaneNobetGrupList);
@@ -113,7 +113,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
             }
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetMyDrop(eczaneNobetGrupList);
@@ -143,7 +143,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 return HttpNotFound();
             }
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetMyDrop(eczaneNobetGrupList);
@@ -173,7 +173,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _kalibrasyonService.Update(kalibrasyon);
                 return RedirectToAction("Index");
             }
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneNobetGrupList = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetMyDrop(eczaneNobetGrupList);

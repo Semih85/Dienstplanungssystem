@@ -56,7 +56,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
             //var nobetUstGrup = nobetUstGruplar.Select(s => s.Id).ToList();
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
             var nobetGrupGorevTipGunKurallarTumu = _nobetGrupGorevTipGunKuralService.GetDetaylar(nobetUstGrup.Id);
 
@@ -76,7 +76,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public ActionResult NobetGrupGorevTipGunKuralPartial(int nobetGrupGorevTipId = 0, int nobetGunKuralId = 0)
         {
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
                 .Where(w => w.Id == nobetGrupGorevTipId || nobetGrupGorevTipId == 0).ToList();
@@ -88,7 +88,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public ActionResult AktifPasifYap(int nobetGrupGorevTipId = 0, int nobetGunKuralId = 0, bool pasifMi = false)
         {
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
                 .Where(w => w.Id == nobetGrupGorevTipId || nobetGrupGorevTipId == 0).ToList();
@@ -133,7 +133,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
             var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
 
@@ -181,7 +181,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
             }
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
             var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
 
@@ -204,7 +204,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 return HttpNotFound();
             }
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
             var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
 
@@ -228,7 +228,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
             }
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
             var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
 

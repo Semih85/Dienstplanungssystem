@@ -8,23 +8,23 @@ namespace WM.UI.Mvc.Services
 {
     public class NobetUstGrupSessionService : INobetUstGrupSessionService
     {
-        public NobetUstGrupDetay GetNobetUstGrup()
+        public NobetUstGrupDetay GetSession(string sessionAdi)
         {
-            var nobetUstGrupToCheck = (NobetUstGrupDetay)HttpContext.Current.Session["nobetUstGrup"];
+            var nobetUstGrupToCheck = (NobetUstGrupDetay)HttpContext.Current.Session[sessionAdi];
 
             if (nobetUstGrupToCheck == null)
             {
-                HttpContext.Current.Session["nobetUstGrup"] = new NobetUstGrupDetay();
+                HttpContext.Current.Session[sessionAdi] = new NobetUstGrupDetay();
 
-                nobetUstGrupToCheck = (NobetUstGrupDetay)HttpContext.Current.Session["nobetUstGrup"];
+                nobetUstGrupToCheck = (NobetUstGrupDetay)HttpContext.Current.Session[sessionAdi];
             }
 
             return nobetUstGrupToCheck;
         }
 
-        public void SetNobetUstGrup(NobetUstGrupDetay nobetUstGrupDetay)
+        public void SetSession(NobetUstGrupDetay nobetUstGrupDetay, string sessionAdi)
         {
-            HttpContext.Current.Session["nobetUstGrup"] = nobetUstGrupDetay;
+            HttpContext.Current.Session[sessionAdi] = nobetUstGrupDetay;
         }
     }
 }

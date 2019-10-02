@@ -42,7 +42,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
             //var nobetUstGrup = _nobetUstGrupService.GetListByUser(user).FirstOrDefault();
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
             return View(nobetUstGrupGunGruplar);
@@ -68,7 +68,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult Create()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetUstGruplar = _nobetUstGrupService.GetDetaylar(nobetUstGrup.Id);
 
             ViewBag.GunGrupId = new SelectList(_gunGrupService.GetList(), "Id", "Adi");
@@ -89,7 +89,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
             }
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetUstGruplar = _nobetUstGrupService.GetDetaylar(nobetUstGrup.Id);
 
             ViewBag.GunGrupId = new SelectList(_gunGrupService.GetList(), "Id", "Adi", nobetUstGrupGunGrup.GunGrupId);
@@ -112,7 +112,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return HttpNotFound();
             }
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetUstGruplar = _nobetUstGrupService.GetDetaylar(nobetUstGrup.Id);
 
             ViewBag.GunGrupId = new SelectList(_gunGrupService.GetList(), "Id", "Adi", nobetUstGrupGunGrup.GunGrupId);
@@ -132,7 +132,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _nobetUstGrupGunGrupService.Update(nobetUstGrupGunGrup);
                 return RedirectToAction("Index");
             }
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetUstGruplar = _nobetUstGrupService.GetDetaylar(nobetUstGrup.Id);
 
             ViewBag.GunGrupId = new SelectList(_gunGrupService.GetList(), "Id", "Adi", nobetUstGrupGunGrup.GunGrupId);

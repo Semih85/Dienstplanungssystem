@@ -56,7 +56,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //var nobetUstGrup = _nobetUstGrupService.GetListByUser(user).FirstOrDefault();
             //var yetkiliNobetGruplar = _nobetGrupService.GetListByUser(user);
 
-            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetGruplar = _nobetGrupService.GetDetaylar(ustGrupSession.Id);
 
@@ -97,7 +97,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetUstGruplar = _nobetUstGrupService.GetDetaylar(nobetUstGrup.Id);
 
@@ -119,7 +119,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
             }
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetUstGruplar = _nobetUstGrupService.GetDetaylar(nobetUstGrup.Id);
 
@@ -143,7 +143,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //var user = _userService.GetByUserName(User.Identity.Name);
             //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetUstGruplar = _nobetUstGrupService.GetDetaylar(nobetUstGrup.Id);
 
@@ -165,7 +165,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
             }
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetUstGruplar = _nobetUstGrupService.GetDetaylar(nobetUstGrup.Id);
 

@@ -73,7 +73,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult Index()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetGruplar = _nobetGrupGorevTipService.GetMyDrop(nobetUstGrup.Id);
 
             ViewBag.NobetGrupGorevTipId = new SelectList(items: nobetGruplar, dataValueField: "Id", dataTextField: "Value");
@@ -95,7 +95,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult EczaneNobetMazeretPartialView(int nobetGrupId = 0, int eczaneId = 0, DateTime? MazeretTarihi = null)
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetGruplar = _nobetGrupService.GetDetaylar(nobetUstGrup.Id)
                 .Where(w => w.Id == nobetGrupId || nobetGrupId == 0).ToList();
@@ -297,7 +297,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //var user = _userService.GetByUserName(User.Identity.Name);
             //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
             //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneNobetMazeretler = _eczaneNobetMazeretService.GetDetaylar(nobetUstGrup.Id)
                    .OrderByDescending(o => o.Tarih)
@@ -329,7 +329,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public JsonResult GetMazeretler(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi = null, DateTime? bitisTarihi = null, int? eczaneNobetMazeretIstekTipId = 0)
         {
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneNobetMazeretler = new List<EczaneNobetMazeretDetay>();
             var eczaneNobetIstekler = new List<EczaneNobetIstekDetay>();
@@ -396,7 +396,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult Create()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             //var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
@@ -421,7 +421,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult Create([Bind(Include = "Id,EczaneNobetGrupId,MazeretId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama")] EczaneNobetMazeretCoklu eczaneNobetMazeretCoklu)
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             //var haftaninGunleri = Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>().ToList();
             if (eczaneNobetMazeretCoklu.HaftaninGunu == null)
@@ -585,7 +585,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         //[HandleException]
         public ActionResult CreatePartial([Bind(Include = "Id,EczaneNobetGrupId,MazeretId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama")] EczaneNobetMazeretCoklu eczaneNobetMazeretCoklu)
         {
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             //var haftaninGunleri = Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>().ToList();
             if (eczaneNobetMazeretCoklu.HaftaninGunu == null)

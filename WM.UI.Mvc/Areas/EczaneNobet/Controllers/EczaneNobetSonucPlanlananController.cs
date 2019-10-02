@@ -44,7 +44,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/EczaneNobetSonucPlanlanan
         public ActionResult Index()
         {
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetMyDrop(nobetUstGrup.Id);
 
@@ -55,7 +55,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public ActionResult IndexNakilEczaneyeGore()
         {
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetMyDrop(nobetUstGrup.Id);
 
@@ -93,7 +93,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             //var nobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(nobetGrupGorevTipId);
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
                 .Where(w => w.Id == nobetGrupGorevTipId || nobetGrupGorevTipId == 0).ToList();
@@ -124,7 +124,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //baslangicTarihi = new DateTime(2018, 6, 1);
             //baslangicTarihi = new DateTime(2019, 3, 13);
             //bitisTarihi = new DateTime(2020, 12, 31);
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var gunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id)
                 .Where(w => w.GunGrupId == gunGrupId || gunGrupId == 0).ToList();

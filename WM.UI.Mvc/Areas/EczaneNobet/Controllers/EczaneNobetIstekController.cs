@@ -57,7 +57,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //var eczaneNobetMazerets = db.EczaneNobetMazerets.Include(e => e.Eczane).Include(e => e.Mazeret).Include(e => e.Takvim);
             //eczaneNobetMazerets.ToList()
             //var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             //var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id);
 
@@ -93,7 +93,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
 
             //var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             //var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
@@ -117,7 +117,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,EczaneNobetGrupId,IstekId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama,YinedeEklensinMi")] EczaneNobetIstekCoklu eczaneNobetIstekCoklu)
         {            
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(eczaneNobetIstekCoklu.EczaneNobetGrupId);
             var nobetUstGrupId = eczaneNobetGruplar.Select(s => s.NobetUstGrupId).Distinct().SingleOrDefault();
 
@@ -297,7 +297,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreatePartial([Bind(Include = "Id,EczaneNobetGrupId,IstekId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama,YinedeEklensinMi")] EczaneNobetIstekCoklu eczaneNobetIstekCoklu)
         {
-            //var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            //var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(eczaneNobetIstekCoklu.EczaneNobetGrupId);
 

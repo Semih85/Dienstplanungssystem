@@ -46,7 +46,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Index()
         {
-            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetUstGrupId = ustGrupSession.Id;
 
             //var ikiliEczaneler = new List<AyniGunTutulanNobetDetay>();
@@ -83,7 +83,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public JsonResult AyniGunNobetTutanlarinListesi(int ayniGunNobetSayisi)
         {
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetUstGrup.Id, ayniGunNobetSayisi);
 
@@ -98,7 +98,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
             //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var ikiliEczaneler = _ayniGunTutulanNobetService.IkiliEczaneleriOlustur(nobetUstGrup.Id);
 
@@ -117,7 +117,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         //yoksa ekler varsa günceller
         public ActionResult AyniGunNobetTutanlariTabloyaEkle()
         {
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var ikiliEczanelerTumu = _ayniGunTutulanNobetService.GetDetaylar(nobetUstGrup.Id);
 
@@ -142,7 +142,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //var user = _userService.GetByUserName(User.Identity.Name);
             //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
             //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var ikiliEczanelerTumu = _ayniGunTutulanNobetService.GetDetaylar(nobetUstGrup.Id);
 
             var ikiliEczanelerSifirdanBuyukler = _ayniGunTutulanNobetService.GetListSifirdanFarkli(nobetUstGrup.Id);

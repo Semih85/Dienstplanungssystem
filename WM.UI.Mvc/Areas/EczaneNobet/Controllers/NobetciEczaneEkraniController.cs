@@ -69,7 +69,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
             //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id).ToList();
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             int nobetUstGrupId = nobetUstGrup.Id;
 

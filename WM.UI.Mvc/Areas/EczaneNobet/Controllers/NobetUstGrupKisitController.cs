@@ -70,7 +70,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ////var rolId = rolIdler.FirstOrDefault();
             ////ViewBag.RolId = rolId;
             //var nobetUstGrup = nobetUstGruplar.FirstOrDefault();
-            var nobetUstGrupDetay = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrupDetay = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             //_nobetUstGrupService.GetDetay(nobetUstGrup.Id);
 
             var kisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupDetay.Id)
@@ -196,7 +196,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult VarsayilanKisitlar()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGrupDetay = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrupDetay = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetUstGrupId = nobetUstGrupDetay.Id;
             //_nobetUstGrupService.GetListByUser(user)
             //.Select(s => s.Id)

@@ -63,7 +63,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGruplar)
             //    .OrderBy(o => o.NobetGorevTipAdi)
             //    .ThenBy(o => o.Tarih).ToList();
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
             var nobetOzelGunler = _nobetOzelGunService.GetList();//bayramTurler
@@ -76,7 +76,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public ActionResult SearchWithBayram(int? nobetGrupGorevTipId = 0, int? nobetOzelGunId = 0)
         {
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
                 .Where(w => w.Id == nobetGrupGorevTipId || nobetGrupGorevTipId == 0);
@@ -109,7 +109,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             if (silinecekBayramids.Count() > 0)
                 _nobetGrupGorevTipTakvimOzelGunService.CokluSil(silinecekBayramids);
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var bayramlar = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGrup.Id, (int)nobetGrupGorevTipId, (int)nobetOzelGunId)
                 //.Where(w => (w.NobetGrupGorevTipId == nobetGrupGorevTipId || nobetGrupGorevTipId == 0)
@@ -139,7 +139,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/NobetGrupGorevTipTakvimOzelGun/Create
         public ActionResult Create()
         {
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             
             var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
                 .Select(s => new MyDrop { Id = s.Id, Value = $"{s.NobetGrupAdi}, {s.NobetGorevTipAdi}" });
@@ -206,7 +206,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
             }
 
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetGrupGorevTipGunKurallarTumu = _nobetGrupGorevTipGunKuralService.GetDetaylar(nobetUstGrup.Id);
 
@@ -243,7 +243,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 return HttpNotFound();
             }
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetGrupGorevTipGunKurallarTumu = _nobetGrupGorevTipGunKuralService.GetDetaylar(nobetUstGrup.Id);
 
@@ -286,7 +286,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _nobetGrupGorevTipTakvimOzelGunService.Update(nobetGrupGorevTipTakvimOzelGun);
                 return RedirectToAction("Index");
             }
-            var nobetUstGrup = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var nobetGrupGorevTipGunKurallarTumu = _nobetGrupGorevTipGunKuralService.GetDetaylar(nobetUstGrup.Id);
 

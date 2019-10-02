@@ -41,7 +41,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
             //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var userEczaneler = _userEczaneService.GetDetaylar(ustGrupSession.Id);
 
@@ -67,7 +67,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult Create()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
-            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneler = _eczaneService.GetList(ustGrupSession.Id).Select(s => new { s.Id, s.Adi }).OrderBy(w => w.Adi);
             //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
@@ -92,7 +92,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
             }
 
-            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneler = _eczaneService.GetList(ustGrupSession.Id).Select(s => new { s.Id, s.Adi }).OrderBy(w => w.Adi);
             var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(ustGrupSession.Id);
@@ -114,7 +114,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 return HttpNotFound();
             }
-            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneler = _eczaneService.GetList(ustGrupSession.Id).Select(s => new { s.Id, s.Adi }).OrderBy(w => w.Adi);
             var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(ustGrupSession.Id);
@@ -136,7 +136,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _userEczaneService.Update(userEczane);
                 return RedirectToAction("Index");
             }
-            var ustGrupSession = _nobetUstGrupSessionService.GetNobetUstGrup();
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneler = _eczaneService.GetList(ustGrupSession.Id).Select(s => new { s.Id, s.Adi }).OrderBy(w => w.Adi);
             var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(ustGrupSession.Id);
