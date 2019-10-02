@@ -4167,7 +4167,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 //"SÖĞÜT", //23.4.2008
                                 //"ÇÖZEN",   //-5
                                 //"DUYGU",//14
-                                "BUYRUKÇU"
+                                "BAŞAK"
                             };
 
                             if (kontrolEdilecekEczaneler.Contains(eczaneNobetTarih.EczaneAdi) && eczaneNobetTarih.HaftaIciMi)
@@ -4408,10 +4408,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var sonNobetTarihindenBalilanTariheKadarGecenGunSayisi = (bakilanTarih - sonNobetTarihi).TotalDays;
             double sonNobetTarihindenSonraGecenGunSayisi = 1;
 
-            if (borcluNobetSayisi < 0)
-            {
-                borcluNobetSayisi = 0;
-            }
+            var sabitEksikNobetGunuSayisi = 0;
+
+            if (borcluNobetSayisi < sabitEksikNobetGunuSayisi)
+                borcluNobetSayisi = sabitEksikNobetGunuSayisi;
 
             if (tipAdi == "dini"
                 || tipAdi == "milli"
@@ -4434,7 +4434,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             var gunFarkiKarekokIcinde = Math.Sqrt(karekokuAlinacakGunFarki);
 
             var fark = cevrimKatSayisi + (cevrimKatSayisi * mevsimKatsayisi) / gunFarkiKarekokIcinde + manuelSayi;
-
 
             double toplamFark = fark;
 
@@ -4530,7 +4529,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 var ilgiliEczaneSayisi = eczaneler.Count;
 
                 var kuralIhlalMesaj = $"Kural kontol! "
-                        + $"Aşağıdaki açıklamalara göre "
+                        + $"Tabloya göre "
                         + $"<a href=\"/EczaneNobet/NobetUstGrupKisit/KisitAyarla\" class=\"card-link\" target=\"_blank\">nöbet ayarlarında</a> "
                         + $"bazı değişiklikler yaparak <strong>tekrar çözmelisiniz..</strong>"
                         + "<hr /> "
@@ -4598,7 +4597,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 var ilgiliEczaneSayisi = eczaneler.Count;
 
                 var kuralIhlalMesaj = $"Kural kontol! "
-                        + $"Aşağıdaki açıklamalara göre "
+                        + $"Tabloya göre "
                         + $"<a href=\"/EczaneNobet/NobetUstGrupKisit/KisitAyarla\" class=\"card-link\" target=\"_blank\">nöbet ayarlarında</a> "
                         + $"bazı değişiklikler yaparak <strong>tekrar çözmelisiniz..</strong>"
                         + "<hr /> "
@@ -4698,7 +4697,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 var ilgiliEczaneSayisi = eczaneler.Count;
 
                 var kuralIhlalMesaj = $"Kural kontol! "
-                        + $"Aşağıdaki açıklamalara göre "
+                        + $"Tabloya göre "
                         + $"<a href=\"/EczaneNobet/NobetUstGrupKisit/KisitAyarla\" class=\"card-link\" target=\"_blank\">nöbet ayarlarında</a> "
                         + $"bazı değişiklikler yaparak <strong>tekrar çözmelisiniz..</strong>"
                         + "<hr /> "
