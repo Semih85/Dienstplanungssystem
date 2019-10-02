@@ -77,7 +77,14 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                  defaults: new { controller = "NobetGrupGorevTipKisit", action = "Create" }
                 );
 
+            context.MapRoute(
+             name: "UserRoleCreate",
+             url: "user-role-ekle",
+             defaults: new { controller = "UserRole", action = "Create" }
+            );
 
+
+            //varsayılan
             context.MapRoute(
                 name: "Create",
                 url: "eczane-nobet/{controller}/ekle",
