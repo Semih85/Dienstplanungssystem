@@ -723,12 +723,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                 EczaneId = sonuc.EczaneId,
                                 ArdisikNobetSayisi = 0,
                                 NobetUstGrupId = sonuc.NobetUstGrupId,
-                                EczaneGrupTanimAdi = $"{tarih.TarihAciklama} tarihindeki nöbetler",
+                                EczaneGrupTanimAdi = $"{tarih.Tarih.ToString("dd.MM.yy-ddd.")} nöbeti",
                                 EczaneGrupTanimTipAdi = "Aynı gün nöbet",
                                 EczaneGrupTanimTipId = tarih.NobetGunKuralId,
                                 NobetGrupId = sonuc.NobetGrupId,
                                 EczaneAdi = sonuc.EczaneAdi,
                                 NobetGrupAdi = sonuc.NobetGrupAdi,
+                                NobetGorevTipAdi = sonuc.NobetGorevTipAdi,
+                                NobetGorevTipId = sonuc.NobetGorevTipId,
                                 EczaneNobetGrupId = sonuc.EczaneNobetGrupId,
                                 AyniGunNobetTutabilecekEczaneSayisi = 1
                                 //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
