@@ -726,7 +726,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         tarihAraligiOrtalamaEnFazlaIlgiliKisit.GunSayisi = tarihAralik.GunSayisi;
                         tarihAraligiOrtalamaEnFazlaIlgiliKisit.OrtalamaNobetSayisi = tarihAralik.OrtalamaNobetSayisi;
                         tarihAraligiOrtalamaEnFazlaIlgiliKisit.NobetUstGrupKisit = herAyEnFazlaIlgiliKisit;
-                        tarihAraligiOrtalamaEnFazlaIlgiliKisit.GunKuralAdi = nobetGunKural.NobetGunKuralAdi;
+                        tarihAraligiOrtalamaEnFazlaIlgiliKisit.GunKuralAdi = herAyEnFazlaIlgiliKisit.KisitId == 42 ? nobetGunKural.NobetGunKuralAdi : "";
 
                         TarihAraligiOrtalamaEnFazla(tarihAraligiOrtalamaEnFazlaIlgiliKisit);
 
@@ -1784,7 +1784,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                 NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k84"),//k34
                                 KumulatifOrtalamaNobetSayisi = kumulatifOrtalamaCumartesiSayisi,
                                 ToplamNobetSayisi = eczaneNobetIstatistikTumGorevTipler.Sum(s => s.NobetSayisiCumartesi),
-                                GunKuralAdi = $"cumartesi-gündüz {gunKural.NobetGunKuralAdi}",
+                                GunKuralAdi = $"{gunKural.NobetGunKuralAdi}-Gündüz",
                                 KararDegiskeni = _x
                             };
                             KumulatifToplamEnFazla(kumulatifToplamEnFazlaCumartesi);
@@ -1803,7 +1803,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             EczaneNobetGrup = eczaneNobetGrup,
                             EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
                             NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k38"),
-                            GunKuralAdi = $"cumartesi-gündüz {gunKural.NobetGunKuralAdi}",
+                            GunKuralAdi = $"{gunKural.NobetGunKuralAdi}-Gündüz",
                             KararDegiskeni = _x
                         };
                         TarihAraligiOrtalamaEnFazla(tarihAraligiOrtalamaEnFazlaIlgiliKisit);
@@ -2347,11 +2347,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             ;
                     }
 
-                    string cozulenNobetGruplar = CozulenGruplariYazdir(data.NobetGrupGorevTipler);
-
                     var celiskiler = results.Celiskiler.Split('*');
 
-                    mesaj = CeliskileriTabloyaAktar(data.BaslangicTarihi, data.BitisTarihi, data.CalismaSayisi, iterasyonMesaj, cozulenNobetGruplar, celiskiler);
+                    mesaj = CeliskileriTabloyaAktar(data.BaslangicTarihi, data.BitisTarihi, data.CalismaSayisi, iterasyonMesaj, data.NobetGrupGorevTipler, celiskiler);
 
                     throw new Exception(mesaj);
                 }

@@ -655,7 +655,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         tarihAraligiOrtalamaEnFazlaIlgiliKisit.GunSayisi = tarihAralik.GunSayisi;
                         tarihAraligiOrtalamaEnFazlaIlgiliKisit.OrtalamaNobetSayisi = tarihAralik.OrtalamaNobetSayisi;
                         tarihAraligiOrtalamaEnFazlaIlgiliKisit.NobetUstGrupKisit = herAyEnFazlaIlgiliKisit;
-                        tarihAraligiOrtalamaEnFazlaIlgiliKisit.GunKuralAdi = nobetGunKural.NobetGunKuralAdi;
+                        tarihAraligiOrtalamaEnFazlaIlgiliKisit.GunKuralAdi = herAyEnFazlaIlgiliKisit.KisitId == 42 ? nobetGunKural.NobetGunKuralAdi : "";
 
                         TarihAraligiOrtalamaEnFazla(tarihAraligiOrtalamaEnFazlaIlgiliKisit);
 
@@ -1317,12 +1317,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             //+ $"<br/>Elenen eczane sayısı: <strong>{data.AyIcindeAyniGunNobetTutanEczaneler.Count}</strong>."
                             ;
                     }
-
-                    string cozulenNobetGruplar = CozulenGruplariYazdir(data.NobetGrupGorevTipler);
-
+                    
                     var celiskiler = results.Celiskiler.Split('*');
 
-                    mesaj = CeliskileriTabloyaAktar(data.BaslangicTarihi, data.BitisTarihi, data.CalismaSayisi, iterasyonMesaj, cozulenNobetGruplar, celiskiler);
+                    mesaj = CeliskileriTabloyaAktar(data.BaslangicTarihi, data.BitisTarihi, data.CalismaSayisi, iterasyonMesaj, data.NobetGrupGorevTipler, celiskiler);
 
                     throw new Exception(mesaj);
                 }
