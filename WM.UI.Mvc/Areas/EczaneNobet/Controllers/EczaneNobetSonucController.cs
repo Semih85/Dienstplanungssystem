@@ -709,6 +709,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
         }
+
         public JsonResult GetEczaneNobetAlacakVerecekler(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi, DateTime? bitisTarihi, int raporId, bool kapaliEczaneler, int gunGrupId = 0)
         {
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
@@ -922,7 +923,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return ConvertToJson(new List<EczaneNobetSonucListe2>());
         }
 
-
         double KalibrasyonDegeriToplam(int eczaneNobetGrupId, int gunGrupId, int kalibrasyonTipId, int nobetUstGrupId)
         {
             //if (nobetUstGrupId == 5)
@@ -1058,6 +1058,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //    return new List<KalibrasyonDetay>();
             //}
         }
+
         private static List<KalibrasyonDetay> GetSonuclarAylik(List<EczaneNobetSonucListe2> sonuclar)
         {
             return sonuclar

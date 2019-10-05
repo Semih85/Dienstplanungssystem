@@ -91,7 +91,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.NobetUstGrupId = nobetUstGrup.Id;
             return View();
         }
-
         public ActionResult EczaneNobetMazeretPartialView(int nobetGrupId = 0, int eczaneId = 0, DateTime? MazeretTarihi = null)
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
@@ -146,7 +145,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             eczaneNobetMazeretlerVeIstekler = GetModel(unSelectedEczaneMazeretIstekIDs);
             return View("Index", "EczaneNobetMazeretIstek");
         }
-
         public EczaneNobetMazeretIstekDetay ConvertEczaneNobetIstekDetayToEczaneNobetMazeretIstekDetay(EczaneNobetIstekDetay model)
         {
             var myEczaneNobetMazeretIstekDetay = new EczaneNobetMazeretIstekDetay
@@ -197,7 +195,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             return myEczaneNobetMazeretIstekDetay;
         }
-        public ActionResult EczaneNobetMazeretPartialView2(int[] eczaneId = null, DateTime? baslangicTarihi = null, DateTime? bitisTarihi = null, int? EczaneNobetMazeretIstekTipId = 0)
+        public ActionResult EczaneNobetMazeretPartialView2(
+            int[] eczaneId = null,
+            DateTime? baslangicTarihi = null,
+            DateTime? bitisTarihi = null,
+            int? EczaneNobetMazeretIstekTipId = 0)
         {
             var user = _userService.GetByUserName(User.Identity.Name);
             var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
@@ -291,7 +293,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             return PartialView("EczaneNobetMazeretPartialView", eczaneNobetMazeretlerVeIstekler);
         }
-
         public JsonResult GetMazeretlerTumu()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
@@ -326,8 +327,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             return jsonResult;
         }
-
-        public JsonResult GetMazeretler(int[] nobetGrupGorevTipId, DateTime? baslangicTarihi = null, DateTime? bitisTarihi = null, int? eczaneNobetMazeretIstekTipId = 0)
+        public JsonResult GetMazeretler(int[] nobetGrupGorevTipId,
+            DateTime? baslangicTarihi = null,
+            DateTime? bitisTarihi = null,
+            int? eczaneNobetMazeretIstekTipId = 0)
         {
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
