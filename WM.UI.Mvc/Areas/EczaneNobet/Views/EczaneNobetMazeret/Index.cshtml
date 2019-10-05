@@ -754,7 +754,7 @@
                             ["Gün"]: n.Gun,
                             //Tarih2: tarihGoster(n.TarihKisa),
                             TarihUzun: n.TarihAciklama,
-                            YılAy: n.Yil + "_" + n.Ay,
+                            YılAy: n.Yil + "-" + (n.Ay < 10 ? "0" + n.Ay : n.Ay),
                             //Tur: n.MazeretIstekTuru,
                             Açıklama: n.Aciklama,
                             Id: n.Id,
