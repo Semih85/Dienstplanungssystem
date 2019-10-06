@@ -1,0 +1,61 @@
+﻿@model List<NobetUstGrupKisitDetayDegisimTakip>
+
+<table class="table table-sm table-hover table-bordered table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th class="text-center" colspan="3">Nöbet Kural</th>
+            <th class="text-center" colspan="3">Önce</th>
+            <th class="text-center" colspan="3">Sonra</th>
+            <th rowspan="2" style="text-align:center">Güncellenme Tarihi</th>
+        </tr>
+        <tr>
+            <th>Kodu</th>
+            <th>Kategorisi</th>
+            <th>Adı</th>
+            <th>Durum</th>
+            <th>Değer</th>
+            <th>Grup Sayısı</th>
+            <th>Durum</th>
+            <th>Değer</th>
+            <th>Grup Sayısı</th>
+            @*<th>Tarihi</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.NobetUstGrupKisitDetayOnce.KisitKodu</td>
+                <td>@item.NobetUstGrupKisitDetayOnce.KisitKategorisi</td>
+                <td>@item.NobetUstGrupKisitDetayOnce.KisitAdiGosterilen</td>
+
+                <td>@(item.NobetUstGrupKisitDetayOnce.PasifMi ? "Pasif" : "Aktif")</td>
+                <td>@item.NobetUstGrupKisitDetayOnce.SagTarafDegeri</td>
+                <td>@item.NobetUstGrupKisitDetayOnce.NobetGrupGorevtipKisitSayisi</td>
+
+                <td>
+                    @(item.NobetUstGrupKisitDetaySonra.PasifMi ? "Pasif" : "Aktif")
+                    @if (item.NobetUstGrupKisitDetayOnce.PasifMi != item.NobetUstGrupKisitDetaySonra.PasifMi)
+                    {
+                        <span class="text-danger font-weight-bold">*</span>
+                    }
+                </td>
+                <td>
+                    @item.NobetUstGrupKisitDetaySonra.SagTarafDegeri
+                    @if (item.NobetUstGrupKisitDetayOnce.SagTarafDegeri != item.NobetUstGrupKisitDetaySonra.SagTarafDegeri)
+                    {
+                        <span class="text-danger font-weight-bold">*</span>
+                    }
+                </td>
+                <td>
+                    @item.NobetUstGrupKisitDetaySonra.NobetGrupGorevtipKisitSayisi
+                    @if (item.NobetUstGrupKisitDetayOnce.NobetGrupGorevtipKisitSayisi != item.NobetUstGrupKisitDetaySonra.NobetGrupGorevtipKisitSayisi)
+                    {
+                        <span class="text-danger font-weight-bold">*</span>
+                    }
+                </td>
+                <td>@item.DegisimTarihi</td>
+            </tr>
+        }
+    </tbody>
+</table>

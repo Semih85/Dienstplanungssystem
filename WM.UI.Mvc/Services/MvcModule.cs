@@ -11,6 +11,7 @@ namespace WM.UI.Mvc.Services
         public override void Load()
         {
             Bind<INobetUstGrupSessionService>().To<NobetUstGrupSessionService>().InSingletonScope();
+            Bind<INobetUstGrupKisitSessionService>().To<NobetUstGrupKisitSessionService>().InSingletonScope();
         }
     }
 }

@@ -65,6 +65,7 @@
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSonucDetayMazeretli.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\AlternatifOlasiNobetciEczaneler.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\GunGrupBase.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\NobetUstGrupKisitDetayDegisimTakip.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\RaporDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSonucListeSırali.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneUzaklikMatrisDetay.cs" />
