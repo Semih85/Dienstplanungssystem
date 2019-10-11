@@ -1,14 +1,16 @@
 ﻿@model List<NobetUstGrupKisitDetayDegisimTakip>
 
-<table class="table table-sm table-hover table-bordered table-striped">
+<table class="table table-sm table-hover table-bordered table-striped" id="kisitDegisimTablosu">
     <thead class="thead-light">
         <tr>
+            <th rowspan="2" class="text-center">Sıra Nu.</th>
             <th class="text-center" colspan="3">Nöbet Kural</th>
             <th class="text-center" colspan="3">Önce</th>
             <th class="text-center" colspan="3">Sonra</th>
             <th rowspan="2" style="text-align:center">Güncellenme Tarihi</th>
         </tr>
         <tr>
+            @*<th>Sıra</th>*@
             <th>Kodu</th>
             <th>Kategorisi</th>
             <th>Adı</th>
@@ -25,12 +27,13 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>@item.SiraNumarasi</td>
                 <td>@item.NobetUstGrupKisitDetayOnce.KisitKodu</td>
                 <td>@item.NobetUstGrupKisitDetayOnce.KisitKategorisi</td>
                 <td>@item.NobetUstGrupKisitDetayOnce.KisitAdiGosterilen</td>
 
                 <td>@(item.NobetUstGrupKisitDetayOnce.PasifMi ? "Pasif" : "Aktif")</td>
-                <td>@item.NobetUstGrupKisitDetayOnce.SagTarafDegeri</td>
+                <td>@(item.NobetUstGrupKisitDetayOnce.DegerPasifMi ? "-" : item.NobetUstGrupKisitDetayOnce.SagTarafDegeri.ToString())</td>
                 <td>@item.NobetUstGrupKisitDetayOnce.NobetGrupGorevtipKisitSayisi</td>
 
                 <td>
@@ -41,7 +44,7 @@
                     }
                 </td>
                 <td>
-                    @item.NobetUstGrupKisitDetaySonra.SagTarafDegeri
+                    @(item.NobetUstGrupKisitDetaySonra.DegerPasifMi ? "-" : item.NobetUstGrupKisitDetaySonra.SagTarafDegeri.ToString())
                     @if (item.NobetUstGrupKisitDetayOnce.SagTarafDegeri != item.NobetUstGrupKisitDetaySonra.SagTarafDegeri)
                     {
                         <span class="text-danger font-weight-bold">*</span>

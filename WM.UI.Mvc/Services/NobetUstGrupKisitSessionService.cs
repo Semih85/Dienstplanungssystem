@@ -47,12 +47,14 @@ namespace WM.UI.Mvc.Services
             string sessionAdi,
             List<NobetUstGrupKisitDetayDegisimTakip> nobetUstGrupKisitlar)
         {
-            nobetUstGrupKisitlar.Add(new NobetUstGrupKisitDetayDegisimTakip
+            var sira = nobetUstGrupKisitlar.LastOrDefault() != null ? nobetUstGrupKisitlar.LastOrDefault().SiraNumarasi : 0;
+
+            nobetUstGrupKisitlar.Add(new NobetUstGrupKisitDetayDegisimTakip(sira)
             {
                 NobetUstGrupKisitDetayOnce = nobetUstGrupDetayOnce,
                 NobetUstGrupKisitDetaySonra = nobetUstGrupDetaySonra,
                 DegisimTarihi = DateTime.Now,
-                NobetUstGrupId = nobetUstGrupDetayOnce.NobetUstGrupId
+                NobetUstGrupId = nobetUstGrupDetaySonra.NobetUstGrupId
             });
 
             HttpContext.Current.Session[sessionAdi] = nobetUstGrupKisitlar;
