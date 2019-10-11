@@ -11,6 +11,7 @@ using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.UI.Mvc.Areas.EczaneNobet.Models;
 using WM.UI.Mvc.Models;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -26,6 +27,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetGrupService _nobetGrupService;
         private INobetUstGrupService _nobetUstGrupService;
         private IEczaneNobetSonucService _eczaneNobetSonucService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public EczaneUzaklikMatrisController(IEczaneService eczaneService,
                                 IUserService userService,
@@ -33,7 +35,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                 INobetUstGrupService nobetUstGrupService,
                                 INobetGrupService nobetGrupService,
                                 IEczaneNobetGrupService eczaneNobetGrupService,
-                                IEczaneNobetSonucService eczaneNobetSonucService)
+                                IEczaneNobetSonucService eczaneNobetSonucService,
+                                INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _eczaneService = eczaneService;
             _nobetUstGrupService = nobetUstGrupService;
@@ -42,6 +45,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _eczaneNobetSonucService = eczaneNobetSonucService;
             _userService = userService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
         #endregion
         private WMUIMvcContext db = new WMUIMvcContext();
@@ -49,9 +53,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/EczaneUzaklikMatris
         public ActionResult Index()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
-            var nobetUstGrupId = nobetUstGruplar.FirstOrDefault();//userın birden fazla üst grubu varsa şeçtirmek lazım
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+            var nobetUstGrupId = ustGrupSession.Id;
             var eczaneGrupIdList = _nobetGrupService.GetListByNobetUstGrupId(nobetUstGrupId).Select(s => s.Id).ToList();
             var nobetciEczaneler = _eczaneNobetGrupService.GetAktifEczaneNobetGrupList(eczaneGrupIdList);
             //nobetciEczaneler = nobetciEczaneler.Take(10).ToList();
@@ -95,12 +100,14 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         void SetUzakliklarKusUcusu(EczaneUzaklikMatrisViewModel model)
         {
             double earthRadiusM = 6371000;
+
             var siraliEcaneler = model.Eczaneler.OrderBy(s => s.Id).ToList();
+
             foreach (var itemFrom in siraliEcaneler)
             {
-
                 if (itemFrom.Enlem <= 1 || itemFrom.Boylam <= 1)
                     continue;
+
                 var siraliEcaneler2 = siraliEcaneler.Where(s => s.Id > itemFrom.Id).ToList();
 
                 foreach (var itemTo in siraliEcaneler2)
@@ -124,13 +131,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     double distance = earthRadiusM * c;
 
-                    EczaneUzaklikMatris eczaneUzaklikMatris = new EczaneUzaklikMatris();
-                    eczaneUzaklikMatris.EczaneIdFrom = Convert.ToInt32(itemFrom.Id);
-                    eczaneUzaklikMatris.EczaneIdTo = Convert.ToInt32(itemTo.Id);
-                    eczaneUzaklikMatris.Mesafe = Convert.ToInt32(distance);
-                    var user = _userService.GetByUserName(User.Identity.Name);
-                    var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
-                    var nobetUstGrupId = nobetUstGruplar.FirstOrDefault();
+                    var eczaneUzaklikMatris = new EczaneUzaklikMatris
+                    {
+                        EczaneIdFrom = Convert.ToInt32(itemFrom.Id),
+                        EczaneIdTo = Convert.ToInt32(itemTo.Id),
+                        Mesafe = Convert.ToInt32(distance)
+                    };
+
+                    var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+                    var nobetUstGrupId = ustGrupSession.Id;
 
                     try
                     {
