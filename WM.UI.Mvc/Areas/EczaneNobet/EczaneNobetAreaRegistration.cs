@@ -513,6 +513,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
             );
 
             context.MapRoute(
+                name: "NobetKomisyonu",
+                url: "nobet-komisyonu",
+                defaults: new { controller = "NobetKomisyonu", action = "Index" }
+            );
+            
+            context.MapRoute(
                 name: "NobetciEczaneEkrani",
                 url: "onee/{eczaneId}",///{name}/{password}",
                 defaults: new

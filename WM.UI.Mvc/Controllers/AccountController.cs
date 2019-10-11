@@ -124,14 +124,20 @@ namespace WM.UI.Mvc.Controllers
                         case 1:
                             url = RedirectToAction("Index", "Admin", new { area = "" });
                             break;
-                        case 4:
-                            url = RedirectToAction("Index", "EczaneKullanici", new { area = "EczaneNobet", userId = user.Id });
-                            break;
                         case 2:
                             //url = RedirectToAction("Index", "OdaYonetim", new { area = "EczaneNobet", userId = user.Id });
                             break;
                         case 3:
                             //url = RedirectToAction("Index", "NobetUstGrupYonetim", new { area = "EczaneNobet", userId = user.Id });
+                            break;
+                        case 4:
+                            url = RedirectToAction("Index", "EczaneKullanici", new { area = "EczaneNobet", userId = user.Id });
+                            break;
+                        //case 5://misafir
+                        //    url = RedirectToAction("Index", "EczaneKullanici", new { area = "EczaneNobet", userId = user.Id });
+                        //    break;
+                        case 6:
+                            url = RedirectToAction("Index", "NobetKomisyonu", new { area = "EczaneNobet" });
                             break;
                         default:
                             url = RedirectToAction("Unauthorized", "Account", new { area = "" });
