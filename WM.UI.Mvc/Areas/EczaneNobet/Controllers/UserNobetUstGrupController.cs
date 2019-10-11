@@ -13,7 +13,7 @@ using WM.UI.Mvc.Models;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Oda,Üst Grup")]
     [HandleError]
     public class UserNobetUstGrupController : Controller
     {

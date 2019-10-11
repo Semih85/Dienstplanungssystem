@@ -9,7 +9,7 @@ using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Oda,Üst Grup")]
     public class UserEczaneController : Controller
     {
         #region ctor
