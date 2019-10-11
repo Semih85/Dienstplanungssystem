@@ -123,12 +123,14 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var menuRole = _menuRoleService.GetById(id);
-            MenuRoleDetay menuRoleDetay = _menuRoleService.GetMenuRoleDetaylar().Where(s => s.Id == menuRole.Id).SingleOrDefault();
+
+            var menuRoleDetay = _menuRoleService.GetMenuRoleDetaylar().SingleOrDefault(s => s.Id == menuRole.Id);
+
             if (menuRole == null)
             {
                 return HttpNotFound();
             }
-            return View(menuRole);
+            return View(menuRoleDetay);
         }
 
         // POST: EczaneNobet/MenuRole/Delete/5
@@ -137,7 +139,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var menuRole = _menuRoleService.GetById(id);
-            MenuRoleDetay menuRoleDetay = _menuRoleService.GetMenuRoleDetaylar().Where(s => s.Id == menuRole.Id).SingleOrDefault();
+            var menuRoleDetay = _menuRoleService.GetMenuRoleDetaylar().SingleOrDefault(s => s.Id == menuRole.Id);
             _menuRoleService.Delete(id);
             return RedirectToAction("Index");
         }
