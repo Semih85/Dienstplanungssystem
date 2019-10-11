@@ -41,7 +41,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _userEczaneService = userEczaneService;
         }
 
-        // GET: EczaneNobet/Eczane        
+        // GET: EczaneNobet/Eczane 
+        [Authorize(Roles = "Admin,Oda,Üst Grup,Eczane")]
         public ActionResult Index()
         {
             var user = _userService.GetByUserName(User.Identity.Name);
@@ -98,6 +99,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Create([Bind(Include = "Id,Adi,AcilisTarihi,KapanisTarihi,Enlem,Boylam,Adres,TelefonNo,MailAdresi,WebSitesi,NobetUstGrupId")] Eczane eczane)
         {
             if (ModelState.IsValid)
@@ -152,6 +154,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Edit([Bind(Include = "Id,Adi,AcilisTarihi,KapanisTarihi,Enlem,Boylam,Adres,TelefonNo,MailAdresi,WebSitesi, NobetUstGrupId")] Eczane eczane)
         {
             if (ModelState.IsValid)
@@ -184,6 +187,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // POST: EczaneNobet/Eczane/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult DeleteConfirmed(int id)
         {
             Eczane eczane = _eczaneService.GetById(id);

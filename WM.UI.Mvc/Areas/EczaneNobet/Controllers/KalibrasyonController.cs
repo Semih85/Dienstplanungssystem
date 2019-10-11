@@ -51,6 +51,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         #endregion
 
         // GET: EczaneNobet/Kalibrasyon
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Index()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
@@ -77,6 +78,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/Kalibrasyon/Create
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Create()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
@@ -105,6 +107,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Create([Bind(Include = "Id,EczaneNobetGrupId,KalibrasyonTipId,NobetUstGrupGunGrupId,Deger,Aciklama")] Kalibrasyon kalibrasyon)
         {
             if (ModelState.IsValid)
@@ -132,6 +135,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/Kalibrasyon/Edit/5
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Edit(int id)
         {
             if (id < 1)
@@ -166,6 +170,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Edit([Bind(Include = "Id,EczaneNobetGrupId,KalibrasyonTipId,NobetUstGrupGunGrupId,Deger,Aciklama")] Kalibrasyon kalibrasyon)
         {
             if (ModelState.IsValid)
@@ -192,6 +197,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/Kalibrasyon/Delete/5
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Delete(int id)
         {
             if (id < 1)
@@ -209,6 +215,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // POST: EczaneNobet/Kalibrasyon/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult DeleteConfirmed(int id)
         {
             //var kalibrasyon = _kalibrasyonService.GetDetayById(id);

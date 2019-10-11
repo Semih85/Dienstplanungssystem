@@ -15,7 +15,7 @@ using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Oda,Üst Grup")]
     public class NobetUstGrupController : Controller
     {
         private INobetUstGrupService _nobetUstGrupService;
@@ -35,6 +35,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/NobetUstGrup
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Index()
         {
             var user = _userService.GetByUserName(User.Identity.Name);
@@ -67,6 +68,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/NobetUstGrup/Create
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Create()
         {
             ViewBag.EczaneOdaId = new SelectList(_eczaneOdaService.GetList(), "Id", "Adi");

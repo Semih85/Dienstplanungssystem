@@ -17,7 +17,7 @@ using WM.UI.Mvc.Services;
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
     [HandleError]
-    [Authorize]
+    [Authorize(Roles = "Admin,Oda,Üst Grup")]
     public class EczaneNobetDegisimController : Controller
     {
         #region ctor

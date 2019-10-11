@@ -58,6 +58,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         #endregion
 
         // GET: EczaneNobet/EczaneNobetGrup
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Index()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);

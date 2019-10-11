@@ -48,6 +48,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         #endregion
 
         // GET: EczaneNobet/NobetUstGrupKisit
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Index()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
@@ -66,6 +67,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult KisitAyarla()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);

@@ -70,6 +70,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         #endregion
 
         // GET: EczaneNobet/EczaneNobetMazeret
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Index()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
@@ -396,6 +397,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/EczaneNobetMazeret/Create
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Create()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
@@ -759,6 +761,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         //    };
         //}
         // GET: EczaneNobet/EczaneNobetMazeret/Edit/5
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Edit(int id)
         {
             if (id == 0)
@@ -794,6 +797,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Edit([Bind(Include = "Id,EczaneNobetGrupId,MazeretId,TakvimId,Aciklama")] EczaneNobetMazeret eczaneNobetMazeret)
         {
             if (ModelState.IsValid)
@@ -809,6 +813,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.TakvimId = new SelectList(_takvimService.GetList(), "Id", "Tarih", eczaneNobetMazeret.TakvimId);
             return View(eczaneNobetMazeret);
         }
+        
         //[HttpPost]
         public void SecilenleriSil(string selectedEczaneMazeretIstekIDs, string unSelectedEczaneMazeretIstekIDs)
         {
@@ -848,7 +853,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //return PartialView("EczaneNobetMazeretPartialView", eczaneNobetMazeretlerVeIstekler);
             //  return Json(unSelectedEczaneMazeretIstekIDs, JsonRequestBehavior.AllowGet);          
         }
+        
         // GET: EczaneNobet/EczaneNobetMazeret/Delete/5
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Delete(int id)
         {
             if (id == 0)
@@ -866,6 +873,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // POST: EczaneNobet/EczaneNobetMazeret/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult DeleteConfirmed(int id)
         {
             EczaneNobetMazeret eczaneNobetMazeret = _eczaneNobetMazeretService.GetById(id);

@@ -12,7 +12,8 @@ using WM.UI.Mvc.Models;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
-    [Authorize]
+    //[Authorize]
+    [Authorize(Roles = "Admin,Oda,Üst Grup")]
     [HandleError]
     public class MazeretController : Controller
     {
@@ -27,6 +28,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/Mazeret
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Index()
         {
             var model = _mazeretService.GetList();
@@ -35,6 +37,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/Mazeret/Details/5
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Details(int id)
         {
             if (id < 0)
@@ -50,6 +53,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/Mazeret/Create
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Create()
         {
             ViewBag.MazeretTurId = new SelectList(_mazeretTurService.GetList().Select(s => new { s.Id, s.Adi }), "Id", "Adi");

@@ -26,13 +26,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
         private IUserService _userService;
         private INobetUstGrupSessionService _nobetUstGrupSessionService;
+        private INobetUstGrupKisitSessionService _nobetUstGrupKisitSessionService;
 
         public NobetGrupGorevTipKisitController(INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
             INobetUstGrupService nobetUstGrupService,
             IUserService userService,
             INobetUstGrupKisitService nobetUstGrupKisitService,
             INobetGrupGorevTipService nobetGrupGorevTipService,
-            INobetUstGrupSessionService nobetUstGrupSessionService)
+            INobetUstGrupSessionService nobetUstGrupSessionService,
+            INobetUstGrupKisitSessionService nobetUstGrupKisitSessionService)
         {
             _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
             _nobetUstGrupService = nobetUstGrupService;
@@ -40,6 +42,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _nobetUstGrupKisitService = nobetUstGrupKisitService;
             _nobetGrupGorevTipService = nobetGrupGorevTipService;
             _nobetUstGrupSessionService = nobetUstGrupSessionService;
+            _nobetUstGrupKisitSessionService = nobetUstGrupKisitSessionService;
         }
 
         // GET: EczaneNobet/NobetGrupGorevTipKisit
@@ -128,7 +131,21 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 try
                 {
+                    var nobetUstGrupKisit = _nobetUstGrupKisitService.GetById(nobetGrupGorevTipKisit.NobetUstGrupKisitId);
+
+                    var nobetUstGrupId = nobetUstGrupKisit.NobetUstGrupId;
+
+                    var kisitOnce = _nobetUstGrupKisitService.GetDetay(nobetUstGrupKisit.KisitId, nobetUstGrupId);
+
+                    var nobetUstGrupKisitSession = _nobetUstGrupKisitSessionService.GetSessionList("nobetUstGrupKisitSession", nobetUstGrupId);
+
                     _nobetGrupGorevTipKisitService.Insert(nobetGrupGorevTipKisit);
+
+                    var kisitSonra = _nobetUstGrupKisitService.GetDetay(nobetUstGrupKisit.KisitId, nobetUstGrupId);
+
+                    _nobetUstGrupKisitSessionService.AddSessionList(kisitOnce, kisitSonra, "nobetUstGrupKisitSession", nobetUstGrupKisitSession);
+
+                    nobetUstGrupKisitSession = _nobetUstGrupKisitSessionService.GetSessionList("nobetUstGrupKisitSession", kisitOnce.NobetUstGrupId);
                 }
                 catch (DbUpdateException ex)
                 {
@@ -202,7 +219,22 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
+                var kisitOnce = _nobetGrupGorevTipKisitService.GetDetayById(nobetGrupGorevTipKisit.Id);
+
+                var kisitOnceGrupBazli = GetNobetUstGrupKisitDetay(kisitOnce);
+
+                var nobetUstGrupKisitSession = _nobetUstGrupKisitSessionService.GetSessionList("nobetUstGrupKisitSession", kisitOnce.NobetUstGrupId);
+
                 _nobetGrupGorevTipKisitService.Update(nobetGrupGorevTipKisit);
+
+                var kisitSonra = _nobetGrupGorevTipKisitService.GetDetayById(kisitOnce.Id);
+
+                var kisitSonraGrupBazli = GetNobetUstGrupKisitDetay(kisitSonra);
+
+                _nobetUstGrupKisitSessionService.AddSessionList(kisitOnceGrupBazli, kisitSonraGrupBazli, "nobetUstGrupKisitSession", nobetUstGrupKisitSession);
+
+                nobetUstGrupKisitSession = _nobetUstGrupKisitSessionService.GetSessionList("nobetUstGrupKisitSession", kisitOnce.NobetUstGrupId);
+
                 return RedirectToAction("Index");
             }
             //var user = _userService.GetByUserName(User.Identity.Name);
@@ -216,7 +248,28 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi", nobetGrupGorevTipKisit.NobetGrupGorevTipId);
             ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitlar, "Id", "KisitAdiUzun", nobetGrupGorevTipKisit.NobetUstGrupKisitId);
+
             return View(nobetGrupGorevTipKisit);
+        }
+
+        private static NobetUstGrupKisitDetay GetNobetUstGrupKisitDetay(NobetGrupGorevTipKisitDetay kisitOnce)
+        {
+            var kisitOnceGrupBazli = new NobetUstGrupKisitDetay
+            {
+                NobetUstGrupId = kisitOnce.NobetUstGrupId,
+                KisitId = kisitOnce.KisitId,
+                SagTarafDegeri = kisitOnce.SagTarafDegeri,
+                SagTarafDegeriVarsayilan = kisitOnce.SagTarafDegeriVarsayilan,
+                PasifMi = kisitOnce.PasifMi,
+                VarsayilanPasifMi = kisitOnce.VarsayilanPasifMi,
+                DegerPasifMi = kisitOnce.DegerPasifMi,
+                Id = kisitOnce.NobetUstGrupKisitId,
+                KisitAdi = kisitOnce.KisitAdi,
+                KisitAciklama = kisitOnce.KisitAciklama,
+                KisitAdiGosterilen = kisitOnce.KisitAdiGosterilen,
+                //KisitAdiGosterilenKisa = kisitOnce.KisitAdiGosterilen
+            };
+            return kisitOnceGrupBazli;
         }
 
         // GET: EczaneNobet/NobetGrupGorevTipKisit/Delete/5
@@ -239,7 +292,24 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            var nobetGrupGorevTipKisit = _nobetGrupGorevTipKisitService.GetById(id);
+
+            var nobetUstGrupKisit = _nobetUstGrupKisitService.GetById(nobetGrupGorevTipKisit.NobetUstGrupKisitId);
+
+            var nobetUstGrupId = nobetUstGrupKisit.NobetUstGrupId;
+
+            var kisitOnce = _nobetUstGrupKisitService.GetDetay(nobetUstGrupKisit.KisitId, nobetUstGrupId);
+
+            var nobetUstGrupKisitSession = _nobetUstGrupKisitSessionService.GetSessionList("nobetUstGrupKisitSession", kisitOnce.NobetUstGrupId);
+
             _nobetGrupGorevTipKisitService.Delete(id);
+
+            var kisitSonra = _nobetUstGrupKisitService.GetDetay(nobetUstGrupKisit.KisitId, nobetUstGrupId);
+
+            _nobetUstGrupKisitSessionService.AddSessionList(kisitOnce, kisitSonra, "nobetUstGrupKisitSession", nobetUstGrupKisitSession);
+
+            nobetUstGrupKisitSession = _nobetUstGrupKisitSessionService.GetSessionList("nobetUstGrupKisitSession", kisitOnce.NobetUstGrupId);
+
             return RedirectToAction("Index");
         }
 
