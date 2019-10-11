@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
-    [Authorize(Roles = "Admin,Oda,Üst Grup, Nöbet Komisyonu")]
+    [Authorize(Roles = "Admin,Oda,Üst Grup,Nöbet Komisyonu Üyesi")]
     public class NobetKomisyonuController : Controller
     {
         // GET: EczaneNobet/NobetKomisyonu

@@ -15,7 +15,8 @@ using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
-    [Authorize(Roles = "Admin,Oda,Üst Grup")]
+    //[Authorize(Roles = "Admin,Oda,Üst Grup")]
+    [Authorize]
     public class NobetUstGrupController : Controller
     {
         private INobetUstGrupService _nobetUstGrupService;
@@ -35,7 +36,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/NobetUstGrup
-        [Authorize(Roles = "Admin,Oda,Üst Grup")]
+        [Authorize]
         public ActionResult Index()
         {
             var user = _userService.GetByUserName(User.Identity.Name);
