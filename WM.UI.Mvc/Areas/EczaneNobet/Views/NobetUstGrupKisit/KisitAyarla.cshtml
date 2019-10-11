@@ -51,7 +51,6 @@
                     </button>
                 </div>*@
             <div class="modal-body" style="font-size:small">
-                <h5 class="card-title">Son Yapılan Nöbet Kural Değişimleri @*<span class="badge badge-info" id="degisimSayisi"></span>*@</h5>
                 @*<div class="spinner-border text-primary" role="status" id="kisitDurumuLoadingElement" style="display:none">
                         <span class="sr-only">Loading...</span>
                     </div>*@
@@ -379,6 +378,7 @@
         }
 
     </script>
+
     <script>
         //col
         $("#degisebilenKisitlar").click(function () {
@@ -447,9 +447,27 @@
 
         $('#search').click(function () {
             //alert(url)
-            $('#searchResults').empty();
-            $('#searchResults').load(url);
+            //$('#searchResults').empty();
+            $('#searchResults').load(url, function() {
+
+                var kuralDegisimSayisi = $("#kisitDegisimTablosu > tbody > tr").length;
+
+                //if (kuralDegisimSayisi > 0) {
+                //    $("#kisitDegisimTablosu").show();
+                //}
+                //else {
+                //    $("#kisitDegisimTablosu").hide();
+                //}
+                //alert()
+            });
+
+            //var customerId = $('#kisitDegisimTablosu tr:last').attr('Genel');
+
+            //alert(customerId)
+
             //$('#degisimSayisi').text(url.length);
+            //$("#kisitDegisimTablosu > tbody > tr").length
+            //alert($("#kisitDegisimTablosu > tbody > tr").length)
         })
 
         var urlRaporuGuncelle = '@Url.Action("EditAjax")';
@@ -584,7 +602,7 @@
                     alert('Hata. Veri okunamadı! ' + data);
                 },
             });
-            }
+        }
 
     </script>
 }
