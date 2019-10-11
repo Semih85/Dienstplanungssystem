@@ -1,4 +1,4 @@
-﻿@model MenuRole
+﻿@model MenuRoleDetay
 
 @{
     ViewBag.Title = "Delete";
@@ -12,24 +12,25 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Menu.LinkText)
+            @Html.DisplayNameFor(model => model.MenuAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Menu.LinkText)
+            @Html.DisplayFor(model => model.MenuAdi)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Role.Name)
+            @Html.DisplayNameFor(model => model.RolAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Role.Name)
+            @Html.DisplayFor(model => model.RolAdi)
         </dd>
 
     </dl>
 
     @using (Html.BeginForm()) {
+
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
