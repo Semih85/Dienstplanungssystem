@@ -2256,7 +2256,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             celiskiler += $"<td>Kural</td>";
             celiskiler += $"<td>Değer</td>";
             celiskiler += $"<td>Grup</td>";
-            celiskiler += $"<td>Alt/Eş Grup/Detay</td>";
+            celiskiler += $"<td>(Alt/Eş) Grup/Detay</td>";
             celiskiler += $"<td>Eczane</td>";
             celiskiler += "</tr>";
             celiskiler += "</thead>";

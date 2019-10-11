@@ -72,7 +72,7 @@
                                 <div class="dropdown-divider"></div>
                             }
                             @Html.ActionLink(menuAlt.LinkText, menuAlt.ActionName, menuAlt.ControllerName, new { area = menuAlt.AreaName }, new { @class = menuAlt.SpanCssClass })
-                            if (menuAlt.LinkText == "Nöbet İstatistik")
+                            if (menuAlt.LinkText == "Nöbet İstatistik" && Model.MenuAltlar.Where(s => s.MenuId == menu.Id).Count() > 1)
                             {
                                 <div class="dropdown-divider"></div>
                             }
