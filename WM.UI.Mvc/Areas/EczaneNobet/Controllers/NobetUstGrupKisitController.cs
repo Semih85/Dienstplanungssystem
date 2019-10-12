@@ -261,8 +261,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => new { s.Id, s.Adi });
+            var nobetUstGrupDetay = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+            var nobetUstGruplar = _nobetUstGrupService.GetDetaylar(nobetUstGrupDetay.Id).Select(s => new { s.Id, s.Adi });
 
             ViewBag.KisitId = new SelectList(_kisitService.GetDetaylar(), "Id", "KisitAdi");
             ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar, "Id", "Adi");
