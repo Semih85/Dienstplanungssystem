@@ -18,7 +18,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public DateTime OlusturmaTarihi { get; set; }
         public int KisitKategoriId { get; set; }
         public string KisitKategoriAdi { get; set; }
-        public string KisitAdi => $"K{(Id < 10 ? '0' + Id : Id)} {KisitKategoriAdi}, {AdiGosterilen}";
+        public string KisitAdi => $"K{(Id < 10 ? '0' + Id.ToString() : Id.ToString())} {KisitKategoriAdi}, {AdiGosterilen}";
         public bool DegerPasifMi { get; set; }
     }
 }
