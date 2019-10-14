@@ -166,11 +166,11 @@
 
             var baslangicStr = $("#BaslangicTarihi").val();
             var baslangicArr = baslangicStr.split(".");
-            var baslangicDate = new Date(baslangicArr[0], baslangicArr[1], baslangicArr[2]);
+            var baslangicDate = new Date(baslangicArr[2], baslangicArr[1], baslangicArr[0]);
 
             var bitisStr = $("#BitisTarihi").val();
             var bitisArr = bitisStr.split(".");
-            var bitisDate = new Date(bitisArr[0], bitisArr[1], bitisArr[2]);
+            var bitisDate = new Date(bitisArr[2], bitisArr[1], bitisArr[0]);
 
             if (baslangicDate > bitisDate) {
                 alert("Başlangıç tarihi (" + baslangicStr + ") bitiş tarihinden (" + bitisStr + ") büyük olamaz!!!.");
@@ -181,8 +181,8 @@
 
         $("#formSubmitButton").click(function (e) {
 
-            var bitisTarihi = tarihDondur2($('#BitisTarihi').val());
             var baslangicTarihi = tarihDondur2($('#BaslangicTarihi').val());
+            var bitisTarihi = tarihDondur2($('#BitisTarihi').val());
 
             if (baslangicTarihi != "" && bitisTarihi != "") {
                 if (bitisTarihi < baslangicTarihi) {
