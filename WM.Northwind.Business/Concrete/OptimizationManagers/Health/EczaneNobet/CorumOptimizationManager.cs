@@ -179,8 +179,6 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 //&& w.EczaneAdi == "ÖZGÜR"
                 ).ToList();
 
-
-
             var nobetGorevTipId = 7;
             if (!nobetGorevTipler.Contains(nobetGorevTipId))
                 nobetGorevTipId = 0;
@@ -369,11 +367,18 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetGrupIdListe);
             var ikiliEczanelerMesafe = new List<AyniGunTutulanNobetDetay>();
+            var kritereUygunSayilar = mesafeler.Where(w => w.Mesafe > mesafeKriter).ToList();
 
-            foreach (var mesafe in mesafeler.Where(w => w.Mesafe > mesafeKriter))
+            foreach (var mesafe in kritereUygunSayilar)
             {
                 var eczaneFrom = eczaneNobetGruplarGorevTip1.SingleOrDefault(x => x.EczaneId == mesafe.EczaneIdFrom) ?? new EczaneNobetGrupDetay();
                 var eczaneTo = eczaneNobetGruplarGorevTip1.SingleOrDefault(x => x.EczaneId == mesafe.EczaneIdTo) ?? new EczaneNobetGrupDetay();
+
+                if (eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneId).Contains(mesafe.EczaneIdFrom)
+                 || eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneId).Contains(mesafe.EczaneIdTo))
+                {
+                    continue;
+                }
 
                 if (eczaneFrom.EczaneId == 0 || eczaneTo.EczaneId == 0)
                 {

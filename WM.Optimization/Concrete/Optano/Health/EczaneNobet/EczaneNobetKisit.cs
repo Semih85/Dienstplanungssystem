@@ -1122,7 +1122,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 {
                     var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
                      //+ $"m{indis}. " +
-                     + $"Mazeret tarihi: {eczaneNobetMazeret.Tarih.ToShortDateString()}"
+                     + $"{eczaneNobetMazeret.Tarih.ToString("dd.MM.yy-ddd.")} - {eczaneNobetMazeret.MazeretAdi}"
                      //+ $"{eczaneNobetMazeret.MazeretAdi}"
                      + $"";
 
@@ -1155,7 +1155,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 foreach (var eczaneNobetIstek in p.EczaneNobetIstekler)
                 {
                     var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
-                         + $"istek tarihi: {eczaneNobetIstek.Tarih.ToShortDateString()}"
+                         + $"{eczaneNobetIstek.Tarih.ToString("dd.MM.yy-ddd.")} - {eczaneNobetIstek.IstekAdi}"
                          //+ $"{eczaneNobetIstek.IstekAdi}"
                          + $"";
 
