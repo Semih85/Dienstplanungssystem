@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WM.Northwind.Business.Abstract.Authorization;
 using WM.Northwind.Business.Abstract.EczaneNobet;
+using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.UI.Mvc.Areas.EczaneNobet.Models;
 using WM.UI.Mvc.Models;
@@ -64,7 +65,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var model = new EczaneUzaklikMatrisViewModel
             {
                 Eczaneler = new List<Eczane>(),
-                NobetUstGrupId = nobetUstGrupId
+                NobetUstGrupId = nobetUstGrupId,
+                //Uzakliklar = new List<EczaneUzaklikMatrisDetay>()
             };
 
             foreach (var item in nobetciEczaneler)
@@ -89,7 +91,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 });
             }
 
-            SetUzakliklarKusUcusu(model);
+            SetUzakliklarKusUcusu(model.Eczaneler);
+
+            var sonuclar = _eczaneUzaklikMatrisService.GetDetaylar(nobetUstGrupId);
+
+            model.Uzakliklar = sonuclar;
 
             return View(model);
         }
@@ -97,14 +103,24 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             return degrees * Math.PI / 180;
         }
-        void SetUzakliklarKusUcusu(EczaneUzaklikMatrisViewModel model)
+
+        void SetUzakliklarKusUcusu(List<Eczane> eczaneler)
         {
             double earthRadiusM = 6371000;
 
-            var siraliEcaneler = model.Eczaneler.OrderBy(s => s.Id).ToList();
+            var siraliEcaneler = eczaneler.OrderBy(s => s.Id).ToList();
 
             foreach (var itemFrom in siraliEcaneler)
             {
+                var kotrol = true;
+
+                if (kotrol)
+                {
+                    if (itemFrom.Adi == "NEFES")
+                    {
+                    }                    
+                }
+
                 if (itemFrom.Enlem <= 1 || itemFrom.Boylam <= 1)
                     continue;
 
@@ -114,6 +130,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 {
                     if (itemTo.Enlem <= 1 || itemTo.Boylam <= 1)
                         continue;
+
                     double lat1 = itemFrom.Enlem;
                     double lon1 = itemFrom.Boylam;
                     double lat2 = itemTo.Enlem;
@@ -127,14 +144,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
                         Math.Sin(dLon / 2) * Math.Sin(dLon / 2) * Math.Cos(lat1) * Math.Cos(lat2);
+
                     double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
 
                     double distance = earthRadiusM * c;
 
                     var eczaneUzaklikMatris = new EczaneUzaklikMatris
                     {
-                        EczaneIdFrom = Convert.ToInt32(itemFrom.Id),
-                        EczaneIdTo = Convert.ToInt32(itemTo.Id),
+                        EczaneIdFrom = itemFrom.Id,
+                        EczaneIdTo = itemTo.Id,
                         Mesafe = Convert.ToInt32(distance)
                     };
 
