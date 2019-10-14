@@ -372,8 +372,13 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             foreach (var mesafe in mesafeler.Where(w => w.Mesafe > mesafeKriter))
             {
-                var eczaneFrom = eczaneNobetGruplarGorevTip1.SingleOrDefault(x => x.EczaneId == mesafe.EczaneIdFrom);
-                var eczaneTo = eczaneNobetGruplarGorevTip1.SingleOrDefault(x => x.EczaneId == mesafe.EczaneIdTo);
+                var eczaneFrom = eczaneNobetGruplarGorevTip1.SingleOrDefault(x => x.EczaneId == mesafe.EczaneIdFrom) ?? new EczaneNobetGrupDetay();
+                var eczaneTo = eczaneNobetGruplarGorevTip1.SingleOrDefault(x => x.EczaneId == mesafe.EczaneIdTo) ?? new EczaneNobetGrupDetay();
+
+                if (eczaneFrom.EczaneId == 0 || eczaneTo.EczaneId == 0)
+                {
+                    throw new Exception($"{eczaneFrom.EczaneAdi} {eczaneTo.EczaneAdi} ikilisi listeye eklenemedi!");
+                }
 
                 ikiliEczanelerMesafe.Add(new AyniGunTutulanNobetDetay
                 {
@@ -468,7 +473,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _eczaneNobetOrtakService.KurallariKontrolEtIstek(nobetUstGrupId, eczaneNobetIstekler, nobetGrupKurallar);
 
             return corumDataModel;
-        }        
+        }
 
         [LogAspect(typeof(DatabaseLogger))]
         [SecuredOperation(Roles = "Admin,Oda,Üst Grup")]
