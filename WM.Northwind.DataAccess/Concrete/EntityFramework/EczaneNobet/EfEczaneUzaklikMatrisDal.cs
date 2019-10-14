@@ -54,5 +54,28 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
             }
         }
 
+        public virtual void CokluEkle(List<EczaneUzaklikMatrisDetay> eczaneUzaklikMatrisDetaylar)
+        {
+            var liste = new List<EczaneUzaklikMatris>();
+            
+            using (var ctx = new EczaneNobetContext())
+            {
+                foreach (var eczaneUzaklik in eczaneUzaklikMatrisDetaylar)
+                {
+                    var nobetSonuc = new EczaneUzaklikMatris
+                    {
+                        EczaneIdFrom = eczaneUzaklik.EczaneIdFrom,
+                        EczaneIdTo = eczaneUzaklik.EczaneIdTo,
+                        Mesafe = eczaneUzaklik.Mesafe
+                    };
+
+                    liste.Add(nobetSonuc);
+                }
+
+                ctx.EczaneUzaklikMatrisler.AddRange(liste);
+                ctx.SaveChanges();
+            }
+        }
+
     }
 }

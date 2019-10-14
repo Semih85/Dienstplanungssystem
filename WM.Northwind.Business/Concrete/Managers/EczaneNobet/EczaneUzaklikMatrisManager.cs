@@ -200,5 +200,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             return mesafeKontrolEczaneler;
         }
+
+        public void CokluEkle(List<EczaneUzaklikMatrisDetay> eczaneUzaklikMatrisDetaylar)
+        {
+            _eczaneUzaklikMatrisDal.CokluEkle(eczaneUzaklikMatrisDetaylar);
+        }
     }
 }

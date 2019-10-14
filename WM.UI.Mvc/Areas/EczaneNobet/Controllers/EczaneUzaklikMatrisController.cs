@@ -110,6 +110,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var siraliEcaneler = eczaneler.OrderBy(s => s.Id).ToList();
 
+            var eczaneUzaklikMatrisList = new List<EczaneUzaklikMatrisDetay>();
+
             foreach (var itemFrom in siraliEcaneler)
             {
                 var kotrol = true;
@@ -118,7 +120,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 {
                     if (itemFrom.Adi == "NEFES")
                     {
-                    }                    
+                    }
                 }
 
                 if (itemFrom.Enlem <= 1 || itemFrom.Boylam <= 1)
@@ -149,25 +151,25 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     double distance = earthRadiusM * c;
 
-                    var eczaneUzaklikMatris = new EczaneUzaklikMatris
+                    eczaneUzaklikMatrisList.Add(new EczaneUzaklikMatrisDetay
                     {
                         EczaneIdFrom = itemFrom.Id,
                         EczaneIdTo = itemTo.Id,
                         Mesafe = Convert.ToInt32(distance)
-                    };
+                    });
 
                     var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
                     var nobetUstGrupId = ustGrupSession.Id;
-
-                    try
-                    {
-                        _eczaneUzaklikMatrisService.Insert(eczaneUzaklikMatris);
-                    }
-                    catch (Exception ex)
-                    {
-                        TempData["MessageDanger"] = "ERROR: " + ex.InnerException.InnerException.Message.ToString();
-                    }
                 }
+            }
+
+            try
+            {
+                _eczaneUzaklikMatrisService.CokluEkle(eczaneUzaklikMatrisList);
+            }
+            catch (Exception ex)
+            {
+                TempData["MessageDanger"] = "ERROR: " + ex.InnerException.InnerException.Message.ToString();
             }
         }
         // GET: EczaneNobet/EczaneUzaklikMatris/Details/5
