@@ -12,5 +12,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Models
 
         public int NobetUstGrupId { get; set; }
         public List<Eczane> Eczaneler { get; set; }
+        public List<EczaneUzaklikMatrisDetay> Uzakliklar { get; internal set; }
     }
 }
