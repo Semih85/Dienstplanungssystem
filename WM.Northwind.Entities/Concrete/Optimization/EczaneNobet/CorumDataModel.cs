@@ -70,5 +70,6 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public List<EczaneGrupDetay> ArasindaAyniGun2NobetFarkiOlanIkiliEczaneler { get; set; }
         public List<EczaneNobetTarihAralikIkili> EczaneNobetTarihAralikIkiliEczaneler { get; set; }
         public List<AyniGunTutulanNobetDetay> IkiliEczaneler { get; set; }
+        public List<EczaneNobetGrupGunKuralIstatistikYatay> EczaneNobetGrupGunKuralIstatistikYataySon3Ay { get; set; }
     }
 }
