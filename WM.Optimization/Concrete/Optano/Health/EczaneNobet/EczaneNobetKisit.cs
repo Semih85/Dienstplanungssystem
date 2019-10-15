@@ -31,7 +31,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     : p.NobetGrupGorevTip.NobetGrupAdi;
 
                 var kisitAdi = IsimleriBirlestir("K00, Talep"
-                    , $"{tarih.NobetGunKuralAdi}-{tarih.Tarih.ToString("dd.MM.yy")}"
+                    ,
+                    //$"{tarih.NobetGunKuralAdi}" +
+                    $"{tarih.Tarih.ToString("dd.MM.yy-ddd.")}"
                     //, $""
                     , tarih.TalepEdilenNobetciSayisi.ToString()
                     , nobetGrupBilgisi
@@ -150,7 +152,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var fark = p.KumulatifOrtalamaNobetSayisi - p.ToplamNobetSayisi;
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanimKisa}" +
-                    $" {fark} = {p.KumulatifOrtalamaNobetSayisi}-{p.ToplamNobetSayisi} (Kmlt.Ort.-Top.)Nöb." +
+                    $" {fark} " +
+                    //$" {fark} = {p.KumulatifOrtalamaNobetSayisi}-{p.ToplamNobetSayisi} (Kmlt.Ort.-Top.)Nöb." +
                     $"{(p.GunKuralAdi == null ? "" : $" - {p.GunKuralAdi}")}"
                     ;
 
