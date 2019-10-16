@@ -494,8 +494,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     pesPeseGorevEnAzPazar.NobetYazilabilecekIlkTarih = yazilabilecekIlkPazarTarihi;
                     pesPeseGorevEnAzPazar.SonNobetTarihi = eczaneNobetIstatistik.SonNobetTarihiPazar;
 
-                    //istisna
-                    //PesPeseGorevEnAz(pesPeseGorevEnAzPazar);
+                    //istisna -- Ekim 2019 sonuna kadar.
+                    PesPeseGorevEnAz(pesPeseGorevEnAzPazar);
 
                     #endregion
 
@@ -1077,6 +1077,18 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #endregion
 
+                    #region Kümülatif hafta içi en az - son 3 ay
+
+                    var kpKumulatifToplamEnAzHaftaIciSon3Ay = (KpKumulatifToplam)kpKumulatifToplam.Clone();
+
+                    kpKumulatifToplamEnAzHaftaIciSon3Ay.Tarihler = haftaIciGunleri;
+                    kpKumulatifToplamEnAzHaftaIciSon3Ay.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k72");
+                    kpKumulatifToplamEnAzHaftaIciSon3Ay.ToplamNobetSayisi = eczaneNobetIstatistikSon3Ay.NobetSayisiHaftaIci;
+
+                    KumulatifToplamEnFazla(kpKumulatifToplamEnAzHaftaIciSon3Ay);
+
+                    #endregion
+
                     #region Kümülatif bayram en az
 
                     var kpKumulatifToplamEnAzBayram = (KpKumulatifToplam)kpKumulatifToplam.Clone();
@@ -1102,8 +1114,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     .Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
 
                 var tarihAraligiIstisna = tarihAraligi
-                    .Where(w => w.GunGrupId > 2
-                    ).ToList();//istisna -- ekim sonrası w.GunGrupId != 2
+                    .Where(w => w.GunGrupId != 2
+                    ).ToList();//istisna -- ekim 2019 sonrası "w.GunGrupId != 2" olarak düeltildi. Öncesinde "w.GunGrupId > 2" idi. bu istisna da mayıs 2020'de son bulacak.
 
                 #region eczane gruplar
 
