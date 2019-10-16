@@ -317,11 +317,30 @@
                 </button>*@
             </div>
             <div class="modal-body">
+                <div class="row justify-content-sm-center" id="degisenKisitUyari" style="display:none">
+                    <div class="col-12">
+                        <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+                            <i class="fa fa-warning"></i> Dikkat!
+                            <a class="alert-link" target="_blank" href="@Url.Action( "KisitAyarla", "NobetUstGrupKisit",new { area = "EczaneNobet" })">
+                                @*<span class="text-primary">*@
+                                <span id="degisenKistiSayisi"></span> kural
+                                @*<i class="fa fa-external-link" aria-hidden="true"></i>*@
+                                @*</span>*@
+
+                            </a>
+                            varsayılandan farklıdır.
+                            @*<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+                        </div>
+                    </div>
+                </div>
+
                 <p>
                     Devam etmek istediğinizden
                     <span class="text-danger"> emin misiniz?</span>
                 </p>
-                <label class="mb-2" id="seilenKriterler"></label>
+                <label class="mb-1" id="seilenKriterler"></label>
 
                 <div class="row mb-2">
                     <div class="col">
@@ -338,24 +357,6 @@
                 </div>
                 <div class="spinner-border text-primary" role="status" id="kisitDurumuLoadingElement" style="display:none">
                     <span class="sr-only">Loading...</span>
-                </div>
-                <div class="row justify-content-sm-center" id="degisenKisitUyari" style="display:none">
-                    <div class="col-12">
-                        <div class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
-                            <i class="fa fa-warning"></i> Dikkat!
-                            <a class="alert-link" target="_blank" href="@Url.Action( "KisitAyarla", "NobetUstGrupKisit",new { area = "EczaneNobet" })">
-                                @*<span class="text-primary">*@
-                                <span id="degisenKistiSayisi"></span> kural
-                                @*<i class="fa fa-external-link" aria-hidden="true"></i>*@
-                                @*</span>*@
-
-                            </a>
-                            varsayılandan farklıdır.
-                            @*<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>*@
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -1212,11 +1213,12 @@
                 + "<span class='mr-4'>Grup Sayısı</span>:"
                 + "<span class='font-weight-bold'> " + grupSayisi + "/" + toplamGrupSayisi + "</span>";
 
-            var mesaj = "<strong>Nöbet yazdırma kriterleri :</strong>" +
-                "<br />" +
+            var mesaj =
+                //"<strong>Nöbet yazdırma kriterleri :</strong>" +
+                //"<br />" +
                 "<span class='mr-3'>Tarih Aralığı</span>: " + "<strong>" + baslangicStr + " - " + bitisStr + "</strong>" +
                 yilSonu() +
-                grup +
+                (toplamGrupSayisi > 1 ? grup : "") +
                 tercih(grupSayisi) +
                 "<br />"
                 ;
