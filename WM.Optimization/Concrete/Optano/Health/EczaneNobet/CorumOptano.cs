@@ -832,6 +832,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #region pasif kısıtlar
 
+                    var eczaneToplamKalibrasyon = GetKalibrasyonDegeri(eczaneKalibrasyon);
+
+                    var eczaneKalibrasyonToplami = eczaneToplamKalibrasyon.KalibrasyonToplamHaftaIci
+                         + eczaneToplamKalibrasyon.KalibrasyonToplamCumartesi
+                         + eczaneToplamKalibrasyon.KalibrasyonToplamPazar;
+
                     #region kümülatif en fazla
 
                     #region Toplam max
@@ -841,6 +847,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazla.Tarihler = tarihler;
                     kpKumulatifToplamEnFazla.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k2");
                     kpKumulatifToplamEnFazla.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiToplam;
+                    //+ (int)eczaneKalibrasyonToplami;
+
                     kpKumulatifToplamEnFazla.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatif;
 
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazla);
@@ -915,8 +923,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     KumulatifToplamEnFazla(kpKumulatifToplamEnFazlaHaftaIci);
 
                     #endregion
-
-                    var eczaneToplamKalibrasyon = GetKalibrasyonDegeri(eczaneKalibrasyon);
 
                     #region Toplam hafta içi toplam kalibrasyonlu 
 
@@ -1010,11 +1016,22 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     var kpKumulatifToplamEnAz = (KpKumulatifToplam)kpKumulatifToplam.Clone();
 
-                    kpKumulatifToplamEnAz.Tarihler = tarihler;
-                    kpKumulatifToplamEnAz.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k3");
-                    kpKumulatifToplamEnAz.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiToplam;
+                    var istisnalarKumulatifToplamEnAz = new string[] {
+                        //"GAZİ",
+                        //"OYA",
+                        //"PAPATYA",
+                        //"GÖKMEN",
+                    };
 
-                    KumulatifToplamEnFazla(kpKumulatifToplamEnAz);
+                    if (!istisnalarKumulatifToplamEnAz.Contains(eczaneNobetGrup.EczaneAdi))
+                    {
+                        kpKumulatifToplamEnAz.Tarihler = tarihler;
+                        kpKumulatifToplamEnAz.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k3");
+                        kpKumulatifToplamEnAz.ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiToplam
+                               + (int)eczaneKalibrasyonToplami;
+
+                        KumulatifToplamEnFazla(kpKumulatifToplamEnAz);
+                    }
 
                     #endregion
 
@@ -1546,7 +1563,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             return results;
         }
 
-        
+
     }
 
 }
