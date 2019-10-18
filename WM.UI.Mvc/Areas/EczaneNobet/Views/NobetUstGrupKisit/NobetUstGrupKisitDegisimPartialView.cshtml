@@ -37,13 +37,13 @@
                 <th>Kategorisi</th>
                 <th>Adı</th>
 
-                <th style="background-color:lightblue; border-left-width:thick">Durum</th>
-                <th style="background-color:lightblue">Değer</th>
-                <th style="background-color:lightblue; border-right-width:thick">Grup Sayısı</th>
+                <th class="text-center" style="background-color:lightblue; border-left-width:thick">Durum</th>
+                <th class="text-center" style="background-color:lightblue">Değer</th>
+                <th class="text-center" style="background-color:lightblue; border-right-width:thick">Grup Sayısı</th>
 
-                <th style="background-color:lightgreen">Durum</th>
-                <th style="background-color:lightgreen">Değer</th>
-                <th style="background-color:lightgreen; border-right-width:thick">Grup Sayısı</th>
+                <th class="text-center" style="background-color:lightgreen">Durum</th>
+                <th class="text-center" style="background-color:lightgreen">Değer</th>
+                <th class="text-center" style="background-color:lightgreen; border-right-width:thick">Grup Sayısı</th>
                 @*<th>Tarihi</th>*@
             </tr>
         </thead>
@@ -56,31 +56,34 @@
                     <td>@item.NobetUstGrupKisitDetayOnce.KisitKategorisi</td>
                     <td>@item.NobetUstGrupKisitDetayOnce.KisitAdiGosterilen</td>
 
-                    <td style="border-left-width:thick">@(item.NobetUstGrupKisitDetayOnce.PasifMi ? "Pasif" : "Aktif")</td>
-                    <td>@(item.NobetUstGrupKisitDetayOnce.DegerPasifMi ? "-" : item.NobetUstGrupKisitDetayOnce.SagTarafDegeri.ToString())</td>
-                    <td style="border-right-width:thick">@item.NobetUstGrupKisitDetayOnce.NobetGrupGorevtipKisitSayisi</td>
+                    @* önce *@
+                    <td class="text-center" style="border-left-width:thick">@(item.NobetUstGrupKisitDetayOnce.PasifMi ? "Pasif" : "Aktif")</td>
+                    <td class="text-center" >@(item.NobetUstGrupKisitDetayOnce.DegerPasifMi ? "-" : item.NobetUstGrupKisitDetayOnce.SagTarafDegeri.ToString())</td>
+                    <td class="text-center" style="border-right-width:thick">@item.NobetUstGrupKisitDetayOnce.NobetGrupGorevtipKisitSayisi</td>
 
-                    <td>
+                    @* sonra *@
+                    <td class="text-center">
                         @(item.NobetUstGrupKisitDetaySonra.PasifMi ? "Pasif" : "Aktif")
                         @if (item.NobetUstGrupKisitDetayOnce.PasifMi != item.NobetUstGrupKisitDetaySonra.PasifMi)
                         {
                             <span class="text-danger font-weight-bold">*</span>
                         }
                     </td>
-                    <td>
+                    <td class="text-center">
                         @(item.NobetUstGrupKisitDetaySonra.DegerPasifMi ? "-" : item.NobetUstGrupKisitDetaySonra.SagTarafDegeri.ToString())
                         @if (item.NobetUstGrupKisitDetayOnce.SagTarafDegeri != item.NobetUstGrupKisitDetaySonra.SagTarafDegeri)
                         {
                             <span class="text-danger font-weight-bold">*</span>
                         }
                     </td>
-                    <td style="border-right-width:thick">
+                    <td class="text-center" style="border-right-width:thick">
                         @item.NobetUstGrupKisitDetaySonra.NobetGrupGorevtipKisitSayisi
                         @if (item.NobetUstGrupKisitDetayOnce.NobetGrupGorevtipKisitSayisi != item.NobetUstGrupKisitDetaySonra.NobetGrupGorevtipKisitSayisi)
                         {
                             <span class="text-danger font-weight-bold">*</span>
                         }
                     </td>
+
                     <td>@item.DegisimTarihi</td>
                 </tr>
             }
