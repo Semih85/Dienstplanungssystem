@@ -133,9 +133,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 {
                     var nobetUstGrupKisit = _nobetUstGrupKisitService.GetById(nobetGrupGorevTipKisit.NobetUstGrupKisitId);
 
+                    var nobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(nobetGrupGorevTipKisit.NobetGrupGorevTipId);
+
                     var nobetUstGrupId = nobetUstGrupKisit.NobetUstGrupId;
 
                     var kisitOnce = _nobetUstGrupKisitService.GetDetay(nobetUstGrupKisit.KisitId, nobetUstGrupId);
+
+                    kisitOnce.KisitKategoriAdi += $"_{nobetGrupGorevTip.NobetGrupAdi}";
 
                     var nobetUstGrupKisitSession = _nobetUstGrupKisitSessionService.GetSessionList("nobetUstGrupKisitSession", nobetUstGrupId);
 
@@ -267,6 +271,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 KisitAdi = kisitOnce.KisitAdi,
                 KisitAciklama = kisitOnce.KisitAciklama,
                 KisitAdiGosterilen = kisitOnce.KisitAdiGosterilen,
+                KisitKategoriAdi = $"{kisitOnce.KisitKategoriAdi}_{kisitOnce.NobetGrupAdi}",
+                KisitKategoriId = kisitOnce.KisitKategoriId
                 //KisitAdiGosterilenKisa = kisitOnce.KisitAdiGosterilen
             };
             return kisitOnceGrupBazli;
