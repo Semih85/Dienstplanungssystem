@@ -2310,7 +2310,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     .ThenBy(o => o.EczaneNobetGrupId)
                     .ToList();
 
-                foreach (var tarihBazliSonuc in tarihBazliSonuclar.Take(tarihBazliSonuclar.Count - 1).ToList())
+                var tarihBazliSonuclar1Eksik = tarihBazliSonuclar.Take(tarihBazliSonuclar.Count - 1).ToList();
+
+                foreach (var tarihBazliSonuc in tarihBazliSonuclar1Eksik)
                 {
                     var tarihBazliSonuclar2 = tarihBazliSonuclar
                         .Where(w => w.EczaneNobetGrupId > tarihBazliSonuc.EczaneNobetGrupId).ToList();
