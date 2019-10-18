@@ -111,8 +111,10 @@
                         table: htmls
                     }
 
+                    var simdi = new Date();
+                    var zaman = simdi.getDay() + "-" + simdi.getHours() + "-" + simdi.getMinutes() + "-" + simdi.getSeconds();
                     var link = document.createElement("a");
-                    link.download = "kuralCeliskiler.xls";
+                    link.download = "kuralCeliskiler_" + zaman + ".xls"; 
                     link.href = uri + base64(format(template, ctx));
                     link.click();
                 }
