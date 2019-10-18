@@ -17,6 +17,7 @@ using WM.UI.Mvc.Services;
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
     [Authorize(Roles = "Admin,Oda,Üst Grup")]
+    [HandleError]
     [Authorize]
     public class AyniGunTutulanNobetController : Controller
     {
