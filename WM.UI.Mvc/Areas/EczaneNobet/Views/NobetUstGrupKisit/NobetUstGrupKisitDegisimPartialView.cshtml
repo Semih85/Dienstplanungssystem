@@ -22,13 +22,13 @@
         </div>
     </div>
 
-    <table id="gridT" class="table table-sm table-hover table-bordered table-striped" id="kisitDegisimTablosu">
+    <table id="gridT" class="table table-sm table-hover table-bordered table-striped">
         <thead class="thead-light">
             <tr>
                 <th rowspan="2" class="text-center">Sıra Nu.</th>
                 <th class="text-center" colspan="3">Nöbet Kural</th>
-                <th class="text-center" colspan="3">Önce</th>
-                <th class="text-center" colspan="3">Sonra</th>
+                <th class="text-center" colspan="3" style="background-color:lightblue; border-left-width:thick; border-right-width:thick">Önce</th>
+                <th class="text-center" colspan="3" style="background-color:lightgreen; border-right-width:thick">Sonra</th>
                 <th rowspan="2" style="text-align:center">Güncellenme Tarihi</th>
             </tr>
             <tr>
@@ -36,12 +36,14 @@
                 <th>Kodu</th>
                 <th>Kategorisi</th>
                 <th>Adı</th>
-                <th>Durum</th>
-                <th>Değer</th>
-                <th>Grup Sayısı</th>
-                <th>Durum</th>
-                <th>Değer</th>
-                <th>Grup Sayısı</th>
+
+                <th style="background-color:lightblue; border-left-width:thick">Durum</th>
+                <th style="background-color:lightblue">Değer</th>
+                <th style="background-color:lightblue; border-right-width:thick">Grup Sayısı</th>
+
+                <th style="background-color:lightgreen">Durum</th>
+                <th style="background-color:lightgreen">Değer</th>
+                <th style="background-color:lightgreen; border-right-width:thick">Grup Sayısı</th>
                 @*<th>Tarihi</th>*@
             </tr>
         </thead>
@@ -54,9 +56,9 @@
                     <td>@item.NobetUstGrupKisitDetayOnce.KisitKategorisi</td>
                     <td>@item.NobetUstGrupKisitDetayOnce.KisitAdiGosterilen</td>
 
-                    <td>@(item.NobetUstGrupKisitDetayOnce.PasifMi ? "Pasif" : "Aktif")</td>
+                    <td style="border-left-width:thick">@(item.NobetUstGrupKisitDetayOnce.PasifMi ? "Pasif" : "Aktif")</td>
                     <td>@(item.NobetUstGrupKisitDetayOnce.DegerPasifMi ? "-" : item.NobetUstGrupKisitDetayOnce.SagTarafDegeri.ToString())</td>
-                    <td>@item.NobetUstGrupKisitDetayOnce.NobetGrupGorevtipKisitSayisi</td>
+                    <td style="border-right-width:thick">@item.NobetUstGrupKisitDetayOnce.NobetGrupGorevtipKisitSayisi</td>
 
                     <td>
                         @(item.NobetUstGrupKisitDetaySonra.PasifMi ? "Pasif" : "Aktif")
@@ -72,7 +74,7 @@
                             <span class="text-danger font-weight-bold">*</span>
                         }
                     </td>
-                    <td>
+                    <td style="border-right-width:thick">
                         @item.NobetUstGrupKisitDetaySonra.NobetGrupGorevtipKisitSayisi
                         @if (item.NobetUstGrupKisitDetayOnce.NobetGrupGorevtipKisitSayisi != item.NobetUstGrupKisitDetaySonra.NobetGrupGorevtipKisitSayisi)
                         {
