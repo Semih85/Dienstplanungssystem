@@ -35,7 +35,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.Id).IsRequired();
             this.Property(t => t.NobetOzelGunKategoriId).IsRequired();
 
-            this.Property(t => t.TakvimId).IsRequired()
+            this.Property(t => t.TakvimId)
+                .IsRequired()
                         .HasColumnAnnotation("Index",
                          new IndexAnnotation(
                                      new IndexAttribute("UN_NobetGrupGorevTipTakvimOzelGunler")
@@ -51,14 +52,26 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             //                             IsUnique = true,
             //                             Order = 2
             //                         }));
-            this.Property(t => t.NobetGrupGorevTipGunKuralId).IsRequired()
-                        .HasColumnAnnotation("Index",
+            this.Property(t => t.NobetGrupGorevTipGunKuralId)
+                .IsRequired()
+                .HasColumnAnnotation("Index",
                          new IndexAnnotation(
                                      new IndexAttribute("UN_NobetGrupGorevTipTakvimOzelGunler")
                                      {
                                          IsUnique = true,
                                          Order = 2
                                      }));
+
+            //this.Property(t => t.FarkliGunGosterilsinMi)
+            //            //.IsRequired()
+            //            .HasColumnAnnotation("Index",
+            //             new IndexAnnotation(
+            //                         new IndexAttribute("UN_NobetGrupGorevTipTakvimOzelGunler")
+            //                         {
+            //                             IsUnique = true,
+            //                             Order = 3
+            //                         }));
+
             //this.Property(t => t.NobetOzelGunId).IsRequired()
             //            .HasColumnAnnotation("Index",
             //             new IndexAnnotation(
