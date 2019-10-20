@@ -1468,9 +1468,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var silinecekNobetlerTumu = _eczaneNobetSonucService.GetSonuclar(nobetGrupGorevTipId, baslangicTarihi, bitisTarihi2);
 
             var silinecekNobetler = silinecekNobetlerTumu
-                .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi
-                        && !w.YayimlandiMi) //yayımlanan nöbetler silinemez
-                .Select(s => s.Id).ToArray();
+                    .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi
+                            && !w.YayimlandiMi) //yayımlanan nöbetler silinemez
+                    .Select(s => s.Id).ToArray();
 
             //var silinecekNobetlerPlanlanan = _eczaneNobetSonucPlanlananService.GetDetaylar(baslangicTarihi, nobetUstGrup.Id)
             //    .Where(w => w.NobetGrupId == nobetGrupId || nobetGrupId == 0)
