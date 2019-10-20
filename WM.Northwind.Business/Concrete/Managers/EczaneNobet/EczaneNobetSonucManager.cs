@@ -464,21 +464,22 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             var nobetUstGrupId = detaylar.Select(s => s.NobetUstGrupId).FirstOrDefault();
 
-            if (nobetUstGrupId == 5)
-            {
-                var sonuclar = GetSonuclar(detaylar, nobetUstGrupId);
+            //if (nobetUstGrupId == 5)
+            //{
+            //    var sonuclar = GetSonuclar(detaylar, nobetUstGrupId);
 
-                var nobetDurumlar = _nobetDurumService.GetDetaylar();
-                //.Where(w => w.NobetDurumTipId != 4).ToList();
+            //    var nobetDurumlar = _nobetDurumService.GetDetaylar();
+            //    //.Where(w => w.NobetDurumTipId != 4).ToList();
 
-                return GetSonuclar(sonuclar, nobetDurumlar);
-            }
+            //    return GetSonuclar(sonuclar, nobetDurumlar);
+            //}
+
             //var sw = new Stopwatch();
             //sw.Start();
             //var sonuclarT = GetSonuclar(detaylar, nobetUstGrupId);
             //sw.Stop();
 
-            return GetSonuclar(detaylar, nobetUstGrupId); ;
+            return GetSonuclar(detaylar, nobetUstGrupId);
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
@@ -603,17 +604,29 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             var sonuclar = new List<EczaneNobetSonucListe2>();
 
+            var kontrol = false;
+
             foreach (var tarih in tarihler)
             {
+                if (kontrol)
+                {
+                    if (tarih.Tarih == new DateTime(2019, 10, 27))
+                    {
+                    }
+                }                
+
                 var sonuclar2 = eczaneNobetSonuclar
                     .Where(w => w.TakvimId == tarih.TakvimId).ToList();
 
-                if (sonuclar2.Count != 3)               
+                if (sonuclar2.Count != 3)
                     continue;
-                
+
                 var altGruplar = sonuclar2
                     .Select(s => new { s.NobetAltGrupId, s.NobetAltGrupAdi }).Distinct()
                     .OrderBy(o => o.NobetAltGrupAdi).ToArray();
+
+                if (altGruplar.Length != 3)
+                    continue;
 
                 for (int i = 0; i < altGruplar.Length; i++)
                 {
@@ -646,10 +659,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                  ).SingleOrDefault() ?? new NobetDurumDetay { NobetDurumTipAdi = "Tanımsız Durum" };
 
                     var sonuc = sonuclar2
-                        .Where(w => w.NobetAltGrupId == altGrupId1).SingleOrDefault();
-                    //?? new EczaneNobetSonucListe2();
+                        .Where(w => w.NobetAltGrupId == altGrupId1).SingleOrDefault() ?? new EczaneNobetSonucListe2();
 
-                    if (sonuc != null)
+                    if (sonuc.Id != 0)
                     {
                         sonuc.NobetDurumId = nobetDurum.Id;
                         sonuc.NobetDurumTipId = nobetDurum.NobetDurumTipId;
