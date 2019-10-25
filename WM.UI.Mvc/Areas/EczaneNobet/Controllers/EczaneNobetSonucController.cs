@@ -667,6 +667,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     NobetDurumAdi = s.NobetDurumAdi,
                     NobetDurumTipAdi = s.NobetDurumTipAdi,
                     KalibrasyonDeger = KalibrasyonDegeriToplam(s.EczaneNobetGrupId, s.GunGrupId, 7, s.NobetUstGrupId),
+                    EczaneNobetGrupBaslamaTarihi = s.EczaneNobetGrupBaslamaTarihi,
                     EczaneNobetGrupBitisTarihi = s.EczaneNobetGrupBitisTarihi,
                     AgirlikDegeri = s.AgirlikDegeri,
                     NobetOzelGunAdi = s.NobetOzelGunAdi,
@@ -701,6 +702,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     NobetGrupGorevTipId = s.NobetGrupGorevTipId,
                     NobetDurumAdi = s.NobetDurumAdi,
                     NobetDurumTipAdi = s.NobetDurumTipAdi,
+                    EczaneNobetGrupBaslamaTarihi = s.EczaneNobetGrupBaslamaTarihi,
                     EczaneNobetGrupBitisTarihi = s.EczaneNobetGrupBitisTarihi,
                     AgirlikDegeri = s.AgirlikDegeri,
                     NobetOzelGunAdi = s.NobetOzelGunAdi,
@@ -1491,6 +1493,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
             catch (Exception e)
             {
+                //TempData["LastError"] = e;
+
                 throw new Exception("Aktif sonuçlar silinemedi!", e.InnerException);
             }
 
