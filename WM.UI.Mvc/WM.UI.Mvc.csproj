@@ -1428,6 +1428,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ExtensionMethods\" />
+    <Folder Include="Filters\" />
     <Folder Include="Reports\" />
   </ItemGroup>
   <ItemGroup>
