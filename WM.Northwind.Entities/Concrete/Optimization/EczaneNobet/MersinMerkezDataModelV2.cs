@@ -30,7 +30,8 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public List<EczaneGrupDetay> EczaneGruplar { get; set; }
         public List<EczaneGrupDetay> OncekiAylardaAyniGunNobetTutanEczaneler { get; set; }
         public List<EczaneGrupDetay> ArasindaAyniGun2NobetFarkiOlanIkiliEczaneler { get; set; }
-        public List<EczaneGrupDetay> AltGruplarlaAyniGunNobetTutmayacakEczanelerYenisehir { get; set; }
+        public List<EczaneGrupDetay> AltGruplarlaAyniGunNobetTutmayacakEczanelerYenisehir1_2 { get; set; }
+        public List<EczaneGrupDetay> AltGruplarlaAyniGunNobetTutmayacakEczanelerYenisehir3_2 { get; set; }
         public List<EczaneGrupDetay> AltGruplarlaAyniGunNobetTutmayacakEczanelerToroslar { get; set; }
 
         public List<EczaneGrupTanimDetay> EczaneGrupTanimlar { get; set; }
