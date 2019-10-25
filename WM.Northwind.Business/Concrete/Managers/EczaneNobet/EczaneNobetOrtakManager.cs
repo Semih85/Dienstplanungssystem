@@ -3534,7 +3534,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 //alt grubu olanlar
                 var nobetAltGrubuOlanlarinSonuclari = eczaneNobetSonuclar
                     .Where(w => altGrubuOlanNobetGruplar.Contains(w.NobetGrupId)
-                             && w.NobetAltGrupId == nobetAltGrupId || nobetAltGrupId == 0
+                             && (w.NobetAltGrupId == nobetAltGrupId || nobetAltGrupId == 0)
                              && w.NobetAltGrupKapanmaTarihi == null
                              ).ToList();
 
@@ -3553,7 +3553,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                         var kontrol = false;
 
-                        var kontrolEdilecekEczaneler = new string[] { "OKTAY YILMAZ", "AKSU" };
+                        var kontrolEdilecekEczaneler = new string[] {
+                            "DÜNYA"
+                            //,"ADALET"
+                            //, "AKSU"
+                            //, "AKSU" 
+                        };
 
                         if (kontrol && kontrolEdilecekEczaneler.Contains(eczane.EczaneAdi))
                         {
@@ -4424,7 +4429,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
             else //if (tipAdi == "hafta içi")
             {
-                sonNobetTarihindenSonraGecenGunSayisi = (sonNobetTarihindenBalilanTariheKadarGecenGunSayisi + borcluNobetSayisi) * ilkTarihtenSonrakiGecenGunSayisi; 
+                sonNobetTarihindenSonraGecenGunSayisi = (sonNobetTarihindenBalilanTariheKadarGecenGunSayisi + borcluNobetSayisi) * ilkTarihtenSonrakiGecenGunSayisi;
             }
 
             //negatif olmamalı
