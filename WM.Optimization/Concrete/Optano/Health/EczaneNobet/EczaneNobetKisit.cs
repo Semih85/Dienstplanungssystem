@@ -464,7 +464,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             {
                             }
 
-                            var kontrolEdilecekGruptakiEczaneler = new string[] { "EBRU" };
+                            var kontrolEdilecekGruptakiEczaneler = new string[] { 
+                                //"ADALET"
+                                "DÜNYA"
+                            };
 
                             if (eczaneGruplar.Where(w => kontrolEdilecekGruptakiEczaneler.Contains(w.EczaneAdi)).Count() > 0)
                             {
