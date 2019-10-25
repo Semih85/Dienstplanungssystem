@@ -12,6 +12,8 @@ using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Samples;
+using WM.Core.Aspects.PostSharp.LogAspects;
+using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -24,6 +26,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _nobetDurumDal = nobetDurumDal;
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int nobetDurumId)
         {
@@ -41,12 +44,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _nobetDurumDal.GetList();
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(NobetDurum nobetDurum)
         {
             _nobetDurumDal.Insert(nobetDurum);
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetDurum nobetDurum)
         {

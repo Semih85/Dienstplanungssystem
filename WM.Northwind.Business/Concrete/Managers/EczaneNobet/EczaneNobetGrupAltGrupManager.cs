@@ -27,6 +27,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _eczaneNobetGrupAltGrupDal = eczaneNobetGrupAltGrupDal;
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int eczaneNobetGrupAltGrupId)
         {
@@ -44,12 +45,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _eczaneNobetGrupAltGrupDal.GetList();
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(EczaneNobetGrupAltGrup eczaneNobetGrupAltGrup)
         {
             _eczaneNobetGrupAltGrupDal.Insert(eczaneNobetGrupAltGrup);
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(EczaneNobetGrupAltGrup eczaneNobetGrupAltGrup)
         {

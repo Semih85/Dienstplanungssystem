@@ -12,6 +12,8 @@ using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Samples;
+using WM.Core.Aspects.PostSharp.LogAspects;
+using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -23,6 +25,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             _nobetGrupTalepDal = nobetGrupTalepDal;
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int nobetGrupTalepId)
         {
@@ -33,16 +37,21 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetGrupTalepDal.Get(x => x.Id == nobetGrupTalepId);
         }
+        
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetGrupTalep> GetList()
         {
             return _nobetGrupTalepDal.GetList();
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(NobetGrupTalep nobetGrupTalep)
         {
             _nobetGrupTalepDal.Insert(nobetGrupTalep);
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetGrupTalep nobetGrupTalep)
         {

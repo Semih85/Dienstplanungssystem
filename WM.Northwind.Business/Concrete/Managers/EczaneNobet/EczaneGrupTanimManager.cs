@@ -12,6 +12,8 @@ using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Samples;
+using WM.Core.Aspects.PostSharp.LogAspects;
+using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -23,6 +25,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             _eczaneGrupTanimDal = eczaneGrupTanimDal;
         }
+
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int eczaneGrupTanimId)
         {
@@ -39,12 +43,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _eczaneGrupTanimDal.GetList();
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(EczaneGrupTanim eczaneGrupTanim)
         {
             _eczaneGrupTanimDal.Insert(eczaneGrupTanim);
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(EczaneGrupTanim eczaneGrupTanim)
         {

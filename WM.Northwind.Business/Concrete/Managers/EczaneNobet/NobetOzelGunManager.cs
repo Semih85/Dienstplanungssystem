@@ -12,6 +12,8 @@ using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Samples;
+using WM.Core.Aspects.PostSharp.LogAspects;
+using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -23,6 +25,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             _nobetOzelGunDal = nobetOzelGunDal;
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int nobetOzelGunId)
         {
@@ -33,22 +37,26 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetOzelGunDal.Get(x => x.Id == nobetOzelGunId);
         }
+        
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetOzelGun> GetList()
         {
             return _nobetOzelGunDal.GetList();
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(NobetOzelGun nobetOzelGun)
         {
             _nobetOzelGunDal.Insert(nobetOzelGun);
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetOzelGun nobetOzelGun)
         {
             _nobetOzelGunDal.Update(nobetOzelGun);
         }
-
 
     }
 }

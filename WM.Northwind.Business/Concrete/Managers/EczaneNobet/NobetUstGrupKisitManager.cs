@@ -13,6 +13,8 @@ using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Samples;
 using WM.Core.Aspects.PostSharp.AutorizationAspects;
+using WM.Core.Aspects.PostSharp.LogAspects;
+using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -25,6 +27,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _nobetUstGrupKisitDal = nobetUstGrupKisitDal;
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         [SecuredOperation(Roles = "Admin")]
         public void Delete(int nobetUstGrupKisitId)
@@ -36,11 +39,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetUstGrupKisitDal.Get(x => x.Id == nobetUstGrupKisitId);
         }
+        
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetUstGrupKisit> GetList()
         {
             return _nobetUstGrupKisitDal.GetList();
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         [SecuredOperation(Roles = "Admin")]
         public void Insert(NobetUstGrupKisit nobetUstGrupKisit)
@@ -48,6 +54,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _nobetUstGrupKisitDal.Insert(nobetUstGrupKisit);
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetUstGrupKisit nobetUstGrupKisit)
         {

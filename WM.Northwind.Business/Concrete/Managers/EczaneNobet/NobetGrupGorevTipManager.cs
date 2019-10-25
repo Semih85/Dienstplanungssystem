@@ -13,6 +13,8 @@ using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Samples;
 using WM.Northwind.Entities.Concrete.Authorization;
+using WM.Core.Aspects.PostSharp.LogAspects;
+using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -27,6 +29,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _nobetGrupGorevTipDal = nobetGrupGorevTipDal;
             _nobetGrupService = nobetGrupService;
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int nobetGrupGorevTipId)
         {
@@ -37,16 +41,21 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetGrupGorevTipDal.Get(x => x.Id == nobetGrupGorevTipId);
         }
+        
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetGrupGorevTip> GetList()
         {
             return _nobetGrupGorevTipDal.GetList();
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(NobetGrupGorevTip nobetGrupGorevTip)
         {
             _nobetGrupGorevTipDal.Insert(nobetGrupGorevTip);
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetGrupGorevTip nobetGrupGorevTip)
         {

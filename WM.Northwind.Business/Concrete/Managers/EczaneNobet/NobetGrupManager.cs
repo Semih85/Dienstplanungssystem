@@ -2,7 +2,9 @@
 using System.Linq;
 using WM.Core.Aspects.PostSharp.AutorizationAspects;
 using WM.Core.Aspects.PostSharp.CacheAspects;
+using WM.Core.Aspects.PostSharp.LogAspects;
 using WM.Core.CrossCuttingConcerns.Caching.Microsoft;
+using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 using WM.Northwind.Business.Abstract.Authorization;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.DataAccess.Abstract.EczaneNobet;
@@ -26,6 +28,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _userService = userService;
             _nobetUstGrupService = nobetUstGrupService;
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int nobetGrupId)
         {
@@ -36,16 +40,21 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetGrupDal.Get(x => x.Id == nobetGrupId);
         }
+        
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetGrup> GetList()
         {
             return _nobetGrupDal.GetList();
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(NobetGrup nobetGrup)
         {
             _nobetGrupDal.Insert(nobetGrup);
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetGrup nobetGrup)
         {

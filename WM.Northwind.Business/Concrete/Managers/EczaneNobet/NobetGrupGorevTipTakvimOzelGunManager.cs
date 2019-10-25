@@ -27,6 +27,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _nobetGrupGorevTipTakvimOzelGunDal = nobetGrupGorevTipTakvimOzelGunDal;
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int nobetGrupGorevTipTakvimOzelGunId)
         {
@@ -43,12 +44,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _nobetGrupGorevTipTakvimOzelGunDal.GetList();
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(NobetGrupGorevTipTakvimOzelGun nobetGrupGorevTipTakvimOzelGun)
         {
             _nobetGrupGorevTipTakvimOzelGunDal.Insert(nobetGrupGorevTipTakvimOzelGun);
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetGrupGorevTipTakvimOzelGun nobetGrupGorevTipTakvimOzelGun)
         {

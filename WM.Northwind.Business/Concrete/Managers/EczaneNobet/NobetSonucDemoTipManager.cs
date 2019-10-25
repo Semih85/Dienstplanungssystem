@@ -12,6 +12,8 @@ using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Samples;
+using WM.Core.Aspects.PostSharp.LogAspects;
+using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -23,6 +25,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             _nobetSonucDemoTipDal = nobetSonucDemoTipDal;
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int nobetSonucDemoTipId)
         {
@@ -33,22 +37,26 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetSonucDemoTipDal.Get(x => x.Id == nobetSonucDemoTipId);
         }
-         [CacheAspect(typeof(MemoryCacheManager))]
+        
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetSonucDemoTip> GetList()
         {
             return _nobetSonucDemoTipDal.GetList();
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(NobetSonucDemoTip nobetSonucDemoTip)
         {
             _nobetSonucDemoTipDal.Insert(nobetSonucDemoTip);
         }
+        
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetSonucDemoTip nobetSonucDemoTip)
         {
             _nobetSonucDemoTipDal.Update(nobetSonucDemoTip);
         }
-                        
-
+        
     } 
 }

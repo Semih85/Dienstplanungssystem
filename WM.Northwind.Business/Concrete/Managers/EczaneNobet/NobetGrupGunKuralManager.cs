@@ -27,6 +27,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _nobetGrupGunKuralDal = nobetGrupGunKuralDal;
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int nobetGrupGunKuralId)
         {
@@ -43,12 +44,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _nobetGrupGunKuralDal.GetList();
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(NobetGrupGunKural nobetGrupGunKural)
         {
             _nobetGrupGunKuralDal.Insert(nobetGrupGunKural);
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetGrupGunKural nobetGrupGunKural)
         {
