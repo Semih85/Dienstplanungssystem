@@ -176,7 +176,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetSonuclarBaslamaTarihindenSonrasi = eczaneNobetSonuclarCozulenGruplar
                 .Where(w => w.Tarih >= nobetUstGrupBaslangicTarihi).ToList();
 
-            var son3Ay = baslangicTarihi.AddMonths(-2);
+            var son3Ay = baslangicTarihi.AddMonths(-3);
 
             var eczaneNobetSonuclarSon3Ay = eczaneNobetSonuclarCozulenGruplar
                 .Where(w => w.Tarih >= son3Ay).ToList();
@@ -284,7 +284,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var indisId = 0;
 
-            var altGruplarlaAyniGunNobetTutmayacakEczanelerYeniSehir = new List<EczaneGrupDetay>();
+            var altGruplarlaAyniGunNobetTutmayacakEczanelerYeniSehir1_2 = new List<EczaneGrupDetay>();
+            var altGruplarlaAyniGunNobetTutmayacakEczanelerYeniSehir3_2 = new List<EczaneGrupDetay>();
             var altGruplarlaAyniGunNobetTutmayacakEczanelerToroslar = new List<EczaneGrupDetay>();
 
             if (!altGruplarlaAyniGunNobetTutma.PasifMi)
@@ -306,17 +307,46 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 eczaneNobetSonuclarAltGruplaAyniGun = eczaneNobetSonuclar
                         .Where(w => altGrupluTakipEdilecekNobetGrupIdList.Contains(w.NobetGrupId)).ToList();
 
-                var ayniGunNobetTutmasiTakipEdilecekGruplar = new List<int>
+                var ayniGunNobetTutmasiTakipEdilecekGruplar_1 = new List<int>
                     {
                         20,//Yenişehir-1,
+                        //22 //Yenişehir-3 (M.Ü. Hastanesi)
+                    };
+
+                var ayniGunNobetTutmasiTakipEdilecekGruplar_3 = new List<int>
+                    {
+                        //20,//Yenişehir-1,
                         22 //Yenişehir-3 (M.Ü. Hastanesi)
                     };
+
                 var altGrubuOlanNobetGruplar = new List<int>
                     {
                         21//Yenişehir-2
                     };
 
-                altGruplarlaAyniGunNobetTutmayacakEczanelerYeniSehir = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturMersin(eczaneNobetSonuclarAltGruplaAyniGun, eczaneNobetGruplarAltGruplaAyniGun, eczaneNobetGrupAltGruplarYenisehir2, altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, indisId, ayniGunNobetTutmasiTakipEdilecekGruplar, altGrubuOlanNobetGruplar, 0, (int)altGruplarlaAyniGunNobetTutma.SagTarafDegeri);
+                altGruplarlaAyniGunNobetTutmayacakEczanelerYeniSehir1_2 = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturMersin(
+                    eczaneNobetSonuclarAltGruplaAyniGun,
+                    eczaneNobetGruplarAltGruplaAyniGun,
+                    eczaneNobetGrupAltGruplarYenisehir2,
+                    altGruplarlaAyniGunNobetTutma,
+                    nobetUstGrupBaslangicTarihi,
+                    indisId,
+                    ayniGunNobetTutmasiTakipEdilecekGruplar_1,
+                    altGrubuOlanNobetGruplar,
+                    0,
+                    (int)altGruplarlaAyniGunNobetTutma.SagTarafDegeri);
+
+                altGruplarlaAyniGunNobetTutmayacakEczanelerYeniSehir3_2 = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturMersin(
+                    eczaneNobetSonuclarAltGruplaAyniGun,
+                    eczaneNobetGruplarAltGruplaAyniGun,
+                    eczaneNobetGrupAltGruplarYenisehir2,
+                    altGruplarlaAyniGunNobetTutma,
+                    nobetUstGrupBaslangicTarihi,
+                    indisId,
+                    ayniGunNobetTutmasiTakipEdilecekGruplar_3,
+                    altGrubuOlanNobetGruplar,
+                    0,
+                    (int)altGruplarlaAyniGunNobetTutma.SagTarafDegeri);
                 #endregion                
             }
 
@@ -427,7 +457,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneGruplar = eczaneGruplar2,
                 ArasindaAyniGun2NobetFarkiOlanIkiliEczaneler = arasindaAyniGun2NobetFarkiOlanIkiliEczaneler,
                 OncekiAylardaAyniGunNobetTutanEczaneler = oncekiAylardaAyniGunNobetTutanEczaneler,
-                AltGruplarlaAyniGunNobetTutmayacakEczanelerYenisehir = altGruplarlaAyniGunNobetTutmayacakEczanelerYeniSehir,
+                AltGruplarlaAyniGunNobetTutmayacakEczanelerYenisehir1_2 = altGruplarlaAyniGunNobetTutmayacakEczanelerYeniSehir1_2,
+                AltGruplarlaAyniGunNobetTutmayacakEczanelerYenisehir3_2 = altGruplarlaAyniGunNobetTutmayacakEczanelerYeniSehir3_2,
                 AltGruplarlaAyniGunNobetTutmayacakEczanelerToroslar = altGruplarlaAyniGunNobetTutmayacakEczanelerToroslar,
 
                 EczaneNobetIstekler = eczaneNobetIstekler,
