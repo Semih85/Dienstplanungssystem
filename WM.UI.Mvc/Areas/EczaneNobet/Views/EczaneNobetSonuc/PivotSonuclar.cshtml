@@ -497,6 +497,7 @@
         var dagilimlarPlanlananGerceklesenFiltreli = null;
 
         var ayniGunNobet = null;
+        var altGrupDagilim = null;
         var ayniGunNobetTutanEczaneler = new Array();
         var ayniGunNobetTutanEczanelerDinamik = new Array();
         var ayniGunNobetTutanEczanelerOzet = new Array();
@@ -665,7 +666,6 @@
                                 ["Nöbet Sayısı"]: n.NobetSayisi,
                                 ["Gruba Katılış Tarihi"]: n.GrubaKatilisTarihi,
                                 ["Gruptan Ayrılış Tarihi"]: n.GruptanAyrilisTarihi,
-                                ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi,
                                 ["Sonuç Türü"]: n.SonucTuruAdi
                             });
                         });
@@ -749,7 +749,8 @@
                                     ["Tarih Sıralı"]: n.Tarih2,
                                     ["Alt Grup Adı"]: n.NobetAltGrubu,
                                     ["Nöbet Durum Tipi"]: n.NobetDurumTipAdi,
-                                    ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi
+                                    ["Gruba Katılış Tarihi"]: n.GrubaKatilisTarihi,
+                                    ["Gruptan Ayrılış Tarihi"]: n.GruptanAyrilisTarihi
                                 });
                             });
                         }else if (raporId == 26) {//mazeret istek
@@ -771,7 +772,8 @@
                                     ["Mazeret/İstek"]: n.NobetTipi,
                                     ["Eczane Sonuç"]: n.EczaneSonucAdi,
                                     ["Alt Grup Adı"]: n.NobetAltGrubu,
-                                    ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi
+                                    ["Gruba Katılış Tarihi"]: n.GrubaKatilisTarihi,
+                                    ["Gruptan Ayrılış Tarihi"]: n.GruptanAyrilisTarihi
                                 });
                             });
                         }
@@ -789,7 +791,8 @@
                                     Tarih: n.Tarih,
                                     ["Tarih Sıralı"]: n.Tarih2,
                                     ["Alt Grup Adı"]: n.NobetAltGrubu,
-                                    ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi,
+                                    ["Gruba Katılış Tarihi"]: n.GrubaKatilisTarihi,
+                                    ["Gruptan Ayrılış Tarihi"]: n.GruptanAyrilisTarihi,
                                     ["Gün Ağırlık"]: n.AgirlikDegeri,
                                     ["Özel Gün"]: n.NobetOzelGunAdi,
                                     ["Özel Gün Ktg."]: n.NobetOzelGunKategoriAdi
@@ -831,7 +834,8 @@
                                     //["Nöbet Durum Tipi"]: n.NobetDurumTipAdi,
                                     //["Nöbet Sayısı"]: 1,
                                     //["Kalibrasyon Değeri"]: n.KalibrasyonDeger,
-                                    ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi,
+                                   ["Gruba Katılış Tarihi"]: n.GrubaKatilisTarihi,
+                                   ["Gruptan Ayrılış Tarihi"]: n.GruptanAyrilisTarihi,
                                     //["Gün Ağırlık"]: n.AgirlikDegeri,
                                     //["Özel Gün"]: n.NobetOzelGunAdi,
                                     //["Özel Gün Ktg."]: n.NobetOzelGunKategoriAdi
@@ -870,7 +874,8 @@
                                     //["Nöbet Durum Tipi"]: n.NobetDurumTipAdi,
                                     //["Nöbet Sayısı"]: 1,
                                     //["Kalibrasyon Değeri"]: n.KalibrasyonDeger,
-                                    ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi,
+                                   ["Gruba Katılış Tarihi"]: n.GrubaKatilisTarihi,
+                                   ["Gruptan Ayrılış Tarihi"]: n.GruptanAyrilisTarihi,
                                     //["Gün Ağırlık"]: n.AgirlikDegeri,
                                     //["Özel Gün"]: n.NobetOzelGunAdi,
                                     //["Özel Gün Ktg."]: n.NobetOzelGunKategoriAdi
@@ -1890,7 +1895,6 @@
                 );
             }
             else {
-                //nobetciEczaneler;
                 var mesaj = raporBaslik;
                 var divId = 'divUyariRaporlar' + icRaporDivAdi;
                 var parentDivId = icRaporDivAdi;
@@ -2018,7 +2022,6 @@
                 );
             }
             else {
-                //nobetciEczaneler;
                 var mesaj = raporBaslik;
                 var divId = 'divUyariRaporlar' + icRaporDivAdi;
                 var parentDivId = icRaporDivAdi;
@@ -2915,7 +2918,6 @@
                 );
             }
             else {
-                //nobetciEczaneler;
                 var mesaj = raporBaslik;
                 var divId = 'divUyariRaporlar' + icRaporDivAdi;
                 var parentDivId = icRaporDivAdi;
@@ -2934,7 +2936,7 @@
         //aynı gün nöbet tutanlar
 
         //alt grup r18
-        var altGrupDagilim;
+        //var altGrupDagilim;
         function altGrupDagilimlar() {
 
             //alert("altGrupAyniGunNobetTutanEczaneler.length: " + altGrupAyniGunNobetTutanEczaneler.length)
@@ -3067,7 +3069,6 @@
                 });
             }
             else {
-                //nobetciEczaneler;
                 var mesaj = raporBaslik;
                 var divId = 'divUyariRaporlar' + icRaporDivAdi;
                 var parentDivId = icRaporDivAdi;
@@ -3140,7 +3141,6 @@
                 });
             }
             else {
-                //nobetciEczaneler;
                 var mesaj = raporBaslik;
                 var divId = 'divUyariRaporlar' + icRaporDivAdi;
                 var parentDivId = icRaporDivAdi;
@@ -3177,7 +3177,6 @@
                 });
             }
             else {
-                //nobetciEczaneler;
                 var mesaj = raporBaslik;
                 var divId = 'divUyariRaporlar' + icRaporDivAdi;
                 var parentDivId = icRaporDivAdi;
@@ -3507,6 +3506,7 @@
             alacakVereceklerList = null;
 
             altGrupDagilim = null;
+            altGrupAyniGunNobetTutanEczaneler = new Array();
             altGrupSirali = null;
             ayniGunDagilim = null;
             ayniGunDagilimTablo = null;
