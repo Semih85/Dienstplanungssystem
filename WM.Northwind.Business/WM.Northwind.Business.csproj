@@ -286,6 +286,7 @@
     <Compile Include="ValidationRules\FluentValidation\EczaneNobetMazeretCokluValidator.cs" />
     <Compile Include="ValidationRules\FluentValidation\EczaneNobetIstekValidator.cs" />
     <Compile Include="ValidationRules\FluentValidation\EczaneNobetMazeretValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidation\UserValidator.cs" />
     <Compile Include="ValidationRules\FluentValidation\LoginItemValidator.cs" />
     <Compile Include="ValidationRules\FluentValidation\EczaneValidator.cs" />
   </ItemGroup>
