@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -20,7 +21,23 @@ namespace WM.Core.DAL.EntityFramework
             {
                 var addedEntity = context.Entry(entity);
                 addedEntity.State = EntityState.Added;
-                context.SaveChanges();
+
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (DbEntityValidationException e)
+                {
+                    //foreach (var eve in e.EntityValidationErrors)
+                    //{
+                    //}
+
+                    throw e;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
             }
         }
 
@@ -92,7 +109,7 @@ namespace WM.Core.DAL.EntityFramework
         public virtual void Update(List<TEntity> entities)
         {
             using (var context = new TContext())
-            {                
+            {
                 foreach (var entity in entities)
                 {
                     var updatedEntity = context.Entry(entity);
