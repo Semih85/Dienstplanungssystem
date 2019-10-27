@@ -10,6 +10,7 @@ using WM.Northwind.Business.Abstract.Authorization;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.UI.Mvc.Models;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -20,20 +21,26 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IUserNobetUstGrupService _userNobetUstGrupService;
         private INobetUstGrupService _nobetUstGrupService;
         private IUserService _userService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public UserNobetUstGrupController(IUserNobetUstGrupService userNobetUstGrupService,
                                           INobetUstGrupService nobetUstGrupService,
-                                          IUserService userService)
+                                          IUserService userService,
+                                          INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _userNobetUstGrupService = userNobetUstGrupService;
             _nobetUstGrupService = nobetUstGrupService;
             _userService = userService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
 
         // GET: EczaneNobet/UserNobetUstGrup
         public ActionResult Index()
         {
-            var model = _userNobetUstGrupService.GetDetaylar();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var model = _userNobetUstGrupService.GetDetaylar(nobetUstGrup.Id);
+
             return View(model);
         }
 

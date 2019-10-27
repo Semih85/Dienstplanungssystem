@@ -39,17 +39,18 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var user = _userService.GetByUserName(User.Identity.Name);
-            var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
-            var rolId = rolIdler.FirstOrDefault();
-            ViewBag.rolId = rolId;
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+            //var rolId = rolIdler.FirstOrDefault();
+            //ViewBag.rolId = rolId;
             //yetkili olduğu odalar
             //var eczaneOdalar = _eczaneOdaService.GetListByUser(user);
             //yetkili olduğu nöbet üst gruplar
-            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
 
-            var model = _nobetUstGrupService.GetDetaylar()
-                .Where(s => nobetUstGruplar.Contains(s.Id));
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var model = _nobetUstGrupService.GetDetaylar(nobetUstGrup.Id);
+
             return View(model);
         }
 
