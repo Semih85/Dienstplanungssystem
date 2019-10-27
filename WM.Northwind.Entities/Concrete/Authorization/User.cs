@@ -21,8 +21,15 @@ namespace WM.Northwind.Entities.Concrete.Authorization
         [Display(Name = "Parolası")]
         [Required(ErrorMessage = "{0} alanı boş bırakılamaz..!")]
         [DataType(DataType.Password)]
-        [StringLength(50, ErrorMessage = "Şifre en az 6(altı) karakter olmalıdır..!", MinimumLength = 6)]
+        [StringLength(64, ErrorMessage = "Şifre en az 6(altı) karakter olmalıdır..!", MinimumLength = 6)]
         public string Password { get; set; }
+
+        //[Display(Name = "Parola Doğrulama")]
+        //[Required(ErrorMessage = "{0} alanı boş bırakılamaz..!")]
+        //[DataType(DataType.Password)]
+        //[Compare("Password")]
+        //[StringLength(64, ErrorMessage = "Şifre en az 6(altı) karakter olmalıdır..!", MinimumLength = 6)]
+        //public string PasswordConfirm { get; set; }
 
         [Display(Name = "Adı")]
         [Required(ErrorMessage = "{0} alanı boş bırakılamaz..!")]

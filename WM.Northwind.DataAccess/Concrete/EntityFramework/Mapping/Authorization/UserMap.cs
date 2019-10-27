@@ -62,7 +62,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.Authorization
 
             this.Property(t => t.Password)
                 .IsRequired()
-                .HasMaxLength(50);
+                .HasMaxLength(64)
+                ;
 
             this.Property(t => t.FirstName)
                 .IsRequired()

@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComplexTypes\EditUser.cs" />
     <Compile Include="ComplexTypes\CategoryNbProduct.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\AltGrupIleTutulanNobetDurumu.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\AyniGunNobetTakipGrupAltGrupDetay.cs" />

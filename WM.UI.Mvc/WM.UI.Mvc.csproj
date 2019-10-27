@@ -1418,6 +1418,9 @@
     <Content Include="Views\Home\NobetYazDetay.cshtml" />
     <Content Include="Views\Home\EczaneNobetSistemi.cshtml" />
     <Content Include="Views\Home\EczaneNobetSistemiDetay.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Account\Details.cshtml" />
+    <Content Include="Views\Account\Delete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
