@@ -46,6 +46,11 @@ namespace WM.Northwind.Business.Concrete.Managers.Authorization
             return _userDal.Get(u => u.UserName == userName & u.Password == password);
         }
 
+        public User GetById(int id)
+        {
+            return _userDal.Get(u => u.Id == id);
+        }
+
         public User GetByUserName(string userName)
         {
             return _userDal.Get(u => u.UserName == userName && u.BitisTarihi == null);
@@ -57,16 +62,20 @@ namespace WM.Northwind.Business.Concrete.Managers.Authorization
             return _userDal.GetUserRoles(user);
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
+        [FluentValidationAspect(typeof(UserValidator))]
         public void Insert(User user)
         {
             _userDal.Insert(user);
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         public void Update(User user)
         {
             _userDal.Update(user);
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         public void Delete(int userId)
         {
             _userDal.Delete(new User { Id = userId });
