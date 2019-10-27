@@ -21,7 +21,7 @@ namespace WM.Northwind.Business.ValidationRules.FluentValidation
 
             RuleFor(p => p.Password)
                     .NotEmpty()
-                    .MaximumLength(50);
+                    .MaximumLength(64);
         }
     }
 }
