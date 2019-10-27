@@ -343,6 +343,8 @@ namespace WM.UI.Mvc.Controllers
 
             var userAktif = _userService.GetByUserName(User.Identity.Name);
 
+            var mesaj = $"<strong>{editUser.UserName}</strong> kullanıcısı başarı ile güncellenmiştir.";
+
             if (userAktif.Id == kullanici.Id)
             {
                 FormsAuthentication.SignOut();
@@ -368,7 +370,10 @@ namespace WM.UI.Mvc.Controllers
                         Email = editUser.Email,
                         Id = kullanici.Id
                     };
+                    
                     _userService.Update(user);
+
+                    TempData["KullaniciDurumu"] = mesaj;
                 }
                 else
                 {
@@ -392,6 +397,8 @@ namespace WM.UI.Mvc.Controllers
                 };
 
                 _userService.Update(user);
+
+                TempData["KullaniciDurumu"] = mesaj;
 
                 return RedirectToAction("Index");
             }
