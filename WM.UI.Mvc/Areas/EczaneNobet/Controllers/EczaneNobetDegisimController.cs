@@ -54,8 +54,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user).Select(s => s.Id);
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
-            var eczaneNobetDegisimler = _eczaneNobetDegisimService.GetDetaylar(nobetUstGrup.Id);
-                //.Where(w => nobetUstGruplar.Contains(w.NobetUstGrupId));
+            var eczaneNobetDegisimler = _eczaneNobetDegisimService.GetDetaylar(nobetUstGrup.Id)
+                .OrderByDescending(o => o.KayitTarihi).ToList();
+            //.Where(w => nobetUstGruplar.Contains(w.NobetUstGrupId));
 
             return View(eczaneNobetDegisimler);
         }
