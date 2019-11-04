@@ -873,11 +873,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     NobetGunKuralAdi = s.Key.NobetGunKuralAdi,
                     GunGrupAdi = s.Key.GunGrupAdi,
                     GunGrupId = s.Key.GunGrupId,
-                    GunSayisi = s.Count(),
-                    TalepEdilenNobetciSayisi = s.Sum(f => f.TalepEdilenNobetciSayisi),
+                    NobetGunKuralKapanmaTarihi = s.Key.NobetGunKuralKapanmaTarihi,
                     IstatistikBaslamaTarihi = s.Min(f => f.Tarih),
                     IstatistikBitisTarihi = s.Max(f => f.Tarih),
-                    NobetGunKuralKapanmaTarihi = s.Key.NobetGunKuralKapanmaTarihi
+                    GunSayisi = s.Count(),
+                    TalepEdilenNobetciSayisi = s.Sum(f => f.TalepEdilenNobetciSayisi)
                 }).ToList();
         }
 
@@ -1963,7 +1963,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             #endregion
 
             #region nöbet yazılacak tarih aralığını belirle
-            
+
             var anahtarListeyeEklenecekYeniAcilanEczaneler = eczaneNobetGruplarTumu
                 .Where(w => w.BaslangicTarihi >= nobetBaslangicTarihi
                          && w.BaslangicTarihi >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
@@ -2200,7 +2200,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 #endregion
 
                 alinacakEczaneSayisi = nobetYazilacakTarihSayisi - sonuclarTumu.Count;
-            } 
+            }
 
             #endregion
         }
