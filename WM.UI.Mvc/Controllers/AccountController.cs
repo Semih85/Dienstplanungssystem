@@ -144,7 +144,7 @@ namespace WM.UI.Mvc.Controllers
                         //    url = RedirectToAction("Index", "EczaneKullanici", new { area = "EczaneNobet", userId = user.Id });
                         //    break;
                         case 6:
-                            url = RedirectToAction("Index", "NobetKomisyonu", new { area = "EczaneNobet" });
+                            url = RedirectToAction("PivotSonuclar", "EczaneNobetSonuc", new { area = "EczaneNobet" });
                             break;
                         default:
                             url = RedirectToAction("Unauthorized", "Account", new { area = "" });
