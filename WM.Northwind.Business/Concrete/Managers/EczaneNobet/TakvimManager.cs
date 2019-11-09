@@ -1934,6 +1934,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         //[TransactionScopeAspect]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nobetGrupGorevTip">Nöbet grubu</param>
+        /// <param name="eczaneNobetGruplarTumu">Nöbet grubundaki eczaneler</param>
+        /// <param name="nobetBaslangicTarihi">Planlanan nöbetlerin yazılacağı ilk tarih</param>
+        /// <param name="nobetBitisTarihi">Planlanan nöbetlerin yazılacağı son tarih</param>
+        /// <param name="gunGrupId">Gün grubu</param>
         public void SiraliNobetYazGunGrupBazinda(
             NobetGrupGorevTipDetay nobetGrupGorevTip,
             List<EczaneNobetGrupDetay> eczaneNobetGruplarTumu,
@@ -2040,7 +2048,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 var nobetYazilacakTarih = nobetYazilacakTarihAraligi[tarihIndis];
 
-                var iterasyonBaslangicTarihi = nobetYazilacakTarih.Tarih;
+                var iterasyonBaslangicTarihi = tarihIndis == 0 ? nobetBaslangicTarihi : nobetYazilacakTarih.Tarih;
 
                 var iterasyonBaslangicindaKapanmamisEczaneNobetGruplar = eczaneNobetGruplarTumu
                     .Where(w => !(w.BitisTarihi <= iterasyonBaslangicTarihi)
