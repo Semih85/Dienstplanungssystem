@@ -109,7 +109,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     baslamaTarihi = (DateTime)baslangicTarihi;
                 }
 
-                _takvimService.SiraliNobetYazGrupBazinda(nobetGrupGorevTip, eczaneNobetGruplarHepsi, baslamaTarihi, bitisTarihi);
+                _takvimService.SiraliNobetYazGrupBazinda(
+                    nobetGrupGorevTip,
+                    eczaneNobetGruplarHepsi,
+                    baslamaTarihi,
+                    bitisTarihi);
             }
 
             var jsonResult = Json(nobetGrupGorevTipler.Count(), JsonRequestBehavior.AllowGet);
@@ -119,7 +123,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return jsonResult;
         }
 
-        public JsonResult PlanlanaNobetleriYazNakilEczaneyeGore(DateTime? baslangicTarihi, DateTime bitisTarihi, int gunGrupId = 0, int nobetGrupGorevTipId = 0)
+        public JsonResult PlanlanaNobetleriYazNakilEczaneyeGore(
+            DateTime? baslangicTarihi,
+            DateTime bitisTarihi,
+            int gunGrupId = 0,
+            int nobetGrupGorevTipId = 0)
         {
             //baslangicTarihi = new DateTime(2018, 6, 1);
             //baslangicTarihi = new DateTime(2019, 3, 13);
@@ -145,7 +153,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                 foreach (var gunGrup in gunGruplar)
                 {
-                    _takvimService.SiraliNobetYazGunGrupBazinda(nobetGrupGorevTip, eczaneNobetGruplarHepsi, baslamaTarihi, bitisTarihi, gunGrup.GunGrupId);
+                    _takvimService.SiraliNobetYazGunGrupBazinda(
+                        nobetGrupGorevTip,
+                        eczaneNobetGruplarHepsi,
+                        baslamaTarihi,
+                        bitisTarihi,
+                        gunGrup.GunGrupId);
                 }
             }
 
