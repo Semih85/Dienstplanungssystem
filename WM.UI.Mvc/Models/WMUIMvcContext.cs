@@ -154,5 +154,7 @@ namespace WM.UI.Mvc.Models
         public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.AyniGunNobetTakipGrupAltGrup> AyniGunNobetTakipGrupAltGrups { get; set; }
 
         public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.EczaneNobetSonucPlanlanan> EczaneNobetSonucPlanlanans { get; set; }
+
+        public System.Data.Entity.DbSet<WM.Northwind.Entities.Concrete.EczaneNobet.EczaneNobetSanalSonuc> EczaneNobetSanalSonucs { get; set; }
     }
 }

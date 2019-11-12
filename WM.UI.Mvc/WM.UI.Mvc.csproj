@@ -863,6 +863,12 @@
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
     <Content Include="Areas\EczaneNobet\Views\Shared\ErrorSilinenNobetlerPartial.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Create.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Delete.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Details.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Edit.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Index.cshtml" />
+    <Content Include=".editorconfig" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -1181,6 +1187,7 @@
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneKullaniciController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneMisafirController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetDegisimController.cs" />
+    <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetSanalSonucController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetSonucPlanlananController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneUzaklikMatrisController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EkranController.cs" />

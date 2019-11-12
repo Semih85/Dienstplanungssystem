@@ -110,6 +110,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<RaporKategori> RaporKategoriler { get; set; }
         public DbSet<RaporRol> RaporRoller { get; set; }
         public DbSet<RaporNobetUstGrup> RaporNobetUstGruplar { get; set; }
+        public DbSet<EczaneNobetSanalSonuc> EczaneNobetSanalSonuclar { get; set; }
         
         #endregion
 
@@ -205,6 +206,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new RaporKategoriMap());
             modelBuilder.Configurations.Add(new RaporRolMap());
             modelBuilder.Configurations.Add(new RaporNobetUstGrupMap());
+            modelBuilder.Configurations.Add(new EczaneNobetSanalSonucMap());
             
             #endregion
         }

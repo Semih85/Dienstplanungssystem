@@ -54,6 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSanalSonucDetay.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSanalSonucDuzenle.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSanalSonucEkle.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSonucEkle.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\TakvimNobetGrupGunGrupIstatistik.cs" />
     <Compile Include="ComplexTypes\EditUser.cs" />
     <Compile Include="ComplexTypes\CategoryNbProduct.cs" />
@@ -211,6 +215,7 @@
     <Compile Include="Concrete\EczaneNobet\EczaneNobetDegisim.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetFeragat.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetIstek.cs" />
+    <Compile Include="Concrete\EczaneNobet\EczaneNobetSanalSonuc.cs" />
     <Compile Include="Concrete\EczaneNobet\Rapor.cs" />
     <Compile Include="Concrete\EczaneNobet\RaporKategori.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetSonucDemo.cs" />

@@ -44,7 +44,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetAltGrupAdi = s.EczaneNobetGrup.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault() != null
                         ? s.EczaneNobetGrup.EczaneNobetGrupAltGruplar.Where(w => w.BitisTarihi == null).FirstOrDefault().NobetAltGrup.Adi
                         : "Aalt grup yok",
-                        YayimlandiMi = s.YayimlandiMi
+                        YayimlandiMi = s.YayimlandiMi,
+                        SanalNobetMi = s.EczaneNobetSanalSonuc.EczaneNobetSonucId > 0 ? true : false,
+                        SanalNobetAciklama = s.EczaneNobetSanalSonuc.Aciklama
                     }).SingleOrDefault(filter);
             }
         }
@@ -59,9 +61,10 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                 //;
                 var liste = from s in ctx.EczaneNobetSonuclar
                             where s.EczaneNobetFeragat.NobetFeragatTipId != 2
+                            let sanalNobetDurumu = s.EczaneNobetSanalSonuc
                             let eczaneNobetGrup = s.EczaneNobetFeragat.NobetFeragatTipId == 4 ? s.EczaneNobetFeragat.EczaneNobetGrup : s.EczaneNobetGrup
                             let eczaneNobetGrupAltGrup = eczaneNobetGrup.EczaneNobetGrupAltGruplar
-                            .Where(w => w.BaslangicTarihi <= s.Takvim.Tarih && (s.Takvim.Tarih <= w.BitisTarihi || w.BitisTarihi == null)).FirstOrDefault()
+                                .Where(w => w.BaslangicTarihi <= s.Takvim.Tarih && (s.Takvim.Tarih <= w.BitisTarihi || w.BitisTarihi == null)).FirstOrDefault()
                             select new EczaneNobetSonucDetay2
                             {
                                 Id = s.Id,
@@ -84,7 +87,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                                 NobetAltGrupId = eczaneNobetGrupAltGrup != null ? eczaneNobetGrupAltGrup.NobetAltGrupId : 0,
                                 NobetAltGrupAdi = eczaneNobetGrupAltGrup != null ? eczaneNobetGrupAltGrup.NobetAltGrup.Adi : "Aalt grup yok",
                                 NobetAltGrupKapanmaTarihi = eczaneNobetGrupAltGrup != null ? eczaneNobetGrupAltGrup.NobetAltGrup.BitisTarihi : null,
-                                YayimlandiMi = s.YayimlandiMi
+                                YayimlandiMi = s.YayimlandiMi,
+                                SanalNobetMi = sanalNobetDurumu.EczaneNobetSonucId > 0 ? true : false,
+                                SanalNobetAciklama = sanalNobetDurumu.Aciklama
                             };
 
                 return filter == null

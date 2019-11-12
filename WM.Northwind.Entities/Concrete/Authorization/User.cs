@@ -54,5 +54,6 @@ namespace WM.Northwind.Entities.Concrete.Authorization
         public virtual List<UserNobetUstGrup> UserNobetUstGruplar { get; set; }
         public virtual List<UserEczane> UserEczaneler { get; set; }
         public virtual List<EczaneNobetDegisim> EczaneNobetDegisimler { get; set; }
+        public virtual List<EczaneNobetSanalSonuc> EczaneNobetSanalSonuclar { get; set; }
     }
 }

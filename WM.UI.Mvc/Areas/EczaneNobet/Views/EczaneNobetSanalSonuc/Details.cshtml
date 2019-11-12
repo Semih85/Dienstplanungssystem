@@ -1,0 +1,73 @@
+﻿@model EczaneNobetSanalSonucDetay
+
+@{
+    ViewBag.Title = "Eczane Sanal Nöbet Detaylar | Nöbet Sistemi";
+}
+
+<h4>Detaylar</h4>
+
+<div>
+    <h4>Eczane Nöbet Sanal Detaylar</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        @*<dt>
+                @Html.DisplayNameFor(model => model.EczaneNobetSonucId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EczaneNobetSonucId)
+            </dd>*@
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGrupAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KayitTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KayitTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Listeye Dön", "Index")
+</p>

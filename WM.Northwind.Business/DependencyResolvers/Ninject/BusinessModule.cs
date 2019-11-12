@@ -158,6 +158,9 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IEczaneNobetSonucService>().To<EczaneNobetSonucManager>().InSingletonScope();
             Bind<IEczaneNobetSonucDal>().To<EfEczaneNobetSonucDal>();
 
+            Bind<IEczaneNobetSanalSonucService>().To<EczaneNobetSanalSonucManager>().InSingletonScope();
+            Bind<IEczaneNobetSanalSonucDal>().To<EfEczaneNobetSanalSonucDal>();
+
             Bind<IEczaneNobetDegisimService>().To<EczaneNobetDegisimManager>().InSingletonScope();
             Bind<IEczaneNobetDegisimDal>().To<EfEczaneNobetDegisimDal>();
 

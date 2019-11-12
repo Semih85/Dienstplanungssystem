@@ -23,5 +23,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Models
         public List<RaporDetay> Raporlar { get; internal set; }
         public DateTime SonNobetTarihi { get; internal set; }
         public bool KapaliEczaneler { get; internal set; }
+        public bool SanalNobetler { get; internal set; }
     }
 }

@@ -32,6 +32,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string NobetAltGrupAdi { get; set; }
         public string EczaneninAcikOlduguSaatAraligi { get; set; }
         public DateTime? NobetAltGrupKapanmaTarihi { get; set; }
+        public bool SanalNobetMi { get; set; }
+        public string SanalNobetAciklama { get; set; }
     }
 }
 

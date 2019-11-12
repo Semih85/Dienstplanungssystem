@@ -32,6 +32,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         //? $"{NobetGrupId} {NobetGrupAdi}"
         //: $"{NobetGrupAdi}";
         public bool YayimlandiMi { get; set; }
+        public bool SanalNobetMi { get; set; }
         public double AgirlikDegeri { get; set; }
         public string NobetOzelGunAdi { get; set; }
         public string NobetOzelGunKategoriAdi { get; set; }
@@ -79,7 +80,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string GruptanAyrilisTarihi => String.Format("{0:yyyy.MM.dd}", EczaneNobetGrupBitisTarihi);
         public DateTime NobetUstGrupBaslamaTarihi { get; set; }
         public DateTime NobetGrupGorevTipBaslamaTarihi { get; set; }
-        public string TarihAciklama => String.Format("{0:d MMM yyyy, ddd}", Tarih);
+        public string TarihAciklama => $"{String.Format("{0:d MMM yyyy, ddd}", Tarih)} {(SanalNobetMi ? "Sanal" : "")}";
         public string Tarih2 => String.Format("{0:yyyy.MM.dd}", Tarih);
         public string Yıl_Ay => String.Format("{0:yy MM}", Tarih);
         public string GunIkiHane => String.Format("{0:dd}", Tarih);

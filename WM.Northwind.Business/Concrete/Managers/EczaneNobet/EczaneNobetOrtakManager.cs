@@ -3933,6 +3933,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         NobetAltGrupId = s.NobetAltGrupId,
                         NobetAltGrupAdi = s.NobetAltGrupAdi,
                         YayimlandiMi = s.YayimlandiMi,
+                        SanalNobetMi = s.SanalNobetMi,
                         AgirlikDegeri = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
                              ? b.AgirlikDegeri
                              : 0,
@@ -3998,6 +3999,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         NobetAltGrupId = s.NobetAltGrupId,
                         NobetAltGrupAdi = s.NobetAltGrupAdi,
                         YayimlandiMi = s.YayimlandiMi,
+                        SanalNobetMi = s.SanalNobetMi,
                         AgirlikDegeri = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
                              ? b.AgirlikDegeri
                              : 0,

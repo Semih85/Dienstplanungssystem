@@ -1,0 +1,132 @@
+﻿@model EczaneNobetSanalSonucDetay
+
+@{
+    ViewBag.Title = "Eczane Sanal Nöbet Düzenle |  Nöbet Yaz";
+}
+<h4>Eczane Sanal Nöbet Sonuç Düzenle</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.EczaneNobetSonucId)
+        @Html.HiddenFor(model => model.UserId)
+        @Html.HiddenFor(model => model.KayitTarihi)
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.EczaneNobetGrupId, "EczaneNobetGrupId", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-7">
+                @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new
+                {
+                    @class = "form-control selectpicker",
+               data_live_search = "true",
+               data_actions_box = "true",
+               title = "Eczane seçiniz..."
+           })
+                @Html.ValidationMessageFor(model => model.EczaneNobetGrupId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group mb-2" id="fromTarih">
+            @Html.Label("Nöbet Tarihi", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group mb-2" style="width:260px; min-width:200px">
+
+                    @Html.TextBox("NobetTarihi", null, new
+                    {
+                        @class = "form-control datepicker pl-2",
+                       //data_toggle = "tooltip",
+                       //data_placement = "top",
+                       //title = "Başlangıç Tarihi",
+                       //style = "pl-3",
+                       autocomplete = "off",
+                       placeHolder = "Nöbet Tarihi"
+                   })
+
+                </div>
+
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.KayitTarihi, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.KayitTarihi, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.KayitTarihi, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Aciklama, "Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-7">
+                @*@Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control", placeHolder = "Sanal nöbet hk. açıklama..." } })*@
+                @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control", placeHolder = "Sanal nöbet hk. açıklama..." })
+                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+                @*<small class="form-text text-muted">Eczanenin hangi sebeple bu gruba atandığının açıklaması.</small>*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Kaydet" class="btn btn-primary" id="btnSubmitForm" />
+            @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+        </div>
+    </div>
+}
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/validation/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
+
+    <script>
+        $(function () {
+
+            $('.datepicker').datepicker('setStartDate', "01-01-1900");
+
+            var baslangicStr = tarihDondur2($("#NobetTarihi").val());
+
+            $("#NobetTarihi").datepicker("setDate", baslangicStr);
+
+        });
+
+        function tarihDondur2(metin) {
+
+            var tarih = metin.split(' ', 1)[0];
+            //alert(tarih)
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2] * 1;
+            //alert(yil)
+            ay = tarihTanim[1] * 1;
+            gun = tarihTanim[0] * 1;
+
+            if (gun.length != 4) {
+
+                return new Date(yil, ay - 1, gun);//yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+    </script>
+}

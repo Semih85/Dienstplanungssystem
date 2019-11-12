@@ -37,6 +37,14 @@
                 <label class="custom-control-label text-secondary" for="chkKapananEczaneleriGosterGizle" title="Nöbet grubundan çıkan eczaneleri listede görmek için bu kutucuğu seçiniz.">Tüm Eczaneler</label>
             </div>
 
+            <div class="custom-control custom-checkbox mr-3 mb-2 mb-md-1">
+                @Html.CheckBox("chkSanallNobetleriGosterGizle", true, new { @class = "custom-control-input istatisitkFromInput", onchange = "chekBoxDegistirSanalNobetler(this);" })
+                <label class="custom-control-label text-secondary" for="chkSanallNobetleriGosterGizle"
+                       title="Sonuçları kalibrasyon ya da sanal nöbet değerleri ile birlikte görmek için bu kutucuğu seçiniz.">
+                    Sanal Nöbetler
+                </label>
+            </div>
+
             @*<div class="alert-info text-center mr-2 mb-2 pl-2 mb-lg-0" style="margin-top:-8px" id="raporKategoriDiv">
                     <span class="font-weight-bold small" id="raporKategoriDivBaslik">Rapor Kategorileri</span>
                     <br id="raporKategoriDivBaslikAltBosluk" />
@@ -56,7 +64,7 @@
 
         <div class="btn-group" role="group">
 
-            <span class="h4 text-danger mr-3 mb-2 mb-md-1" id="raporBaslik">@*Nöbet İstatistikleri*@</span>
+            <span class="h4 text-danger mr-3 mb-2 mb-md-1" id="raporBaslik">Nöbet İstatistikleri</span>
 
             <span id="wait" class="spinner-border text-primary pr-0 mr-0" role="status" style="display:none">
                 <span class="sr-only">Loading...</span>
@@ -82,7 +90,10 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="bg-white pt-4 px-4">
-                    <h5 class="h4"><i class="fa fa-pie-chart fa-lg text-danger"></i> İstatistik ve Raporlar</h5>
+                    <h5 class="h4">
+                        <i class="fa fa-pie-chart fa-lg text-danger" data-toggle="collapse" data-target="#navbarToggleExternalContent"
+                           aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation" id="istatistikIcon"></i> İstatistik ve Raporlar
+                    </h5>
                     @*<small class="text-muted">Bu sayfada aşağıdaki seçenekleri kullanarak nöbet ile ilgili bir çok analiz yapabilirsiniz.</small>*@
                 </div>
                 <div class="card border-0">
@@ -135,6 +146,7 @@
                         @Html.HiddenFor(model => model.BitisTarihi)
                         @Html.Hidden("SonNobetTarihi", Model.SonNobetTarihi.ToShortDateString())
                         @Html.HiddenFor(model => model.KapaliEczaneler)
+                        @Html.HiddenFor(model => model.SanalNobetler)
 
                         <div class="form-group mb-2 mb-lg-0 mr-2">
                             <fieldset>
@@ -419,7 +431,7 @@
 
         function uyariDivOlustur(mesaj, divAdi, parentDivId) {
 
-            $('.istatisitkFromInput').change(function () {                
+            $('.istatisitkFromInput').change(function () {
                 //alert(1)
                 var uyariMesaj = "<i class='fa fa-info-circle mr-2'></i>"
                     + "Sorgu kriterleri değişti. "
@@ -1669,12 +1681,26 @@
             //var myButton = $(butonRaporId);
 
             //if (myButton.length != 0) {
-                if (element.checked) {
-                    $("#KapaliEczaneler").val(true);
-                }
-                else {
-                    $("#KapaliEczaneler").val(false);
-                }
+            if (element.checked) {
+                $("#KapaliEczaneler").val(true);
+            }
+            else {
+                $("#KapaliEczaneler").val(false);
+            }
+            //}
+        }
+
+        function chekBoxDegistirSanalNobetler(element) {
+
+            //var myButton = $(butonRaporId);
+
+            //if (myButton.length != 0) {
+            if (element.checked) {
+                $("#SanalNobetler").val(true);
+            }
+            else {
+                $("#SanalNobetler").val(false);
+            }
             //}
         }
 
@@ -2433,7 +2459,7 @@
                             aggregators: pivotAggregators,
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
-                            onRefresh: function (config) {                                
+                            onRefresh: function (config) {
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2498,7 +2524,7 @@
                             aggregators: pivotAggregators,
                             rendererName: "Sıcaklık Haritası",
                             renderers: pivotRenderers,
-                            onRefresh: function (config) {                                
+                            onRefresh: function (config) {
                                 PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
                             }
                         }
@@ -2899,9 +2925,38 @@
                     renderers: pivotRenderers,
                     onRefresh: function (config) {
                         $(icRaporDivId).find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
-                        //alert(0)
+                        //alert($(this).text())
                         //pivotAlanlariGosterPlanlanaGerceklesen = true;
                         PivotAlanlariGosterGizle(pivotAlanlariGoster, icRaporDivId)
+
+                        
+                        $.each($(icRaporDivId + " #testTable tbody tr td"), function (key, value) {
+
+                            //console.log($(this).text());
+                            if ($(this).text().indexOf('Sanal') != -1) {
+                                $(this).css('background-color', "#C3E6CB");
+                            }
+                            //else if ($(this).text().indexOf('Bayram') != -1) {
+                            //    $(this).css('background-color', "#F5C6CB");
+                            //}
+                            //else if ($(this).text().indexOf('Arife') != -1) {
+                            //    $(this).css('background-color', "#FFEEBA");
+                            //}
+
+                            //table-success: #C3E6CB
+                            //table-info: #BEE5EB
+                            //table-danger: #F5C6CB
+
+                            //$.each(this.cells, function(k,i){
+                            //    console.log(i);
+                            //});
+
+                            //console.log( key + ": " + this.find('.pvtVal').text() );
+                        });
+
+                        //if ($(this).text().indexOf('Sanal') != -1) {
+                        //        $(this).css('background-color', "#F5C6CB");
+                        //    }
 
                         //$('#raporMasterDiv .pvtAttrDropdown option').each(function () {
                         //    //$(this).hide();
@@ -3867,7 +3922,8 @@
 
             $("#collapseKriterler").collapse('show');
 
-            $('#btnSilTarihAraligi, #btnSilBaslangicTarihi, #btnSilBitisTarihi, #navbarBrand').css('cursor','pointer');
+            $('#btnSilTarihAraligi, #btnSilBaslangicTarihi, #btnSilBitisTarihi, #istatistikIcon, #navbarBrand').css('cursor','pointer');
+
             //$('#btnSilBaslangicTarihi').css('cursor','pointer');
             //$('#btnSilBitisTarihi').css('cursor','pointer');
         });
