@@ -38,7 +38,7 @@
             </div>
 
             <div class="custom-control custom-checkbox mr-3 mb-2 mb-md-1">
-                @Html.CheckBox("chkSanallNobetleriGosterGizle", true, new { @class = "custom-control-input istatisitkFromInput", onchange = "chekBoxDegistirSanalNobetler(this);" })
+                @Html.CheckBox("chkSanallNobetleriGosterGizle", new { @class = "custom-control-input istatisitkFromInput", onchange = "chekBoxDegistirSanalNobetler(this);" })
                 <label class="custom-control-label text-secondary" for="chkSanallNobetleriGosterGizle"
                        title="Sonuçları kalibrasyon ya da sanal nöbet değerleri ile birlikte görmek için bu kutucuğu seçiniz.">
                     Sanal Nöbetler
@@ -3862,6 +3862,8 @@
 
             //alert(nobetUstGrupId)
 
+            //getElementsByName("chkSanallNobetleriGosterGizle").val(1);
+
             $('.datepicker').datepicker('setStartDate', "01-01-1900");
 
             //alert(sonNobetTarihi)
@@ -3923,7 +3925,7 @@
             $("#collapseKriterler").collapse('show');
 
             $('#btnSilTarihAraligi, #btnSilBaslangicTarihi, #btnSilBitisTarihi, #istatistikIcon, #navbarBrand').css('cursor','pointer');
-
+            
             //$('#btnSilBaslangicTarihi').css('cursor','pointer');
             //$('#btnSilBitisTarihi').css('cursor','pointer');
         });
