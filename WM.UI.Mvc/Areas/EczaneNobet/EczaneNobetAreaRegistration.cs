@@ -78,10 +78,16 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                 );
 
             context.MapRoute(
-             name: "UserRoleCreate",
-             url: "user-role-ekle",
-             defaults: new { controller = "UserRole", action = "Create" }
-            );
+                 name: "UserRoleCreate",
+                 url: "user-role-ekle",
+                 defaults: new { controller = "UserRole", action = "Create" }
+                );
+
+            context.MapRoute(
+                 name: "EczaneNobetSanalSonucCreate",
+                 url: "eczane-sanal-nobet-ekle",
+                 defaults: new { controller = "EczaneNobetSanalSonuc", action = "Create" }
+                );
 
 
             //varsayılan
@@ -150,6 +156,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                 );
 
             context.MapRoute(
+                 name: "EczaneNobetSanalSonucEdit",
+                 url: "eczane-sanal-nobet-duzenle/{id}",
+                 defaults: new { controller = "EczaneNobetSanalSonuc", action = "Edit", id = UrlParameter.Optional }
+                );
+
+            context.MapRoute(
                 "Edit",
                 "eczane-nobet/{controller}/duzenle/{id}",
                 new { action = "Edit", id = UrlParameter.Optional }
@@ -212,7 +224,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                url: "nobet-grup-kural-sil/{id}",
                defaults: new { controller = "NobetGrupGorevTipKisit", action = "Delete", id = UrlParameter.Optional }
               );
-                       
+
+            context.MapRoute(
+               name: "EczaneNobetSanalSonucDelete",
+               url: "eczane-sanal-nobet-sil/{id}",
+               defaults: new { controller = "EczaneNobetSanalSonuc", action = "Delete", id = UrlParameter.Optional }
+              );
+
 
             context.MapRoute(
                 "Delete",
@@ -270,6 +288,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                 name: "NobeGrupGunKuralDetails",
                 url: "nobet-grup-haftanin-gunleri-detaylar/{id}",
                 defaults: new { controller = "NobetGrupGorevTipGunKural", action = "Details", id = UrlParameter.Optional }
+            );
+
+            context.MapRoute(
+                name: "EczaneNobetSanalSonucDetails",
+                url: "eczane-sanal-nobet-detaylar/{id}",
+                defaults: new { controller = "EczaneNobetSanalSonuc", action = "Details", id = UrlParameter.Optional }
             );
 
             context.MapRoute(
@@ -420,84 +444,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                 defaults: new { controller = "Kalibrasyon", action = "Index" }
             );
 
-            /*
-                context.MapRoute(
-                    "NobetGrup",
-                    "NobetGrup",
-                    new { controller = "NobetGrup", action = "Index" }
+            context.MapRoute(
+                    name: "EczaneNobetSanalSonuc",
+                    url: "eczane-sanal-nobetler",
+                    defaults: new { controller = "EczaneNobetSanalSonuc", action = "Index" }
                 );
-
-                context.MapRoute(
-                    "EczaneNobetGrup",
-                    "EczaneNobetGrup",
-                    new { controller = "EczaneNobetGrup", action = "Index" }
-                );
-
-                context.MapRoute(
-                    "EczaneGrupTanim",
-                    "EczaneGrupTanim",
-                    new { controller = "EczaneGrupTanim", action = "Index" }
-                );
-
-                context.MapRoute(
-                    "EczaneGrup",
-                    "EczaneGrup",
-                    new { controller = "EczaneGrup", action = "Index" }
-                );
-                context.MapRoute(
-                    "NobetGrupKural",
-                    "NobetGrupKural",
-                    new { controller = "NobetGrupKural", action = "Index" }
-                );
-
-                context.MapRoute(
-                    "EczaneNobetMazeret",
-                    "EczaneNobetMazeret",
-                    new { controller = "EczaneNobetMazeret", action = "Index" }
-                );
-
-                context.MapRoute(
-                    "EczaneNobetIstek",
-                    "EczaneNobetIstek",
-                    new { controller = "EczaneNobetIstek", action = "Index" }
-                );
-
-                context.MapRoute(
-                    "Eczane",
-                    "Eczane",
-                    new { controller = "Eczane", action = "Index" }
-                );
-
-                context.MapRoute(
-                    "PivotSonuclar",
-                    "PivotSonuclar",
-                    new { controller = "EczaneNobetSonuc", action = "PivotSonuclar" }
-                );
-
-                context.MapRoute(
-                    "GorselSonuclar",
-                    "GorselSonuclar",
-                    new { controller= "EczaneNobetSonuc", action = "GorselSonuclar"}
-                );
-
-                context.MapRoute(
-                    "DemoPivotSonuclar",
-                    "DemoPivotSonuclar",
-                    new { controller = "EczaneNobetSonucDemo", action = "DemoPivot" }
-                );
-
-                context.MapRoute(
-                    "DemoGorselSonuclar",
-                    "DemoGorselSonuclar",
-                    new { controller = "EczaneNobetSonucDemo", action = "GorselSonuclar" }
-                );
-
-                context.MapRoute(
-                    "EczaneNobet",
-                    "EczaneNobet",
-                    new { controller = "EczaneNobet", action = "Index" }
-                );
-                */
+            
             #endregion
 
             context.MapRoute(
