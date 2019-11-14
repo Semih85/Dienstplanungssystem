@@ -21,6 +21,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetSonucGunKural> GetDetaylarForIstatistik();
         EczaneNobetSonuc GetById(int Id);
         EczaneNobetSonucDetay2 GetDetay2ById(int Id);
+        EczaneNobetSonucDetay2 GetDetay(int takvimId, int eczaneNobetGrupId);
         void Insert(EczaneNobetSonuc sonuc);
         void Update(EczaneNobetSonuc sonuc);
         void Delete(int Id);
@@ -40,6 +41,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetSonucDetay2> GetDetaylar(DateTime baslangicTarihi, DateTime bitisTarihi, int[] nobetGrupIdList);
         List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipIdList(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList);
         List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipIdList(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList, bool kapaliEczaneler);
+        List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipIdList(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList, bool kapaliEczaneler, bool sanalNobetler);
         List<EczaneNobetSonucDetay2> GetDetaylar(int nobetUstGrupId);
         List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipId(int nobetGrupGorevTipId);
         List<EczaneNobetSonucDetay2> GetDetaylar(List<int> nobetGrupIdList);
@@ -74,5 +76,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void UpdateSonuclarInsertDegisim(EczaneNobetSonuc eczaneNobetSonuc, EczaneNobetDegisim eczaneNobetDegisim);
         void UpdateSonuclarInsertDegisim(List<NobetDegisim> nobetDegisimler);
         List<EczaneGrupDetay> OncekiAylardaAyniGunNobetTutanlar(DateTime baslangicTarihi, List<EczaneNobetSonucListe2> eczaneNobetSonuclarOncekiAylar, int indisId, int oncekiBakilacakAylar);
+        void InsertSonuclarInsertSanalSonuclar(EczaneNobetSonuc eczaneNobetSonuc, EczaneNobetSanalSonuc eczaneNobetSanalSonuc);
+        void UpdateSonuclarUpdateSanalSonuclar(EczaneNobetSonuc eczaneNobetSonuc, EczaneNobetSanalSonuc eczaneNobetSanalSonuc);
+        void SilSonuclarSilSanalSonuclar(int eczaneNobetSonucId);
     }
 }

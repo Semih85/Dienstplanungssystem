@@ -34,6 +34,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         private IEczaneNobetGrupAltGrupService _eczaneNobetGrupAltGrupService;
         private IEczaneNobetDegisimService _eczaneNobetDegisimService;
         private INobetDurumService _nobetDurumService;
+        private IEczaneNobetSanalSonucService _eczaneNobetSanalSonuc;
 
         public EczaneNobetSonucManager(IEczaneNobetSonucDal eczaneNobetSonucDal,
                                        IEczaneNobetOrtakService eczaneNobetOrtakService,
@@ -48,7 +49,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                        IEczaneNobetIstekService eczaneNobetIstekService,
                                        IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrupService,
                                        IEczaneNobetDegisimService eczaneNobetDegisimService,
-                                       INobetDurumService nobetDurumService
+                                       INobetDurumService nobetDurumService,
+                                       IEczaneNobetSanalSonucService eczaneNobetSanalSonuc
                                       )
         {
             _eczaneNobetSonucDal = eczaneNobetSonucDal;
@@ -65,6 +67,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _eczaneNobetGrupAltGrupService = eczaneNobetGrupAltGrupService;
             _eczaneNobetDegisimService = eczaneNobetDegisimService;
             _nobetDurumService = nobetDurumService;
+            _eczaneNobetSanalSonuc = eczaneNobetSanalSonuc;
         }
         #endregion
 
@@ -152,6 +155,45 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
         }
 
+        [TransactionScopeAspect]
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public void InsertSonuclarInsertSanalSonuclar(EczaneNobetSonuc eczaneNobetSonuc, EczaneNobetSanalSonuc eczaneNobetSanalSonuc)
+        {
+            Insert(eczaneNobetSonuc);
+
+            var sonuc = GetDetay(eczaneNobetSonuc.TakvimId, eczaneNobetSonuc.EczaneNobetGrupId);
+
+            eczaneNobetSanalSonuc.EczaneNobetSonucId = sonuc.Id;
+
+            _eczaneNobetSanalSonuc.Insert(eczaneNobetSanalSonuc);
+        }
+
+
+        [TransactionScopeAspect]
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public void UpdateSonuclarUpdateSanalSonuclar(EczaneNobetSonuc eczaneNobetSonuc, EczaneNobetSanalSonuc eczaneNobetSanalSonuc)
+        {
+            Update(eczaneNobetSonuc);
+
+            var sonuc = GetDetay(eczaneNobetSonuc.TakvimId, eczaneNobetSonuc.EczaneNobetGrupId);
+
+            eczaneNobetSanalSonuc.EczaneNobetSonucId = sonuc.Id;
+
+            _eczaneNobetSanalSonuc.Update(eczaneNobetSanalSonuc);
+        }
+
+        [TransactionScopeAspect]
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public void SilSonuclarSilSanalSonuclar(int eczaneNobetSonucId)
+        {
+            _eczaneNobetSanalSonuc.Delete(eczaneNobetSonucId);
+
+            Delete(eczaneNobetSonucId);
+        }
+
         public EczaneNobetSonuc GetById(int Id)
         {
             return _eczaneNobetSonucDal.Get(x => x.Id == Id);
@@ -160,6 +202,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public EczaneNobetSonucDetay2 GetDetay2ById(int Id)
         {
             return _eczaneNobetSonucDal.GetDetay(x => x.Id == Id);
+        }
+
+        public EczaneNobetSonucDetay2 GetDetay(int takvimId, int eczaneNobetGrupId)
+        {
+            return _eczaneNobetSonucDal.GetDetay(x => x.TakvimId == takvimId && x.EczaneNobetGrupId == eczaneNobetGrupId);
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
@@ -292,13 +339,48 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
-        public List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipIdList(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList, bool kapaliEczaneler)
+        public List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipIdList(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList, bool sanalNobetler)
         {
             return _eczaneNobetSonucDal.GetDetayList(x => (x.Tarih >= baslangicTarihi || baslangicTarihi == null)
                                                        && (x.Tarih <= bitisTarihi || bitisTarihi == null)
                                                        && nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId)
-                                                       && (x.EczaneNobetGrupBitisTarihi == null || kapaliEczaneler)
+                                                       && (x.EczaneNobetGrupBitisTarihi == null || sanalNobetler)
+                                                       && (x.SanalNobetMi || x.SanalNobetMi == false)
                                                        );
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucDetay2> GetDetaylarByNobetGrupGorevTipIdList(DateTime? baslangicTarihi, DateTime? bitisTarihi, int[] nobetGrupGorevTipIdList, bool kapaliEczaneler, bool sanalNobetler)
+        {
+            var sonuclar = new List<EczaneNobetSonucDetay2>();
+
+            //sonuclar = _eczaneNobetSonucDal.GetDetayList(x => (x.Tarih >= baslangicTarihi || baslangicTarihi == null)
+            //                           && (x.Tarih <= bitisTarihi || bitisTarihi == null)
+            //                           && nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId)
+            //                           && (x.EczaneNobetGrupBitisTarihi == null || kapaliEczaneler)
+            //                           && (x.SanalNobetMi == sanalNobetler || sanalNobetler == false)
+            //                           );
+
+            if (sanalNobetler)
+            {
+                sonuclar = _eczaneNobetSonucDal.GetDetayList(x => (x.Tarih >= baslangicTarihi || baslangicTarihi == null)
+                                                       && (x.Tarih <= bitisTarihi || bitisTarihi == null)
+                                                       && nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId)
+                                                       && (x.EczaneNobetGrupBitisTarihi == null || kapaliEczaneler)
+                                                       //&& (x.SanalNobetMi == sanalNobetler || sanalNobetler == true)
+                                                       );
+            }
+            else
+            {
+                sonuclar = _eczaneNobetSonucDal.GetDetayList(x => (x.Tarih >= baslangicTarihi || baslangicTarihi == null)
+                                                       && (x.Tarih <= bitisTarihi || bitisTarihi == null)
+                                                       && nobetGrupGorevTipIdList.Contains(x.NobetGrupGorevTipId)
+                                                       && (x.EczaneNobetGrupBitisTarihi == null || kapaliEczaneler)
+                                                       && (x.SanalNobetMi == sanalNobetler)
+                                                       );
+            }
+
+            return sonuclar;
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
