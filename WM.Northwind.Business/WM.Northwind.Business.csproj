@@ -114,6 +114,7 @@
     <Compile Include="Abstract\EczaneNobet\IRaporNobetUstGrupService.cs" />
     <Compile Include="Abstract\EczaneNobet\IRaporRolService.cs" />
     <Compile Include="Abstract\Optimization\EczaneNobet\IAlanyaOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IKirikhanOptimizationService.cs" />
     <Compile Include="Abstract\Optimization\EczaneNobet\IZonguldakOptimizationService.cs" />
     <Compile Include="Abstract\Optimization\EczaneNobet\IBartinOptimizationService.cs" />
     <Compile Include="Abstract\Optimization\EczaneNobet\IIskenderunOptimizationService.cs" />
@@ -257,6 +258,7 @@
     <Compile Include="Concrete\Managers\Transport\TransportMaliyetManager.cs" />
     <Compile Include="Concrete\Managers\Transport\FabrikaManager.cs" />
     <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\AlanyaOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\KirikhanOptimizationManager.cs" />
     <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\ZonguldakOptimizationManager.cs" />
     <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\BartinOptimizationManager.cs" />
     <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\CorumOptimizationManager.cs" />

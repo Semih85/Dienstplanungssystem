@@ -27,6 +27,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private ICorumOptimizationService _corumOptimizationService;
         private IIskenderunOptimizationService _iskenderunOptimizationService;
         private IZonguldakOptimizationService _zonguldakOptimizationService;
+        private IKirikhanOptimizationService _kirikhanOptimizationService;
 
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
@@ -52,6 +53,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                   IBartinOptimizationService bartinOptimizationService,
                                   ICorumOptimizationService corumOptimizationService,
                                   IIskenderunOptimizationService iskenderunOptimizationService,
+                                  IKirikhanOptimizationService kirikhanOptimizationService,
 
                                   IEczaneNobetGrupService eczaneNobetGrupService,
                                   INobetGrupGorevTipService nobetGrupGorevTipService,
@@ -79,6 +81,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _bartinOptimizationService = bartinOptimizationService;
             _corumOptimizationService = corumOptimizationService;
             _iskenderunOptimizationService = iskenderunOptimizationService;
+            _kirikhanOptimizationService = kirikhanOptimizationService;
 
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _nobetGrupGorevTipService = nobetGrupGorevTipService;
@@ -284,6 +287,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 case 9:
                     sonucModel = _corumOptimizationService.ModelCoz(eczaneNobetModelCoz);
                     break;
+                case 10:
+                    sonucModel = _kirikhanOptimizationService.ModelCoz(eczaneNobetModelCoz);
+                    break;                    
                 default:
                     return RedirectToAction("Index");
             }
@@ -545,7 +551,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var nobetGrupGorevTipIdList = nobetGrupGorevTipId.ToList();
 
-            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetGrupGorevTipIdList);
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylarByIdList(nobetGrupGorevTipIdList);
 
             //var eczaneNobetMazeretNobettenDusenler = new List<EczaneNobetMazeretSayilari>();
 
