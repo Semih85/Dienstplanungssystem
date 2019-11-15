@@ -44,6 +44,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public bool YilbasiMi { get; set; }
         public bool YilSonuMu { get; set; }
         public int TalepEdilenNobetciSayisi { get; set; }
+        public bool CtsYadaPzrGunuMu { get; set; }
 
         string GetIkiliAylar(int ay)
         {
