@@ -536,7 +536,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             if (esNobetGruplar.Count > 0)
             {
                 var indis = 0;
+
                 var ilk = esNobetGruplar.FirstOrDefault();
+
                 foreach (var esNobetGrupId in esNobetGruplar)//1,2,3,4,5
                 {
                     if (esNobetGrupId > ilk)
@@ -544,12 +546,15 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         if (grupList.Contains(esNobetGrupId))
                             continue;
                     }
+
                     indis++;
 
                     var temp = BagliNobetGruplar(eczaneGrupDetaylar, esNobetGrupId);//1,2,3
+
                     foreach (var item2 in temp)
                     {
                         grupList.Add(item2);//1,2,3
+
                         esliNobetGruplar
                             .Add(new NobetBagGrup
                             {
@@ -563,6 +568,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 var tekliNobetGruplar = nobetGruplar //_nobetGrupService.GetList(nobetGruplar)
                     .Where(x => !esNobetGruplar.Contains(x)).ToList();
+
                 #endregion
 
                 #region tüm nöbet gruplar                
@@ -577,9 +583,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 }
 
                 var indis2 = tumNobetGruplar.Select(s => s.Id).LastOrDefault();
+
                 foreach (var tekliNobetGrup in tekliNobetGruplar)
                 {
                     indis2++;
+
                     tumNobetGruplar.Add(new NobetBagGrup
                     {
                         Id = indis2,

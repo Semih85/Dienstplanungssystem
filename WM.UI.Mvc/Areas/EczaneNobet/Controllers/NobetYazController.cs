@@ -403,6 +403,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetGruplar = _eczaneNobetGrupService.NobetGruplarDDL(nobetUstGrupId);
 
             #region başka gruplarla ilişkisi olan gruplar
+
             var eczaneGruplar = _eczaneGrupService.GetDetaylarAktifGruplar(nobetUstGrupId);
 
             //Birbiri ile ilişkili grupların gruplanması
@@ -466,6 +467,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
             ViewBag.NobetGrupGorevTipId = new SelectList(nobetGruplarDDL, "Id", "Value");
+
             ViewBag.grupSayisi = nobetGruplarDDL.Count();
 
             TempData["NobetGrupAdi"] = nobetGruplar.Select(s => GetNobetGrupGorevTipAdlari(s.NobetUstGrupId, s.NobetGrupGorevTipId, s.NobetGrupGorevTipAdi, s.NobetGrupAdi)).ToArray();
