@@ -417,13 +417,12 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 var nobetGruplarBagDurumu = _eczaneGrupService.EsGrupluEczanelerinGruplariniBelirleTumu(eczaneGruplar, nobetGruplar);
 
                 var tumNobetGruplar = from g in nobetGruplarSirali
-                                      from e in nobetGruplarBagDurumu
-                                      where g.NobetGrupId == e.NobetGrupId
+                                      let e = nobetGruplarBagDurumu.SingleOrDefault(x => x.NobetGrupId == g.NobetGrupId) ?? new NobetBagGrup()
                                       orderby e.Id, g.SiraId
                                       select new NobetGrupBagGrup
                                       {
                                           BagId = e.Id,
-                                          NobetGrupId = e.NobetGrupId
+                                          NobetGrupId = g.NobetGrupId
                                       };
 
                 #endregion

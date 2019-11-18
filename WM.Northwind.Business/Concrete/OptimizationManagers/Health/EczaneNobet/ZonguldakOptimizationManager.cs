@@ -460,35 +460,14 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 //Birbiri ile ilişkili grupların gruplanması
                 var nobetGruplarBagDurumu = _eczaneGrupService.EsGrupluEczanelerinGruplariniBelirleTumu(eczaneGruplar, nobetGruplar);
 
-                var tumNobetGruplar = new List<NobetGrupBagGrup>();
-
-                if (nobetGruplarBagDurumu.Count > 0)
-                {
-                    tumNobetGruplar = (from g in nobetGruplarSirali
-                                       from e in nobetGruplarBagDurumu
-                                                    .Where(w => g.NobetGrupId == w.NobetGrupId).DefaultIfEmpty()
-                                           //where g.NobetGrupId == e.NobetGrupId
-                                       orderby e.Id, g.SiraId
-                                       select new NobetGrupBagGrup
-                                       {
-                                           BagId = (g.NobetGrupId == e?.NobetGrupId)
-                                                         ? e.Id
-                                                         : 0,
-                                           //e.Id,
-                                           NobetGrupId = e.NobetGrupId
-                                       }).ToList();
-                }
-                else
-                {
-                    tumNobetGruplar = (from g in nobetGruplarSirali
-                                       orderby g.SiraId
-                                       select new NobetGrupBagGrup
-                                       {
-                                           BagId = 0,
-                                           //e.Id,
-                                           NobetGrupId = g.NobetGrupId
-                                       }).ToList();
-                }
+                var tumNobetGruplar = from g in nobetGruplarSirali
+                                      let e = nobetGruplarBagDurumu.SingleOrDefault(x => x.NobetGrupId == g.NobetGrupId) ?? new NobetBagGrup()
+                                      orderby e.Id, g.SiraId
+                                      select new NobetGrupBagGrup
+                                      {
+                                          BagId = e.Id,
+                                          NobetGrupId = g.NobetGrupId
+                                      };
 
                 #endregion
 
