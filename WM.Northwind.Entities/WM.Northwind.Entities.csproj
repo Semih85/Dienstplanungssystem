@@ -58,6 +58,7 @@
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSanalSonucDuzenle.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSanalSonucEkle.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSonucEkle.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\MyDropSonuclar.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\TakvimNobetGrupGunGrupIstatistik.cs" />
     <Compile Include="ComplexTypes\EditUser.cs" />
     <Compile Include="ComplexTypes\CategoryNbProduct.cs" />

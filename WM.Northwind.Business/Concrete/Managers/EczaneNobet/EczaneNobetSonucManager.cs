@@ -252,7 +252,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [LogAspect(typeof(DatabaseLogger))]
         public List<MyDrop> GetNobetGrupSonYayimNobetTarihleri(int nobetUstGrupId)
         {
-            var liste = _eczaneNobetSonucDal
+            var liste = new List<MyDropSonuclar>();
+
+            liste = _eczaneNobetSonucDal
                 .GetDetayList(w => w.NobetUstGrupId == nobetUstGrupId && w.YayimlandiMi)
                 .GroupBy(g => new
                 {
@@ -260,18 +262,36 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     g.NobetGorevTipAdi,
                     g.NobetGrupAdi
                 })
-                .Select(s => new
+                .Select(s => new MyDropSonuclar
                 {
                     Id = s.Key.NobetGrupGorevTipId,
                     Value = $"{s.Key.NobetGrupGorevTipId}, {s.Key.NobetGrupAdi}, {s.Key.NobetGorevTipAdi}, Son Nöbet Yayım Tarihi: ",
-                    SonTarih = s.Max(m => m.Tarih)
+                    Tarih = s.Max(m => m.Tarih)
                 }).ToList();
+
+            if (liste.Count == 0)
+            {
+                liste = _eczaneNobetSonucDal
+                    .GetDetayList(w => w.NobetUstGrupId == nobetUstGrupId)
+                    .GroupBy(g => new
+                    {
+                        g.NobetGrupGorevTipId,
+                        g.NobetGorevTipAdi,
+                        g.NobetGrupAdi
+                    })
+                    .Select(s => new MyDropSonuclar
+                    {
+                        Id = s.Key.NobetGrupGorevTipId,
+                        Value = $"{s.Key.NobetGrupGorevTipId}, {s.Key.NobetGrupAdi}, {s.Key.NobetGorevTipAdi}, Nöbetler hiç yayımlanmamış! ({s.Min(m => m.Tarih).ToShortDateString()}-{s.Max(m => m.Tarih).ToShortDateString()}) ",
+                        Tarih = s.Max(m => m.Tarih)
+                    }).ToList();
+            }
 
             return liste
                 .Select(s => new MyDrop
                 {
                     Id = s.Id,
-                    Value = $"{s.Value} {s.SonTarih.ToShortDateString()}"
+                    Value = $"{s.Value} {s.Tarih.ToShortDateString()}"
                 }).ToList();
         }
 
@@ -695,7 +715,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     if (tarih.Tarih == new DateTime(2019, 10, 27))
                     {
                     }
-                }                
+                }
 
                 var sonuclar2 = eczaneNobetSonuclar
                     .Where(w => w.TakvimId == tarih.TakvimId).ToList();
