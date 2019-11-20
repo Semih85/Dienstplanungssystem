@@ -18,22 +18,27 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
     [HandleError]
     public class AyniGunNobetTakipGrupAltGrupController : Controller
     {
-        private WMUIMvcContext db = new WMUIMvcContext();
         private IAyniGunNobetTakipGrupAltGrupService _ayniGunNobetTakipGrupAltGrupService;
         private IUserService _userService;
         private INobetUstGrupService _nobetUstGrupService;
+        private INobetGrupGorevTipService _nobetGrupGorevTipService;
         private INobetUstGrupSessionService _nobetUstGrupSessionService;
+        private INobetAltGrupService _nobetAltGrup;
 
         public AyniGunNobetTakipGrupAltGrupController(
             IAyniGunNobetTakipGrupAltGrupService ayniGunNobetTakipGrupAltGrupService,
             IUserService userService,
             INobetUstGrupService nobetUstGrupService,
+            INobetGrupGorevTipService nobetGrupGorevTipService,
+            INobetAltGrupService nobetAltGrup,
             INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _ayniGunNobetTakipGrupAltGrupService = ayniGunNobetTakipGrupAltGrupService;
             _userService = userService;
             _nobetUstGrupService = nobetUstGrupService;
             _nobetUstGrupSessionService = nobetUstGrupSessionService;
+            _nobetGrupGorevTipService = nobetGrupGorevTipService;
+            _nobetAltGrup = nobetAltGrup;
         }
 
         // GET: EczaneNobet/AyniGunNobetTakipGrupAltGrup
@@ -64,16 +69,25 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/AyniGunNobetTakipGrupAltGrup/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            ViewBag.NobetAltGrupId = new SelectList(db.NobetAltGrups, "Id", "Adi");
-            ViewBag.NobetGrupGorevTipId = new SelectList(db.NobetGrupGorevTips, "Id", "Id");
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetAltGruplar = _nobetAltGrup.GetDetaylar(nobetUstGrup.Id);
+
+            ViewBag.NobetAltGrupId = new SelectList(nobetAltGruplar, "Id", "NobetAltGrupTanim");
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi");
+
             return View();
         }
 
         // POST: EczaneNobet/AyniGunNobetTakipGrupAltGrup/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,NobetGrupGorevTipId,NobetAltGrupId,BaslamaTarihi,BitisTarihi")] AyniGunNobetTakipGrupAltGrup ayniGunNobetTakipGrupAltGrup)
@@ -84,13 +98,20 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.NobetAltGrupId = new SelectList(db.NobetAltGrups, "Id", "Adi", ayniGunNobetTakipGrupAltGrup.NobetAltGrupId);
-            ViewBag.NobetGrupGorevTipId = new SelectList(db.NobetGrupGorevTips, "Id", "Id", ayniGunNobetTakipGrupAltGrup.NobetGrupGorevTipId);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetAltGruplar = _nobetAltGrup.GetDetaylar(nobetUstGrup.Id);
+
+            ViewBag.NobetAltGrupId = new SelectList(nobetAltGruplar, "Id", "NobetAltGrupTanim");
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi");
 
             return View(ayniGunNobetTakipGrupAltGrup);
         }
 
         // GET: EczaneNobet/AyniGunNobetTakipGrupAltGrup/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             if (id < 0)
@@ -102,14 +123,22 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.NobetAltGrupId = new SelectList(db.NobetAltGrups, "Id", "Adi", ayniGunNobetTakipGrupAltGrup.NobetAltGrupId);
-            ViewBag.NobetGrupGorevTipId = new SelectList(db.NobetGrupGorevTips, "Id", "Id", ayniGunNobetTakipGrupAltGrup.NobetGrupGorevTipId);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetAltGruplar = _nobetAltGrup.GetDetaylar(nobetUstGrup.Id);
+
+            ViewBag.NobetAltGrupId = new SelectList(nobetAltGruplar, "Id", "NobetAltGrupTanim", ayniGunNobetTakipGrupAltGrup.NobetAltGrupId);
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi", ayniGunNobetTakipGrupAltGrup.NobetGrupGorevTipId);
+
             return View(ayniGunNobetTakipGrupAltGrup);
         }
 
         // POST: EczaneNobet/AyniGunNobetTakipGrupAltGrup/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,NobetGrupGorevTipId,NobetAltGrupId,BaslamaTarihi,BitisTarihi")] AyniGunNobetTakipGrupAltGrup ayniGunNobetTakipGrupAltGrup)
@@ -119,12 +148,20 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 _ayniGunNobetTakipGrupAltGrupService.Update(ayniGunNobetTakipGrupAltGrup);
                 return RedirectToAction("Index");
             }
-            ViewBag.NobetAltGrupId = new SelectList(db.NobetAltGrups, "Id", "Adi", ayniGunNobetTakipGrupAltGrup.NobetAltGrupId);
-            ViewBag.NobetGrupGorevTipId = new SelectList(db.NobetGrupGorevTips, "Id", "Id", ayniGunNobetTakipGrupAltGrup.NobetGrupGorevTipId);
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetAltGruplar = _nobetAltGrup.GetDetaylar(nobetUstGrup.Id);
+
+            ViewBag.NobetAltGrupId = new SelectList(nobetAltGruplar, "Id", "NobetAltGrupTanim", ayniGunNobetTakipGrupAltGrup.NobetAltGrupId);
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi", ayniGunNobetTakipGrupAltGrup.NobetGrupGorevTipId);
+
             return View(ayniGunNobetTakipGrupAltGrup);
         }
 
         // GET: EczaneNobet/AyniGunNobetTakipGrupAltGrup/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             if (id < 0)
@@ -140,6 +177,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // POST: EczaneNobet/AyniGunNobetTakipGrupAltGrup/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -147,15 +185,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var ayniGunNobetTakipGrupAltGrup = _ayniGunNobetTakipGrupAltGrupService.GetDetayById(id);
             _ayniGunNobetTakipGrupAltGrupService.Delete(id);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }

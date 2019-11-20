@@ -1,4 +1,4 @@
-﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.AyniGunNobetTakipGrupAltGrup
+﻿@model AyniGunNobetTakipGrupAltGrupDetay
 
 @{
     ViewBag.Title = "Details";
@@ -11,19 +11,35 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.NobetAltGrup.Adi)
+            @Html.DisplayNameFor(model => model.NobetGrupAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NobetAltGrup.Adi)
+            @Html.DisplayFor(model => model.NobetGrupAdi)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NobetGrupGorevTip.Id)
+            @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NobetGrupGorevTip.Id)
+            @Html.DisplayFor(model => model.NobetGorevTipAdi)
+        </dd>
+
+        <dt>
+            Alt Grubu Olan Nobet Grubu
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGrupAdiAltGruplu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetAltGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetAltGrupAdi)
         </dd>
 
         <dt>

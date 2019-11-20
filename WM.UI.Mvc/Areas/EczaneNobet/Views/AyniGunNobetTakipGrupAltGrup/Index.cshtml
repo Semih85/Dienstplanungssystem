@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<AyniGunNobetTakipGrupAltGrupDetay>
 
-
 @{
-    ViewBag.Title = "Aynı Gün Nöbet Takip Grup - Alt Grup | Nöbet Sistemi";
+    ViewBag.Title = "Grup - Alt Grup Eşleştirme | Nöbet Sistemi";
+
+    var gorevTipiSayisi = Model.Select(s => s.NobetGorevTipAdi).Distinct().Count();
 }
 
 <div class="row justify-content-between mb-2">
     <div class="col-md-4 mb-2">
         <div class="form-inline">
-            <h4 class="mr-5">Aynı Gün Nobet Takip Grup - Alt Gruplar</h4>
+            <h4 class="mr-5">Grup - Alt Grup Eşleştirme (<span class="text-danger">Aynı Gün Nobet Takip</span>)</h4>
             <div class="form-group">
                 <a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
             </div>
@@ -51,19 +52,16 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.NobetGrupAdi)
+                    Nöbet Grubu
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+                    Alt Grup
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.NobetAltGrupAdi)
+                    Başlama Tarihi
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.BaslamaTarihi)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.BitisTarihi)
+                    Bitiş Tarihi
                 </th>
                 <th></th>
             </tr>
@@ -73,13 +71,10 @@
             {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+                    @(gorevTipiSayisi > 1 ? $"{item.NobetGrupAdi} ({item.NobetGorevTipAdi})" : item.NobetGrupAdi)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NobetAltGrupAdi)
+                    @($"{item.NobetAltGrupAdi} ({item.NobetGrupAdiAltGruplu})")
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.BaslamaTarihi)

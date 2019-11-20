@@ -31,7 +31,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         BitisTarihi = s.BitisTarihi,
                         Id = s.Id,
                         NobetUstGrupId = s.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
-                        KumulatifToplamNobetSayisi = s.KumulatifToplamNobetSayisi
+                        KumulatifToplamNobetSayisi = s.KumulatifToplamNobetSayisi,
+                        NobetGrupAdiAltGruplu = s.NobetAltGrup.NobetGrupGorevTip.NobetGrup.Adi,
+                        NobetGrupGorevTipIcinTanimliAltGrupSayisi = s.NobetGrupGorevTip.NobetAltGruplar.Select(g => g.NobetGrupGorevTip.NobetGorevTipId).Distinct().Count()
                     }).SingleOrDefault(filter);
             }
         }
@@ -51,7 +53,10 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         BitisTarihi = s.BitisTarihi,
                         Id = s.Id,
                         NobetUstGrupId = s.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
-                        KumulatifToplamNobetSayisi = s.KumulatifToplamNobetSayisi
+                        KumulatifToplamNobetSayisi = s.KumulatifToplamNobetSayisi,
+                        NobetGrupAdiAltGruplu = s.NobetAltGrup.NobetGrupGorevTip.NobetGrup.Adi,
+                        //NobetGrupGorevTipIcinTanimliAltGrupSayisi = s.NobetGrupGorevTip.NobetAltGruplar.Count
+                        NobetGrupGorevTipIcinTanimliAltGrupSayisi = s.NobetGrupGorevTip.NobetAltGruplar.Select(g => g.NobetGrupGorevTip.NobetGorevTipId).Distinct().Count()
                     });
 
                 return filter == null

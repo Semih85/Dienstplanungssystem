@@ -23,5 +23,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string NobetGrupAdi { get; set; }
         public string NobetGorevTipAdi { get; set; }
         public string NobetUstGrupAdi { get; set; }
+        public int NobetGrupGorevTipIcinTanimliAltGrupSayisi { get; set; }
+        public string NobetAltGrupTanim => $"{Adi} ({(NobetGrupGorevTipIcinTanimliAltGrupSayisi > 1 ? $"{NobetGrupAdi} - {NobetGorevTipAdi}" : NobetGrupAdi)})";
+
     }
 }
