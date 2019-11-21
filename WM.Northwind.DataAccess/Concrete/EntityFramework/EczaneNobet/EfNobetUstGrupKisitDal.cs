@@ -15,6 +15,18 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
 {
     public class EfNobetUstGrupKisitDal : EfEntityRepositoryBase<NobetUstGrupKisit, EczaneNobetContext>, INobetUstGrupKisitDal
     {
+        public void CokluEkle(List<NobetUstGrupKisit> nobetUstGrupKisitlar)
+        {
+            using (var context = new EczaneNobetContext())
+            {
+                foreach (var nobetUstGrupKisit in nobetUstGrupKisitlar)
+                {
+                    context.NobetUstGrupKisitlar.Add(nobetUstGrupKisit);
+                }
+                context.SaveChanges();
+            }
+        }
+
         public NobetUstGrupKisitDetay GetDetay(Expression<Func<NobetUstGrupKisitDetay, bool>> filter)
         {
             using (var ctx = new EczaneNobetContext())

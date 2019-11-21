@@ -267,7 +267,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.KisitId = new SelectList(_kisitService.GetDetaylar(), "Id", "KisitAdi");
             ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar, "Id", "Adi");
 
-            var nobetUstGrupKisit = new NobetUstGrupKisit
+            var nobetUstGrupKisit = new NobetUstGrupKisitCoklu
             {
                 SagTarafDegeri = 0
             };
@@ -281,11 +281,28 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create([Bind(Include = "Id,NobetUstGrupId,KisitId,PasifMi,VarsayilanPasifMi,SagTarafDegeri, SagTarafDegeriVarsayilan")] NobetUstGrupKisit nobetUstGrupKisit)
+        public ActionResult Create([Bind(Include = "Id,NobetUstGrupId,KisitId,PasifMi,VarsayilanPasifMi,SagTarafDegeri, SagTarafDegeriVarsayilan")] NobetUstGrupKisitCoklu nobetUstGrupKisitCoklu)
         {
             if (ModelState.IsValid)
             {
-                _nobetUstGrupKisitService.Insert(nobetUstGrupKisit);
+                var nobetUstGrupKisitlar = new List<NobetUstGrupKisit>();
+
+                foreach (var kisitId in nobetUstGrupKisitCoklu.KisitId)
+                {
+                    nobetUstGrupKisitlar.Add(new NobetUstGrupKisit
+                    {
+                        KisitId = kisitId,
+                        NobetUstGrupId = nobetUstGrupKisitCoklu.NobetUstGrupId,
+                        SagTarafDegeri = nobetUstGrupKisitCoklu.SagTarafDegeri,
+                        PasifMi = nobetUstGrupKisitCoklu.PasifMi,
+                        Aciklama = nobetUstGrupKisitCoklu.Aciklama,
+                        SagTarafDegeriVarsayilan = nobetUstGrupKisitCoklu.SagTarafDegeriVarsayilan,
+                        VarsayilanPasifMi = nobetUstGrupKisitCoklu.VarsayilanPasifMi
+                    });
+                }
+
+                _nobetUstGrupKisitService.CokluEkle(nobetUstGrupKisitlar);
+
                 return RedirectToAction("Index");
             }
 
@@ -293,9 +310,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetUstGrupDetay = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetUstGruplar = _nobetUstGrupService.GetDetaylar(nobetUstGrupDetay.Id).Select(s => new { s.Id, s.Adi });
 
-            ViewBag.KisitId = new SelectList(_kisitService.GetDetaylar(), "Id", "KisitAdi", nobetUstGrupKisit.KisitId);
-            ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar, "Id", "Adi", nobetUstGrupKisit.NobetUstGrupId);
-            return View(nobetUstGrupKisit);
+            ViewBag.KisitId = new SelectList(_kisitService.GetDetaylar(), "Id", "KisitAdi", nobetUstGrupKisitCoklu.KisitId);
+            ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar, "Id", "Adi", nobetUstGrupKisitCoklu.NobetUstGrupId);
+            return View(nobetUstGrupKisitCoklu);
         }
 
         // GET: EczaneNobet/NobetUstGrupKisit/Edit/5

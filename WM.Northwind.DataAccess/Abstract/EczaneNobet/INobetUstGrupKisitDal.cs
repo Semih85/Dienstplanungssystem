@@ -10,7 +10,8 @@ using WM.Northwind.Entities.Concrete.EczaneNobet;
 
 namespace WM.Northwind.DataAccess.Abstract.EczaneNobet
 {
-    public interface INobetUstGrupKisitDal : IEntityRepository<NobetUstGrupKisit> , IEntityDetayRepository<NobetUstGrupKisitDetay>
-    {  
-    } 
-} 
+    public interface INobetUstGrupKisitDal : IEntityRepository<NobetUstGrupKisit>, IEntityDetayRepository<NobetUstGrupKisitDetay>
+    {
+        void CokluEkle(List<NobetUstGrupKisit> nobetUstGrupKisitlar);
+    }
+}

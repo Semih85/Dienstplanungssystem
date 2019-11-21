@@ -15,6 +15,7 @@ using WM.Optimization.Abstract.Samples;
 using WM.Core.Aspects.PostSharp.AutorizationAspects;
 using WM.Core.Aspects.PostSharp.LogAspects;
 using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
+using WM.Core.Aspects.PostSharp.TranstionAspects;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -39,13 +40,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetUstGrupKisitDal.Get(x => x.Id == nobetUstGrupKisitId);
         }
-        
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetUstGrupKisit> GetList()
         {
             return _nobetUstGrupKisitDal.GetList();
         }
-        
+
         [LogAspect(typeof(DatabaseLogger))]
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         [SecuredOperation(Roles = "Admin")]
@@ -147,6 +148,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             {
                 return 0;
             }
+        }
+
+        [TransactionScopeAspect]
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public void CokluEkle(List<NobetUstGrupKisit> nobetUstGrupKisitlar)
+        {
+            _nobetUstGrupKisitDal.CokluEkle(nobetUstGrupKisitlar);
         }
     }
 }

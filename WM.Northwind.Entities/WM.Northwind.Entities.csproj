@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComplexTypes\EczaneNobet\NobetUstGrupKisitCoklu.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSanalSonucDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSanalSonucDuzenle.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetSanalSonucEkle.cs" />

@@ -17,6 +17,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void Insert(NobetUstGrupKisit nobetUstGrupKisit);
         void Update(NobetUstGrupKisit nobetUstGrupKisit);
         void Delete(int nobetUstGrupKisitId);
+        void CokluEkle(List<NobetUstGrupKisit> nobetUstGrupKisitlar);
 
         NobetUstGrupKisitDetay GetDetayById(int nobetUstGrupKisitId);
         NobetUstGrupKisitDetay GetDetay(string kisitAdi, int nobetUstGrupId);
