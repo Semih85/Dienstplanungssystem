@@ -74,5 +74,7 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public int CalismaSayisiLimit { get; set; }
         public int TimeLimit { get; set; }
         public List<KalibrasyonYatay> Kalibrasyonlar { get; set; }
+        public List<NobetGrupGorevTipGunKuralDetay> NobetGrupGorevTipGunKurallar { get; set; }
+        public List<NobetUstGrupGunGrupDetay> GunGruplar { get; set; }
     }
 }
