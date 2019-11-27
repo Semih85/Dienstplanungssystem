@@ -135,8 +135,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             if (!p.NobetUstGrupKisit.PasifMi && p.Tarihler.Count > 0)
             {
+                var tarihAraligi = p.Tarihler
+                    .Select(s => new
+                    {
+                        s.TakvimId,
+                        s.Tarih
+                    }).Distinct().ToList();
+
                 var kararIndex = p.EczaneNobetTarihAralik
-                                   .Where(e => p.Tarihler.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
+                                   .Where(e => tarihAraligi.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
 
                 if (p.EnAzMi)
                 {
@@ -2321,6 +2328,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             "Farklı ay peşpeşe görev sayısı en çok 5 olarak gevşetildi!",
                             "default"
                 };
+
+            mesaj += "<a href=\"/EczaneNobet/NobetUstGrupKisit/KisitAyarla\" class=\"card-link\" target=\"_blank\">Nöbet Ayarları</a> ";
 
             mesaj += $"<br /> <strong>Çalışma adımları <span class='badge badge-info'>{calismaSayisi}</span></strong>" +
                 $"{iterasyonMesaj} ";
