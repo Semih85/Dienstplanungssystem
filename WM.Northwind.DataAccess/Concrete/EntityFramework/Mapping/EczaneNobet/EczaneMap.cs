@@ -56,7 +56,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             //            }));
 
             this.Property(t => t.Adres)
-                .HasMaxLength(150)
+                .HasMaxLength(250)
                 .IsOptional();
             //.HasColumnAnnotation("Index",
             //        new IndexAnnotation(
