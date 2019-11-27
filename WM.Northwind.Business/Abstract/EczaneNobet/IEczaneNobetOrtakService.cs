@@ -61,6 +61,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
             List<NobetGrupGorevTipTakvimOzelGunDetay> nobetGrupGorevTipTakvimOzelGunler,
             EczaneNobetSonucTuru sonucTuru);
 
+        void VirgulleAyrilanNobetGruplariniAyir(int nobetUstGrupId, List<EczaneNobetSonucListe2> sonuclar);
+
         List<EczaneNobetGrupGunKuralIstatistik> GetEczaneNobetGrupGunKuralIstatistikEczaneBazli(List<EczaneNobetSonucListe2> eczaneNobetSonuc);
 
         List<EczaneNobetGrupGunKuralIstatistik> GetEczaneNobetGrupGunKuralIstatistik(List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneNobetSonucListe2> eczaneNobetSonuc);
