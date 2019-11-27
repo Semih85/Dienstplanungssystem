@@ -2070,7 +2070,7 @@
                     pivotRows = ["Eczane"];
                     pivotCols = ["Görev Tipi", "Gün Grup"];
                 }
-                else if (nobetUstGrupId == 5 || nobetUstGrupId == 9) {
+                else if (nobetUstGrupId == 5 || nobetUstGrupId == 9 || nobetUstGrupId == 10) {
                     pivotRows = ["Eczane"];
                     pivotCols = ["Gün Grup"];
                     pivotRendererName = "Sıcaklık Haritası (Sütun)"
@@ -2177,7 +2177,7 @@
                     pivotCols = ["Gün Grup", "Gün Tanım"];
                     pivotRendererName = "Sıcaklık Haritası (Sütun)"
                 }
-                else if (nobetUstGrupId == 9) {
+                else if (nobetUstGrupId == 9 || nobetUstGrupId == 10) {
                     pivotRows = ["Eczane"];
                 }
 
@@ -2300,7 +2300,7 @@
                 else if (nobetUstGrupId == 5) {
                     pivotRows = ["Eczane"];
                 }
-                else if (nobetUstGrupId == 9) {
+                else if (nobetUstGrupId == 9 || nobetUstGrupId == 10) {
                     pivotRows = ["Eczane"];
                 }
 
@@ -2343,12 +2343,9 @@
                     pivotRows = ["Görev Tipi", "Eczane"];
                     //pivotCols = ["Gün Grup", "Mevsim"];
                 }
-                else if (nobetUstGrupId == 5) {
+                else if (nobetUstGrupId == 5 || nobetUstGrupId == 9 || nobetUstGrupId == 10) {
                     pivotRows = ["Eczane"];
-                }
-                else if (nobetUstGrupId == 9) {
-                    pivotRows = ["Eczane"];
-                }
+                };
 
                 mevsimDagilim = $(function table3() {
                     $(icRaporDivId).pivotUI(dagilimlarPivot,
@@ -2392,7 +2389,7 @@
                 else if (nobetUstGrupId == 5) {
                     pivotRows = ["Eczane"];
                 }
-                else if (nobetUstGrupId == 9) {
+                else if (nobetUstGrupId == 9 || nobetUstGrupId == 10) {
                     pivotRows = ["Eczane"];
                 }
 
@@ -3102,6 +3099,7 @@
         var ayniGunDagilimTablo;
         function ayniGunDagilimlarTablo() {
             //alert(3)
+            alert("ayniGunNobetTutanEczaneler.length: " + ayniGunNobetTutanEczaneler.length)
             if (ayniGunNobetTutanEczaneler.length > 0) {
                 ayniGunDagilimTablo = $(function table8() {
                     $(icRaporDivId).pivotUI(ayniGunNobetTutanEczaneler,
@@ -3156,6 +3154,10 @@
 
                 var pivotRows = ["G1 Nöbet Grubu", "G1Eczane"];
                 var pivotCols = ["G2 Nöbet Grubu", "G2Eczane"];
+
+                if (nobetUstGrupId == 5) {
+                    pivotRows = ["G1 Nöbet Alt Grubu", "G1Eczane"];
+                }   pivotCols = ["G2 Nöbet Alt Grubu", "G2Eczane"];
 
                 var pivotRowsAktif; //= pivotRows;
                 var pivotColsAktif; //= pivotCols;
