@@ -603,7 +603,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             return takvimNobetGruplar;
         }
-
         public List<TakvimNobetGrup> GetTakvimNobetGruplarByNobetGrupGorevTipId(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetGrupGorevTipId, int gunGrupId)
         {
             var tarihler = GetDetaylar(baslangicTarihi, bitisTarihi);
@@ -615,7 +614,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             return takvimNobetGruplar;
         }
-
         public List<TakvimNobetGrup> GetTakvimNobetGruplarByNobetGrupGorevTipIdSonraki(DateTime baslangicTarihi, int alinacakTarihSayisi, int nobetGrupGorevTipId, int gunGrupId)
         {
             var tarihler = GetDetaylar(baslangicTarihi);
@@ -629,7 +627,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             return takvimNobetGruplar;
         }
-
         public List<TakvimNobetGrup> GetTakvimNobetGruplarByNobetGrupGorevTipIdOnceki(DateTime baslangicTarihi, int alinacakTarihSayisi, int nobetGrupGorevTipId, int gunGrupId)
         {
             var tarihler = GetDetaylarOnceki(baslangicTarihi);
@@ -643,7 +640,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             return takvimNobetGruplar;
         }
-
         public List<TakvimNobetGrup> GetTakvimNobetGruplar(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetGrupIdList, int nobetGorevTipId, List<int> nobetGunKuralIdList)
         {
             var tarihler = GetDetaylar(baslangicTarihi, bitisTarihi);
@@ -831,7 +827,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             return GetTakvimNobetGrupGunKuralIstatistik(tarihler);
         }
-
         public List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunDegerIstatistikler(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetGrupIdList, int nobetGorevTipId)
         {
             var tarihler = GetTakvimNobetGruplar(baslangicTarihi, bitisTarihi, nobetGrupIdList, nobetGorevTipId);
@@ -844,6 +839,28 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             return GetTakvimNobetGrupGunKuralIstatistik(tarihler);
         }
+
+        /// <summary>
+        /// IlgiliTarihler
+        /// </summary>
+        /// <param name="baslangicTarihi"></param>
+        /// <param name="bitisTarihi"></param>
+        /// <param name="nobetGrupGorevTipler"></param>
+        /// <param name="takvimIdList"></param>
+        /// <param name="icindeMi"></param>
+        /// <returns></returns>
+        public List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunDegerIstatistikler(
+            DateTime baslangicTarihi,
+            DateTime bitisTarihi,
+            int nobetGrupGorevTipId,
+            int[] takvimIdList)
+        {
+            var tarihler =  GetTakvimNobetGruplarByNobetGrupGorevTipId(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId)
+                    .Where(w => takvimIdList.Contains(w.TakvimId)).ToList();
+
+            return GetTakvimNobetGrupGunKuralIstatistik(tarihler);
+        }
+
         private List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunKuralIstatistik(List<TakvimNobetGrup> takvimNobetGruplar)
         {//alanya için bakılacak
             //var bayramlar = takvimNobetGruplar.Where(w => w.GunGrupId == 2).ToList();

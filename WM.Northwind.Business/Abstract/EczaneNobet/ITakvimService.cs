@@ -38,12 +38,15 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         TakvimNobetGrup GetTakvimNobetGruplar(DateTime baslangicTarihi, NobetGrupGorevTipDetay nobetGrupGorevTip, int gunGrupId, int gunSayisi);
         List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId);
         List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(DateTime baslangicTarihi, DateTime bitisTarihi, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler, List<int> nobetGunKuralIdList);
-
         List<TakvimNobetGrupPeriyot> GetTakvimNobetGruplar(DateTime baslangicTarihi, List<int> ayFarklari, int uzunluk, List<int> nobetGrupIdList, int nobetGorevTipId, string gunGrup);
-
         List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunDegerIstatistikler(DateTime baslangicTarihi, DateTime bitisTarihi, List<int> nobetGrupIdList, int nobetGorevTipId);
         List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunDegerIstatistikler(DateTime baslangicTarihi, DateTime bitisTarihi, List<NobetGrupGorevTipDetay> nobetGrupGorevTipler);
         List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunDegerIstatistikler(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetGrupGorevTipId);
+        List<TakvimNobetGrupGunDegerIstatistik> GetTakvimNobetGrupGunDegerIstatistikler(
+              DateTime baslangicTarihi,
+              DateTime bitisTarihi,
+              int nobetGrupGorevTipId,
+              int[] takvimIdList);
 
         List<TakvimDetay> GetDetaylar();
         List<TakvimDetay> GetDetaylar(int yil);
