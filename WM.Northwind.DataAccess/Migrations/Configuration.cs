@@ -137,10 +137,35 @@ namespace WM.Northwind.DataAccess.Migrations
             //context.SaveChanges(); 
             #endregion
 
+
+            #region takvimler
+            //var takvimler = new List<Takvim>();
+
+            //for (int y = 2021; y < 2023; y++)
+            //{
+            //    for (int m = 1; m < 13; m++)
+            //    {
+            //        var aydakiGunler = DateTime.DaysInMonth(y, m);
+
+            //        for (int d = 1; d <= aydakiGunler; d++)
+            //        {
+            //            takvimler.Add(new Takvim()
+            //            {
+            //                Tarih = new DateTime(y, m, d)
+            //            });
+            //        }
+            //    }
+            //}
+            //context.Takvimler.AddOrUpdate(s => new { s.Tarih }, takvimler.ToArray());
+            ////takvimler.ForEach(d => context.Takvimler.Add(d));
+            //context.SaveChanges();
+
+            #endregion
+
             var baslamaTarihi = new DateTime(2020, 1, 1);
             var odaId = 6;
             var nobetUstGrupId = 10;
-            var nobetGrupGorevTipId = 61; // context.NobetGrupGorevTipler.Max(x => x.Id) + 1;
+            var nobetGrupGorevTipId = 62; // context.NobetGrupGorevTipler.Max(x => x.Id) + 1;
             var varsayilanNobetciSayisi = 1;
 
             //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 53, 54 }, varsayilanNobetciSayisi, 42);
@@ -148,8 +173,8 @@ namespace WM.Northwind.DataAccess.Migrations
             //NobetGrupGorevTipTakvimOzelGunEkle(context, 54);
 
             //UstGrupPaketiEkle(context, baslamaTarihi, odaId, nobetUstGrupId);
-            //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 29,30 }, varsayilanNobetciSayisi, 32);
-            //NobetGrupGorevTipTakvimOzelGunEkle(context, 50);
+            NobetGrupGorevTipTakvimOzelGunEkle(context, 62);
+            //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 62 }, varsayilanNobetciSayisi, 61);
             //TalepEkle(context, 28, 2);
 
             var gerekliBilgilerKirikhan = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)
@@ -252,7 +277,7 @@ new Eczane{ Adi="BAHADIR", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=
 
             };
 
-            UstGrupPaketiEkleKompakt(gerekliBilgilerKirikhan);
+            //UstGrupPaketiEkleKompakt(gerekliBilgilerKirikhan);
 
         }
 
@@ -5237,6 +5262,8 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
         {
             var bayramlar2 = context.NobetGrupGorevTipTakvimOzelGunler
                 .Where(w => w.NobetGrupGorevTipGunKural.NobetGrupGorevTip.Id == 55
+                && w.Takvim.Tarih >= new DateTime(2020, 6, 1)
+                && w.Takvim.Tarih < new DateTime(2020, 10, 1)
                 //&& w.NobetOzelGunId != 10 
                 //arife
                 //&& !(((int)w.Takvim.Tarih.DayOfWeek + 1 == 1 || (int)w.Takvim.Tarih.DayOfWeek + 1 == 6) && w.NobetOzelGunId == 9)
@@ -5355,7 +5382,8 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
             int alinacakNobetGrupGorevTipId)
         {
             var nobetGrupGorevTipGunKuralListe = context.NobetGrupGorevTipGunKurallar
-                            .Where(w => w.NobetGrupGorevTipId == alinacakNobetGrupGorevTipId)
+                            .Where(w => w.NobetGrupGorevTipId == alinacakNobetGrupGorevTipId
+                            && (w.NobetGunKuralId == 1 || w.NobetGunKuralId == 7))
                             .ToList();
 
             var nobetGrupGorevTipGunKurallar = new List<NobetGrupGorevTipGunKural>();
@@ -5371,16 +5399,27 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
         {
             int nobetUstGrupGunGrupId = 0;
 
-            if (nobetGunKuralId == 1 || nobetGunKuralId == 7)
+            if (nobetGunKuralId == 1)
             {//pazar
-                var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && (x.GunGrupId == 1 || x.GunGrupId == 7));
+                var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && x.GunGrupId == 1);
                 nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
             }
-            else if (nobetGunKuralId > 1 && nobetGunKuralId < 7)
-            {//hafta içi
-                var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && x.GunGrupId == 3);
+            else if (nobetGunKuralId == 7)
+            {//cumartesi
+                var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && x.GunGrupId == 4);
                 nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
             }
+
+            //if (nobetGunKuralId == 1 || nobetGunKuralId == 7)
+            //{//pazar
+            //    var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && (x.GunGrupId == 1 || x.GunGrupId == 7));
+            //    nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
+            //}
+            //else if (nobetGunKuralId > 1 && nobetGunKuralId < 7)
+            //{//hafta içi
+            //    var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && x.GunGrupId == 3);
+            //    nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
+            //}
             //else if (nobetGunKuralId == 7)
             //{
             //    if (nobetUstGrupId == 3 || nobetUstGrupId == 5 || nobetUstGrupId == 6)
