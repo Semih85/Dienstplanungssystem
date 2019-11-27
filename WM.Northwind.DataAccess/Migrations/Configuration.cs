@@ -136,146 +136,302 @@ namespace WM.Northwind.DataAccess.Migrations
             //}
             //context.SaveChanges(); 
             #endregion
-
-
-            #region takvimler
-            //var takvimler = new List<Takvim>();
-
-            //for (int y = 2021; y < 2023; y++)
-            //{
-            //    for (int m = 1; m < 13; m++)
-            //    {
-            //        var aydakiGunler = DateTime.DaysInMonth(y, m);
-
-            //        for (int d = 1; d <= aydakiGunler; d++)
-            //        {
-            //            takvimler.Add(new Takvim()
-            //            {
-            //                Tarih = new DateTime(y, m, d)
-            //            });
-            //        }
-            //    }
-            //}
-            //context.Takvimler.AddOrUpdate(s => new { s.Tarih }, takvimler.ToArray());
-            ////takvimler.ForEach(d => context.Takvimler.Add(d));
-            //context.SaveChanges();
-
-            #endregion
-
+            
             var baslamaTarihi = new DateTime(2020, 1, 1);
-            var odaId = 6;
-            var nobetUstGrupId = 10;
-            var nobetGrupGorevTipId = 62; // context.NobetGrupGorevTipler.Max(x => x.Id) + 1;
+            var odaId = 8;
+            var nobetUstGrupId = 11;
+            var nobetGrupGorevTipId = context.NobetGrupGorevTipler.Max(x => x.Id) + 1;
             var varsayilanNobetciSayisi = 1;
 
-            //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 53, 54 }, varsayilanNobetciSayisi, 42);
-            //NobetGrupGorevTipTakvimOzelGunEkle(context, 53);
-            //NobetGrupGorevTipTakvimOzelGunEkle(context, 54);
-
-            //UstGrupPaketiEkle(context, baslamaTarihi, odaId, nobetUstGrupId);
-            NobetGrupGorevTipTakvimOzelGunEkle(context, 62);
-            //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 62 }, varsayilanNobetciSayisi, 61);
-            //TalepEkle(context, 28, 2);
-
-            var gerekliBilgilerKirikhan = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)
+            var gerekliBilgilerDiyarbakir = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)
             {
                 //var baslamaTarihi = new DateTime(2019, 3, 5);
                 //var odaId = 6;
                 //var nobetUstGrupId = 7;
                 //var nobetGrupGorevTipId = 30;
-                NobetGrupGorevTipId = nobetGrupGorevTipId,
-                NobetUstGrupId = nobetUstGrupId,
 
-                //BaslamaTarihi = new DateTime(2019, 3, 5),
+                BaslamaTarihi = baslamaTarihi, // new DateTime(2019, 3, 5),
 
-                //EczaneOdalalar = new List<EczaneOda>
-                //{
-                //    new EczaneOda(){ Adi="Hatay", Adres="Ekinci Mah. Ýnönü Bulvarý No:114 Antakya", TelefonNo="3262145647", MailAdresi="yonetim@hatayeo.org.tr", WebSitesi ="http://www.hatayeo.org.tr/"},
-                //},
-
-                NobetUstGruplar = new List<NobetUstGrup>() {
-                    new NobetUstGrup(){ Adi = "Kýrýkhan", Aciklama = "Kýrýkhan", EczaneOdaId = odaId, BaslangicTarihi=baslamaTarihi,
-                        Enlem = 1,
-                        Boylam = 1
-                        //Enlem = 41.4556754,
-                        //Boylam = 31.7694652
-                    },
-                },
-
-                //NobetGruplar = new List<NobetGrup>() {
-                //    new NobetGrup(){ Adi = "KOZCAÐIZ", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
-                //    new NobetGrup(){ Adi = "ULUS", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
-                //    new NobetGrup(){ Adi = "AMASRA", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
-                //},
+                EczaneOdalalar = new List<EczaneOda>
+                            {
+                                new EczaneOda(){ Adi="Diyarbakýr", Adres="Diyarbakýr", TelefonNo="4120000000", 
+                                    //MailAdresi="45corumeo@gmail.com", WebSitesi ="http://www.corumeo.org/"
+                                },
+                            },
 
                 Eczaneler = new List<Eczane>()
-                {
-                    #region kýrýkhan
+                            {
+                                #region diyarbakýr - merkez
+            new Eczane{ Adi="A PLUS", AcilisTarihi=new DateTime(2016,6,1), Enlem=37.918738, Boylam=40.229816, Adres="YENÝÞEHÝR MAH. LÝSE 4. SOK.( DÝYARBAKIR BAROSU YANI ADLÝYE KARÞI SOKAÐI) ÝPSAN 7 APT. ALTI NO:14/B", TelefonNo="4125025532"},
+new Eczane{ Adi="ADA", AcilisTarihi=new DateTime(2016,6,6), Enlem=37.922210, Boylam=40.200948, Adres="5 Nisan Mah. Medine Bulvarý No:39 Baðlar Ýl Müf. 100 m aþaðý Namýk Kemal Lisesi 200m yukarýsý", TelefonNo="4122286992"},
+new Eczane{ Adi="AGÜLOÐLU", AcilisTarihi=new DateTime(1992,4,9), Enlem=37.916974, Boylam=40.226934, Adres="Büyükþehir Belediyesi Karþýsýnda Lise Cad. 5. Sok. Yeniþehir Ýlkokulu Karþýsý Tarým Orman Ýl Müd. Arkasý Yeniþehir Diyarbakýr", TelefonNo="4122244871"},
+new Eczane{ Adi="AKADEMÝ DÝCLE", AcilisTarihi=new DateTime(2012,9,27), Enlem=37.936200, Boylam=40.204500, Adres="H.Evleri Mah. 3. Sok. Genesis Hastanesi Acil Karþýsý No:19/B", TelefonNo="4122380727"},
+new Eczane{ Adi="AKAN", AcilisTarihi=new DateTime(2006,12,26), Enlem=37.924300, Boylam=40.207300, Adres="Emek Cad. Polis Okulu Üst Köþe Sebzeciler Durak No:105", TelefonNo="4122364626"},
+new Eczane{ Adi="AKSÜNGER", AcilisTarihi=new DateTime(2012,4,6), Enlem=37.952600, Boylam=40.173700, Adres="Diclekent Bulvarý 200. Sok. Eski Perþembe Pazarý Hacý Levent Tatlýcýsý Sokaðý Metropol 3 Sitesi Saðlýk Ocaðý Karþýsý", TelefonNo="4122351268"},
+new Eczane{ Adi="ALÝ", AcilisTarihi=new DateTime(2015,11,4), Enlem=37.935100, Boylam=40.197900, Adres="Tesislerdeki Vakýfbank binasý arkasý LÝV Otel arka caddesi ÞOK market 50 m ilerisi", TelefonNo="4122380378"},
+new Eczane{ Adi="ALÝ EREN", AcilisTarihi=new DateTime(2015,10,1), Enlem=37.944600, Boylam=40.187100, Adres="Urfa Yolu Dicle Memorial Arkasý Nazým Hikmet Cad. Çelebi Eser Camii Çaprazý Oyuncakçý Sokaðý", TelefonNo="4122520509"},
+new Eczane{ Adi="AMED", AcilisTarihi=new DateTime(2017,7,17), Enlem=37.918942, Boylam=40.198040, Adres="Diclekent Mah. Batý Hastanesi Yaný , Bereket Lahmacun Arka sokaðý", TelefonNo="5422992907"},
+new Eczane{ Adi="ANADOLU", AcilisTarihi=new DateTime(2000,10,18), Enlem=37.936200, Boylam=40.178300, Adres="Peyas Cad.455.Sok (Eski Peyas Köyü)Halil Akgün Sitesi ve Marina Balýk Evi Arkasý K.Pýnar 9 Nolu ASM Kar.", TelefonNo="4122516430"},
+new Eczane{ Adi="ANZEL MÝRA", AcilisTarihi=new DateTime(2012,3,26), Enlem=37.926700, Boylam=40.164100, Adres="Urfa Yolu Üzeri Özel Dicle Memorial Hast. Yaný", TelefonNo="4122526262"},
+new Eczane{ Adi="ARSLAN", AcilisTarihi=new DateTime(2007,3,21), Enlem=37.928900, Boylam=40.173700, Adres="Ceylan AVM den Gazilere giderken saðdan 2. sokak tatlýcýoðlu tatlýcýsý sokaðýnda Gaziler Çeþme Duraðý", TelefonNo="4122518279"},
+new Eczane{ Adi="ARYA", AcilisTarihi=new DateTime(2009,1,24), Enlem=37.935700, Boylam=40.189300, Adres="Park Orman Arkasý Memorial Hatanesi Yaný", TelefonNo="4122518095"},
+new Eczane{ Adi="ASYA", AcilisTarihi=new DateTime(2018,5,31), Enlem=37.928223, Boylam=40.156905, Adres="5 Nisan Mah. Girne Cad. 844. Sok. No:32 5 Nisan Saðlýk Ocaðý Karþýsý", TelefonNo="4122365948"},
+new Eczane{ Adi="AÞÝTÝ", AcilisTarihi=new DateTime(2014,8,7), Enlem=37.938900, Boylam=40.162200, Adres="Musa Ant. Cad. Üzeri (75. Yola Yakýn )(Eski 6 Nolu ) 2 nolu Aile Giriþi", TelefonNo="4122519898"},
+new Eczane{ Adi="AYHAN", AcilisTarihi=new DateTime(2012,5,15), Enlem=37.915600, Boylam=40.229800, Adres="Uçkuyular Eðitim ve Araþtýrma Hastanesi Karþýsý tren rayý yaný", TelefonNo="4123390221"},
+new Eczane{ Adi="AYÞÝN", AcilisTarihi=new DateTime(2012,8,1), Enlem=37.917820, Boylam=40.208480, Adres="Nükhet Coþkun Cad. Baðlar Hastanesi Karþýsý Dörtyol Apt. Altý No:90/B", TelefonNo="4125812010"},
+new Eczane{ Adi="AYYILDIZ", AcilisTarihi=new DateTime(2004,11,18), Enlem=37.917200, Boylam=40.232800, Adres="Aliemiri 1.Sok. Yýlmaz 2004 Apt Altý Özel Venividi Hast.Sokaðý", TelefonNo="4122289695"},
+new Eczane{ Adi="BAÐLAR", AcilisTarihi=new DateTime(2018,5,9), Enlem=37.920160, Boylam=40.208280, Adres="BAÐLAR HASTANESÝNDEN ORYILa giderken 200 Metre ilerideki Eski Armina Market Arkasý Bingöllüler Taziye Evi Karþýsý BAÐLAR", TelefonNo="4122357246"},
+new Eczane{ Adi="BARIÞ", AcilisTarihi=new DateTime(2010,11,3), Enlem=37.918500, Boylam=40.198200, Adres="ÝSKANEVLERÝ KAVÞAÐI (VESTEL'ÝN KARÞI CADDESÝ ) YENÝKÖY MEZARLIÐINA GÝDEN,CUMA PAZARININ KURULDUÐU CADDE DÝYAR DÜÐÜN SALONU YAKINI YENÝKÖY ASM KARÞISI", TelefonNo="4122350026"},
+new Eczane{ Adi="BAVER", AcilisTarihi=new DateTime(2016,11,18), Enlem=37.921003, Boylam=40.207731, Adres="Faik Ali Ortaokul Arkasý Armina Market Arkasý 2-3 Nolu Yeni Saðlýk Ocaðý Karþýsý Bingöl taziye evi çaprazý", TelefonNo="4122358336"},
+new Eczane{ Adi="BERFÝN", AcilisTarihi=new DateTime(2010,3,1), Enlem=37.939000, Boylam=40.196000, Adres="Dr. Sýtký Göral Cad.Huzurevleri Mah.Çiftçioðlu Apt.Altý (Mekke Cami Karþýsý)", TelefonNo="4122376409"},
+new Eczane{ Adi="BERÝVAN", AcilisTarihi=new DateTime(2015,9,8), Enlem=37.933500, Boylam=40.169100, Adres="Mezopotamya Mah. Fýrat Bulvarý Gaziler Eski Son Durak Karþýsý Þeyhmus Pastanesi Ýlerisi", TelefonNo="4122510797"},
+new Eczane{ Adi="BÝRTANE", AcilisTarihi=new DateTime(2012,4,17), Enlem=37.948500, Boylam=40.170400, Adres="Ava Düðün Salonu ve Bedüzzaman Camii Arkasý Çeysa-6 sitesi Altý", TelefonNo="4122570351"},
+new Eczane{ Adi="BODAKÇÝ", AcilisTarihi=new DateTime(2015,4,24), Enlem=37.939900, Boylam=40.171600, Adres="Gaziler Yeni Son Durak Biçen market karþýsý Jiber Sokaðý Akkoyunlu Ý.Ö.O Yaný", TelefonNo="5366631729"},
+new Eczane{ Adi="BOTAN", AcilisTarihi=new DateTime(2013,7,10), Enlem=37.916970, Boylam=40.211720, Adres="Muradiye Mah. 190. Sok. Muradiye Saðlýk Ocaðý Karþýsý Yanýkköþk Baðlar", TelefonNo="4122334399"},
+new Eczane{ Adi="BOZAN ", AcilisTarihi=new DateTime(2006,12,11), Enlem=37.850100, Boylam=40.666300, Adres="Körhat Mh. Alipýnar Mezarlýðý Yaný Meteoroloji Md. Bitiþiði alay komutanlýðý karþýsý", TelefonNo="4124156000"},
+new Eczane{ Adi="BULAK", AcilisTarihi=new DateTime(2016,6,16), Enlem=37.914293, Boylam=40.167678, Adres="Baðcýlar Mah. Qamiþlo Blv. Kom. Nevroz Park Sitesi Altý No:45-E Nevroz Parkýn 100 m aþaðýsý keyfi diyar lokantasý karþýsý", TelefonNo="4125029829"},
+new Eczane{ Adi="BÜÞRA", AcilisTarihi=new DateTime(2015,3,12), Enlem=37.918600, Boylam=40.234800, Adres="Daðkapý Çocuk Hastanesi Yaný Özel Akdemi KBB Bitiþiði Levent Lojmanlarý Karþýsý No:7/E", TelefonNo="4122287027"},
+new Eczane{ Adi="BÜYÜK", AcilisTarihi=new DateTime(2009,12,3), Enlem=37.916900, Boylam=40.203500, Adres="Baðlar Sento Cad. No:116/C Kuruçeþme Kavþaðý Baðlar", TelefonNo="4122340030"},
+new Eczane{ Adi="CANAN", AcilisTarihi=new DateTime(1998,5,14), Enlem=37.916200, Boylam=40.236000, Adres="Körhat Mah. Cemiloðlu Bulvarý Körhat Saðlýk Ocaðý Karþýsý Meteroloji Ýl Müd. Yaný", TelefonNo="4122236893"},
+new Eczane{ Adi="CEMRE", AcilisTarihi=new DateTime(2011,11,30), Enlem=37.938000, Boylam=40.166800, Adres="Musa Anter Cad. Enerji Spor Salonu Ýlerisi es gross Market karþýsý Kayapýnar Gaziler Diyarbakýr", TelefonNo="4122520079"},
+new Eczane{ Adi="CEYLAN", AcilisTarihi=new DateTime(1998,5,29), Enlem=37.911400, Boylam=40.224700, Adres="Ýstasyon Cad. Eski Hal Bitiþiði No:47 Urfa Kapý", TelefonNo="4122266218"},
+new Eczane{ Adi="CEYLAN KARAVÝL PARK", AcilisTarihi=new DateTime(2011,11,22), Enlem=37.927400, Boylam=40.169800, Adres="Yenihal Kavþaðý Ceylan Karavil Park Alýþ Veriþ Merkezi Giriþ Katý", TelefonNo="4122513232"},
+new Eczane{ Adi="ÇAÐLAR ", AcilisTarihi=new DateTime(2017,3,10), Enlem=37.936124, Boylam=40.188286, Adres="Diclekent Park orman Memorial Diyarbakýr Hastanesi arkasý", TelefonNo="4122526067"},
+new Eczane{ Adi="ÇELEBÝ", AcilisTarihi=new DateTime(2012,1,4), Enlem=37.914100, Boylam=40.237800, Adres="Yeniköy Mezarlýðý Bitimi (Hava Alaný Yolu) Opet Karþýsý Mersa 2 Sitesi C Blok Altý", TelefonNo="4122244543"},
+new Eczane{ Adi="ÇEVRE", AcilisTarihi=new DateTime(2008,6,6), Enlem=37.926500, Boylam=40.209200, Adres="Hatboyu Cad.Gneydoðu Yapý Koop.1.Kýsým No:1 Çarþamba pazarýnýn baþý nergiz pastanesi karþýsý", TelefonNo="4122368807"},
+new Eczane{ Adi="ÇÝÇEK", AcilisTarihi=new DateTime(1995,12,19), Enlem=37.917400, Boylam=40.238700, Adres="Dr. Þeref Ýnalöz Cad. No:3/A Selahattin Eyyubi Devlet Hast. Karþýsý", TelefonNo="4122235947"},
+new Eczane{ Adi="ÇÝÐDEM", AcilisTarihi=new DateTime(2009,5,11), Enlem=37.915500, Boylam=40.228800, Adres="75'lik Yol Tekel Kavþaðý Goldroom Market Karþýsýnda Gümrük Binasý Yan Sokaðý Kayapýnar", TelefonNo="4122235350"},
+new Eczane{ Adi="ÇOLAK", AcilisTarihi=new DateTime(2013,10,8), Enlem=37.926300, Boylam=40.170900, Adres="CEYLAN KARAVÝL AVM KAVÞAÐI DOÐAN SOFRA SALONU KARÞISI TABÝER LOKANTASI YANI YENÝHAL", TelefonNo="4122909829"},
+new Eczane{ Adi="ÇUHADAR", AcilisTarihi=new DateTime(2005,6,23), Enlem=37.927300, Boylam=40.206000, Adres="Hatboyu Cad. Oryýl Petrol Yaný Bektaþ 1 Apt. No:5", TelefonNo="4122344948"},
+new Eczane{ Adi="DEFNE", AcilisTarihi=new DateTime(2006,3,10), Enlem=37.936700, Boylam=40.187900, Adres="Diclekent Memorial Diyarbakýr Hastanesi Arkasý", TelefonNo="4122513045"},
+new Eczane{ Adi="DENÝZ", AcilisTarihi=new DateTime(2007,8,23), Enlem=37.929200, Boylam=40.198800, Adres="Cezaevi Alt Köþesi Ziyaretçi Kapýsý Sokaðý . Armina Markete Yetiþmeden Dicle Yas evi Karþýsý", TelefonNo="4122341520"},
+new Eczane{ Adi="DERMAN", AcilisTarihi=new DateTime(2018,6,4), Enlem=37.917426, Boylam=40.202510, Adres="Karacadað Cad. 134/A Ziraat bankasý kuruçeþme þubesi çaprazý baðlar", TelefonNo="4122360066"},
+new Eczane{ Adi="DÝCLE FIRAT", AcilisTarihi=new DateTime(2013,9,28), Enlem=37.911000, Boylam=40.233200, Adres="Melikahmet Cad. No:8/B Alipaþa Saðlýk Ocaðý Roj Düðün Salonu Karþýsý A101 ve BIM Market ARASI", TelefonNo="4122290081"},
+new Eczane{ Adi="DÝCLEKENT", AcilisTarihi=new DateTime(2005,12,12), Enlem=37.939100, Boylam=40.172000, Adres="Yýlmaz Güney Cad. Bediüzzaman Camii Yaný Cizrelioðlu Lisesi Eski Giriþ Karþýsý", TelefonNo="4122572091"},
+new Eczane{ Adi="DÝLAN", AcilisTarihi=new DateTime(2019,3,6), Enlem=37.918237, Boylam=40.208525, Adres="Kaynartepe Mah.Nükhet Coþkun Cad. Özel Baðlar hastanesi Karþýsý", TelefonNo="4122360508"},
+new Eczane{ Adi="DÝYAPOÐLU", AcilisTarihi=new DateTime(2010,11,3), Enlem=37.924100, Boylam=40.201400, Adres="Medine Bul. Ýl Müftülüðü Karþýsý Çeltik fabrikasý bitiþiði namýk kemal lisesi ilerisi", TelefonNo="4122337474"},
+new Eczane{ Adi="DÝYAR", AcilisTarihi=new DateTime(2016,12,26), Enlem=37.931431, Boylam=40.199512, Adres="Baðlar Bayýndýrlýk'ta ki DÝÞ HASTANESÝ KARÞISI. ( TESÝSLER kavþaðýndan EMNÝYET MÜDÜRLÜÐÜ'ne giden yol üstünde )", TelefonNo="4122343436"},
+new Eczane{ Adi="DOÐU", AcilisTarihi=new DateTime(1982,12,22), Enlem=37.914600, Boylam=40.236900, Adres="Gazi Cad. Nebi Camisi Karþýsý Kýlýççý Pasajý Altý No:13/A Kadayýfçý Saim usta bitiþiði Daðkapý", TelefonNo="4122289235"},
+new Eczane{ Adi="DOÐUMEVÝ", AcilisTarihi=new DateTime(2016,11,9), Enlem=37.922606, Boylam=40.154293, Adres="Diyarbakýr Kadýn Doðum ve Çocuk Hastanesi yaný Süleyman Bin Halid Yurdu Altý Urfa Bulvarý", TelefonNo="4125027474"},
+new Eczane{ Adi="DURAN", AcilisTarihi=new DateTime(2002,11,12), Enlem=37.922400, Boylam=40.210000, Adres="Baðlar Saðlýk Ocaðý Cd. Eski Saðlýk Ocaðý Karþýsý. Baðlar Ptt ve Oryýl Petrol ORTASI", TelefonNo="4122363826"},
+new Eczane{ Adi="DÜNYA", AcilisTarihi=new DateTime(2009,12,14), Enlem=37.935778, Boylam=40.203336, Adres="Huzurevleri Mah. Þ.Urfa Yolu 1.Km Özel Genesis Hastanesi Yaný", TelefonNo="4122372067"},
+new Eczane{ Adi="EGE", AcilisTarihi=new DateTime(2008,5,14), Enlem=37.919100, Boylam=40.236300, Adres="Daðkapý Çocuk Hastanesi Yaný Özel Akademi KBB Bitiþi Levent Lojmanlarý Karþýsý", TelefonNo="4122242371"},
+new Eczane{ Adi="EKÝN DÝLA", AcilisTarihi=new DateTime(2010,2,1), Enlem=37.947800, Boylam=40.176100, Adres="Diclekent Memorial Hastanesi Yaný", TelefonNo="4122521505"},
+new Eczane{ Adi="ELÝT", AcilisTarihi=new DateTime(2008,6,26), Enlem=37.945900, Boylam=40.182500, Adres="D.Kent Bulv.Milenyum Apt.Altý (Avantaj Mar. Yaný) Diclekent Mado Karþ.", TelefonNo="4122576425"},
+new Eczane{ Adi="EMEK", AcilisTarihi=new DateTime(2010,2,12), Enlem=37.926500, Boylam=40.201600, Adres="Baðlar Emek Cad. 85/B1 Eski Polis Okulu Karþýsý", TelefonNo="4122341555"},
+new Eczane{ Adi="EMÝR", AcilisTarihi=new DateTime(2018,8,6), Enlem=37.926771, Boylam=40.130045, Adres="Fýrat Mah. Jiyan Cad. Metropol 5 Sitesi Altý Otogar Camiisini geçtikten sonra 2. kavþaktan Kompleksia sit. Sola dönünce 300 m ileri de solda", TelefonNo="4125024353"},
+new Eczane{ Adi="ENÝS", AcilisTarihi=new DateTime(2007,8,23), Enlem=37.922700, Boylam=40.210000, Adres="Kaynartepe Mah.Nükhet Coþkun Cad. Eski Baðlar Saðlýk Ocaðý Karþýsý 190/A Baðlar", TelefonNo="4122344398"},
+new Eczane{ Adi="ERDAL", AcilisTarihi=new DateTime(2009,11,18), Enlem=37.954300, Boylam=40.174000, Adres="Diclekent Cad. Medya Kavþaðý Yukarýsý Tatlýcý Hacý Levent Sokaðý Metropol 3 Sitesi Arkasý Kayapýnar", TelefonNo="4122574446"},
+new Eczane{ Adi="ERDÝNÇ", AcilisTarihi=new DateTime(2015,11,12), Enlem=37.935100, Boylam=40.200500, Adres="Huzurevleri Mah. Cami Köþesi Ninova Karþýsý Liv Suit Otel Bitiþiði No:38/A (ESKÝ AK PARTÝ BÝNASINA YETÝÞMEDEN)", TelefonNo="4122374344"},
+new Eczane{ Adi="EVÝN", AcilisTarihi=new DateTime(2007,10,10), Enlem=37.927400, Boylam=40.197700, Adres="Cezaevi Alt Köþesi Barýþ Cad.Eski Baðlar 3 Nolu Saðlýk Ocaðý Karþýsý Vali ünal erkan ÝO ÝLERÝSÝ", TelefonNo="4122345918"},
+new Eczane{ Adi="EVÝNDAR", AcilisTarihi=new DateTime(2011,3,21), Enlem=37.922999, Boylam=40.193452, Adres="Sento Cad. Eski Özel Nisa Kadýn Doðum Hastanesi Yaný þu anki þok market yaný , dostdoðru elektrik yaný Ýskanevleri/ Baðlar", TelefonNo="4122510151"},
+new Eczane{ Adi="EYLÜL", AcilisTarihi=new DateTime(2008,10,14), Enlem=37.925900, Boylam=40.197100, Adres="Cezaevi Alt Köþesi Perþembe pazarý sokaðý Vali Ünal Erkan Ý.Ö.O ilerisi Baðlar 3 Nolu Saðlýk Ocaðý Karþýsý baðlar", TelefonNo="4122341946"},
+new Eczane{ Adi="FARUK", AcilisTarihi=new DateTime(2017,3,13), Enlem=37.915372, Boylam=40.151612, Adres="Hamravat Evleri Arkasý Araç Muayene Ýstasyon Karþý Caddesi Karakuþ Yapý-Mimoza CTY Altý Hamravat ASM Yaný", TelefonNo="4122515114"},
+new Eczane{ Adi="FERAH", AcilisTarihi=new DateTime(1988,8,25), Enlem=37.922100, Boylam=40.209400, Adres="Nükhet Coþkun Cad 5 NÝSAN MAH. ESKÝ 1. Nolu Saðlýk Ocaðý Bitiþiði(ÖZEL BAÐLAR HASTESÝNDEN KOÞUYOLUNA DOÐRU GELÝRKEN 200 M AÞAÐIDA) Baðlar", TelefonNo="4122355205"},
+new Eczane{ Adi="FIRAT", AcilisTarihi=new DateTime(1992,7,10), Enlem=37.914600, Boylam=40.208700, Adres="Nükhet Coþkun CAD. NUKHET COÞKUN ÝLKOKULU YANI ESKÝ BÝRLÝK LÝSESÝ KARÞISI BAÐLAR DÖRTYOL", TelefonNo="4122368846"},
+new Eczane{ Adi="FORUM BERÝTAN", AcilisTarihi=new DateTime(2015,5,18), Enlem=37.918700, Boylam=40.232500, Adres="Fabrika Mah. Elazýð Bulvarý Forum AVM Zemin Kat 155/23 Caminin Yan Tarafý", TelefonNo="4125022396"},
+new Eczane{ Adi="FURKAN", AcilisTarihi=new DateTime(2016,11,14), Enlem=37.931600, Boylam=40.198900, Adres="Turgut Özal Bulvarý No:97 Devlet Hastanesi Semt Polikiniði ( Baðlar Diþ Polikiniði Yardým Eden Fizik Tedavi Karþýsý Sigortacýlarýn hizasýnda)", TelefonNo="4122362205"},
+new Eczane{ Adi="GAZÝLER", AcilisTarihi=new DateTime(2011,7,7), Enlem=37.926700, Boylam=40.164000, Adres="GAZÝLER ÇEÞME DURAÐI KARÞISI", TelefonNo="4122522123"},
+new Eczane{ Adi="GÖKKUÞAÐI", AcilisTarihi=new DateTime(2017,12,6), Enlem=37.917177, Boylam=40.137767, Adres="Yeni Otogar Kavþaðý Çarmar Market Sokaðý 50 m içeride sað tarafta Birtane 3 Sitesi D Blok altý, Otogar", TelefonNo="4122901322"},
+new Eczane{ Adi="GÜLÝSTAN", AcilisTarihi=new DateTime(2015,9,2), Enlem=37.934800, Boylam=40.194600, Adres="Diclekent Bulvarý Cegerxwin Kültür Merkezi Karþýsý Hacý levent tatlýcýsý ilerisi", TelefonNo="4122377077"},
+new Eczane{ Adi="GÜNDOÐUÞ", AcilisTarihi=new DateTime(2016,8,22), Enlem=37.930813, Boylam=40.144405, Adres="75. Yol Go Petrol'ün Karþýsýndaki Nazým Hikmet Caddesi (Big Yellow Taxi Cafenin Saðýndaki Caddenin Az Ýlerisi)Tema Parký ve Aslan Market Arasý", TelefonNo="4126118056"},
+new Eczane{ Adi="GÜNEYDOÐU", AcilisTarihi=new DateTime(2009,2,4), Enlem=37.918600, Boylam=40.231900, Adres="Lise Cad. Valilik Arkasý Nüfus Müd. Yaný Gap Apt Altý No:38/A", TelefonNo="4122282890"},
+new Eczane{ Adi="HACETTEPE", AcilisTarihi=new DateTime(2006,6,21), Enlem=37.923765, Boylam=40.155860, Adres="Urfa yolu Kadýn Doðum ve Çocuk Hastanesi Karþýsý Denizbank ve Diyargaz Yaný Altýn þehir plaza 5. No:162/B kayapýnar", TelefonNo="4122380828"},
+new Eczane{ Adi="HALK", AcilisTarihi=new DateTime(2010,8,19), Enlem=37.915800, Boylam=40.236900, Adres="Gazi Cad.No:7/D Daðkapý Nebi Cami Karþýsý Daðkapý Dörtyol ( ciðerci remzi ustanýn yaný)", TelefonNo="4122285911"},
+new Eczane{ Adi="HAVÝN", AcilisTarihi=new DateTime(2010,1,19), Enlem=37.930800, Boylam=40.205000, Adres="Sultan Hastanesi Karþýsý Babil (NCTY) Alýþveriþ Merkezi Altý", TelefonNo="4122378900"},
+new Eczane{ Adi="HELÝN YAÞAM ", AcilisTarihi=new DateTime(2016,5,18), Enlem=37.944645, Boylam=40.184180, Adres="Huzurevleri Mah. Dr. Sýtký Göral Cad. Huzurevleri Son Durak Özdeniz Market Yaný", TelefonNo="4122382135"},
+new Eczane{ Adi="HÝLAL", AcilisTarihi=new DateTime(2017,12,29), Enlem=37.940827, Boylam=40.179461, Adres="Gazi Yaþargil Eðitim Araþtýrma Çýkýþý Memursen Toki Karþýsý Çeysa Arium Sitesi Altý B Blok KAYAPINAR (BALIKÇININ ÝLERÝSÝ)", TelefonNo="4122570757"},
+new Eczane{ Adi="HÜLYA", AcilisTarihi=new DateTime(2006,1,24), Enlem=37.933800, Boylam=40.175000, Adres="Fýrat Bulvarý Gaziler Villalarý Karþýsý Eski Son Durak ( Pazartesi Pazar sokaðý)", TelefonNo="4122523396"},
+new Eczane{ Adi="IÞIK", AcilisTarihi=new DateTime(2018,8,6), Enlem=37.924130, Boylam=40.178729, Adres="YENÝHAL CAD. TOPTANCILAR SÝTESÝ ÝLERÝSÝ ERBAB 3 SÝTESÝ D BLOK ALTI NO:2", TelefonNo="4122903599"},
+new Eczane{ Adi="ÝBNÝSÝNA", AcilisTarihi=new DateTime(2006,6,22), Enlem=37.918200, Boylam=40.208500, Adres="Nükhet Çoþkun Cad. 100/A(Baðlar Ptt Karþýsý) Özel baðlar hastanesi karþýsý 5378492002", TelefonNo="4122352134"},
+new Eczane{ Adi="ÝDÝL", AcilisTarihi=new DateTime(2016,3,28), Enlem=37.930089, Boylam=40.205958, Adres="NCITY Alýþveriþ Merkezi Altý Sultan Hastanesi Karþýsý Baðlar", TelefonNo="4122370014"},
+new Eczane{ Adi="ÝREM", AcilisTarihi=new DateTime(2012,2,22), Enlem=37.941600, Boylam=40.213500, Adres="Gürdoðan mah. 551 . Sok no :11/A yeniþehir ( 12 nolu yeniþehir asm karþýsý)", TelefonNo="4122622622"},
+new Eczane{ Adi="ÝRFAN", AcilisTarihi=new DateTime(2010,12,6), Enlem=37.935207, Boylam=40.198229, Adres="Urfayolu Vakýfbank Arkasý Huzurevleri 12. Sok. Aðma Apt.Altý", TelefonNo="4122374772"},
+new Eczane{ Adi="VERESELÝ ÝSKANEVLERÝ", AcilisTarihi=new DateTime(2017,1,17), Enlem=37.922920, Boylam=40.194042, Adres="Sento Cad. Eski Baðlar Belediyesi Yaný Çelebi 1 Apt. Altý Baðlar no:151/ E", TelefonNo="4122513886"},
+new Eczane{ Adi="JANYA", AcilisTarihi=new DateTime(2017,9,29), Enlem=37.908482, Boylam=40.223278, Adres="ESKÝ HAL ARKASI ÞEHÝTLÝK DÖRTYOL MESLEK LÝSESÝ KARÞISI YENÝÞEHÝR", TelefonNo="4122264800"},
+new Eczane{ Adi="KADÝR", AcilisTarihi=new DateTime(2017,8,1), Enlem=37.935258, Boylam=40.187757, Adres="Park Orman Yaný Özel Memorial Hastanesi Karþýsý Med CTY Altý Ýþkur Yaný", TelefonNo="4122286881"},
+new Eczane{ Adi="KALENDER ", AcilisTarihi=new DateTime(2017,3,14), Enlem=37.953763, Boylam=40.180374, Adres="Medya Mah. 172. Sok. Hatipoðlu 2 Þelale Evleri A Blok No:9 Ýbnisina ASM Yaný Metropol Siteleri 2 Aþaðý Caddesi", TelefonNo="4122282585"},
+new Eczane{ Adi="KARDELEN", AcilisTarihi=new DateTime(2011,3,4), Enlem=37.936000, Boylam=40.171600, Adres="Cami nebi mah. Gazi cad. no:4 sur Nebi Cami Karþýsý, Dolmuþ Duraðý Yaný Daðkapý Dörtyol Pak fýrýn karþýsý", TelefonNo="4122232421"},
+new Eczane{ Adi="KARDEÞLER", AcilisTarihi=new DateTime(1988,1,18), Enlem=37.913500, Boylam=40.229200, Adres="Ýnönü Cad. Büyük P.T.T Yaný Çiftkapý Karþýsý No:63 SUR", TelefonNo="4122239855"},
+new Eczane{ Adi="KASIMOÐLU", AcilisTarihi=new DateTime(1998,3,16), Enlem=37.916000, Boylam=40.236900, Adres="Gazi Cad. Cumhuriyet .Garajý Yaný Ali Gaffar Okan Lisesi Karþýsý ( BOWER HASTANESÝ KARÞISI SURUN ARKASI)", TelefonNo="4122234156"},
+new Eczane{ Adi="KAYAPINAR", AcilisTarihi=new DateTime(2016,2,27), Enlem=37.948409, Boylam=40.170373, Adres="Diclekent Mah. Ava Düðün Salonunun Arkasýndaki Bediüzzaman Cami Arkasý 265. Sok. No:16/A Çeysa 6 Sitesi Altý", TelefonNo="4122570919"},
+new Eczane{ Adi="KENT", AcilisTarihi=new DateTime(2012,3,29), Enlem=37.946000, Boylam=40.175800, Adres="Diclekent Bulvarý Ava Düðün Salonu Yaný Diclekent Carrefour AVM Binasý ( BATI HASTANESÝ KARÞISI)", TelefonNo="4122570024"},
+new Eczane{ Adi="KERÝM", AcilisTarihi=new DateTime(2012,9,24), Enlem=37.918900, Boylam=40.203000, Adres="5 Nisan Mah.Girne Cad Baðlar dörtyoldan çeltik fabrikasýna giden yol üzeri .5 Nisan Saðlýk Ocaðý Karþýsý Baðlar", TelefonNo="4122353520"},
+new Eczane{ Adi="KURUÇEÞME", AcilisTarihi=new DateTime(1982,2,12), Enlem=37.917100, Boylam=40.205400, Adres="Baðlar Gürsel Cad. No:159 Baðlar- Kuruçeþme dörtyol arasý", TelefonNo="4122355197"},
+new Eczane{ Adi="LALE", AcilisTarihi=new DateTime(2013,9,2), Enlem=37.916000, Boylam=40.229100, Adres="Aliemiri 4. Sok. SGK Arkasý Empati Psikyatri Dal Merkezi Karþýsý", TelefonNo="4122294350"},
+new Eczane{ Adi="LATÝFOÐLU ALÝPINAR", AcilisTarihi=new DateTime(2016,1,4), Enlem=37.587500, Boylam=40.495700, Adres="Alipýnar Mah 8. Anajet Üs Komutanlýðý Karþýsý Alay Kavþaðý Baðlar", TelefonNo="4122369490"},
+new Eczane{ Adi="MAVÝ", AcilisTarihi=new DateTime(2014,1,1), Enlem=37.916700, Boylam=40.233900, Adres="Park Orman karþýsýndaki Çarmar Market Arkasý yeni yapýlan huzurevleri karakolu yaný huzurevleri muhtarlýk biriþiði Diclekent Bulvarý", TelefonNo="4122623629"},
+new Eczane{ Adi="MED", AcilisTarihi=new DateTime(2015,10,22), Enlem=37.916700, Boylam=40.233900, Adres="Aliemiri 1.Sok. 6/C Eski Venevidi Hastanesi Acil Karþýsý", TelefonNo="4122247373"},
+new Eczane{ Adi="MELÝH", AcilisTarihi=new DateTime(1983,6,20), Enlem=37.911200, Boylam=40.226500, Adres="Koopler. Mah. Akkoyunlu Cad. Toprak Mahsülleri Ofisi Lojmanlarý Karþýsý 42/B Ofis Balýkçýlarbaþý dolmuþ duraðý karþýsý", TelefonNo="4122293288"},
+new Eczane{ Adi="MENEKÞE", AcilisTarihi=new DateTime(2017,10,17), Enlem=37.941315, Boylam=40.186962, Adres="Peyas Mah. Diclekent Bulvarý Çaðdaþ 1 Sitesi 41/c (Eski Nil Koleji Karþýsý Gültekin Peynircilik Yaný)", TelefonNo="4122516420"},
+new Eczane{ Adi="MERKEZ", AcilisTarihi=new DateTime(2016,11,29), Enlem=37.920588, Boylam=40.163172, Adres="Kadýn Doðum Hastanesi Arkasý Baðcýlar Mah. Yenihal 2. Cad. Jiyan 3 Sitesi Altý No:25/A BAÐLAR Royal market yaný eski avea cad.", TelefonNo="4122904511"},
+new Eczane{ Adi="MERVE", AcilisTarihi=new DateTime(2015,11,6), Enlem=37.930400, Boylam=40.175000, Adres="75. Metre Yolu GO Petrol Karþýsý STARBUCKS CAFE Arkasý Carrefoursa Market ve Simya Koleji Arasý", TelefonNo="4129990212"},
+new Eczane{ Adi="MESUT", AcilisTarihi=new DateTime(2003,12,25), Enlem=37.920000, Boylam=40.198700, Adres="Sento Cad. HACI SÜLEYMAN AYDIN SÝT. ALTI C BLOK NO:83/B Kuruçeþme Ziraat Bankasý Bitiþiði Baðlar", TelefonNo="4122510307"},
+new Eczane{ Adi="METROPOL", AcilisTarihi=new DateTime(2017,8,11), Enlem=37.916489, Boylam=40.234215, Adres="Aliemri 1.Sok.No:2/E Özel Veni Vidi (DÝYAR LÝFE) Has. Karþýsý Dilan Sinemasý Altý", TelefonNo="4122293439"},
+new Eczane{ Adi="MEVSÝM", AcilisTarihi=new DateTime(2017,4,18), Enlem=37.929986, Boylam=40.173003, Adres="Ceylan AVM Kavþaðýndan Gaziler Yönüne Giderken Çeþme Duraðýna varmadan tatlýcýoðlu tatlýcýsýnýn olduðu 2. sokaða giriþte 100 m ileride A 101 karþýsý ( bizim market arkasý)", TelefonNo="4122525604"},
+new Eczane{ Adi="UFUK", AcilisTarihi=new DateTime(2017,12,12), Enlem=37.914494, Boylam=40.224572, Adres="Valilik Arkasý Nüfus Müdürlüðü ve Yeni Þehir Beldiyesi Civarý Y.Þehir Saðlýk Ocaðý Karþýsý", TelefonNo="4122292979"},
+new Eczane{ Adi="MURAT", AcilisTarihi=new DateTime(2007,11,29), Enlem=37.914300, Boylam=40.224400, Adres="Lise cad. Valilik Arkasý Nüfus Müd. Yaný Yeniþehir saðlýk ocaðý karþýsý Gültekin Peynircilik Yaný no:35", TelefonNo="4122235957"},
+new Eczane{ Adi="NAZ", AcilisTarihi=new DateTime(2006,8,1), Enlem=37.921900, Boylam=40.214600, Adres="Selahattin Eyyubi Mah.Aydýn Arslan Bul. Sultan Hastanesi YANI Süleyman Demirel Lisesi Karþýsý", TelefonNo="4122381727"},
+new Eczane{ Adi="NEFES", AcilisTarihi=new DateTime(2015,12,1), Enlem=37.916200, Boylam=40.218200, Adres="Ofis Ýstasyon Cad.Ayhan Duraðý Yapý Kredi Bankasý Karþýsý Akkoyunlu Blv Özlem Apt. No:18/E", TelefonNo="4122289456"},
+new Eczane{ Adi="NEÞE", AcilisTarihi=new DateTime(2011,11,30), Enlem=37.926500, Boylam=40.201400, Adres="Emek Cad.Eski Polis Okulu Karþýsý No:97 A-B", TelefonNo="4122364737"},
+new Eczane{ Adi="NEZAHAT", AcilisTarihi=new DateTime(2014,8,11), Enlem=37.922446, Boylam=40.209918, Adres="Nukhet Coþkun Cad. Oryýl Petrol ile Özel Baðlar Hastanesi arasý Eski Saðlýk Ocaðý Bitiþiði", TelefonNo="4122369494"},
+new Eczane{ Adi="NÝNOVA PARK", AcilisTarihi=new DateTime(2011,9,15), Enlem=37.933300, Boylam=40.202200, Adres="Selahhattin eyyubi mah. Þanlýurfa yolu NÝNOVA PARK AVM ÝÇÝ ZEMÝN KAT B-1 NO:10", TelefonNo="4122901166"},
+new Eczane{ Adi="NUDEM", AcilisTarihi=new DateTime(2017,5,18), Enlem=37.920708, Boylam=40.176100, Adres="baðcýlar mah. Orhan doðan cad. f.yýldýz 3 sitesi altý BB23 ( göletli park karþýsý mezarlýk cad. þeyh sait camii yaný )", TelefonNo="4122358788"},
+new Eczane{ Adi="NUJÝN", AcilisTarihi=new DateTime(2013,10,11), Enlem=37.907000, Boylam=40.216000, Adres="Þehitlik Mah. 62. Sok. Pacacý Metin Þaban Market Karþýsý (Eðitim Lise Köþesi)", TelefonNo="4122267163"},
+new Eczane{ Adi="NUR", AcilisTarihi=new DateTime(2011,9,9), Enlem=37.929200, Boylam=40.193100, Adres="Cezaevinden Migrosa Giden Yol Üzeri Cezaevi Üst Köþe Buhara 1 Apt. Altý PAZAR PAZARI Yaný", TelefonNo="4122520776"},
+new Eczane{ Adi="OFÝS", AcilisTarihi=new DateTime(2012,11,15), Enlem=37.919657, Boylam=40.218909, Adres="Koperatifler Mah. Akkoyunlu Cad. 46/A Ýstasyon Cad. Baþý (T M O Karþýsý) Ofis (BANKA ATM'LERÝNÝN KARÞISI)", TelefonNo="4122231055"},
+new Eczane{ Adi="OKYANUS", AcilisTarihi=new DateTime(2019,3,5), Enlem=37.941357, Boylam=40.178172, Adres="S. Eyyubi Bulv.Peyas(Diclekent mah) Mah. Y.Yol Lukoil Petrol Yukarýsý Elmas 9 Sitesi Altý D.Kent", TelefonNo="4122575897"},
+new Eczane{ Adi="ORMAN", AcilisTarihi=new DateTime(2004,10,12), Enlem=37.919100, Boylam=40.234500, Adres="Çocuk hastanesi yolu Diyar Galeria Arkasý Levent Lojmanlarý Karþýsý", TelefonNo="4122243031"},
+new Eczane{ Adi="ORTADOÐU", AcilisTarihi=new DateTime(2009,5,8), Enlem=37.916100, Boylam=40.215200, Adres="Ofis Gevran Cad. Ziraat Bankasý Karþýsý", TelefonNo="4122343621"},
+new Eczane{ Adi="ORYIL", AcilisTarihi=new DateTime(2007,9,5), Enlem=37.926000, Boylam=40.209600, Adres="Hatboyu Cad.No:7/A Baðlar/Diyarbakýr Oryýl Petrol ile Nergiz Patanesi Arasý Doðu-Yapý Kooperatifleri Karþýsý", TelefonNo="4122348688"},
+new Eczane{ Adi="OZAN", AcilisTarihi=new DateTime(2010,12,3), Enlem=37.939200, Boylam=40.161500, Adres="Musa Ant. Cad.(Enerji Spor Salonu Caddesi) Gross ve Þok Market Ýlerisi Çýnar Ekmek Fýrýný Sokaðý Ýmami Þafi Cami Arkasý Kayapýnar 6 No'lu Aile Hekimliði Karþýsý (75 metreden Musa Antere girince 2. sol Sokak)", TelefonNo="4122513341"},
+new Eczane{ Adi="ÖZDEMÝR", AcilisTarihi=new DateTime(2013,12,25), Enlem=37.936700, Boylam=40.204000, Adres="H.Evleri Mah. 2. Sok.No: 3 Urfa yolu Genesis Hastanesi Yaný Acil çýkýþý", TelefonNo="4122381763"},
+new Eczane{ Adi="ÖZDENÝZ", AcilisTarihi=new DateTime(2011,10,13), Enlem=37.925400, Boylam=40.196800, Adres="Cezaevi Alt Köþesi Vali Ünal Erkan Ý.Ö.O Sokaðý 6 ve 7 Nolu Saðlýk Ocaðý Karþýsý Perþembe pazarý caddesi", TelefonNo="4122337649"},
+new Eczane{ Adi="ÖZER", AcilisTarihi=new DateTime(2011,11,30), Enlem=37.941600, Boylam=40.191000, Adres="Dr.Sýtký Güral Cad.Huzur Düðün Salonu Karþýsý Veysel Apt. Altý H.Evleri", TelefonNo="4122377717"},
+new Eczane{ Adi="ÖZLEM", AcilisTarihi=new DateTime(2016,8,9), Enlem=37.917138, Boylam=40.233254, Adres="Aliemiri 1. Sok. Venividi Sokaðý. Dünya Doðum Hastanesi Karþýsý 8/A", TelefonNo="4122335669"},
+new Eczane{ Adi="ÖZYURTLU", AcilisTarihi=new DateTime(2014,2,5), Enlem=37.929100, Boylam=40.198800, Adres="Cezaevi Alt Köþe Ziyaretçi giriþ Kapýsý Sokaðý A101 Markete Yetiþmeden Dicle Yasevi Karþýsý", TelefonNo="4122363635"},
+new Eczane{ Adi="PAPATYA ", AcilisTarihi=new DateTime(2016,9,22), Enlem=37.918743, Boylam=40.130943, Adres="Urfa Yolu Üzeri Otogar Ýlerisi Armina Market Yaný Tanlar Plaza Altý", TelefonNo="4125028080"},
+new Eczane{ Adi="PARK ORMAN", AcilisTarihi=new DateTime(2015,1,16), Enlem=37.946200, Boylam=40.181700, Adres="Diclekent ana cadde park orman kavþaðý çarmar market ve ptt bitiþiði diclekent/kayapýnar", TelefonNo="4122377172"},
+new Eczane{ Adi="PASUR", AcilisTarihi=new DateTime(2008,6,2), Enlem=37.915600, Boylam=40.232100, Adres="Aliemiri Cad. Venevidi Hast. Yaný Adidas Sembol (A101 YANI) Spor Yaný", TelefonNo="4122292672"},
+new Eczane{ Adi="PELÝN", AcilisTarihi=new DateTime(2004,6,9), Enlem=37.916900, Boylam=40.222900, Adres="Üçkuyular Toki Tempo market Bitiþiði Saðlýk Ocaðý Karþýsý", TelefonNo="4123490021"},
+new Eczane{ Adi="PINAR", AcilisTarihi=new DateTime(2019,2,1), Enlem=37.926203, Boylam=40.197041, Adres="C.Evi Alt Köþe Vali Ünal Erkan Ý.Ö.O Sokaðý 6-7 Nolu Saðlýk Ocaðý Yaný(PERÞEMBE PAZARI CADDESÝ ÜSTÜ)", TelefonNo="4122341155"},
+new Eczane{ Adi="REÞÝTOÐLU", AcilisTarihi=new DateTime(2012,3,1), Enlem=37.921700, Boylam=40.209700, Adres="5 Nisan Mah. 749. Sok. Faik Ali Ý.Ö.O Arkasý Baðlar Sakarya Saðlýk Ocaðý Karþýsý", TelefonNo="4122334030"},
+new Eczane{ Adi="ROHAT", AcilisTarihi=new DateTime(2010,9,24), Enlem=37.947500, Boylam=40.177100, Adres="Medya Kavþaðý Ava Düðün Salonu Yolu Üzeri Tavacý Recep Usta Karþýsý Kayapýnar", TelefonNo="4122573754"},
+new Eczane{ Adi="ROJDA", AcilisTarihi=new DateTime(2005,9,28), Enlem=37.919900, Boylam=40.216400, Adres="Kaynartepe Mah. Cemiloðlu Cad. No :6 Kahveönü Duraðý Ofis alt geçit BAÐLAR GÝRÝÞÝ tren rayý arkasý", TelefonNo="4122343135"},
+new Eczane{ Adi="RÜZGAR", AcilisTarihi=new DateTime(2014,11,3), Enlem=37.923600, Boylam=40.165900, Adres="Þato Park Düðün Salonu Yaný AVEA TÜRK TELEKOM GLOBAL Karþýsý TURKCEL GLOBAL ARKASI Yenihal", TelefonNo="4125021084"},
+new Eczane{ Adi="SABRÝOÐLU", AcilisTarihi=new DateTime(2013,10,21), Enlem=37.927100, Boylam=40.155900, Adres="NAZÝM HÝKMET CADDESÝ 75 GO PETROL YANI ÇELEBÝ ESER CAMÝ YANI (KADIN DOÐUM KARÞISI ÇEYSA PLAZA ARKASI )", TelefonNo="8502812294"},
+new Eczane{ Adi="SARISALTIK", AcilisTarihi=new DateTime(2011,11,25), Enlem=37.944000, Boylam=40.186400, Adres="Diclekent Bulvarý Gönül kahvesi karþýsý GO Petrol Arkasý H.Evleri 2 Nolu Saðlýk Ocaðý Yaný Huzurevleri", TelefonNo="4122383500"},
+new Eczane{ Adi="SELAMET", AcilisTarihi=new DateTime(2007,11,12), Enlem=37.930200, Boylam=40.197400, Adres="SEYRANTEPE ÞANLIURFA YOLI 1.KM HUZUREVLERÝ MAH. 3. SOKAK 13/A GENESÝS HOSPÝTAL ARKASI ACÝL KARÞISI", TelefonNo="4122380807"},
+new Eczane{ Adi="SEMT", AcilisTarihi=new DateTime(2019,4,26), Enlem=37.951137, Boylam=40.173224, Adres="Medya Mah. Yýlmaz Güney Caddesi Saray Market Yaný Soçesa Sitesi Altý ( Diclekentteki Armina marketten içeriye girdikten sonra 100 m ileride solda, Metropol Taksi Duraðý Karþýsý )", TelefonNo="4122576262"},
+new Eczane{ Adi="SERÇEM", AcilisTarihi=new DateTime(2011,8,25), Enlem=37.933092, Boylam=40.201099, Adres="S. Eyubi Mah.Bayýndýrlýk Ninova Arkasý Güneydoðu Taksi Duraðý Arkasý (Polisevi Yaný)", TelefonNo="4122371988"},
+new Eczane{ Adi="SERDAR", AcilisTarihi=new DateTime(1994,10,7), Enlem=37.909400, Boylam=40.222400, Adres="Þehitlik Mah. Bayram 4 Apt. Altý No:18/B Hazro kasabý-Geliþim pastanesi karþýsý Selahattin Avþar Cami Yaný Þehitlik", TelefonNo="4122261623"},
+new Eczane{ Adi="SEVÝM", AcilisTarihi=new DateTime(2011,3,21), Enlem=37.922200, Boylam=40.219500, Adres="Ofis Gevran Cad. Eski Askerlik Þub. Civarý Sadýk künefe karþýsý no:35 Ofis", TelefonNo="4122284866"},
+new Eczane{ Adi="SEYRANTEPE", AcilisTarihi=new DateTime(1990,10,5), Enlem=37.940100, Boylam=40.220000, Adres="SÝLVAN YOLU ÜZERÝ ( fakülte yolu üzeri ) CUMHURÝYET MAH NO 14 YENÝÞEHÝR DÝYARBAKIR", TelefonNo="4122623161"},
+new Eczane{ Adi="SÝBEL", AcilisTarihi=new DateTime(2012,1,19), Enlem=37.923500, Boylam=40.180100, Adres="Toptancýlar Sitesi Arkasý Gökkuþaðý Düðün Salonu Yaný Vizyon Konutlarý Altý", TelefonNo="4122902604"},
+new Eczane{ Adi="SU", AcilisTarihi=new DateTime(2014,12,2), Enlem=37.940200, Boylam=40.188800, Adres="mezopotamya bulvarý cadde 50 üzeri seferoðlu iç kale sitesi altý c blok no:54/ B KAYAPINAR", TelefonNo="4122370578"},
+new Eczane{ Adi="SUR", AcilisTarihi=new DateTime(2006,6,14), Enlem=37.911300, Boylam=40.226100, Adres="Ýstasyon Cad. Eski Hal Yaný No:5", TelefonNo="4122264545"},
+new Eczane{ Adi="SURÝÇÝ", AcilisTarihi=new DateTime(2014,5,22), Enlem=37.916300, Boylam=40.238400, Adres="Gazi Cad.Ali Gaffar Okan Lisesi Karþýsý (Bower Hastanesi Karþýsý) Cumhuriyet Garajý Yaný", TelefonNo="4122232970"},
+new Eczane{ Adi="SURKENT", AcilisTarihi=new DateTime(2009,8,27), Enlem=37.916600, Boylam=40.237000, Adres="Dr.Yusuf Azizoðlu Cad. Bower hastanesi altý (eski alman hast altý) Daðkapý", TelefonNo="4122288436"},
+new Eczane{ Adi="ÞAHÝN", AcilisTarihi=new DateTime(1984,3,13), Enlem=37.917100, Boylam=40.209200, Adres="Fatih Cad. No:91/B Baðlar Diski Su Tahsilatý karþýsý Muradiye Mah. Muhtarý Karþýsý Baðlar /Dörtyol", TelefonNo="4122355351"},
+new Eczane{ Adi="ÞENAY", AcilisTarihi=new DateTime(2014,7,10), Enlem=37.918000, Boylam=40.208500, Adres="Baðlar Nükhet Coþkun Cad. Cihan Apt. Altý No:96 Baðlar Ptt Karþýsý ( özel baðlar hastanesi karþýsý)", TelefonNo="4122367944"},
+new Eczane{ Adi="ÞENTEPE ", AcilisTarihi=new DateTime(2010,11,4), Enlem=37.857300, Boylam=40.665500, Adres="Baðlar Dörtyol Kavþaðý Trafo Bitiþiði Sarmaþýk lokantasý karþýsý Özel baðlar hastanesinden 200 m ileride dörtyol kavþaðýnda", TelefonNo="4122367249"},
+new Eczane{ Adi="ÞEYMA", AcilisTarihi=new DateTime(2013,12,12), Enlem=37.923100, Boylam=40.213500, Adres="Sunay Cad .( Eski Koþuyolu Caddesi.) Koþuyolu Parký ilk kapýnýn karþýsý oryýl petrolden ofis alt geçide giderken saðda baðlar/diyarbakýr", TelefonNo="4122523613"},
+new Eczane{ Adi="ÞÝFA", AcilisTarihi=new DateTime(2009,5,11), Enlem=37.929500, Boylam=40.199000, Adres="Þeyh Þamil.Mah. Barýþ cad.Vali Ünal Erkan Ý.Ö.Ö Yaný 3Nolu Sað. Ocaðý Karþýsý C.Evi Alt Köþe Perþembe pazarý sokaðý", TelefonNo="4122344745"},
+new Eczane{ Adi="ÞÝRÝNEVLER", AcilisTarihi=new DateTime(2009,9,10), Enlem=37.934100, Boylam=40.176000, Adres="GAZÝLER SON DURAK JÝBER ÝÇ GÝYÝM KARÞISI (IÞIKLARIN ÖNÜ)", TelefonNo="4122526320"},
+new Eczane{ Adi="TEPE", AcilisTarihi=new DateTime(2014,5,28), Enlem=37.925619, Boylam=40.206601, Adres="Emek Cad. Özlem 2000 Lokantasý civarý Badýka Yas Evi Yaný Emek Banyo Sokaðý", TelefonNo="4122356797"},
+new Eczane{ Adi="TÝLLO", AcilisTarihi=new DateTime(2010,10,25), Enlem=37.918200, Boylam=40.233500, Adres="Diyar Galeria Avm Altý Yeniþehir", TelefonNo="4122243300"},
+new Eczane{ Adi="TOPRAK ", AcilisTarihi=new DateTime(2013,12,6), Enlem=37.912100, Boylam=40.236800, Adres="Cami nebi mah. Gazi cad. No:22/D Reha Ýþ Merkezi Altý DÖRTYOL DAÐKAPI", TelefonNo="4122235639"},
+new Eczane{ Adi="UÇAR", AcilisTarihi=new DateTime(2007,10,23), Enlem=37.924100, Boylam=40.210500, Adres="Eski Oryýl Petrol Yaný Koþuyolu Mesleki Ve teknik anadolu lisesi karþýsý Nukhet Coþkun cad. baþlangýcý baðlar/ diyarbakýr", TelefonNo="4122343200"},
+new Eczane{ Adi="ULUSOY", AcilisTarihi=new DateTime(2010,3,29), Enlem=37.918200, Boylam=40.201400, Adres="Baðlar Sento Cad. Kuruçeþme No:79 Ziraat Bankasýnýn 50 m ilerisi", TelefonNo="4122337746"},
+new Eczane{ Adi="UYSAL", AcilisTarihi=new DateTime(2017,2,10), Enlem=37.917118, Boylam=40.233273, Adres="Aliemiri 1.Sok. No:8B Özel Dünya Doðum Hastanesi Karþýsý ( Eski Veni Vidi Hastanesi sokaðý) Daðkapý", TelefonNo="4122285858"},
+new Eczane{ Adi="UZMAN", AcilisTarihi=new DateTime(2010,2,12), Enlem=37.931500, Boylam=40.204600, Adres="Sultan Hastanesi Bitiþiði N -CITY alýþveriþ merkezi karþýsý aydýn arslan bulvarý baðlar", TelefonNo="4122375228"},
+new Eczane{ Adi="VEYSEL", AcilisTarihi=new DateTime(2012,5,8), Enlem=37.908679, Boylam=40.163956, Adres="NEWROZ PARK SAHNE ARKASI SAAT KULESÝ AÞAÐISI SELENYUM SÝTESÝ KARÞI ÇAPRAZI NÝL YAPI AKLAR SÝTESÝ ALTI BAÐCILAR MAHALLESÝ 1158.SOKAK NO:5/BB BAÐLAR", TelefonNo="4125031818"},
+new Eczane{ Adi="VÝTAMÝN", AcilisTarihi=new DateTime(2015,1,16), Enlem=37.951200, Boylam=40.172600, Adres="Medya Mah. Diclekent Bulvarý 144/Ca dünya kavþaðý Diclekent Diþ Polikliniði yaný Arçelik Bitiþiði Azel Rezidance altý kayapýnar", TelefonNo="4122576868"},
+new Eczane{ Adi="YEKBUN", AcilisTarihi=new DateTime(2010,10,19), Enlem=37.920800, Boylam=40.200300, Adres="Nükhet Coþkun Cad.Baðlar Ptt Karþýsý Gönül Apt.Altý", TelefonNo="4122336145"},
+new Eczane{ Adi="YENÝ HAYAT", AcilisTarihi=new DateTime(2005,3,28), Enlem=37.925400, Boylam=40.204300, Adres="Emek Cad. No:65 Eski Polis Okulu ve Kýzýlay Taksi Duraðý arasý tatlýcý ahmet usta yaný", TelefonNo="4122347600"},
+new Eczane{ Adi="YENÝ ÝSTANBUL", AcilisTarihi=new DateTime(2010,7,21), Enlem=37.926155, Boylam=40.202082, Adres="Þeyh Þamil Mah .Emek Cad. Eski Polis Okulu Karþýsý No:89/B Baðlar", TelefonNo="4122341967"},
+new Eczane{ Adi="KOZA ", AcilisTarihi=new DateTime(2018,8,14), Enlem=37.907911, Boylam=40.211247, Adres="Alipýnar Mezarlýðý Karþýsý Bebeler Sarayý Arkasý (Alipýnar Saðlýk Ocaðý Karþýsý)", TelefonNo="5557596830"},
+new Eczane{ Adi="YENÝFÝLÝZ", AcilisTarihi=new DateTime(1997,3,20), Enlem=37.917900, Boylam=40.210900, Adres="BAÐLAR GÜRSEL CAD.YANIK KÖÞK ESKÝ BAÐLAR ZÝRAAT BANKASINA YETÝÞMEDEN KAYNARCA HAMAMI CÝVARI NO:78", TelefonNo="4122330383"},
+new Eczane{ Adi="YENÝHAL", AcilisTarihi=new DateTime(2010,4,19), Enlem=37.925500, Boylam=40.172200, Adres="Baðcýlar Mah. Yenihal Kavþaðý 1163. Sok. Tabier Lahmacun Yan Sokaðý Star Düðün Salonu Karþýsý", TelefonNo="4122523225"},
+new Eczane{ Adi="YENÝSÝNEM", AcilisTarihi=new DateTime(2011,10,13), Enlem=37.908700, Boylam=40.224600, Adres="Þehitlik Mah. Yaradanakul Cad. No:24/D Þehitlik Lisesi Karþýsý ( ESKÝ HAL ARKASI)", TelefonNo="4122264439"},
+new Eczane{ Adi="YENÝÞEHÝR", AcilisTarihi=new DateTime(2015,11,25), Enlem=37.915300, Boylam=40.230500, Adres="Ali Emiri Cad. Fizyopolitan Hastanesi Yaný Tek Kapý Karþýsý( Eski SSK Yaný) Yeniþehir", TelefonNo="4122280008"},
+new Eczane{ Adi="YENÝYOL", AcilisTarihi=new DateTime(2007,9,27), Enlem=37.942300, Boylam=40.172100, Adres="KAYAPINAR SGK YANI SARAY SAÇ TAVA YANI KAYAPINAR DÝYARBAKIR", TelefonNo="4122524418"},
+new Eczane{ Adi="YILDIZ", AcilisTarihi=new DateTime(2013,12,5), Enlem=37.929500, Boylam=40.201000, Adres="Hatboyu Cad. Mevlana Halit Mah.Eski Polis Okulu Arka Kapýsý Karþýsý Çarkanat 5 apt. altý", TelefonNo="4122360152"},
+new Eczane{ Adi="YÝÐÝT", AcilisTarihi=new DateTime(2010,12,31), Enlem=37.934500, Boylam=40.198100, Adres="Urfa Yolu 1.Km Ninova AVM Karþý Çaprazý LÝV SUÝT otel yaný ( ÇOCUK HASTANESÝ SEMT POLK. YANI)", TelefonNo="4122373252"},
+new Eczane{ Adi="ZEHRA", AcilisTarihi=new DateTime(2010,12,1), Enlem=37.933100, Boylam=40.163200, Adres="Fýrat Bulvarý Petrol Ofisi Karþýsý Çarmar Yaný Gaziler Son Durak", TelefonNo="4122515161"},
+new Eczane{ Adi="ZÝLAN", AcilisTarihi=new DateTime(2016,10,26), Enlem=37.920990, Boylam=40.207895, Adres="5 Nisan Mah. 744. Sok. Faik Ali Ý.Ö.O Arkasý Yeni Baðlar Saðlýk Ocaðý Kar. Armina Market Ark.", TelefonNo="4122359704"},
+new Eczane{ Adi="ZÜMRÜT", AcilisTarihi=new DateTime(2017,10,6), Enlem=37.912813, Boylam=40.179811, Adres="MEHMED UZUN CAD. HAVAALANI KAVÞAÐINDAN YENÝKÖY MEZARLIÐINA DOÐRU PETROL OFÝSÝ YANI ZÜMRÜTKENT SÝTESÝ KARÞISI BAÐCILAR", TelefonNo="4125230057"},
+new Eczane{ Adi="DOÐRU", AcilisTarihi=new DateTime(2009,1,19), Enlem=37.926200, Boylam=40.197300, Adres="Þ.Þamil Mah.Barýþ Cad. Eski Baðlar 3 Nolu Saðlýk Ocaðý 6ve7 nolu Aile Hek.Vali Ünal ÝÖO Yaný Cezaevi alt köþe", TelefonNo="4122347435"},
+new Eczane{ Adi="VÝZYON ", AcilisTarihi=new DateTime(2017,11,2), Enlem=37.912980, Boylam=40.167808, Adres="Baðcýlar Mah. Þengal Cad. No:5 Baðlar/Diyarbakýr Newroz Parký Aþaðýsýnda Biçen marketi geçtikten sonra saðdaki ara yolda (Keyf-i Diyar Lahmacun Salonu Sokaðý)", TelefonNo="4125022564"},
+new Eczane{ Adi="BAHAR", AcilisTarihi=new DateTime(2012,5,8), Enlem=37.908400, Boylam=40.223200, Adres="Þehitlik Mah. Yaradanakul Cad. Çeþme Altý No:40/B Eski Ticaret Lisesi Yaný", TelefonNo="4122267535"},
+new Eczane{ Adi="TEKÝN", AcilisTarihi=new DateTime(2017,11,16), Enlem=37.930010, Boylam=40.172944, Adres="Ceylan Karavil Park Avm kavþaðýndan Gazilere doðru giderken ikinci sokaktan içeri girdikten sonra 50 m ileride A101 karþýsýnda", TelefonNo="5456081230"},
+new Eczane{ Adi="DÝYARBAKIR ", AcilisTarihi=new DateTime(2017,11,21), Enlem=37.933037, Boylam=40.156518, Adres="Fýrat mah. Fýrat Bulvarý Fidan sit. A Blok no:103/b Gaziler Yeni Son Durak,Lunapark Kavþaðý Shell Petrol Karþýsý", TelefonNo="4122515525"},
+new Eczane{ Adi="GÖKHAN", AcilisTarihi=new DateTime(2017,12,25), Enlem=37.976531, Boylam=40.175958, Adres="ERGANÝ YOLU KÝA KAVÞAÐINDAN GÝRÝÞ 500. METRE ÝLERÝDEN SAÐA DÖNÜNCE 500 METRE ÝLERDE SAÐDA", TelefonNo="4125026030"},
+new Eczane{ Adi="YAÐMUR", AcilisTarihi=new DateTime(2018,1,3), Enlem=37.918061, Boylam=40.231154, Adres="Büyük þehir belediyesi karþýsý lise caddesinde çamlýca taksi duraðý bitiþiði , çarmar market karþýsý yeniþehir", TelefonNo="4122280404"},
+new Eczane{ Adi="TALAYTEPE", AcilisTarihi=new DateTime(2017,12,19), Enlem=37.927955, Boylam=40.134081, Adres="OTOGAR ile SANAYÝ arasý yoldan içeri giriþte ikinci kavþakta saðda. OTOGAR arkasý 50 metrelik yolda (Komlexia TEZ-GEL KOM KARÞISINDA )", TelefonNo="4125022519"},
+new Eczane{ Adi="TURAÇ ", AcilisTarihi=new DateTime(2018,1,3), Enlem=37.930295, Boylam=40.190738, Adres="Mega Center Yaný iÞ Bankasý Arkasý Rihan Parký Karþýsý Þeyh Þail Mah. Ergin 2 Apt Altý", TelefonNo="4122523526"},
+new Eczane{ Adi="MEVLANA ", AcilisTarihi=new DateTime(2018,1,22), Enlem=37.934962, Boylam=40.199398, Adres="HUZUREVLERÝ MAH. URFA YOLU BULVARI TESÝSLER KAVÞAÐI MALABADÝ OTEL KARÞI NO:46/A", TelefonNo="4122370606"},
+new Eczane{ Adi="PERA ", AcilisTarihi=new DateTime(2018,3,29), Enlem=37.937380, Boylam=40.142914, Adres="LUNAPARK CADDESÝ YENÝ STADYUM YOLU MÝGROS KAVÞAÐI ÇAPRAZ KARÞISI ATAÞLAR DÝYAR LÝFE SÝT. ALTI", TelefonNo="4122360606"},
+new Eczane{ Adi="LÝMON ", AcilisTarihi=new DateTime(2018,4,13), Enlem=37.910640, Boylam=40.120487, Adres="ZANA DÜÐÜN SALONU 100 METRE ARKASI BAÞKENT 2 SÝTESÝ B BLOK ALTI HASHAVAR AÝLE SM YANI", TelefonNo="4125030809"},
+new Eczane{ Adi="MECNUN", AcilisTarihi=new DateTime(2018,7,10), Enlem=37.926401, Boylam=40.162500, Adres="URFA YOLU Memorial Dicle Hastanesi Acil Çaprazý Fýrat Mah. 507. Sok. Ademoðlu Yaþam Sit. Altý", TelefonNo="4129994907"},
+new Eczane{ Adi="UÐURTAN ", AcilisTarihi=new DateTime(2018,9,27), Enlem=37.928395, Boylam=40.129995, Adres="Jiyan Cad. 579. Sok. Fýrat Mah. Serin Yapý Paradise Evleri ALTI ( OTOGAR CAMÝÝSÝNDEN SAÐA DÖNÜNCE 2. KAVÞAKTAN KOMPLEKSÝA SÝTESÝNDEN SOLA DÖNÜNCE 400M ÝLERÝDE SAÐ TARAFTA) A Blok No:40", TelefonNo="4125032288"},
+new Eczane{ Adi="ASAF ", AcilisTarihi=new DateTime(2018,11,15), Enlem=37.938817, Boylam=40.150564, Adres="LUNAPARK ARKASI BÝGROSS MARKET ARA SOKAÐINDAN 500 M ÝLERÝDE SAÐ TARAFTA OÐUR YAPI ALTI MEZOPOTAMYA MAH. 608.SOK. FUTUREBUÝLD SÝTESÝ B BLOK 10/BA", TelefonNo="4125020146"},
+new Eczane{ Adi="ECE ", AcilisTarihi=new DateTime(2018,10,30), Enlem=37.940123, Boylam=40.192103, Adres="Parkorman çarmar arkasý eski Vali Gökhan Aydýner lisesi (Kayapýnar eðitim merkezi) karþýsý dr. Sýtký görel cad. huzur düðün salonu arkasý huzurevler 1 nolu asm yaný kayapýnar", TelefonNo="4122379966"},
+new Eczane{ Adi="NEHÝR", AcilisTarihi=new DateTime(2015,2,2), Enlem=37.955400, Boylam=40.177500, Adres="Ava Düðün Salonu arkasý yýlmaz güney cad.bediüzzaman cami karþýsý", TelefonNo="4122572861"},
+new Eczane{ Adi="ESRA'NIN", AcilisTarihi=new DateTime(2018,11,9), Enlem=37.936264, Boylam=40.148816, Adres="LUNAPARK ARKASI BIG GROSS MARKET SOKAÐI KARAKOÇ GOLD LÝNE KARÞISI ASUR YAPI ALTI", TelefonNo="4125028015"},
+new Eczane{ Adi="VAHDET ", AcilisTarihi=new DateTime(2018,11,26), Enlem=37.944574, Boylam=40.185944, Adres="Diclekent Bulvarý gönül kahvesi kavþaðý GO Petrol Arkasý H.Evleri 2 Nolu Saðlýk Ocaðý Yaný Huzurevleri", TelefonNo="4122382818"},
+new Eczane{ Adi="ROTA ", AcilisTarihi=new DateTime(2018,12,17), Enlem=37.928338, Boylam=40.172108, Adres="Peyas Mah. Kayapýnar Cad. Ceylan AVM Karþýsý, Þehir Yapý Altý No:4/C gaziler cad. Çeþme Duraðýna giderken ana cadde üzerinde sað tarafta", TelefonNo="4125031020"},
+new Eczane{ Adi="YAZICIOÐLU ", AcilisTarihi=new DateTime(1986,2,8), Enlem=37.921400, Boylam=40.219300, Adres="Gevran Cad. No:5 Ofis", TelefonNo="5377900491"},
+new Eczane{ Adi="ZELAL", AcilisTarihi=new DateTime(2019,1,14), Enlem=37.908315, Boylam=40.223007, Adres="Þehitlik Mah. Eski Ticaret Lisesi Yaný Yaradanakul Cad. Demir Apt. Altý No:19/A", TelefonNo="4122263333"},
+new Eczane{ Adi="VADÝ ", AcilisTarihi=new DateTime(2019,1,25), Enlem=37.916941, Boylam=40.233634, Adres="VENÝ VÝDÝ HASTANESÝ ACÝL KARÞISI YENÝÞEHÝR MAH. ALÝEMÝRÝ 1. SOK. NO:4/D", TelefonNo="5337042101"},
+new Eczane{ Adi="PAKETÇÝ", AcilisTarihi=new DateTime(2019,2,11), Enlem=37.937692, Boylam=40.150176, Adres="Mezopotamya Mah. 608.sk Nevres Konutlarý altý No:6/B Kayapýnar [Lunapark Arkasý Big Gross Marketi geçer geçmez ilk saða girip düz ilerleyince 100 mt ileride(Tayþi-Disa Konutlarý karþýsý)]", TelefonNo="4125031414"},
+new Eczane{ Adi="ZÝN ", AcilisTarihi=new DateTime(2019,3,14), Enlem=37.910895, Boylam=40.114533, Adres="MEDYA MAH. TEKEL CAD. RANYA PARK BEDÝR YAPI ALTI MEVLANA HALÝT Ý.Ö.O YANI NO:62/A-D ( DÝYARBAKIR GÜMRÜK MÜD. ARKASI)", TelefonNo="4125033494"},
+new Eczane{ Adi="GÝRNE", AcilisTarihi=new DateTime(2019,3,18), Enlem=37.918741, Boylam=40.203348, Adres="5 NÝSAN MAH. GÝRNE CAD. ÇÝÐDEM4 APT ALTI NO:67/C BAÐLAR DÖRTYOLDAN ÝSKANEVLERÝNE ÇIKAN TEK YOL ÜZERÝ 11 NOLU ASM YANI", TelefonNo="4122364006"},
+new Eczane{ Adi="DÝCLE", AcilisTarihi=new DateTime(2019,4,2), Enlem=37.924090, Boylam=40.206444, Adres="5 NÝSAN MAH. ÖÐRETMENLER CAD. NO:31/D ÖZLEM 2000 LOKANTASI YANI BAÐLAR", TelefonNo="4122358595"},
+new Eczane{ Adi="CADDE 50", AcilisTarihi=new DateTime(2019,4,22), Enlem=37.935293, Boylam=40.136854, Adres="FIRAT MAH. MEZOPOTAMYA BULVARI STAR PLUS SÝTESÝ B BLOK NO:47/BA KAYAPINAR ( 50 METRELÝK YOL GO PETROL ÇAPRAZI)", TelefonNo="4125028818"},
+new Eczane{ Adi="ARZU", AcilisTarihi=new DateTime(2019,4,10), Enlem=37.913059, Boylam=40.148989, Adres="Doðum hastanesi Acil Servis Arkasýnda TÜV-TÜRK Araç muayene istasyonu karþýsýndaki Aram-Tigran caddesi 1.kavþakta ( Evrim alataþ cad. 26/C ) BAÐCILAR", TelefonNo="4125027071"},
+new Eczane{ Adi="BATI", AcilisTarihi=new DateTime(2019,4,4), Enlem=37.918511, Boylam=40.203466, Adres="DÝCLEKENT AVA DÜÐÜN SALONU YANI BATI HASTANESÝ KARÞISI", TelefonNo="4122364004"},
+new Eczane{ Adi="ANKA", AcilisTarihi=new DateTime(2019,2,14), Enlem=37.954251, Boylam=40.165214, Adres="Diclekent Dünya Kavþaðý Araþtýrma Hst.dönüþ yolu üzeri Hancý restorant 100 metre ilerisi nurçay robin sitesi altý kayapýnar", TelefonNo="4125033510"},
+new Eczane{ Adi="HAVALÝMANI", AcilisTarihi=new DateTime(2019,3,6), Enlem=37.907732, Boylam=40.166698, Adres="NEWROZ PARK ARKASI KEYFÝ DÝYAR LOKANTASI YOLUNUN SONU KARACADAÐ ÝMAM HATÝP LÝSESÝ YANI ÞENGAL CADDESÝ NO:13 CC BAÐLAR", TelefonNo="4125033269"},
+new Eczane{ Adi="ASLI GÜNEL", AcilisTarihi=new DateTime(2019,6,2), Enlem=37.926393, Boylam=40.163074, Adres="URFA YOLU ÜZERÝ KADIN DOÐUM HAST. KARÞISINDAKÝ MEMORÝAL DÝCLE HASTANESÝNÝN ACÝL ÇIKIÞI", TelefonNo="4125022878"},
+new Eczane{ Adi="ELÝF", AcilisTarihi=new DateTime(2019,5,15), Enlem=37.946499, Boylam=40.176680, Adres="DÝCLEKENT MAH.KAYAPINAR CAD. NO:82/A AVA DÜÐÜN SALONU KARÞISI BATI HASTANESÝ YANI", TelefonNo="4124150007"},
+new Eczane{ Adi="DOÐA", AcilisTarihi=new DateTime(2008,11,17), Enlem=37.940900, Boylam=40.188000, Adres="500 EVLER GÝRÝÞÝ OTOGARDAN SONRAKÝ 2. IÞIKLARA VARMADAN HEMEN SAÐ TARAFTA", TelefonNo="4122550494"},
+new Eczane{ Adi="PELÝN", AcilisTarihi=new DateTime(2004,6,9), Enlem=37.916900, Boylam=40.222900, Adres="ÜÇ KUYULAR TOKÝ TEMPO AVM BÝTÝÞÝÐÝ SAÐLIK OCAÐI KARÞISI", TelefonNo="4123490021"},
+new Eczane{ Adi="YEKTA", AcilisTarihi=new DateTime(2019,3,13), Enlem=37.942166, Boylam=40.214346, Adres="SEYRANTEPE TOKÝ KAVÞAÐI A101 DEN SONRA SAÐA DÖNÜNCE 150 M SONRA SOLDA CADDE ÜZERÝ PAÞA MARKET YANI", TelefonNo="4122623399"},
+new Eczane{ Adi="BÝLGE", AcilisTarihi=new DateTime(2019,1,22), Enlem=37.930632, Boylam=40.204977, Adres="SELAHATTÝN EYYUBÝ MAH. AYDIN ARSLAN BULVARI AYDIN SÝTESÝ ÞELALE EVLERÝ 8C1 NO:26/A BAÐLAR SULTAN HASTANESÝ KARÞISI", TelefonNo="4122371862"},
+new Eczane{ Adi="YENI YASAM", AcilisTarihi=new DateTime(2007,8,10), Enlem=37.918300, Boylam=40.208400, Adres="Özel baðlar hastanesi karþýsý Aydýn Kaya Apt. Baðlar Dörtyol P.T.T. Karþýsý", TelefonNo="4122353131"},
+new Eczane{ Adi="KÝRAZ ÇÝÇEÐÝ ", AcilisTarihi=new DateTime(2019,2,11), Enlem=37.954609, Boylam=40.179978, Adres="medya mahallesi 176.sokak zahiroðlu 3 sitesi altý no:10/a", TelefonNo="4122572120"},
+new Eczane{ Adi="KURTULUÞ ", AcilisTarihi=new DateTime(2019,4,18), Enlem=37.916578, Boylam=40.234687, Adres="ALÝEMÝRÝ 1. Sok. NO:6/A DAÐKAPI DÝYAR LÝFE (VENÝ VÝDÝ )HASTANESÝ ACÝL ÇIKIÞI KARÞISI", TelefonNo="4122291537"},
+new Eczane{ Adi="HÝSAR", AcilisTarihi=new DateTime(2018,6,5), Enlem=37.920233, Boylam=40.207983, Adres="BAÐLAR HASTANESÝ'NÝN 200 METRE ÝLERÝSÝ MANSUR GROSS MARKET ARKASI CUMA PAZARI CADDESÝ BÝNGÖLLÜLER TAZÝYEEVÝ KARÞISI", TelefonNo="4122331221"},
+new Eczane{ Adi="ÝSKAN MAFRAK ", AcilisTarihi=new DateTime(2019,7,17), Enlem=37.931176, Boylam=40.161149, Adres="GAZÝLER KAPLAN CÝTYPARK DÜÐÜN SALONU IÞIKLARINDAKÝ JÝBERÝN SOKAÐINDA AKKOYUNLU ÝLKÖÐRETÝM OKULU KARÞISI LEZGÝN 4 EVLERÝ ALTI", TelefonNo="4122513221"},
+new Eczane{ Adi="DAÐKAPI", AcilisTarihi=new DateTime(2019,6,26), Enlem=37.916668, Boylam=40.237035, Adres="DOKTOR YUSUF AZÝZOÐLU CAD. NO:1/F BOWER HASTANESÝ ALTI YENÝÞEHÝR", TelefonNo="4122288433"},
+new Eczane{ Adi="HUZUREVLERÝ ", AcilisTarihi=new DateTime(2019,8,23), Enlem=37.938779, Boylam=40.195027, Adres="Huzurevleri Mah.(HUZUREVLERÝ CAMÝ KÖÞESÝNDEN GÝRÝÞTE 200 M ÝÇERÝDE) Dr. Sýtký Göral Cad. YILDEM APT. ALTI NO:24/A Kelebek fýrýn karþýsý", TelefonNo="4122381658"},
+new Eczane{ Adi="GÜLSEREN ", AcilisTarihi=new DateTime(2019,10,15), Enlem=37.918568, Boylam=40.181377, Adres="Diyarbakýr Ýli Baðlar Ýlçesi Baðcýlar Mah. Orhan Doðan Cad. Hiva Sit. B Blok No:43/B A101 Çaprazý", TelefonNo="4125036988"},
+new Eczane{ Adi="NEHÝR", AcilisTarihi=new DateTime(2018,7,10), Enlem=37.908459, Boylam=40.221742, Adres="ÞEHÝTLÝK CAD. ÞEHÝRLÝK DÖRTYOL ÖZGÜR SÝTESÝ ALTI A/BLOK", TelefonNo="4122261701"},
+new Eczane{ Adi="HAMRAVAT", AcilisTarihi=new DateTime(2019,11,15), Enlem=37.909248, Boylam=40.148596, Adres="ARAÇ MUAYENE ÝSTASYON KAVÞAÐINDAN GÖKKUÞAÐI VE HAMRAVAT EVLERÝARKASINA GÝDEN SAAT KULESÝ CÝVARINDA (MERAM 5 SÝTESÝ CADDESÝ ÜZERÝNDE ÞEYHMUS ALTO TATLICISI KARÞISINDA )BAÐCILAR MAH.", TelefonNo="4125026042"},
 
-new Eczane{ Adi="ÞIKÇA", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Caddesi", TelefonNo="3446408"},
-new Eczane{ Adi="KURTULUÞ", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Caddesi Halkbank Civarý", TelefonNo="3441191"},
-new Eczane{ Adi="SELVÝ", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Can Hastanesi Karþýsý", TelefonNo="3441579"},
-new Eczane{ Adi="ERDEM", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Denizbank Civarý", TelefonNo="3441629"},
-new Eczane{ Adi="GÜLPINAR", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Denizbank Civarý", TelefonNo="3441661"},
-new Eczane{ Adi="KURÞUN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kaymakamlýk Karþýsý", TelefonNo="3441654"},
-new Eczane{ Adi="ÇELÝK", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Halkbank Altý", TelefonNo="3449191"},
-new Eczane{ Adi="AKSOY", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Yeni Devlet Hastanesi Karþýsý ", TelefonNo="3447111"},
-new Eczane{ Adi="BÝLKAY", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Yeni Devlet Hastanesi Karþýsý ", TelefonNo="3452583"},
-new Eczane{ Adi="EREN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Bilim Hastanesi Karþýsý", TelefonNo="3450856"},
-new Eczane{ Adi="DENÝZOÐLU", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Bilim Hastanesi Karþýsý", TelefonNo="3452985"},
-new Eczane{ Adi="KIRIKHAN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Eski Devlet Hastanesi Karþýsý", TelefonNo="3455006"},
-new Eczane{ Adi="ALP", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Hassa Cad. Saðlýk Ocaðý Karþýsý", TelefonNo="3452141"},
-new Eczane{ Adi="GÜLSEN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kaymakamlýk Karþýsý", TelefonNo="3454566"},
-new Eczane{ Adi="KAHRAMAN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Bilim Hastanesi Karþýsý", TelefonNo="3451528"},
-new Eczane{ Adi="CAN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Halkbank Karþýsý", TelefonNo="3450022"},
-new Eczane{ Adi="GÜLALÝ", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Hassa Cad. Saðlýk Ocaðý Karþýsý", TelefonNo="3450326"},
-new Eczane{ Adi="SÝNAN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Yeni Devlet Hastanesi Karþýsý ", TelefonNo="3448001"},
-new Eczane{ Adi="KAYA", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Ptt Karþýsý", TelefonNo="3447473"},
-new Eczane{ Adi="FATÝH", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Bilim Hastanesi Karþýsý", TelefonNo="3447655"},
-new Eczane{ Adi="NEÞE", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Ptt Karþýsý", TelefonNo="3443040"},
-new Eczane{ Adi="UÐUR", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Ptt Karþýsý", TelefonNo="3444666"},
-new Eczane{ Adi="KELCE", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Akbank Karþýsý", TelefonNo="3450088"},
-new Eczane{ Adi="CEYHUN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Hassa Cad. Saðlýk Ocaðý Karþýsý", TelefonNo="3451030"},
-new Eczane{ Adi="BÝLGÝLÝ", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Belediye Karþýsý Ptt Üstü", TelefonNo="3452626"},
-new Eczane{ Adi="FUNDA", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Yeni Devlet Hastanesi Karþýsý ", TelefonNo="3449144"},
-new Eczane{ Adi="AKPINAR", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Can Hastanesi Karþýsý", TelefonNo="3443030"},
-new Eczane{ Adi="COÞKUN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="4 Nolu Saðlýk Ocaðý Karþýsý", TelefonNo="3443434"},
-new Eczane{ Adi="ANADOLU", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Yeni Devlet Hastanesi Karþýsý ", TelefonNo="3441110"},
-new Eczane{ Adi="DAÐDELEN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Bilim Hastanesi Karþýsý", TelefonNo="3454545"},
-new Eczane{ Adi="TUBA", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Devlet Hastanesi Karþýsý", TelefonNo="3451717"},
-new Eczane{ Adi="MERVE", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Devlet Hastanesi Karþýsý", TelefonNo="3448282"},
-new Eczane{ Adi="YAVUZ", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Devlet Hastanesi Karþýsý", TelefonNo="5027700"},
-new Eczane{ Adi="SEVGÝ", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Hassa Cad. Saðlýk Ocaðý Karþýsý", TelefonNo="3444499"},
-new Eczane{ Adi="BAHADIR", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="4 Nolu Saðlýk Ocaðý Civarý", TelefonNo="3450808"},
+                                #endregion
+                            },
 
+                NobetUstGruplar = new List<NobetUstGrup>() {
+                                new NobetUstGrup(){ Adi = "Diyarbakýr", Aciklama = "Diyarbakýr Merkez", EczaneOdaId = odaId, BaslangicTarihi=baslamaTarihi, TimeLimit = 60 },
+                            },
 
-                    #endregion
-                },
+                NobetGruplar = new List<NobetGrup>() {
+                                new NobetGrup(){ Adi = "Diyarbakýr Merkez", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                            },
 
-                Kullanicilar = new List<KullaniciRolEkle>()
-                {
-                    //new KullaniciRolEkle(){ RoleId = 3, User= new User{ Email="ustGrupZonguldak@nobetyaz.com", FirstName="Üst Grup", LastName="Üst grup", Password=$"ustGrup{nobetUstGrupId}", UserName="ustGrupZonguldak"}},
-                    //new User(){ Email="odaIskenderun@nobetyaz.com", FirstName="Oda Ýskenderun", LastName="Oda Ýskenderun", Password=$"odaÝskenderun{odaId}", UserName="odaÝskenderun"},
-                    //new User(){ Email="ustGrupZonguldak@nobetyaz.com", FirstName="Üst Grup", LastName="Üst grup", Password=$"ustGrup{nobetUstGrupId}", UserName="ustGrupZonguldak"},
-                    //new User(){ Email="oncelnilgun@gmail.com", FirstName="NilGün", LastName="Öncel", Password="HeoNilgun", UserName="oncelnilgun@gmail.com"}
-                },
+                Kullanicilar = new List<User>()
+                            {
+                                new User(){ Email="odaDiyarbakir@nobetyaz.com", FirstName="Oda Diyarbakýr", LastName="Oda Diyarbakýr", Password="odaDiyarbakir8", UserName="odaDiyarbakir", BaslamaTarihi = baslamaTarihi},
+                                new User(){ Email="ustGrupDiyarbakir@nobetyaz.com", FirstName="Üst Grup", LastName="Üst grp", Password="ustGrup8", UserName="ustGrupDiyarbakir", BaslamaTarihi = baslamaTarihi},
+                                new User(){ Email="ecz.mahmutsert@gmail.com", FirstName="Mahmut", LastName="Sert", Password="mahmutSert8", UserName="ecz.mahmutsert@gmail.com", BaslamaTarihi = baslamaTarihi}
+                            },
 
                 NobetGrupKurallar = new List<NobetGrupKural>()
-                {
-                    new NobetGrupKural(){ NobetGrupGorevTipId=nobetGrupGorevTipId, NobetKuralId=1, BaslangicTarihi=baslamaTarihi, Deger=2}, //Ardýþýk Boþ Gün Sayýsý
-                    //new NobetGrupKural(){ NobetGrupGorevTipId=28, NobetKuralId=2, BaslangicTarihi=baslamaTarihi, Deger=5}, //Birlikte Nöbet Sayýsý
-                    new NobetGrupKural(){ NobetGrupGorevTipId=nobetGrupGorevTipId, NobetKuralId=3, BaslangicTarihi=baslamaTarihi, Deger=varsayilanNobetciSayisi} //Varsayýlan günlük nöbetçi sayýsý
-                },
+                            {
+                                new NobetGrupKural(){ NobetGrupGorevTipId=nobetGrupGorevTipId, NobetKuralId=1, BaslangicTarihi=baslamaTarihi, Deger=1},//Ardýþýk Boþ Gün Sayýsý
+                                //new NobetGrupKural(){ NobetGrupGorevTipId=28, NobetKuralId=2, BaslangicTarihi=baslamaTarihi, Deger=5},
+                                new NobetGrupKural(){ NobetGrupGorevTipId=nobetGrupGorevTipId, NobetKuralId=3, BaslangicTarihi=baslamaTarihi, Deger=3}//Varsayýlan günlük nöbetçi sayýsý
+                            },
 
                 NobetUstGrupGunGruplar = new List<NobetUstGrupGunGrup>()
-                {
-                    new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 2, AmacFonksiyonuKatsayisi = 8000 }, //bayram
-                    new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 3, AmacFonksiyonuKatsayisi = 100 }, //h.içi
-                    new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 7, AmacFonksiyonuKatsayisi = 1000 }, //h.sonu
-                    //new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 4 },
-                }
-
+                            {
+                                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 1, AmacFonksiyonuKatsayisi = 1000 },
+                                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 2, AmacFonksiyonuKatsayisi = 8000 },
+                                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 3, AmacFonksiyonuKatsayisi = 900 },
+                                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 4, AmacFonksiyonuKatsayisi = 100 }
+                            }
             };
+
+            //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 53, 54 }, varsayilanNobetciSayisi, 42);
+            //NobetGrupGorevTipTakvimOzelGunEkle(context, 53);
+            //NobetGrupGorevTipTakvimOzelGunEkle(context, 54);
+
+            UstGrupPaketiEkle(gerekliBilgilerDiyarbakir);
+            //NobetGrupGorevTipTakvimOzelGunEkle(context, 62);
+            //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 62 }, varsayilanNobetciSayisi, 61);
+            //TalepEkle(context, 28, 2);
 
             //UstGrupPaketiEkleKompakt(gerekliBilgilerKirikhan);
 
@@ -4956,7 +5112,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
             #region users
 
-            var kullanicilar = b.Kullanicilar.Select(s => s.User);
+            var kullanicilar = b.Kullanicilar;//.Select(s => s.User);
 
             if (kullanicilar.Count() > 0)
             {
@@ -4968,18 +5124,24 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
             #region user roles    
 
-            var userRole = new List<UserRole>();
+            var userRoller = new List<UserRole>();
 
             if (kullanicilar.Count() > 0)
             {
+                var i = 0;
+
                 foreach (var kullanici in b.Kullanicilar)
                 {
-                    var sonEklenenKullanici = b.EczaneNobetContext.Users.SingleOrDefault(w => w.Email == kullanici.User.Email);
+                    i++;
 
-                    userRole.Add(new UserRole() { RoleId = kullanici.RoleId, UserId = sonEklenenKullanici.Id });
+                    var eklenenKullanici = b.EczaneNobetContext.Users.SingleOrDefault(w => w.Email == kullanici.Email);
+
+                    var rolId = i == 1 ? 2: 3;
+
+                    userRoller.Add(new UserRole() { RoleId = rolId, UserId = eklenenKullanici.Id, BaslamaTarihi = b.BaslamaTarihi });
                 };
 
-                b.EczaneNobetContext.UserRoles.AddOrUpdate(s => new { s.RoleId, s.UserId }, userRole.ToArray());
+                b.EczaneNobetContext.UserRoles.AddOrUpdate(s => new { s.RoleId, s.UserId, s.BaslamaTarihi }, userRoller.ToArray());
                 b.EczaneNobetContext.SaveChanges();
             }
             #endregion
@@ -4988,16 +5150,16 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
             var userEczaneOdalar = new List<UserEczaneOda>();
 
-            foreach (var kullanici in b.Kullanicilar.Where(w => w.RoleId == 2))
+            foreach (var userRol in userRoller.Where(w => w.RoleId == 2))
             {
-                var sonEklenenKullanici = b.EczaneNobetContext.Users.SingleOrDefault(w => w.Email == kullanici.User.Email);
+                //var sonEklenenKullanici = b.EczaneNobetContext.Users.SingleOrDefault(w => w.Email == kullanici.User.Email);
 
-                userEczaneOdalar.Add(new UserEczaneOda { EczaneOdaId = b.OdaId, UserId = sonEklenenKullanici.Id });
+                userEczaneOdalar.Add(new UserEczaneOda { EczaneOdaId = b.OdaId, UserId = userRol.UserId, BaslamaTarihi = b.BaslamaTarihi });
             };
 
             if (userEczaneOdalar.Count > 0)
             {
-                b.EczaneNobetContext.UserEczaneOdalar.AddOrUpdate(s => new { s.EczaneOdaId, s.UserId }, userEczaneOdalar.ToArray());
+                b.EczaneNobetContext.UserEczaneOdalar.AddOrUpdate(s => new { s.EczaneOdaId, s.UserId, s.BaslamaTarihi }, userEczaneOdalar.ToArray());
                 b.EczaneNobetContext.SaveChanges();
             }
 
@@ -5007,16 +5169,16 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
             var userNobetUstGruplar = new List<UserNobetUstGrup>();
 
-            foreach (var kullanici in b.Kullanicilar.Where(w => w.RoleId == 3))
+            foreach (var userRol in userRoller.Where(w => w.RoleId == 3))
             {
-                var sonEklenenKullanici = b.EczaneNobetContext.Users.SingleOrDefault(w => w.Email == kullanici.User.Email);
+                //var sonEklenenKullanici = b.EczaneNobetContext.Users.SingleOrDefault(w => w.Email == kullanici.User.Email);
 
-                userNobetUstGruplar.Add(new UserNobetUstGrup { NobetUstGrupId = b.NobetUstGrupId, UserId = sonEklenenKullanici.Id });
+                userNobetUstGruplar.Add(new UserNobetUstGrup { NobetUstGrupId = b.NobetUstGrupId, UserId = userRol.UserId, BaslamaTarihi = b.BaslamaTarihi });
             };
 
             if (userNobetUstGruplar.Count > 0)
             {
-                b.EczaneNobetContext.UserNobetUstGruplar.AddOrUpdate(s => new { s.NobetUstGrupId, s.UserId }, userNobetUstGruplar.ToArray());
+                b.EczaneNobetContext.UserNobetUstGruplar.AddOrUpdate(s => new { s.NobetUstGrupId, s.UserId, s.BaslamaTarihi }, userNobetUstGruplar.ToArray());
                 b.EczaneNobetContext.SaveChanges();
             }
 
@@ -5060,58 +5222,58 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
                 foreach (var kural in kurallar)
                 {
                     if (kural == 1)
-                    {//varsayýlan nöbetçi sayýsý
-                        if (nobetGrupGorevTip.Id == 55)
+                    {//Ardýþýk Boþ Gün Sayýsý
+                        if (nobetGrupGorevTip.Id == 63)
                         {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 5 });
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 10 });
                         }
-                        else if (nobetGrupGorevTip.Id == 56)
-                        {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 7 });
-                        }
-                        else if (nobetGrupGorevTip.Id == 57)
-                        {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 5 });
-                        }
-                        else if (nobetGrupGorevTip.Id == 58)
-                        {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 3 });
-                        }
-                        else if (nobetGrupGorevTip.Id == 59)
-                        {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 4 });
-                        }
-                        else if (nobetGrupGorevTip.Id == 60)
-                        {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 7 });
-                        }
+                        //else if (nobetGrupGorevTip.Id == 56)
+                        //{
+                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 7 });
+                        //}
+                        //else if (nobetGrupGorevTip.Id == 57)
+                        //{
+                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 5 });
+                        //}
+                        //else if (nobetGrupGorevTip.Id == 58)
+                        //{
+                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 3 });
+                        //}
+                        //else if (nobetGrupGorevTip.Id == 59)
+                        //{
+                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 4 });
+                        //}
+                        //else if (nobetGrupGorevTip.Id == 60)
+                        //{
+                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 7 });
+                        //}
                     }
                     else if (kural == 3)
-                    {
-                        if (nobetGrupGorevTip.Id == 55)
+                    {//Varsayýlan günlük nöbetçi sayýsý
+                        if (nobetGrupGorevTip.Id == 63)
                         {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 8 });
                         }
-                        else if (nobetGrupGorevTip.Id == 56)
-                        {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
-                        }
-                        else if (nobetGrupGorevTip.Id == 57)
-                        {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
-                        }
-                        else if (nobetGrupGorevTip.Id == 58)
-                        {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
-                        }
-                        else if (nobetGrupGorevTip.Id == 59)
-                        {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
-                        }
-                        else if (nobetGrupGorevTip.Id == 60)
-                        {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
-                        }
+                        //else if (nobetGrupGorevTip.Id == 56)
+                        //{
+                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                        //}
+                        //else if (nobetGrupGorevTip.Id == 57)
+                        //{
+                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                        //}
+                        //else if (nobetGrupGorevTip.Id == 58)
+                        //{
+                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                        //}
+                        //else if (nobetGrupGorevTip.Id == 59)
+                        //{
+                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                        //}
+                        //else if (nobetGrupGorevTip.Id == 60)
+                        //{
+                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+                        //}
                     }
                 }
 
@@ -5124,8 +5286,8 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
             #region nöbet üst grup gün gruplar
 
-            //b.EczaneNobetContext.NobetUstGrupGunGruplar.AddOrUpdate(s => new { s.NobetUstGrupId, s.GunGrupId }, b.NobetUstGrupGunGruplar.ToArray());
-            //b.EczaneNobetContext.SaveChanges();
+            b.EczaneNobetContext.NobetUstGrupGunGruplar.AddOrUpdate(s => new { s.NobetUstGrupId, s.GunGrupId }, b.NobetUstGrupGunGruplar.ToArray());
+            b.EczaneNobetContext.SaveChanges();
 
             #endregion            
 
@@ -5158,30 +5320,30 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
                 //birden fazla nöbet grubu olursa ayarla mutlaka
 
-                if (indisEczaneSayisi <= 11)
-                {
-                    nobetGrupGorevTipId = b.NobetGrupGorevTipId;
-                }
-                else if (indisEczaneSayisi <= 42)
-                {
-                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 1;
-                }
-                else if (indisEczaneSayisi <= 52)
-                {
-                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 2;
-                }
-                else if (indisEczaneSayisi <= 58)
-                {
-                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 3;
-                }
-                else if (indisEczaneSayisi <= 67)
-                {
-                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 4;
-                }
-                else if (indisEczaneSayisi <= 84)
-                {
-                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 5;
-                }
+                //if (indisEczaneSayisi <= 11)
+                //{
+                //    nobetGrupGorevTipId = b.NobetGrupGorevTipId;
+                //}
+                //else if (indisEczaneSayisi <= 42)
+                //{
+                //    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 1;
+                //}
+                //else if (indisEczaneSayisi <= 52)
+                //{
+                //    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 2;
+                //}
+                //else if (indisEczaneSayisi <= 58)
+                //{
+                //    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 3;
+                //}
+                //else if (indisEczaneSayisi <= 67)
+                //{
+                //    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 4;
+                //}
+                //else if (indisEczaneSayisi <= 84)
+                //{
+                //    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 5;
+                //}
 
                 eczaneNobetGruplar.Add(new EczaneNobetGrup()
                 {
@@ -5207,32 +5369,33 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
             #region nöbet üst grup kýsýtlar
 
-            //var nobetUstGrupKisitlar = b.EczaneNobetContext.NobetUstGrupKisitlar
-            //    .Where(w => w.NobetUstGrupId == 2)//antalya - varsayýlan
-            //    .ToList();
+            var nobetUstGrupKisitlar = b.EczaneNobetContext.NobetUstGrupKisitlar
+                .Where(w => w.NobetUstGrupId == 9)//çorum
+                .ToList();
 
-            //if (b.NobetUstGruplar != null)
-            //{
-            //    var kisitlar = new List<NobetUstGrupKisit>();
+            if (b.NobetUstGruplar != null)
+            {
+                var kisitlar = new List<NobetUstGrupKisit>();
 
-            //    foreach (var nobetUstGrupKisit in nobetUstGrupKisitlar)
-            //    {
-            //        var nobetUstGrupKisit2 = new NobetUstGrupKisit()
-            //        {
-            //            KisitId = nobetUstGrupKisit.KisitId,
-            //            NobetUstGrupId = b.NobetUstGrupId,
-            //            SagTarafDegeri = nobetUstGrupKisit.SagTarafDegeri,
-            //            SagTarafDegeriVarsayilan = nobetUstGrupKisit.SagTarafDegeriVarsayilan,
-            //            PasifMi = nobetUstGrupKisit.PasifMi,
-            //            VarsayilanPasifMi = nobetUstGrupKisit.VarsayilanPasifMi
-            //        };
+                foreach (var nobetUstGrupKisit in nobetUstGrupKisitlar)
+                {
+                    var nobetUstGrupKisit2 = new NobetUstGrupKisit()
+                    {
+                        KisitId = nobetUstGrupKisit.KisitId,
+                        NobetUstGrupId = b.NobetUstGrupId,
+                        SagTarafDegeri = nobetUstGrupKisit.SagTarafDegeri,
+                        SagTarafDegeriVarsayilan = nobetUstGrupKisit.SagTarafDegeriVarsayilan,
+                        PasifMi = nobetUstGrupKisit.PasifMi,
+                        VarsayilanPasifMi = nobetUstGrupKisit.VarsayilanPasifMi
+                    };
 
-            //        kisitlar.Add(nobetUstGrupKisit2);
-            //    }
+                    kisitlar.Add(nobetUstGrupKisit2);
+                }
 
-            //    b.EczaneNobetContext.NobetUstGrupKisitlar.AddOrUpdate(s => new { s.NobetUstGrupId, s.KisitId }, kisitlar.ToArray());
-            //    b.EczaneNobetContext.SaveChanges();
-            //}
+                b.EczaneNobetContext.NobetUstGrupKisitlar.AddOrUpdate(s => new { s.NobetUstGrupId, s.KisitId }, kisitlar.ToArray());
+                b.EczaneNobetContext.SaveChanges();
+            }
+
             #endregion
         }
 
@@ -5262,8 +5425,8 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
         {
             var bayramlar2 = context.NobetGrupGorevTipTakvimOzelGunler
                 .Where(w => w.NobetGrupGorevTipGunKural.NobetGrupGorevTip.Id == 55
-                && w.Takvim.Tarih >= new DateTime(2020, 6, 1)
-                && w.Takvim.Tarih < new DateTime(2020, 10, 1)
+                //&& w.Takvim.Tarih >= new DateTime(2020, 6, 1)
+                //&& w.Takvim.Tarih < new DateTime(2020, 10, 1)
                 //&& w.NobetOzelGunId != 10 
                 //arife
                 //&& !(((int)w.Takvim.Tarih.DayOfWeek + 1 == 1 || (int)w.Takvim.Tarih.DayOfWeek + 1 == 6) && w.NobetOzelGunId == 9)
@@ -5399,30 +5562,35 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
         {
             int nobetUstGrupGunGrupId = 0;
 
+            //if (nobetGunKuralId == 1)
+            //{//pazar
+            //    var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && x.GunGrupId == 1);
+            //    nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
+            //}
+            //else if (nobetGunKuralId == 7)
+            //{//cumartesi
+            //    var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && x.GunGrupId == 4);
+            //    nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
+            //}
+
             if (nobetGunKuralId == 1)
             {//pazar
                 var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && x.GunGrupId == 1);
                 nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
             }
-            else if (nobetGunKuralId == 7)
-            {//cumartesi
-                var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && x.GunGrupId == 4);
+            if (nobetGunKuralId == 7)
+            {//c.tesi
+                var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && x.GunGrupId == 1);
                 nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
             }
-
-            //if (nobetGunKuralId == 1 || nobetGunKuralId == 7)
-            //{//pazar
-            //    var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && (x.GunGrupId == 1 || x.GunGrupId == 7));
-            //    nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
-            //}
-            //else if (nobetGunKuralId > 1 && nobetGunKuralId < 7)
-            //{//hafta içi
-            //    var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && x.GunGrupId == 3);
-            //    nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
-            //}
+            else if (nobetGunKuralId > 1 && nobetGunKuralId < 7)
+            {//hafta içi
+                var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && x.GunGrupId == 3);
+                nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
+            }
             //else if (nobetGunKuralId == 7)
             //{
-            //    if (nobetUstGrupId == 3 || nobetUstGrupId == 5 || nobetUstGrupId == 6)
+            //    if (nobetUstGrupId == 3 || nobetUstGrupId == 5 || nobetUstGrupId == 6 || nobetUstGrupId == 11)
             //    {//cumartesi, varsa
             //        var nobetUstGrupGunGrup = nobetUstGrupGunGruplar.SingleOrDefault(x => x.NobetUstGrupId == nobetUstGrupId && x.GunGrupId == 4);
             //        nobetUstGrupGunGrupId = nobetUstGrupGunGrup.Id;
@@ -5469,7 +5637,9 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
         public List<Eczane> Eczaneler { get; set; }
         public List<NobetGrup> NobetGruplar { get; internal set; }
         public List<NobetUstGrup> NobetUstGruplar { get; internal set; }
-        public List<KullaniciRolEkle> Kullanicilar { get; internal set; }
+        public List<KullaniciRolEkle> KullaniciRoller { get; internal set; }
+        public List<User> Kullanicilar { get; internal set; }
+        
         public List<NobetGrupKural> NobetGrupKurallar { get; internal set; }
         public List<NobetUstGrupGunGrup> NobetUstGrupGunGruplar { get; internal set; }
         public int NobetGrupGorevTipId { get; internal set; }
@@ -7575,3 +7745,107 @@ new Eczane{ Adi="BAHAR", AcilisTarihi=new DateTime(2016,10,20), Enlem=41.306890,
             }
         };     
  */
+
+#region kýrýkhan
+/*
+ var gerekliBilgilerKirikhan = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)
+        {
+            //var baslamaTarihi = new DateTime(2019, 3, 5);
+            //var odaId = 6;
+            //var nobetUstGrupId = 7;
+            //var nobetGrupGorevTipId = 30;
+            NobetGrupGorevTipId = nobetGrupGorevTipId,
+            NobetUstGrupId = nobetUstGrupId,
+
+            //BaslamaTarihi = new DateTime(2019, 3, 5),
+
+            //EczaneOdalalar = new List<EczaneOda>
+            //{
+            //    new EczaneOda(){ Adi="Hatay", Adres="Ekinci Mah. Ýnönü Bulvarý No:114 Antakya", TelefonNo="3262145647", MailAdresi="yonetim@hatayeo.org.tr", WebSitesi ="http://www.hatayeo.org.tr/"},
+            //},
+
+            NobetUstGruplar = new List<NobetUstGrup>() {
+                new NobetUstGrup(){ Adi = "Kýrýkhan", Aciklama = "Kýrýkhan", EczaneOdaId = odaId, BaslangicTarihi=baslamaTarihi,
+                    Enlem = 1,
+                    Boylam = 1
+                    //Enlem = 41.4556754,
+                    //Boylam = 31.7694652
+                },
+            },
+
+            //NobetGruplar = new List<NobetGrup>() {
+            //    new NobetGrup(){ Adi = "KOZCAÐIZ", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+            //    new NobetGrup(){ Adi = "ULUS", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+            //    new NobetGrup(){ Adi = "AMASRA", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+            //},
+
+            Eczaneler = new List<Eczane>()
+            {
+                #region kýrýkhan
+
+new Eczane{ Adi="ÞIKÇA", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Caddesi", TelefonNo="3446408"},
+new Eczane{ Adi="KURTULUÞ", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Caddesi Halkbank Civarý", TelefonNo="3441191"},
+new Eczane{ Adi="SELVÝ", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Can Hastanesi Karþýsý", TelefonNo="3441579"},
+new Eczane{ Adi="ERDEM", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Denizbank Civarý", TelefonNo="3441629"},
+new Eczane{ Adi="GÜLPINAR", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Denizbank Civarý", TelefonNo="3441661"},
+new Eczane{ Adi="KURÞUN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kaymakamlýk Karþýsý", TelefonNo="3441654"},
+new Eczane{ Adi="ÇELÝK", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Halkbank Altý", TelefonNo="3449191"},
+new Eczane{ Adi="AKSOY", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Yeni Devlet Hastanesi Karþýsý ", TelefonNo="3447111"},
+new Eczane{ Adi="BÝLKAY", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Yeni Devlet Hastanesi Karþýsý ", TelefonNo="3452583"},
+new Eczane{ Adi="EREN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Bilim Hastanesi Karþýsý", TelefonNo="3450856"},
+new Eczane{ Adi="DENÝZOÐLU", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Bilim Hastanesi Karþýsý", TelefonNo="3452985"},
+new Eczane{ Adi="KIRIKHAN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Eski Devlet Hastanesi Karþýsý", TelefonNo="3455006"},
+new Eczane{ Adi="ALP", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Hassa Cad. Saðlýk Ocaðý Karþýsý", TelefonNo="3452141"},
+new Eczane{ Adi="GÜLSEN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kaymakamlýk Karþýsý", TelefonNo="3454566"},
+new Eczane{ Adi="KAHRAMAN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Bilim Hastanesi Karþýsý", TelefonNo="3451528"},
+new Eczane{ Adi="CAN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Halkbank Karþýsý", TelefonNo="3450022"},
+new Eczane{ Adi="GÜLALÝ", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Hassa Cad. Saðlýk Ocaðý Karþýsý", TelefonNo="3450326"},
+new Eczane{ Adi="SÝNAN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Yeni Devlet Hastanesi Karþýsý ", TelefonNo="3448001"},
+new Eczane{ Adi="KAYA", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Ptt Karþýsý", TelefonNo="3447473"},
+new Eczane{ Adi="FATÝH", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Bilim Hastanesi Karþýsý", TelefonNo="3447655"},
+new Eczane{ Adi="NEÞE", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Ptt Karþýsý", TelefonNo="3443040"},
+new Eczane{ Adi="UÐUR", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Ptt Karþýsý", TelefonNo="3444666"},
+new Eczane{ Adi="KELCE", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Kanatlý Cad. Akbank Karþýsý", TelefonNo="3450088"},
+new Eczane{ Adi="CEYHUN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Hassa Cad. Saðlýk Ocaðý Karþýsý", TelefonNo="3451030"},
+new Eczane{ Adi="BÝLGÝLÝ", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Belediye Karþýsý Ptt Üstü", TelefonNo="3452626"},
+new Eczane{ Adi="FUNDA", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Yeni Devlet Hastanesi Karþýsý ", TelefonNo="3449144"},
+new Eczane{ Adi="AKPINAR", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Can Hastanesi Karþýsý", TelefonNo="3443030"},
+new Eczane{ Adi="COÞKUN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="4 Nolu Saðlýk Ocaðý Karþýsý", TelefonNo="3443434"},
+new Eczane{ Adi="ANADOLU", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Yeni Devlet Hastanesi Karþýsý ", TelefonNo="3441110"},
+new Eczane{ Adi="DAÐDELEN", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Bilim Hastanesi Karþýsý", TelefonNo="3454545"},
+new Eczane{ Adi="TUBA", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Devlet Hastanesi Karþýsý", TelefonNo="3451717"},
+new Eczane{ Adi="MERVE", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Devlet Hastanesi Karþýsý", TelefonNo="3448282"},
+new Eczane{ Adi="YAVUZ", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Devlet Hastanesi Karþýsý", TelefonNo="5027700"},
+new Eczane{ Adi="SEVGÝ", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="Hassa Cad. Saðlýk Ocaðý Karþýsý", TelefonNo="3444499"},
+new Eczane{ Adi="BAHADIR", AcilisTarihi=new DateTime(2020,1,1), Enlem=1, Boylam=1, Adres="4 Nolu Saðlýk Ocaðý Civarý", TelefonNo="3450808"},
+
+
+                #endregion
+            },
+
+            Kullanicilar = new List<KullaniciRolEkle>()
+            {
+                //new KullaniciRolEkle(){ RoleId = 3, User= new User{ Email="ustGrupZonguldak@nobetyaz.com", FirstName="Üst Grup", LastName="Üst grup", Password=$"ustGrup{nobetUstGrupId}", UserName="ustGrupZonguldak"}},
+                //new User(){ Email="odaIskenderun@nobetyaz.com", FirstName="Oda Ýskenderun", LastName="Oda Ýskenderun", Password=$"odaÝskenderun{odaId}", UserName="odaÝskenderun"},
+                //new User(){ Email="ustGrupZonguldak@nobetyaz.com", FirstName="Üst Grup", LastName="Üst grup", Password=$"ustGrup{nobetUstGrupId}", UserName="ustGrupZonguldak"},
+                //new User(){ Email="oncelnilgun@gmail.com", FirstName="NilGün", LastName="Öncel", Password="HeoNilgun", UserName="oncelnilgun@gmail.com"}
+            },
+
+            NobetGrupKurallar = new List<NobetGrupKural>()
+            {
+                new NobetGrupKural(){ NobetGrupGorevTipId=nobetGrupGorevTipId, NobetKuralId=1, BaslangicTarihi=baslamaTarihi, Deger=2}, //Ardýþýk Boþ Gün Sayýsý
+                //new NobetGrupKural(){ NobetGrupGorevTipId=28, NobetKuralId=2, BaslangicTarihi=baslamaTarihi, Deger=5}, //Birlikte Nöbet Sayýsý
+                new NobetGrupKural(){ NobetGrupGorevTipId=nobetGrupGorevTipId, NobetKuralId=3, BaslangicTarihi=baslamaTarihi, Deger=varsayilanNobetciSayisi} //Varsayýlan günlük nöbetçi sayýsý
+            },
+
+            NobetUstGrupGunGruplar = new List<NobetUstGrupGunGrup>()
+            {
+                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 2, AmacFonksiyonuKatsayisi = 8000 }, //bayram
+                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 3, AmacFonksiyonuKatsayisi = 100 }, //h.içi
+                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 7, AmacFonksiyonuKatsayisi = 1000 }, //h.sonu
+                //new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 4 },
+            }
+
+        };
+ */
+#endregion
