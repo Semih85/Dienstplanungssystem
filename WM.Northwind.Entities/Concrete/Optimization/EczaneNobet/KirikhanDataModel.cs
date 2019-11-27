@@ -40,7 +40,6 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public List<NobetGrupGorevTipDetay> NobetGrupGorevTipler { get; set; }
         public List<NobetGrupTalepDetay> NobetGrupTalepler { get; set; }
         public List<EczaneNobetGrupDetay> EczaneNobetGruplar { get; set; }
-        public List<EczaneNobetGrupAltGrupDetay> EczaneNobetGrupAltGruplar { get; set; }
 
         public List<NobetUstGrupKisitDetay> Kisitlar { get; set; }
 
@@ -56,19 +55,12 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         
         //Karar Değişkeni
         public List<EczaneNobetTarihAralik> EczaneNobetTarihAralik { get; set; }
-        public List<EczaneGrupDetay> AyniGunNobetTutanEsGruplar { get; set; }
-        public List<EczaneGrupDetay> OncekiAylardaAyniGunNobetTutanEczaneler { get; set; }
         public List<NobetGrupGorevTipGunKuralDetay> NobetGrupGorevTipGunKurallar { get; set; }
         public List<EczaneNobetGrupGunKuralIstatistikYatay> EczaneBazliGunKuralIstatistikYatay { get; set; }
-        public List<EczaneNobetSonucListe2> EczaneNobetSonuclarAltGruplarlaBirlikte { get; set; }
 
-        public List<EczaneGrupDetay> AltGruplarlaAyniGunNobetTutmayacakEczanelerSehirDisi { get; set; }
-        public List<EczaneGrupDetay> AltGruplarlaAyniGunNobetTutmayacakEczanelerSehirIci1 { get; set; }
-        public List<EczaneGrupDetay> AltGruplarlaAyniGunNobetTutmayacakEczanelerSehirIci2 { get; set; }
         public List<NobetGrupGorevTipKisitDetay> NobetGrupGorevTipKisitlar { get; set; }
         public int CalismaSayisiLimit { get; set; }
         public int TimeLimit { get; set; }
-        public List<AyniGunTutulanNobetDetay> IkiliEczaneler { get; set; }
         public List<EczaneNobetGrupGunKuralIstatistikYatay> EczaneNobetGrupGunKuralIstatistikYataySon3Ay { get; set; }
     }
 }
