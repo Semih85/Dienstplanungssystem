@@ -166,11 +166,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 //     && (e.NobetGrupId1 == nobetGrupGorevTip.NobetGrupId
                 //      || e.NobetGrupId2 == nobetGrupGorevTip.NobetGrupId)).ToList();
 
-                var nobetGrupGunKurallarAktifGunler = data.NobetGrupGunKurallar
-                                                    .Where(s => s.NobetGrupId == nobetGrupGorevTip.NobetGrupId
-                                                             && nobetGunKurallar.Contains(s.NobetGunKuralId))
-                                                    .Select(s => s.NobetGunKuralId)
-                                                    .ToList();
+                var nobetGrupGunKurallarAktifGunler = data.NobetGrupGorevTipGunKurallar
+                                                        .Where(s => s.NobetGrupGorevTipId == nobetGrupGorevTip.Id
+                                                                 && nobetGunKurallar.Contains(s.NobetGunKuralId))
+                                                        .Select(s => s.NobetGunKuralId).ToList();
 
                 //var nobetGrupGunGruplar = nobetGrupGunKurallar.Select(s=>s.)
 

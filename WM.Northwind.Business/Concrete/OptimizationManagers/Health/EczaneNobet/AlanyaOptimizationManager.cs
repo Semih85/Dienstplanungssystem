@@ -30,7 +30,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private IEczaneNobetSonucAktifService _eczaneNobetSonucAktifService;
         private IEczaneNobetSonucService _eczaneNobetSonucService;
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
-        private INobetGrupGunKuralService _nobetGrupGunKuralService;
+        private INobetGrupGorevTipGunKuralService _nobetGrupGorevTipGunKuralService;
         private INobetGrupKuralService _nobetGrupKuralService;
         private INobetGrupService _nobetGrupService;
         private INobetGrupTalepService _nobetGrupTalepService;
@@ -40,6 +40,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
         private INobetGrupGorevTipKisitService _nobetGrupGorevTipKisitService;
         private IKalibrasyonService _kalibrasyonService;
+        private INobetUstGrupGunGrupService _nobetUstGrupGunGrupService;
+        private IEczaneNobetKisit _eczaneNobetKisit;
 
         public AlanyaOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -51,7 +53,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     IEczaneNobetOrtakService eczaneNobetOrtakService,
                     IEczaneNobetSonucAktifService eczaneNobetSonucAktifService,
                     INobetGrupGorevTipService nobetGrupGorevTipService,
-                    INobetGrupGunKuralService nobetGrupGunKuralService,
+                    INobetGrupGorevTipGunKuralService nobetGrupGorevTipGunKuralService,
                     INobetGrupKuralService nobetGrupKuralService,
                     INobetGrupService nobetGrupService,
                     INobetGrupTalepService nobetGrupTalepService,
@@ -62,7 +64,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrupService,
                     IAyniGunTutulanNobetService ayniGunTutulanNobetService,
                     INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
-                    IKalibrasyonService kalibrasyonService
+                    IKalibrasyonService kalibrasyonService,
+                    INobetUstGrupGunGrupService nobetUstGrupGunGrupService,
+                    IEczaneNobetKisit eczaneNobetKisit
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -75,7 +79,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _eczaneNobetSonucAktifService = eczaneNobetSonucAktifService;
             _eczaneNobetSonucService = eczaneNobetSonucService;
             _nobetGrupGorevTipService = nobetGrupGorevTipService;
-            _nobetGrupGunKuralService = nobetGrupGunKuralService;
+            _nobetGrupGorevTipGunKuralService = nobetGrupGorevTipGunKuralService;
             _nobetGrupKuralService = nobetGrupKuralService;
             _nobetGrupService = nobetGrupService;
             _nobetGrupTalepService = nobetGrupTalepService;
@@ -86,6 +90,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _ayniGunTutulanNobetService = ayniGunTutulanNobetService;
             _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
             _kalibrasyonService = kalibrasyonService;
+            _nobetUstGrupGunGrupService = nobetUstGrupGunGrupService;
+            _eczaneNobetKisit = eczaneNobetKisit;
         }
         #endregion
 
@@ -382,6 +388,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneKumulatifHedefler = new List<EczaneNobetIstatistik>();
             var eczaneNobetIstatistikler = new List<EczaneNobetIstatistik>();
 
+            var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylarAktifList(nobetGrupGorevTipler.Select(s => s.Id).ToList());
+
             var eczaneNobetTarihAralik1 = _takvimService.GetEczaneNobetTarihAralik(baslangicTarihi, bitisTarihi, nobetGorevTipId, nobetGrupIdListe)
                 .Where(w => eczaneNobetGruplar.Select(s => s.EczaneId).Contains(w.EczaneId)).ToList();
 
@@ -401,7 +409,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                   .Where(w => w.MazeretId != 3)
                   .ToList();
 
-            var takvimNobetGrupGunDegerIstatistikler = _takvimService.GetTakvimNobetGrupGunDegerIstatistikler(nobetUstGrupBaslangicTarihi, bitisTarihi, nobetGrupIdListe, nobetGorevTipId);
+            //var takvimNobetGrupGunDegerIstatistikler = _takvimService.GetTakvimNobetGrupGunDegerIstatistikler(nobetUstGrupBaslangicTarihi, bitisTarihi, nobetGrupIdListe, nobetGorevTipId);
+            var takvimNobetGrupGunDegerIstatistikler = _takvimService.GetTakvimNobetGrupGunDegerIstatistikler(nobetUstGrupBaslangicTarihi, bitisTarihi, nobetGrupGorevTipler);
+            var takvimNobetGrupGunDegerIstatistiklerTarihAralik = _takvimService.GetTakvimNobetGrupGunDegerIstatistikler(baslangicTarihi, bitisTarihi, nobetGrupGorevTipler);
 
             var eczaneNobetGrupAltGruplar = _eczaneNobetGrupAltGrupService.GetDetaylar(nobetUstGrupId);
 
@@ -416,7 +426,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var ikiliEczaneAyniGunNobet = _nobetUstGrupKisitService.GetDetay(45, nobetUstGrupId);
             var arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = new List<EczaneGrupDetay>();
 
-            if (!ikiliEczaneAyniGunNobet.PasifMi)
+            if (!ikiliEczaneAyniGunNobet.PasifMi && nobetGrupIdListe.Count() > 1)
             {
                 arasindaAyniGun2NobetFarkiOlanIkiliEczaneler = _ayniGunTutulanNobetService.GetArasinda2FarkOlanIkiliEczaneleri(
                     eczaneNobetGruplar,
@@ -443,7 +453,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var oncekiAylardaAyniGunNobetTutanEczaneler = new List<EczaneGrupDetay>();
 
             var oncekiAylarAyniGunNobet = _nobetUstGrupKisitService.GetDetay(41, nobetUstGrupId);
-            if (!oncekiAylarAyniGunNobet.PasifMi)
+
+            if (!oncekiAylarAyniGunNobet.PasifMi && nobetGrupIdListe.Count() > 1)
             {
                 //indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
                 oncekiAylardaAyniGunNobetTutanEczaneler = _eczaneNobetSonucService.OncekiAylardaAyniGunNobetTutanlar(baslangicTarihi,
@@ -501,7 +512,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             //        nobetUstGrupKisitlar.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId).SagTarafDegeri = grupBazliKisit.SagTarafDegeri;
             //    }
             //}
-
+            var gunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrupId);
 
             var alanyaDataModel = new AlanyaDataModel()
             {
@@ -527,7 +538,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 ArasindaAyniGun2NobetFarkiOlanIkiliEczaneler = arasindaAyniGun2NobetFarkiOlanIkiliEczaneler,
                 OncekiAylardaAyniGunNobetTutanEczaneler = oncekiAylardaAyniGunNobetTutanEczaneler,
                 EczaneNobetIstekler = eczaneNobetIstekler,
-                NobetGrupGunKurallar = _nobetGrupGunKuralService.GetDetaylarAktifList(nobetGrupIdListe),
+                NobetGrupGorevTipGunKurallar = nobetGrupGorevTipGunKurallar,
                 NobetGrupKurallar = nobetGrupKurallar,
                 NobetGrupGorevTipler = nobetGrupGorevTipler,
                 NobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(nobetGrupIdListe, baslangicTarihi, bitisTarihi),
@@ -540,7 +551,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 TakvimNobetGrupGunDegerIstatistikler = takvimNobetGrupGunDegerIstatistikler,
                 EczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatay,
                 EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
-
+                GunGruplar = gunGruplar,
                 AyIcindeAyniGunNobetTutanEczaneler = ayIcindeAyniGunNobetTutanEczaneler,
                 //YilIcindeAyniGunNobetTutanEczaneler = yilIcindeAyniGunNobetTutanEczaneler,
                 //SonIkiAyAyniGunNobetTutanEczaneler = sonIkiAyAyniGunNobetTutanEczaneler,
@@ -553,9 +564,68 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 Kalibrasyonlar = _kalibrasyonService.GetKalibrasyonlarYatay(nobetUstGrupId)
             };
 
+            #region kontrol
+
             //_eczaneNobetOrtakService.KurallariKontrolEtHaftaIciEnAzEnCok(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);
             _eczaneNobetOrtakService.KurallariKontrolEtMazeretIstek(nobetUstGrupId, eczaneNobetMazeretler, eczaneNobetIstekler);
             _eczaneNobetOrtakService.KurallariKontrolEtIstek(nobetUstGrupId, eczaneNobetIstekler, nobetGrupKurallar);
+
+            var arzTalepKontrol = false;
+
+            if (arzTalepKontrol)
+            {
+                foreach (var nobetGrupGorevTip in nobetGrupGorevTipler)
+                {
+                    var herAyEnFazlaIlgiliKisit = new NobetUstGrupKisitDetay();
+
+                    var kisitlarGrupBazli = grupBazliKisitlar
+                        .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+
+                    var kisitlarAktif = _eczaneNobetKisit.GetKisitlarNobetGrupBazli(nobetUstGrupKisitlar, kisitlarGrupBazli);
+
+                    var eczaneNobetTarihAralikGrupBazli = takvimNobetGrupGunDegerIstatistiklerTarihAralik
+                        .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+
+                    var taleplerGunGrupBazli = new List<TakvimNobetGrupGunGrupIstatistik>();
+
+                    foreach (var gunGrup in gunGruplar)
+                    {
+                        var eczaneNobetTarihAralikGunGrupBazli = eczaneNobetTarihAralikGrupBazli
+                            .Where(w => w.GunGrupId == gunGrup.GunGrupId).ToList();
+
+                        var taleplerGunGrupBazli1 = eczaneNobetTarihAralikGunGrupBazli
+                            .Where(w => w.GunGrupId == gunGrup.GunGrupId)
+                            .GroupBy(s => new
+                            {
+                                s.NobetGrupGorevTipId,
+                                s.GunGrupId,
+                                s.GunGrupAdi,
+                                s.NobetGorevTipAdi,
+                                s.NobetGorevTipId,
+                                s.NobetGrupAdi,
+                                s.NobetGrupId
+                            })
+                            .Select(s => new TakvimNobetGrupGunGrupIstatistik
+                            {
+                                NobetGrupGorevTipId = s.Key.NobetGrupGorevTipId,
+                                GunGrupId = s.Key.GunGrupId,
+                                GunGrupAdi = s.Key.GunGrupAdi,
+                                NobetGorevTipAdi = s.Key.NobetGorevTipAdi,
+                                NobetGorevTipId = s.Key.NobetGorevTipId,
+                                NobetGrupAdi = s.Key.NobetGrupAdi,
+                                NobetGrupId = s.Key.NobetGrupId,
+                                IstatistikBaslamaTarihi = s.Min(f => f.IstatistikBaslamaTarihi),
+                                IstatistikBitisTarihi = s.Max(f => f.IstatistikBitisTarihi),
+                                GunSayisi = s.Count(),
+                                TalepEdilenNobetciSayisi = s.Sum(f => f.TalepEdilenNobetciSayisi)
+                            }).ToList();
+
+                        taleplerGunGrupBazli.AddRange(taleplerGunGrupBazli1);
+                    }
+                }
+            }
+
+            #endregion
 
             return alanyaDataModel;
         }
@@ -587,13 +657,12 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 var nobetGruplarBagDurumu = _eczaneGrupService.EsGrupluEczanelerinGruplariniBelirleTumu(eczaneGruplar, nobetGruplar);
 
                 var tumNobetGruplar = from g in nobetGruplarSirali
-                                      from e in nobetGruplarBagDurumu
-                                      where g.NobetGrupId == e.NobetGrupId
+                                      let e = nobetGruplarBagDurumu.SingleOrDefault(x => x.NobetGrupId == g.NobetGrupId) ?? new NobetBagGrup()
                                       orderby e.Id, g.SiraId
                                       select new NobetGrupBagGrup
                                       {
                                           BagId = e.Id,
-                                          NobetGrupId = e.NobetGrupId
+                                          NobetGrupId = g.NobetGrupId
                                       };
 
                 #endregion
