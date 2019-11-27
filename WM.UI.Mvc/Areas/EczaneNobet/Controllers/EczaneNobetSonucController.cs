@@ -451,7 +451,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     EczaneNobetSonucTuru.Kesin)
                     .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi).ToList();
 
-                VirgulleAyrilanNobetGruplariniAyir(nobetUstGrupId, sonuclarMazeretli);
+                _eczaneNobetOrtakService.VirgulleAyrilanNobetGruplariniAyir(nobetUstGrupId, sonuclarMazeretli);
 
                 var sonuclarMazeretliJson = GetSonuclar(sonuclarMazeretli, raporId);
 
@@ -586,8 +586,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return ConvertToJson(modelNobetDurumlar);
             }
 
-
-            VirgulleAyrilanNobetGruplariniAyir(nobetUstGrupId, sonuclar);
+            _eczaneNobetOrtakService.VirgulleAyrilanNobetGruplariniAyir(nobetUstGrupId, sonuclar);
 
             ViewBag.ToplamUzunluk = sonuclar.Count;
 
@@ -603,38 +602,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
-        }
-
-        private void VirgulleAyrilanNobetGruplariniAyir(int nobetUstGrupId, List<EczaneNobetSonucListe2> sonuclar)
-        {
-            if (nobetUstGrupId == 5
-                || nobetUstGrupId == 4
-                || nobetUstGrupId == 9)
-            {//osmaniye, giresun
-                var tarihler = sonuclar.Select(s => new { s.TakvimId, s.NobetGorevTipId }).Distinct().ToArray();
-                var nobetGorevTipler = tarihler.Select(s => new { s.NobetGorevTipId }).Distinct().ToArray();
-
-                foreach (var nobetGorevTip in nobetGorevTipler)
-                {
-                    foreach (var tarih in tarihler.Where(w => w.NobetGorevTipId == nobetGorevTip.NobetGorevTipId))
-                    {
-                        var sonuclarGunluk = sonuclar
-                            .Where(w => w.TakvimId == tarih.TakvimId
-                                     && w.NobetGorevTipId == nobetGorevTip.NobetGorevTipId)
-                            .OrderBy(o => o.EczaneAdi).ToArray();
-
-                        var indis = 1;
-
-                        foreach (var item in sonuclarGunluk)
-                        {
-                            item.NobetGrupAdiGunluk = indis.ToString();
-
-                            indis++;
-                        }
-                    }
-                }
-            }
-        }
+        }      
 
         private List<EczaneNobetSonucDagilimlar> GetSonuclar(List<EczaneNobetSonucListe2> sonuclar, int raporId)
         {
