@@ -141,7 +141,7 @@ namespace WM.Northwind.DataAccess.Migrations
             var odaId = 8;
             var nobetUstGrupId = 11;
             var nobetGrupGorevTipId = context.NobetGrupGorevTipler.Max(x => x.Id) + 1;
-            var varsayilanNobetciSayisi = 1;
+            var varsayilanNobetciSayisi = 8;
 
             var gerekliBilgilerDiyarbakir = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)
             {
@@ -154,15 +154,14 @@ namespace WM.Northwind.DataAccess.Migrations
 
                 EczaneOdalalar = new List<EczaneOda>
                             {
-                                new EczaneOda(){ Adi="Diyarbakýr", Adres="Diyarbakýr", TelefonNo="4120000000", 
-                                    //MailAdresi="45corumeo@gmail.com", WebSitesi ="http://www.corumeo.org/"
+                                new EczaneOda(){ Adi="Diyarbakýr", Adres="Diyarbakýr", TelefonNo="4120000000", MailAdresi="info@diyarbakireo.org.tr", WebSitesi ="https://www.diyarbakireo.org.tr/"
                                 },
                             },
 
                 Eczaneler = new List<Eczane>()
                             {
                                 #region diyarbakýr - merkez
-            new Eczane{ Adi="A PLUS", AcilisTarihi=new DateTime(2016,6,1), Enlem=37.918738, Boylam=40.229816, Adres="YENÝÞEHÝR MAH. LÝSE 4. SOK.( DÝYARBAKIR BAROSU YANI ADLÝYE KARÞI SOKAÐI) ÝPSAN 7 APT. ALTI NO:14/B", TelefonNo="4125025532"},
+new Eczane{ Adi="A PLUS", AcilisTarihi=new DateTime(2016,6,1), Enlem=37.918738, Boylam=40.229816, Adres="YENÝÞEHÝR MAH. LÝSE 4. SOK.( DÝYARBAKIR BAROSU YANI ADLÝYE KARÞI SOKAÐI) ÝPSAN 7 APT. ALTI NO:14/B", TelefonNo="4125025532"},
 new Eczane{ Adi="ADA", AcilisTarihi=new DateTime(2016,6,6), Enlem=37.922210, Boylam=40.200948, Adres="5 Nisan Mah. Medine Bulvarý No:39 Baðlar Ýl Müf. 100 m aþaðý Namýk Kemal Lisesi 200m yukarýsý", TelefonNo="4122286992"},
 new Eczane{ Adi="AGÜLOÐLU", AcilisTarihi=new DateTime(1992,4,9), Enlem=37.916974, Boylam=40.226934, Adres="Büyükþehir Belediyesi Karþýsýnda Lise Cad. 5. Sok. Yeniþehir Ýlkokulu Karþýsý Tarým Orman Ýl Müd. Arkasý Yeniþehir Diyarbakýr", TelefonNo="4122244871"},
 new Eczane{ Adi="AKADEMÝ DÝCLE", AcilisTarihi=new DateTime(2012,9,27), Enlem=37.936200, Boylam=40.204500, Adres="H.Evleri Mah. 3. Sok. Genesis Hastanesi Acil Karþýsý No:19/B", TelefonNo="4122380727"},
@@ -188,7 +187,10 @@ new Eczane{ Adi="BERÝVAN", AcilisTarihi=new DateTime(2015,9,8), Enlem=37.933500,
 new Eczane{ Adi="BÝRTANE", AcilisTarihi=new DateTime(2012,4,17), Enlem=37.948500, Boylam=40.170400, Adres="Ava Düðün Salonu ve Bedüzzaman Camii Arkasý Çeysa-6 sitesi Altý", TelefonNo="4122570351"},
 new Eczane{ Adi="BODAKÇÝ", AcilisTarihi=new DateTime(2015,4,24), Enlem=37.939900, Boylam=40.171600, Adres="Gaziler Yeni Son Durak Biçen market karþýsý Jiber Sokaðý Akkoyunlu Ý.Ö.O Yaný", TelefonNo="5366631729"},
 new Eczane{ Adi="BOTAN", AcilisTarihi=new DateTime(2013,7,10), Enlem=37.916970, Boylam=40.211720, Adres="Muradiye Mah. 190. Sok. Muradiye Saðlýk Ocaðý Karþýsý Yanýkköþk Baðlar", TelefonNo="4122334399"},
-new Eczane{ Adi="BOZAN ", AcilisTarihi=new DateTime(2006,12,11), Enlem=37.850100, Boylam=40.666300, Adres="Körhat Mh. Alipýnar Mezarlýðý Yaný Meteoroloji Md. Bitiþiði alay komutanlýðý karþýsý", TelefonNo="4124156000"},
+new Eczane{ Adi="BOZAN ", AcilisTarihi=new DateTime(2006,12,11), 
+    Enlem=37.850100, 
+    Boylam=40.666300, 
+    Adres="Körhat Mh. Alipýnar Mezarlýðý Yaný Meteoroloji Md. Bitiþiði alay komutanlýðý karþýsý", TelefonNo="4124156000"},
 new Eczane{ Adi="BULAK", AcilisTarihi=new DateTime(2016,6,16), Enlem=37.914293, Boylam=40.167678, Adres="Baðcýlar Mah. Qamiþlo Blv. Kom. Nevroz Park Sitesi Altý No:45-E Nevroz Parkýn 100 m aþaðýsý keyfi diyar lokantasý karþýsý", TelefonNo="4125029829"},
 new Eczane{ Adi="BÜÞRA", AcilisTarihi=new DateTime(2015,3,12), Enlem=37.918600, Boylam=40.234800, Adres="Daðkapý Çocuk Hastanesi Yaný Özel Akdemi KBB Bitiþiði Levent Lojmanlarý Karþýsý No:7/E", TelefonNo="4122287027"},
 new Eczane{ Adi="BÜYÜK", AcilisTarihi=new DateTime(2009,12,3), Enlem=37.916900, Boylam=40.203500, Adres="Baðlar Sento Cad. No:116/C Kuruçeþme Kavþaðý Baðlar", TelefonNo="4122340030"},
@@ -376,7 +378,7 @@ new Eczane{ Adi="HAVALÝMANI", AcilisTarihi=new DateTime(2019,3,6), Enlem=37.9077
 new Eczane{ Adi="ASLI GÜNEL", AcilisTarihi=new DateTime(2019,6,2), Enlem=37.926393, Boylam=40.163074, Adres="URFA YOLU ÜZERÝ KADIN DOÐUM HAST. KARÞISINDAKÝ MEMORÝAL DÝCLE HASTANESÝNÝN ACÝL ÇIKIÞI", TelefonNo="4125022878"},
 new Eczane{ Adi="ELÝF", AcilisTarihi=new DateTime(2019,5,15), Enlem=37.946499, Boylam=40.176680, Adres="DÝCLEKENT MAH.KAYAPINAR CAD. NO:82/A AVA DÜÐÜN SALONU KARÞISI BATI HASTANESÝ YANI", TelefonNo="4124150007"},
 new Eczane{ Adi="DOÐA", AcilisTarihi=new DateTime(2008,11,17), Enlem=37.940900, Boylam=40.188000, Adres="500 EVLER GÝRÝÞÝ OTOGARDAN SONRAKÝ 2. IÞIKLARA VARMADAN HEMEN SAÐ TARAFTA", TelefonNo="4122550494"},
-new Eczane{ Adi="PELÝN", AcilisTarihi=new DateTime(2004,6,9), Enlem=37.916900, Boylam=40.222900, Adres="ÜÇ KUYULAR TOKÝ TEMPO AVM BÝTÝÞÝÐÝ SAÐLIK OCAÐI KARÞISI", TelefonNo="4123490021"},
+new Eczane{ Adi="PELÝN2", AcilisTarihi=new DateTime(2004,6,9), Enlem=37.916900, Boylam=40.222900, Adres="ÜÇ KUYULAR TOKÝ TEMPO AVM BÝTÝÞÝÐÝ SAÐLIK OCAÐI KARÞISI", TelefonNo="4123490021"},
 new Eczane{ Adi="YEKTA", AcilisTarihi=new DateTime(2019,3,13), Enlem=37.942166, Boylam=40.214346, Adres="SEYRANTEPE TOKÝ KAVÞAÐI A101 DEN SONRA SAÐA DÖNÜNCE 150 M SONRA SOLDA CADDE ÜZERÝ PAÞA MARKET YANI", TelefonNo="4122623399"},
 new Eczane{ Adi="BÝLGE", AcilisTarihi=new DateTime(2019,1,22), Enlem=37.930632, Boylam=40.204977, Adres="SELAHATTÝN EYYUBÝ MAH. AYDIN ARSLAN BULVARI AYDIN SÝTESÝ ÞELALE EVLERÝ 8C1 NO:26/A BAÐLAR SULTAN HASTANESÝ KARÞISI", TelefonNo="4122371862"},
 new Eczane{ Adi="YENI YASAM", AcilisTarihi=new DateTime(2007,8,10), Enlem=37.918300, Boylam=40.208400, Adres="Özel baðlar hastanesi karþýsý Aydýn Kaya Apt. Baðlar Dörtyol P.T.T. Karþýsý", TelefonNo="4122353131"},
@@ -387,14 +389,14 @@ new Eczane{ Adi="ÝSKAN MAFRAK ", AcilisTarihi=new DateTime(2019,7,17), Enlem=37.
 new Eczane{ Adi="DAÐKAPI", AcilisTarihi=new DateTime(2019,6,26), Enlem=37.916668, Boylam=40.237035, Adres="DOKTOR YUSUF AZÝZOÐLU CAD. NO:1/F BOWER HASTANESÝ ALTI YENÝÞEHÝR", TelefonNo="4122288433"},
 new Eczane{ Adi="HUZUREVLERÝ ", AcilisTarihi=new DateTime(2019,8,23), Enlem=37.938779, Boylam=40.195027, Adres="Huzurevleri Mah.(HUZUREVLERÝ CAMÝ KÖÞESÝNDEN GÝRÝÞTE 200 M ÝÇERÝDE) Dr. Sýtký Göral Cad. YILDEM APT. ALTI NO:24/A Kelebek fýrýn karþýsý", TelefonNo="4122381658"},
 new Eczane{ Adi="GÜLSEREN ", AcilisTarihi=new DateTime(2019,10,15), Enlem=37.918568, Boylam=40.181377, Adres="Diyarbakýr Ýli Baðlar Ýlçesi Baðcýlar Mah. Orhan Doðan Cad. Hiva Sit. B Blok No:43/B A101 Çaprazý", TelefonNo="4125036988"},
-new Eczane{ Adi="NEHÝR", AcilisTarihi=new DateTime(2018,7,10), Enlem=37.908459, Boylam=40.221742, Adres="ÞEHÝTLÝK CAD. ÞEHÝRLÝK DÖRTYOL ÖZGÜR SÝTESÝ ALTI A/BLOK", TelefonNo="4122261701"},
+new Eczane{ Adi="NEHÝR2", AcilisTarihi=new DateTime(2018,7,10), Enlem=37.908459, Boylam=40.221742, Adres="ÞEHÝTLÝK CAD. ÞEHÝRLÝK DÖRTYOL ÖZGÜR SÝTESÝ ALTI A/BLOK", TelefonNo="4122261701"},
 new Eczane{ Adi="HAMRAVAT", AcilisTarihi=new DateTime(2019,11,15), Enlem=37.909248, Boylam=40.148596, Adres="ARAÇ MUAYENE ÝSTASYON KAVÞAÐINDAN GÖKKUÞAÐI VE HAMRAVAT EVLERÝARKASINA GÝDEN SAAT KULESÝ CÝVARINDA (MERAM 5 SÝTESÝ CADDESÝ ÜZERÝNDE ÞEYHMUS ALTO TATLICISI KARÞISINDA )BAÐCILAR MAH.", TelefonNo="4125026042"},
 
                                 #endregion
                             },
 
                 NobetUstGruplar = new List<NobetUstGrup>() {
-                                new NobetUstGrup(){ Adi = "Diyarbakýr", Aciklama = "Diyarbakýr Merkez", EczaneOdaId = odaId, BaslangicTarihi=baslamaTarihi, TimeLimit = 60 },
+                                new NobetUstGrup(){ Adi = "Diyarbakýr", Aciklama = "Diyarbakýr Merkez", EczaneOdaId = odaId, BaslangicTarihi=baslamaTarihi, TimeLimit = 60, Enlem = 37.9228549, Boylam = 40.1275728 },
                             },
 
                 NobetGruplar = new List<NobetGrup>() {
@@ -5215,69 +5217,69 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
             #region nöbet grup kurallar
 
             //var sonNobetGrubu = b.EczaneNobetContext.NobetGrupKurallar.ToList().LastOrDefault();
-            foreach (var nobetGrupGorevTip in b.EczaneNobetContext.NobetGrupGorevTipler.Where(w => w.Id > b.NobetGrupGorevTipId))
-            {
-                var kurallar = new int[2] { 1, 3 };
+            //foreach (var nobetGrupGorevTip in b.EczaneNobetContext.NobetGrupGorevTipler.Where(w => w.Id > b.NobetGrupGorevTipId))
+            //{
+            //    var kurallar = new int[2] { 1, 3 };
 
-                foreach (var kural in kurallar)
-                {
-                    if (kural == 1)
-                    {//Ardýþýk Boþ Gün Sayýsý
-                        if (nobetGrupGorevTip.Id == 63)
-                        {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 10 });
-                        }
-                        //else if (nobetGrupGorevTip.Id == 56)
-                        //{
-                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 7 });
-                        //}
-                        //else if (nobetGrupGorevTip.Id == 57)
-                        //{
-                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 5 });
-                        //}
-                        //else if (nobetGrupGorevTip.Id == 58)
-                        //{
-                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 3 });
-                        //}
-                        //else if (nobetGrupGorevTip.Id == 59)
-                        //{
-                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 4 });
-                        //}
-                        //else if (nobetGrupGorevTip.Id == 60)
-                        //{
-                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 7 });
-                        //}
-                    }
-                    else if (kural == 3)
-                    {//Varsayýlan günlük nöbetçi sayýsý
-                        if (nobetGrupGorevTip.Id == 63)
-                        {
-                            b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 8 });
-                        }
-                        //else if (nobetGrupGorevTip.Id == 56)
-                        //{
-                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
-                        //}
-                        //else if (nobetGrupGorevTip.Id == 57)
-                        //{
-                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
-                        //}
-                        //else if (nobetGrupGorevTip.Id == 58)
-                        //{
-                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
-                        //}
-                        //else if (nobetGrupGorevTip.Id == 59)
-                        //{
-                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
-                        //}
-                        //else if (nobetGrupGorevTip.Id == 60)
-                        //{
-                        //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
-                        //}
-                    }
-                }
+            //    foreach (var kural in kurallar)
+            //    {
+            //        if (kural == 1)
+            //        {//Ardýþýk Boþ Gün Sayýsý
+            //            if (nobetGrupGorevTip.Id == 63)
+            //            {
+            //                b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 10 });
+            //            }
+            //            //else if (nobetGrupGorevTip.Id == 56)
+            //            //{
+            //            //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 7 });
+            //            //}
+            //            //else if (nobetGrupGorevTip.Id == 57)
+            //            //{
+            //            //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 5 });
+            //            //}
+            //            //else if (nobetGrupGorevTip.Id == 58)
+            //            //{
+            //            //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 3 });
+            //            //}
+            //            //else if (nobetGrupGorevTip.Id == 59)
+            //            //{
+            //            //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 4 });
+            //            //}
+            //            //else if (nobetGrupGorevTip.Id == 60)
+            //            //{
+            //            //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 7 });
+            //            //}
+            //        }
+            //        else if (kural == 3)
+            //        {//Varsayýlan günlük nöbetçi sayýsý
+            //            if (nobetGrupGorevTip.Id == 63)
+            //            {
+            //                b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 8 });
+            //            }
+            //            //else if (nobetGrupGorevTip.Id == 56)
+            //            //{
+            //            //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+            //            //}
+            //            //else if (nobetGrupGorevTip.Id == 57)
+            //            //{
+            //            //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+            //            //}
+            //            //else if (nobetGrupGorevTip.Id == 58)
+            //            //{
+            //            //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+            //            //}
+            //            //else if (nobetGrupGorevTip.Id == 59)
+            //            //{
+            //            //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+            //            //}
+            //            //else if (nobetGrupGorevTip.Id == 60)
+            //            //{
+            //            //    b.NobetGrupKurallar.Add(new NobetGrupKural() { NobetGrupGorevTipId = nobetGrupGorevTip.Id, NobetKuralId = kural, BaslangicTarihi = b.BaslamaTarihi, Deger = 1 });
+            //            //}
+            //        }
+            //    }
 
-            }
+            //}
 
             b.EczaneNobetContext.NobetGrupKurallar.AddOrUpdate(s => new { s.NobetGrupGorevTipId, s.NobetKuralId, s.BaslangicTarihi }, b.NobetGrupKurallar.ToArray());
             b.EczaneNobetContext.SaveChanges();
@@ -5469,8 +5471,6 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
                             .Where(w => w.NobetGrupGorevTipId == 49) //antalya 11. grup
                             .ToList();
 
-            var nobetGrupGorevTipGunKurallar = new List<NobetGrupGorevTipGunKural>();
-
             var nobetGorevTipler = nobetGrupVeGorevTipler.Select(s => s.NobetGorevTipId);
             var nobetGruplar = nobetGrupVeGorevTipler.Select(s => s.NobetGrupId);
 
@@ -5480,17 +5480,18 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
                          && nobetGruplar.Contains(w.NobetGrupId)
                          ).ToList();
 
-            NobetGrupGunKuralEkle2(context, baslamaTarihi, nobetUstGrupId, nobetGrupGorevTipGunKuralListe, nobetGrupGorevTipGunKurallar, nobetGrupGorevTipler, varsayilanNobetciSayisi);
+            NobetGrupGunKuralEkle2(context, baslamaTarihi, nobetUstGrupId, nobetGrupGorevTipGunKuralListe, nobetGrupGorevTipler, varsayilanNobetciSayisi);
         }
 
         private static void NobetGrupGunKuralEkle2(Concrete.EntityFramework.Contexts.EczaneNobetContext context,
             DateTime baslamaTarihi,
             int nobetUstGrupId,
             List<NobetGrupGorevTipGunKural> nobetGrupGorevTipGunKuralListe,
-            List<NobetGrupGorevTipGunKural> nobetGrupGorevTipGunKurallar,
             List<NobetGrupGorevTip> nobetGrupGorevTipler,
             int varsayilanNobetciSayisi)
         {
+            var nobetGrupGorevTipGunKurallar = new List<NobetGrupGorevTipGunKural>();
+
             foreach (var nobetGrupGorevTip in nobetGrupGorevTipler)
             {
                 //if (nobetGrupGorevTip.Id == 43)
@@ -5528,13 +5529,11 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
                             .Where(w => w.NobetGrupGorevTipId == 24) //antalya 11. grup
                             .ToList();
 
-            var nobetGrupGorevTipGunKurallar = new List<NobetGrupGorevTipGunKural>();
-
             var nobetGrupGorevTipler = context.NobetGrupGorevTipler
                 .Where(w => w.NobetGrup.NobetUstGrupId == nobetUstGrupId
                          && nobetGrupGorevTipIdList.Contains(w.Id)).ToList();
 
-            NobetGrupGunKuralEkle2(context, baslamaTarihi, nobetUstGrupId, nobetGrupGorevTipGunKuralListe, nobetGrupGorevTipGunKurallar, nobetGrupGorevTipler, varsayilanNobetciSayisi);
+            NobetGrupGunKuralEkle2(context, baslamaTarihi, nobetUstGrupId, nobetGrupGorevTipGunKuralListe, nobetGrupGorevTipler, varsayilanNobetciSayisi);
         }
 
         private static void NobetGrupGunKuralEkle(Concrete.EntityFramework.Contexts.EczaneNobetContext context,
@@ -5549,13 +5548,11 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
                             && (w.NobetGunKuralId == 1 || w.NobetGunKuralId == 7))
                             .ToList();
 
-            var nobetGrupGorevTipGunKurallar = new List<NobetGrupGorevTipGunKural>();
-
             var nobetGrupGorevTipler = context.NobetGrupGorevTipler
                 .Where(w => w.NobetGrup.NobetUstGrupId == nobetUstGrupId
                          && nobetGrupGorevTipIdList.Contains(w.Id)).ToList();
 
-            NobetGrupGunKuralEkle2(context, baslamaTarihi, nobetUstGrupId, nobetGrupGorevTipGunKuralListe, nobetGrupGorevTipGunKurallar, nobetGrupGorevTipler, varsayilanNobetciSayisi);
+            NobetGrupGunKuralEkle2(context, baslamaTarihi, nobetUstGrupId, nobetGrupGorevTipGunKuralListe, nobetGrupGorevTipler, varsayilanNobetciSayisi);
         }
 
         private static int GetNobetUstGrupGunGrupId(int nobetUstGrupId, int nobetGunKuralId, List<NobetUstGrupGunGrup> nobetUstGrupGunGruplar)
