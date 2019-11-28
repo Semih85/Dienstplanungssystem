@@ -814,6 +814,7 @@
                         else if (nobetUstGrupId == 4
                             || nobetUstGrupId == 5
                             || nobetUstGrupId == 9
+                            || nobetUstGrupId == 11
                         ) {
                              $.each(dagilimlar, function (index, n) {
                                dagilimlarAktarilacak.push({
@@ -1836,10 +1837,9 @@
                 if (nobetUstGrupId == 4) {
                     pivotCols = ["Görev Tipi", "Nöbet Grubu Günlük"];
                 }
-                else if (nobetUstGrupId == 5) {
-                    pivotCols = ["Nöbet Grubu Günlük"];
-                }
-                else if (nobetUstGrupId == 9) {
+                else if (nobetUstGrupId == 5
+                    || nobetUstGrupId == 9
+                    || nobetUstGrupId == 11) {
                     pivotCols = ["Nöbet Grubu Günlük"];
                 }
 
@@ -1942,10 +1942,8 @@
                 if (nobetUstGrupId == 4) {
                     pivotCols = ["Görev Tipi", "Nöbet Grubu Günlük"];
                 }
-                else if (nobetUstGrupId == 5) {
-                    pivotCols = ["Nöbet Grubu Günlük"];
-                }
-                else if (nobetUstGrupId == 9) {
+                else if (nobetUstGrupId == 5
+                || nobetUstGrupId == 9) {
                     pivotCols = ["Nöbet Grubu Günlük"];
                 }
 
@@ -2436,10 +2434,8 @@
                     pivotRows = ["Görev Tipi", "Eczane"];
                     //pivotCols = ["Gün Grup", "Mevsim"];
                 }
-                else if (nobetUstGrupId == 5) {
-                    pivotRows = ["Eczane"];
-                }
-                else if (nobetUstGrupId == 9) {
+                else if (nobetUstGrupId == 5
+                      || nobetUstGrupId == 9) {
                     pivotRows = ["Eczane"];
                 }
                 //else if (nobetUstGrupId == 5) {
