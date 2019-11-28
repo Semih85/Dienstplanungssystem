@@ -2408,10 +2408,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
         public void VirgulleAyrilanNobetGruplariniAyir(int nobetUstGrupId, List<EczaneNobetSonucListe2> sonuclar)
         {
-            if (nobetUstGrupId == 5
-                || nobetUstGrupId == 4
-                || nobetUstGrupId == 9)
-            {//osmaniye, giresun
+            if (nobetUstGrupId == 5//osmaniye
+                || nobetUstGrupId == 4//giresun
+                || nobetUstGrupId == 9//çorum
+                || nobetUstGrupId == 11//d.bakır
+                )
+            {
                 var tarihler = sonuclar.Select(s => new { s.TakvimId, s.NobetGorevTipId }).Distinct().ToArray();
                 var nobetGorevTipler = tarihler.Select(s => new { s.NobetGorevTipId }).Distinct().ToArray();
 
@@ -2420,9 +2422,25 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     foreach (var tarih in tarihler.Where(w => w.NobetGorevTipId == nobetGorevTip.NobetGorevTipId))
                     {
                         var sonuclarGunluk = sonuclar
-                            .Where(w => w.TakvimId == tarih.TakvimId
-                                     && w.NobetGorevTipId == nobetGorevTip.NobetGorevTipId)
-                            .OrderBy(o => o.EczaneAdi).ToArray();
+                                  .Where(w => w.TakvimId == tarih.TakvimId
+                                           && w.NobetGorevTipId == nobetGorevTip.NobetGorevTipId)
+                                  //.OrderBy(o => o.NobetAltGrupAdi)
+                                  //.ThenBy(o => o.EczaneAdi)
+                                  .ToArray();
+
+                        if (nobetUstGrupId == 5)
+                        {
+                            sonuclarGunluk = sonuclarGunluk
+                                  .OrderBy(o => o.NobetAltGrupAdi)
+                                  .ThenBy(o => o.EczaneAdi)
+                                  .ToArray();
+                        }
+                        else
+                        {
+                            sonuclarGunluk = sonuclarGunluk
+                                  .OrderBy(o => o.EczaneAdi)
+                                  .ToArray();
+                        }
 
                         var indis = 1;
 
