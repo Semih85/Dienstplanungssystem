@@ -379,7 +379,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     {
                         var kontrolEdilecekEczaneler = new string[] {
                             "HÜLYA",
-                            //"ELİF", "AYDINLAR", "DERYA", "KARABIÇAK","IŞIK"
                         };
 
                         if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.EczaneAdi))

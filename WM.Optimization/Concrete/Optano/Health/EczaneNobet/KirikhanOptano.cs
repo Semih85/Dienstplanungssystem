@@ -41,50 +41,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             var eczaneNobetTutamazGunler = new List<EczaneNobetTutamazGun>
             {
-                 //İSTİKAMET (cuma, cts, pazar tutabilir)
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 2 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 3 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 4 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 5 },
-
-                 //ELİF (cts ve pazar tutabilir)
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 2 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 3 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 4 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 5 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 6 },
-
-                 //AYDINLAR (cts tutabilir)
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 1 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 2 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 3 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 4 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 5 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 6 },
-
-                 //DERYA (cts tutabilir)
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 1 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 2 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 3 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 4 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 5 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 6 },
-
-                 //KARABIÇAK (cts tutabilir)
-                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1025, NobetGunKuralId = 1 },
-                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1025, NobetGunKuralId = 2 },
-                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1025, NobetGunKuralId = 3 },
-                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1025, NobetGunKuralId = 4 },
-                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1025, NobetGunKuralId = 5 },
-                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1025, NobetGunKuralId = 6 },
+                 // (cuma, cts, pazar tutabilir)
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 2 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 3 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 4 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 5 },
             };
 
             var istisnaEczaneler = new string[] {
-                        //"AYDINLAR",
-                        //"DERYA",
-                        //"ELİF",
-                        //"KARABIÇAK",
-                        //"ZEYNEP" //BUNU SONRADAN KALDIR. KALİBRASYON EKLENECEK
+                        //"",
                     };
 
             var nobetGrupGorevTipSayisi = data.NobetGrupGorevTipler.Count();
@@ -414,13 +379,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     if (kontrol)
                     {
-                        var kontrolEdilecekEczaneler = new string[] {
-                            //"ANNAKKAYA",
-                            //"ELİF", 
-                            //"AYDINLAR", "KARABIÇAK","IŞIK",
-                            //"YENİYOL"
-                            //"FERİDUNOĞLU"
-                            //"DERYA"
+                        var kontrolEdilecekEczaneler = new string[] {                
                             //"BAHADIR",
                             //"GÜLALİ",
                             "DENİZOĞLU"
@@ -1675,10 +1634,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         {
                             var kontrolEdilecekEczaneler = new string[] {
                             "BİLGİLİ",
-                            //"ANNAKKAYA",
-                            //"DERYA",
-                            //"KADEMOĞLU",
-                            //"KARABIÇAK"
                         };
 
                             if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.EczaneAdi))

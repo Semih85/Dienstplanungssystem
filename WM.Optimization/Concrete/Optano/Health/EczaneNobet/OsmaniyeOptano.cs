@@ -323,7 +323,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             "ÖZEN",
                             //"EZGİ",
                             //"DEVA",
-                            //"ELİF", "AYDINLAR", "DERYA", "KARABIÇAK"
                         };
 
                         if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.EczaneAdi))
