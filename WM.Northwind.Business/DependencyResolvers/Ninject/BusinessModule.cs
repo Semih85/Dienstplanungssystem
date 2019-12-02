@@ -302,6 +302,9 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IDiyarbakirOptimizationService>().To<DiyarbakirOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetDiyarbakirOptimization>().To<DiyarbakirOptano>().InSingletonScope();
 
+            Bind<IManavgatOptimizationService>().To<ManavgatOptimizationManager>().InSingletonScope();
+            Bind<IEczaneNobetManavgatOptimization>().To<ManavgatOptano>().InSingletonScope();
+
             Bind<IZonguldakOptimizationService>().To<ZonguldakOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetZonguldakOptimization>().To<ZonguldakOptano>().InSingletonScope();
 
