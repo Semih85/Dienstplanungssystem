@@ -2,7 +2,7 @@
     @addTagHelper "*,Abc.Northwind.UI.Mvc"*@
 
 @{
-    ViewBag.Title = "Nöbet Sistemi";
+    ViewBag.Title = MultiLanguage.HomeTexts.NobetSistemi;
     ViewBag.MetaDescription = "Nöbetçi Eczane Sistemi, Online Eczane Ekranı ve Hemşire Nöbet Sistemi gibi bir çok alanda en iyi çözümler Nöbet Sistemi'nde.";
     //Nöbet sistemi ile siz sadece nöbet kurallarını belirledikten sonra, adaletli ve en hızlı şekilde nöbet yazabilir, çok sayıda istatistik sayesinde sonuçları kolayca takip edebilirsiniz.
 
@@ -10,6 +10,7 @@
 }
 
 <style>
+
 
     .circle {
         /*background: #007bff;*/
@@ -33,6 +34,7 @@
 </style>
 
 <style>
+
     .jumbotron {
         background: url("../Content/images/digital_background4.jpg");
         /*background-color: aliceblue;*/
@@ -46,14 +48,14 @@
 
     <div class="jumbotron jumbotron-fluid py-4 py-lg-5 mt-5 mb-0 mb-md-2 mb-lg-3">
         <div class="container text-white">
-            <h1 class="display-4 font-weight-bold" style="font-size:300%;" id="jumbotronYazi">Nöbet Sistemi</h1>
-            <p class="lead text-capitalize">"Nöbet" hakkında her şey @*bu sistemde*@</p>
+            <h1 class="display-4 font-weight-bold" style="font-size:300%;" id="jumbotronYazi">@MultiLanguage.HomeTexts.NobetSistemi</h1>
+            <p class="lead text-capitalize">@MultiLanguage.HomeTexts.NobetHakkindaHerSey @*bu sistemde*@</p>
             @*Nöbetlerinizi yazalım ve istatistikleri dinamik olarak gösterelim.*@
             <hr class="my-lg-4 my-3 bg-info text-left w-50" align="left">
             @*<p>Gelin birlikte matematiği hayatın içine taşıyalım</p>*@
-            <p>Siz uğraşmayın! Zamanınız size kalsın.</p>
-            <a class="btn btn-outline-info btn-lg" href="@Url.Action("NobetYazDetay")" role="button">
-                <span class="fa fa-bars"></span> Detaylar
+            <p>@MultiLanguage.HomeTexts.SizUgrasmayinZamaninizSizeKalsin.</p>
+            <a class="btn btn-outline-info btn-lg" href="@Url.RouteUrl("NobetYazDetay")" role="button">
+                <span class="fa fa-bars"></span> @MultiLanguage.HomeTexts.Detaylar
             </a>
         </div>
     </div>
@@ -67,12 +69,17 @@
 
             <div class="col-lg-4">
                 <ul class="list-group list-group-flush text-left">
-                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Siz sadece kurallarınızı <i class="fa fa-cogs text-danger" aria-hidden="true"></i> belirleyin.</li>
-                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Saniyeler içinde <i class="fa fa-hourglass-end text-danger" aria-hidden="true"></i> nöbetleriniz yazılsın.</li>
                     <li class="list-group-item">
-                        <i class="fa fa-check text-success" aria-hidden="true"></i>
-                        İstatistiklerin
-                        <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i> keyfini çıkarın.
+                        <i class="fa fa-cogs text-danger" aria-hidden="true"></i>
+                        @MultiLanguage.HomeTexts.SizSadeceKurallariBelirleyin
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa fa-hourglass-end text-danger" aria-hidden="true"></i>
+                        @MultiLanguage.HomeTexts.SaniyelerIcindeNobetlerinizYazilsin
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i>
+                        @MultiLanguage.HomeTexts.IstatistiklerinKeyfiniCikarin
                     </li>
                 </ul>
 
@@ -82,9 +89,7 @@
                     <img class="img-fluid" src="~/Content/images/meeting-peoples-1080x625.png" alt="En iyi plan süresi" width="220" />
                     <br />
                     <span class="font-weight-bold">
-                        Matematik
-                        @*<i class="fa fa-calendar-check-o text-danger" aria-hidden="true"></i>*@ hayatın içinde güzel
-                        <i class="fa fa-check-square-o text-success" aria-hidden="true"></i>
+                        @MultiLanguage.HomeTexts.MatematikHayatinIcindeGuzel
                     </span>
                 </div>
 
@@ -94,12 +99,15 @@
 
                 <ul class="list-group list-group-flush text-left">
                     <li class="list-group-item">
-                        <i class="fa fa-check text-success" aria-hidden="true"></i> Tüm cihazlardan
-                        <i class="fa fa-mobile-phone text-danger" aria-hidden="true"></i>
+                        <i class="fa fa-desktop text-danger" aria-hidden="true"></i>
                         <i class="fa fa-tablet text-danger" aria-hidden="true"></i>
-                        ve 7/24 ulaşın.
+                        <i class="fa fa-mobile-phone text-danger" aria-hidden="true"></i>
+                        @MultiLanguage.HomeTexts.TumCihazlardan7_24ulasin
                     </li>
-                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Tüm veriler SSL <i class="fa fa-shield text-danger" aria-hidden="true"></i> ile güvende.</li>
+                    <li class="list-group-item">
+                        <i class="fa fa-shield text-danger" aria-hidden="true"></i>
+                        @MultiLanguage.HomeTexts.TumVerilerSSLileGuvende
+                    </li>
                 </ul>
             </div>
 
@@ -109,7 +117,8 @@
         <div class="row mb-md-0">
 
             <div class="col-12 text-center mb-2 mt-2">
-                <h4>Ücretsiz demo için bize <a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> ulaşın. Hemen başlayalım.</h4>
+
+                <h4><a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> @MultiLanguage.HomeTexts.UcretsizDemoIcinBizeUlasin @MultiLanguage.HomeTexts.HemenBaslayalim</h4>
             </div>
 
         </div>
@@ -128,9 +137,17 @@
             <div class="col-md-6 mb-3">
                 <div class="card border-primary bg-light">
                     <div class="card-header">
-                        <a class="h4 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemi")">
-                            <small class="text-danger bg-white font-weight-bolder" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">&nbsp;E&nbsp;</small> Nöbet Sistemi
-                        </a>
+                        @*<a class="h4 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemi")">
+                                <small class="text-danger bg-white font-weight-bolder" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">
+                                    &nbsp;E&nbsp;
+                                </small> <span>@MultiLanguage.HomeTexts.NobetSistemi</span>
+                            </a>*@
+                        <span class="h4">
+                            @*<small class="text-danger bg-white font-weight-bolder" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">
+                                &nbsp;E&nbsp;
+                            </small>*@ 
+                            <span>@MultiLanguage.HomeTexts.EczaneNobetSistemi</span>
+                        </span>
                     </div>
                     <div class="card-body text-center">
                         <a title="Nöbetçi Eczaneleri Görmek için Tıklayınız." target="_blank" href="@Url.RouteUrl("NobetciEczaneler")">
@@ -144,7 +161,7 @@
             <div class="col-md-6 mb-3">
                 <div class="card border-primary bg-light">
                     <div class="card-header">
-                        <span class="h4"> Hemşire Nöbet Sistemi</span>
+                        <span class="h4">@MultiLanguage.HomeTexts.HemsireNobetSistemi</span>
                     </div>
                     <div class="card-body text-center">
 
@@ -165,33 +182,33 @@
 
         <div class="row text-center mb-3">
             <div class="col-md-12 mb-3">
-                <h2>Referanslarımız</h2>
+                <h2>@MultiLanguage.HomeTexts.Referanslarimiz</h2>
             </div>
             <div class="col-md-3">
                 <div style="display:none" id="odaSayisiSabit">6</div>
                 <div class="Counter circle bg-light font-weight-bold text-dark" id="odaSayisi">6</div>
                 @*<span class="Counter bg-light font-weight-bold text-dark" id="odaSayisi">100</span>*@
-                <div class="seviye text-dark">Eczacı Odası</div>
+                <div class="seviye text-dark">@MultiLanguage.HomeTexts.EczaciOdasi</div>
             </div>
             <div class="col-md-3 mb-3">
                 <div style="display:none" id="ustGrupSayisiSabit">50</div>
                 @*<span>+</span>*@
                 <div class="Counter circle bg-light font-weight-bold text-dark" id="ustGrupSayisi">50</div>
                 @*<span class="Counter bg-light font-weight-bold text-dark">1500</span>*@
-                <div class="seviye text-dark">Nöbet Bölgesi</div>
+                <div class="seviye text-dark">@MultiLanguage.HomeTexts.NobetBolgesi</div>
             </div>
             <div class="col-md-3 mb-3">
                 <div style="display:none" id="grupSayisiSabit">1200</div>
                 @*<span>+</span>*@
                 <div class="Counter circle bg-light font-weight-bold text-dark" id="grupSayisi">1200</div>
-                <div class="seviye text-dark">Eczane</div>
+                <div class="seviye text-dark">@MultiLanguage.HomeTexts.Eczane</div>
             </div>
             <div class="col-md-3 mb-3">
                 <div style="display:none" id="eczaneSayisiSabit">20672</div>
                 @*<span></span>*@
                 <div class="Counter circle bg-light font-weight-bold text-dark" id="eczaneSayisi">20672</div>
                 <div id="nobetSistemi"></div>
-                <div class="seviye text-dark">Yazılan Nöbet</div>
+                <div class="seviye text-dark">@MultiLanguage.HomeTexts.YazilanNobet</div>
             </div>
         </div>
 
@@ -309,7 +326,7 @@
                         complete: function () {
                             if (ilkSayi > 10)
                                 $this.text("+" + Math.ceil(this.Counter));
-                        }                       
+                        }
                     }
                 );
             //counterlar++;
