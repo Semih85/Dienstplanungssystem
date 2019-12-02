@@ -40,6 +40,20 @@ namespace WM.Northwind.Business.Concrete.Managers.Authorization
                                   );
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
+        //[FluentValidationAspect(typeof(LoginItemValidator))]
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public User GetByEMailOrUserNamaAndPassword(LoginItem loginItem)
+        {
+            return _userDal.Get(u => (u.Email.Equals(loginItem.Email) || u.UserName.Equals(loginItem.Email))
+                                  && u.Password.Equals(loginItem.Password)
+                                  //String.Compare(u.Email, loginItem.Email, true) == 0
+                                  //&& String.Compare(u.Password, loginItem.Password, true) == 0
+                                  //   u.Email.Equals(loginItem.Email, StringComparison.Ordinal)
+                                  //&& u.Password.Equals(loginItem.Password, StringComparison.Ordinal)
+                                  );
+        }
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public User GetByUserNameAndPassword(string userName, string password)
         {

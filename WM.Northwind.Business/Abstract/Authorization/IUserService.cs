@@ -12,6 +12,7 @@ namespace WM.Northwind.Business.Abstract.Authorization
     {
         User GetByUserNameAndPassword(string userName, string password);
         User GetByEMailAndPassword(LoginItem loginItem);
+        User GetByEMailOrUserNamaAndPassword(LoginItem loginItem);
         User GetById(int id);
         User GetByUserName(string userName);
         List<User> GetList();
