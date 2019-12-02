@@ -869,6 +869,8 @@
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Edit.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Index.cshtml" />
     <Content Include=".editorconfig" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\NobetciEczaneMesafeler.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\NobetciEczaneMesafelerPartial.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -1278,6 +1280,7 @@
     <Compile Include="Areas\EczaneNobet\Models\UpdateSonuclarInsertDegisimViewModel.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Areas\EczaneNobet\Models\KuralKategorilerPartialViewModel.cs" />
+    <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Areas\Northwind\Models\CategoryListPartialViewModel.cs" />
     <Compile Include="Areas\Northwind\NorthwindAreaRegistration.cs" />
@@ -1319,6 +1322,9 @@
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\WMUIMvcContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\HomeTexts.de.Designer.cs" />
+    <Compile Include="Resources\HomeTexts.Designer.cs" />
+    <Compile Include="Resources\HomeTexts.en.Designer.cs" />
     <Compile Include="Services\INobetUstGrupKisitSessionService.cs" />
     <Compile Include="Services\INobetUstGrupSessionService.cs" />
     <Compile Include="Services\MvcModule.cs" />
@@ -1476,6 +1482,11 @@
     <Analyzer Include="..\packages\Microsoft.NetCore.Analyzers.2.9.7\analyzers\dotnet\cs\Microsoft.NetCore.CSharp.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.7\analyzers\dotnet\cs\Microsoft.NetFramework.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.7\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\HomeTexts.de.resx" />
+    <EmbeddedResource Include="Resources\HomeTexts.en.resx" />
+    <EmbeddedResource Include="Resources\HomeTexts.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

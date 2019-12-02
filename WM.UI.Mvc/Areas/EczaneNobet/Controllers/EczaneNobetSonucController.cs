@@ -602,7 +602,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             jsonResult.MaxJsonLength = int.MaxValue;
 
             return jsonResult;
-        }      
+        }
 
         private List<EczaneNobetSonucDagilimlar> GetSonuclar(List<EczaneNobetSonucListe2> sonuclar, int raporId)
         {
@@ -1888,6 +1888,71 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.ToplamUzunluk = uzunluk;
 
             return PartialView("AlternatifNobetcilerPartial", alternatifOlasiEczaneler);
+        }
+
+        public ActionResult NobetciEczaneMesafeler()
+        {
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+            var nobetUstGrupId = nobetUstGrup.Id;
+
+            var eczanelerArasiMesafeyiKoru = _nobetUstGrupKisitService.GetDetay("eczanelerArasiMesafeyiKoru", nobetUstGrupId);
+
+            ViewBag.MesafeKriteri = (int)eczanelerArasiMesafeyiKoru.SagTarafDegeri;
+
+            return View();
+        }
+
+        public ActionResult NobetciEczaneMesafelerPartial(DateTime nobetTarihi, int mesafeKriter = 0)
+        {
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+            var nobetUstGrupId = nobetUstGrup.Id;
+            //var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetMyDrop(nobetUstGrupId);
+
+            //var nobetGrupGorevTipId = feragatEdenNobetciEczane.NobetGrupGorevTipId;
+            if (mesafeKriter <= 0)
+            {
+                throw new Exception("Mesafe kriteri negatif olamaz!!");
+            }
+
+            var gunlukSonuclar = _eczaneNobetSonucService.GetDetaylarGunluk(nobetTarihi, nobetUstGrupId)
+                       .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)
+                .ToList();
+
+            var eczanelerArasiMesafeler = new List<NobetciEczaneMesafe>();
+
+            var sonucSayi = gunlukSonuclar.Count;
+
+            for (int i = 0; i < sonucSayi - 1; i++)
+            {
+                for (int j = i + 1; j < sonucSayi; j++)
+                {
+                    var s = _eczaneUzaklikMatrisService.GetDetay(gunlukSonuclar[i].EczaneId, gunlukSonuclar[j].EczaneId);
+
+                    var m = new NobetciEczaneMesafe
+                    {
+                        EczaneAdiFrom = s.EczaneAdiFrom,
+                        EczaneAdiTo = s.EczaneAdiTo,
+                        EczaneIdFrom = s.EczaneIdFrom,
+                        EczaneIdTo = s.EczaneIdTo,
+                        Mesafe = s.Mesafe,
+                        NobetUstGrupId = s.NobetUstGrupId,
+                        NobetTarihi = nobetTarihi
+                    };
+
+                    eczanelerArasiMesafeler.Add(m);
+                }
+            }
+
+            var eczaneMesafeler = eczanelerArasiMesafeler.Where(w => w.Mesafe <= mesafeKriter).ToList();
+
+            var uzunluk = eczanelerArasiMesafeler.Count;
+            var mesafeKriterineUygunOlmayanEczaneSayisi = eczaneMesafeler.Count;
+
+            var eczanelerArasiMesafeyiKoru = _nobetUstGrupKisitService.GetDetay("eczanelerArasiMesafeyiKoru", nobetUstGrupId);
+
+            ViewBag.MesafeKriteri = (int)eczanelerArasiMesafeyiKoru.SagTarafDegeri;
+
+            return PartialView("NobetciEczaneMesafelerPartial", eczanelerArasiMesafeler.OrderBy(o => o.Mesafe).ToList());
         }
 
         public ActionResult AylarDdlPartialView(int yil)

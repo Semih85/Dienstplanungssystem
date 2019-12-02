@@ -449,6 +449,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                     url: "eczane-sanal-nobetler",
                     defaults: new { controller = "EczaneNobetSanalSonuc", action = "Index" }
                 );
+
+            context.MapRoute(
+                    name: "NobetciEczaneMesafeler",
+                    url: "nobetci-eczane-mesafeler",
+                    defaults: new { controller = "EczaneNobetSonuc", action = "NobetciEczaneMesafeler" }
+                );
+
             
             #endregion
 
