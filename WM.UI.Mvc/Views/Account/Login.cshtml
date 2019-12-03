@@ -19,8 +19,8 @@
 <div class="row justify-content-center mx-2">
     <div class="card bg-light" style="width: 40rem; margin-top: 2rem;">
         <div class="card-body">
-            <h5 class="card-title text-primary font-weight-bold">Oturum aç</h5>
-            <h6 class="card-subtitle mb-4 text-muted">Kayıt için iletişime geçin. <a href="mailto:nobetyaz@gmail.com" alt="yoneylemci@hotmail.com" title="yoneylemci@hotmail.com"><span class="fa fa-envelope fa-lg"></span></a></h6>
+            <h5 class="card-title text-primary font-weight-bold">@MultiLanguage.HomeTexts.KullaniciGirisi</h5>
+            <h6 class="card-subtitle mb-4 text-muted">@MultiLanguage.HomeTexts.KayitIcinIletisimeGecin <a href="mailto:nobetyaz@gmail.com" alt="yoneylemci@hotmail.com" title="yoneylemci@hotmail.com"><span class="fa fa-envelope fa-lg"></span></a></h6>
             @*<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>*@
             @if (!ViewData.ModelState.IsValid)
             {
@@ -71,11 +71,11 @@
                 <div class="col-auto my-1">
                     <div class="custom-control custom-checkbox mr-sm-2">
                         @Html.CheckBoxFor(m => m.LoginItem.RememberMe, new { @class = "custom-control-input", id = "customControlAutosizing" })
-                        <label class="custom-control-label" for="customControlAutosizing">Beni hatırla</label>
+                        <label class="custom-control-label" for="customControlAutosizing">@MultiLanguage.HomeTexts.BeniHatırla</label>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-success pull-right"><i class="fa fa-sign-in"></i> Giriş</button>
+                <button type="submit" class="btn btn-success pull-right"><i class="fa fa-sign-in"></i> @MultiLanguage.HomeTexts.Giris</button>
             }
             @*<a href="#" class="card-link">Card link</a>*@
             @*<a href="#" class="card-link">Another link</a>*@
