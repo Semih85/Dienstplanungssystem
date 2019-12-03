@@ -91,6 +91,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
             List<EczaneNobetGrupAltGrupDetay> eczaneNobetGrupAltGruplar,
             NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
             DateTime nobetUstGrupBaslamaTarihi,
+            int[] ayniGunNobetTutmasiTakipEdilecekGruplar,
+            int[] altGrubuOlanNobetGruplar,
             int indisId);
 
         List<EczaneGrupDetay> AltGruplarlaSiraliNobetListesiniOlusturMersin(
