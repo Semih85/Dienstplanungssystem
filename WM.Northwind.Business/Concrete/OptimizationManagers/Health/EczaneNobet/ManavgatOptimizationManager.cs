@@ -322,21 +322,31 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             if (!altGruplarlaAyniGunNobetTutma.PasifMi)
             {
-                var indisId = eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
+                var indisId = 0;// eczaneGruplar2.Select(s => s.EczaneGrupTanimId).Max();
 
-                var altGrupluTakipEdilecekNobetGrupIdList =
+                var altGrupluTakipEdilecekNobetGrupGorevTipIdList =
                      new List<int> {
-                                   13, //antalya-10
-                                   14  //antalya-11
+                                   64, //manavgat-1
+                                   65  //manavgat-2
                      };
 
-                var eczaneNobetGruplarAltGruplaAyniGun = _eczaneNobetGrupService.GetDetaylar(altGrupluTakipEdilecekNobetGrupIdList, baslangicTarihi, bitisTarihi)
+                var ayniGunNobetTutmasiTakipEdilecekGruplar = new int[]
+                {
+                    65//Manavgat-2
+                };
+
+                var altGrubuOlanNobetGruplar = new int[]
+                {
+                    64//Manavgat-1
+                };
+
+                var eczaneNobetGruplarAltGruplaAyniGun = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(baslangicTarihi, bitisTarihi, altGrupluTakipEdilecekNobetGrupGorevTipIdList)
                         .Where(w => !eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneNobetGrupId).Contains(w.Id)).ToList();
 
                 eczaneNobetSonuclarAltGruplaAyniGun = eczaneNobetSonuclar
-                        .Where(w => altGrupluTakipEdilecekNobetGrupIdList.Contains(w.NobetGrupId)).ToList();
+                        .Where(w => altGrupluTakipEdilecekNobetGrupGorevTipIdList.Contains(w.NobetGrupGorevTipId)).ToList();
 
-                altGruplarlaAyniGunNobetTutmayacakEczaneler = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlustur(eczaneNobetSonuclarAltGruplaAyniGun, eczaneNobetGruplarAltGruplaAyniGun, eczaneNobetGrupAltGruplar, altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, indisId);
+                altGruplarlaAyniGunNobetTutmayacakEczaneler = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlustur(eczaneNobetSonuclarAltGruplaAyniGun, eczaneNobetGruplarAltGruplaAyniGun, eczaneNobetGrupAltGruplar, altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, ayniGunNobetTutmasiTakipEdilecekGruplar, altGrubuOlanNobetGruplar, indisId);
             }
 
             #endregion

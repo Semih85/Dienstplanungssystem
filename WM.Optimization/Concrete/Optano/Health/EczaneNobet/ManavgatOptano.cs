@@ -1076,14 +1076,14 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #region Alt gruplar (aynı gün nöbet)
 
-            var altGrupluTakipEdilecekNobetGrupIdList =
+            var altGrupluTakipEdilecekNobetGrupGorevTipIdList =
                 new List<int> {
-                            13, //antalya-10
-                            14  //antalya-11
+                            64, //manavgat-1
+                            65  //manavgat-2
                 };
             //altGruplarlaAyniGunNobetTutmayacakEczaneNobetTarihAralik
             var eczaneNobetTarihAralikAtlGruplu = data.EczaneNobetTarihAralik
-                .Where(w => altGrupluTakipEdilecekNobetGrupIdList.Contains(w.NobetGrupId)).ToList();
+                .Where(w => altGrupluTakipEdilecekNobetGrupGorevTipIdList.Contains(w.NobetGrupGorevTipId)).ToList();
 
             kpEsGrubaAyniGunNobetYazma.EczaneNobetTarihAralik = eczaneNobetTarihAralikAtlGruplu;
             kpEsGrubaAyniGunNobetYazma.NobetUstGrupKisit = altGruplarlaAyniGunNobetTutma;
@@ -1096,7 +1096,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             foreach (var gunGrup in gunGruplar)
             {
                 kpEsGrubaAyniGunNobetYazma.Tarihler = data.TarihAraligi
-                    .Where(w => altGrupluTakipEdilecekNobetGrupIdList.Contains(w.NobetGrupId)
+                    .Where(w => altGrupluTakipEdilecekNobetGrupGorevTipIdList.Contains(w.NobetGrupGorevTipId)
                              && w.GunGrupId == gunGrup.GunGrupId).ToList();
 
                 var kpEsGrubaAyniGunNobetYazmaGunGrup = (KpEsGrubaAyniGunNobetYazma)kpEsGrubaAyniGunNobetYazma.Clone();
