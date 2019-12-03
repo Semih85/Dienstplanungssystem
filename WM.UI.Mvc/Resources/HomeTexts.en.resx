@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Almanca" xml:space="preserve">
-    <value>Germany</value>
+    <value>German</value>
   </data>
   <data name="AnaSayfa" xml:space="preserve">
     <value>Home Page</value>

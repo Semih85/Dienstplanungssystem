@@ -187,7 +187,8 @@
     <value>Lass uns anfangen.</value>
   </data>
   <data name="HemsireNobetSistemi" xml:space="preserve">
-    <value>Krankenschwester Pflicht</value>
+    <value>Dienstplanungssystem</value>
+    <comment>Krankenschwester Pflicht</comment>
   </data>
   <data name="HerNobetPeriyodundaGrubaYeniKatilan" xml:space="preserve">
     <value>In jeder Dienstzeit kann es eine neue Einrichtung/Person geben, die der Gruppe beigetreten ist oder diese verlassen hat</value>
