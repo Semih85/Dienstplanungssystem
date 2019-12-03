@@ -330,13 +330,23 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                                    14  //antalya-11
                      };
 
+                var ayniGunNobetTutmasiTakipEdilecekGruplar = new int[]
+                {
+                    13//Antalya-10
+                };
+
+                var altGrubuOlanNobetGruplar = new int[]
+                {
+                    14//Antalya-10
+                };
+
                 var eczaneNobetGruplarAltGruplaAyniGun = _eczaneNobetGrupService.GetDetaylar(altGrupluTakipEdilecekNobetGrupIdList, baslangicTarihi, bitisTarihi)
                         .Where(w => !eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneNobetGrupId).Contains(w.Id)).ToList();
 
                 eczaneNobetSonuclarAltGruplaAyniGun = eczaneNobetSonuclar
                         .Where(w => altGrupluTakipEdilecekNobetGrupIdList.Contains(w.NobetGrupId)).ToList();
 
-                altGruplarlaAyniGunNobetTutmayacakEczaneler = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlustur(eczaneNobetSonuclarAltGruplaAyniGun, eczaneNobetGruplarAltGruplaAyniGun, eczaneNobetGrupAltGruplar, altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, indisId);
+                altGruplarlaAyniGunNobetTutmayacakEczaneler = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlustur(eczaneNobetSonuclarAltGruplaAyniGun, eczaneNobetGruplarAltGruplaAyniGun, eczaneNobetGrupAltGruplar, altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, ayniGunNobetTutmasiTakipEdilecekGruplar, altGrubuOlanNobetGruplar, indisId);
             }
 
             #endregion
