@@ -306,7 +306,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             //,"GÜVEN"
                             //,"ELİF"
                             //,"YEDİTEPE"
-                            "NEFES"
+                            "AGÜLOĞLU"
                         };
 
                         if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.EczaneAdi))
@@ -689,6 +689,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                         #region kümülatif en fazla
 
+                        //if (nobetTutamazGunler.Count() > 0
+                        //    && nobetTutulabilenGunKuralId == nobetGunKural.NobetGunKuralId
+                        //    && nobetGunKural.GunGrupId == 3)
+                        //    continue;
+                        //sadece hafta içi tutabilen eczane için gün kural limiti olmayack.
+                        //örn.: istikamet cuma günü diğerlerinden fazla tutabilir.
+
                         var kumulatifOrtalamaGunKuralNobetSayisi = tarihAralik.KumulatifOrtalamaNobetSayisi;
 
                         var gunKuralNobetSayisi = GetToplamGunKuralNobetSayisi(eczaneNobetIstatistik, nobetGunKural.NobetGunKuralId);
@@ -701,13 +708,28 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                         kumulatifEnFazlaIlgiliGunkural = GetNobetGunKuralIlgiliKisitKumulatif(kisitlarAktif, nobetGunKural.NobetGunKuralId);
 
-                        if (haftaIciEnAzVeEnCokNobetSayisiArasindakiFark <= kumulatifEnfazlaHaftaIciDagilimi.SagTarafDegeri && !kumulatifEnfazlaHaftaIciDagilimi.PasifMi)
+                        var kumulatifToplamEnFazla = (KpKumulatifToplam)kpOrtalamaEnFazlaKumulatif.Clone();
+
+                        if (haftaIciEnAzVeEnCokNobetSayisiArasindakiFark >= kumulatifEnfazlaHaftaIciDagilimi.SagTarafDegeri
+                            && gunKuralNobetSayisi >= kumulatifEnfazlaHaftaIciDagilimi.SagTarafDegeri
+                            && !kumulatifEnfazlaHaftaIciDagilimi.PasifMi
+                            && !herAyEnFazlaIlgiliKisit.PasifMi
+                            )
                         {//hafta içi dağılım
-                            if (!nobetGrupGunKurallarAktifGunler.Contains(nobetGunKural.NobetGunKuralId)
-                                 //&& !ozelTurTakibiYapilacakGunler.Contains(gunKural.NobetGunKuralId)
-                                 && haftaIciEnCokVeGunKuralNobetleriArasindakiFark >= 1
-                                 )
-                                kumulatifOrtalamaGunKuralNobetSayisi++;
+
+                            kumulatifOrtalamaGunKuralNobetSayisi = 0;
+
+                            kumulatifToplamEnFazla.GunKuralAdi = nobetGunKural.NobetGunKuralAdi;
+
+                            kumulatifEnFazlaIlgiliGunkural = kumulatifEnfazlaHaftaIciDagilimi;
+
+                            //kumulatifEnFazlaIlgiliGunkural = kumulatifEnfazlaHaftaIciDagilimi;
+
+                            //if (!nobetGrupGunKurallarAktifGunler.Contains(nobetGunKural.NobetGunKuralId)
+                            //     //&& !ozelTurTakibiYapilacakGunler.Contains(gunKural.NobetGunKuralId)
+                            //     && haftaIciEnCokVeGunKuralNobetleriArasindakiFark >= 1
+                            //     )
+                            //    kumulatifOrtalamaGunKuralNobetSayisi++;
 
                             //if (data.CalismaSayisi == 1
                             //    //&& !nobetGrupGunKurallar.Contains(gunKural.NobetGunKuralId)
@@ -730,8 +752,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             //    )
                             //    kumulatifOrtalamaGunKuralNobetSayisi++;
                         }
-
-                        var kumulatifToplamEnFazla = (KpKumulatifToplam)kpOrtalamaEnFazlaKumulatif.Clone();
 
                         kumulatifToplamEnFazla.Tarihler = tarihAralik.TakvimNobetGruplar;
                         kumulatifToplamEnFazla.KumulatifOrtalamaNobetSayisi = kumulatifOrtalamaGunKuralNobetSayisi;
@@ -1156,9 +1176,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var tarihAraligi = data.TarihAraligi
                     .Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
 
-                var tarihAraligiIstisna = tarihAraligi
-                    .Where(w => w.GunGrupId != 2
-                    ).ToList();//istisna -- ekim 2019 sonrası "w.GunGrupId != 2" olarak düeltildi. Öncesinde "w.GunGrupId > 2" idi. bu istisna da mayıs 2020'de son bulacak.
+                var tarihAraligiIstisna = tarihAraligi;
+                    //.Where(w => w.GunGrupId != 2
+                    //).ToList();//istisna -- ekim 2019 sonrası "w.GunGrupId != 2" olarak düeltildi. Öncesinde "w.GunGrupId > 2" idi. bu istisna da mayıs 2020'de son bulacak.
 
                 #region eczane gruplar
 
