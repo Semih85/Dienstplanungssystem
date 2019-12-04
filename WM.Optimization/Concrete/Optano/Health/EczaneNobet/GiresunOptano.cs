@@ -45,27 +45,27 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                  new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 5 },
 
                  //ELİF (cts ve pazar tutabilir)
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 2 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 3 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 4 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 5 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 6 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 2 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 3 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 4 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 5 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1024, NobetGunKuralId = 6 },
 
-                 //AYDINLAR (cts tutabilir)
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 1 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 2 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 3 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 4 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 5 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 6 },
+                 ////AYDINLAR (cts tutabilir)
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 1 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 2 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 3 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 4 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 5 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1022, NobetGunKuralId = 6 },
 
-                 //DERYA (cts tutabilir)
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 1 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 2 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 3 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 4 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 5 },
-                 new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 6 },
+                 ////DERYA (cts tutabilir)
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 1 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 2 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 3 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 4 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 5 },
+                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1023, NobetGunKuralId = 6 },
 
                  //KARABIÇAK (cts tutabilir)
                  //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 1025, NobetGunKuralId = 1 },
@@ -77,11 +77,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             };
 
             var istisnaEczaneler = new string[] {
-                        "AYDINLAR",
-                        "DERYA",
-                        "ELİF",
-                        "KARABIÇAK",
-                        "ZEYNEP" //BUNU SONRADAN KALDIR. KALİBRASYON EKLENECEK
+                        //"AYDINLAR",
+                        //"DERYA",
+                        //"ELİF",
+                        //"KARABIÇAK",
+                        //"ZEYNEP" //BUNU SONRADAN KALDIR. KALİBRASYON EKLENECEK
                     };
 
             #region tur çevrim katsayıları
@@ -294,14 +294,14 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var ortalamaNobetSayisiKumulatif = OrtalamaNobetSayisi(talepEdilenNobetciSayisi + kumulatifToplamNobetSayisi, gruptakiEczaneSayisiIstisnalarHaric);//gruptakiEczaneSayisi
                 var ortalamaNobetSayisiKumulatifHaftaIci = OrtalamaNobetSayisi(talepEdilenNobetciSayisiHaftaIci + kumulatifToplamNobetSayisiHaftaIci, gruptakiEczaneSayisiIstisnalarHaric);
-                var ortalamaNobetSayisiKumulatifCuma = OrtalamaNobetSayisi(talepEdilenNobetciSayisiCuma + kumulatifToplamNobetSayisiCuma, gruptakiEczaneSayisi - 3);
+                var ortalamaNobetSayisiKumulatifCuma = OrtalamaNobetSayisi(talepEdilenNobetciSayisiCuma + kumulatifToplamNobetSayisiCuma, gruptakiEczaneSayisi - 1);
                 var ortalamaNobetSayisiKumulatifCumartesi = OrtalamaNobetSayisi(talepEdilenNobetciSayisiCumartesi
                                                                                 + kumulatifToplamNobetSayisiCumartesi, gruptakiEczaneSayisi);
 
                 var ortalamaNobetSayisiKumulatifCumaVeCumartesi = OrtalamaNobetSayisi(talepEdilenNobetciSayisiCuma
                                                                                       + talepEdilenNobetciSayisiCumartesi
                                                                                       + kumulatifToplamNobetSayisiCumaVeCumartesi, gruptakiEczaneSayisi);
-                var ortalamaNobetSayisiKumulatifPazar = OrtalamaNobetSayisi(talepEdilenNobetciSayisiPazar + kumulatifToplamNobetSayisiPazar, gruptakiEczaneSayisi - 3);
+                var ortalamaNobetSayisiKumulatifPazar = OrtalamaNobetSayisi(talepEdilenNobetciSayisiPazar + kumulatifToplamNobetSayisiPazar, gruptakiEczaneSayisi);
 
                 var ortalamaNobetSayisiKumulatifSon3Ay = OrtalamaNobetSayisi(talepEdilenNobetciSayisi + kumulatifToplamNobetSayisiSon3Ay, gruptakiEczaneSayisi);
                 var ortalamaNobetSayisiKumulatifHaftaIciSon3Ay = OrtalamaNobetSayisi(talepEdilenNobetciSayisiHaftaIci + kumulatifToplamNobetSayisiHaftaIciSon3Ay, gruptakiEczaneSayisi);
@@ -1556,8 +1556,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var kumulatifToplamNobetSayisi = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiToplam);
                 var kumulatifToplamNobetSayisiCumartesiGunduz = eczaneNobetGrupGunKuralIstatistikler.Sum(s => s.NobetSayisiCumartesi);
 
-                var ortalamaNobetSayisiKumulatif = OrtalamaNobetSayisi(talepEdilenNobetciSayisi + kumulatifToplamNobetSayisi, gruptakiEczaneSayisi - 3);//gruptakiEczaneSayisi
-                var ortalamaNobetSayisiKumulatifCumartesiGunduz = OrtalamaNobetSayisi(talepEdilenNobetciSayisiCumartesiGunduz + kumulatifToplamNobetSayisiCumartesiGunduz, gruptakiEczaneSayisi - 3);//gruptakiEczaneSayisi
+                var ortalamaNobetSayisiKumulatif = OrtalamaNobetSayisi(talepEdilenNobetciSayisi + kumulatifToplamNobetSayisi, gruptakiEczaneSayisi);//gruptakiEczaneSayisi
+                var ortalamaNobetSayisiKumulatifCumartesiGunduz = OrtalamaNobetSayisi(talepEdilenNobetciSayisiCumartesiGunduz + kumulatifToplamNobetSayisiCumartesiGunduz, gruptakiEczaneSayisi);//gruptakiEczaneSayisi
                 var ortalamaNobetSayisiKumulatifCumartesiGunduzOrj = ortalamaNobetSayisiKumulatifCumartesiGunduz;
 
                 ;
@@ -1881,7 +1881,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         //|| eczaneNobetGrup.NobetAltGrupId == 17
                         )
                     {//buraya dikkat -- sadece doğu alt grubu için uygunlandı.
-                        ortalamaNobetSayisiKumulatifCumartesiGunduz++;
+                        //ortalamaNobetSayisiKumulatifCumartesiGunduz++;
                     }
                     else
                     {
