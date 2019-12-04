@@ -216,6 +216,9 @@
   <data name="MatematikHayatinIcindeGuzel" xml:space="preserve">
     <value>Matematik hayatın içinde güzel</value>
   </data>
+  <data name="MetaDescription" xml:space="preserve">
+    <value>Nöbetçi Eczane Sistemi, Online Eczane Ekranı ve Hemşire Nöbet Sistemi gibi bir çok alanda en iyi çözümler Nöbet Sistemi'nde.</value>
+  </data>
   <data name="NobetBolgesi" xml:space="preserve">
     <value>Nöbet Bölgesi</value>
   </data>

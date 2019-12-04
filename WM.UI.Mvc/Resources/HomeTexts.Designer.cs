@@ -68,7 +68,18 @@ namespace MultiLanguage {
                 return ResourceManager.GetString("Almanca", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to MetaDescription
+        /// </summary>
+        public static string MetaDescription
+        {
+            get
+            {
+                return ResourceManager.GetString("MetaDescription", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Ana Sayfa.
         /// </summary>
