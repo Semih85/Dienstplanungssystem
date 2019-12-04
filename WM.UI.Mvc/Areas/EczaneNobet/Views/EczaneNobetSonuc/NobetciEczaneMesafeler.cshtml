@@ -18,7 +18,7 @@
 }
 <!-- #endregion -->
 
-    <h4>Nöbetçi Eczaneler Arası Mesafeler</h4>
+<h4>Nöbetçi Eczaneler Arası Mesafeler</h4>
 
 @using (Ajax.BeginForm(null, null, getAjaxOptions, new { @class = "form-inline" }))
 {
@@ -42,16 +42,16 @@
         </div>
 
         @*@Html.LabelFor(model => model.AcilisTarihi, htmlAttributes: new { @class = "control-label" })*@
-   
-            <div class="input-group mr-2 mr-lg-4 mb-3 mb-md-0">
-                <div class="input-group-prepend">
-                    <span class="input-group-text p-2">
-                        <i class="fa fa-map-signs mr-1" aria-hidden="true"></i> <span class="small"> Mesafe (m.) &#8804;</span>
-                    </span>
-                </div>
-                @Html.TextBox("MesafeKriter", (int)ViewBag.MesafeKriteri, new { @class = "form-control text-center p-2", placeHolder = "Mesafe", autocomplete = "off", style = "width:70px;" })
+
+        <div class="input-group mr-2 mr-lg-4 mb-3 mb-md-0">
+            <div class="input-group-prepend">
+                <span class="input-group-text p-2">
+                    <i class="fa fa-map-signs mr-1" aria-hidden="true"></i> <span class="small"> Mesafe (m.) &#8804;</span>
+                </span>
             </div>
-        
+            @Html.TextBox("MesafeKriter", (int)ViewBag.MesafeKriteri, new { @class = "form-control text-center p-2", placeHolder = "Mesafe", autocomplete = "off", style = "width:70px;" })
+        </div>
+
         @*@Html.ValidationMessageFor(model => model.Tarih, "", new { @class = "text-danger" })*@
 
         <div class="form-group mr-2">
@@ -78,15 +78,13 @@
 }
 
 @section Styles{
-    @Styles.Render("~/bundle/bootstrap-select/style")
     @Styles.Render("~/bundle/bootstrap-datepicker/style")
 }
 
 @section Scripts{
-    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
-    @Scripts.Render("~/bundle/validation/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
     @Scripts.Render("~/bundle/ajax")
-    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/validation/scripts")
 
     <script>
         $(function () {
