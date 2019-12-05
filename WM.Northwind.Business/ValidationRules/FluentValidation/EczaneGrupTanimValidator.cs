@@ -17,7 +17,7 @@ namespace WM.Northwind.Business.ValidationRules.FluentValidation
             RuleFor(p => p.ArdisikNobetSayisi).ExclusiveBetween(-1, 300);
             RuleFor(p => p.AyniGunNobetTutabilecekEczaneSayisi).GreaterThan(0);
             RuleFor(p => p.BaslangicTarihi).NotEmpty();
-            RuleFor(p => p.BitisTarihi).Empty();
+            //RuleFor(p => p.BitisTarihi).Empty();
         }
     }
 }
