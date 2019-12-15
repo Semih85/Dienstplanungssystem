@@ -2378,6 +2378,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     nobetGrupGorevTipler = nobetGrupGorevTiplerGunluk;
                 }
 
+                if (nobetGrupGorevTipler.Length - 1 == 0)
+                    continue;
+
                 for (int i = 0; i < nobetGrupGorevTipler.Length - 1; i++)
                 {
                     for (int j = i + 1; j < nobetGrupGorevTipler.Length; j++)
@@ -2441,6 +2444,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             if (nobetUstGrupId == 5//osmaniye
                 || nobetUstGrupId == 4//giresun
+                || nobetUstGrupId == 6//bartın
                 || nobetUstGrupId == 9//çorum
                 || nobetUstGrupId == 11//d.bakır
                 )
