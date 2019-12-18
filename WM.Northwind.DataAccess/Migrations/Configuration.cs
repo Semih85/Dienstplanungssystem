@@ -73,10 +73,10 @@ namespace WM.Northwind.DataAccess.Migrations
             //    }
             //}
 
-            //NobetGrupGorevTipTakvimOzelGunEkle(context, 56);
-            //NobetGrupGorevTipTakvimOzelGunEkle(context, 57);
+            NobetGrupGorevTipTakvimOzelGunEkle(context, 66);
+            NobetGrupGorevTipTakvimOzelGunEkle(context, 67);
             //NobetGrupGorevTipTakvimOzelGunEkle(context, 60);
-
+            ;
             #region örnek
             //var kisitKategoriler = new List<KisitKategori>()
             //                {
@@ -5267,7 +5267,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
         private static void NobetGrupGorevTipTakvimOzelGunEkle(Concrete.EntityFramework.Contexts.EczaneNobetContext context, int nobetGrupGorevTipId)
         {
             var bayramlar2 = context.NobetGrupGorevTipTakvimOzelGunler
-                .Where(w => w.NobetGrupGorevTipGunKural.NobetGrupGorevTip.Id == 55
+                .Where(w => w.NobetGrupGorevTipGunKural.NobetGrupGorevTip.Id == 63
                 //&& w.Takvim.Tarih >= new DateTime(2020, 6, 1)
                 //&& w.Takvim.Tarih < new DateTime(2020, 10, 1)
                 //&& w.NobetOzelGunId != 10 
