@@ -112,7 +112,17 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public JsonResult EditAjax(int id, bool pasifMi, double sagTarafDegeri)
         {
             var kisitOnce = _nobetUstGrupKisitService.GetDetayById(id);
-            var kisitOrj = _nobetUstGrupKisitService.GetById(id);
+            var kisitOrj = new NobetUstGrupKisit
+            {
+                Id = kisitOnce.Id,
+                //Aciklama = kisitOnce,
+                KisitId = kisitOnce.KisitId,
+                NobetUstGrupId = kisitOnce.NobetUstGrupId,
+                PasifMi = kisitOnce.PasifMi,
+                SagTarafDegeri = kisitOnce.SagTarafDegeri,
+                SagTarafDegeriVarsayilan = kisitOnce.SagTarafDegeriVarsayilan,
+                VarsayilanPasifMi = kisitOnce.VarsayilanPasifMi
+            };
 
             //TempData["KisitDuzenleSonuc"] = $"Kısıt: {kisit.KisitId} ({kisit.KisitKategoriAdi} / {kisit.KisitAdiGosterilen})";
 
