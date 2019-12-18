@@ -495,6 +495,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                                     var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
                                       + $"{tarih.Tarih.ToString("dd.MM.yy-ddd.")}"
+                                      + $" {p.NobetGrupGorevTipAdi}"
                                       + $"";
 
                                     var nobetGrupBilgisi = eczaneGrupTanim.EczaneGrupTanimAdi;
@@ -525,6 +526,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                         var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
                                             + $" Öncelikli çözüm, "
                                             + $"{tarih.Tarih.ToString("dd.MM.yy-ddd.")}"
+                                            + $" {p.NobetGrupGorevTipAdi}"
                                             + $"";
 
                                         var nobetGrupBilgisi = eczaneGrupTanim.EczaneGrupTanimAdi;
@@ -560,6 +562,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                     var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
                                        + $"{altLimit.ToString("dd.MM.yy")} - {ustLimit.ToString("dd.MM.yy")}"
                                        + $"({(int)(ustLimit - altLimit).TotalDays} gün)"
+                                       + $" {p.NobetGrupGorevTipAdi}"
                                        + $"";
 
                                     var nobetGrupBilgisi = eczaneGrupTanim.EczaneGrupTanimAdi;
@@ -590,6 +593,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                         var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
                                            + $"Öncelikli çözüm "
                                            + $"{altLimit.ToString("dd.MM.yy")} - {ustLimit.ToString("dd.MM.yy")} ({(int)(ustLimit - altLimit).TotalDays} gün)"
+                                           + $" {p.NobetGrupGorevTipAdi}"
                                            + $"";
 
                                         var nobetGrupBilgisi = eczaneGrupTanim.EczaneGrupTanimAdi;

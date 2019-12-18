@@ -12,7 +12,7 @@ namespace WM.Optimization.Entities.KisitParametre
         public List<TakvimNobetGrup> Tarihler { get; set; }
         public List<EczaneGrupDetay> EczaneGruplar { get; set; }
         public NobetUstGrupKisitDetay NobetUstGrupKisit { get; set; }
-        //public string GunGrupAdi { get; set; }
+        public string NobetGrupGorevTipAdi { get; set; }
 
         public override OptanoKisitParametreModelBase<Model, EczaneNobetTarihAralik> Clone()
         {
