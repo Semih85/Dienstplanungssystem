@@ -211,7 +211,7 @@
     <value>Contact for registration</value>
   </data>
   <data name="KullaniciGirisi" xml:space="preserve">
-    <value>User Sign In</value>
+    <value>Sign In</value>
   </data>
   <data name="MatematikHayatinIcindeGuzel" xml:space="preserve">
     <value>Math is nice in life</value>

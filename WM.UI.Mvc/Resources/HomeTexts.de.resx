@@ -212,7 +212,7 @@
     <value>Kontakt für die Registrierung</value>
   </data>
   <data name="KullaniciGirisi" xml:space="preserve">
-    <value>Benutzer anmelden</value>
+    <value>Anmelden</value>
   </data>
   <data name="MatematikHayatinIcindeGuzel" xml:space="preserve">
     <value>Mathe ist schön im Leben</value>
@@ -293,6 +293,6 @@
     <value>Geplante Zeitplanung</value>
   </data>
   <data name="ZamaniSizeKalsin" xml:space="preserve">
-    <value>Sparen eure Zeit</value>
+    <value>Sparen Ihre Zeit</value>
   </data>
 </root>
