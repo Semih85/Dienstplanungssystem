@@ -1350,8 +1350,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 #endregion
             }
-
-
+            
             #region mesafe
 
             var esGrubaAyniGunNobetYazmaMesafelerTumu = new KpEsGrubaAyniGunNobetYazma
@@ -1611,8 +1610,5 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             }
             return results;
         }
-
-
     }
-
 }
