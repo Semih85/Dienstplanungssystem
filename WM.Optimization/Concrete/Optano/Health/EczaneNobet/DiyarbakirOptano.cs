@@ -90,10 +90,18 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #region Kısıtlar
 
-            var kisitlarAktif = data.NobetUstGrupKisitlar;
+            //var kisitlarAktif = data.NobetUstGrupKisitlar;
 
             foreach (var nobetGrupGorevTip in data.NobetGrupGorevTipler)
             {
+                #region kısıtlar grup bazlı
+
+                var kisitlarGrupBazli = data.NobetGrupGorevTipKisitlar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+
+                var kisitlarAktif = GetKisitlarNobetGrupBazli(data.Kisitlar, kisitlarGrupBazli);
+
+                #endregion
+
                 #region ön hazırlama
 
                 var nobetGrupKurallar = data.NobetGrupKurallar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
@@ -1177,8 +1185,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     .Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
 
                 var tarihAraligiIstisna = tarihAraligi;
-                    //.Where(w => w.GunGrupId != 2
-                    //).ToList();//istisna -- ekim 2019 sonrası "w.GunGrupId != 2" olarak düeltildi. Öncesinde "w.GunGrupId > 2" idi. bu istisna da mayıs 2020'de son bulacak.
+                //.Where(w => w.GunGrupId != 2
+                //).ToList();//istisna -- ekim 2019 sonrası "w.GunGrupId != 2" olarak düeltildi. Öncesinde "w.GunGrupId > 2" idi. bu istisna da mayıs 2020'de son bulacak.
 
                 #region eczane gruplar
 
@@ -1226,8 +1234,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var esGrubaAyniGunNobetYazmaMesafeler = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
                 esGrubaAyniGunNobetYazmaMesafeler.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k59");
-                esGrubaAyniGunNobetYazmaMesafeler.EczaneGruplar = data.MesafeKontrolEczaneler;
+                esGrubaAyniGunNobetYazmaMesafeler.EczaneGruplar = data.MesafeKontrolEczaneler.Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
                 esGrubaAyniGunNobetYazmaMesafeler.Tarihler = tarihAraligiIstisna;
+                esGrubaAyniGunNobetYazmaMesafeler.NobetGrupGorevTipAdi = nobetGrupGorevTip.NobetGrupGorevTipAdi;
 
                 EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaMesafeler);
 
@@ -1341,6 +1350,26 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 #endregion
             }
+
+
+            #region mesafe
+
+            var esGrubaAyniGunNobetYazmaMesafelerTumu = new KpEsGrubaAyniGunNobetYazma
+            {
+                Model = model,
+                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                EczaneNobetSonuclar = data.EczaneGrupNobetSonuclar,
+                Tarihler = data.TarihAraligi,
+                KararDegiskeni = _x,
+                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k59"),
+                EczaneGruplar = data.MesafeKontrolEczaneler,
+                //Tarihler = tarihAraligiIstisna,
+                NobetGrupGorevTipAdi = "Tümü"
+            };
+
+            EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaMesafelerTumu);
+
+            #endregion
 
             #endregion
 
@@ -1469,7 +1498,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                 EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,//.Where(w => w.GunGrupId != 2).ToList(),
                                 EczaneNobetTarihAralikIkiliEczaneler = data.EczaneNobetTarihAralikIkiliEczaneler,
                                 IkiliEczaneler = data.IkiliEczanelerMesafe,
-                                NobetUstGrupKisit = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "k10"),
+                                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k10"),
                                 Tarihler = data.TarihAraligi,//.Where(w => w.GunGrupId != 2).ToList(),
                                 KararDegiskeni = _x,
                                 KararDegiskeniIkiliEczaneler = _y

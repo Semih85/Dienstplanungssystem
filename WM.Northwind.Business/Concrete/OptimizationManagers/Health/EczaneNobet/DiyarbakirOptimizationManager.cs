@@ -39,6 +39,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private INobetDurumService _nobetDurumService;
         private IEczaneUzaklikMatrisService _eczaneUzaklikMatrisService;
         private IEczaneService _eczaneService;
+        private INobetGrupGorevTipKisitService _nobetGrupGorevTipKisitService;
 
         public DiyarbakirOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -64,7 +65,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     IAyniGunTutulanNobetService ayniGunTutulanNobetService,
                     INobetDurumService nobetDurumService,
                     IEczaneUzaklikMatrisService eczaneUzaklikMatrisService,
-                    IEczaneService eczaneService
+                    IEczaneService eczaneService,
+                    INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -91,6 +93,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _nobetDurumService = nobetDurumService;
             _eczaneUzaklikMatrisService = eczaneUzaklikMatrisService;
             _eczaneService = eczaneService;
+            _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
         }
         #endregion
 
@@ -465,7 +468,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 NobetGrupGorevTipler = nobetGrupGorevTipler,
                 NobetGrupTalepler = _nobetGrupTalepService.GetDetaylar(nobetGrupIdListe, baslangicTarihi, bitisTarihi),
                 EczaneNobetGruplar = eczaneNobetGruplarTumu,
-                NobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupId),
+                Kisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupId),
+                NobetGrupGorevTipKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrupId),
+
                 EczaneGrupNobetSonuclar = eczaneGrupNobetSonuclar,
                 EczaneNobetSonuclar = eczaneNobetSonuclarCozulenGruplar,
                 EczaneGrupNobetSonuclarTumu = eczaneNobetSonuclar,
