@@ -41,11 +41,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             var eczaneNobetTutamazGunler = new List<EczaneNobetTutamazGun>
             {
-                 // (cuma, cts, pazar tutabilir)
-                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 2 },
-                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 3 },
-                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 4 },
-                 //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 5 },
+                // (cuma, cts, pazar tutabilir)
+                //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 2 },
+                //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 3 },
+                //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 4 },
+                //new EczaneNobetTutamazGun{ EczaneNobetGrupId = 920, NobetGunKuralId = 5 },
             };
 
             var istisnaEczaneler = new string[] {
@@ -1422,7 +1422,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 //var nobetGrupTalepler = data.NobetGrupTalepler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                #region tarihler
 
                 var tarihler = data.TarihAraligi
                     .Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
@@ -1445,6 +1444,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             GunSayisi = s.Count()
                         }).ToList();
 
+                    #region tarihler
                     var pazarGunleri = tarihler.Where(w => w.NobetGunKuralId == 1).OrderBy(o => o.Tarih).ToList();
                     var bayramlar = tarihler.Where(w => w.GunGrupId == 2).OrderBy(o => o.Tarih).ToList();
                     var haftaIciGunleri = tarihler.Where(w => w.GunGrupId == 3).OrderBy(o => o.Tarih).ToList();
@@ -2151,7 +2151,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     #endregion
 
                 }
-
             }
 
             #endregion
