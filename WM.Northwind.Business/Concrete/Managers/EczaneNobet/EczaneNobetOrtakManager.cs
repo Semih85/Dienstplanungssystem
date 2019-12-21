@@ -2936,7 +2936,6 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             var eczaneNobetSonucSirali = eczaneNobetSonuc.OrderBy(o => o.EczaneNobetGrupId).ThenBy(o => o.Tarih).ToList();
 
-
             foreach (var eczaneNobet in eczaneNobetSonucSirali)
             {
                 var gunGruplar = eczaneNobetSonuc.Select(s => new { s.GunGrupId, s.GunGrupAdi }).Distinct().ToList();
@@ -3042,8 +3041,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             //var nobetAltGruplar = eczaneNobetGrupGunKuralIstatistik.Select(s => s.NobetAltGrupId).Distinct().ToList();
             //var NobetGorevTiler = eczaneNobetGrupGunKuralIstatistik.Select(s => s.NobetGorevTipId).Distinct().ToList();
             //var nobetGunKurallar = eczaneNobetGrupGunKuralIstatistik.Select(w => w.NobetGunKuralId).Distinct().ToList();
-            //var eczane = eczaneNobetGrupGunKuralIstatistik.Where(w => w.NobetGunKuralId == 12).ToList();
-            //var eczane2 = eczane.Where(w => w.EczaneAdi == "TUNA").ToList();
+            //var eczane = eczaneNobetGrupGunKuralIstatistik.Where(w => w.NobetGunKuralId == 7).ToList();
+            //var eczane2 = eczane.Where(w => w.EczaneAdi == "KURŞUN").ToList();
 
             ;
             var nobetUstGrupId = eczaneNobetGrupGunKuralIstatistik.Select(s => s.NobetUstGrupId).Distinct().SingleOrDefault();
@@ -3133,7 +3132,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                        : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
                }).ToList();
 
-            //var eczane = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.EczaneAdi == "EFENDİOĞLU").ToList();
+            //var eczaneIstatistik = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.EczaneAdi == "KURŞUN").ToList();
 
             return eczaneNobetGrupGunKuralIstatistikYatay;
         }
