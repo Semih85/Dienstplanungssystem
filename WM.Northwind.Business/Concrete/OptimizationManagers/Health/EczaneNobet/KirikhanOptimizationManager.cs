@@ -220,7 +220,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var enSonNobetlerSon3Ay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplarTumu, eczaneNobetSonuclarSon3Ay);
 
             var eczaneNobetGrupGunKuralIstatistikYatay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler);
-            var eczaneBazliGunKuralIstatistikYatay = _eczaneNobetOrtakService.GetEczaneBazliGunKuralIstatistikYatay(enSonNobetler);
+            var eczaneBazliGunKuralIstatistikYatay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler);
 
             var eczaneNobetGrupGunKuralIstatistikYataySon3Ay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetlerSon3Ay);
 
