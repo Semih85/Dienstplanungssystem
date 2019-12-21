@@ -159,7 +159,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var fark = p.KumulatifOrtalamaNobetSayisi - p.ToplamNobetSayisi;
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanimKisa}" +
-                    $" {fark} = ort.: {p.KumulatifOrtalamaNobetSayisi} - top.nöb.: {p.ToplamNobetSayisi} " +
+                    $" {fark} = (ort.: {p.KumulatifOrtalamaNobetSayisi} - top.nöb.: {p.ToplamNobetSayisi}) " +
                     //$" {fark} = {p.KumulatifOrtalamaNobetSayisi}-{p.ToplamNobetSayisi} (Kmlt.Ort.-Top.)Nöb." +
                     $"{(p.GunKuralAdi == null ? "" : $" - {p.GunKuralAdi}")}"
                     ;
