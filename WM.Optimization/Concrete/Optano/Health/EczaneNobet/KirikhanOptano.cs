@@ -297,8 +297,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var ortalamaNobetSayisiKumulatif = OrtalamaNobetSayisi(talepEdilenNobetciSayisi + kumulatifToplamNobetSayisi, gruptakiEczaneSayisiIstisnalarHaric);//gruptakiEczaneSayisi
                 var ortalamaNobetSayisiKumulatifHaftaIci = OrtalamaNobetSayisi(talepEdilenNobetciSayisiHaftaIci + kumulatifToplamNobetSayisiHaftaIci, gruptakiEczaneSayisiIstisnalarHaric);
                 var ortalamaNobetSayisiKumulatifCuma = OrtalamaNobetSayisi(talepEdilenNobetciSayisiCuma + kumulatifToplamNobetSayisiCuma, gruptakiEczaneSayisi);
-                var ortalamaNobetSayisiKumulatifCumartesiTumu = OrtalamaNobetSayisi(talepEdilenNobetciSayisiCumartesiTumu
-                                                                                + kumulatifToplamNobetSayisiCumartesi, gruptakiEczaneSayisi);
+                var ortalamaNobetSayisiKumulatifCumartesiTumu = OrtalamaNobetSayisi(talepEdilenNobetciSayisiCumartesiTumu 
+                                                                                  + kumulatifToplamNobetSayisiCumartesiYaz
+                                                                                  + kumulatifToplamNobetSayisiCumartesi, gruptakiEczaneSayisi);
 
                 var ortalamaNobetSayisiKumulatifCumartesiYazveBayramTumu = OrtalamaNobetSayisi(talepEdilenNobetciSayisiCumartesiYaz + talepEdilenNobetciSayisiBayramlar
                                                                             + kumulatifToplamNobetSayisiCumartesiYaz + kumulatifToplamNobetSayisiBayram, gruptakiEczaneSayisi);
@@ -953,10 +954,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     kpKumulatifToplamCumartesiEnFazlaTumGorevTipleri.EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazliTumGrorevTipler;
                     kpKumulatifToplamCumartesiEnFazlaTumGorevTipleri.Tarihler = cumartesiTumGorevTipleri;
-                    kpKumulatifToplamCumartesiEnFazlaTumGorevTipleri.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k21");
+                    kpKumulatifToplamCumartesiEnFazlaTumGorevTipleri.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k84");
                     kpKumulatifToplamCumartesiEnFazlaTumGorevTipleri.ToplamNobetSayisi = eczaneBazliGunKuralIstatistikYatay.NobetSayisiCumartesi;
                     kpKumulatifToplamCumartesiEnFazlaTumGorevTipleri.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifCumartesiTumu;
-                    kpKumulatifToplamCumartesiEnFazlaTumGorevTipleri.GunKuralAdi = "Tüm Görevler";
+                    //kpKumulatifToplamCumartesiEnFazlaTumGorevTipleri.GunKuralAdi = "Tüm Görevler";
 
                     KumulatifToplamEnFazla(kpKumulatifToplamCumartesiEnFazlaTumGorevTipleri);
 
@@ -966,7 +967,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazlaTumGorevTipleriYazCtesiBayram.Tarihler = cumartesiYazveBayramlar;
                     kpKumulatifToplamEnFazlaTumGorevTipleriYazCtesiBayram.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k87");
                     kpKumulatifToplamEnFazlaTumGorevTipleriYazCtesiBayram.ToplamNobetSayisi = eczaneBazliGunKuralIstatistikYatayYazCtesi.NobetSayisiCumartesi
-                                                                                       + eczaneBazliGunKuralIstatistikYatay.NobetSayisiBayram;
+                                                                                            + eczaneBazliGunKuralIstatistikYatay.NobetSayisiBayram;
 
                     kpKumulatifToplamEnFazlaTumGorevTipleriYazCtesiBayram.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifCumartesiYazveBayramTumu;
                     //kpKumulatifToplamCumartesiEnFazlaTumGorevTipleri.GunKuralAdi = "Yaz Cts. ve Bayramlar";
