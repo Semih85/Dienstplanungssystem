@@ -145,14 +145,14 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var kararIndex = p.EczaneNobetTarihAralik
                                    .Where(e => tarihAraligi.Select(s => s.TakvimId).Contains(e.TakvimId)).ToList();
 
-                var durum = "ort";
+                var durum = "ort.";
 
                 if (p.EnAzMi)
                 {
                     if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
                         p.KumulatifOrtalamaNobetSayisi = p.NobetUstGrupKisit.SagTarafDegeri;
 
-                    durum = "enk";
+                    durum = "en az";
                 }
                 else
                 {
@@ -163,7 +163,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var fark = p.KumulatifOrtalamaNobetSayisi - p.ToplamNobetSayisi;
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanimKisa}" +
-                    $" {fark} = ({durum}.: {p.KumulatifOrtalamaNobetSayisi} - top.nöb.: {p.ToplamNobetSayisi}) " +
+                    $" {fark} = ({durum}: {p.KumulatifOrtalamaNobetSayisi} - top.nöb.: {p.ToplamNobetSayisi}) " +
                     //$" {fark} = {p.KumulatifOrtalamaNobetSayisi}-{p.ToplamNobetSayisi} (Kmlt.Ort.-Top.)Nöb." +
                     $"{(p.GunKuralAdi == null ? "" : $" - {p.GunKuralAdi}")}"
                     ;
