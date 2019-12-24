@@ -1,4 +1,8 @@
-﻿@if (Request.IsAuthenticated)
+﻿@{ 
+    var userIcon = "fa fa-lg fa-user-o";
+}
+
+@if (Request.IsAuthenticated)
 {
     //kullanıcı adı ve logout linklerin çıkar
 
@@ -10,9 +14,8 @@
         <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownLoginLink">
             <span class="dropdown-item-text">
                 Merhaba,
-                <a class="btn-link" href="@Url.Action("Edit", "Account",new { area = "", userName = @User.Identity.Name })" 
-                   title="@MultiLanguage.HomeTexts.Duzenle"
-                   >@User.Identity.Name</a>
+                <a class="btn-link" href="@Url.Action("Edit", "Account",new { area = "", userName = @User.Identity.Name })"
+                   title="@MultiLanguage.HomeTexts.Duzenle">@User.Identity.Name</a>
             </span>
             <a class="dropdown-item" href="@Url.Action("Logout", "Account",new { area = "" })"><span class="fa fa-sign-out"></span>@MultiLanguage.HomeTexts.Cikis</a>
         </div>
@@ -25,5 +28,10 @@
 else
 {
     //login ve register linklerini çıkar
-    <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account",new { area = "" })"><span class="fa fa-lg fa-user"></span> @MultiLanguage.HomeTexts.KullaniciGirisi</a></li>
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Login", "Account",new { area = "" })">
+            <span class="@userIcon"></span> 
+            @MultiLanguage.HomeTexts.KullaniciGirisi
+        </a>
+    </li>
 }
