@@ -76,5 +76,6 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public List<KalibrasyonYatay> Kalibrasyonlar { get; set; }
         public List<NobetGrupGorevTipGunKuralDetay> NobetGrupGorevTipGunKurallar { get; set; }
         public List<NobetUstGrupGunGrupDetay> GunGruplar { get; set; }
+        public List<DebugEczaneDetay> DebugYapilacakEczaneler { get; set; }
     }
 }

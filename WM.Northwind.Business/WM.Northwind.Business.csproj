@@ -82,6 +82,7 @@
     <Compile Include="Abstract\EczaneNobet\IAyniGunTutulanNobetService.cs" />
     <Compile Include="Abstract\EczaneNobet\IBayramService.cs" />
     <Compile Include="Abstract\EczaneNobet\IBayramTurService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IDebugEczaneService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneGorevTipService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneGrupTanimTipService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetDegisimService.cs" />
@@ -184,6 +185,7 @@
     <Compile Include="Concrete\Managers\EczaneNobet\BagGrup.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\BayramManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\BayramTurManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\DebugEczaneManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneGorevTipManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneGrupTanimTipManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetDegisimManager.cs" />

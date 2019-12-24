@@ -388,22 +388,14 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     if (kontrol)
                     {
-                        var kontrolEdilecekEczaneler = new string[] {
-                            //"ANNAKKAYA",
-                            //"ELİF", 
-                            "AYDINLAR",
-                            "KARABIÇAK", 
-                            //"IŞIK",
-                            //"YENİYOL"
-                            //"FERİDUNOĞLU"
-                            "DERYA"
-                            //"KADEMOĞLU"
-                        };
+                        var kontrolEdilecekEczaneler = data.DebugYapilacakEczaneler.Select(s => s.EczaneNobetGrupId).ToArray();
 
-                        if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.EczaneAdi))
+                        if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.Id))
                         {
+                            var kontrolEdilenEczane = eczaneNobetGrup.EczaneAdi;
                         }
                     }
+
                     #endregion
 
                     #region eczane bazlı veriler
@@ -1647,19 +1639,14 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     if (kontrol)
                     {
-                        var kontrolEdilecekEczaneler = new string[] {
-                            //"ELİF",
-                            "BİLGİ"
-                            //"ANNAKKAYA",
-                            //"DERYA",
-                            //"KADEMOĞLU",
-                            //"KARABIÇAK"
-                        };
+                        var kontrolEdilecekEczaneler = data.DebugYapilacakEczaneler.Select(s => s.EczaneNobetGrupId).ToArray();
 
-                        if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.EczaneAdi))
+                        if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.Id))
                         {
+                            var kontrolEdilenEczane = eczaneNobetGrup.EczaneAdi;
                         }
                     }
+
                     #endregion
 
                     #region eczane bazlı veriler

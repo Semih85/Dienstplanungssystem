@@ -42,6 +42,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private IKalibrasyonService _kalibrasyonService;
         private INobetUstGrupGunGrupService _nobetUstGrupGunGrupService;
         private IEczaneNobetKisit _eczaneNobetKisit;
+        private IDebugEczaneService _debugEczaneService;
 
         public AlanyaOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -66,7 +67,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
                     IKalibrasyonService kalibrasyonService,
                     INobetUstGrupGunGrupService nobetUstGrupGunGrupService,
-                    IEczaneNobetKisit eczaneNobetKisit
+                    IEczaneNobetKisit eczaneNobetKisit,
+                    IDebugEczaneService debugEczaneService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -92,6 +94,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _kalibrasyonService = kalibrasyonService;
             _nobetUstGrupGunGrupService = nobetUstGrupGunGrupService;
             _eczaneNobetKisit = eczaneNobetKisit;
+            _debugEczaneService = debugEczaneService;
         }
         #endregion
 
@@ -291,6 +294,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             if (baslangicTarihi < nobetUstGrupBaslangicTarihi)
                 throw new Exception($"</strong>Nöbet başlangıç tarihi ({baslangicTarihi.ToShortDateString()}) üst grup başlama tarihinden ({nobetUstGrupBaslangicTarihi.ToShortDateString()}) küçük olamaz.");
+
+            var debugYapilacakEczaneler = _debugEczaneService.GetDetaylarAktifOlanlar(nobetUstGrupId);
 
             var nobetGruplar = _nobetGrupService.GetDetaylar(nobetGrupIdListe).OrderBy(s => s.Id).ToList();
 
@@ -561,7 +566,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
                 IkiliEczaneler = ikiliEczaneler,
                 NobetGrupGorevTipKisitlar = grupBazliKisitlar,
-                Kalibrasyonlar = _kalibrasyonService.GetKalibrasyonlarYatay(nobetUstGrupId)
+                Kalibrasyonlar = _kalibrasyonService.GetKalibrasyonlarYatay(nobetUstGrupId),
+                DebugYapilacakEczaneler = debugYapilacakEczaneler
             };
 
             #region kontrol

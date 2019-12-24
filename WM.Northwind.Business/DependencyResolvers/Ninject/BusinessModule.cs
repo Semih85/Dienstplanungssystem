@@ -260,6 +260,8 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<ILogService>().To<LogManager>().InSingletonScope();
             Bind<ILogDal>().To<EfLogDal>();
 
+            Bind<IDebugEczaneService>().To<DebugEczaneManager>().InSingletonScope();
+            Bind<IDebugEczaneDal>().To<EfDebugEczaneDal>();
 
             #endregion
 

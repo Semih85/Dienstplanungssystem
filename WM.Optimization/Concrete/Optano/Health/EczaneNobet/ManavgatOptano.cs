@@ -298,14 +298,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #region kontrol
 
-                    var kontrol = false;
+                    var kontrol = true;
 
                     if (kontrol)
                     {
-                        var kontrolEdilecekEczaneler = new string[] { "ESRA ÇELİK" };
+                        var kontrolEdilecekEczaneler = data.DebugYapilacakEczaneler.Select(s => s.EczaneNobetGrupId).ToArray();
 
-                        if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.EczaneAdi))
+                        if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.Id))
                         {
+                            var kontrolEdilenEczane = eczaneNobetGrup.EczaneAdi;
                         }
                     }
 

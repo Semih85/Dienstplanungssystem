@@ -36,6 +36,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private IEczaneNobetMuafiyetService _eczaneNobetMuafiyetService;
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
         private INobetGrupGorevTipKisitService _nobetGrupGorevTipKisitService;
+        private IDebugEczaneService _debugEczaneService;
 
         public BartinOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -58,7 +59,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     IEczaneNobetMuafiyetService eczaneNobetMuafiyetService,
                     IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrupService,
                     IAyniGunTutulanNobetService ayniGunTutulanNobetService,
-                    INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService
+                    INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
+                    IDebugEczaneService debugEczaneService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -82,6 +84,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _eczaneNobetGrupAltGrupService = eczaneNobetGrupAltGrupService;
             _ayniGunTutulanNobetService = ayniGunTutulanNobetService;
             _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
+            _debugEczaneService = debugEczaneService;
         }
         #endregion
 
@@ -158,6 +161,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 if (baslangicTarihi < nobetGrupGorevTip.BaslamaTarihi)
                     throw new Exception($"Nöbet başlangıç tarihi <strong>({baslangicTarihi.ToShortDateString()})</strong> grup başlama tarihinden <strong>({nobetGrupGorevTip.BaslamaTarihi.ToShortDateString()})</strong> küçük olamaz.");
             }
+
+            var debugYapilacakEczaneler = _debugEczaneService.GetDetaylarAktifOlanlar(nobetUstGrupId);
 
             var sadeceSiraliNobetYazilacakGruplar = _nobetGrupGorevTipKisitService.GetDetaylarByKisitId(63);//Sadece Sıralı Nöbet Yaz
 
@@ -398,7 +403,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatay,
                 EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
                 IkiliEczaneler = ikiliEczaneler,
-                NobetGrupGorevTipKisitlar = grupBazliKisitlar
+                NobetGrupGorevTipKisitlar = grupBazliKisitlar,
+                DebugYapilacakEczaneler = debugYapilacakEczaneler
             };
 
             //_eczaneNobetOrtakService.KurallariKontrolEtHaftaIciEnAzEnCok(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);

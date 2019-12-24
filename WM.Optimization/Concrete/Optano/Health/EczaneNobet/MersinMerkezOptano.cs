@@ -376,16 +376,18 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 {
                     #region kontrol
 
-                    var kontrol = false;
+                    var kontrol = true;
 
                     if (kontrol)
                     {
-                        var kontrolEdilecekEczaneler = new string[] { "DERYA" };
+                        var kontrolEdilecekEczaneler = data.DebugYapilacakEczaneler.Select(s => s.EczaneNobetGrupId).ToArray();
 
-                        if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.EczaneAdi))
+                        if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.Id))
                         {
+                            var kontrolEdilenEczane = eczaneNobetGrup.EczaneAdi;
                         }
                     }
+
                     #endregion
 
                     #region eczane bazlı veriler

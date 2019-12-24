@@ -62,6 +62,7 @@
     <Compile Include="Abstract\EczaneNobet\IAyniGunTutulanNobetDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IBayramDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IBayramTurDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IDebugEczaneDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneGorevTipDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneGrupTanimTipDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetDegisimDal.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfAyniGunTutulanNobetDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfBayramDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfBayramTurDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfDebugEczaneDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneGorevTipDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneGrupTanimTipDal.cs" />
@@ -215,6 +217,7 @@
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\AyniGunNobetTakipGrupAltGrupMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\AyniGunTutulanNobetMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\BayramTurMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\DebugEczaneMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneGorevTipMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneGrupTanimTipMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneIlceMap.cs" />

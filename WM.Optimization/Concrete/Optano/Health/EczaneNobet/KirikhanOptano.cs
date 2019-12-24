@@ -393,15 +393,18 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     if (kontrol)
                     {
-                        var kontrolEdilecekEczaneler = new string[] {
-                            "BAHADIR",
-                            "SELVİ",
-                            "KAYA",
-                            "KURŞUN"
-                        };
+                        var kontrolEdilecekEczaneler = data.DebugYapilacakEczaneler.Select(s=> s.EczaneNobetGrupId).ToArray();
+                        //    new string[] {
+                        //    "BAHADIR",
+                        //    "SELVİ",
+                        //    "KAYA",
+                        //    "KURŞUN",
+                        //    "KURTULUŞ"
+                        //};
 
-                        if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.EczaneAdi))
+                        if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.Id))
                         {
+                            var kontrolEdilenEczane = eczaneNobetGrup.EczaneAdi;
                         }
                     }
                     #endregion
@@ -934,7 +937,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     kpKumulatifToplamEnFazlaTumGorevTipleri.EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazliTumGrorevTipler;
                     kpKumulatifToplamEnFazlaTumGorevTipleri.Tarihler = tarihlerTumGorevTipleri;
                     kpKumulatifToplamEnFazlaTumGorevTipleri.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k2");
-                    kpKumulatifToplamEnFazlaTumGorevTipleri.ToplamNobetSayisi = eczaneBazliGunKuralIstatistikYatay.NobetSayisiToplam;
+                    kpKumulatifToplamEnFazlaTumGorevTipleri.ToplamNobetSayisi = eczaneBazliGunKuralIstatistikYatay.NobetSayisiToplam + eczaneBazliGunKuralIstatistikYatayYazCtesi.NobetSayisiToplam;
                     kpKumulatifToplamEnFazlaTumGorevTipleri.KumulatifOrtalamaNobetSayisi = ortalamaNobetSayisiKumulatifTumu;
                     kpKumulatifToplamEnFazlaTumGorevTipleri.GunKuralAdi = "Tüm Görevler";
 
@@ -1664,14 +1667,18 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     if (kontrol)
                     {
-                        var kontrolEdilecekEczaneler = new string[] {
-                            "BAHADIR",
-                            "SELVİ",
-                            "KAYA",
-                        };
+                        var kontrolEdilecekEczaneler = data.DebugYapilacakEczaneler.Select(s => s.EczaneNobetGrupId).ToArray();
+                        //    new string[] {
+                        //    "BAHADIR",
+                        //    "SELVİ",
+                        //    "KAYA",
+                        //    "KURŞUN",
+                        //    "KURTULUŞ"
+                        //};
 
-                        if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.EczaneAdi))
+                        if (kontrolEdilecekEczaneler.Contains(eczaneNobetGrup.Id))
                         {
+                            var kontrolEdilenEczane = eczaneNobetGrup.EczaneAdi;
                         }
                     }
                     #endregion
