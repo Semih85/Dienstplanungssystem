@@ -1357,7 +1357,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                 NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k10"),
                                 Tarihler = data.TarihAraligi,
                                 KararDegiskeni = _x,
-                                KararDegiskeniIkiliEczaneler = _y
+                                KararDegiskeniIkiliEczaneler = _y,
+                                EczaneGruplar = data.EczaneGruplar,
+                                NobetGrupKurallar = data.NobetGrupKurallar.Where(w => w.NobetKuralId == 1).ToList()
                             };
                             AyIcindeSadece1KezAyniGunNobetTutulsun(kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
 
@@ -1450,7 +1452,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             //+ $"<br/>Elenen eczane sayısı: <strong>{data.AyIcindeAyniGunNobetTutanEczaneler.Count}</strong>."
                             ;
                     }
-                    
+
                     var celiskiler = results.Celiskiler.Split('*');
 
                     mesaj = CeliskileriTabloyaAktar(data.BaslangicTarihi, data.BitisTarihi, data.CalismaSayisi, iterasyonMesaj, data.NobetGrupGorevTipler, celiskiler);

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComplexTypes\EczaneNobet\DebugEczaneDetay.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\EczaneGrupTanimSayisi.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\NobetciEczaneMesafe.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\NobetciEczaneMesafelerViewModel.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\NobetUstGrupKisitCoklu.cs" />

@@ -896,40 +896,66 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             if (!p.NobetUstGrupKisit.PasifMi)
             {
-                var tarihAraligi = p.Tarihler.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToList();
-                var indis = 1;
+                var tarihAraligi = p.Tarihler
+                    .Select(s => new { s.TakvimId, s.Tarih, s.GunGrupId, s.GunGrupAdi })
+                    .Distinct()
+                    .OrderBy(o => o.TakvimId).ToList();
 
-                foreach (var ikiliEczane in p.IkiliEczaneler)
+                //var cs = new List<Constraint>();
+
+                for (int t = 0; t < p.IkiliEczaneler.Count(); t++)
                 {
+                    #region kontrol
+
+                    if (p.IkiliEczaneler[t].EczaneAdi1 == "GÖKALP" && p.IkiliEczaneler[t].EczaneAdi2 == "PINAR")
+                    {
+                    }
+
+                    #endregion
+
+                    var nobetGrupKurallar = p.NobetGrupKurallar
+                        .Where(w => w.NobetGrupGorevTipId == p.IkiliEczaneler[t].NobetGrupGorevTipId1
+                                 || w.NobetGrupGorevTipId == p.IkiliEczaneler[t].NobetGrupGorevTipId2).ToList();
+
+                    var pespeseGunMax = GetArdisikBosGunSayisiMax(nobetGrupKurallar);
+
                     var kararIndexIkiliEczaneler = p.EczaneNobetTarihAralik
-                             .Where(e => e.EczaneId == ikiliEczane.EczaneId1 || e.EczaneId == ikiliEczane.EczaneId2).ToList();
+                             .Where(e => e.EczaneId == p.IkiliEczaneler[t].EczaneId1 || e.EczaneId == p.IkiliEczaneler[t].EczaneId2).ToList();
+
+                    var ayniEsGruptaOlmaSayisi = GetAyniEsGruptaOlmaSayisi(p.EczaneGruplar, p.IkiliEczaneler[t]);
+
+                    if (AyniEsGruptaOlmaSayisiSifirdanBuyukMu(ayniEsGruptaOlmaSayisi))
+                        continue;
 
                     if (kararIndexIkiliEczaneler.Count > 0)
                     {
-                        foreach (var tarih in tarihAraligi.Take(p.Tarihler.Count - 1))
-                        {
-                            var tarihler2 = tarihAraligi.Where(w => w.Tarih > tarih.Tarih).ToList();
+                        var ikiliEczaneler = $"{p.IkiliEczaneler[t].EczaneAdi1}-{p.IkiliEczaneler[t].EczaneAdi2}";
 
-                            foreach (var tarih2 in tarihler2)
+                        for (int i = 0; i < tarihAraligi.Count - 1 - pespeseGunMax; i++)
+                        {
+                            var tarihIlk = tarihAraligi[i].Tarih.ToShortDateString();
+
+                            for (int j = i + pespeseGunMax; j < tarihAraligi.Count; j++)
                             {
                                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
-                                                 $" 3 {indis}";
+                                    $" {t}"; //.{i}-{j}";
 
-                                var ikiliEczaneler = $"{ikiliEczane.EczaneAdi1}-{ikiliEczane.EczaneAdi2}";
-                                var ikiliTarihler = $"{tarih.Tarih.ToShortDateString()}-{tarih2.Tarih.ToShortDateString()}";
+                                if (tarihAraligi[i].GunGrupId == 1 && tarihAraligi[j].GunGrupId == 1)
+                                    continue;
+
+                                var ikiliTarihler = $"{tarihIlk}-{tarihAraligi[j].Tarih.ToShortDateString()}";
+
+                                var kararIndex = kararIndexIkiliEczaneler
+                                        .Where(e => e.TakvimId == tarihAraligi[i].TakvimId || e.TakvimId == tarihAraligi[j].TakvimId).ToList();
 
                                 var kisitAdi = IsimleriBirlestir(kisitTanim, ikiliEczaneler, ikiliTarihler);
 
-                                var kararIndex = kararIndexIkiliEczaneler
-                                        .Where(e => e.TakvimId == tarih.TakvimId || e.TakvimId == tarih2.TakvimId).ToList();
-
                                 #region kontrol
-                                var kontrol = true;
+                                var kontrol = false;
 
                                 if (kontrol)
                                 {
-                                    var ss = new string[] { "İSTİKAMET", "KURTOĞLU" };
-                                    var sayi = kararIndex.Where(w => w.EczaneAdi == "İSTİKAMET" || w.EczaneAdi == "KURTOĞLU").Count();
+                                    var sayi = kararIndex.Where(w => w.EczaneAdi == "GÖKALP" && w.EczaneAdi == "PINAR").Count();
 
                                     if (sayi > 0)
                                     {
@@ -938,18 +964,113 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                 #endregion
 
                                 var std = 3;
-                                var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                                var exp = Expression.Sum(kararIndex.Select(k => p.KararDegiskeni[k]));
                                 var cns = Constraint.LessThanOrEqual(exp, std);
+                                //cns. = kisitAdi;
                                 cns.LowerBound = 0;
-
                                 p.Model.AddConstraint(cns, kisitAdi);
 
-                                indis++;
+                                //cs.Add(cns);
                             }
                         }
+
+                        //foreach (var tarih in tarihAraligi.Take(p.Tarihler.Count - 1))
+                        //{
+                        //    var tarihler2 = tarihAraligi.Where(w => w.Tarih > tarih.Tarih).ToList();
+
+                        //    foreach (var tarih2 in tarihler2)
+                        //    {
+                        //        var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}" +
+                        //                         $" 3 {indis}";
+
+                        //        var ikiliEczaneler = $"{ikiliEczane.EczaneAdi1}-{ikiliEczane.EczaneAdi2}";
+                        //        var ikiliTarihler = $"{tarih.Tarih.ToShortDateString()}-{tarih2.Tarih.ToShortDateString()}";
+
+                        //        var kisitAdi = IsimleriBirlestir(kisitTanim, ikiliEczaneler, ikiliTarihler);
+
+                        //        var kararIndex = kararIndexIkiliEczaneler
+                        //                .Where(e => e.TakvimId == tarih.TakvimId || e.TakvimId == tarih2.TakvimId).ToList();
+
+                        //        #region kontrol
+                        //        var kontrol = true;
+
+                        //        if (kontrol)
+                        //        {
+                        //            var ss = new string[] { "İSTİKAMET", "KURTOĞLU" };
+                        //            var sayi = kararIndex.Where(w => w.EczaneAdi == "İSTİKAMET" || w.EczaneAdi == "KURTOĞLU").Count();
+
+                        //            if (sayi > 0)
+                        //            {
+                        //            }
+                        //        }
+                        //        #endregion
+
+                        //        var std = 3;
+                        //        var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                        //        var cns = Constraint.LessThanOrEqual(exp, std);
+                        //        cns.LowerBound = 0;
+
+                        //        p.Model.AddConstraint(cns, kisitAdi);
+
+                        //        indis++;
+                        //    }
+                        //}
                     }
+
+                    //p.Model.AddConstraints(cs);
                 }
             }
+        }
+
+        private static int GetArdisikBosGunSayisiMax(List<NobetGrupKuralDetay> nobetGrupKurallar)
+        {
+            var pespeseGunMax = 0;
+
+            if (nobetGrupKurallar.Count > 1)
+            {
+                pespeseGunMax = (int)nobetGrupKurallar.Select(s => s.Deger).Max();
+            }
+            else
+            {
+                pespeseGunMax = (int)nobetGrupKurallar.SingleOrDefault().Deger;
+            }
+
+            return pespeseGunMax;
+        }
+
+        private List<EczaneGrupTanimSayisi> GetAyniEsGruptaOlmaSayisi(List<EczaneGrupDetay> eczaneGrupDetaylar, AyniGunTutulanNobetDetay ikiliEczane)
+        {
+            var eczaneGruplar = eczaneGrupDetaylar
+                .Where(w => w.EczaneId == ikiliEczane.EczaneId1 || w.EczaneId == ikiliEczane.EczaneId2).ToList();
+
+            var ayniEsGruptaOlmaSayisi = eczaneGruplar
+                .Where(w => w.AyniGunNobetTutabilecekEczaneSayisi == 1)
+                .GroupBy(g => new
+                {
+                    g.EczaneGrupTanimId,
+                    g.EczaneGrupTanimAdi
+                })
+                .Select(s => new EczaneGrupTanimSayisi
+                {
+                    EczaneGrupTanimId = s.Key.EczaneGrupTanimId,
+                    EczaneGrupTanimAdi = s.Key.EczaneGrupTanimAdi,
+                    EczaneGrupTanimMiktari = s.Count()
+                })
+                .Where(w => w.EczaneGrupTanimMiktari > 1).ToList();
+
+            return ayniEsGruptaOlmaSayisi;
+        }
+
+        private bool AyniEsGruptaOlmaSayisiSifirdanBuyukMu(List<EczaneGrupTanimSayisi> ayniEsGruptaOlmaSayisi)
+        {
+            var ayniEsGruptaOlmaSayisiSifirdanBuyukMu = false;
+
+            if (ayniEsGruptaOlmaSayisi.Count > 0)
+            {
+                ayniEsGruptaOlmaSayisiSifirdanBuyukMu = ayniEsGruptaOlmaSayisi.Select(S => S.EczaneGrupTanimMiktari).Max() > 0;
+            }
+
+            return ayniEsGruptaOlmaSayisiSifirdanBuyukMu;
         }
 
         /// <summary>
@@ -960,12 +1081,29 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             if (!p.NobetUstGrupKisit.PasifMi)
             {
-                var tarihAraligi = p.Tarihler.Select(s => new { s.TakvimId, s.Tarih }).Distinct().ToArray();
+                var tarihAraligi = p.Tarihler
+                    .Select(s => new { s.TakvimId, s.Tarih, s.GunGrupId, s.GunGrupAdi })
+                    .Distinct()
+                    .OrderBy(o => o.TakvimId).ToArray();
 
                 var indis = 0;
 
                 foreach (var ikiliEczane in p.IkiliEczaneler)
                 {
+                    #region kontrol
+
+                    //if (ikiliEczane.EczaneAdi1 == "NİSA" && ikiliEczane.EczaneAdi2 == "SU")
+                    //{
+                    //}
+
+                    #endregion
+
+                    var nobetGrupKurallar = p.NobetGrupKurallar
+                        .Where(w => w.NobetGrupGorevTipId == ikiliEczane.NobetGrupGorevTipId1
+                                 || w.NobetGrupGorevTipId == ikiliEczane.NobetGrupGorevTipId2).ToList();
+
+                    var pespeseGunMax = GetArdisikBosGunSayisiMax(nobetGrupKurallar);
+
                     var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}";
 
                     var ikiliEczaneler = $"{ikiliEczane.EczaneAdi1}-{ikiliEczane.EczaneAdi2}";
@@ -978,20 +1116,30 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     var kararIndexIkiliEczaneler = p.EczaneNobetTarihAralik
                             .Where(e => (e.EczaneNobetGrupId == ikiliEczane.EczaneNobetGrupId1 || e.EczaneNobetGrupId == ikiliEczane.EczaneNobetGrupId2)).ToList();
 
-                    foreach (var tarih in tarihAraligi)
+                    var ayniEsGruptaOlmaSayisi = GetAyniEsGruptaOlmaSayisi(p.EczaneGruplar, ikiliEczane);
+
+                    if (AyniEsGruptaOlmaSayisiSifirdanBuyukMu(ayniEsGruptaOlmaSayisi))
+                        continue;
+
+                    for (int i = 0; i < tarihAraligi.Length; i++)
                     {
-                        var ikiliTarihler = $"{tarih.Tarih.ToShortDateString()}";
+                        var ikiliTarihler = $"{tarihAraligi[i].Tarih.ToShortDateString()}";
+
+                        //var sonrakiGun = tarihAraligi[i + pespeseGunMax];
+
+                        //if (tarihAraligi[i].GunGrupId == 1 && sonrakiGun.GunGrupId == 1)
+                        //    continue;
 
                         var kisitAdiBuyuktur = IsimleriBirlestir(kisitTanim, ikiliEczaneler, ikiliTarihler, $"{indis} büyüktür");
                         var kisitAdiKucuktur = IsimleriBirlestir(kisitTanim, ikiliEczaneler, ikiliTarihler, $"{indis} küçüktür");
 
                         var kararIndex = kararIndexIkiliEczaneler
-                            .Where(e => e.TakvimId == tarih.TakvimId).ToList();
+                            .Where(e => e.TakvimId == tarihAraligi[i].TakvimId).ToList();
 
                         if (kararIndex.Count == 2)
                         {
                             var kararIndex2 = kararIndex3
-                                    .Where(e => e.TakvimId == tarih.TakvimId).FirstOrDefault();
+                                    .Where(e => e.TakvimId == tarihAraligi[i].TakvimId).FirstOrDefault();
 
                             #region kontrol
                             //var ss = new string[] { "AYDOĞAN", "SARE" };
@@ -1003,12 +1151,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             #endregion
 
                             var std1 = 2 - 2 * (1 - p.KararDegiskeniIkiliEczaneler[kararIndex2]);
-                            var exp1 = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                            var exp1 = Expression.Sum(kararIndex.Select(k => p.KararDegiskeni[k]));
                             var cnsBuyuktur = Constraint.GreaterThanOrEqual(exp1, std1);
                             p.Model.AddConstraint(cnsBuyuktur, kisitAdiBuyuktur);
 
                             var std2 = 1 + 2 * p.KararDegiskeniIkiliEczaneler[kararIndex2];
-                            var exp2 = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                            var exp2 = Expression.Sum(kararIndex.Select(k => p.KararDegiskeni[k]));
                             var cnsKucuktur = Constraint.LessThanOrEqual(exp2, std2);
                             p.Model.AddConstraint(cnsKucuktur, kisitAdiKucuktur);
 
@@ -1018,6 +1166,93 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         {
                         }
                     }
+
+                    //for (int i = 0; i < tarihAraligi.Length - pespeseGunMax; i++)
+                    //{
+                    //    var ikiliTarihler = $"{tarihAraligi[i].Tarih.ToShortDateString()}";
+
+                    //    var sonrakiGun = tarihAraligi[i + pespeseGunMax];
+
+                    //    //if (tarihAraligi[i].GunGrupId == 1 && sonrakiGun.GunGrupId == 1)
+                    //    //    continue;
+
+                    //    var kisitAdiBuyuktur = IsimleriBirlestir(kisitTanim, ikiliEczaneler, ikiliTarihler, $"{indis} büyüktür");
+                    //    var kisitAdiKucuktur = IsimleriBirlestir(kisitTanim, ikiliEczaneler, ikiliTarihler, $"{indis} küçüktür");
+
+                    //    var kararIndex = kararIndexIkiliEczaneler
+                    //        .Where(e => e.TakvimId == tarihAraligi[i].TakvimId).ToList();
+
+                    //    if (kararIndex.Count == 2)
+                    //    {
+                    //        var kararIndex2 = kararIndex3
+                    //                .Where(e => e.TakvimId == sonrakiGun.TakvimId).FirstOrDefault();
+
+                    //        #region kontrol
+                    //        //var ss = new string[] { "AYDOĞAN", "SARE" };
+                    //        //var sayi = kararIndex.Where(w => w.EczaneAdi == "AYDOĞAN" || w.EczaneAdi == "NİSA").Count();
+
+                    //        //if (sayi == 4)
+                    //        //{
+                    //        //} 
+                    //        #endregion
+
+                    //        var std1 = 2 - 2 * (1 - p.KararDegiskeniIkiliEczaneler[kararIndex2]);
+                    //        var exp1 = Expression.Sum(kararIndex.Select(k => p.KararDegiskeni[k]));
+                    //        var cnsBuyuktur = Constraint.GreaterThanOrEqual(exp1, std1);
+                    //        p.Model.AddConstraint(cnsBuyuktur, kisitAdiBuyuktur);
+
+                    //        var std2 = 1 + 2 * p.KararDegiskeniIkiliEczaneler[kararIndex2];
+                    //        var exp2 = Expression.Sum(kararIndex.Select(k => p.KararDegiskeni[k]));
+                    //        var cnsKucuktur = Constraint.LessThanOrEqual(exp2, std2);
+                    //        p.Model.AddConstraint(cnsKucuktur, kisitAdiKucuktur);
+
+                    //        indis++;
+                    //    }
+                    //    else
+                    //    {
+                    //    }
+                    //}
+
+                    //foreach (var tarih in tarihAraligi)
+                    //{
+                    //    var ikiliTarihler = $"{tarih.Tarih.ToShortDateString()}";
+
+                    //    var kisitAdiBuyuktur = IsimleriBirlestir(kisitTanim, ikiliEczaneler, ikiliTarihler, $"{indis} büyüktür");
+                    //    var kisitAdiKucuktur = IsimleriBirlestir(kisitTanim, ikiliEczaneler, ikiliTarihler, $"{indis} küçüktür");
+
+                    //    var kararIndex = kararIndexIkiliEczaneler
+                    //        .Where(e => e.TakvimId == tarih.TakvimId).ToList();
+
+                    //    if (kararIndex.Count == 2)
+                    //    {
+                    //        var kararIndex2 = kararIndex3
+                    //                .Where(e => e.TakvimId == tarih.TakvimId).FirstOrDefault();
+
+                    //        #region kontrol
+                    //        //var ss = new string[] { "AYDOĞAN", "SARE" };
+                    //        //var sayi = kararIndex.Where(w => w.EczaneAdi == "AYDOĞAN" || w.EczaneAdi == "NİSA").Count();
+
+                    //        //if (sayi == 4)
+                    //        //{
+                    //        //} 
+                    //        #endregion
+
+                    //        var std1 = 2 - 2 * (1 - p.KararDegiskeniIkiliEczaneler[kararIndex2]);
+                    //        var exp1 = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                    //        var cnsBuyuktur = Constraint.GreaterThanOrEqual(exp1, std1);
+                    //        p.Model.AddConstraint(cnsBuyuktur, kisitAdiBuyuktur);
+
+                    //        var std2 = 1 + 2 * p.KararDegiskeniIkiliEczaneler[kararIndex2];
+                    //        var exp2 = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                    //        var cnsKucuktur = Constraint.LessThanOrEqual(exp2, std2);
+                    //        p.Model.AddConstraint(cnsKucuktur, kisitAdiKucuktur);
+
+                    //        indis++;
+                    //    }
+                    //    else
+                    //    {
+                    //    }
+                    //}
 
                     var std3 = 1;
                     var exp3 = Expression.Sum(kararIndex3.Select(i => p.KararDegiskeniIkiliEczaneler[i]));
