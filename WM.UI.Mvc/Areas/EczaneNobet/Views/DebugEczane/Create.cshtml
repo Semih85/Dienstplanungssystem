@@ -1,0 +1,73 @@
+﻿@model DebugEczane
+
+@{
+    ViewBag.Title = "Debug Eczane Ekle |  Nöbet Yaz";
+}
+
+<h4>Debug Eczane Ekle</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="card">
+        <div class="card-body">
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @*@Html.LabelFor(model => model.NobetUstGrupId, "Üst Grup", htmlAttributes: new { @class = "control-label col-2" })*@
+
+                    @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new
+                    {
+                        @class = "form-control selectpicker",
+                       //multiple = "true",
+                       //data_width = "auto",
+                       data_actions_box = "true",
+                       mobile = "true",
+                       data_live_search = "true",
+                       //data_selected_text_format = "count > 4",
+                       title = "Eczane Seçiniz..."
+
+                   })
+
+                </div>
+
+
+                <div class="form-group col-md-4">
+                    <div class="custom-control custom-checkbox mb-2">
+                        @Html.CheckBox("AktifMi", new { @class = "custom-control-input" })
+                        <label class="custom-control-label" for="AktifMi">Aktif Mi</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Ekle" class="btn btn-primary" />
+                @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+            </div>
+
+        </div>
+    </div>
+
+}
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @*@Scripts.Render("~/bundle/bootstrap-datepicker/scripts")*@
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/validation/scripts")
+
+    @*@Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")*@
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/validation/scripts")
+    @*@Scripts.Render("~/bundle/globalize/scripts")*@
+
+
+}

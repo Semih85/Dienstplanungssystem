@@ -875,6 +875,11 @@
     <Content Include=".editorconfig" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\NobetciEczaneMesafeler.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\NobetciEczaneMesafelerPartial.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Create.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Delete.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Details.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Edit.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -1187,6 +1192,7 @@
     <Compile Include="Areas\EczaneNobet\Controllers\AyniGunTutulanNobetController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\BayramController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\BayramTurController.cs" />
+    <Compile Include="Areas\EczaneNobet\Controllers\DebugEczaneController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneGrupController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneGrupTanimController.cs" />
