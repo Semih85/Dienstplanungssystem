@@ -20,7 +20,7 @@ namespace WM.Northwind.DataAccess.Migrations
         public Configuration()
         {
             //veri tabanýnda deðiþikliðe izin vermek için istendiði zaman true olacak.
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
             //alan silineceði zaman true olacak. silmede veri kaybýný önlemek için false 
             AutomaticMigrationDataLossAllowed = false;
         }

@@ -17,7 +17,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             //Database.SetInitializer(new EczaneNobetInitializerAlanya());
             //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EczaneNobetContext>());
 
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<EczaneNobetContext, Configuration>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<EczaneNobetContext, Configuration>());
         }
 
         public EczaneNobetContext() : base("Name=EczaneNobetContext")
