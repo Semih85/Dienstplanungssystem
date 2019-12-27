@@ -596,5 +596,16 @@ namespace MultiLanguage {
                 return ResourceManager.GetString("ZamaniSizeKalsin", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Basında Biz.
+        /// </summary>
+        public static string BasindaBiz
+        {
+            get
+            {
+                return ResourceManager.GetString("BasindaBiz", resourceCulture);
+            }
+        }
     }
 }

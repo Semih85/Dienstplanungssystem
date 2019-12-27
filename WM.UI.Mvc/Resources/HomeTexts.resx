@@ -126,6 +126,9 @@
   <data name="AncakIhtiyacaGore" xml:space="preserve">
     <value>Ancak ihtiyaca göre, çok sayıda &lt;b&gt;nöbet kuralları&lt;/b&gt; probleme ilave olmaktadır</value>
   </data>
+  <data name="BasindaBiz" xml:space="preserve">
+    <value>Basında Biz</value>
+  </data>
   <data name="BeniHatırla" xml:space="preserve">
     <value>Beni hatırla</value>
   </data>
