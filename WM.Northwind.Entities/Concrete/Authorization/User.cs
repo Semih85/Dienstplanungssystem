@@ -7,7 +7,6 @@ using WM.Core.Entities;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace WM.Northwind.Entities.Concrete.Authorization
 {
     public class User : IEntity
@@ -48,6 +47,11 @@ namespace WM.Northwind.Entities.Concrete.Authorization
         public DateTime BaslamaTarihi { get; set; }
         [Display(Name = "Bitiş Tarihi")]
         public DateTime? BitisTarihi { get; set; }
+
+        [Display(Name = "Telefon Nu.")]
+        public string TelefonNo { get; set; }
+        [Display(Name = "Telefon")]
+        public string TelefonNumarasi => new Iletisim().GetTelefonNumarasi();
 
         public virtual List<UserRole> UserRoles { get; set; }
         public virtual List<UserEczaneOda> UserEczaneOdalar { get; set; }

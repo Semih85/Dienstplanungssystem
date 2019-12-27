@@ -38,7 +38,7 @@ namespace WM.Northwind.Entities.Concrete
             }
         }
 
-        private string GetTelefonNumarasi()
+        public string GetTelefonNumarasi()
         {
             if (TelefonNo != null && TelefonNo.Length == 10)
             {
