@@ -31,7 +31,7 @@
                 //sil
                 columns.Add().Encoded(false).Sanitized(false).RenderValueAs(html =>
                 {
-                    string htmlStr = "<a  href='/EczaneNobet/EczaneGrup/Delete/" + html.Id.ToString() + "' class='btn btn-outline-danger btn-sm'><span class='fa fa-remove fa-lg'></span></a>";
+                    string htmlStr = "<a onclick='return confirm('Eczane eş grup silinecek! Emin misiniz?');' href='/EczaneNobet/EczaneGrup/Delete/" + html.Id.ToString() + "' class='btn btn-outline-danger btn-sm'><span class='fa fa-remove fa-lg'></span></a>";
                     return MvcHtmlString.Create(htmlStr);
                 }).SetWidth(15);
 

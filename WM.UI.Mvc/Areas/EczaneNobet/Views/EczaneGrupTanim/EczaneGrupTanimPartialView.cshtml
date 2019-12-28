@@ -123,7 +123,8 @@
                                 <div class="collapse d-md-block" id="@target.Remove(0,1)">
                                     <a class="btn btn-outline-primary py-0 btn-sm mr-2" title="Gruba eczane ekle" href="@Url.Action("Create2", "EczaneGrup", new { eczaneGrupTanimId = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-plus"></span></a>
                                     <a class="btn btn-outline-success py-0 btn-sm mr-2" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
-                                    <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                                    <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" onclick="return confirm('Eş grup silinecek! Emin misiniz?');"
+                                       href="@Url.Action("Delete", null, new { id = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
                                 </div>
                             </td>
                             <td>
