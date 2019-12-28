@@ -103,6 +103,13 @@
         </div>
 
         <div class="form-group">
+            <div class="custom-control custom-checkbox mb-2 ml-md-3">
+                @Html.CheckBox("PasifMi", new { @class = "custom-control-input" })
+                <label class="custom-control-label" for="PasifMi">Pasif mi?</label>
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Ekle" class="btn btn-primary" />
                 @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })

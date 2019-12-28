@@ -101,7 +101,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneGrupTanimlarTumu = _eczaneGrupTanimService.GetDetaylar(ustGrupSession.Id);
-                //.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId));
+            //.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId));
 
             var eczaneGrupTanimlar = eczaneGrupTanimlarTumu//.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
                     .Where(p => Regex.Split(Keywords, @"\s")
@@ -166,7 +166,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneGrupTanimlarTumu = _eczaneGrupTanimService.GetDetaylar(ustGrupSession.Id);
-                //.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId));
+            //.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId));
 
             var eczaneGruptanimTipIdListe = eczaneGrupTanimlarTumu.Select(s => s.EczaneGrupTanimTipId).Distinct().ToList();
 
@@ -187,7 +187,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
             var model = eczaneGrupTanimlarTumu //_eczaneGrupTanimService.GetDetaylar()
-                //.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
+                                               //.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
                 .Where(w => (w.EczaneGrupTanimTipId == EczaneGruptanimTipId || EczaneGruptanimTipId == 0));
 
             return View("Index", model);//result:model
@@ -206,7 +206,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneGrupTanimlarTumu = _eczaneGrupTanimService.GetDetaylar(ustGrupSession.Id);
-                //.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId));
+            //.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId));
 
             var eczaneGruptanimTipIdListe = eczaneGrupTanimlarTumu.Select(s => s.EczaneGrupTanimTipId).Distinct().ToList();
 
@@ -227,7 +227,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
             var model = eczaneGrupTanimlarTumu //_eczaneGrupTanimService.GetDetaylar()
-                //.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
+                                               //.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId))
                 .Where(w => w.EczaneGrupTanimTipId == EczaneGruptanimTipId || EczaneGruptanimTipId == 0);
 
             return View("Index", model);//result:model
@@ -241,7 +241,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var eczaneGrupTanimlarTumu = _eczaneGrupTanimService.GetDetaylar(ustGrupSession.Id);
-                //.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId));
+            //.Where(s => nobetUstGruplar.Contains(s.NobetUstGrupId));
 
             var eczaneGruptanimTipIdListe = eczaneGrupTanimlarTumu
                 .Select(s => s.EczaneGrupTanimTipId).Distinct().ToList();
@@ -294,7 +294,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Adi,ArdisikNobetSayisi,Aciklama,BaslangicTarihi,BitisTarihi,NobetUstGrupId,NobetGorevTipId,AyniGunNobetTutabilecekEczaneSayisi,EczaneGrupTanimTipId")] EczaneGrupTanim eczaneGrupTanim)
+        public ActionResult Create([Bind(Include = "Id,Adi,ArdisikNobetSayisi,Aciklama,BaslangicTarihi,BitisTarihi,NobetUstGrupId,NobetGorevTipId,AyniGunNobetTutabilecekEczaneSayisi,EczaneGrupTanimTipId,PasifMi")] EczaneGrupTanim eczaneGrupTanim)
         {
             if (ModelState.IsValid)
             {
@@ -343,7 +343,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Adi,ArdisikNobetSayisi,Aciklama,BaslangicTarihi,BitisTarihi,NobetUstGrupId,NobetGorevTipId,AyniGunNobetTutabilecekEczaneSayisi,EczaneGrupTanimTipId")] EczaneGrupTanim eczaneGrupTanim)
+        public ActionResult Edit([Bind(Include = "Id,Adi,ArdisikNobetSayisi,Aciklama,BaslangicTarihi,BitisTarihi,NobetUstGrupId,NobetGorevTipId,AyniGunNobetTutabilecekEczaneSayisi,EczaneGrupTanimTipId,PasifMi")] EczaneGrupTanim eczaneGrupTanim)
         {
             if (ModelState.IsValid)
             {
@@ -406,15 +406,32 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 foreach (string item in liste)
                 {
-                    var eczaneGrupTanim = new EczaneGrupTanim();
-                    eczaneGrupTanim = _eczaneGrupTanimService.GetById(Convert.ToInt32(item));
-                    eczaneGrupTanim.PasifMi = false;
+                    var eczaneGrupTanimOrj = _eczaneGrupTanimService.GetById(Convert.ToInt32(item));
+
+                    var eczaneGrupTanim = new EczaneGrupTanim
+                    {
+                        Adi = eczaneGrupTanimOrj.Adi,
+                        Aciklama = eczaneGrupTanimOrj.Aciklama,
+                        ArdisikNobetSayisi = eczaneGrupTanimOrj.ArdisikNobetSayisi,
+                        AyniGunNobetTutabilecekEczaneSayisi = eczaneGrupTanimOrj.AyniGunNobetTutabilecekEczaneSayisi,
+                        BaslangicTarihi = eczaneGrupTanimOrj.BaslangicTarihi,
+                        BitisTarihi = eczaneGrupTanimOrj.BitisTarihi,
+                        EczaneGrupTanimTipId = eczaneGrupTanimOrj.EczaneGrupTanimTipId,
+                        Id = eczaneGrupTanimOrj.Id,
+                        NobetGorevTipId = eczaneGrupTanimOrj.NobetGorevTipId,
+                        NobetUstGrupId = eczaneGrupTanimOrj.NobetUstGrupId,
+                        PasifMi = false
+                    };
+
                     _eczaneGrupTanimService.Update(eczaneGrupTanim);
+
                     nobetUstGruplar.Add(Convert.ToInt32(item));
+
                     if (liste.Count() > 1)
                         durumuDegisenEczaneGrupTanimListesi += ", " + eczaneGrupTanim.Adi;
                     else
                         durumuDegisenEczaneGrupTanimListesi += eczaneGrupTanim.Adi;
+
                     foreach (var eczaneGrupTanimDetays in eczaneGrupTanimDetaylar)
                     {
                         if (eczaneGrupTanimDetays.EczaneGrupTanimDetay.Id == Convert.ToInt32(item))
@@ -429,14 +446,24 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var liste2 = eczaneGruplar.Split(',');
             var durumuDegisenEczaneListesi = "";
             //eczaneGrupları update
+
             if (liste2[0].Length > 0)
             {
                 foreach (string item in liste2)
                 {
-                    var eczaneGrup = new EczaneGrup();
-                    eczaneGrup = _eczaneGrupService.GetById(Convert.ToInt32(item));
-                    eczaneGrup.PasifMi = false;
+                    var eczaneGrupOrj = _eczaneGrupService.GetById(Convert.ToInt32(item));
+
+                    var eczaneGrup = new EczaneGrup
+                    {
+                        EczaneGrupTanimId = eczaneGrupOrj.EczaneGrupTanimId,
+                        EczaneId = eczaneGrupOrj.EczaneId,
+                        Id = eczaneGrupOrj.Id,
+                        BirlikteNobetYazilsinMi = eczaneGrupOrj.BirlikteNobetYazilsinMi,
+                        PasifMi = false
+                    };
+
                     _eczaneGrupService.Update(eczaneGrup);
+
                     if (liste2.Count() > 1)
                         durumuDegisenEczaneListesi += ", " + _eczaneService.GetById(eczaneGrup.EczaneId).Adi;
                     else
@@ -507,9 +534,23 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 foreach (string item in liste)
                 {
-                    var eczaneGrupTanim = new EczaneGrupTanim();
-                    eczaneGrupTanim = _eczaneGrupTanimService.GetById(Convert.ToInt32(item));
-                    eczaneGrupTanim.PasifMi = true;
+                    var eczaneGrupTanimOrj = _eczaneGrupTanimService.GetById(Convert.ToInt32(item));
+
+                    var eczaneGrupTanim = new EczaneGrupTanim
+                    {
+                        Adi = eczaneGrupTanimOrj.Adi,
+                        Aciklama = eczaneGrupTanimOrj.Aciklama,
+                        ArdisikNobetSayisi = eczaneGrupTanimOrj.ArdisikNobetSayisi,
+                        AyniGunNobetTutabilecekEczaneSayisi = eczaneGrupTanimOrj.AyniGunNobetTutabilecekEczaneSayisi,
+                        BaslangicTarihi = eczaneGrupTanimOrj.BaslangicTarihi,
+                        BitisTarihi = eczaneGrupTanimOrj.BitisTarihi,
+                        EczaneGrupTanimTipId = eczaneGrupTanimOrj.EczaneGrupTanimTipId,
+                        Id = eczaneGrupTanimOrj.Id,
+                        NobetGorevTipId = eczaneGrupTanimOrj.NobetGorevTipId,
+                        NobetUstGrupId = eczaneGrupTanimOrj.NobetUstGrupId,
+                        PasifMi = true
+                    };
+
                     _eczaneGrupTanimService.Update(eczaneGrupTanim);
                     nobetUstGruplar.Add(Convert.ToInt32(item));
                     if (liste.Count() > 1)
@@ -534,14 +575,24 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 foreach (string item in liste2)
                 {
-                    var eczaneGrup = new EczaneGrup();
-                    eczaneGrup = _eczaneGrupService.GetById(Convert.ToInt32(item));
-                    eczaneGrup.PasifMi = true;
+                    var eczaneGrupOrj = _eczaneGrupService.GetById(Convert.ToInt32(item));
+
+                    var eczaneGrup = new EczaneGrup
+                    {
+                        EczaneGrupTanimId = eczaneGrupOrj.EczaneGrupTanimId,
+                        EczaneId = eczaneGrupOrj.EczaneId,
+                        Id = eczaneGrupOrj.Id,
+                        BirlikteNobetYazilsinMi = eczaneGrupOrj.BirlikteNobetYazilsinMi,
+                        PasifMi = true
+                    };
+
                     _eczaneGrupService.Update(eczaneGrup);
+
                     if (liste2.Count() > 1)
                         durumuDegisenEczaneListesi += ", " + _eczaneService.GetById(eczaneGrup.EczaneId).Adi;
                     else
                         durumuDegisenEczaneListesi += _eczaneService.GetById(eczaneGrup.EczaneId).Adi;
+
                     foreach (var eczaneGrupTanimDetays in eczaneGrupTanimDetaylar)
                     {
                         foreach (var myEczaneGrupDetay in eczaneGrupTanimDetays.EczaneGrupDetaylar)

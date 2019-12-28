@@ -347,7 +347,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EczaneGrupTanimId,EczaneId")] EczaneGrupCoklu eczaneGrupCoklu)
+        public ActionResult Create([Bind(Include = "Id,EczaneGrupTanimId,EczaneId,PasifMi")] EczaneGrupCoklu eczaneGrupCoklu)
         {
             if (ModelState.IsValid)
             {
@@ -452,7 +452,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,EczaneGrupTanimId,EczaneId")] EczaneGrup eczaneGrup)
+        public ActionResult Edit([Bind(Include = "Id,EczaneGrupTanimId,EczaneId,PasifMi")] EczaneGrup eczaneGrup)
         {
             if (ModelState.IsValid)
             {
