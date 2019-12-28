@@ -145,13 +145,16 @@
         $(document).ready(function () {
         
                 $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLocaleLowerCase('tr-TR');
+
+                    var value = $(this).val().toLocaleLowerCase('tr-TR');
+
                     $("#ozelTakvimTablo tr").filter(function () {
-                    $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
-                });
-                if ($(this).val().length == 0) {
-                    getPaging(currentPage)
-                }
+                        $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                    });
+                    
+                    if ($(this).val().length == 0) {
+                        getPaging(currentPage)
+                    }
                 });
 
                 $('#btnExceleAktar').click(function () {
