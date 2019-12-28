@@ -64,8 +64,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 .ThenBy(o => o.NobetGrupAdi)
                 .ThenBy(o => o.NobetAltGrupAdi)
                 .ThenBy(o => o.EczaneAdi)
-                .ToList()
-                ;
+                .ToList();
+
+            var nobetAltGruplar = _nobetAltGrupService.GetDetaylar(nobetUstGrup.Id);
+
+            ViewBag.NobetAltGrupId = new SelectList(nobetAltGruplar, "Id", "Adi");
 
             return View(eczaneNobetGrupAltGruplar);
         }
@@ -74,6 +77,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
             //var nobetGruplar = _nobetGrupService.GetListByUser(user).Select(s => s.Id).ToList();
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
             var eczaneNobetGrupAltGruplar = _eczaneNobetGrupAltGrupService.GetDetaylarByNobetGrupId(nobetGrupId)
                 .OrderBy(o => o.NobetAltGrupAdi)
                 .ThenBy(o => o.EczaneAdi)
@@ -81,6 +86,23 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //s.Where(w => nobetGruplar.Contains(w.NobetGrupId));
 
             return PartialView(eczaneNobetGrupAltGruplar);
+        }
+
+        public ActionResult GetEczaneNobetGrupAltGruplar(int? nobetAltGrupId)
+        {
+            nobetAltGrupId = nobetAltGrupId == null ? 0 : nobetAltGrupId;
+            //var user = _userService.GetByUserName(User.Identity.Name);
+            //var nobetGruplar = _nobetGrupService.GetListByUser(user).Select(s => s.Id).ToList();
+
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var eczaneNobetGrupAltGruplar = _eczaneNobetGrupAltGrupService.GetDetaylar(nobetUstGrup.Id, nobetAltGrupId)
+                .OrderBy(o => o.NobetAltGrupAdi)
+                .ThenBy(o => o.EczaneAdi)
+                .ToList();
+            //s.Where(w => nobetGruplar.Contains(w.NobetGrupId));
+
+            return PartialView("EczaneNobetGrupAltGrupPartial", eczaneNobetGrupAltGruplar);
         }
 
         // GET: EczaneNobet/EczaneNobetGrupAltGrup/Details/5
