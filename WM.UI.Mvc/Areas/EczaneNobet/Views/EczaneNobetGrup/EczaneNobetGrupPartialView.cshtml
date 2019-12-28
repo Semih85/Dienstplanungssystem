@@ -1,0 +1,151 @@
+﻿@model IEnumerable<EczaneNobetGrupDetay>
+
+
+@if (ViewBag.SilinenBayramSayisi != null)
+{
+    <div class="row justify-content-sm-center">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                <i class="fa fa-check"></i> @ViewBag.SilinenBayramSayisi adet bayram silinmiştir.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+@if (Model.Count() > 0)
+{
+    <div id="div1">
+        <table id="gridT" class="table table-hover table-striped table-bordered table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th style="width:10%">
+                        @Html.DisplayNameFor(model => model.EczaneAdi)
+                    </th>
+                    <th style="width:10%">
+                        @Html.DisplayNameFor(model => model.NobetGrupAdi)
+                    </th>
+                    <th style="width:9%">
+                        @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+                    </th>
+                    <th style="width:13%">
+                        @Html.DisplayName("Erken Nöbet Yazılsın Mı?")
+                    </th>
+                    <th style="width:10%">
+                        @Html.DisplayNameFor(model => model.BaslangicTarihi)
+                    </th>
+                    <th style="width:10%">
+                        @Html.DisplayNameFor(model => model.BitisTarihi)
+                    </th>
+                    <th style="width:5%">
+                        Durum
+                    </th>
+                    <th style="width:25%">
+                        @Html.DisplayNameFor(model => model.Aciklama)
+                    </th>
+                    <th style="width:10%"></th>
+                </tr>
+            </thead>
+            <tbody id="eczaneNobetGrupTablo">
+                @foreach (var item in Model)
+                {
+                    <tr class="gridtr">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EczaneAdi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EnErkenTarihteNobetYazilsinMi)
+                        </td>
+                        <td>
+                            @($"{item.BaslangicTarihi.ToString("dd.MM.yyyy, ddd.")}")
+                        </td>
+                        <td>
+                            @($"{(item.BitisTarihi == null ? "" : ((DateTime)item.BitisTarihi).ToString("dd.MM.yyyy, ddd."))}")
+                            @*@Html.DisplayFor(modelItem => item.BitisTarihi)*@
+                        </td>
+                        <td>
+                            @if (item.BitisTarihi != null)
+                            {
+                                <span class="badge badge-danger">
+                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    Pasif
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-success">
+                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    Aktif
+                                </span>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Aciklama)
+                        </td>
+                        <td>
+                            @{
+                                var target = $"#islem{@item.Id}";
+                            }
+                            <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="fa fa-cog"></span>
+                            </button>
+                            <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                                <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                                <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                                <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="...">
+            <ul class="navbar-nav">
+                <li class="nav-link" id="myPaging">
+                </li>
+            </ul>
+            <div class="nav-item">Toplam Kayıt: <span id="toplamKayitSayisi"></span></div>
+        </nav>
+
+    </div>
+}
+else
+{
+    <div class="alert alert-info alert-dismissible fade show mt-2" role="alert">
+        <i class="fa fa-info-circle"></i> Seçilen kritere uygun nöbet grubu kaydı bulunmamaktadır.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@*@section Scripts{
+        @Scripts.Render("~/bundle/ajax")
+        @Scripts.Render("~/bundle/bootstrap-select/scripts")
+        @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    }*@
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#checkAll").click(function () {
+
+            $(".checkBox").prop('checked',
+                $(this).prop('checked'));
+        });
+
+        var model = @Html.Raw(Json.Encode(Model));
+        sayfalamaYap(model, 15);
+    });
+
+</script>
+
+

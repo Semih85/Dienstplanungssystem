@@ -1,8 +1,30 @@
 ﻿@model IEnumerable<EczaneNobetGrupDetay>
 
 @{
-    ViewBag.Title = "Eczane Nöbet Gruplar |  Nöbet Yaz";
+    ViewBag.Title = "Eczane Nöbet Gruplar | Nöbet Sistemi";
+
+    //var postAjaxSecilenleriSil = new AjaxOptions
+    //{
+    //    AllowCache = false,
+
+    //    Url = Url.Action("SecilenleriSil"),
+    //    HttpMethod = "POST",
+    //    UpdateTargetId = "eczaneNobetGruplarListe",
+    //    InsertionMode = InsertionMode.Replace,
+    //    LoadingElementId = "loading"
+    //};
+
+    var getAjaxSearch = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("SearchWithNobetGrupGorevTipId"),
+        HttpMethod = "GET",
+        UpdateTargetId = "eczaneNobetGruplarListe",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "loading"
+    };
 }
+
 
 @*<div class="well">
         <div class="form-inline">
@@ -46,19 +68,54 @@
     </div>
 </div>
 
-
-@*----------------loading gif--------------------*@
-<div class="row">
-    <div class="col-lg-3">
-    </div>
-    <div class="col-lg-4">
-        <div id="loading" align="center" style="margin-top: 10%">
-            <img src="~/Content/images/orig.gif" />
+<div class="row mb-2">
+    <div class="col-4">
+        <div class="form-inline">
+            @using (Ajax.BeginForm(null, null, getAjaxSearch, new { @class = "form-inline mb-2", id = "formTumu" }))
+            {
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="form-group mr-3">
+                            @Html.DropDownList("NobetGrupGorevTipId", null, htmlAttributes: new
+                               {
+                                   @class = "form-control selectpicker",
+                                   //@id = "Id",
+                                   onchange = "myFunction(event)",
+                                   data_width = "auto",
+                                   mobile = "true",
+                                   data_live_search = "true"
+                               }, optionLabel: "Tüm Gruplar")
+                        </div>
+                        <div class="form-group mr-3">
+                            <span class="input-group-btn">
+                                <button type="submit" id="submitSorgula" class="btn btn-primary my-2 pull-right"><i class="fa fa-search"></i> Sorgula</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-    <div class="col-lg-4">
-    </div>
 </div>
+
+@*----------------loading gif--------------------*@
+@*<div class="row">
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-4">
+            <div id="loading" align="center" style="margin-top: 10%">
+                <img src="~/Content/images/orig.gif" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+        </div>
+    </div>*@
+
+
+<div class="spinner-border text-primary" role="status" style="display:none" id="loading">
+    <span class="sr-only">Loading...</span>
+</div>
+
 @if (TempData["EklenenEczane"] != null)
 {
     <div class="row">
@@ -75,131 +132,48 @@
     </div>
 }
 
-<div id="div1" style="visibility:hidden">
-    <table id="gridT" class="table table-hover table-striped table-bordered table-sm">
-        <thead class="thead-light">
-            <tr>
-                <th style="width:10%">
-                    @Html.DisplayNameFor(model => model.EczaneAdi)
-                </th>
-                <th style="width:10%">
-                    @Html.DisplayNameFor(model => model.NobetGrupAdi)
-                </th>
-                <th style="width:7%">
-                    @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
-                </th>
-                <th style="width:13%">
-                    @Html.DisplayName("Erken Nöbet Yazılsın Mı?")
-                </th>
-                <th style="width:10%">
-                    @Html.DisplayNameFor(model => model.BaslangicTarihi)
-                </th>
-                <th style="width:10%">
-                    @Html.DisplayNameFor(model => model.BitisTarihi)
-                </th>
-                <th style="width:5%">
-                    Durum
-                </th>
-                <th style="width:25%">
-                    @Html.DisplayNameFor(model => model.Aciklama)
-                </th>
-                <th style="width:10%"></th>
-            </tr>
-        </thead>
-        <tbody id="eczaneNobetGrupTablo">
-            @foreach (var item in Model)
-            {
-                <tr class="gridtr">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EczaneAdi)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NobetGrupAdi)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EnErkenTarihteNobetYazilsinMi)
-                    </td>
-                    <td>
-                        @($"{item.BaslangicTarihi.ToString("dd.MM.yyyy, ddd.")}")
-                    </td>
-                    <td>
-                        @($"{(item.BitisTarihi == null ? "" : ((DateTime)item.BitisTarihi).ToString("dd.MM.yyyy, ddd."))}")
-                        @*@Html.DisplayFor(modelItem => item.BitisTarihi)*@
-                    </td>
-                    <td>
-                        @if (item.BitisTarihi != null)
-                        {
-                            <span class="badge badge-danger">
-                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                Pasif
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="badge badge-success">
-                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                Aktif
-                            </span>
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Aciklama)
-                    </td>
-                    <td>
-                        @{
-                            var target = $"#islem{@item.Id}";
-                        }
-                        <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="fa fa-cog"></span>
-                        </button>
-                        <div class="collapse d-md-block" id="@target.Remove(0,1)">
-                            <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
-                            <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
-                            <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="...">
-        <ul class="navbar-nav">
-            <li class="nav-link" id="myPaging">
-            </li>
-        </ul>
-        <div class="nav-item">Toplam Kayıt: <span id="toplamKayitSayisi"></span></div>
-    </nav>
+<div class="row">
+    <div class="col">
+        <div id="silinenBayramlar">
 
+        </div>
+    </div>
 </div>
+
+<div class="row">
+    <div class="col">
+        <div id="eczaneNobetGruplarListe">
+            @*@{
+                    Html.RenderAction("EczaneNobetMazeretPartialView", "EczaneNobetMazeret");
+                }*@
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
 @section Scripts{
+    @Scripts.Render("~/bundle/ajax")
     @Scripts.Render("~/bundle/pager")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+
     <script>
         $(document).ready(function () {
-            var model = @Html.Raw(Json.Encode(Model));
 
-            sayfalamaYap(model, 15);
-            veriyiGizleLoadingGifiGoster();
-            function veriyiGizleLoadingGifiGoster() {
-                document.getElementById("div1").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
-                // document.getElementById("div_searching").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
-                document.getElementById("loading").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
-                acilisiGeciktir()
-            }
-            function acilisiGeciktir() {
-                setTimeout(
-                    loadingGifiGizleVeriyiGoster, /* Request next message  */
-                    200 /* ..after ms seconds */
-                );
-            }
-            function loadingGifiGizleVeriyiGoster() {
-                document.getElementById("div1").style.visibility = "visible";//tablo gösterilir
-                // document.getElementById("div_searching").style.visibility = "visible";//sayfa yüklenirken tablo gizlenir
-                document.getElementById("loading").style.visibility = "hidden";//gif gizlenir
-                document.getElementById("loading").style.display = "none";//gif yer kaplamasın
-            }
+            $("#myInput").on("keyup", function () {
+
+                    var value = $(this).val().toLocaleLowerCase('tr-TR');
+
+                    $("#eczaneNobetGrupTablo tr").filter(function () {
+                        $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                    });
+                    
+                    if ($(this).val().length == 0) {
+                        getPaging(currentPage)
+                    }
+            });
 
             $('#btnExceleAktar').click(function () {
                 // alert('ConfirmSubmit')
@@ -208,8 +182,9 @@
                 });
                 exportToExcel();
                 //location.reload();
-                sayfalamaYap(model, 15);
+                //sayfalamaYap(model, 15);
             });
+
             function exportToExcel() {
 
                 var htmls = "";
@@ -240,16 +215,6 @@
                 link.href = uri + base64(format(template, ctx));
                 link.click();
             }
-
-            $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLocaleLowerCase('tr-TR');
-                $("#eczaneNobetGrupTablo tr").filter(function () {
-                    $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
-                });
-                if ($(this).val().length == 0) {
-                    getPaging(currentPage)
-                }
-            });
         });
     </script>
 }

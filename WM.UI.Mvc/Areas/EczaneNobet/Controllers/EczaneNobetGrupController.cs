@@ -70,11 +70,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //    nobetUstGrup = ustGrupSession;
             //}
 
-            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(ustGrupSession.Id)
-                //.GetListByUser(user)
-                .Select(s => s.Id).ToList();
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(ustGrupSession.Id);
 
-            var model = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipler)
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "NobetGrupGorevTipAdi");
+
+            var model = _eczaneNobetGrupService.GetDetaylar(ustGrupSession.Id)
                 .OrderBy(s => s.NobetGorevTipId)
                 .ThenBy(s => s.NobetGrupAdi)
                 .ThenBy(s => s.EczaneAdi).ToList();
@@ -153,6 +153,23 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 .OrderBy(s => s.NobetGrupAdi).ThenBy(s => s.EczaneAdi);
 
             return View("Index", model);//result:model
+        }
+
+        public ActionResult SearchWithNobetGrupGorevTipId(int? nobetGrupGorevTipId = 0)
+        {
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrup.Id)
+                .Where(w => w.Id == nobetGrupGorevTipId || nobetGrupGorevTipId == 0);
+
+            ViewBag.NobetGrupGorevTipId = new SelectList(nobetGrupGorevTipler, "Id", "Adi");
+
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipler.Select(s => s.Id).ToList())
+                .OrderBy(s => s.NobetGorevTipId)
+                .ThenBy(s => s.NobetGrupAdi)
+                .ThenBy(s => s.EczaneAdi).ToList();
+
+            return PartialView("EczaneNobetGrupPartialView", eczaneNobetGruplar);
         }
 
         // POST: EczaneNobet/EczaneNobetGrup/Create
