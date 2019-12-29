@@ -75,6 +75,14 @@ namespace WM.Optimization.Abstract.Health
             int gruptakiEczaneSayisi,
             List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikler,
             List<TakvimNobetGrupGunDegerIstatistik> nobetGunKuralIstatistikler);
+
+        bool KumulatifEnfazlaHafIciDagilimiArasindaFarkVarmi(
+            NobetUstGrupKisitDetay herAyEnFazlaIlgiliKisit,
+            NobetUstGrupKisitDetay kumulatifEnfazlaHaftaIciDagilimi,
+            TakvimNobetGrupGunDegerIstatistik nobetGunKural,
+            int gunKuralNobetSayisi,
+            int haftaIciEnCokVeGunKuralNobetleriArasindakiFark,
+            int haftaIciEnAzVeEnCokNobetSayisiArasindakiFark);
     }
 }
 

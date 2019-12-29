@@ -2960,6 +2960,23 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 .Where(w => w.KalibrasyonTipId > 7).SingleOrDefault() ?? new KalibrasyonYatay();
         }
 
+        public bool KumulatifEnfazlaHafIciDagilimiArasindaFarkVarmi(
+            NobetUstGrupKisitDetay herAyEnFazlaIlgiliKisit,
+            NobetUstGrupKisitDetay kumulatifEnfazlaHaftaIciDagilimi,
+            TakvimNobetGrupGunDegerIstatistik nobetGunKural,
+            int gunKuralNobetSayisi,
+            int haftaIciEnCokVeGunKuralNobetleriArasindakiFark,
+            int haftaIciEnAzVeEnCokNobetSayisiArasindakiFark)
+        {
+            var durum = haftaIciEnAzVeEnCokNobetSayisiArasindakiFark >= kumulatifEnfazlaHaftaIciDagilimi.SagTarafDegeri
+                                         && gunKuralNobetSayisi >= kumulatifEnfazlaHaftaIciDagilimi.SagTarafDegeri
+                                         && haftaIciEnCokVeGunKuralNobetleriArasindakiFark == 0
+                                         && !kumulatifEnfazlaHaftaIciDagilimi.PasifMi
+                                         && !herAyEnFazlaIlgiliKisit.PasifMi
+                                         && nobetGunKural.GunGrupId == 3;
+            return durum;
+        }
+
         #endregion        
     }
 }

@@ -759,11 +759,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                         var kumulatifToplamEnFazla = (KpKumulatifToplam)kpOrtalamaEnFazlaKumulatif.Clone();
 
-                        if (haftaIciEnAzVeEnCokNobetSayisiArasindakiFark >= kumulatifEnfazlaHaftaIciDagilimi.SagTarafDegeri
-                            && gunKuralNobetSayisi >= kumulatifEnfazlaHaftaIciDagilimi.SagTarafDegeri
-                            && !kumulatifEnfazlaHaftaIciDagilimi.PasifMi
-                            && !herAyEnFazlaIlgiliKisit.PasifMi
-                            && nobetGunKural.GunGrupId == 3
+                        if (KumulatifEnfazlaHafIciDagilimiArasindaFarkVarmi(
+                            herAyEnFazlaIlgiliKisit,
+                            kumulatifEnfazlaHaftaIciDagilimi,
+                            nobetGunKural,
+                            gunKuralNobetSayisi,
+                            haftaIciEnCokVeGunKuralNobetleriArasindakiFark,
+                            haftaIciEnAzVeEnCokNobetSayisiArasindakiFark)
                             )
                         {//hafta içi dağılım
 
