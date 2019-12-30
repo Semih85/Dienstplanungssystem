@@ -30,6 +30,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IKirikhanOptimizationService _kirikhanOptimizationService;
         private IDiyarbakirOptimizationService _diyarbakirOptimizationService;
         private IManavgatOptimizationService _manavgatOptimizationService;
+        private IOrduMerkezOptimizationService _orduMerkezOptimizationService;
 
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
@@ -58,6 +59,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                   IKirikhanOptimizationService kirikhanOptimizationService,
                                   IDiyarbakirOptimizationService diyarbakirOptimizationService,
                                   IManavgatOptimizationService manavgatOptimizationService,
+                                  IOrduMerkezOptimizationService orduMerkezOptimizationService,
 
                                   IEczaneNobetGrupService eczaneNobetGrupService,
                                   INobetGrupGorevTipService nobetGrupGorevTipService,
@@ -88,6 +90,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _kirikhanOptimizationService = kirikhanOptimizationService;
             _diyarbakirOptimizationService = diyarbakirOptimizationService;
             _manavgatOptimizationService = manavgatOptimizationService;
+            _orduMerkezOptimizationService = orduMerkezOptimizationService;
 
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _nobetGrupGorevTipService = nobetGrupGorevTipService;
@@ -301,6 +304,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     break;
                 case 12:
                     sonucModel = _manavgatOptimizationService.ModelCoz(eczaneNobetModelCoz);
+                    break;
+                case 13:
+                    sonucModel = _orduMerkezOptimizationService.ModelCoz(eczaneNobetModelCoz);
                     break;
                 default:
                     return RedirectToAction("Index");
