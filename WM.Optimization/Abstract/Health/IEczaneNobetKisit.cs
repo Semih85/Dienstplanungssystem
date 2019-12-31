@@ -11,6 +11,7 @@ namespace WM.Optimization.Abstract.Health
     //where T : class, IDataModel, new() 
     {
         void TalebiKarsila(KpTalebiKarsila talebiKarsilaKisitParametreModel);
+        void TalebiKarsila(KpTalebiKarsila p, TakvimNobetGrup tarih);
         void TarihAraligiOrtalamaEnFazla(KpTarihAraligiOrtalamaEnFazla tarihAraligiOrtalamaEnFazlaKisitParametreModel);
         void PesPeseGorevEnAz(KpPesPeseGorevEnAz kisitParametreModel);
         void EsGruptakiEczanelereAyniGunNobetYazma(KpEsGrubaAyniGunNobetYazma esGrubaAyniGunNobetYazmaKisitParametreModel);

@@ -24,35 +24,40 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             foreach (var tarih in p.Tarihler)
             {
-                var nobetGrupBilgisi = p.NobetGrupGorevTip.NobetUstGrupId == 4
-                    ? IsimleriBirlestir(p.NobetGrupGorevTip.NobetGorevTipAdi)
-                    : p.NobetGrupGorevTip.NobetUstGrupId == 5
-                    ? ""
-                    : p.NobetGrupGorevTip.NobetGrupAdi;
-
-                var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}";// +
-                    //$" {p.KuralAciklama}" +
-                    //$"{enAzNobetSayisi}"
-                    ;
-
-                var kisitAdi = IsimleriBirlestir(kisitTanim
-                    ,
-                    //$"{tarih.NobetGunKuralAdi}" +
-                    $"{tarih.Tarih.ToString("dd.MM.yy-ddd.")}"
-                    //, $""
-                    , tarih.TalepEdilenNobetciSayisi.ToString()
-                    , nobetGrupBilgisi
-                    );
-
-                var kararIndex = p.EczaneNobetTarihAralikTumu
-                    .Where(k => k.TakvimId == tarih.TakvimId).ToList();
-
-                var std = tarih.TalepEdilenNobetciSayisi;
-                var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
-                var cns = Constraint.Equals(exp, std);
-
-                p.Model.AddConstraint(cns, kisitAdi);
+                TalebiKarsila(p, tarih);
             }
+        }
+
+        public virtual void TalebiKarsila(KpTalebiKarsila p, TakvimNobetGrup tarih)
+        {
+            var nobetGrupBilgisi = p.NobetGrupGorevTip.NobetUstGrupId == 4
+                ? IsimleriBirlestir(p.NobetGrupGorevTip.NobetGorevTipAdi)
+                : p.NobetGrupGorevTip.NobetUstGrupId == 5
+                ? ""
+                : p.NobetGrupGorevTip.NobetGrupAdi;
+
+            var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}";// +
+                                                                 //$" {p.KuralAciklama}" +
+                                                                 //$"{enAzNobetSayisi}"
+            ;
+
+            var kisitAdi = IsimleriBirlestir(kisitTanim
+                ,
+                //$"{tarih.NobetGunKuralAdi}" +
+                $"{tarih.Tarih.ToString("dd.MM.yy-ddd.")}"
+                //, $""
+                , tarih.TalepEdilenNobetciSayisi.ToString()
+                , nobetGrupBilgisi
+                );
+
+            var kararIndex = p.EczaneNobetTarihAralikTumu
+                .Where(k => k.TakvimId == tarih.TakvimId).ToList();
+
+            var std = tarih.TalepEdilenNobetciSayisi;
+            var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+            var cns = Constraint.Equals(exp, std);
+
+            p.Model.AddConstraint(cns, kisitAdi);
         }
 
         #endregion
