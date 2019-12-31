@@ -1110,6 +1110,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return (from e in eczaneNobetGruplar
                     from t in takvimNobetGrupGorevTipler
                     where e.NobetGrupGorevTipId == t.NobetGrupGorevTipId
+                    let altGrup = _eczaneNobetGrupAltGrupService.GetDetayByEczaneNobetGrupId(e.Id) ?? new EczaneNobetGrupAltGrupDetay()
                     //e.NobetGrupId == t.NobetGrupId
                     select new EczaneNobetTarihAralik
                     {
@@ -1139,7 +1140,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                         YilSonuMu = t.NobetGunKuralId == 11 ? true : false,
                         ArifeMi = t.NobetGunKuralId == 10 ? true : false,
                         HaftaIciMi = t.GunGrupId == 3 ? true : false,
-                        TalepEdilenNobetciSayisi = t.TalepEdilenNobetciSayisi
+                        TalepEdilenNobetciSayisi = t.TalepEdilenNobetciSayisi,
+                        NobetAltGrupAdi = altGrup.NobetAltGrupAdi,
+                        NobetAltGrupId = altGrup.NobetAltGrupId,
                         //Yil = t.Yil,
                         //Ay = t.Ay,
                         //Gun = t.Gun,
