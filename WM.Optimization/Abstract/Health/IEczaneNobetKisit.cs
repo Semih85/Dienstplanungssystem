@@ -11,8 +11,9 @@ namespace WM.Optimization.Abstract.Health
     //where T : class, IDataModel, new() 
     {
         void TalebiKarsila(KpTalebiKarsila talebiKarsilaKisitParametreModel);
-        void TalebiKarsila(KpTalebiKarsila p, TakvimNobetGrup tarih);
+        void TalebiKarsila(KpTalebiKarsila kpTalebiKarsila, TakvimNobetGrup tarih);
         void TarihAraligiOrtalamaEnFazla(KpTarihAraligiOrtalamaEnFazla tarihAraligiOrtalamaEnFazlaKisitParametreModel);
+        void TarihVeAltGrupBazliEnFazla(KpTarihVeAltGrupBazliEnFazla kpTarihVeAltGrupBazliEnFazla);
         void PesPeseGorevEnAz(KpPesPeseGorevEnAz kisitParametreModel);
         void EsGruptakiEczanelereAyniGunNobetYazma(KpEsGrubaAyniGunNobetYazma esGrubaAyniGunNobetYazmaKisitParametreModel);
         void KumulatifToplamEnFazla(KpKumulatifToplam kumulatifToplamEnFazlaKisitParametreModel);
@@ -21,10 +22,10 @@ namespace WM.Optimization.Abstract.Health
         void IstegiKarsila(KpIstegiKarsila istegiKarsilaKisitParametreModel);
         void PespeseFarkliTurNobetYaz(KpPespeseFarkliTurNobet bayramPespeseFarkliTurKisitParametreModel);
 
-        void HerAyHaftaIciPespeseGorev(KpHerAyHaftaIciPespeseGorev herAyHaftaIciPespeseGorevKisitParametreModel);        
-        void TarihAraligindaEnAz1NobetYaz(KpTarihAraligindaEnAz1NobetYaz tarihAraligindaEnAz1NobetYazKisitParametreModel);        
+        void HerAyHaftaIciPespeseGorev(KpHerAyHaftaIciPespeseGorev herAyHaftaIciPespeseGorevKisitParametreModel);
+        void TarihAraligindaEnAz1NobetYaz(KpTarihAraligindaEnAz1NobetYaz tarihAraligindaEnAz1NobetYazKisitParametreModel);
         void BirEczaneyeAyniGunSadece1GorevYaz(KpAyniGunSadece1NobetTuru ayniGunSadece1NobetTuruKisitParametreModel);
-        void NobetGorevTipineGoreDagilimYap(KpGorevTipineGorevDagilim kisitParametreModel);        
+        void NobetGorevTipineGoreDagilimYap(KpGorevTipineGorevDagilim kisitParametreModel);
         void IstenenEczanelerinNobetGunleriniKisitla(KpIstenenEczanelerinNobetGunleriniKisitla kpIstenenEczanelerinNobetGunleriniKisitla);
         void AyIcindeSadece1KezAyniGunNobetTutulsun(KpAyIcindeSadece1KezAyniGunNobet ayIcindeSadece1KezAyniGunNobetKisitParametreModel);
         void AyIcindeSadece1KezAyniGunNobetTutulsunEczaneBazli(KpAyIcindeSadece1KezAyniGunNobet ayIcindeSadece1KezAyniGunNobetKisitParametreModel);

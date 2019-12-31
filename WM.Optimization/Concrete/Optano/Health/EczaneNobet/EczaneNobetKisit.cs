@@ -47,6 +47,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 $"{tarih.Tarih.ToString("dd.MM.yy-ddd.")}"
                 //, $""
                 , tarih.TalepEdilenNobetciSayisi.ToString()
+                , p.TalepDetay
                 , nobetGrupBilgisi
                 );
 
@@ -134,6 +135,29 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var cns = Constraint.LessThanOrEqual(exp, std);
                 cns.LowerBound = 0;
                 p.Model.AddConstraint(cns, kisitAdi);
+            }
+        }
+
+        public virtual void TarihVeAltGrupBazliEnFazla(KpTarihVeAltGrupBazliEnFazla p)
+        {
+            if (!p.NobetUstGrupKisit.PasifMi)
+            {
+                if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
+                    p.OrtalamaNobetSayisi += p.NobetUstGrupKisit.SagTarafDegeri;
+
+                var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanimKisa}" +
+                    $" {p.OrtalamaNobetSayisi}" +
+                    $" {p.Tarih.Tarih.ToShortDateString()}" +
+                    $"{((p.GunKuralAdi == null || p.GunKuralAdi == "") ? "" : $"- {p.GunKuralAdi}")}"
+                    ;
+
+                var kararIndex = p.EczaneNobetTarihAralik;
+
+                var std = p.OrtalamaNobetSayisi;
+                var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+                var cns = Constraint.LessThanOrEqual(exp, std);
+                cns.LowerBound = 0;
+                p.Model.AddConstraint(cns, kisitTanim);
             }
         }
 
