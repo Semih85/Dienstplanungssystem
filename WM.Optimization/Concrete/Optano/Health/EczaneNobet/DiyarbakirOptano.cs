@@ -309,8 +309,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     talebiKarsilaAltGrup.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k88");
 
-                    foreach (var tarih in tarihler)
+                    for (int i = 0; i < tarihler.Count; i++)
                     {
+                        var tarih = tarihler[i];
+
                         var tarihAltGrup = new TakvimNobetGrup
                         {
                             TalepEdilenNobetciSayisi = (int)talebiKarsilaAltGrup.NobetUstGrupKisit.SagTarafDegeri,
