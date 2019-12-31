@@ -172,6 +172,7 @@
     <Compile Include="Entities\KisitParametre\KpTalebiKarsila.cs" />
     <Compile Include="Entities\KisitParametre\KpIstenenEczanelerinNobetGunleriniKisitla.cs" />
     <Compile Include="Entities\KisitParametre\KpBase.cs" />
+    <Compile Include="Entities\KisitParametre\KpTarihVeAltGrupBazliEnFazla.cs" />
     <Compile Include="Entities\KisitParametre\KpTarihAraligiOrtalamaEnFazla.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

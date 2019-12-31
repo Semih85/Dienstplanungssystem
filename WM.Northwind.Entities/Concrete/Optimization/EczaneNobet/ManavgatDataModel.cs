@@ -63,5 +63,6 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public int TimeLimit { get; set; }
         public List<KalibrasyonYatay> Kalibrasyonlar { get; set; }
         public List<DebugEczaneDetay> DebugYapilacakEczaneler { get; set; }
+        public List<NobetAltGrupDetay> NobetAltGruplar { get; set; }
     }
 }

@@ -103,6 +103,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var tarihler = data.TarihAraligi
                     .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
+                var gunGruplarGrupBazli = tarihler
+                    .Select(s => new { s.GunGrupId, s.GunGrupAdi })
+                    .Distinct()
+                    .OrderBy(o => o.GunGrupId).ToList();
+
                 var nobetGrupTalepler = tarihler
                     .GroupBy(g => g.TalepEdilenNobetciSayisi)
                     .Select(s => new
@@ -280,17 +285,78 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 #region talep
 
-                var talebiKarsilaKisitParametreModel = new KpTalebiKarsila
+                var talebiKarsila = new KpTalebiKarsila
                 {
-                    EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli,
                     NobetGrupGorevTip = nobetGrupGorevTip,
-                    Tarihler = tarihler,
                     Model = model,
-                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k89"),
-                    KararDegiskeni = _x
+                    KararDegiskeni = _x,
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k89")
                 };
 
-                TalebiKarsila(talebiKarsilaKisitParametreModel);
+                foreach (var gunGrup in gunGruplarGrupBazli)
+                {
+                    var tarihlerGunGrupBazli = tarihler.Where(w => w.GunGrupId == gunGrup.GunGrupId).ToArray();
+
+                    for (int i = 0; i < tarihlerGunGrupBazli.Length; i++)
+                    {
+                        var tarih = tarihlerGunGrupBazli[i];
+
+                        var mod6 = i % 6;
+
+                        switch (mod6)
+                        {
+                            case 0:
+                                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 53 || w.NobetAltGrupId == 54).ToList();
+                                break;
+                            case 1:
+                                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 56 || w.NobetAltGrupId == 57).ToList();
+                                break;
+                            case 2:
+                                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 53 || w.NobetAltGrupId == 56).ToList();
+                                break;
+                            case 3:
+                                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 54 || w.NobetAltGrupId == 57).ToList();
+                                break;
+                            case 4:
+                                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 53 || w.NobetAltGrupId == 57).ToList();
+                                break;
+                            case 5:
+                                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 54 || w.NobetAltGrupId == 57).ToList();
+                                break;
+                        }
+
+                        TalebiKarsila(talebiKarsila, tarih);
+                    }
+                }
+
+                var altGruplar = data.NobetAltGruplar;
+
+                var tarihVeAltGrupBazliEnFazla = new KpTarihVeAltGrupBazliEnFazla
+                {
+                    Model = model,
+                    KararDegiskeni = _x,
+                    OrtalamaNobetSayisi = 1,
+                    NobetUstGrupKisit = new NobetUstGrupKisitDetay { KisitKategoriAdi = "Talep", KisitAdiGosterilen = "Gerekli Nöbetçi Eczane Sayısı", KisitId = -1 }
+                };
+
+                for (int i = 0; i < tarihler.Count; i++)
+                {
+                    var tarih = tarihler[i];
+
+                    tarihVeAltGrupBazliEnFazla.Tarih = tarih;
+
+                    var eczaneNobetTarihAralikGrupBazliTarihBazli = eczaneNobetTarihAralikGrupBazli.Where(w => w.TakvimId == tarih.TakvimId).ToList();
+
+                    foreach (var altGrup in altGruplar)
+                    {
+                        tarihVeAltGrupBazliEnFazla.GunKuralAdi = altGrup.Adi;
+
+                        tarihVeAltGrupBazliEnFazla.EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazliTarihBazli
+                            .Where(w => w.NobetAltGrupId == altGrup.Id).ToList();
+
+                        TarihVeAltGrupBazliEnFazla(tarihVeAltGrupBazliEnFazla);
+                    }
+                }
 
                 #endregion
 
@@ -1017,7 +1083,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     }
                     #endregion
 
-                    #endregion                    
+                    #endregion
                 }
 
                 #region istek ve mazeretler

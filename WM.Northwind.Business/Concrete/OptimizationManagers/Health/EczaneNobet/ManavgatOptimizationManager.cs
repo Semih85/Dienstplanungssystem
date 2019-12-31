@@ -43,6 +43,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private INobetGrupGorevTipTakvimOzelGunService _nobetGrupGorevTipTakvimOzelGunService;
         private IKalibrasyonService _kalibrasyonService;
         private IDebugEczaneService _debugEczaneService;
+        private INobetAltGrupService _nobetAltGrupService;
 
         public ManavgatOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -70,7 +71,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     INobetGrupGorevTipGunKuralService nobetGrupGorevTipGunKuralService,
                     INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService,
                     IKalibrasyonService kalibrasyonService,
-                    IDebugEczaneService debugEczaneService
+                    IDebugEczaneService debugEczaneService,
+                    INobetAltGrupService nobetAltGrupService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -99,6 +101,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _nobetGrupGorevTipTakvimOzelGunService = nobetGrupGorevTipTakvimOzelGunService;
             _kalibrasyonService = kalibrasyonService;
             _debugEczaneService = debugEczaneService;
+            _nobetAltGrupService = nobetAltGrupService;
         }
         #endregion
 
@@ -359,6 +362,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupId);
             var grupBazliKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrupId);
 
+            var nobetAltGruplar = _nobetAltGrupService.GetDetaylar(nobetUstGrupId);
+
             var dataModel = new ManavgatDataModel()
             {
                 Yil = eczaneNobetDataModelParametre.YilBitis,
@@ -394,7 +399,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
                 NobetGrupGorevTipKisitlar = grupBazliKisitlar,
                 Kalibrasyonlar = _kalibrasyonService.GetKalibrasyonlarYatay(nobetUstGrupId),
-                DebugYapilacakEczaneler = debugYapilacakEczaneler
+                DebugYapilacakEczaneler = debugYapilacakEczaneler,
+                NobetAltGruplar = nobetAltGruplar
             };
 
             var sure_toplam = stopwatch.Elapsed;
