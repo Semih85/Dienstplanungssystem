@@ -60,15 +60,15 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
             ? $"K0{KisitId}"
             : $"K{KisitId}";
 
-        public string KisitKategorisi => KisitId > 0
+        public string KisitKategorisi => KisitId != 0
             ? $"{(KisitKategoriAdi == "A Genel" ? KisitKategoriAdi.Substring(2) : KisitKategoriAdi)}"
             : "";
 
-        public string KisitTanim => KisitId > 0
+        public string KisitTanim => KisitId != 0
             ? $"{KisitKodu}, {KisitKategorisi}, {KisitAdiGosterilen},"
             : "";
 
-        public string KisitTanimKisa => KisitId > 0
+        public string KisitTanimKisa => KisitId != 0
             ? $"{KisitKodu}, {KisitKategorisi}, {KisitAdiGosterilenKisa},"
             : "";
 
