@@ -41,6 +41,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private IEczaneService _eczaneService;
         private INobetGrupGorevTipKisitService _nobetGrupGorevTipKisitService;
         private IDebugEczaneService _debugEczaneService;
+        private INobetAltGrupService _nobetAltGrupService;
 
         public DiyarbakirOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -68,7 +69,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     IEczaneUzaklikMatrisService eczaneUzaklikMatrisService,
                     IEczaneService eczaneService,
                     INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
-                    IDebugEczaneService debugEczaneService
+                    IDebugEczaneService debugEczaneService,
+                    INobetAltGrupService nobetAltGrupService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -97,6 +99,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _eczaneService = eczaneService;
             _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
             _debugEczaneService = debugEczaneService;
+            _nobetAltGrupService = nobetAltGrupService;
         }
         #endregion
 
@@ -442,6 +445,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe);
 
+            var nobetAltGruplar = _nobetAltGrupService.GetDetaylar(nobetUstGrupId);
+
             var dataModel = new DiyarbakirDataModel()
             {
                 Yil = eczaneNobetDataModelParametre.YilBaslangic,
@@ -491,7 +496,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 MesafeKontrolEczaneler = mesafeKontrolEczaneler,
                 SonrakiDonemAyniGunNobetIstekGirilenler = sonrakiDonemAyniGunNobetIstekGirilenler,
                 EczaneNobetIsteklerSonrakiDonem = eczaneNobetIsteklerSonrakiDonem,
-                DebugYapilacakEczaneler = debugYapilacakEczaneler
+                DebugYapilacakEczaneler = debugYapilacakEczaneler,
+                NobetAltGruplar = nobetAltGruplar
             };
 
             //_eczaneNobetOrtakService.KurallariKontrolEtHaftaIciEnAzEnCok(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);
