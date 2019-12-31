@@ -439,7 +439,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupId);
             var grupBazliKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrupId);
 
-            var mersinMerkezDataModel = new MersinMerkezDataModelV2()
+            var dataModel = new MersinMerkezDataModelV2()
             {
                 Yil = yilBitis,
                 Ay = ayBitis,
@@ -495,7 +495,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _eczaneNobetOrtakService.KurallariKontrolEtMazeretIstek(nobetUstGrupId, eczaneNobetMazeretler, eczaneNobetIstekler);
             _eczaneNobetOrtakService.KurallariKontrolEtIstek(nobetUstGrupId, eczaneNobetIstekler, nobetGrupKurallar);
 
-            return mersinMerkezDataModel;
+            return dataModel;
         }
 
         [LogAspect(typeof(DatabaseLogger))]
