@@ -30,7 +30,12 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     ? ""
                     : p.NobetGrupGorevTip.NobetGrupAdi;
 
-                var kisitAdi = IsimleriBirlestir("K00, Gerekli Nöbetçi Eczane Sayısı"
+                var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}";// +
+                    //$" {p.KuralAciklama}" +
+                    //$"{enAzNobetSayisi}"
+                    ;
+
+                var kisitAdi = IsimleriBirlestir(kisitTanim
                     ,
                     //$"{tarih.NobetGunKuralAdi}" +
                     $"{tarih.Tarih.ToString("dd.MM.yy-ddd.")}"

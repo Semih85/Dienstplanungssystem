@@ -375,6 +375,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli,
                     NobetGrupGorevTip = nobetGrupGorevTip,
                     Tarihler = tarihler,
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k89"),
                     Model = model,
                     KararDegiskeni = _x
                 };
@@ -1625,6 +1626,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     NobetGrupGorevTip = nobetGrupGorevTip,
                     Tarihler = ilgiliTarihler,
                     Model = model,
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k89"),
                     KararDegiskeni = _x
                 };
                 TalebiKarsila(talebiKarsilaKisitParametreModel);

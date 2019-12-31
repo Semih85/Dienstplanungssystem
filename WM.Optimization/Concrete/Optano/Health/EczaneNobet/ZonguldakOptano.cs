@@ -335,6 +335,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     NobetGrupGorevTip = nobetGrupGorevTip,
                     Tarihler = tarihler,
                     Model = model,
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k89"),
                     KararDegiskeni = _x
                 };
 

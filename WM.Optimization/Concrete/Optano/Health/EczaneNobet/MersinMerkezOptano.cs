@@ -353,7 +353,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 //nobetGunKuralDetaylar.Add(GetNobetGunKuralHaftaIciToplam(data, nobetGrup.Id, gruptakiNobetciSayisi, cozulenAydakiHaftaIciToplamNobetSayisi));
                 #endregion
 
-                #region talebi karşıla
+                #region talep
 
                 var talebiKarsilaKisitParametreModel = new KpTalebiKarsila
                 {
@@ -361,6 +361,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     NobetGrupGorevTip = nobetGrupGorevTip,
                     Tarihler = tarihler,
                     Model = model,
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k89"),
                     KararDegiskeni = _x
                 };
 
