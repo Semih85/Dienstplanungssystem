@@ -855,7 +855,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             int nobetGrupGorevTipId,
             int[] takvimIdList)
         {
-            var tarihler =  GetTakvimNobetGruplarByNobetGrupGorevTipId(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId)
+            var tarihler = GetTakvimNobetGruplarByNobetGrupGorevTipId(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId)
                     .Where(w => takvimIdList.Contains(w.TakvimId)).ToList();
 
             return GetTakvimNobetGrupGunKuralIstatistik(tarihler);
@@ -1107,10 +1107,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
         private List<EczaneNobetTarihAralik> GetEczaneNobetTarihAralik(List<TakvimNobetGrup> takvimNobetGrupGorevTipler, List<EczaneNobetGrupDetay> eczaneNobetGruplar)
         {
+            var nobetGrupGorevTipler = eczaneNobetGruplar.Select(s => s.NobetGrupGorevTipId).Distinct().ToArray();
+
+            var eczaneNobetGrupAltGruplar = _eczaneNobetGrupAltGrupService.GetDetaylarByNobetGrupGorevTipId(nobetGrupGorevTipler);
+
             return (from e in eczaneNobetGruplar
                     from t in takvimNobetGrupGorevTipler
                     where e.NobetGrupGorevTipId == t.NobetGrupGorevTipId
-                    let altGrup = _eczaneNobetGrupAltGrupService.GetDetayByEczaneNobetGrupId(e.Id) ?? new EczaneNobetGrupAltGrupDetay()
+                    let altGrup = eczaneNobetGrupAltGruplar.SingleOrDefault(x => x.EczaneNobetGrupId == e.Id) ?? new EczaneNobetGrupAltGrupDetay()
                     //e.NobetGrupId == t.NobetGrupId
                     select new EczaneNobetTarihAralik
                     {
