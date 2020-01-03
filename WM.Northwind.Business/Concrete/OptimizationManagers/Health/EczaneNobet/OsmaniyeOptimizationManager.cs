@@ -329,7 +329,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetGrupIdListe);
             var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe);
 
-            var osmaniyeDataModel = new OsmaniyeDataModel()
+            var dataModel = new OsmaniyeDataModel()
             {
                 Yil = eczaneNobetDataModelParametre.YilBaslangic,
                 Ay = eczaneNobetDataModelParametre.AyBitis,
@@ -377,7 +377,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _eczaneNobetOrtakService.KurallariKontrolEtMazeretIstek(nobetUstGrupId, eczaneNobetMazeretler, eczaneNobetIstekler);
             _eczaneNobetOrtakService.KurallariKontrolEtIstek(nobetUstGrupId, eczaneNobetIstekler, nobetGrupKurallar);
 
-            return osmaniyeDataModel;
+            return dataModel;
         }
 
         [LogAspect(typeof(DatabaseLogger))]

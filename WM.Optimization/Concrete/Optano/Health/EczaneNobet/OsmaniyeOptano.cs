@@ -1576,6 +1576,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                 IkiliEczaneler = data.IkiliEczaneler,//.Where(w => w.NobetGorevTipId1 == 2 && w.NobetGorevTipId2 == 2).ToList(),
                                 NobetUstGrupKisit = NobetUstGrupKisit(data.NobetUstGrupKisitlar, "k10"),
                                 Tarihler = data.TarihAraligi,//.Where(w => w.GunGrupId == 4 || w.GunGrupId == 1).ToList(),
+                                EczaneGruplar = data.EczaneGruplar,
+                                NobetGrupKurallar = data.NobetGrupKurallar.Where(w => w.NobetKuralId == 1).ToList(),
                                 KararDegiskeni = _x
                             };
                             AyIcindeSadece1KezAyniGunNobetTutulsunEczaneBazli(ayIcindeSadece1KezAyniGunNobetKisit);
