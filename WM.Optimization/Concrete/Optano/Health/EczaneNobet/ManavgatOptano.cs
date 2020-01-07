@@ -106,7 +106,19 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var gunGruplarGrupBazli = tarihler
                     .Select(s => new { s.GunGrupId, s.GunGrupAdi })
                     .Distinct()
-                    .OrderBy(o => o.GunGrupId).ToList();
+                    .OrderBy(o => o.GunGrupId).ToArray();
+
+                var gunGruplarGrupBazli2 = new List<NobetUstGrupGunGrupDetay>();
+
+                for (int i = 0; i < gunGruplarGrupBazli.Length; i++)
+                {
+                    gunGruplarGrupBazli2.Add(new NobetUstGrupGunGrupDetay
+                    {
+                        GunGrupId = gunGruplarGrupBazli[i].GunGrupId,
+                        GunGrupAdi = gunGruplarGrupBazli[i].GunGrupAdi,
+                        NobetUstGrupId = data.NobetUstGrupId
+                    });
+                }
 
                 var nobetGrupTalepler = tarihler
                     .GroupBy(g => g.TalepEdilenNobetciSayisi)
@@ -297,41 +309,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 TalebiKarsila(talebiKarsila);
 
-                //foreach (var gunGrup in gunGruplarGrupBazli)
-                //{
-                //    var tarihlerGunGrupBazli = tarihler.Where(w => w.GunGrupId == gunGrup.GunGrupId).ToArray();
-
-                //    for (int i = 0; i < tarihlerGunGrupBazli.Length; i++)
-                //    {
-                //        var tarih = tarihlerGunGrupBazli[i];
-
-                //        var mod6 = i % 6;
-
-                //        switch (mod6)
-                //        {
-                //            case 0:
-                //                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 53 || w.NobetAltGrupId == 54).ToList();
-                //                break;
-                //            case 1:
-                //                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 56 || w.NobetAltGrupId == 57).ToList();
-                //                break;
-                //            case 2:
-                //                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 53 || w.NobetAltGrupId == 56).ToList();
-                //                break;
-                //            case 3:
-                //                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 54 || w.NobetAltGrupId == 57).ToList();
-                //                break;
-                //            case 4:
-                //                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 53 || w.NobetAltGrupId == 57).ToList();
-                //                break;
-                //            case 5:
-                //                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 54 || w.NobetAltGrupId == 57).ToList();
-                //                break;
-                //        }
-
-                //        TalebiKarsila(talebiKarsila, tarih);
-                //    }
-                //}
+                //TalepKisitlariniOlusturAltGrupBazli(tarihler, gunGruplarGrupBazli2, eczaneNobetTarihAralikGrupBazli, talebiKarsila);
 
                 var altGruplar = data.NobetAltGruplar;
 
@@ -343,24 +321,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     NobetUstGrupKisit = new NobetUstGrupKisitDetay { KisitKategoriAdi = "Talep", KisitAdiGosterilen = "Gerekli Nöbetçi Eczane Sayısı", KisitId = -1 }
                 };
 
-                for (int i = 0; i < tarihler.Count; i++)
-                {
-                    var tarih = tarihler[i];
-
-                    tarihVeAltGrupBazliEnFazla.Tarih = tarih;
-
-                    var eczaneNobetTarihAralikGrupBazliTarihBazli = eczaneNobetTarihAralikGrupBazli.Where(w => w.TakvimId == tarih.TakvimId).ToList();
-
-                    foreach (var altGrup in altGruplar)
-                    {
-                        tarihVeAltGrupBazliEnFazla.GunKuralAdi = altGrup.Adi;
-
-                        tarihVeAltGrupBazliEnFazla.EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazliTarihBazli
-                            .Where(w => w.NobetAltGrupId == altGrup.Id).ToList();
-
-                        TarihVeAltGrupBazliEnFazla(tarihVeAltGrupBazliEnFazla);
-                    }
-                }
+                HerGunAyniAltGruptanEnFazla1NobetciOlsun(tarihler, eczaneNobetTarihAralikGrupBazli, altGruplar, tarihVeAltGrupBazliEnFazla);
 
                 #endregion
 
@@ -1174,6 +1135,80 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             #endregion
 
             return model;
+        }
+
+        private void HerGunAyniAltGruptanEnFazla1NobetciOlsun(
+            List<TakvimNobetGrup> tarihler,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralikGrupBazli,
+            List<NobetAltGrupDetay> altGruplar,
+            KpTarihVeAltGrupBazliEnFazla tarihVeAltGrupBazliEnFazla)
+        {
+            for (int i = 0; i < tarihler.Count; i++)
+            {
+                var tarih = tarihler[i];
+
+                tarihVeAltGrupBazliEnFazla.Tarih = tarih;
+
+                var eczaneNobetTarihAralikGrupBazliTarihBazli = eczaneNobetTarihAralikGrupBazli.Where(w => w.TakvimId == tarih.TakvimId).ToList();
+
+                foreach (var altGrup in altGruplar)
+                {
+                    tarihVeAltGrupBazliEnFazla.GunKuralAdi = altGrup.Adi;
+
+                    tarihVeAltGrupBazliEnFazla.EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazliTarihBazli
+                        .Where(w => w.NobetAltGrupId == altGrup.Id).ToList();
+
+                    TarihVeAltGrupBazliEnFazla(tarihVeAltGrupBazliEnFazla);
+                }
+            }
+        }
+
+        private void TalepKisitlariniOlusturAltGrupBazli(
+            List<TakvimNobetGrup> tarihler,
+            List<NobetUstGrupGunGrupDetay> gunGruplarGrupBazli2,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralikGrupBazli,
+            KpTalebiKarsila talebiKarsila)
+        {
+            foreach (var gunGrup in gunGruplarGrupBazli2)
+            {
+                var tarihlerGunGrupBazli = tarihler.Where(w => w.GunGrupId == gunGrup.GunGrupId).ToArray();
+
+                for (int i = 0; i < tarihlerGunGrupBazli.Length; i++)
+                {
+                    var tarih = tarihlerGunGrupBazli[i];
+
+                    var mod6 = i % 6;
+
+                    switch (mod6)
+                    {
+                        case 0:
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskeniIlgiliAltGruplar(eczaneNobetTarihAralikGrupBazli, 53, 54);
+                            break;
+                        case 1:
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskeniIlgiliAltGruplar(eczaneNobetTarihAralikGrupBazli, 56, 57);
+                            break;
+                        case 2:
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskeniIlgiliAltGruplar(eczaneNobetTarihAralikGrupBazli, 53, 56);
+                            break;
+                        case 3:
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskeniIlgiliAltGruplar(eczaneNobetTarihAralikGrupBazli, 54, 57);
+                            break;
+                        case 4:
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskeniIlgiliAltGruplar(eczaneNobetTarihAralikGrupBazli, 53, 57);
+                            break;
+                        case 5:
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskeniIlgiliAltGruplar(eczaneNobetTarihAralikGrupBazli, 54, 57);
+                            break;
+                    }
+
+                    TalebiKarsila(talebiKarsila, tarih);
+                }
+            }
+        }
+
+        private List<EczaneNobetTarihAralik> GetKararDegiskeniIlgiliAltGruplar(List<EczaneNobetTarihAralik> eczaneNobetTarihAralikGrupBazli, int nobetAltGrupId1, int nobetAltGrupId2)
+        {
+            return eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == nobetAltGrupId1 || w.NobetAltGrupId == nobetAltGrupId2).ToList();
         }
 
         public EczaneNobetSonucModel Solve(ManavgatDataModel data)
