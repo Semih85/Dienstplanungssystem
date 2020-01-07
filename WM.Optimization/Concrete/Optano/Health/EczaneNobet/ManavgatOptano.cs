@@ -1182,22 +1182,22 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     switch (mod6)
                     {
                         case 0:
-                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskeniIlgiliAltGruplar(eczaneNobetTarihAralikGrupBazli, 53, 54);
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskenindenAltGruplariFiltrele(eczaneNobetTarihAralikGrupBazli, new int[] { 53, 54 });
                             break;
                         case 1:
-                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskeniIlgiliAltGruplar(eczaneNobetTarihAralikGrupBazli, 56, 57);
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskenindenAltGruplariFiltrele(eczaneNobetTarihAralikGrupBazli, new int[] { 56, 57 });
                             break;
                         case 2:
-                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskeniIlgiliAltGruplar(eczaneNobetTarihAralikGrupBazli, 53, 56);
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskenindenAltGruplariFiltrele(eczaneNobetTarihAralikGrupBazli, new int[] { 53, 56 });
                             break;
                         case 3:
-                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskeniIlgiliAltGruplar(eczaneNobetTarihAralikGrupBazli, 54, 57);
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskenindenAltGruplariFiltrele(eczaneNobetTarihAralikGrupBazli, new int[] { 54, 57 });
                             break;
                         case 4:
-                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskeniIlgiliAltGruplar(eczaneNobetTarihAralikGrupBazli, 53, 57);
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskenindenAltGruplariFiltrele(eczaneNobetTarihAralikGrupBazli, new int[] { 53, 57 });
                             break;
                         case 5:
-                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskeniIlgiliAltGruplar(eczaneNobetTarihAralikGrupBazli, 54, 57);
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskenindenAltGruplariFiltrele(eczaneNobetTarihAralikGrupBazli, new int[] { 54, 57 });
                             break;
                     }
 
@@ -1206,9 +1206,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             }
         }
 
-        private List<EczaneNobetTarihAralik> GetKararDegiskeniIlgiliAltGruplar(List<EczaneNobetTarihAralik> eczaneNobetTarihAralikGrupBazli, int nobetAltGrupId1, int nobetAltGrupId2)
+        private List<EczaneNobetTarihAralik> GetKararDegiskenindenAltGruplariFiltrele(List<EczaneNobetTarihAralik> eczaneNobetTarihAralikGrupBazli, int[] nobetAltGrupIdList)
         {
-            return eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == nobetAltGrupId1 || w.NobetAltGrupId == nobetAltGrupId2).ToList();
+            return eczaneNobetTarihAralikGrupBazli.Where(w => nobetAltGrupIdList.Contains(w.NobetAltGrupId)).ToList();
         }
 
         public EczaneNobetSonucModel Solve(ManavgatDataModel data)
