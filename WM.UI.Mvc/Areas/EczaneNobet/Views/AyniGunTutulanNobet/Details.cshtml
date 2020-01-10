@@ -1,0 +1,58 @@
+﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.AyniGunTutulanNobet
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>AyniGunTutulanNobet</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneNobetGrupId1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneNobetGrupId1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneNobetGrupId2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneNobetGrupId2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnSonAyniGunNobetTakvimId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnSonAyniGunNobetTakvimId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AyniGunNobetSayisi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AyniGunNobetSayisi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AyniGunNobetTutamayacaklariGunSayisi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AyniGunNobetTutamayacaklariGunSayisi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

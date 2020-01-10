@@ -1,0 +1,38 @@
+﻿
+@model System.Web.Mvc.HandleErrorInfo
+@{
+    ViewBag.Title = "Error";
+}
+
+
+<div class="container">
+    <div class="col-md-12">
+        <div class="alert alert-danger">
+            <b> Üzgünüz, işleminiz esnasında bir hata oluştu. <i class="fa fa-frown-o" aria-hidden="true"></i></b>
+        </div>
+        <hr />
+        <div>
+            <b>
+                Hata:
+            </b>
+            @Html.Raw(Model.Exception.Message)
+            <br />
+            <b>Action: </b> @Model.ActionName
+            <br />
+            <b>Controller: </b> @Model.ControllerName
+            @if (@Model.Exception.InnerException != null)
+            {
+                <br />
+                <b>InnerException: </b> @Model.Exception.InnerException
+            }
+            @if (@Model.Exception.StackTrace != null)
+            {
+                <br />
+                <b>StackTrace: </b>
+                <br />
+                <pre class="alert-light">@Model.Exception.StackTrace </pre>
+            }
+            @*<pre> @Model.Exception.InnerException</pre>*@
+        </div>
+    </div>
+</div>

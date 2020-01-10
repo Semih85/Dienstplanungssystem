@@ -1,0 +1,34 @@
+﻿@model IEnumerable<WM.Northwind.Entities.Concrete.Authorization.Role>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Rol</h2>
+
+<p>
+    @Html.ActionLink("Ekle", "Create")
+</p>
+<table class="table table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-success btn-sm fa fa-edit fa-lg" })
+            @Html.ActionLink(" ", "Details", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm fa fa-info-circle fa-lg" })
+            @Html.ActionLink(" ", "Delete", new { id = item.Id }, new { @class = "btn btn-outline-danger btn-sm fa fa-remove fa-lg" })
+        </td>
+    </tr>
+}
+
+</table>

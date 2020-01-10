@@ -1,0 +1,180 @@
+﻿@model IEnumerable<NobetUstGrupKisitDetay>
+
+@{
+                /**/
+
+                ViewBag.Title = "Nöbet Üst Grup Kısıtlar | Nöbet Sistemi";
+}
+
+<div class="form-inline">
+    <h4 class="mr-5">Nöbet Üst Grup Kısıtlar</h4>
+    <div class="form-group mr-5">
+        <a class="btn btn-outline-success btn-sm pull-right" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+    </div>
+    <div class="input-group mr-5">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+        </div>
+        <input type="text" id="myInput" class="form-control" placeholder="Ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+    </div>
+    <a class="btn btn-outline-primary ml-5" href="@Url.Action("VarsayilanKisitlar", null, new { area= "EczaneNobet" })"><span class="fa fa-check-square-o"></span> Varsayılan kısıtlar</a>
+</div>
+
+@if (ViewBag.Sonuc1 != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa fa-check"></i> <strong>@ViewBag.KisitDuzenleSonuc </strong> başarılı bir şekilde güncellenmiştir.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@*<h4>
+        Nöbet Üst Grup Kısıtlar
+        @if (ViewBag.RolId < 3)
+        {
+            <a class="btn btn-outline-success btn-sm ml-5" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+        }
+
+        <a class="btn btn-outline-primary pull-right mt-1" href="@Url.Action("VarsayilanKisitlar", null, new { area= "EczaneNobet" })"><span class="fa fa-check-square-o"></span> Varsayılan kısıtlar</a>
+    </h4>*@
+<hr />
+<!-- #region ModelCoz form -->
+<!-- #endregion -->
+
+
+<table class="table table-sm table-hover">
+    <thead class="thead-light">
+        <tr>
+            <th style="width:5%">
+                @Html.DisplayName("KısıtId")
+            </th>
+            <th style="width:13%">
+                @Html.DisplayName("Kategori")
+            </th>
+            <th style="width:8%">
+                @Html.DisplayNameFor(model => model.KisitAdi)
+            </th>
+            <th style="width:30%">
+                @Html.DisplayName("Açıklama")
+                @*@Html.DisplayNameFor(model => model.KisitAciklama)*@
+            </th>
+            <th>
+                @Html.DisplayName("Std")
+                @*@Html.DisplayNameFor(model => model.SagTarafDegeri)*@
+            </th>
+            <th style="width:5%">
+                @Html.DisplayName("Std Vrs")
+                @*@Html.DisplayNameFor(model => model.SagTarafDegeri)*@
+            </th>
+            @if (ViewBag.RolId < 3)
+            {
+                <th>
+                    @Html.DisplayName("Üst Grup")
+                </th>
+            }
+            <th>
+                @Html.DisplayName("Durum")
+            </th>
+            <th>
+                @Html.DisplayName("Varsayılan")
+            </th>
+            <th style="width:15%"></th>
+        </tr>
+    </thead>
+    <tbody id="kisitTablo">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @(item.KisitId < 10 ? $"K0{item.KisitId}" : $"K{item.KisitId}")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KisitKategoriAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KisitAdi)
+                </td>
+                <td class="w-50">
+                    @Html.DisplayFor(modelItem => item.KisitAciklama)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SagTarafDegeri)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SagTarafDegeriVarsayilan)
+                </td>
+                @if (ViewBag.RolId < 3)
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetUstGrupAdi)
+                    </td>
+                }
+
+                <td>
+                    @if (item.PasifMi == true)
+                    {
+                        <span class="badge badge-danger">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            Pasif
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-success">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            Aktif
+                        </span>
+                    }
+                </td>
+                <td>
+                    @if (item.VarsayilanPasifMi == true)
+                    {
+                        <span class="badge badge-danger">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            Pasif
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-success">
+                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                            Aktif
+                        </span>
+                    }
+                </td>
+                <td>
+                    @{
+                        var target = $"#islem{@item.Id}";
+                    }
+                    <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="fa fa-cog"></span>
+                    </button>
+                    <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                        <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                        <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                        <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            //var kisitAciklamasi = $("#KisitAciklama").text();
+            //alert(kisitAciklamasi)
+            //$("#KisitAciklama").val(kisitAciklamasi.substring(0, 10));
+
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLocaleLowerCase('tr-TR');
+                $("#kisitTablo tr").filter(function () {
+                    $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

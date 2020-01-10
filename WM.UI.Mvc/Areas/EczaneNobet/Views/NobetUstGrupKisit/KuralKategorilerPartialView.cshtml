@@ -1,0 +1,360 @@
+﻿@model KuralKategorilerPartialViewModel
+
+@{
+    var tabId = Model.TabId;
+    var kisitTuru = Model.KisitTuru;
+}
+
+@foreach (var item in Model.NobetUstGrupKisitDetaylar)
+{
+    tabId = tabId.First().ToString().ToUpper() + tabId.Substring(1);
+    var id = $"#id{tabId}{item.Id}";
+    var chkBoxId = $"chk{tabId}{item.Id}";
+    var txtId = $"txt{tabId}{item.Id}";
+    var divId = $"div{tabId}{item.Id}";
+    var formId = $"form{tabId}{item.Id}";
+    var formBtnId = $"formBtnId{tabId}{item.Id}";
+    var formBtnUyariId = $"formBtnUyariId{tabId}{item.Id}";
+    var chkBoxLblId = $"lblChk{tabId}{item.Id}";
+    var chkBoxAltId = $"chkAlt{tabId}{item.Id}";
+    var cardIdKuralId = $"card{item.Id}";
+    var varsayilandanFarkliMi = false;
+    var degerPasifMi = "none";
+    var grupBazliKisitSayisiSpanId = $"spanGrupBazliKisitSayisi{item.Id}";
+
+    if ((item.PasifMi != item.VarsayilanPasifMi
+        || item.SagTarafDegeri != item.SagTarafDegeriVarsayilan
+        || item.NobetGrupGorevtipKisitSayisi > 0))
+    {
+        varsayilandanFarkliMi = true;
+    }
+
+    //var cardBorderColor = "border-dark";
+
+    //if (item.PasifMi != item.VarsayilanPasifMi)
+    //{
+    //    cardBorderColor = "border-dark";
+    //}
+    //else if (item.PasifMi == false)
+    //{
+    //    cardBorderColor = "border-success";
+    //}
+    //else
+    //{
+    //    cardBorderColor = "border-danger";
+    //}
+
+    var btnTip = "btn-success btn-sm";
+    var cardHeaderRenk = "cardHeaderRenkAktif";
+    var cardBodyRenk = "cardBodyRenkAktif";
+    var cardHeaderAciklamaButtonRenk = "badge badge-light";
+    var labelYaziRengi = "text-primary";
+    var cardBottomAlert = "alert-warning";
+    var grupBazliKisitSayisi = "badge-light";
+    var labelYazi = "Aktif";
+    var labelYaziTersi = "";
+    var badgeTip = "badge badge-primary";
+    var renk = "#007bff";
+    var kisitNumarasi = item.KisitId < 10 ? $"K0{item.KisitId}" : $"K{item.KisitId}";
+    var kisitKategoriAdi = item.KisitKategoriAdi;
+    var haricKuralIdList = new int[4] {11,//eczaneGrup
+                                       35, //pespeseHaftaIciAyniGunNobet,
+                                       39, //nobetBorcOdeme
+                                       10, //ayIcindeAyniGunNobet
+                                           };
+
+
+    if (item.PasifMi == true)
+    {
+        labelYazi = "Pasif";
+        labelYaziRengi = "text-secondary";
+        labelYaziTersi = "Aktif";
+        renk = "#bbbbbb";
+        badgeTip = "badge badge-secondary";
+        cardHeaderRenk = "cardHeaderRenkPasif";
+        cardBodyRenk = "cardBodyRenkPasif";
+        cardBottomAlert = "alert-warning";
+        cardHeaderAciklamaButtonRenk = "badge badge-light";
+    }
+    else
+    {
+        labelYaziTersi = "Pasif";
+    }
+
+    var updateAjaxOptions = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("Edit"),
+        HttpMethod = "post",
+        UpdateTargetId = divId,
+        InsertionMode = InsertionMode.ReplaceWith,
+        OnSuccess = "OnSuccess"
+    };
+
+    if (!item.DegerPasifMi)
+    {
+        degerPasifMi = "";
+    }
+
+    if (item.NobetGrupGorevtipKisitSayisi > 0)
+    {
+        grupBazliKisitSayisi = "badge-danger";
+    }
+
+    //col-md-4
+    <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 mb-2 pb-0 p-1" , id="@divId">
+
+        <div class="card mb-2 border-bottom" id="@cardIdKuralId" style="min-width:198px;">
+            <div class="card-header p-2 @cardHeaderRenk">
+                <div class="d-inline">
+                    
+                    <a data-toggle="collapse" href="@id" title="@kisitNumarasi kuralı '@labelYazi.ToLower()'" class="@badgeTip kuralId"><i class="fa fa-info-circle" aria-hidden="true"></i> @kisitNumarasi</a>
+
+                    @*<a class="@cardHeaderAciklamaButtonRenk" data-toggle="collapse" href="@id" role="button" title="Kural Açıklaması" aria-expanded="false"
+        aria-controls="@id.Substring(1)" style="width:30px;">
+         <i class="fa fa-info-circle" aria-hidden="true"></i>
+         @*<span class="d-none d-md-inline"> Açıklama</span>*@
+                    @*<span data-toggle="tooltip" data-placement="top" title="Kural Açıklaması"></span>*
+        </a>*@
+
+                    @if (varsayilandanFarkliMi)
+                    {
+                        <span class="formBtnUyari badge badge-danger" id="@formBtnUyariId" title="Bu kural varsayılandan farklıdır.">
+                            <i class="fa fa-warning" aria-hidden="true"></i>
+                            Farklı!
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="formBtnUyari badge badge-danger" id="@formBtnUyariId" style="display:none" title="Bu kural varsayılandan farklıdır.">
+                            <i class="fa fa-warning" aria-hidden="true"></i>
+
+                        </span>
+                        @*<i class="fa fa-warning text-danger formBtnUyari mt-1" id="@formBtnUyariId" style="display:none" title="Bu kural varsayılandan farklıdır." aria-hidden="true"></i>*@
+                    }
+
+                    @*@if (varsayilandanFarkliMi)
+        {
+            <i class="fa fa-warning text-danger formBtnUyari" id="@formBtnUyariId" title="Bu kural varsayılandan farklıdır." aria-hidden="true">*Farklı</i>
+        }
+        else
+        {
+            <i class="fa fa-warning text-danger formBtnUyari" id="@formBtnUyariId" style="display:none" title="Bu kural varsayılandan farklıdır." aria-hidden="true"></i>
+        }*@
+
+                    <div class="custom-control custom-switch pull-right">
+
+                        @Html.CheckBox("PasifMiUst", !item.PasifMi, new { @class = "custom-control-input", id = $"chk{id.Substring(3)}", onchange = "chekBoxDegistir(this, " + @formId + ", " + @cardIdKuralId + ");" })
+
+                        <label id="@chkBoxLblId" class="custom-control-label @labelYaziRengi font-weight-bold mr-md-2"
+                               title="Kural durum" for="@chkBoxId">
+                            @*<span class="d-none d-md-inline"> @labelYazi</span>*@
+
+                            @labelYazi
+                        </label>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-body border-bottom py-1 px-2 @cardBodyRenk">
+
+                @*@if (@item.NobetGrupGorevtipKisitSayisi > 0)
+                    {
+                        <div class="alert alert-warning px-2 py-1" role="alert">
+                            <a href="@Url.Action("Index", "NobetGrupGorevTipKisit")" class="alert-link " target="_blank">
+                                Gruba özel kurallar <span class="badge badge-secondary" title="Gruba özel kural sayısı">@item.NobetGrupGorevtipKisitSayisi</span>
+                            </a>
+                        </div>
+                    }*@
+                <p class="card-title text-center mb-2">
+
+                    @if (item.KisitAdi == "eczaneGrup")
+                    {
+                        <a href="@Url.Action("Index", "EczaneGrupTanim")" class="card-link " target="_blank" title="Eczane Grup Tanımlara Git">
+                            @item.KisitAdiGosterilen
+                        </a>
+                    }
+                    else if (item.KisitAdi == "istek")
+                    {
+                        <a href="@Url.Action("Index", "EczaneNobetIstek")" class="card-link " target="_blank" title="Eczane Nöbet İsteklere Git">
+                            @item.KisitAdiGosterilen
+                        </a>
+                    }
+                    else if (item.KisitAdi == "mazeret")
+                    {
+                        <a href="@Url.Action("Index", "EczaneNobetMazeret")" class="card-link " target="_blank" title="Eczane Nöbet Mazeretlere Git">
+                            @item.KisitAdiGosterilen
+                        </a>
+                    }
+                    else if (item.KisitAdi == "nobetGunKural" || item.KisitAdi == "gunKumulatifToplamEnFazla")
+                    {
+                        <a href="@Url.Action("Index", "NobetGrupGorevTipGunKural")" class="card-link " target="_blank" title="Gün Kurallara Git">
+                            @item.KisitAdiGosterilen
+                        </a>
+                    }
+                    else if (item.KisitId == 29)
+                    {
+                        <a href="@Url.Action("Index", "AyniGunNobetTakipGrupAltGrup")" class="card-link " target="_blank" title="Nöbet Grup-Alt Gruplara Git">
+                            @item.KisitAdiGosterilen
+                        </a>
+                    }
+                    else
+                    {
+                        @item.KisitAdiGosterilen
+                    }
+
+                    @if (kisitTuru == "varsayilandanFarkli")
+                    {
+                        @*<a class="badge badge-warning mr-2 mt-1" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
+                                <span data-toggle="tooltip" data-placement="top" title="Varsayılana Dön">
+                                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                                    <span class="d-none d-lg-inline"> Varsayılan</span>
+                                </span>
+                            </a>*@
+                    }
+                </p>
+
+                <!-- #region kısıt güncelle form -->
+                @*@using (Ajax.BeginForm(null, null, updateAjaxOptions, new { @class = "form-inline", id = $"form{id.Remove(0, 3)}" }))*@
+                @*new { id = item.Id }*@
+
+                @using (Html.BeginForm("Edit2", null, null, FormMethod.Post, new { @class = "form-inline justify-content-center mb-1", id = @formId }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("Id", item.Id)
+                    @Html.CheckBox("PasifMi", !item.PasifMi, new { id = chkBoxAltId, style = "display:None;" })
+                    @*@Html.Hidden("NobetUstGrupId", item.NobetUstGrupId)
+                        @Html.Hidden("KisitId", item.KisitId)*@
+
+                    <span class="badge badge-light mr-1 mr-md-2 mb-1"
+                          title="Bu kuralın alması beklenen sayı. Varsayılanı: @item.SagTarafDegeriVarsayilan" style="width:50px; display: @degerPasifMi" for="@txtId">
+                        Değer
+                    </span>
+
+                    @Html.TextBox("SagTarafDegeri", item.SagTarafDegeri, new
+                    {
+                        @class = "form-control text-small mb-1 border-top-0 border-right-0 border-left-0",
+                       type = "number",
+                       id = $"txt{id.Substring(3)}",
+                       style = "text-align: center; height:30px; width:50px; margin-right:13px; padding:0px; display:" + @degerPasifMi
+                    })
+
+                    //if (item.PasifMi != item.VarsayilanPasifMi || item.SagTarafDegeri != item.SagTarafDegeriVarsayilan)
+                    //{
+                    //    btnTip = "btn-warning btn-sm";
+                    //}
+                    if (item.PasifMi)
+                    {
+                        btnTip = "btn-outline-secondary btn-sm";
+                    }
+
+                    <button type="button" title="Kuralı Güncelle" class="btn @btnTip formGondermeButonu mb-1" id="@formBtnId" onclick="kuralDegistirButonaBas(this, @formId)" style=" display: @degerPasifMi; width:35px; height:30px;">
+                        <i class="fa fa-save" aria-hidden="true"></i>@*<span class="d-none d-xl-inline"> Güncelle</span>*@
+                    </button>
+
+                }
+
+                @if (Convert.ToInt32(TempData["NobetGrupGorevTipSayisi"]) > 1)
+                {
+                    <div class="row">
+                        <div class="col d-inline mb-1">
+                            <hr style="margin-top:5px; margin-bottom:10px; display: @degerPasifMi" />
+
+                            <span>
+                                <a href="@Url.Action("Index", "NobetGrupGorevTipKisit")" class="card-link " target="_blank">
+                                    <span>Grp: </span> <span class="badge @grupBazliKisitSayisi grupBazliKisitSayi" id="@grupBazliKisitSayisiSpanId" title="Gruba özel kural sayısı"> @item.NobetGrupGorevtipKisitSayisi</span>
+                                </a>
+                                @*<span class="badge badge-secondary" title="@item.NobetGrupGorevtipKisitSayisi adet nöbet grubu.">@item.NobetGrupGorevtipKisitSayisi</span>*@
+                            </span>
+
+                            @if (!haricKuralIdList.Contains(item.KisitId))
+                            {
+                                <a class="card-link pull-right" title="Gruba özel kural ekle" target="_blank"
+                                   href="@Url.Action("Create2", "NobetGrupGorevTipKisit", new { kisitId = item.KisitId, area= "EczaneNobet" })">
+                                    Ekle <span class="fa fa-plus"></span>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                }
+
+                <div class="collapse" id="@id.Substring(1)">
+                    <div class="alert alert-info fade show" role="alert">
+
+                        @*<h6 class="mr-2 mr-lg-1 font-weight-bold">@kisitKategoriAdi / @item.KisitAdiGosterilen:</h6>*@
+
+                        <p>
+                            <i class="fa fa-info-circle"></i> @item.KisitAciklama
+                        </p>
+
+                        <!-- #region varsayılan durum -->
+                        <h6>Varsayılan Ayar:</h6>
+                        <div class="alert @cardBottomAlert fade show py-2 mb-1" role="alert" @*title="Varsayılan Ayarlar"*@>
+                            @if (item.VarsayilanPasifMi == true)
+                            {
+                                @*<i class="fa fa-check-square-o" aria-hidden="true"></i>*@
+                                @*<i class="fa fa-warning"></i>*@
+                                <span class="text-sm">
+                                    <span style="display:@degerPasifMi">
+                                        Değer:
+                                    </span>
+                                    <span class="font-weight-bold" style="display:@degerPasifMi">
+                                        @item.SagTarafDegeriVarsayilan
+                                    </span>
+                                    <span class="@(degerPasifMi == "none" ? "" : "pull-right") ">
+                                        Durum:
+                                        <span class="font-weight-bold">
+                                            P<span class="d-none d-md-inline">asif</span>
+                                        </span>
+                                    </span>
+                                    @*<strong class="pull-right">
+                                            Varsayılan <span class="d-none d-md-inline"> Ayar</span>
+                                        </strong>*@
+                                </span>
+                            }
+                            else
+                            {
+                                @*<i class="fa fa-square-o text-secondary" aria-hidden="true"></i>*@
+
+                                @*<i class="fa fa-warning"></i>*@
+                                <span class="text-sm">
+                                    <span style="display:@degerPasifMi">
+                                        Değer:
+                                    </span>
+                                    <span class="font-weight-bold" style="display:@degerPasifMi">
+                                        @item.SagTarafDegeriVarsayilan
+                                    </span>
+                                    <span class="@(degerPasifMi == "none" ? "" : "pull-right") ">
+                                        Durum:
+                                        <span class="font-weight-bold text-primary">
+                                            A<span class="d-none d-md-inline">ktif</span>
+                                        </span>
+                                    </span>
+                                    @*<strong class="pull-right">
+                                            Varsayılan <span class="d-none d-md-inline"> Ayar</span>
+                                        </strong>*@
+                                </span>
+                            }
+                        </div>
+                        <!-- #endregion -->
+                    </div>
+                </div>
+
+                <!-- #endregion -->
+                <!-- #region açıklama -->
+                @*<a class="card-link" title="Kısıt Açıklaması" data-toggle="collapse" href="@id" role="button" aria-expanded="false" aria-controls="@id.Substring(1)">
+                        Açıklama
+                    </a>*@
+
+                <!-- #endregion -->
+            </div>
+            @*<div class="card-footer">
+                    <p class="card-subtitle">
+                        Std: Sağ Taraf Değeri
+                    </p>
+                </div>*@
+        </div>
+    </div>
+
+}

@@ -1,0 +1,251 @@
+﻿@model IEnumerable<NobetDurumDetay>
+
+@{
+    ViewBag.Title = "Nöbet Durumları | Nöbet Sistemi";
+}
+
+<div class="row justify-content-between mb-2">
+    <div class="col-md-4 mb-2">
+        <div class="form-inline">
+            <h4 class="mr-5">Nöbet Durumlar</h4>
+            <div class="form-group">
+                <a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-xl-3">
+
+        @*@Html.DropDownList("NobetAltGrupId", null, htmlAttributes: new { @class = "form-control selectpicker",
+                   //data_width = "auto",
+                   mobile = "true",
+                   data_live_search = "true",
+                   title = "-- Tüm alt gruplar --"
+               })*@
+
+        @*<button class="btn btn-dark btn-sm" type="button" id="btnExceleAktar">
+                <i class="fa fa-file-excel-o text-success"></i> Excele Aktar
+                <i class="fa fa-download"></i>
+            </button>*@
+    </div>
+
+    <div class="col-md-4 col-xl-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="text" id="myInput" class="form-control" placeholder="Tabloda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-3">
+    </div>
+    <div class="col-lg-4">
+        <div id="loading" align="center" style="margin-top: 10%">
+            <img src="~/Content/images/orig.gif" />
+        </div>
+    </div>
+    <div class="col-lg-4">
+    </div>
+</div>
+
+
+<div id="div1" style="visibility:hidden">
+    <table id="gridT" class="table table-hover table-sm">
+        <thead>
+            <tr>
+                <th style="display:none">
+                    @Html.DisplayName("Alt Grup Id1")
+                </th>
+                <th>
+                    @Html.DisplayName("Alt Grup 1")
+                </th>
+                <th>
+                    @Html.DisplayName("Alt Grup 2")
+                </th>
+                <th>
+                    @Html.DisplayName("Alt Grup 3")
+                </th>
+                <th>
+                    @Html.DisplayName("Nöbet Durumu")
+                </th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+        <tbody id="gridTBody">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="display:none">
+                        @Html.DisplayFor(modelItem => item.NobetAltGrupId1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetAltGrupAdi1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetAltGrupAdi2)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetAltGrupAdi3)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetDurumTipAdi)
+                    </td>
+                    <td>
+                        @{
+                            var target = $"#islem{@item.Id}";
+                        }
+                        <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="fa fa-cog"></span>
+                        </button>
+                        <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                            <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                            <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                            <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+
+@section Styles{
+    <link href="~/Content/tableexport.min.css" rel="stylesheet" />
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @*@Scripts.Render("~/bundle/pager")*@
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    <script src="~/Scripts/xlsx/xlsx.core.min.js"></script>
+    <script src="~/Scripts/FileSaver.min.js"></script>
+    <script src="~/Scripts/tableexport.min.js"></script>
+
+    <script>
+
+        var DefaultTable = document.getElementById('gridT');
+
+
+
+        $(DefaultTable).tableExport({
+            headers: true,                              // (Boolean), display table headers (th or td elements) in the <thead>, (default: true)
+            footers: true,                              // (Boolean), display table footers (th or td elements) in the <tfoot>, (default: false)
+            formats: ['xlsx', 'csv', 'txt'],            // (String[]), filetype(s) for the export, (default: ['xlsx', 'csv', 'txt'])
+            filename: 'id',                             // (id, String), filename for the downloaded file, (default: 'id')
+            bootstrap: false,                           // (Boolean), style buttons using bootstrap, (default: false)
+            position: 'bottom',                         // (top, bottom), position of the caption element relative to table, (default: 'bottom')
+            ignoreRows: null,                           // (Number, Number[]), row indices to exclude from the exported file(s) (default: null)
+            ignoreCols: null,                           // (Number, Number[]), column indices to exclude from the exported file(s) (default: null)
+            ignoreCSS: '.tableexport-ignore',           // (selector, selector[]), selector(s) to exclude cells from the exported file(s) (default: '.tableexport-ignore')
+            emptyCSS: '.tableexport-empty',             // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s) (default: '.tableexport-empty')
+            trimWhitespace: true,                       // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s) (default: true)
+            RTL: false,                                 // (Boolean), set direction of the worksheet to right-to-left (default: false)
+            sheetname: 'id'                             // (id, String), sheet name for the exported spreadsheet, (default: 'id')
+        });
+
+        function exportToExcel() {
+            //alert(1)
+            var htmls = "";
+
+            var uri = 'data:application/vnd.ms-excel;base64,';
+
+            var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+
+            var base64 = function (s) {
+                return window.btoa(unescape(encodeURIComponent(s)))
+            };
+
+            var format = function (s, c) {
+                return s.replace(/{(\w+)}/g, function (m, p) {
+                    return c[p];
+                })
+            };
+
+            htmls = $("table").html();
+
+            var ctx = {
+                worksheet: 'Worksheet',
+                table: htmls
+            }
+
+            var link = document.createElement("a");
+            link.download = "nöbet-durumlar.xls";
+            link.href = uri + base64(format(template, ctx));
+            link.click();
+        }
+
+        $(document).ready(function () {
+            var model = @Html.Raw(Json.Encode(Model));
+                //sayfalamaYap(model, 15);
+            veriyiGizleLoadingGifiGoster();
+
+            $("#myInput").on("keyup", function () {
+                    var value = $(this).val().toLocaleLowerCase('tr-TR');
+                    $("#gridTBody tr").filter(function () {
+                    $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                    });
+
+                    //if ($(this).val().length == 0) {
+                    //    getPaging(currentPage)
+                    //}
+            });
+
+            function getNobetGrupId() {
+                //alert(1)
+                var selected = $("#NobetGrupId :selected").select();
+                return selected.text();
+            }
+
+            $("#NobetAltGrupId").change(function (e) {
+
+                var nobetAltGrubu = $("#NobetAltGrupId :selected").select();
+                var nobetAltGrupId = nobetAltGrubu.val();
+
+                //model = $.grep(model, function (n, i) {
+                //    console.log(n.NobetAltGrupId1 + " " + nobetAltGrupId)
+                //    return (n.NobetAltGrupId1 == nobetAltGrupId || nobetAltGrupId == 0);
+                //});
+
+                //$.each(model, function (i, altGrup) {
+                //    console.log(i.NobetAltGrupId1 + " " + NobetAltGrupAdi2)
+                //    var tblRow = '<tr>' +
+                //        '<td>' + altGrup.NobetAltGrupId1 + '</td>' +
+                //        '<td>' + altGrup.NobetAltGrupAdi1 + '</td>' +
+                //        '<td>' + altGrup.NobetAltGrupAdi2 + '</td>' +
+                //        '<td>' + altGrup.NobetAltGrupAdi3 + '</td>' +
+                //        '<td>' + altGrup.NobetDurumTipAdi + '</td>' +
+                //        '</tr>'
+                //    //Add our table row to the 'questions' <table>
+                //    $(tblRow).appendTo('#gridT tbody');
+                //});            
+               
+            });           
+
+        });
+
+        function veriyiGizleLoadingGifiGoster() {
+                document.getElementById("div1").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
+                // document.getElementById("div_searching").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
+                document.getElementById("loading").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
+                acilisiGeciktir()
+            }
+        function acilisiGeciktir() {
+                setTimeout(
+                    loadingGifiGizleVeriyiGoster, /* Request next message  */
+                    200 /* ..after ms seconds */
+                );
+            }
+        function loadingGifiGizleVeriyiGoster() {
+                document.getElementById("div1").style.visibility = "visible";//tablo gösterilir
+                // document.getElementById("div_searching").style.visibility = "visible";//sayfa yüklenirken tablo gizlenir
+                document.getElementById("loading").style.visibility = "hidden";//gif gizlenir
+                document.getElementById("loading").style.display = "none";//gif yer kaplamasın
+        }
+
+    </script>
+}
+

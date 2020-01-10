@@ -1,0 +1,56 @@
+﻿@model NobetDurumDetay
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Sil</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Nöbet Durum</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetDurumTipAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetDurumTipAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetAltGrupAdi1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetAltGrupAdi1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetAltGrupAdi2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetAltGrupAdi2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetAltGrupAdi3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetAltGrupAdi3)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

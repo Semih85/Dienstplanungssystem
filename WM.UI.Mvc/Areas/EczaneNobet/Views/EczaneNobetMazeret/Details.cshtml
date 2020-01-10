@@ -1,0 +1,51 @@
+﻿@model EczaneNobetMazeretDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detaylar</h2>
+
+<div>
+    <h4>Eczane Nöbet Mazeret</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MazeretAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MazeretAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tarih)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-primary" }) 
+    @Html.ActionLink("Eczane Nöbet Mazeret Listesi", "Index", null, new { @class = "btn btn-outline-warning" })
+
+</p>

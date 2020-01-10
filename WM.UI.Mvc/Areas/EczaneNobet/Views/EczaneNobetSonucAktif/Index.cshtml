@@ -1,0 +1,121 @@
+﻿@model IEnumerable<EczaneNobetSonucDetay2>
+
+@{
+    double sure = 0;
+
+    var NobetGrupId = TempData["NobetGrupId"];
+    var Yil = TempData["Yil"];
+    var Ay = TempData["Ay"];
+
+    if (TempData["ModelSure"] != null)
+    {
+        sure = (double)TempData["ModelSure"];
+    }
+}
+
+@* Eczane Nöbet Sonuç Aktif İndex *@
+<div class="row">
+    <div class="col-md-4">
+        <h3>Taslak Sonuçlar</h3>
+    </div>
+    <div class="col-md-4">
+        <a class="btn btn-outline-primary ml-5"
+           href="@Url.Action("Anasayfa", "NobetYaz", new { area = "EczaneNobet",
+                                                            nobetGrupId = NobetGrupId,
+                                                            yil = Yil,
+                                                            ay = Ay })">
+            <i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Ana Sayfa
+        </a>
+    </div>
+</div>
+<hr />
+
+@if (sure > 0)
+{
+    <label><b>Çözüm Süresi (sn):</b> @sure </label>
+}
+<p>
+    <b>Tebrikler. <i class='fa fa-check' aria-hidden='true'></i> </b> Nöbetçi eczane modelinin taslak sonuçları aşağıdadır.
+
+    @*<a class="btn btn-outline-success" href="@Url.Action("Create", null, new { @class= "btn btn-success" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>*@
+
+    <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#eminmisiniz">
+        Taslak Nöbetleri Kesinleştir
+    </button>
+
+</p>
+
+<hr />
+<div class="modal" tabindex="-1" id="eminmisiniz" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kesinleştir?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Sonuçları kesinleştirmek istediğinizden emin misiniz?</p>
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Evet", "Kesinlestir",
+                                   new
+                                   {
+                                       area = "EczaneNobet",
+                                       nobetGrupId = NobetGrupId,
+                                       yil = Yil,
+                                       ay = Ay
+                                   }, new { @class = "btn btn-outline-primary", id = "btnKesinlestir" })
+                <button type="button" class="btn btn-outline-warning" data-dismiss="modal">İptal</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-hover table-sm">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @*@Html.DisplayNameFor(model => model.NobetGrupAdi)*@
+                Nöbet Grubu
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.EczaneAdi)*@
+                Eczane
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tarih)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EczaneAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tarih, "DateTime")
+            </td>
+            <td>
+                @*@Html.ActionLink("  ", "Edit", new { id = item.Id }, new { @class = "btn btn-outline-success btn-sm fa fa-edit fa-lg" }) |*@
+                @Html.ActionLink("  ", "Details", new { id = item.Id }, new { @class = "btn btn-outline-primary btn-sm fa fa-info-circle fa-lg" })
+                @*@Html.ActionLink("Sil", "Delete", new { id=item.Id })*@
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section Scripts{
+    <script>
+        $("#btnKesinlestir").click(function () {
+            $('#btnKesinlestir').hide();
+        });
+    </script>
+}

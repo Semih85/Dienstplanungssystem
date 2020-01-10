@@ -1,0 +1,35 @@
+﻿
+@section Styles{
+
+    @Styles.Render("~/bundle/gridmvc/style")
+}
+
+<h3>GridMvc Sample Index</h3>
+
+<div class="row">
+    <div class="col-md-6" >
+        @Html.Action("GridAjaxPartial")
+    </div>
+</div>
+
+
+@section Scripts{
+
+    @Scripts.Render("~/bundle/gridmvc/scripts")
+
+<script>
+        (function () {
+            var gridName = 'FootballersGrid';
+            var pagingUrl = '/GridMvc/GridAjaxPartialPager';
+            $('.grid-mvc').gridmvc();
+            pageGrids[gridName].ajaxify({
+                getData: pagingUrl,
+                getPagedData: pagingUrl
+            });
+        }())
+</script>
+}
+
+
+
+

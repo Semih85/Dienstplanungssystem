@@ -1,0 +1,115 @@
+﻿@model EczaneGrupCoklu
+
+@{
+    ViewBag.Title = "Eş Gruba Eczane Ekle | Nöbet Sistemi";
+}
+
+<h4>Eş Gruba Eczane Ekle</h4>
+<hr />
+
+@using (Html.BeginForm("Create", "EczaneGrup"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.EczaneGrupTanimId, "Eczane Grubu:", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })*@
+            <div class="col-md-12">
+                @Html.DropDownList("EczaneGrupTanimId", null, htmlAttributes: new
+                {
+                    @class = "form-control selectpicker mb-2 mr-4",
+               title = "Eczane grup seçiniz..",
+               data_width = "auto",
+               mobile = "true",
+               data_live_search = "true"
+           })
+                @*<a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", "EczaneGrupTanim", new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Grup Ekle</a>*@
+                @*@Html.ActionLink(" Grup Ekle", "Create", "EczaneGrupTanim", null, new { @class = "btn btn-sm btn-outline-success" })*@
+                @Html.ValidationMessageFor(model => model.EczaneGrupTanimId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group mb-5">
+            @*@Html.LabelFor(model => model.EczaneId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+
+            <div class="col-md-10">
+                @Html.DropDownList("EczaneId", null, htmlAttributes: new
+                {
+                    @class = "form-control selectpicker",
+                       multiple = "true",
+                       data_width = "auto",
+                       mobile = "true",
+                       data_live_search = "true",
+                       title = "Eczane eçiniz..."
+                   })
+                @Html.ValidationMessageFor(model => model.EczaneId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="custom-control custom-checkbox mb-2 ml-md-3">
+                @Html.CheckBox("PasifMi", new { @class = "custom-control-input" })
+                <label class="custom-control-label" for="PasifMi">Pasif mi?</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ekle" id="submitEkle" class="btn btn-outline-primary" />
+                @Html.ActionLink("Eczane Grup Listesi", "Index", "EczaneGrupTanim", null, new { @class = "btn btn-outline-warning" })
+            </div>
+        </div>
+    </div>
+}
+@if (ViewBag.EklenenEczaneSayisi != null)
+{
+    <div class="row justify-content-sm-center">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                <i class="fa fa-check"></i>
+                <strong> @ViewBag.EklenenEczaneSayisi adet eczane @ViewBag.EklenenGrupAdi grubuna eklenmiştir.</strong>
+                @DateTime.Now
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+
+    <script>
+        $("#submitEkle").click(function (e) {
+
+            var secilenGrupSayisi = $("#EczaneGrupTanimId :selected").length;
+            var secilenEczaneSayisi = $("#EczaneId :selected").length;
+
+            if (secilenEczaneSayisi < 1 && secilenGrupSayisi < 1) {
+                alert("Lütfen kriterleri seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+            else if (secilenEczaneSayisi < 1) {
+                alert("Lütfen eczane seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+            else if (secilenGrupSayisi < 1) {
+                alert("Lütfen grup seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+            var grup = $("#EczaneGrupTanimId :selected").text();
+            return confirm(secilenEczaneSayisi + ' eczane ' + grup + ' isimli gruba eklenecek. Emin misiniz?');
+        });
+    </script>
+}

@@ -1,0 +1,77 @@
+﻿@model NobetAltGrupViewModel
+
+@{
+    ViewBag.Title = "Nöbet Alt Gruplar |  Nöbet Yaz";
+}
+
+<h4>
+    Nöbet Alt Grup
+    <a class="btn btn-outline-success btn-sm ml-5" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+</h4>
+
+<hr />
+
+<table class="table table-hover table-sm">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @Html.DisplayName("Nöbet Grubu")
+            </th>
+            <th>
+                @Html.DisplayName("Görev Tipi")
+            </th>
+            <th>
+                @Html.DisplayName("Adı")
+            </th>
+            <th>
+                @Html.DisplayName("Başlama Tarihi")
+            </th>
+            <th>
+                @Html.DisplayName("Bitiş Tarihi")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model.NobetAltGruplar)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adi)
+                @{
+                    var altGrup = @Model.NobetAltGruptakiEczaneSayilari.SingleOrDefault(x => x.NobetAltGrupId == item.Id);
+                    var altGruptakiEczaneSayisi = 0;
+                }
+
+                @if (altGrup != null)
+                {
+                    altGruptakiEczaneSayisi = altGrup.EczaneSayisi;
+
+                    <a class="badge badge-primary" href="@Url.Action("CreateAjax", "EczaneNobetGrupAltGrup", new { nobetGrupId = item.NobetGrupId, area= "EczaneNobet" })" data-toggle="tooltip" data-placement="top" title="Eczane Sayısı">
+                        @*<span class="fa fa-sitemap"></span>*@
+
+                        @altGruptakiEczaneSayisi
+                    </a>
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BaslamaTarihi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BitisTarihi)
+            </td>
+            <td>
+                <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+            </td>
+        </tr>
+    }
+
+</table>

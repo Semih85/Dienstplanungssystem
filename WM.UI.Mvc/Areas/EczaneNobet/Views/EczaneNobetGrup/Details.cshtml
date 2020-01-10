@@ -1,0 +1,74 @@
+﻿@model EczaneNobetGrupDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h4>Eczane Nöbet Grup Detaylar</h4>
+<hr />
+
+<div>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGrupAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGorevTipAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("En Erken Tarihte Nöbet Yazlsın Mı?")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnErkenTarihteNobetYazilsinMi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BaslangicTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BaslangicTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BitisTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BitisTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-primary" })
+    @Html.ActionLink("Eczane Nöbet Grup Listesi", "Index", null, new { @class = "btn btn-outline-warning" })
+</p>

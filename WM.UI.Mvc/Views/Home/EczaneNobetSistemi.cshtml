@@ -1,0 +1,240 @@
+﻿
+@{
+    ViewBag.Title = "Eczane Nöbet Sistemi";
+    ViewBag.MetaDescription = "Nöbetçi Eczane Sistemi ile adaletli ve en hızlı şekilde eczanelere nöbet yazabilir, sonuçları çok sayıda görsel istatistik ile kolayca takip edebilirsiniz.";
+    ViewBag.MetaKeywords = "Eczane Nöbet Sistemi, Online Nöbetçi Eczane Ekranı";
+}
+
+<style>
+    .jumbotron {
+        background-image: url("../Content/images/digital_background4.jpg");
+        /*background-color: aliceblue;*/
+        background-size: cover;
+        /*height:100px;*/
+    }
+</style>
+
+@section jumbotronMaster{
+
+    <div class="jumbotron jumbotron-fluid py-3 py-lg-5 mt-5 mb-lg-2 mb-1">
+        <div class="container text-white">
+            <h1 class="display-4 mt-3 mt-lg-0 font-weight-bolder" style="font-size:250%;" id="jumbotronYazi">
+                <small class="text-danger bg-white font-weight-bolder" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">&nbsp;E&nbsp;</small>
+                <span class="font-weight-bold">Nöbet Sistemi</span>
+            </h1>
+            @*<p class="lead">Detaylar</p>*@
+            @*<hr class="my-4 bg-info text-left w-50" align="left">*@
+            <p class="lead">
+                <i class="fa fa-commenting text-success" aria-hidden="true"></i>
+                Sizin için en doğru kararı en kısa sürede veren sistemi siz de kullanın!
+                @*Siz uğraşmayın! Zamanınız size kalsın.*@
+            </p>
+        </div>
+    </div>
+}
+
+<div class="container">
+
+    <div class="row mb-3">
+
+        <div class="col-12">
+            <div class="alert alert-info fade show" role="alert">
+                <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i> Eczanelere nöbet yazımının
+                <a class="alert-link" href="@Url.RouteUrl("NobetYazDetay")" target="_blank">klasik nöbet sistemlerinden </a>
+                farklı zorlukları vardır.
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    <strong>Elle nöbet yazmak</strong> çok uzun zaman alır.
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    <strong>Aynı gün nöbet tutan eczane kombinasyonu</strong> oldukça önemlidir.
+                </li>
+                @*<li class="list-group-item">
+                        <i class="fa fa-check text-success" aria-hidden="true"></i>
+                        Ayrıca, aynı gün nöbet tutan <strong>bazı eczane ikililerinin birlikte nöbet tutma sayısı</strong> da bir o kadar önemlidir.
+                    </li>*@
+                <li class="list-group-item">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    <strong>Cumartesi, pazar, bayram ve hafta içi</strong> nöbetlerinin hassas takibi gerekmektedir.
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    Kriterlere uygun adil bir nöbet dağılımının, <strong>her eczacı için ayrı ve önemli getirileri</strong> vardır.
+                </li>
+            </ul>
+
+        </div>
+
+        <div class="col-lg-3 text-center pt-3 pt-lg-4 mb-3">
+            @*<a class="h5 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemiDetay")"><span class="fa fa-hand-o-right"></span> Sistem Arayüzleri</a>*@
+
+            <img class="img-fluid img-thumbnail my-2" src="~/Content/images/EczaneNobetSistemi/arayuz-design.jpg" alt="Nöbetçi Eczaneler" />
+        </div>
+
+        <div class="col-lg-4 ">
+
+            <ul class="list-group list-group-flush">
+
+                <li class="list-group-item">
+                    <span class="badge badge-pill badge-info">1</span>
+                    Verilerinizi <i class="fa fa-copy text-danger" aria-hidden="true"></i> <strong>kolayca aktarın</strong>.
+                    @* Kendi sisteminizi <i class="fa fa-cogs text-danger" aria-hidden="true"></i> <strong>zahmetsizce yönetin</strong>.*@
+                </li>
+                <li class="list-group-item">
+                    <span class="badge badge-pill badge-info">2</span>
+                    Siz sadece <strong>kurallarınızı</strong> <i class="fa fa-cogs text-danger" aria-hidden="true"></i> belirleyin.
+                </li>
+                <li class="list-group-item">
+                    <span class="badge badge-pill badge-info">3</span>
+                    <strong>Saniyeler içinde</strong>
+                    <i class="fa fa-hourglass-end text-danger" aria-hidden="true"></i> nöbetlerinizi yazın.
+                </li>
+                <li class="list-group-item">
+                    <span class="badge badge-pill badge-info">4</span>
+                    Çok sayıda
+                    <a class="alert-link" href="@Url.RouteUrl("EczaneNobetSistemiDetay")"> istatistiğe</a>
+                    <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i> hemen ulaşın.
+                </li>
+                <li class="list-group-item">
+                    <span class="badge badge-pill badge-info">5</span>
+                    Sonuçları
+                    <strong>
+                        <a class="alert-link" href="@Url.RouteUrl("NobetciEczaneler")"> haritada</a>
+                        <i class="fa fa-map text-danger" aria-hidden="true"></i>
+                    </strong> görüntüleyin.
+                </li>
+                @*<li class="list-group-item">
+                        <i class="fa fa-check text-success" aria-hidden="true"></i>
+                        <span class="badge badge-pill badge-info">5</span>
+                        Tüm cihazlardan 7/24 ulaşın.
+                    </li>*@
+            </ul>
+
+        </div>
+    </div>
+
+
+    <div class="row mb-2">
+        <div class="col-lg-12 text-center mt-2">
+            <h4>Ücretsiz demo için bize <a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> ulaşın. Hemen başlayalım.</h4>
+        </div>
+        @*<div class="col-lg-4 text-center ">
+            <div class="alert alert-success fade show px-0" role="alert">
+                <i class="fa fa-question-circle fa-lg" title="Bize mesaj ya da e-posta yazın sizi arayalım."></i> Yardım
+                <a href="Tel:+905452710985" class="alert-link" style="text-decoration:none;">(+90) 545 - 271 09 85</a>
+                <i class="fa fa-whatsapp fa-lg"></i>
+            </div>
+        </div>*@
+    </div>
+
+    @*<div class="row">
+            <div class="col text-center">
+                <h5>Her eczanede, <span class="text-danger">nöbetçi eczaneleri</span> online <i class="fa fa-rss text-info" aria-hidden="true"></i> bir şekilde gösteren <a class="card-link" href="@Url.RouteUrl("DijitalTabela")">ONET sistemimize</a> bir göz atın.</h5>
+                <h5 class="text-capitalize">Eczanelere özel <span class="text-danger">aşağıdaki <i class="fa fa-hand-o-down" aria-hidden="true"></i> çözümlerimize</span> bir göz atın.</h5>
+            </div>
+        </div>*@
+    <hr class="bg-info mb-4 w-50">
+
+    @*<div class="modal fade bd-digitalEkran-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <img class="img-fluid" src="~/Content/images/EczaneNobetSistemi/digitalEkran.png" alt="Dijital Nöbetçi Ekranı" />
+                </div>
+            </div>
+        </div>
+        data-toggle="modal" data-target=".bd-digitalEkran-modal-xl"*@
+
+    <div class="row">
+        @*<div class="col-md-4 mb-3 text-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><span class="text-danger">Sistem</span> Arayüzleri</h5>
+                        <a class="nav-link" href="@Url.Action("EczaneNobetSistemiDetay")">
+                            <img class="img-fluid mb-2" src="~/Content/images/EczaneNobetSistemi/arayuz-design.jpg" alt="Nöbetçi Eczaneler" style="height:50%; width:50%" />
+
+                            @*<img class="img-fluid" src="~/Content/images/dijitalEkranKucuk.jpg" alt="Dijital Nöbetçi Ekranı" style="height:78%; width:78%" />
+                        </a>
+                    </div>
+                </div>
+            </div>*@
+        @*<div class="col-md-8 mb-3 text-center">
+
+                <div class="alert alert-warning fade show" role="alert">
+
+                    <h6>
+                        <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+                        <i class="fa fa-rss text-info" aria-hidden="true"></i>
+                        <span class="font-weight-bold">
+                            ONEE
+                            Sistemine
+                            <a class="card-link" href="@Url.RouteUrl("DijitalTabela")">ONET sistemimize</a>
+                            bir göz atın.
+                        </span>
+                    </h6>
+                </div>
+
+            </div>*@
+
+        <div class="col-md-4 offset-lg-4 mb-3 text-center">
+            <div class="card border-primary">
+                <div class="card-body bg-secondary">
+                    @*<h5 class="card-title"><span class="text-danger">Online Nöbetçi Tabelası</span></h5>*@
+                    <a class="h5 card-link text-white text-center" href="@Url.RouteUrl("DijitalTabela")">
+                        <i class="fa fa-rss text-info" aria-hidden="true"></i> ONEE Sistemine bir göz atın.
+                    </a>
+
+                    <img class="img-fluid mt-2" src="~/Content/images/EczaneNobetSistemi/digitalEkran.png" alt="Dijital Nöbetçi Ekranı" />
+                    @*<a class="card-link" href="@Url.RouteUrl("DijitalTabela")">
+
+                        </a>*@
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    @*<hr class="bg-info mb-4" />*@
+
+
+
+</div>
+
+@*<hr class="bg-info mb-5" />
+
+    <div class="row">
+        <div class="col-md-4 mb-3 text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Takas Takip Sistemi</h5>
+                    <p>
+                        Eczanelere özel takas
+                    </p>
+                    <a class="nav-link" href="http://takastakip.com/" target="_blank" role="button">
+                        <img class="img-fluid" src="~/Content/images/ph1.png" alt="Takas Takip Sistemi" style="height:43.5%; width:43.5%" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            //$('#jumbotronYazi').text("Dijital nöbetçi eczane tabelası");
+            $('#navItemReferans').hide();
+
+        });
+
+    </script>
+}
+

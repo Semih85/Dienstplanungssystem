@@ -1,0 +1,200 @@
+﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.Eczane
+
+@{
+    ViewBag.Title = "Eczane Düzenle |  Nöbet Yaz";
+}
+<h4>Eczane Düzenle</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="card">
+        <div class="card-body">
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @*@Html.LabelFor(model => model.Adi, "Eczane Adı", htmlAttributes: new { @class = "control-label" })*@
+                    @Html.EditorFor(model => model.Adi, new { htmlAttributes = new { @class = "form-control", placeHolder = "Eczane Adı" } })
+                    @Html.ValidationMessageFor(model => model.Adi, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-4">
+                    @*@Html.LabelFor(model => model.AcilisTarihi, htmlAttributes: new { @class = "control-label" })*@
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        @Html.TextBox("AcilisTarihi", null, new
+                        {
+                            @class = "form-control datepicker mr-2",
+                               //data_toggle = "tooltip",
+                               //data_placement = "top",
+                               //title = "Başlangıç Tarihi",
+                               autocomplete = "off",
+                               placeHolder = "Açılış Tarihi"
+                           })
+
+                        @*@Html.TextBoxFor(model => model.AcilisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Açılış Tarihi" })*@
+                    </div>
+                    @Html.ValidationMessageFor(model => model.AcilisTarihi, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-4">
+                    @*@Html.LabelFor(model => model.KapanisTarihi, htmlAttributes: new { @class = "control-label" })*@
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        @Html.TextBoxFor(model => model.KapanisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Kapanış Tarihi" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.KapanisTarihi, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @*@Html.LabelFor(model => model.TelefonNo, htmlAttributes: new { @class = "control-label" })*@
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        @Html.EditorFor(model => model.TelefonNo, new { htmlAttributes = new { @class = "form-control", placeHolder = "Telefon" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.TelefonNo, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-4">
+                    @*@Html.LabelFor(model => model.MailAdresi, htmlAttributes: new { @class = "control-label" })*@
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-at" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        @Html.EditorFor(model => model.MailAdresi, new { htmlAttributes = new { @class = "form-control", placeHolder = "E-posta" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.MailAdresi, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-4">
+                    @*@Html.LabelFor(model => model.WebSitesi, htmlAttributes: new { @class = "control-label" })*@
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-globe" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        @Html.EditorFor(model => model.WebSitesi, new { htmlAttributes = new { @class = "form-control", placeHolder = "Web Sitesi" } })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.WebSitesi, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @*@Html.LabelFor(model => model.Adres, htmlAttributes: new { @class = "control-label" })*@
+                    @Html.TextAreaFor(model => model.Adres, new { @class = "form-control", placeHolder = "Adres" })
+                    @Html.ValidationMessageFor(model => model.Adres, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-4">
+                    @*@Html.LabelFor(model => model.AdresTarifi, htmlAttributes: new { @class = "control-label" })*@
+                    @Html.TextAreaFor(model => model.AdresTarifi, new { @class = "form-control", placeHolder = "Adres Tarifi" })
+                    @Html.ValidationMessageFor(model => model.AdresTarifi, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-4">
+                    @*@Html.LabelFor(model => model.AdresTarifiKisa, htmlAttributes: new { @class = "control-label" })*@
+                    @Html.TextAreaFor(model => model.AdresTarifiKisa, new { @class = "form-control", placeHolder = "Adres Tarifi Kısa" })
+                    @Html.ValidationMessageFor(model => model.AdresTarifiKisa, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <span data-toggle="tooltip" data-placement="top" title="Harita Konum Bilgisi"> <i class="fa fa-map-pin fa-lg" aria-hidden="true"></i></span>
+
+            <div class="form-row mb-3">
+                <div class="form-group col-6">
+                    @Html.LabelFor(model => model.Enlem, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Enlem, new { htmlAttributes = new { @class = "form-control", placeHolder = "Enlem" } })
+                    @Html.ValidationMessageFor(model => model.Enlem, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group col-6">
+                    @Html.LabelFor(model => model.Boylam, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Boylam, new { htmlAttributes = new { @class = "form-control", placeHolder = "Boylam" } })
+                    @Html.ValidationMessageFor(model => model.Boylam, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.NobetUstGrupId, "Üst Grup", htmlAttributes: new { @class = "control-label col-2" })*@
+                @Html.DropDownList("NobetUstGrupId", null, htmlAttributes: new { @class = "form-control", style = "display:none;" })
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Kaydet" class="btn btn-primary" id="btnSubmitForm" />
+                @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+            </div>
+
+        </div>
+    </div>
+}
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @*@Scripts.Render("~/bundle/bootstrap-datepicker/scripts")*@
+    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
+    @*@Scripts.Render("~/bundle/validation/scripts")*@
+
+    <script>
+        //$("#btnSubmitForm").click(function () {
+        //    $("#Enlem").text().replace(".", ",");
+        //    $("#Boylam").text().replace(".", ",");
+        //});
+        $(function () {
+
+            $('.datepicker').datepicker('setStartDate', "01-01-1900");
+
+            var baslangicStr = tarihDondur2($("#AcilisTarihi").val());
+
+            $("#AcilisTarihi").datepicker("setDate", baslangicStr);
+
+        });
+
+        function tarihDondur2(metin) {
+
+            var tarih = metin.split(' ', 1)[0];
+            //alert(tarih)
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2] * 1;
+            //alert(yil)
+            ay = tarihTanim[1] * 1;
+            gun = tarihTanim[0] * 1;
+
+            if (gun.length != 4) {
+
+                return new Date(yil, ay - 1, gun);//yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+    </script>
+
+}

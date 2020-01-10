@@ -1,0 +1,131 @@
+﻿@model NobetGrupGorevTipKisitDetay
+
+@{
+    ViewBag.Title = "Nöbet Grup Görev Tip Kural Ekle |  Nöbet Yaz";
+}
+
+<h4>Nöbet Grup Görev Tip Kural Ekle</h4>
+
+@using (Html.BeginForm("Create", "NobetGrupGorevTipKisit"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="card border-primary mb-3 col-md-10">
+            <div class="card-body">
+                <h5 class="card-title">Gruba özel kurallar</h5>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NobetUstGrupKisitId, "Kural", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("NobetUstGrupKisitId", null, htmlAttributes: new { @class = "form-control selectpicker",
+                           //multiple = "true",
+                           //data_width = "auto",
+                           //data_actions_box = "true",
+                           mobile = "true",
+                           data_live_search = "true",
+                           //data_selected_text_format = "count > 4",
+                           title = "Kural Seçiniz..."
+                       })
+                        @Html.ValidationMessageFor(model => model.NobetUstGrupKisitId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NobetGrupGorevTipId, "Nöbet Grubu", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.NobetGrupGorevTipId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-inline mb-3">
+
+                    <div class="form-group mr-4">
+                        <div class="custom-control custom-checkbox ml-md-3">
+                            @Html.CheckBox("PasifMi", new { @class = "custom-control-input" })
+                            <label class="custom-control-label" for="PasifMi">Pasif mi?</label>
+                            @Html.ValidationMessageFor(model => model.PasifMi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SagTarafDegeri, "Değer", htmlAttributes: new { @class = "control-label mr-2" })
+                        @Html.EditorFor(model => model.SagTarafDegeri, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SagTarafDegeri, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Aciklama, "Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control", placeHolder = "Kural Açıklaması" })
+                        @*@Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*<hr class="bg-info" />*@
+
+        <div class="card border-info mb-3 col-md-10">
+            <div class="card-body">
+                <h5 class="card-title">Varsayılan Değerler</h5>
+                @*<h6 class="card-subtitle mb-2 text-muted">Gruba özel kural için hatırlatma</h6>*@
+                <div class="alert alert-info" role="alert">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i> Varsayılan değerler <b>gruba özel kural hakkında hatırlatma</b> olarak kullanabilmesi içindir. Bu alanlar üzerinden sistemde herhangi bir işlem yapılmamaktadır.
+                </div>
+
+                <div class="form-inline mb-3">
+
+                    <div class="form-group mr-4">
+                        <div class="custom-control custom-checkbox ml-md-3">
+                            @Html.CheckBox("VarsayilanPasifMi", new { @class = "custom-control-input" })
+                            <label class="custom-control-label" for="VarsayilanPasifMi">Pasif mi? (Varsayılan)</label>
+                            @Html.ValidationMessageFor(model => model.VarsayilanPasifMi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SagTarafDegeriVarsayilan, "Değer (Varsayılan)", htmlAttributes: new { @class = "control-label mr-2" })
+                        @Html.EditorFor(model => model.SagTarafDegeriVarsayilan, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SagTarafDegeriVarsayilan, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Ekle" class="btn btn-primary" />
+            @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+        </div>
+    </div>
+}
+
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/validation/scripts")
+
+
+    <script>
+        $(function () {
+
+            if ($("#SagTarafDegeri").val() == null || $("#SagTarafDegeri").val() == "") {
+                $("#SagTarafDegeri").val(0);
+                $("#SagTarafDegeriVarsayilan").val(0);
+            }
+            $("#Aciklama").val("Gruba özel kural.");
+        });
+    </script>
+}

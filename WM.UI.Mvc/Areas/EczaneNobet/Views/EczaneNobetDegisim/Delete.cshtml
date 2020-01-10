@@ -1,0 +1,71 @@
+﻿@model EczaneNobetDegisimDetay
+
+@{
+    ViewBag.Title = "Eczane Nöbet Değişim  Sil | Nöbet Sistemi";
+}
+
+<h4>Eczane Nöbet Değişim Sil</h4>
+<hr />
+
+<h5 class="text-danger">Silmek istediğinizden emin misiniz?</h5>
+<div>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGrupAdi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EskiNobetciEczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EskiNobetciEczaneAdi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Kaydeden)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Kaydeden)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KayitTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KayitTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-danger" />
+            @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+        </div>
+    }
+</div>

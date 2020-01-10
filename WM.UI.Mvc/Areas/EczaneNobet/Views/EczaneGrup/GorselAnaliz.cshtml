@@ -1,0 +1,474 @@
+﻿@model EczaneGrupGorselAnalizViewModel
+
+@{
+    ViewBag.Title = "Eczane Grup Analiz |  Nöbet Yaz";
+}
+
+<h4>Eczane Grup Analiz</h4>
+
+<div class="card-header mt-3">
+    <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="fromTo-tab" data-toggle="tab" href="#fromTo" role="tab" aria-controls="fromTo" aria-selected="true">Tablo</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="gorsel-tab" data-toggle="tab" href="#gorsel" role="tab" aria-controls="gorsel" aria-selected="false">Görsel</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="grafik-tab" data-toggle="tab" href="#grafik" role="tab" aria-controls="grafik" aria-selected="false">Grafik</a>
+        </li>
+    </ul>
+</div>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="fromTo" role="tabpanel" aria-labelledby="fromTo-tab">
+        <div class="row mt-2">
+            <div class="col">
+                <div class="card border-0">
+                    @*style="width: 50rem;"*@
+                    <div class="card-body">
+                        <h5 class="card-title">Eş/Akraba Eczaneler From-To</h5>
+
+                        <div id="esAkrabaPivot">
+                            @* Pivot Table *@
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="gorsel" role="tabpanel" aria-labelledby="gorsel-tab">
+        <div class="row mt-2">
+            <div class="col">
+                <div class="card">
+                    @*style="width: 50rem;"*@
+                    <div class="card-body">
+                        <h5 class="card-title">Eş/Akraba Eczaneler Görsel</h5>
+                        <div id="mynetwork2" class="network" style="height:800px;">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="grafik" role="tabpanel" aria-labelledby="grafik-tab">
+        <div class="row mt-4 mx-2">
+            <div class="col-12">
+                <h5 class="mb-2 text-center">Nöbet Gruplarındaki Eczane Sayıları</h5>
+                <p>
+                    <strong>Sol eksen</strong> <span class="text-info">Eşli Eczane Sayısı</span> ve <span class="text-danger">Toplam Eczane Sayını</span>, <strong> sağ eksen </strong> <span class="text-primary">Eşli Eczane Yüzdesini</span> göstermektedir.
+                </p>
+                <div class="row mt-4" id="eczaneGrupGrafik">
+                    <div class="col-lg-8">
+                        <canvas id="myChartAntalya"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section styles{
+    @Styles.Render("~/bundle/network/style")
+    @Styles.Render("~/bundle/pivot/style")
+}
+
+<!-- #region Scripts -->
+@section Scripts{
+
+    @Scripts.Render("~/bundle/chart/scripts")
+    @Scripts.Render("~/bundle/vis/scripts")
+
+    @Scripts.Render("~/bundle/queryui/scripts", "~/bundle/pivot/scripts")
+
+    <script>
+        //setTimeout(function () { $('.alert').fadeOut(500); }, 3000);
+
+        var eczaneGruplar = $(function table2() {
+            $("#esAkrabaPivot").pivotUI(_eczaneGrupEdges,
+                {
+                    rows: ["GrupTürü", "FromNöbetGrubu", "GrupAdı"],
+                    cols: ["ToNöbetGrubu"],
+                    vals: ["FromNöbetGrubu"],
+                    aggregatorName: "Count",
+                    rendererName: "Heatmap"
+                }
+            );
+        });
+
+        var eczaneGruplarGorsel;
+        //frekans
+        $('#fromTo-tab').click(function () {
+            //eczaneGruplar
+        });
+
+        //frekans
+        $('#gorsel-tab').click(function () {
+            if (eczaneGruplarGorsel == null) {
+                eczaneGruplarGorsel = drawNobetGrup();
+            }
+            else {
+                eczaneGruplarGorsel;
+            }
+
+        });
+
+    </script>
+
+    <script>
+
+        // $(document).ready(function () {
+
+        //     //drawNobetGrup();
+
+        //});
+
+        //vis değişkenler
+        var _nodes = @Html.Raw(Json.Encode(Model.EczaneGrupNodes));
+        var _edges = @Html.Raw(Json.Encode(Model.EczaneGrupNodes));
+        var _eczaneGrupNodes = @Html.Raw(Json.Encode(Model.EczaneGrupNodes));
+        var _eczaneGrupEdges = @Html.Raw(Json.Encode(Model.EczaneGrupEdges.Select(s => new { s.From,
+                              GrupTürü = s.GrupTuru,
+                              GrupAdı = s.GrupTanimAdi,
+                              FromEczane = s.FromEczaneAdi,
+                              FromNöbetGrubu = s.FromNobetGrupAdi,
+                              ToNöbetGrubu = s.ToNobetGrupAdi,
+                              ToEczane = s.ToEczaneAdi, s.Title, s.To, s.Value })));
+
+        var nodes = null;
+        var edges = null;
+        var network = null;
+        var network2 = null;
+        var eczaneGrupNodes = null;
+        var eczaneGrupEdges = null;
+
+        //draw2();
+        //drawNobetGrup2();
+
+        $('#visChange .btn').on('click', function (event) {
+            var val = $(this).find('input').val();
+            if (val==1) {
+                draw();
+                drawNobetGrup();
+            }
+            else {
+                draw2();
+                drawNobetGrup2();
+            }
+        });
+
+        function drawDataNobetGrup() {
+
+            eczaneGrupNodes = [];
+            eczaneGrupEdges = [];
+
+            $.each(_eczaneGrupNodes, function (key, val) {
+                eczaneGrupNodes.push({
+                    id: val.Id,
+                    value: val.Value,
+                    label: val.Label,
+                    group: val.Group,
+                    level: val.Level
+                });
+            });
+
+            $.each(_eczaneGrupEdges, function (key, val) {
+                eczaneGrupEdges.push({
+                    from: val.From,
+                    to: val.To,
+                    value: val.Value,
+                    label: val.Label,
+                    title: val.Title
+                });
+            });
+
+            eczaneGrupNodes = eczaneGrupNodes;
+            eczaneGrupEdges = eczaneGrupEdges;
+        }
+        //görseli çiz
+        function drawData() {
+
+            nodes = [];
+            edges = [];
+
+            $.each(_nodes, function (key, val) {
+                nodes.push({
+                    id: val.Id,
+                    value: val.Value,
+                    label: val.Label,
+                    group: val.Group,
+                    level: val.Level
+                });
+            });
+
+            $.each(_edges, function (key, val) {
+                edges.push({
+                    from: val.From,
+                    to: val.To,
+                    value: val.Value,
+                    label: val.Label,
+                    title: val.Title
+                });
+            });
+
+            nodes = nodes;
+            edges = edges;
+        }
+
+        function draw() {
+
+            drawData();
+
+            // Instantiate our network object.
+            var container = document.getElementById('mynetwork');
+            var data = {
+                nodes: nodes,
+                edges: edges
+            };
+
+            var options = {
+                nodes: {
+                    shape: 'ellipse'
+                    //shape: ellipse, dot, triangle
+                    //scaling: {
+                    //    label: {
+                    //        min: 15,
+                    //        max: 31
+                    //    }
+                    //}
+                },
+                edges: {
+                    color: {
+                        color: 'rgba(30,30,30,0.1)',
+                        highlight: 'blue'
+                    },
+                    width: 0.1,
+                    smooth: {
+                        type: 'cubicBezier'
+                         //types: cubicBezier, curvedCW, straightCross
+                    }
+                },
+                layout: {
+                    hierarchical: {
+                        direction: "UD"
+                    }
+                },
+                physics: true
+            };
+            network = new vis.Network(container, data, options);
+
+        }
+
+        function draw2() {
+
+            drawData();
+
+            // Instantiate our network object.
+            var container = document.getElementById('mynetwork');
+            var data = {
+                nodes: nodes,
+                edges: edges
+            };
+
+            var options = {
+                nodes: {
+                    shape: 'dot',
+                    size: 30,
+                    font: {
+                        size: 32
+                    },
+                    borderWidth: 2,
+                    shadow: true
+                },
+                edges: {
+                    width: 2,
+                    shadow: true
+                }
+            };
+            network = new vis.Network(container, data, options);
+        }
+
+        function drawNobetGrup() {
+
+            drawDataNobetGrup();
+
+            // Instantiate our network object.
+            var container = document.getElementById('mynetwork2');
+            var data = {
+                nodes: eczaneGrupNodes,
+                edges: eczaneGrupEdges
+
+            };
+
+            var options = {
+                nodes: {
+                    shape: 'ellipse'
+                    //shape: ellipse, dot, triangle
+                    //scaling: {
+                    //    label: {
+                    //        min: 15,
+                    //        max: 31
+                    //    }
+                    //}
+                },
+                edges: {
+                    color: {
+                        color: 'rgba(30,30,30,0.1)',
+                        highlight: 'blue'
+                    },
+                    width: 0.1,
+                    smooth: {
+                        type: 'curvedCW'
+                        //types: cubicBezier, curvedCW, straightCross
+                    }
+                },
+                layout: {
+                    hierarchical: {
+                        direction: "LR"
+                    }
+                },
+                physics: true
+            };
+
+            console.log(data.edges);
+            network2 = new vis.Network(container, data, options);
+        }
+
+        function drawNobetGrup2() {
+
+            drawDataNobetGrup();
+
+            // Instantiate our network object.
+            var container = document.getElementById('mynetwork2');
+            var data = {
+                nodes: eczaneGrupNodes,
+                edges: eczaneGrupEdges
+            };
+
+            var options = {
+                nodes: {
+                    shape: 'dot',
+                    size: 30,
+                    font: {
+                        size: 32
+                    },
+                    borderWidth: 2,
+                    shadow: true
+                },
+                edges: {
+                    width: 2,
+                    shadow: true
+                }
+            };
+
+            //console.log(data.edges);
+            network2 = new vis.Network(container, data, options);
+        }
+
+
+    </script>
+
+    <script>
+        setTimeout(function () { $('.alert').fadeOut(500); }, 3000);
+        //$(document).ready(function () {
+        //    if ($(window).width() < 700) {
+        //        $("#eczaneGrupGrafik").hide();
+        //    }
+        //});
+
+        var nobetGrupAdlar = @Html.Raw(Json.Encode(ViewBag.NobetGrupAdi));
+        var esliEczaneSayisi = @Html.Raw(Json.Encode(ViewBag.EsliEczaneSayisi));
+        var gruptakiEczaneSayisi = @Html.Raw(Json.Encode(ViewBag.GruptakiEczaneSayisi));
+        var esliEczaneYuzdesi = @Html.Raw(Json.Encode(ViewBag.EsliEczaneYuzdesi));
+
+        window.chartColors = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(201, 203, 207)',
+            hos: 'rgba(255, 99, 132, 0.2)',
+            hos2: 'rgba(54, 162, 235, 0.2)',
+            hos3: 'rgba(255, 206, 86, 0.2)',
+            hos4: 'rgba(75, 192, 192, 0.2)',
+            hos5: 'rgba(153, 102, 255, 0.2)',
+            hos6: 'rgba(255, 159, 64, 0.2)'
+        };
+
+        var ctx3 = document.getElementById("myChartAntalya");
+        //ctx3.height = 110;
+        var myChart2 = new Chart(ctx3, {
+        type: 'bar',
+        data: {
+            labels: nobetGrupAdlar,
+            datasets: [
+                {
+                    label: 'Eşli Eczane Sayısı',
+                    data: esliEczaneSayisi,
+                    yAxisID: "y-axis-1",
+                    type: 'line',
+                    backgroundColor: window.chartColors.hos4,
+                    borderColor: window.chartColors.purple,
+                    borderWidth: 1
+                },
+                {
+                    label: 'Toplam Eczane Sayısı',
+                    data: gruptakiEczaneSayisi,
+                    yAxisID: "y-axis-1",
+                    backgroundColor: window.chartColors.hos,
+                    borderColor: window.chartColors.hos,
+                    borderWidth: 1
+                },
+                {
+                    label: 'Eşli Eczane Yüzdesi',
+                    data: esliEczaneYuzdesi,
+                    yAxisID: "y-axis-2",
+                    type: 'line',
+                    backgroundColor: window.chartColors.blue,
+                    borderColor: window.chartColors.blue,
+                    fill: false,
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            tooltips: {
+                mode: 'index',
+                intersect: false
+            },
+            scales: {
+                xAxes: [{
+                    stacked: false,
+                }],
+                yAxes: [{
+                        stacked: false,
+                        display: true,
+                        labelString: "Eczane Sayısı",
+                        position: "left",
+                        id: "y-axis-1",
+                        ticks: {
+                            beginAtZero: true
+                    }
+                },
+                    {
+                        stacked: false,
+                        display: true,
+                        labelString:"Yüzde",
+                        position: "right",
+                        id: "y-axis-2",
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    },
+                ]
+            }
+        }
+        });
+
+    </script>
+}

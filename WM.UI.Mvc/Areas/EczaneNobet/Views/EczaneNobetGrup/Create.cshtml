@@ -1,0 +1,179 @@
+﻿@model EczaneNobetGrupCoklu
+
+<h4>Nöbet Grubuna Eczane Ekle</h4>
+<hr />
+<div class="container-fluid">
+
+    @if (TempData["EklenenEczane"] != null)
+    {
+        <div class="row">
+            <div class="col">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="fa fa-check"></i>
+                    <strong> @Convert.ToString(TempData["EklenenEczane"]).ToUpper() eczanesi</strong> başarı ile sisteme eklenmiştir.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <i class="fa fa-warning"></i>
+                    Lütfen bu adımda <strong> @Convert.ToString(TempData["EklenenEczane"]).ToUpper() eczanesinin nöbet grubunu</strong> da kaydedip işleminizi tamamlayınız.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-row mx-2">
+
+                <div class="form-group col-md-3">
+                    @*@Html.LabelFor(model => model.EczaneId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+
+                    @Html.DropDownList("EczaneId", null, htmlAttributes: new { @class = "form-control selectpicker",
+                       multiple = "true",
+                       //data_width = "auto",
+                       data_actions_box = "true",
+                       mobile = "true",
+                       data_live_search = "true",
+                       data_selected_text_format = "count > 4",
+                       title = "Eczane Seçiniz..."
+                   })
+                    @Html.ValidationMessageFor(model => model.EczaneId, "", new { @class = "text-danger" })
+                    <small class="form-text text-muted">Kapanmamış veya herhangi bir gruba atanmamış eczaneler.</small>
+
+                </div>
+
+                <div class="form-group col-md-2">
+                    @*@Html.LabelFor(model => model.BaslangicTarihi, htmlAttributes: new { @class = "control-label" })*@
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        @Html.TextBoxFor(model => model.BaslangicTarihi, new { @class = "form-control datepicker p-2", placeHolder = "Gruba Giriş Tarihi", autocomplete = "off" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-2">
+                    @*@Html.LabelFor(model => model.BitisTarihi, htmlAttributes: new { @class = "control-label" })*@
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                        @Html.TextBoxFor(model => model.BitisTarihi, new { @class = "form-control datepicker p-2", placeHolder = "Grutan Çıkış Tarihi", autocomplete = "off" })
+                    </div>
+                    @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NobetGrupGorevTipId, "Nöbet Grubu", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.DropDownList("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NobetGrupGorevTipId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Aciklama, "Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control", placeHolder = "Eczanenin gruba eklenmesi hk. açıklama..." } })
+                    @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+                    @*<small class="form-text text-muted">Eczanenin hangi sebeple bu gruba atandığının açıklaması.</small>*@
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" id="submitEkle" value="Ekle" class="btn btn-outline-primary" />
+                    @Html.ActionLink("Eczane Nöbet Grup Listesi", "Index", null, new { @class = "btn btn-outline-warning" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/validation/scripts")
+
+    <script>
+
+        function tarihDondur2(metin) {
+
+            var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2];
+            ay = tarihTanim[1];
+            gun = tarihTanim[0];
+
+            if (gun.length != 4) {
+                return yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+
+        $(function () {
+            var baslamaTarihi = tarihDondur2($("#BaslangicTarihi").val());
+
+            if (baslamaTarihi != null || baslamaTarihi != "") {
+                var d = new Date(baslamaTarihi);
+                $("#BaslangicTarihi").datepicker("setDate", new Date(d));
+            }
+            $('#btnSilTarihAraligi, #btnSilBaslangicTarihi, #btnSilBitisTarihi, #navbarBrand').css('cursor','pointer');
+        });
+
+        $("#submitEkle").click(function (e) {
+
+            var secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+            var secilenEczaneSayisi = $("#EczaneId :selected").length;
+            //alert($("#NobetGrupGorevTipId :selected").val())
+            
+            if (secilenEczaneSayisi < 1 && secilenGrupSayisi < 1) {
+                alert("Lütfen kriterleri seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+            else if (secilenEczaneSayisi < 1) {
+                alert("Lütfen eczane seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+            else if (secilenGrupSayisi < 1) {
+                alert("Lütfen grup seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+            var grup = $("#NobetGrupGorevTipId :selected").text();
+            
+            if ($("#Aciklama").val().length > 0 ) {
+                return confirm(secilenEczaneSayisi + ' eczane ' + grup + ' isimli gruba eklenecek. Emin misiniz?');
+            }
+        });
+    </script>
+}

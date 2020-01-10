@@ -1,0 +1,755 @@
+﻿@model EczaneNobetSonucAktifPivotSonuclarViewModel
+
+@{
+    ViewBag.Title = "Taslak Sonuçlar | Nöbet Sistemi";
+    SelectList nobetGruplar = ViewBag.NobetGruplar;
+    int nobetGrup = ViewBag.nobetGrup;
+    int toplamUzunluk = 8500;
+    //int nobetGruptakiEczaneSayisi = ViewBag.NobetGruptakiEczaneSayisi;
+    //string cozulenNobetGrupAdi = ViewBag.CozulenNobetGrupAdi;
+
+    var NobetGrupId = TempData["NobetGrupId"];
+
+    TempData["TaslaktakiBaslamaTarihi"] = Model.BaslamaTarihi;
+    TempData["TaslaktakiBitisTarihi"] = Model.BitisTarihi;
+}
+
+@Html.Hidden("sure", Model.EczaneNobetSonuclar.ToplamSure)
+@Html.Hidden("CozumSuresi", Model.EczaneNobetSonuclar.CozumSuresi)
+@Html.Hidden("baslangicTarihi", Model.BaslamaTarihi)
+@Html.Hidden("bitisTarihi", Model.BitisTarihi)
+
+<!-- #region ana sayfa ve kesinleştir butonları -->
+<div class="row mb-2">
+    <div class="col">
+        <h5>
+            <span class="mr-2">Taslak Sonuçlar</span>
+
+            @if (Model.EczaneNobetSonuclar.ToplamSure.TotalSeconds > 0)
+            {
+                <button type="button" class="btn btn-danger btn-sm mr-2" data-toggle="modal" data-target="#eminmisiniz">
+                    <i class="fa fa-save" aria-hidden="true"></i> Kesinleştir
+                </button>
+            }
+
+            <a role="button" class="btn btn-warning btn-sm" href="@Url.Action("Index", "NobetYaz",new { area = "EczaneNobet" })">
+                <i class="fa fa-hand-o-left" aria-hidden="true"></i> Geri Dön
+            </a>
+        </h5>
+
+    </div>
+    <div class="col">
+        <button type="button" id="btnCozumIstatistik" class="btn btn-success btn-sm pull-right">
+            <i class="fa fa-check" aria-hidden="true"></i>
+            Çözüm İstatistiği
+        </button>
+    </div>
+</div>
+
+<!-- #endregion -->
+
+<div class="modal" tabindex="-1" id="eminmisiniz" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Kesinleştir?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Taslak sonuçları kesinleştirmek istediğinizden emin misiniz?</p>
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Evet", "Kesinlestir", new
+               {
+                   area = "EczaneNobet",
+                   nobetGrupId = NobetGrupId,
+                   baslangicTarihi = Model.BaslamaTarihi,
+                   bitisTarihi = Model.BitisTarihi
+               }, new { @class = "btn btn-outline-primary", id = "btnKesinlestir" })
+                <button type="button" class="btn btn-outline-warning" data-dismiss="modal">İptal</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-5">
+        <div class="card mb-2">
+            <div class="card-body">
+                <h5 class="card-title text-center">
+                    Gün Farkları
+                    @*@if (nobetGruptakiEczaneSayisi > 0)
+                        {
+                            <span class="text-danger" style="font-size:medium;">
+                                (Beklenen
+                                H.içi:<strong> @(Math.Round(nobetGruptakiEczaneSayisi * 1.2 * 0.766, 0))-@(Math.Ceiling(nobetGruptakiEczaneSayisi * 1.34))</strong>,
+                                Pazar:<strong> @(((int)Math.Ceiling((double)nobetGruptakiEczaneSayisi / 5) - 1) * 30)-@(((int)Math.Ceiling((double)nobetGruptakiEczaneSayisi / 4) + 1) * 30)</strong>)
+                            </span>
+                        }*@
+                </h5>
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (Model.GunFarklari.Count() > 0)
+                        {
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="card-header">
+                                        <div class="nav nav-tabs card-header-tabs" id="nav-tab" role="tablist">
+                                            <a class="nav-item nav-link active" id="nav-ozet-tab" data-toggle="tab" href="#nav-ozet" role="tab" aria-controls="nav-ozet" aria-selected="true">Özet</a>
+                                            <a class="nav-item nav-link" id="nav-frekans-tab" data-toggle="tab" href="#nav-frekans" role="tab" aria-controls="nav-frekans" aria-selected="false">
+                                                <i class="fa fa-signal" aria-hidden="true"></i>
+                                            </a>
+                                            <a class="nav-item nav-link" id="nav-detayliArtan-tab" data-toggle="tab" href="#nav-detayliArtan" role="tab" aria-controls="nav-detayliArtan" aria-selected="false">
+                                                <i class="fa fa-list-ul" aria-hidden="true"></i>
+                                                <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+                                            </a>
+                                            <a class="nav-item nav-link" id="nav-detayliAzalan-tab" data-toggle="tab" href="#nav-detayliAzalan" role="tab" aria-controls="nav-detayliAzalan" aria-selected="false">
+                                                <i class="fa fa-list-ul" aria-hidden="true"></i>
+                                                <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
+                                            </a>
+                                            @*<a class="nav-item nav-link" id="nav-dongu-tab" title="Döngüler" data-toggle="tab" href="#nav-dongu" role="tab" aria-controls="nav-dongu" aria-selected="false">
+                                                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                                                </a>*@
+                                        </div>
+                                    </div>
+                                    <div class="tab-content" id="nav-tabContent">
+                                        <div class="tab-pane fade show active" id="nav-ozet" role="tabpanel" aria-labelledby="nav-ozet-tab">
+                                            <div class="row mt-4">
+                                                <div class="col-sm-12 col-md-12">
+                                                    <h6>Özet İstatistik (Enb., Enk., Ort., Std.Sap. vb.)</h6>
+                                                    <div id="gunFarkiMaksimum">
+                                                        @* Pivot Table *@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-frekans" role="tabpanel" aria-labelledby="nav-frekans-tab">
+                                            <div class="row mt-4">
+                                                <div class="col-sm-12 col-md-12">
+                                                    <h6>Gün Farkı Frekans Aralıkları</h6>
+                                                    <div id="gunFarkiFrekans">
+                                                        @* Pivot Table *@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-detayliArtan" role="tabpanel" aria-labelledby="nav-detayliArtan-tab">
+                                            <div class="row mt-4">
+                                                <div class="col-sm-12 col-md-12">
+                                                    @if (ViewBag.ToplamUzunluk > toplamUzunluk)
+                                                    {
+                                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                            Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir. Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir. Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+                                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                    }
+                                                    <h6>Gün Farkı Detaylı (Baştan Sona)</h6>
+                                                    <div id="gunFarkiDetayli">
+                                                        @* Pivot Table *@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-detayliAzalan" role="tabpanel" aria-labelledby="nav-detayliAzalan-tab">
+                                            <div class="row mt-4">
+                                                <div class="col-sm-12 col-md-12">
+                                                    @if (ViewBag.ToplamUzunluk > toplamUzunluk)
+                                                    {
+                                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                            Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir.
+                                                            Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir.
+                                                            Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+                                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                    }
+                                                    <h6>Gün Farkı Detaylı (Sondan Başa)</h6>
+                                                    <div id="gunFarkiDetayli2">
+                                                        @* Pivot Table *@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="tab-pane fade" id="nav-dongu" role="tabpanel" aria-labelledby="nav-dongu-tab">
+                                                <div class="row mt-4">
+                                                    <div class="col-sm-12 col-md-12">
+                                                        @if (ViewBag.ToplamUzunluk > toplamUzunluk)
+                                                        {
+                                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                                Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir.
+                                                                Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir.
+                                                                Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+                                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                        }
+                                                        <div id="donguler">
+                                                             Pivot Table
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                <i class="fa fa-warning"></i> <strong>Aynı türden</strong> (bayram, pazar vb.) <strong>en az 2 nöbet tutan eczane</strong> bulunmamaktadır.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col">
+                        @if (Model.NobetGrupBeklenenGunFarklari.Count > 0)
+                        {
+                            <h6>Beklenen Aralıklar (Gün)</h6>
+                            <table class="table table-sm table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Grup")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Eczane #")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Hafta İçi")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Pazar")
+                                        </th>
+                                    </tr>
+                                </thead>
+                                @foreach (var item in Model.NobetGrupBeklenenGunFarklari)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.EczaneSayisi)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Haftaİci)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Pazar)
+                                        </td>
+                                    </tr>
+                                }
+
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                <strong>Not:</strong> Bu bölüm <span class="text-primary">"Yıl: Başlangıç - Bitiş"</span> değerlerinden bağımsızdır.<br />
+                Nöbet yazılan taslak sonuçların önceki sonuçlarla arasındaki gün farklarına ilişkindir.
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-center">Dağılımlar</h5>
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (Model.TumSonuclar.Count() > 0)
+                        {
+                            <div class="card-header">
+                                <div class="nav nav-tabs card-header-tabs" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link active" id="nav-gun-tab" data-toggle="tab" href="#nav-gun" role="tab" aria-controls="nav-gun" aria-selected="true">Gün</a>
+                                    <a class="nav-item nav-link" id="nav-ay-tab" data-toggle="tab" href="#nav-ay" role="tab" aria-controls="nav-ay" aria-selected="false">Ay</a>
+                                    <a class="nav-item nav-link" id="nav-tarih-tab" data-toggle="tab" href="#nav-tarih" role="tab" aria-controls="nav-tarih" aria-selected="false">Tarih</a>
+                                </div>
+                            </div>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-gun" role="tabpanel" aria-labelledby="nav-gun-tab">
+                                    <div id="gunDagilim" class="mt-3">
+                                        @* Pivot tablo (taslak sonuçlar) *@
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="nav-ay" role="tabpanel" aria-labelledby="nav-ay-tab">
+                                    <div id="aylikDagilim" class="mt-3">
+                                        @* Pivot tablo (taslak sonuçlar) *@
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="nav-tarih" role="tabpanel" aria-labelledby="nav-tarih-tab">
+                                    <div class="alert alert-success alert-dismissible fade show mt-1" role="alert">
+                                        Bu görünümde aşağıdan <strong>Yıl, Ay, Nöbet Grubu vb.</strong> alanları seçerek veriyi sınırlandırınız !!!
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div id="gunlukDagilim" class="mt-3">
+                                        @* Pivot tablo (taslak sonuçlar) *@
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <p>Gösterilecek kayıt bulunmamaktadır.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- #endregion -->
+
+@section styles{
+    @Styles.Render("~/bundle/pivot/style", "~/bundle/alert_toastr/style")
+    @*@if (sekil == 1)
+        {
+            <style>
+                .pvtTotal, .pvtTotalLabel, .pvtGrandTotal {
+                    display: none
+                }
+            </style>
+        }*@
+
+    <style>
+        .toast-message {
+            font-weight: bold;
+        }
+
+        .toast {
+            opacity: 1 !important;
+        }
+        /*#toast-container > div {
+            opacity: 1;
+            -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+            filter: alpha(opacity=100);
+        }*/
+    </style>
+}
+
+@section scripts{
+
+    @Scripts.Render("~/bundle/queryui/scripts", "~/bundle/pivot/scripts", "~/bundle/alert_toastr/scripts")
+
+    <script>
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": false,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "2000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "2000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        var cozumModel = @Html.Raw(Json.Encode(Model.EczaneNobetSonuclar));
+
+        var baslangicTarihi = $('#baslangicTarihi').val();
+        var bitisTarihi = $('#bitisTarihi').val();
+
+        var kisitSayisi = cozumModel.KisitSayisi;
+        var calismaSayisi = cozumModel.CalismaSayisi;
+        var iterasyonSayisi = cozumModel.IterasyonSayisi;
+
+        var kararDegiskeniSayisi = cozumModel.KararDegikeniSayisi;
+        var objectiveValue = cozumModel.ObjectiveValue;//.replace(".", ",");
+        var cozumSuresi = $('#CozumSuresi').val();
+        var sure = $('#sure').val();//.replace(",", ".");
+        var s = timeSpanAyir(cozumSuresi);
+
+        function denemeSayisi() {
+            if (parseInt(calismaSayisi) > 0) {
+                return '<br/>-------------'
+                    + '<br/>Çalışma Sayısı : ' + calismaSayisi;
+            }
+            else {
+                return "";
+            }
+        }
+
+        function iterasyon() {
+            if (parseInt(iterasyonSayisi) > 0) {
+                return '<br/>İterasyon Sayısı : ' + iterasyonSayisi;
+            }
+            else {
+                return "";
+            }
+        }
+
+        function toastMesaj() {
+
+            toastr.clear();
+
+            if (parseInt(s[1]) > 0) {
+
+                var mesaj = '( ' + tarihAyir(baslangicTarihi) + '-' + tarihAyir(bitisTarihi) + ' )'
+                    + '<br/>Amaç Değeri : ' + objectiveValue.toFixed(3)
+                    + '<br/>Kural Sayısı : ' + kisitSayisi
+                    + '<br/>Değişken Sayısı : ' + kararDegiskeniSayisi
+                    + '<br/>Çözüm Süresi : ' + timeSpanFormatla(cozumSuresi)
+                    + '<br/>Toplam Süre  : ' + timeSpanFormatla(sure)                    
+                    + denemeSayisi()
+                    + iterasyon();
+                toastr.success(mesaj, "Çözüm İstatistiği");
+            }
+            //else {
+            //    toastr.success("");
+            //}
+        }
+
+        function timeSpanAyir(zaman) {
+            var tarihParcali = zaman.split(".");
+            return tarihParcali; //[1] + "." + tarihParcali[0] + "." + tarihParcali[2];
+        }
+
+        function timeSpanFormatla(zaman) {
+            var tarihParcali = zaman.split(".");
+            return tarihParcali[0] + "." + tarihParcali[1].substring(0,2);
+        }
+
+        $('#btnCozumIstatistik').click(function () {
+           // alert(1)
+            toastMesaj();
+        });
+
+        function tarihAyir(tarih) {
+            var tarihParcali = tarih.substring(0, 10).split("/");
+            return tarihParcali[1] + "." + tarihParcali[0] + "." + tarihParcali[2];
+        }
+
+        $(document).ready(function () {
+
+            if (parseInt(s[1]) == 0 || s[1] == null) {
+                $('#btnCozumIstatistik').hide();
+            }
+
+            //$('.toast').draggable();
+
+            toastMesaj();
+        });
+
+    </script>
+
+    <script>
+
+
+        var gunFarklari = @Html.Raw(Json.Encode(Model.GunFarklari.Select(s =>
+                   new {GünFarkı = s.GunFarki,
+                       s.Index,
+                       Nöbet1 = s.Nobet1,
+                       //N1Yıl = s.Nobet1Yil,
+                       //N1Ay = s.Nobet1Ay,
+                       //N1Gun = s.Nobet1Gun,
+                       GörevTipi = s.NobetGorevTipAdi,
+                       Nöbet2 = s.Nobet2,
+                       N2Yıl = s.Nobet2Yil,
+                       N2Ay = s.Nobet2Ay,
+                       N2Gun = s.Nobet2Gun,
+                       Eczane = s.EczaneAdi,
+                       GünGrup = s.GunGrupAdi,
+                       NöbetGrubu = s.NobetGrupAdi}).Take(toplamUzunluk)));
+
+        var gunFarkiFrekanslar = @Html.Raw(Json.Encode(Model.GunFarklariFrekanslar.Select(s =>
+                   new
+                   {
+                       GünFarkı = s.GunFarki,
+                       Eczane = s.EczaneAdi,
+                       GünGrup = s.GunGrupAdi,
+                       GörevTipi = s.NobetGorevTipAdi,
+                       NöbetGrubu = s.NobetGrupAdi,
+                       EczaneSayısı = s.FrekanstakiEczaneSayisi
+                   })));
+
+        var gunFarkiFrekansListesi;
+        var gunFarkiDetaliArtanListesi;
+        var gunFarkiDetayliAzalanListesi;
+        var gunFarkiDonguListesi;
+
+        //maksimum
+        var gunFarkiOzetListesi = $(function table2() {
+                $("#gunFarkiMaksimum").pivotUI(gunFarkiFrekanslar,
+                    {
+                        rows: ["GörevTipi", "NöbetGrubu"],
+                        cols: ["GünGrup"],
+                        vals: ["GünFarkı"],
+                        aggregators: {
+                             "Gün Farkı (Enb.)": function () { return tpl.max()(["GünFarkı"]) }
+                            ,"Gün Farkı (Enk.)": function () { return tpl.min()(["GünFarkı"]) }
+                            //"Average": function () { return tpl.average()(["Age"]) }
+                        }
+                        , renderers: {
+                            "Tablo": $.pivotUtilities.renderers['Table'],
+                            "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                            "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
+                        },
+                        aggregatorName: "Gün Farkı (Enb.)",
+                        rendererName: "Sıcaklık Haritası"
+                    }
+                );
+        });
+
+        $('#nav-ozet-tab').click(function () {
+            gunFarkiOzetListesi;
+        });
+
+        //frekans
+
+        $('#nav-frekans-tab').click(function () {
+            if (gunFarkiFrekansListesi == null) {
+                gunFarkiFrekansListesi = $(function table2() {
+                    $("#gunFarkiFrekans").pivotUI(gunFarkiFrekanslar,
+                        {
+                            rows: ["GörevTipi", "NöbetGrubu", "GünFarkı"],
+                            cols: ["GünGrup"],
+                            vals: ["EczaneSayısı"],
+                            aggregators: {
+                                "Eczane #": function () { return sum(intFormat)(["EczaneSayısı"]) }
+                                //"Average": function () { return tpl.average()(["Age"]) }
+                            }
+                            , renderers: {
+                                  "Tablo": $.pivotUtilities.renderers['Table'],
+                                  "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                                  "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
+                            },
+                            aggregatorName: "Eczane #",
+                            rendererName: "Sıcaklık Haritası"
+                        }
+                    );
+                });
+            }
+            else {
+                gunFarkiFrekansListesi;
+            }
+
+        });
+
+
+        //detaylı
+        $('#nav-detayliArtan-tab').click(function () {
+
+            if (gunFarkiDetaliArtanListesi == null) {
+                gunFarkiDetaliArtanListesi = $(function table2() {
+                    $("#gunFarkiDetayli").pivotUI(gunFarklari,
+                        {
+                            rows: ["GörevTipi", "NöbetGrubu", "Nöbet1", "Nöbet2", "Index", "Eczane"],
+                            cols: ["GünGrup"],
+                            vals: ["GünFarkı"],
+                            aggregators: {
+                                "GünFarkı #": function () { return sum(intFormat)(["GünFarkı"]) }
+                                //"Average": function () { return tpl.average()(["Age"]) }
+                            }
+                            , renderers: {
+                                "Tablo": $.pivotUtilities.renderers['Table'],
+                                "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                                "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
+                            },
+                            aggregatorName: "GünFarkı #",
+                            rendererName: "Sıcaklık Haritası"
+                        }
+                    );
+                });
+            }
+            else {
+                gunFarkiDetaliArtanListesi;
+            }
+        });
+
+        //detaylı-2
+        $('#nav-detayliAzalan-tab').click(function () {
+
+            if (gunFarkiDetayliAzalanListesi == null) {
+                gunFarkiDetayliAzalanListesi = $(function table2() {
+                    $("#gunFarkiDetayli2").pivotUI(gunFarklari,
+                        {
+                            rows: ["GörevTipi", "NöbetGrubu", "Nöbet2", "Nöbet1", "Index", "Eczane"],
+                            cols: ["GünGrup"],
+                            vals: ["GünFarkı"],
+                            aggregators: {
+                                "GünFarkı #": function () { return sum(intFormat)(["GünFarkı"]) }
+                                //"Average": function () { return tpl.average()(["Age"]) }
+                            }
+                            , renderers: {
+                                "Tablo": $.pivotUtilities.renderers['Table'],
+                                "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                                "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
+                            },
+                            aggregatorName: "GünFarkı #",
+                            rendererName: "Sıcaklık Haritası"
+                        }
+                    );
+                });
+            }
+            else {
+                gunFarkiDetayliAzalanListesi;
+            }
+
+        });
+
+            //döngü
+            //$(function table2() {
+            //    $("#donguler").pivotUI(gunFarklari,
+            //        {
+            //            rows: ["NöbetGrubu", "GünGrup", "Index"],
+            //            cols: ["N1Yıl","N1Ay"],
+            //            vals: ["GünFarkı"],
+            //            aggregators: {
+            //                "Eczane #": function () { return tpl.count()(["GünFarkı"]) }
+            //                //"Average": function () { return tpl.average()(["Age"]) }
+            //            }
+            //            , renderers: {
+            //                "Tablo": $.pivotUtilities.renderers['Table']
+            //                , "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart']
+            //                , "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
+            //            },
+            //            aggregatorName: "Eczane #",
+            //            rendererName: "Sıcaklık Haritası"
+            //        }
+            //    );
+            //});
+
+
+    </script>
+
+    <script>
+        //setTimeout(function () { $('.alert').fadeOut(500); }, 3000);
+        //pivot tablo (taslak sonuçlar)
+
+        $("#btnKesinlestir").click(function () {
+            $('#btnKesinlestir').hide();
+        });
+
+        var _sonuclar = @Html.Raw(Json.Encode(Model.TumSonuclar.Select(s =>
+                   new {s.Ay,
+                       Eczane = s.EczaneAdi,
+                       Gün = s.NobetGunKuralAdi,
+                       GünGrup = s.GunGrupAdi,
+                       GörevTipi = s.NobetGorevTipAdi,
+
+                       NöbetGrubu = s.NobetGrubu,
+                       Yıl = s.Yil,
+                       Tarih = s.TarihAciklama,
+                       MazeretineYazilanlar = s.Mazeret,
+                       s.SonucTuruAdi}).Take(toplamUzunluk)));
+
+
+        var tpl = $.pivotUtilities.aggregatorTemplates;
+
+        var sum = tpl.sum;
+        var numberFormat = $.pivotUtilities.numberFormat;
+        var intFormat = numberFormat({ digitsAfterDecimal: 0 });
+
+        var ayDagilim;
+        var tarihDagilim;
+
+        //gün dağılım
+        var gunDagilim = $(function table2() {
+            $("#gunDagilim").pivotUI(_sonuclar,
+                {
+                    rows: ["NöbetGrubu", "Eczane"],
+                    cols: ["GörevTipi", "SonucTuruAdi", "GünGrup"],
+                    vals: ["NöbetGrubu"],
+                    aggregators: {
+                        "Nöbet #": function () { return tpl.count()() }
+                        //"Average": function () { return tpl.average()(["Age"]) }
+                    }
+                    , renderers: {
+                        "Tablo": $.pivotUtilities.renderers['Table'],
+                        "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                        "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
+                    },
+                    aggregatorName: "Nöbet #",
+                    rendererName: "Sıcaklık Haritası",
+                }
+            );
+        });
+
+        $('#nav-gun-tab').click(function () {
+            gunDagilim;
+        });
+
+        //ay dağılım
+        $('#nav-ay-tab').click(function () {
+            if (ayDagilim == null) {
+                ayDagilim = $(function table3() {
+                    $("#aylikDagilim").pivotUI(_sonuclar,
+                        {
+                            rows: ["GörevTipi", "NöbetGrubu", "Eczane"],
+                            cols: ["Yıl", "Ay"],
+                            vals: ["NöbetGrubu"],
+                            aggregators: {
+                                "Nöbet #": function () { return tpl.count()() }
+                                //"Average": function () { return tpl.average()(["Age"]) }
+                            }
+                            , renderers: {
+                                "Tablo": $.pivotUtilities.renderers['Table'],
+                                "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                                "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
+                            },
+                            aggregatorName: "Nöbet #",
+                            rendererName: "Sıcaklık Haritası"
+                        }
+                    );
+                });
+            }
+            else {
+                ayDagilim;
+            }
+
+        });
+
+        //tarih dağılım
+        $('#nav-tarih-tab').click(function () {
+
+            if (tarihDagilim == null) {
+                tarihDagilim = $(function table3() {
+                    $("#gunlukDagilim").pivotUI(_sonuclar,
+                        {
+                            rows: ["GörevTipi", "NöbetGrubu", "Eczane"],
+                            cols: ["Yıl", "Ay", "Tarih"],
+                            vals: ["NöbetGrubu"],
+                            aggregators: {
+                                "Nöbet #": function () { return tpl.count()() }
+                                //"Average": function () { return tpl.average()(["Age"]) }
+                            }
+                            , renderers: {
+                                "Tablo": $.pivotUtilities.renderers['Table'],
+                                "Table Bar Grafik": $.pivotUtilities.renderers['Table Barchart'],
+                                "Sıcaklık Haritası": $.pivotUtilities.renderers['Heatmap']
+                            },
+                            aggregatorName: "Nöbet #",
+                            rendererName: "Sıcaklık Haritası"
+                        }
+                    );
+                });
+            }
+            else {
+                tarihDagilim;
+            }
+        });
+
+    </script>
+}
+

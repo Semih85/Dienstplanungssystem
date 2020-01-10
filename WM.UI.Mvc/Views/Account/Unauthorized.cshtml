@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-sm-center">
+    <div class="col-3">
+        <div class="card text-center">
+            @*<div class="card-header">
+                404
+            </div>*@
+            <div class="card-body">
+                <h5 class="card-title text-danger"><i class="fa fa-meh-o" aria-hidden="true"></i> Yetkisiz</h5>
+                <p class="card-text">Bu sayfayı görüntüleme yetkiniz bulunmamaktadır.</p>
+                <a onclick="history.back(-1)" class="btn btn-warning" style="cursor:pointer"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Geri Dön</a>
+                <a class="btn btn-success" href="/"><span class="fa fa-home"></span> Ana Sayfa</a>
+            </div>
+        </div>
+    </div>
+</div>

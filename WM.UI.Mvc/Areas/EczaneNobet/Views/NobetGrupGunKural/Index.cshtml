@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Nöbet Grup Gün Kurallar |  Nöbet Yaz";
+}
+
+<!-- #region ajaxOptions -->
+@{
+    var getAjaxOptionsSorgu = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("NobetGrupGunKuralPartial", "NobetGrupGunKural"),
+        HttpMethod = "GET",
+        UpdateTargetId = "nobetGrupGunKurallar",
+        InsertionMode = InsertionMode.Replace
+    };
+
+    var getAjaxOptionsAktifYap = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("AktifPasifYap", "NobetGrupGunKural"),
+        HttpMethod = "GET",
+        UpdateTargetId = "nobetGrupGunKurallar",
+        InsertionMode = InsertionMode.Replace
+    };
+}
+<!-- #endregion -->
+
+<h4>
+    Nöbet Grup Gün Kurallar
+    <a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+</h4>
+<hr />
+
+<div class="form-inline">
+
+    @using (Ajax.BeginForm(null, null, getAjaxOptionsSorgu, new { @class = "form-inline", id = "formSorgu" }))
+    {
+        <div class="form-group mr-2 mb-2 mb-md-2">
+            <label class="form-control-label font-weight-bold text-secondary mr-sm-2">Nöbet Grubu:</label>
+            @Html.DropDownList("NobetGrupId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "---Tümü---")
+        </div>
+
+        <div class="form-group mr-2 mb-2 mb-md-2">
+            <label class="form-control-label font-weight-bold text-secondary mr-sm-2">Gün:</label>
+            @Html.DropDownList("NobetGunKuralId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "---Tümü---")
+        </div>
+    }
+
+
+    @using (Ajax.BeginForm(null, null, getAjaxOptionsAktifYap, new { @class = "form-inline mb-2", id = "formAktif" }))
+    {
+        @Html.Hidden("nobetGrupId")
+        @Html.Hidden("nobetGunKuralId")
+
+        <div class="form-group mr-2">
+            <div class="col-auto my-1">
+                <div class="custom-control custom-checkbox">
+                    @Html.CheckBox("pasifMi", new { @class = "custom-control-input" })
+                    <label class="custom-control-label" title="Aktif/Pasif" for="pasifMi">Pasif mi?</label>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Güncelle</button>
+    }
+
+</div>
+
+<div id="nobetGrupGunKurallar">
+    @{
+        Html.RenderAction("NobetGrupGunKuralPartial", "NobetGrupGunKural");
+    }
+</div>
+
+@section Scripts{
+
+    @Scripts.Render("~/bundle/ajax")
+
+    <script>
+
+        $("#NobetGrupId").change(function () {
+            var formSorguNobetGrubu = $('#NobetGrupId').val();
+            $('#nobetGrupId').val(formSorguNobetGrubu);
+            $('#formSorgu').submit();
+        });
+
+        $("#NobetGunKuralId").change(function () {
+            var formSorguNobetGunKuralId = $('#NobetGunKuralId').val();
+            $('#nobetGunKuralId').val(formSorguNobetGunKuralId);
+            $('#formSorgu').submit();
+        });
+    </script>
+
+    <script>
+        //setTimeout(function () { $('.alert').fadeOut(500); }, 10000);
+
+        $('#tblNobetGrupGunKurallar').on('click', '.clickable-row', function (event) {
+            if ($(this).hasClass('alert-info')) {
+                $(this).removeClass('alert-info');
+            } else {
+                $(this).addClass('alert-info').siblings().removeClass('alert-info');
+            }
+        });
+
+    </script>
+}

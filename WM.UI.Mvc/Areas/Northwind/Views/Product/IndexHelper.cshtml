@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Index Helper";
+    //Layout = "~/Views/_Layout.cshtml";
+}
+
+<h2>Index with Helper</h2>
+
+@* Helper ile yapılan sayfa *@
+<div class="row">
+
+    @* Makaleler *@
+    <div class="col-md-9">
+        <h2>Makaleler</h2>
+        <hr />
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Panel heading without title
+            </div>
+            <div class="panel-body">
+                <p>
+                    Nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio.
+                    @BootstrapHelper.Button(val: "more")
+                </p>
+            </div>
+            <div class="panel-footer">
+                @for (int i = 0; i < 3; i++)
+                {
+                    @BootstrapHelper.Tag(text: "tag" + i.ToString())
+                }
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Panel heading without title
+            </div>
+            <div class="panel-body">
+                <p>
+                    Nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio.
+                    @BootstrapHelper.Button(val: "more")
+                </p>
+            </div>
+            <div class="panel-footer">
+                @for (int i = 0; i < 3; i++)
+                {
+                    @BootstrapHelper.Tag("success", "tag" + i.ToString())
+                }
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Panel heading without title
+            </div>
+            <div class="panel-body">
+                <p>
+                    Nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio.
+                    @BootstrapHelper.Button(val: "more")
+                </p>
+            </div>
+            <div class="panel-footer">
+                @for (int i = 0; i < 3; i++)
+                {
+                    @BootstrapHelper.Tag("danger", "tag" + i.ToString())
+                }
+            </div>
+        </div>
+    </div>
+
+    @* Kategoriler *@
+    <div class="col-md-3">
+        <h2>Kategoriler</h2>
+
+        <hr />
+        @BootstrapHelper.LinkList("list1", "Category1", "Category1", "Category1", "Category1",
+                                 "Category1", "Category1", "Category1", "Category1")
+    </div>
+</div>
+
+
+

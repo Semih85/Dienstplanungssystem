@@ -1,0 +1,182 @@
+﻿@{
+    var esGruptakiEczanelerleCakismaDurumu = new List<EczaneGrupDetay>();
+    var esGruptakiCakisanEczane = new EczaneGrupDetay();
+
+    if (ViewBag.IstekGirilenTarihtekiEsgrupOlduguEczaneler != null)
+    {
+        esGruptakiEczanelerleCakismaDurumu = (List<EczaneGrupDetay>)ViewBag.IstekGirilenTarihtekiEsgrupOlduguEczaneler;
+    }
+}
+
+@if (ViewBag.Mesaj != null)
+{
+    <div class="form-group">
+        <div class="col-md-10">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Başlangıç ve bitiş tarih aralığı en az  <strong>@ViewBag.minYil</strong> ila en çok <strong>@ViewBag.maxYil</strong> arasında olmalıdır!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ViewBag.MesajBayram != null)
+{
+    <div class="form-group">
+        <div class="col-md-10">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <i class="fa fa-warning"></i> @ViewBag.MesajBayram
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ViewBag.Mesaj2 != null)
+{
+    <div class="form-group">
+        <div class="col-md-10">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                Başlangıç tarihi (<strong>@Model.BaslangicTarihi.ToShortDateString()</strong>) bitiş tarihinden (<strong>@Model.BitisTarihi.ToShortDateString()</strong>) büyük olamaz!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+@if (TempData["EklenenIstekSayisi"] != null)
+{
+    <div class="form-group">
+        <div class="col-10">
+            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                <i class="fa fa-check"></i> @TempData["EklenenIstekSayisi"] günlük istek eklenmiştir.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+@if (TempData["EklenenIstekler"] != null)
+{
+    <div class="row mx-1">
+        <div class="col-10">
+            <table class="table table-hover table-sm" id="eklenenIsteklerTablosu">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Eczane Adı</th>
+                        <th scope="col">İstek Tarihi</th>
+                        <th scope="col">Açıklama</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var eczaneNobetIstek in (List<EczaneNobetIstekDetay>)TempData["EklenenIstekler"])
+                    {
+                        <tr class="myRow">
+                            <td>@eczaneNobetIstek.EczaneAdi</td>
+                            <td>@eczaneNobetIstek.TarihUzun</td>
+                            <td>@eczaneNobetIstek.Aciklama</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+@if (esGruptakiEczanelerleCakismaDurumu.Count == 1)
+{
+    <div class="row">
+        <div class="col-10">
+            @{
+                esGruptakiCakisanEczane = @esGruptakiEczanelerleCakismaDurumu.FirstOrDefault();
+            }
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fa fa-warning"></i> İstek girmeye çalıştığınız eczane
+                <span class="badge badge-light">@esGruptakiCakisanEczane.EczaneGrupTanimAdi </span> eş grubundaki
+                <span class="badge badge-light">@esGruptakiCakisanEczane.EczaneAdi </span> eczanesi ile
+                <span class="font-weight-bold">
+                    @if (@esGruptakiCakisanEczane.ArdisikNobetSayisi > 0)
+                    {
+                        <span class="badge badge-light">@DateTime.Today.AddDays(esGruptakiCakisanEczane.ArdisikNobetSayisi) tarihine kadar</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-light">seçtiğiniz tarih için</span>
+                    }
+                    çakışmaktadır.
+                </span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+else if (esGruptakiEczanelerleCakismaDurumu.Count > 1)
+{
+    <div class="row">
+        <div class="col-10 mb-3">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fa fa-warning"></i> İstek girmeye çalıştığınız eczaneler <span class="badge badge-light">@esGruptakiEczanelerleCakismaDurumu.Count </span>
+                <strong>aynı eş gruptadır.</strong> Lütfen kontrol ediniz.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <table class="table table-hover table-sm" id="esGruptakiEczanelerleCakismalar">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Eş Grup Adı</th>
+                        <th scope="col">Eczane</th>
+                        <th scope="col">Tarih</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var esGruptakiEczane in esGruptakiEczanelerleCakismaDurumu)
+                    {
+                        <tr class="myRow">
+                            <td>@esGruptakiEczane.EczaneGrupTanimAdi</td>
+                            <td>@esGruptakiEczane.EczaneAdi</td>
+                            <td>
+                                @if (esGruptakiEczane.ArdisikNobetSayisi > 0)
+                                {
+                                    <span>@DateTime.Today.AddDays(esGruptakiEczane.ArdisikNobetSayisi) tarihine kadar</span>
+                                }
+                                else
+                                {
+                                    <span>Seçilen tarih</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @*<ul class="list-group">
+                    @foreach (var esGruptakiEczane in esGruptakiEczanelerleCakismaDurumu)
+                    {
+                        <li class="list-group-item list-group-item-warning">
+                            <span class="badge badge-light">@esGruptakiEczane.EczaneGrupTanimAdi </span> eş grubundaki
+                            <span class="badge badge-light">@esGruptakiEczane.EczaneAdi </span> eczanesi ile
+                            <span class="font-weight-bold">
+                                @if (esGruptakiEczane.ArdisikNobetSayisi > 0)
+                                {
+                                    <span class="badge badge-light">@DateTime.Today.AddDays(esGruptakiEczane.ArdisikNobetSayisi) tarihine kadar</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-light">seçtiğiniz tarih için</span>
+                                }
+                            </span>
+                        </li>
+                    }
+                </ul>*@
+        </div>
+    </div>
+}

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<EczaneNobetSonucDetay2>
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-hover table-sm">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayName("Tarih")
+                </th>
+                <th>
+                    @Html.DisplayName("Nöbet Tipi")
+                </th>
+                <th>
+                    @Html.DisplayName("Nöbet Grubu")
+                </th>
+                <th>
+                    @Html.DisplayName("Eczane")
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tarih)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EczaneAdi)
+                    </td>
+                    <td>
+                        <a class="alert-link" target="_blank"
+                           href="@Url.RouteUrl("UpdateSonuclarInsertDegisim", new { eczaneNobetSonucId = item.Id } )">
+                            Nöbet Değiştir
+                        </a>
+                    </td>
+                    <td>
+                        <a class="alert-link" target="_blank"
+                           href="@Url.RouteUrl("AlternatifNobetciOnerileri", new { eczaneNobetSonucId = item.Id } )">
+                            Alternatif Nöbetçi Eczaneler
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

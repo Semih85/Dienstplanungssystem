@@ -1,0 +1,49 @@
+﻿@model EczaneGrup
+
+@{
+    ViewBag.Title = "Eczane Grup Düzenle | Nöbet Sistemi";
+}
+
+<h4>Eczane Grup Düzenle</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EczaneGrupTanimId, "EczaneGrupTanimId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("EczaneGrupTanimId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EczaneGrupTanimId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EczaneId, "EczaneId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("EczaneId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.EczaneId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="custom-control custom-checkbox mb-2 ml-md-3">
+                @Html.CheckBox("PasifMi", new { @class = "custom-control-input" })
+                <label class="custom-control-label" for="PasifMi">Pasif mi?</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-outline-primary" />
+                @Html.ActionLink("Eczane Grup Listesi", "Index", "EczaneGrupTanim", null, new { @class = "btn btn-outline-warning" })
+            </div>
+        </div>
+    </div>
+}

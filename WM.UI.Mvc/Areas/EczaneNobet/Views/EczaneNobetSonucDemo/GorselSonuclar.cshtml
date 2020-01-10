@@ -1,0 +1,374 @@
+﻿
+@model EczaneNobetGorselSonucViewModel
+
+@{
+    //SelectList yillar1 = ViewBag.YilBaslangic;
+    //SelectList aylar1 = ViewBag.ayBaslangic;
+    SelectList yillar2 = ViewBag.yilBitis;
+    SelectList aylar2 = ViewBag.Aylar;
+    int ayBitis = ViewBag.ayBitis;
+    SelectList eczaneler = ViewBag.eczaneId;
+    int frekans = ViewBag.frekansDefault;
+    int versiyon = ViewBag.versiyonDefault;
+    SelectList frekanslar = ViewBag.Frekans;
+    SelectList versiyonlar = ViewBag.Versiyonlar;
+}
+
+<h3>Nöbetçi Eczane Demo Görsel Sonuçlar</h3>
+
+@using (Html.BeginForm("GorselSonuclar", "EczaneNobetSonucDemo", FormMethod.Post, new { @class = "form-inline" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group mr-2 mt-1 mb-1">
+        <label class="form-control-label mr-sm-2">Yıl: </label>
+        @Html.DropDownList("yilBitis", yillar2, htmlAttributes: new { @class = "form-control" })
+    </div>
+
+    <div class="form-group mr-2 mt-1 mb-1">
+        <label class="form-control-label mr-sm-2">Ay: </label>
+        @Html.DropDownList("ayBitis", aylar2, htmlAttributes: new { @class = "form-control" }, optionLabel: "---Tümü---")
+    </div>
+
+    <div class="form-group mr-2 mt-1 mb-1">
+        <label class="form-control-label mr-sm-2">Frekans <span>&#8805;</span></label>
+        @Html.DropDownList("frekans", frekanslar, htmlAttributes: new { @class = "form-control" })
+    </div>
+
+    <div class="form-group mr-2 mt-1 mb-1">
+        <label class="form-control-label mr-sm-2">Versiyon: </label>
+        @Html.DropDownList("versiyon", versiyonlar, htmlAttributes: new { @class = "form-control" })
+    </div>
+
+    <div class="form-group mr-sm-2 mt-1 mb-1">
+        <label class="form-control-label mr-sm-2">Eczane: </label>
+        @Html.DropDownList("eczaneId", eczaneler, htmlAttributes: new { @class = "form-control" }, optionLabel: "---Tümü---")
+    </div>
+
+    <div class="form-group mr-2 mt-1 mb-1">
+
+        <button type="submit" class="btn btn-primary mr-3">Uygula</button>
+
+        <div id="visChange" class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-outline-success active">
+                <input type="radio" name="options" id="option1" value=1 autocomplete="off" checked> Şekil-1
+            </label>
+            <label class="btn btn-outline-danger">
+                <input type="radio" name="options" id="option2" value=2 autocomplete="off"> Şekil-2
+            </label>
+
+        </div>
+    </div>
+}
+
+
+<div class="row mt-2">
+
+    <div class="col-10 col-md-8 ">
+        <h4>Nöbet Sonuçlar</h4>
+        <div id="mynetwork" class="network">
+            @* Veri Görseli *@
+        </div>
+    </div>
+    <div class="col-10 col-md-4">
+        <h4>Eş/Akraba Eczaneler</h4>
+        <div id="mynetwork2" class="network">
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+
+    @Scripts.Render("~/bundle/vis/scripts")
+    <script>
+
+        //vis değişkenler
+        var _nodes = @Html.Raw(Json.Encode(Model.EczaneNobetSonucNodes));
+        var _edges = @Html.Raw(Json.Encode(Model.EczaneNobetSonucEdges.Select(s => new { s.From, s.Label, s.Title, s.To, s.Value })));
+        var _eczaneGrupNodes = @Html.Raw(Json.Encode(Model.EczaneGrupNodes));
+        var _eczaneGrupEdges = @Html.Raw(Json.Encode(Model.EczaneGrupEdges.Select(s => new { s.From, s.Title, s.To, s.Value })));
+
+        var nodes = null;
+        var edges = null;
+        var network = null;
+        var network2 = null;
+        var eczaneGrupNodes = null;
+        var eczaneGrupEdges = null;
+
+        draw();
+        drawNobetGrup();
+
+        $('#visChange .btn').on('click', function (event) {
+            var val = $(this).find('input').val();
+            if (val==1) {
+                draw();
+                drawNobetGrup();
+            }
+            else {
+                draw2();
+                drawNobetGrup2();
+            }
+
+
+        });
+
+        function drawDataNobetGrup() {
+
+            eczaneGrupNodes = [];
+            eczaneGrupEdges = [];
+
+            $.each(_eczaneGrupNodes, function (key, val) {
+                eczaneGrupNodes.push({
+                    id: val.Id,
+                    value: val.Value,
+                    label: val.Label,
+                    group: val.Group,
+                    level: val.Level
+                });
+            });
+
+            $.each(_eczaneGrupEdges, function (key, val) {
+                eczaneGrupEdges.push({
+                    from: val.From,
+                    to: val.To,
+                    value: val.Value,
+                    label: val.Label,
+                    title: val.Title
+                });
+            });
+
+            eczaneGrupNodes = eczaneGrupNodes;
+            eczaneGrupEdges = eczaneGrupEdges;
+        }
+        //görseli çiz
+        function drawData() {
+
+            nodes = [];
+            edges = [];
+
+            $.each(_nodes, function (key, val) {
+                nodes.push({
+                    id: val.Id,
+                    value: val.Value,
+                    label: val.Label,
+                    group: val.Group,
+                    level: val.Level
+                });
+            });
+
+            $.each(_edges, function (key, val) {
+                edges.push({
+                    from: val.From,
+                    to: val.To,
+                    value: val.Value,
+                    label: val.Label,
+                    title: val.Title
+                });
+            });
+
+            nodes = nodes;
+            edges = edges;
+        }
+
+        function draw() {
+
+            drawData();
+
+            // Instantiate our network object.
+            var container = document.getElementById('mynetwork');
+            var data = {
+                nodes: nodes,
+                edges: edges
+            };
+
+            var options = {
+                nodes: {
+                    shape: 'ellipse'
+                    //shape: ellipse, dot, triangle
+                    //scaling: {
+                    //    label: {
+                    //        min: 15,
+                    //        max: 31
+                    //    }
+                    //}
+                },
+                edges: {
+                    color: {
+                        color: 'rgba(30,30,30,0.1)',
+                        highlight: 'blue'
+                    },
+                    width: 0.1,
+                    smooth: {
+                        type: 'cubicBezier'
+                         //types: cubicBezier, curvedCW, straightCross
+                    }
+                },
+                layout: {
+                    hierarchical: {
+                        direction: "UD"
+                    }
+                },
+                physics: true
+            };
+            network = new vis.Network(container, data, options);
+
+        }
+
+        function draw2() {
+
+            drawData();
+
+            // Instantiate our network object.
+            var container = document.getElementById('mynetwork');
+            var data = {
+                nodes: nodes,
+                edges: edges
+            };
+
+            var options = {
+                nodes: {
+                    shape: 'dot',
+                    size: 30,
+                    font: {
+                        size: 32
+                    },
+                    borderWidth: 2,
+                    shadow: true
+                },
+                edges: {
+                    width: 2,
+                    shadow: true
+                }
+            };
+            network = new vis.Network(container, data, options);
+        }
+
+        function drawNobetGrup() {
+
+            drawDataNobetGrup();
+
+            // Instantiate our network object.
+            var container = document.getElementById('mynetwork2');
+            var data = {
+                nodes: eczaneGrupNodes,
+                edges: eczaneGrupEdges
+
+            };
+
+            var options = {
+                nodes: {
+                    shape: 'ellipse'
+                    //shape: ellipse, dot, triangle
+                    //scaling: {
+                    //    label: {
+                    //        min: 15,
+                    //        max: 31
+                    //    }
+                    //}
+                },
+                edges: {
+                    color: {
+                        color: 'rgba(30,30,30,0.1)',
+                        highlight: 'blue'
+                    },
+                    width: 0.1,
+                    smooth: {
+                        type: 'curvedCW'
+                        //types: cubicBezier, curvedCW, straightCross
+                    }
+                },
+                layout: {
+                    hierarchical: {
+                        direction: "LR"
+                    }
+                },
+                physics: true
+            };
+
+            //console.log(data.edges);
+            network2 = new vis.Network(container, data, options);
+        }
+
+        function drawNobetGrup2() {
+
+            drawDataNobetGrup();
+
+            // Instantiate our network object.
+            var container = document.getElementById('mynetwork2');
+            var data = {
+                nodes: eczaneGrupNodes,
+                edges: eczaneGrupEdges
+            };
+
+            var options = {
+                nodes: {
+                    shape: 'dot',
+                    size: 30,
+                    font: {
+                        size: 32
+                    },
+                    borderWidth: 2,
+                    shadow: true
+                },
+                edges: {
+                    width: 2,
+                    shadow: true
+                }
+            };
+
+            //console.log(data.edges);
+            network2 = new vis.Network(container, data, options);
+        }
+
+
+    </script>
+}
+
+@section styles{
+    @Styles.Render("~/bundle/network/style")
+    <style>
+
+        .network {
+            border: 1px solid lightgray;
+        }
+
+        /*Extra small devices (portrait phones, less than 576px)*/
+        @@media (max-width: 575px) {
+            .network {
+                height: 300px;
+            }
+        }
+
+        /*// Small devices (landscape phones, 576px and up)*/
+        @@media (min-width: 576px) and (max-width: 767px) {
+            .network {
+                height: 450px;
+            }
+        }
+
+        /*// Medium devices (tablets, 768px and up)*/
+        @@media (min-width: 768px) and (max-width: 991px) {
+            .network {
+                height: 600px;
+            }
+        }
+
+        /*// Large devices (desktops, 992px and up)*/
+        @@media (min-width: 992px) and (max-width: 1199px) {
+            .network {
+                height: 700px;
+            }
+        }
+
+        /*// Extra large devices (large desktops, 1200px and up)*/
+        @@media (min-width: 1200px) {
+            .network {
+                height: 800px;
+            }
+        }
+    </style>
+}
+
+

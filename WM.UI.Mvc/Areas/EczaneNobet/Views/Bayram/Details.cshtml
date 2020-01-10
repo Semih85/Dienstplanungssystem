@@ -1,0 +1,48 @@
+﻿@model BayramDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h4>Bayram Detay</h4>
+<hr />
+<div>    
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.BayramTurAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BayramTurAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGrupGorevTipAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGrupGorevTipAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGunKuralAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGunKuralAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tarih)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

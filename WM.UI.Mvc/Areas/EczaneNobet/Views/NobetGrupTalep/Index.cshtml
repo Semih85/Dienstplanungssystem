@@ -1,0 +1,70 @@
+﻿@model IEnumerable<NobetGrupTalepDetay>
+
+@{
+    ViewBag.Title = "Nöbetçi Sayıları |  Nöbet Yaz";
+}
+
+<h4>
+    <span class="mr-5">Nöbetçi Sayıları</span>
+    <a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+</h4>
+<hr />
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <i class="fa fa-info-circle"></i> 
+    <strong>Varsayılan günlük nöbetçi sayısı</strong> üst menüdeki
+    <strong>"Kural > Nöbet Grup Kural"</strong> sayfasında bulunan
+    <strong>Varsayılan nöbetçi sayısı</strong> değeri ile tanımlanmaktadır. 
+    <br /> 
+    <strong>Farklı sayıda nöbetçi olduğunda</strong> değişim bu sayfadan yapılmaktadır.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<table class="table table-hover table-sm">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NobetGrupAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tarih)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NobetciSayisi)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tarih)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetciSayisi)
+            </td>
+            <td>
+                <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="#islem" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fa fa-cog"></span>
+                </button>
+                <div class="collapse d-md-block" id="islem">
+                    <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                    <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                    <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

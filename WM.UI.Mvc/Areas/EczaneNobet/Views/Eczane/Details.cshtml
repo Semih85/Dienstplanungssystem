@@ -1,0 +1,113 @@
+﻿@model EczaneDetay
+
+@{
+    ViewBag.Title = "Eczane Detaylar | Nöbet Sistemi";
+}
+
+<h4>Eczane Detaylar</h4>
+
+<hr />
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AcilisTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AcilisTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KapanisTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KapanisTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Enlem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Enlem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Boylam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Boylam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdresTarifi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdresTarifi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdresTarifiKisa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdresTarifiKisa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TelefonNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TelefonNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MailAdresi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MailAdresi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WebSitesi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WebSitesi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetUstGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetUstGrupAdi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Listeye Dön", "Index")
+</p>

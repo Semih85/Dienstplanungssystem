@@ -1,0 +1,100 @@
+﻿@model IEnumerable<KisitDetay>
+
+@{
+    ViewBag.Title = "Kısıtlar | Nöbet Sistemi";
+}
+
+<div class="well">
+    <div class="form-inline">
+        <h4 class="mr-5">Kısıtlar</h4>
+        <div class="form-group mr-5">
+            <a class="btn btn-outline-success btn-sm pull-right" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+        </div>
+        <div class="input-group mr-4">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="text" id="myInput" class="form-control" placeholder="Ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+        </div>
+        <span class="badge badge-info">Toplam Kural Sayısı: @ViewBag.ToplamVeri</span>
+    </div>
+</div>
+
+<hr />
+
+<table class="table table-hover table-sm" style="width:100%">
+    <thead class="thead-light">
+        <tr>
+            <th style="width:3%">
+                @Html.DisplayName("Nu")
+            </th>
+            <th style="width:10%">
+                @Html.DisplayName("Adı")
+            </th>
+            <th style="width:10%">
+                @Html.DisplayName("Adı Gösterilen")
+            </th>
+            <th style="width:10%">
+                @Html.DisplayName("Kategorisi")
+            </th>
+            <th style="width:40%">
+                @Html.DisplayName("Açıklama")
+            </th>
+            <th style="width:15%">
+                @Html.DisplayName("Oluşturma Tarihi")
+            </th>
+            <th style="width:8%"></th>
+        </tr>
+    </thead>
+    <tbody id="kisitTablo">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <span>K</span>@(item.Id < 10 ? $"0{item.Id}" : item.Id.ToString())
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdiGosterilen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KisitKategoriAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aciklama)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OlusturmaTarihi)
+                </td>
+                <td>
+                    @{
+                        var target = $"#islem{@item.Id}";
+                    }
+                    <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="fa fa-cog"></span>
+                    </button>
+                    <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                        <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                        <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                        <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLocaleLowerCase('tr-TR');
+                $("#kisitTablo tr").filter(function () {
+                    $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

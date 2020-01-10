@@ -1,0 +1,279 @@
+﻿
+@{
+    ViewBag.Title = "Online Eczane Ekranı";
+    ViewBag.MetaDescription = "Online Eczane Ekranı istenen ekranda istenen içeriğin gösterilebildiği bir sistemdir. Eczaneler ile her bir nöbetçi eczane arasındaki en kısa yol harita ile online olarak gösterilir.";
+    ViewBag.MetaKeywords = "online eczane ekranı, online nobetçi eczane ekranı, online nobetçi eczane tabelası, eczane nöbet sistemi, nobetçi eczane";
+}
+
+<style>
+    .jumbotron {
+        background-image: url("../Content/images/digital_background4.jpg");
+        /*background-color: aliceblue;*/
+        background-size: cover;
+        /*height:100px;*/
+    }
+</style>
+
+@section jumbotronMaster{
+
+    <div class="jumbotron jumbotron-fluid pb-2 pt-2 py-lg-5 mt-5 mb-lg-2 mb-1">
+        <div class="container text-white">
+            <h1 class="display-4 mt-3 mt-lg-0 font-weight-bold" style="font-size:250%;">ON<span class="text-danger">E</span>E</h1>
+            <p class="lead">
+
+                <strong class="text-info font-weight-bolder">ON</strong>line
+                @*<strong class="text-warning font-weight-bolder">N</strong>öbetçi*@
+                <strong class="text-danger font-weight-bolder">E</strong>czane
+                <strong class="text-info font-weight-bolder">E</strong>kranı
+                <i class="fa fa-rss text-info" aria-hidden="true"></i>
+            </p>
+
+        </div>
+    </div>
+}
+
+@* #FFC300  #388AF9 *@
+@* Dilerseniz <strong class="text-danger">nöbetçi eczaneleri</strong> kağıt <i class="fa fa-file text-danger" aria-hidden="true"></i> yerine, her eczanede bir
+    <span class="font-weight-bold"> ekran üzerinden harita <i class="fa fa-map text-danger" aria-hidden="true"></i> ile gösterelim. </span> *@
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/digitalEkran.png" alt="dijital ekran">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row mb-2">
+        @*<div class="col-12 mb-3">
+                <h3 class="text-center">Online <i class="fa fa-rss text-info" aria-hidden="true"></i> <span class="text-danger">Nöbetçi Eczane Gösterim</span> Tabelası</h3>
+            </div>*@
+
+        <div class="col-12 text-center mb-lg-3">
+            <h4 class="text-center"><i class="fa fa-commenting text-success" aria-hidden="true"></i> Siz de <strong>ON<span class="text-danger">E</span>E</strong> kullanın ve rahat edin!</h4>
+        </div>
+
+        <div class="col-lg-4 mb-3">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item list-group-item-action">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    <strong>ONEE</strong> istenen ekranda istenen içeriğin gösterilebildiği bir sistemdir.
+                </li>
+                <li class="list-group-item list-group-item-action">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    Sistem her ekran için ayrı, <strong>bir adet mini bilgisayar</strong> ile çalışmaktadır.
+                </li>
+                <li class="list-group-item list-group-item-action">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    Ekranlar <strong>yatay ya da dikey</strong> olarak kullanabilir.
+                </li>
+            </ul>
+        </div>
+
+        @*<hr class="bg-secondary d-sm-block d-md-none w-50">*@
+
+        <div class="col-lg-4 text-center mb-3">
+            <img class="img-fluid" src="~/Content/images/EczaneNobetSistemi/DijitalEkran_Sistem.jpg">
+        </div>
+
+        <div class="col-lg-4 mb-3">
+
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> Mini bilgisayarlar <strong>tak-çıkar olarak hemen çalışabilir.</strong></li>
+
+
+                <li class="list-group-item list-group-item-action">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    Mini bilgisayarlar normal bilgisayara (PC) göre <strong>ortalama %94 daha az elektirik</strong> tüketir.
+                </li>
+
+                <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Kolay bir <strong>içerik yönetim arayüzü</strong> vardır.</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+
+        <div class="col-12 mb-3 text-center text-lg-left">
+            <h4>
+                Nöbetçi
+                <small class="text-danger bg-white font-weight-bolder" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">&nbsp;E&nbsp;</small>
+                Gösterim Sistemi
+            </h4>
+            @*<p>
+                    <i class="fa fa-commenting text-success" aria-hidden="true"></i>
+                    Dilerseniz <strong class="text-danger">nöbetçi eczaneleri</strong>, kağıt <i class="fa fa-file text-danger" aria-hidden="true"></i> yerine her eczanede bir
+                    <span class="font-weight-bold"> ekran üzerinden harita <i class="fa fa-map text-danger" aria-hidden="true"></i> ile gösterelim. </span>
+                </p>*@
+        </div>
+
+        <div class="col-lg-8 text-center mb-3">
+            <img class="img-thumbnail" data-toggle="modal" data-target=".bd-example-modal-xl" src="~/Content/images/EczaneNobetSistemi/digitalEkran.png" alt="dijital ekran">
+        </div>
+
+        <div class="col-lg-4 text-center">
+            @*<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="~/Content/images/dijitalEkran.png" alt="İlk slayt" height="600">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/1_Dijital_Ekran_Sunum_Klasik.jpg" alt="2. slayt" height="600">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/2_Dijital_Ekran_Sunum_Onerilen.jpg" alt="3. slayt" height="600">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/3_Dijital_Ekran_Sunum_Avantajlar.jpg" alt="4. slayt" height="600">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="~/Content/images/4_Dijital_Ekran_Sunum_Teklif2.jpg" alt="5. slayt" height="600">
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>*@
+
+
+            @*<h2 class="mb-3">Sistemin Avantajları</h2>*@
+
+            <ul class="list-group list-group-flush text-left">
+
+                <li class="list-group-item list-group-item-action pt-lg-0">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    <strong>Mini bilgisayarlar</strong>
+                    <a class="card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemi")">
+                        <small class="text-danger bg-white font-weight-bolder" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">&nbsp;E&nbsp;</small> Nöbet Sistemi
+                    </a>
+                    ile entegredir.
+                </li>
+
+                <li class="list-group-item list-group-item-action">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    Her eczanedeki ONEE üzerinde <strong>nöbetçi olan eczanelere gidilen en kısa yol</strong> harita ile gösterilmektedir.
+                </li>
+                <li class="list-group-item list-group-item-action">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    Ekrandaki <strong>karekodu telefonunuzdan okutup</strong> istediğiniz eczaneye yol tarifi alabilirsiniz.
+                    @*<strong>Kağıt ve normal bilgisayar</strong> sistemlerinin dezavantajlarını barındırmaz.*@
+                </li>
+                <li class="list-group-item list-group-item-action">
+                    <i class="fa fa-check text-success" aria-hidden="true"></i>
+                    <strong>Kamu spotu ya da reklam</strong> sunulabilmektedir.
+                </li>
+
+                <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> <span class="font-weight-bold">Kağıt, yazıcı ve tonerden</span> kurtulun.</li>
+                <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> Nöbetler <span class="font-weight-bold">online </span><i class="fa fa-rss text-info" aria-hidden="true"></i> güncellensin.</li>
+                @*<li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> Mini bilgisayar ile bağlanın.</li>*@
+                @*<li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> <strong>Minimum elektrik tüketimi.</strong></li>*@
+                @*<li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> Ekranı yatay/dikey olarak kullanın.</li>
+                    <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> <strong>Tak-çıkar ve otomatik çalışan sistem.</strong></li>*@
+                @*<li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Dijital görüntü içeriği</li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Düşük arıza oranı</li>
+                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Sessiz çalışma</li>*@
+
+            </ul>
+        </div>
+
+    </div>
+
+    <hr class="bg-secondary mb-4 w-50">
+
+    <div class="row">
+
+        <div class="col-12">
+            <h4 class="text-center">Klasik Sistemler</h4>
+
+            <div class="row">
+                @*<div class="col-md-4">
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item list-group-item-action">
+                                <span class="badge badge-pill badge-info">1</span>
+                                Her eczanede, günlük nöbetçi listeleri genellikle yazıcı ya da matbaadan alınmış bir kağıt ile gösterilmektedir.
+                            </li>
+                            <li class="list-group-item list-group-item-action">
+                                <span class="badge badge-pill badge-info">2</span>
+                                Bazı bölgelerde ise bu durum bilgisayardan dışarıya dönük bir monitör ile gösterilmektedir.
+                            </li>
+                            <li class="list-group-item list-group-item-action">
+                                <span class="badge badge-pill badge-info">3</span>
+                                Ancak, her iki çözümün de farklı dezavantajları bulunmaktadır.
+                            </li>
+
+                        </ul>
+                    </div>
+                    <hr class="bg-secondary d-sm-block d-md-none w-50">*@
+
+                <div class="col-lg-6 text-center mt-lg-2">
+
+                    <p class="text-center">
+                        <i class="fa fa-minus text-info" aria-hidden="true"></i>
+                        <strong>Kağıt kullanımında</strong> her yıl <span>&#126;</span>1 tır kağıt çöpe gitmektedir.
+                    </p>
+                    <img class="img-fluid w-75" src="~/Content/images/EczaneNobetSistemi/copKamyonu.jpg">
+
+                </div>
+
+                <div class="col-lg-6 mb-3">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item list-group-item-action">
+                            <i class="fa fa-minus text-info" aria-hidden="true"></i>
+                            <strong>Normal bilgisayar (PC)</strong> kullanımında;
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item list-group-item-action">
+                                    <i class="fa fa-minus text-info" aria-hidden="true"></i>
+                                    <strong>Kurulum maliyeti</strong> yüksektir.
+                                </li>
+                                <li class="list-group-item list-group-item-action">
+                                    <i class="fa fa-minus text-info" aria-hidden="true"></i>
+                                    <strong>Uzun süreli kullanımda</strong> arıza yüzdesi fazladır.
+                                </li>
+                                <li class="list-group-item list-group-item-action">
+                                    <i class="fa fa-minus text-info" aria-hidden="true"></i>
+                                    <strong>İdamesi maliyetlidir</strong>.
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*@section scripts{
+
+    <script>
+        $(document).ready(function () {
+
+            $('#jumbotronYazi').text("Dijital nöbetçi eczane tabelası");
+
+        });
+
+    </script>
+
+    }*@
+

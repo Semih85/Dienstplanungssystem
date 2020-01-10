@@ -1,0 +1,35 @@
+﻿
+@section Styles{
+    @Styles.Render("~/bundle/pivot/style")
+}
+
+<title>Pivot Demo</title>
+
+<div id="output">
+
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundle/pivot/scripts")
+
+    <script>
+        // This example is the most basic usage of pivot()
+
+        $(function () {
+            $("#output").pivot(
+                [
+                    { color: "blue", shape: "circle" },
+                    { color: "red", shape: "triangle" },
+                    { color: "red", shape: "triangle" },
+                    { color: "brown", shape: "circle" }
+                ],
+                {
+                    rows: ["color"],
+                    cols: ["shape"]
+                }
+            );
+        });
+    </script>
+}
+
+

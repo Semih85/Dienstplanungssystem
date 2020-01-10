@@ -1,0 +1,41 @@
+﻿@model WM.Northwind.Entities.ComplexTypes.EczaneNobet.EczaneGrupDetay
+
+@{
+    ViewBag.Title = "Eczane Grup Sil | Nöbet Sistemi";
+}
+
+<h4>Eczane Grup Sil</h4>
+<hr />
+
+<h5 class="text-danger">Silmek istediğinizden emin misiniz?</h5>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneGrupTanimAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneGrupTanimAdi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-outline-danger" />
+            @Html.ActionLink("Eczane Grup Listesi", "Index", "EczaneGrupTanim", null, new { @class = "btn btn-outline-warning" })
+
+        </div>
+    }
+</div>

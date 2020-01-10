@@ -1,0 +1,479 @@
+﻿
+@{
+    ViewBag.Title = "Nöbet Yaz Detaylar";
+    ViewBag.MetaDescription = "Nöbetçi Sistemi - Detaylar";
+    ViewBag.MetaKeywords = "nöbet sistemi";
+}
+
+<style>
+
+    .jumbotron {
+        background-image: url("../Content/images/digital_background4.jpg");
+        /*background-color: aliceblue;*/
+        background-size: cover;
+        /*height:100px;*/
+    }
+</style>
+
+@section jumbotronMaster{
+
+    <div class="jumbotron jumbotron-fluid py-3 py-lg-5 mt-5 mb-lg-2 mb-1">
+        <div class="container text-white">
+            <h1 class="display-4 mt-3 mt-lg-0 font-weight-bold" style="font-size:250%; " id="jumbotronYazi">
+                @MultiLanguage.HomeTexts.ZamaniSizeKalsin
+            </h1>
+            @*<p class="lead">Detaylar</p>*@
+            @*<hr class="my-4 bg-info text-left w-50" align="left">*@
+            <p class="lead">
+                @MultiLanguage.HomeTexts.NobetSistemi
+
+                @*Siz uğraşmayın! Zamanınız size kalsın.*@
+            </p>
+        </div>
+    </div>
+}
+
+<section id="nobetSistemi">
+
+    <div class="container">
+
+        @*<div class="row ">
+
+                <div class="col-lg-8">
+                    <p class="text-justify">
+                        Konuyu biraz daha somutlaştıracak olursak aslında nöbet yazmak en basit haliyle bir nevi sudoku çözmek gibidir.
+                        Örneğin gün bazında nöbet yazılan bir sistem düşünelim ve bu sistemi bir tabloda canlandıralım.
+                        Satırlara nöbetçileri, sütunlara ise günleri yazalım.
+                        Günler ve nöbetçiler arasında özellik olarak herhangi bir fark olmadığını,
+                        her gün bir nöbetçi gerektiğini,
+                        nöbetçilerin her gün için müsait olduğunu ve
+                        hatta gün sayısı kadar nöbetçi olduğunu varsayalım.
+                        Bu haliyle satır ve sütun toplamlarını 1 yapacak şekilde hemen herkes bu nöbeti yazabilecektir.
+                    </p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <img src="~/Content/images/sudoku2.png" style="width:90%" />
+                    <span>Sudoku</span>
+                </div>
+            </div>*@
+
+        <div class="row ">
+
+            <div class="col-lg-8 mb-2">
+                <div class="row mb-lg-2 ">
+
+                    <div class="col-md-2 text-center pt-lg-2 mb-3 d-md-none">
+                        <img class="img-fluid" src="~/Content/images/takvim_planlama.png" style="width:30%" />
+                        <br />
+                        <span class="font-weight-bold">
+                            @MultiLanguage.HomeTexts.Planlama
+                        </span>
+                    </div>
+
+                    <div class="col-md-2 text-center pt-lg-2 mb-3 d-none d-md-block">
+                        <img class="img-fluid" src="~/Content/images/takvim_planlama.png" />
+                        <br />
+                        <span class="font-weight-bold">
+                            @MultiLanguage.HomeTexts.Planlama
+                        </span>
+                    </div>
+
+                    <div class="col-md-10 ">
+                        <p class="text-justify">
+                            @*<img src="~/Content/images/nobetYazResimZorluk.jpg" width="100" />*@
+                            @* Diğer taraftan *@
+                            @Html.Raw(MultiLanguage.HomeTexts.NobetYazmakSanildigiKadar).
+                            @MultiLanguage.HomeTexts.BuProblemdeEnyalinHaliyle.
+                            @*Genellikle nöbet yazan kişiler bu durumun farkındadır.*@
+                            @*<strong class="text-danger">Nöbet listeleri binbir emek, zaman ve fazlaca zihin yorgunluğu harcanarak hazırlanmaktadır. </strong>*@
+                            @Html.Raw(MultiLanguage.HomeTexts.AncakIhtiyacaGore).
+                            @Html.Raw(MultiLanguage.HomeTexts.ProbleminYapisiGeregi).
+
+                            @*Bu süreç her bir nöbet periyodu sonunda tekrar ele alınır.*@
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row mb-lg-3 mb-2">
+                    <div class="text-center mb-3 pr-3 d-md-none">
+                        <img class="img-fluid" src="~/Content/images/istatistik.jpg" style="width:40%" />
+                        <br />
+                        <span class="font-weight-bold">
+                            @Html.Raw(MultiLanguage.HomeTexts.Istatistik)
+                        </span>
+                    </div>
+                    <div class="col-md-9">
+                        @*<p class="text-justify">
+                                Bu yapıya;
+                                <strong>pazar, bayram ve hafta içi günlerinin kendi içinde adaletli dağılması, </strong>
+                                <strong>farklı nöbet gruplarının birbiri ile ilişkileri, </strong>
+                                <strong>birbiri ile nöbet tutabilenler/tutamayanlar</strong>
+                                ile <strong>mazeret ve istekler</strong> de eklendiği zaman
+                                çözüm için <strong class="text-danger">binlerce kombinasyon</strong> ortaya çıkar.
+                                @*Zaten bu tip çizelgeleme prolemleri literatürde de <strong>karmaşıklık düzeyi yüksek </strong> kategoride olarak ele alınmaktadır.
+                                <strong>Elle çözüm bulmak bir yana yazılım ile dahi çözüm bulmak oldukça zordur</strong>.
+                            </p>*@
+                        <p class="text-justify">
+                            @Html.Raw(MultiLanguage.HomeTexts.NobetlerinIstatistikOlarakTakipZorunluluguVardır).
+                            @Html.Raw(MultiLanguage.HomeTexts.HerNobetPeriyodundaGrubaYeniKatilan).
+                            @Html.Raw(MultiLanguage.HomeTexts.SurecFazlasiylaDinamiktir).
+                            @Html.Raw(MultiLanguage.HomeTexts.ExcelGibiProgramlar).
+                        </p>
+
+                    </div>
+                    <div class="col-md-3 text-center mb-2 pr-3 d-none d-md-inline">
+                        <img class="img-fluid" src="~/Content/images/istatistik.jpg" />
+                        <br />
+                        <span class="font-weight-bold d-none d-md-inline">
+                            @MultiLanguage.HomeTexts.Istatistik
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-2 text-center mb-3 d-md-none">
+                        <img class="img-fluid" src="~/Content/images/puko.png" style="width:40%" />
+                        <br />
+                        <span class="font-weight-bold">
+                            @MultiLanguage.HomeTexts.Uygulama
+                        </span>
+                    </div>
+
+                    <div class="col-md-2 text-center mb-3 d-none d-md-block">
+                        <img class="img-fluid" src="~/Content/images/puko.png" />
+                        <br />
+                        <span class="font-weight-bold">@MultiLanguage.HomeTexts.Uygulama</span>
+                    </div>
+
+                    <div class="col-md-10">
+                        <p class="text-justify">
+                            @*Bu kurallar her nöbet için değişkenlik gösterecektir.*@
+                            @Html.Raw(MultiLanguage.HomeTexts.ElleYazilirkenBileEnCokIstenenKuallarGozdenKacabilir).
+                            @Html.Raw(MultiLanguage.HomeTexts.BirBaskaSorunIseSonradanOrtayaCikanMazeretlerin).
+                            @*Ayrıca, nöbet yazılan periyotlar uzun bile olsa bu döngü çok geçmeden tekrar sizi bulacaktır.*@
+                            @Html.Raw(MultiLanguage.HomeTexts.BuYonuyleNoberYazmaSureci).
+                            @Html.Raw(MultiLanguage.HomeTexts.BirBaskaSorunIseSonradanOrtayaCikanMazeretlerin).
+                            @Html.Raw(MultiLanguage.HomeTexts.BirDeOlasiHatadaGelecekItirazlar).
+                            @*Yukarıdaki örneklere gerçek hayattaki ihtiyaca göre çok daha farklı kombinasyonlar da eklenebilecektir.*@
+                        </p>
+
+                        @*<p class="text-justify">
+                                <strong>İşte tüm bu nedenlerle;</strong>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Siz sadece kuralları <i class="fa fa-cogs text-danger" aria-hidden="true"></i> belirleyin. </li>
+                                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Saniyeler içinde <i class="fa fa-hourglass-end text-danger" aria-hidden="true"></i> nöbetleriniz yazılsın.</li>
+                                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> İstatistiklerin <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i> keyfini çıkarın.</li>
+                                    <li class="list-group-item text-center border-bottom-0">
+                                        <strong>Siz uğraşmayın! Zamanınız size kalsın.</strong>
+                                    </li>
+
+                                </ul>
+                            </p>*@
+                    </div>
+                </div>
+            </div>
+            <hr class="mb-4 bg-info">
+
+            @*
+                <div class="row mb-2">
+
+                    <div class="col-12 text-center">
+                        <h5>Bazı nöbet kuralları</h5>
+                    </div>
+
+                    <div class="col-lg-6 mb-0">
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">1</span> Bir ya da birden çok nöbet grubu olsun.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">2</span> Nöbetçiler grup değiştirebilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">3</span> Gruplara yeni nöbetçiler eklenebilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">4</span> Nöbetçiler gruplardan çıkabilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">5</span> Nöbet değişimleri yapılabilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">6</span> Günlük nöbetçi ihtiyacı değişken olsun.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">7</span> Pazar, hafta içi ve bayram özel takip edilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">8</span> Hafta içi de olabildiğince eşit dağılsın.</li>
+                        </ul>
+
+                    </div>
+
+                    <div class="col-lg-6">
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">9</span> Her bayram nöbeti öncekinden farklı tipte olsun.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">10</span> Geçerli istekler karşılanabilsin. </li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">11</span> Geçerli mazeretler dikkate alınsın.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">12</span> Herhangi iki nöbetçi sürekli aynı gün nöbet tutmasın.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">13</span> Nöbetçilerden bazıları birbiri ile aynı gün nöbet tutamasın.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">14</span> Nöbet alt grupları da olabilsin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-secondary">15</span> Peş peşe günlerde yazılan nöbetler grubun büyüklüğü ile orantılı olsun.</li>
+                        </ul>
+
+                    </div>
+                </div>
+            *@
+
+
+            <div class="col-lg-4 mb-3">
+                <h5 class="text-center">@MultiLanguage.HomeTexts.NobetSistemi</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        @*<i class="fa fa-check text-success" aria-hidden="true"></i>*@ <i class="fa fa-cogs text-danger" aria-hidden="true"></i> @MultiLanguage.HomeTexts.SizSadeceKurallariBelirleyin.
+                    </li>
+                    <li class="list-group-item">
+                        @*<i class="fa fa-check text-success" aria-hidden="true"></i>*@ <i class="fa fa-hourglass-end text-danger" aria-hidden="true"></i> @MultiLanguage.HomeTexts.SaniyelerIcindeNobetlerinizYazilsin.
+                    </li>
+                    <li class="list-group-item">
+                        @*<i class="fa fa-check text-success" aria-hidden="true"></i>*@ <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i> @MultiLanguage.HomeTexts.IstatistiklerinKeyfiniCikarin.
+                    </li>
+                    <li class="list-group-item text-center border-bottom-0">
+                        <strong>@MultiLanguage.HomeTexts.SizUgrasmayinZamaninizSizeKalsin.</strong>
+                    </li>
+
+                </ul>
+                <div class="text-center mb-3">
+                    @*<a class="h5 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemi")">
+                            <span class="fa fa-hand-o-right"></span>
+                            <small class="text-danger bg-white font-weight-bolder" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">&nbsp;E&nbsp;</small>
+                            @MultiLanguage.HomeTexts.NobetSistemi
+                        </a>*@
+
+                    <img class="img-thumbnail mt-2" src="~/Content/images/ai_picture.jpg" alt="nöbet yaz" width="330" />
+                </div>
+                <div class="text-center mb-3">
+
+                    <h5>
+                        @*<a class="card-link" href="@Url.RouteUrl("Contact")">
+                                <span class="fa fa-envelope"></span>
+                            </a>*@
+                        @*@MultiLanguage.HomeTexts.UcretsizDemoIcinBizeUlasin*@
+                        @MultiLanguage.HomeTexts.HemenBaslayalim
+                    </h5>
+                    @*<h5>Ücretsiz demo için bize <a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> ulaşın. Hemen başlayalım.</h5>*@
+                </div>
+
+                @*<div class="alert alert-success fade show text-center px-0" role="alert">
+                        <i class="fa fa-question-circle fa-lg" title="Bize mesaj ya da e-posta yazın sizi arayalım."></i> Yardım
+                        <a href="Tel:+905452710985" class="alert-link" style="text-decoration:none;">(+90) 545 - 271 09 85</a>
+                        <i class="fa fa-whatsapp fa-lg"></i>
+                    </div>*@
+
+            </div>
+
+
+
+            @*<div class="col-lg-12 mb-2">
+
+                                <ul class="list-group list-group-flush mb-2">
+                                    <li class="list-group-item">
+                                            <i class="fa fa-check text-success" aria-hidden="true"></i> Bu tip çizelgeleme prolemleri literatürde <strong>karmaşıklık düzeyi yüksek </strong> ve <strong> <abbr title="Non-deterministic-polynomial Time">NP-Hard</abbr></strong> kategorisinde olarak ele alınmaktadır.
+                                        </li>
+                                    <li class="list-group-item">
+                                            <i class="fa fa-check text-success" aria-hidden="true"></i>
+                                            Çünkü her bir nöbetçinin diğer hangi nöbetçilerle, hangi gün ve hangi görev tipinde (gece, gündüz nöbeti vb.) nöbet yazılacağına karar verilir.
+                                        </li>
+                                        <li class="list-group-item">
+                                            <i class="fa fa-check text-success" aria-hidden="true"></i> Bu yapıya;
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">
+                                                    <i class="fa fa-plus text-primary" aria-hidden="true"></i> <strong>Pazar, bayram ve hafta içi</strong> günlerinin kendi içindeki adaletli dağılması.
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <i class="fa fa-plus text-primary" aria-hidden="true"></i> <strong>Farklı nöbet gruplarının birbiri ile ilişkileri</strong> de eklendiği zaman.
+                                                </li>
+                                                <li class="list-group-item pb-0">
+                                                    <i class="fa fa-plus text-primary" aria-hidden="true"></i> Çözüm için <strong>binlerce kombinasyon</strong> ortaya çıkar.
+                                                </li>
+
+                                            </ul>
+                                        </li>
+                                        <li class="list-group-item text-danger">
+                                            <i class="fa fa-check text-success" aria-hidden="true"></i> <strong>Bu nedenle elle çözüm bulmak bir yana yazılım ile dahi çözüm oldukça zordur</strong>.
+                                        </li>
+                                    <li class="list-group-item">
+                                        <i class="fa fa-check text-success" aria-hidden="true"></i> Ancak, size özel tasarlanan matematiksel model ile <strong>en iyi çözüm</strong> saniyeler içinde tamamlanır.
+                                    </li>
+                                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Sadece kuralların matematiksel olarak mümkün olup olmadığına odaklanmalısınız.</li>
+                                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Mümkün olan tüm istekler kahve <i class="fa fa-coffee" aria-hidden="true"></i> içme rahatlığında çözülür.</li>
+                                    <li class="list-group-item"><i class="fa fa-check text-success" aria-hidden="true"></i> Sonuçlar istatistiklerden <i class="fa fa-bar-chart" aria-hidden="true"></i> kontrol edilir.</li>
+                                </ul>
+
+                            </div>
+
+                        <div class="col-lg-4 text-center pt-3 pr-0 mb-2">
+                                <img class="img-fluid" src="~/Content/images/istatistik_aylik.jpg" alt="Sonsuz çözüm">
+                            </div>
+                    </div>
+
+                <div class="row ">
+
+                    @*<div class="col-12 mb-2">
+                            <h4>Bize <a class="card-link" href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })">yazın <span class="fa fa-envelope"></span></a> hemen başlayalım.</h4>
+                        </div>*@
+
+            @*<div class="col-12 mb-3">
+                    <h4>Sizi de aramızda görmek istiyoruz...</h4>
+                    @*<p class="text-justify">
+                    Tüm bu süreci kahve <i class="fa fa-coffee text-success" aria-hidden="true"></i> içme rahatlığında yönetmek için tasarlanan <strong>nöbet yaz sistemi</strong> sayesinde yukarıdaki zorlukların hepsini bir kenara bırakın.
+
+                    @*Çünkü sistem tüm bu süreci profesyonelce ele alır ve kullanımınıza sunar.
+                    @*Bu sistemde sadece kuralların matematiksel olarak mümkün olup olmadığına odaklanmalısınız.
+                </p>
+                </div>*@
+
+        </div>
+
+        <hr />  
+        <div class="row">
+            <div class="col">
+                <h3 class="text-primary">@MultiLanguage.HomeTexts.BasindaBiz</h3>
+                @*<span>Parsetamol Dergisi</span>*@
+               
+                <a title="Nöbet Sistemi Parasetamol Dergisinde Görmek için Tıklayınız." target="_blank" href="https://www.yumpu.com/tr/document/read/62696743/parasetamol-dergi-sayi-11/23">
+                    <img class="img-fluid img-thumbnail" src="~/Content/images/EczaneNobetSistemi/Parasetamol-Reklam.png" alt="Nöbet Sistemi Parasetamol-Reklam" />                    
+                </a>
+            </div>
+        </div>
+        @*<hr class="bg-info" />*@
+
+        @*<div class="row ">
+
+                <div class="col-lg-6">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fa fa-check text-success" aria-hidden="true"></i> Size özel <strong>matematiksel model</strong> oluşturalım.
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fa fa-check text-success" aria-hidden="true"></i> Mümkün olan <strong>tüm kurallarınızı</strong> ekleyelim.
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fa fa-check text-success" aria-hidden="true"></i> Her zaman <strong class="text-primary">en iyi çözüme</strong> <strong class="text-success">en kısa sürede</strong> <i class="fa fa-hourglass-end text-success" aria-hidden="true"></i> ulaşın.
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-6">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <i class="fa fa-check text-success" aria-hidden="true"></i> Çok sayıda <strong>görsel istatistik</strong> <i class="fa fa-bar-chart" aria-hidden="true"></i> kullanın.
+                        </li>
+                        <li class="list-group-item">
+                            <i class="fa fa-check text-success" aria-hidden="true"></i> Siz <strong>yorulmayın</strong>.
+                            <i class="fa fa-smile-o" aria-hidden="true"></i>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+
+            <hr class="bg-info" />*@
+
+        @*<div class="row">
+
+                <div class="col-12 mb-2">
+                    <h4>Bazı temel nöbet kuralları:</h4>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><u>Günlerin Adil Dağılımı</u></h5>
+                            <p class="card-text">Haftanın herbir günü ve dini/milli bayram günlerinde ihtiyaç duyulan nöbetçi sayısına adaletli nöbet dağılımı <span class="text-success">sağlanır</span>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><u>Birlikte Nöbet Tutabilenler</u></h5>
+                            <p class="card-text">Birlikte nöbet tutabilecek farklı gruplardaki nöbetçilerin sürekli aynı gün nöbet tutması <span class="text-danger">engellenir</span>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><u>Peşpeşe Nöbet</u></h5>
+                            <p class="card-text">
+                                Ay içinde peşpeşe günlerde nöbet tutma durumu <span class="text-danger">engellenir</span>.
+                                <br />
+                                <strong class="text-danger">*</strong> Sistemde tanımlanan gün aralığı kadar gün geçmeden <span class="text-danger">nöbet yazılmaz</span>.
+                                <br />
+                                <strong class="text-danger">*</strong> Ayrıca <strong>pazar, bayram ve hafta içi</strong> nöbetlerinin kendi içinde, nöbet grubun büyüklüğüne göre hesaplanan belli bir zamandan önce nöbet yazılması <span class="text-danger">engellenir</span>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="card  mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><u>Birlikte Nöbet Tutamayanlar</u></h5>
+                            <p class="card-text">
+                                Konum vb. farklı gerekçeler nedeniyle birbiri ile nöbet tutamayacak durumda olan nöbetçilere sistemde tanımlanan gün aralığında aynı anda <span class="text-danger">nöbet yazılmaz</span>.
+                                <br />
+                                <strong class="text-danger">*</strong> Sadece bir ilde yaklaşık <strong>1500</strong> nöbetçi ikilisi <span class="text-success">dikkate alınmaktadır</span>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title mb-0"><u>İstek</u></h5>
+                            <span class="text-muted">Özel bir sebeple nöbet istenen günler.</span>
+                            <p class="card-text mt-2">
+                                Geçerli <span class="text-success">isteklerin</span> olduğu günlere <span class="text-success">nöbet yazılır</span>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title mb-0"><u>Mazeret</u></h5>
+                            <span class="text-muted">Nöbet için mazeret olan günler.</span>
+                            <p class="card-text mt-2">
+                                Geçerli <span class="text-danger">mazeretlerin</span> olduğu günlere <span class="text-danger">nöbet yazılmaz</span>.
+                                <br />
+                                <strong class="text-danger">*</strong> Aylık ortalama <strong>1000</strong> mazeret <span class="text-success">dikkate alınmaktadır</span>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>*@
+
+    </div>
+
+</section>
+
+
+@section Scripts{
+
+    <script>
+        $(function () {
+            //ready
+            $('#navItemReferans').hide();
+        })
+    </script>
+}

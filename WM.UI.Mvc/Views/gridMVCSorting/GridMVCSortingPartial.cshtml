@@ -1,0 +1,27 @@
+﻿@using GridMvc;
+@using GridMvc.Html;
+@using GridMvc.Sorting;
+@using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
+@using WM.UI.Mvc.Controllers;
+
+@model Grid.Mvc.Ajax.GridExtensions.AjaxGrid<EczaneGrupDetay>
+
+<p>
+    <a class="btn btn-outline-success" href="@Url.Action("Create", null, new { @class= "btn btn-success" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+</p>
+
+@(
+                Html.Grid(Model).Named("EczaneNobetGrid")
+                    .Columns(columns =>
+                    {
+                        columns.Add(f => f.Id).Titled("Id").SetWidth(100);
+                        columns.Add(f => f.EczaneAdi).Titled("Eczane Adı").SetWidth(100);
+                        columns.Add(f => f.EczaneGrupTanimAdi).Titled("Eczane Grup Tanım Adı").SetWidth(40);
+                    })
+                    .Filterable()
+                    .Sortable()
+                    .WithPaging(3)
+)
+<script>
+    alert('@HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString()');
+</script>

@@ -1,0 +1,197 @@
+﻿@model EczaneNobetDegistir
+
+@{
+    ViewBag.Title = "Nöbet Değiştir |  Nöbet Yaz";
+}
+
+<!-- #region ajaxOptions -->
+@{
+    //var getAjaxOptionsForm = new AjaxOptions
+    //{
+    //    AllowCache = false,
+    //    Url = Url.Action("UpdateSonuclarInsertDegisim"),
+    //    HttpMethod = "POST",
+    //    UpdateTargetId = "sonuclar",
+    //    InsertionMode = InsertionMode.Replace,
+    //    LoadingElementId = "wait2",
+    //    OnSuccess = "onSuccessNobetDegisim()"
+    //};
+
+    var getAjaxOptions = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("YeniNobetcininNobetleriPartial"),
+        HttpMethod = "POST",
+        UpdateTargetId = "yeniNobetcininNobetleri",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "wait",
+        OnSuccess = "onSuccessNobetDegistir(data)"
+    };
+}
+<!-- #endregion -->
+
+<h4>Nöbet Değiştir</h4>
+<hr />
+
+<div class="container">
+
+    @*@using (Ajax.BeginForm(null, null, getAjaxOptionsForm, new { @class = "form-horizontal", id = "formNobetDegisim" }))*@
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(x => x.EczaneNobetSonucId)
+
+        <div class="card mb-2 border-secondary">
+            <div class="card-body p-2">
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        <h5 class="ml-3">Eski Nöbetçi Eczane</h5>
+                        @*@Html.LabelFor(model => model.EczaneNobetGrupIdEski, "Eski Nöbetçi Eczane:", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })*@
+                        <div class="col-md-10">
+                            @Html.DropDownList("EczaneNobetGrupIdEski", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(model => model.EczaneNobetGrupIdEski, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-row ml-2">
+                        <div class="form-group col-md-3">
+                            @Html.LabelFor(model => model.TakvimId, "Nöbet Tarihi:", htmlAttributes: new { @class = "control-label" })
+
+                            @Html.DropDownList("TakvimId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(model => model.TakvimId, "", new { @class = "text-danger" })
+
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            @Html.LabelFor(model => model.NobetGorevTipId, "Görev Tipi:", htmlAttributes: new { @class = "control-label" })
+
+                            @Html.DropDownList("NobetGorevTipId", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+                            @Html.ValidationMessageFor(model => model.NobetGorevTipId, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-2 border-primary">
+            <div class="card-body p-2">
+                <div class="form-horizontal">
+
+                    <div class="form-group mb-4">
+                        <h5 class="ml-3 text-primary">Yeni Nöbetçi Eczane</h5>
+                        @*@Html.LabelFor(model => model.EczaneNobetGrupId, "Yeni Nöbetçi Eczane:", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold text-primary" })*@
+                        <div class="col-md-10">
+                            @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new { @class = "form-control selectpicker",
+                           data_live_search = "true",
+                           data_actions_box = "true",
+                           title = "Eczane seçiniz..."
+                       })
+                            @Html.ValidationMessageFor(model => model.EczaneNobetGrupId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group ml-3 my-3">
+                        <div class="custom-control custom-checkbox mb-2">
+                            @Html.CheckBox("KarsilikliNobetDegistir", new { @class = "custom-control-input", disabled = "disabled" })
+                            <label class="custom-control-label text-danger" for="KarsilikliNobetDegistir">
+                                <i class="fa fa-exchange" aria-hidden="true"></i>
+                                Karşılıklı Nöbet Değişimi
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="spinner-border text-info ml-3" role="status" id="wait" style="display:none;">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+
+                    <div id="yeniNobetcininNobetleri" class="mt-2">
+                    </div>
+
+                    <div class="form-group mb-4">
+                        @Html.Label("Açıklama:", htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold text-primary" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control", placeHolder = "Lütfen nöbet değişim nedenini kısaca yazınız..." })
+                            @*@Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control", placeHolder = "Lütfen nöbet değişim nedenini kısaca yazınız..." } })*@
+                            @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Nöbeti Değiştir" class="btn btn-outline-primary" title="Nöbeti Değiştir" id="submitButtonNobetDegisim" />
+                @Html.ActionLink("Listeye Dön", "NobetDegistir", null, new { @class = "btn btn-outline-warning" })
+            </div>
+        </div>
+    }
+
+    <div class="spinner-border text-info ml-3" role="status" id="wait2" style="display:none;">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+<div id="sonuclar" class="mt-2">
+</div>
+
+@using (Ajax.BeginForm(null, null, getAjaxOptions, new { @class = "form-inline", id = "formYeniNobetcininNobetleri" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Hidden("EczaneNobetGrupIdYeniNobetci")
+}
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/validation/scripts")
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+
+    <script>
+        $("#EczaneNobetGrupId").change(function () {
+            $("#KarsilikliNobetDegistir").prop('disabled', false);
+            $('#KarsilikliNobetDegistir').prop('checked', false);
+            $('#yeniNobetcininNobetleri').hide();
+        });
+
+        $("#KarsilikliNobetDegistir").change(function () {
+            //alert($("#EczaneNobetGrupId").val())
+            $("#EczaneNobetGrupIdYeniNobetci").val($("#EczaneNobetGrupId").val())
+            //alert($("#EczaneNobetGrupIdYeniNobetci").val())
+
+            if ($('#KarsilikliNobetDegistir').is(':checked')) {
+                $("#formYeniNobetcininNobetleri").submit();
+            }
+            else {
+                $('#submitButtonNobetDegisim').val("Nöbetleri Değiştir");
+                $('#yeniNobetcininNobetleri').hide();
+            }
+        });
+
+        function onSuccessNobetDegistir(data) {
+            //console.log(data)
+            //refreshedPage = $(data);
+            //newDemo = refreshedPage.find("#partialPageYeniNobetci").html();
+            $('#yeniNobetcininNobetleri').html(data)
+            $('#EczaneNobetSonucIdYeniNobetci').selectpicker()
+
+            $('#submitButtonNobetDegisim').val("Nöbetleri Karşılıklı Değiştir");
+            $('#yeniNobetcininNobetleri').show();
+            //$('#yeniNobetcininNobetleri').html(data);
+        }
+
+        function onSuccessNobetDegisim() {
+
+        }
+    </script>
+}

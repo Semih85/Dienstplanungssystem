@@ -1,0 +1,73 @@
+﻿
+@{
+    var nobetUstGrup = (NobetUstGrupDetay)Session["nobetUstGrup"];
+}
+
+@if (ViewBag.NobetUstGrupSayisi > 1)
+{
+    <li class="nav-item mr-2">
+        @*<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLoginLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="fa fa-lg fa-user"></span>
+                <span class="d-inline d-md-none d-xl-inline"> üst grup</span>
+            </a>*@
+
+        @using (Html.BeginForm("NobetUstGrupSec", "NobetUstGrup", FormMethod.Post, new { @class = "form", id = "formNobetUstGrupId" }))
+        {
+            @Html.Hidden("returnUrl", Request.Url.AbsoluteUri)
+
+            @Html.DropDownList("NobetUstGrupId", null, htmlAttributes: new
+            {
+               @class = "form-control",
+               //multiple = "true",
+               //data_width = "auto",
+               //data_actions_box = "true",
+               //mobile = "true",
+               //data_live_search = "true",
+               //data_selected_text_format = "count > 4",
+               title = "Nöbet Üst Grup Seçiniz..."
+            })
+        }
+
+        @*<div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownLoginLink">
+                <span class="dropdown-item-text">@nobetUstGrup.Adi</span>
+
+                <a class="dropdown-item" href="#"><span class="fa fa-sign-out"></span> Çıkış</a>
+            </div>*@
+    </li>
+}
+else
+{
+    <li class="nav-item mr-2">
+        @*<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLoginLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="fa fa-lg fa-user"></span>
+                <span class="d-inline d-md-none d-xl-inline"> üst grup</span>
+            </a>*@
+
+        @using (Html.BeginForm("NobetUstGrupSec", "NobetUstGrup", FormMethod.Post, new { @class = "form", id = "formNobetUstGrupId", style= "display:none" }))
+        {
+            @Html.Hidden("returnUrl", Request.Url.AbsoluteUri)
+
+            @Html.DropDownList("NobetUstGrupId", null, htmlAttributes: new
+            {
+               @class = "form-control",
+               //multiple = "true",
+               //data_width = "auto",
+               //data_actions_box = "true",
+               //mobile = "true",
+               //data_live_search = "true",
+               //data_selected_text_format = "count > 4",
+               title = "Nöbet Üst Grup Seçiniz..."
+            })
+        }
+
+        @*<div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownLoginLink">
+                <span class="dropdown-item-text">@nobetUstGrup.Adi</span>
+
+                <a class="dropdown-item" href="#"><span class="fa fa-sign-out"></span> Çıkış</a>
+            </div>*@
+    </li>
+}
+
+
+@*@Url.Action("Logout", "Account", new { area = "" })*@
+

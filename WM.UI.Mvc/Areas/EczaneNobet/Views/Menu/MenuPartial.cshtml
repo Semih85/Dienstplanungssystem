@@ -1,0 +1,100 @@
+﻿@model WM.UI.Mvc.Areas.EczaneNobet.Models.MenuPartialViewModel
+
+@*
+    <img src="~/Content/images/NobetciEczaneLogo2.png" style="height:25px;" />
+*@
+
+<div class="collapse navbar-collapse" id="navbarColor03">
+    @if (Model.Menuler.Where(w => w.LinkText == "Nöbet Yaz").FirstOrDefault() != null)
+    {
+        <a class="navbar-brand" href="@Url.Action( "Index", "NobetYaz",new { area = "EczaneNobet" })">
+            Nöbet Yaz
+        </a>
+    }
+    <ul class="navbar-nav mr-auto">
+        @foreach (var menu in Model.Menuler.Where(w => w.LinkText != "Nöbet Yaz"))
+        {
+            //yetkili olduğu alt menü sayısı
+            var menuAltSayisi = Model.MenuAltlar.Where(s => s.MenuId == menu.Id).Count();
+            //tüm alt menülerin sayısı
+            var menuAltTumuSayisi = Model.MenuAltlarTumu.Where(s => s.MenuId == menu.Id).Count();
+
+            if (menuAltSayisi == 0)
+            {
+                @*if (menuAltTumuSayisi > 0)
+                    {//alt menü olup bunlara hiç yetki verilmediyse;
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Alt menüleri görmek için yetki alın.">
+                                <i class="@menu.SpanCssClass" aria-hidden="true"></i>
+                                @menu.LinkText
+                            </a>
+                        </li>
+                    }
+                    else
+                    {//alt menü yoksa*@
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action( menu.ActionName, menu.ControllerName, new { area = menu.AreaName })">
+                        @if (menu.Id == 1)
+                        {//bu sadece Eczane logosu için
+                            <span class="text-danger bg-light font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Eczaneler" style="border:solid; border-width:medium">&nbsp;E&nbsp;</span>
+                            @*<img src="~/Content/images/NobetciEczaneLogo2.png" title="Eczaneler" style="height:25px;" />*@
+                        }
+                        else
+                        {
+                            <i class="@menu.SpanCssClass" aria-hidden="true"></i>
+                            <span class="d-inline d-md-none d-lg-inline">@menu.LinkText</span>
+                        }
+                    </a>
+                </li>
+                //}
+            }
+            else
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="@menu.SpanCssClass" aria-hidden="true"></i>
+                        <span class="d-inline d-md-none d-lg-inline">@menu.LinkText</span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @foreach (var menuAlt in Model.MenuAltlar.Where(s => s.MenuId == menu.Id))
+                        {
+                            //if (!((User.Identity.Name == "semih" || User.Identity.Name == "mustafatopalecz@hotmail.com") && menuAlt.LinkText == "Nöbet Durumları"))
+                            //{
+                            //    continue;
+                            //}
+
+                            if (menuAlt.LinkText == "Kalibrasyon")
+                            {
+                                <div class="dropdown-divider"></div>
+                            }
+                            if (menuAlt.LinkText == "Dijital Harita Ekranı")
+                            {
+                                <div class="dropdown-divider"></div>
+                            }
+                            @Html.ActionLink(menuAlt.LinkText, menuAlt.ActionName, menuAlt.ControllerName, new { area = menuAlt.AreaName }, new { @class = menuAlt.SpanCssClass })
+                            if (menuAlt.LinkText == "Nöbet İstatistik" && Model.MenuAltlar.Where(s => s.MenuId == menu.Id).Count() > 1)
+                            {
+                                <div class="dropdown-divider"></div>
+                            }
+                        }
+                    </div>
+                </li>
+            }
+        }
+        @Html.Action("NobetUstGrupSecPartialView", "NobetUstGrup", new { area = "EczaneNobet" })
+
+    </ul>
+
+    @*<form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>*@
+</div>
+
+<ul class="navbar-nav">
+    <li class="nav-item d-md-none"> <a class="nav-link" href="whatsapp://send?text=@Request.Url" data-action="share/whatsapp/share"><span class="fa fa-whatsapp fa-lg"></span> Paylaş</a></li>
+</ul>
+
+<ul class="navbar-nav float-md-right">
+    @Html.Partial("_LoginPartial")
+</ul>

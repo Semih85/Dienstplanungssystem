@@ -1,0 +1,154 @@
+﻿@model EczaneNobetDegisimSorgu
+
+@{
+    ViewBag.Title = "Nöbet Değiştir |  Nöbet Yaz";
+}
+
+<!-- #region ajaxOptions -->
+@{
+    var getAjaxOptions = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("SonuclarPartial"),
+        HttpMethod = "GET",
+        UpdateTargetId = "sonuclar",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "wait"
+    };
+
+    DateTime? nobetDegisimTarihi = (DateTime?)TempData["NobetDegisimTarihi"];
+    DateTime? nobetDegisimTarihi2 = (DateTime?)TempData["NobetDegisimTarihi2"];
+}
+<!-- #endregion -->
+
+<h4>Nöbet Değiştir</h4>
+<p>
+    @Html.ActionLink("Nöbet Değiştiren Eczaneler", "Index", "EczaneNobetDegisim")
+</p>
+
+@using (Ajax.BeginForm(null, null, getAjaxOptions, new { @class = "form-inline" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-inline">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*@Html.HiddenFor(model => model.Id)*@
+
+        <div class="form-group mr-3">
+            @*@Html.LabelFor(model => model.NobetGrupId, "Nöbet Grubu", htmlAttributes: new { @class = "control-label col-md-2" })*@
+
+            @Html.DropDownList("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control" }, optionLabel: "Tüm Gruplar")
+            @Html.ValidationMessageFor(model => model.NobetGrupId, "", new { @class = "text-danger" })
+        </div>
+
+
+        @*@Html.LabelFor(model => model.AcilisTarihi, htmlAttributes: new { @class = "control-label" })*@
+        <div class="input-group mr-4 mb-3 mb-md-0">
+            <div class="input-group-prepend">
+                <span class="input-group-text p-2">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                </span>
+            </div>
+            @Html.TextBoxFor(model => model.NobetTarihi, new { @class = "form-control datepicker p-2", placeHolder = "Nöbet Tarihi", autocomplete = "off" })
+        </div>
+        @Html.ValidationMessageFor(model => model.NobetTarihi, "", new { @class = "text-danger" })
+
+        @*<div class="form-group">
+                @Html.Label("Nöbet Tarihi", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NobetTarihi, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NobetTarihi, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group mr-2">
+            <button type="submit" id="btnSorgula" class="btn btn-primary"><i class="fa fa-search"></i> Sorgula</button>
+
+        </div>
+
+        <span id="wait" class="spinner-border text-primary" role="status" style="display:none;">
+            <span class="sr-only">Loading...</span>
+        </span>
+    </div>
+}
+
+<hr />
+
+@if (TempData["EskiNobetci"] != null && TempData["EskiNobetci2"] != null)
+{
+    <div class="row justify-content-sm-center">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                <i class='fa fa-check'></i>
+                Aşağıdaki nöbet değişimleri başarı ile gerçekleştirilmiştir.
+                <br />
+
+                <span>1. </span>
+                <span class="badge badge-light"> @nobetDegisimTarihi.Value.ToString("dd MMMM yyyy")  </span>
+                tarihindeki
+                <span class="badge badge-secondary"> @TempData["EskiNobetci"]</span>
+                (eski nöbetçi) ile
+                <span class="badge badge-light"> @TempData["YeniNobetci"]</span>
+                (yeni nöbetçi) eczanesi,
+
+                <br />
+                <span>2. </span>
+                <span class="badge badge-light"> @nobetDegisimTarihi2.Value.ToString("dd MMMM yyyy")  </span>
+                tarihindeki
+                <span class="badge badge-secondary"> @TempData["EskiNobetci2"]</span>
+                (eski nöbetçi) ile
+                <span class="badge badge-light"> @TempData["YeniNobetci2"]</span>
+                (yeni nöbetçi) eczanesi.
+
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+else if (TempData["EskiNobetci"] != null)
+{
+    <div class="row justify-content-sm-center">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                <i class='fa fa-check'></i>
+                <span class="badge badge-light"> @nobetDegisimTarihi.Value.ToString("dd MMMM yyyy")  </span>
+                tarihindeki
+                <span class="badge badge-secondary"> @TempData["EskiNobetci"]</span>
+                (eski nöbetçi) ile
+                <span class="badge badge-light"> @TempData["YeniNobetci"]</span>
+                (yeni nöbetçi) eczanesinin nöbet değişimi başarı ile gerçekleştirilmiştir.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<div id="sonuclar">
+    @{
+        Html.RenderAction("SonuclarPartial", new { nobetGrupId = "NobetGrupId", nobetTarihi = "NobetTarihi" });
+    }
+</div>
+
+@section Styles{
+    @Styles.Render("~/bundle/jqueryui/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/queryui/scripts")
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/validation/scripts")
+    <script>
+        $(".datepicker").datepicker({
+            dateFormat: "yy.mm.dd",
+            monthNames: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+            dayNamesMin: ["Pa", "Pt", "Sl", "Ça", "Pe", "Cu", "Ct"],
+            firstDay: 1
+        });
+
+    </script>
+}

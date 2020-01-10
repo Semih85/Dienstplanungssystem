@@ -1,0 +1,47 @@
+﻿@using WM.Northwind.Entities.ComplexTypes
+@model MaliyetDetail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@section SolTaraf{
+    @Html.Action("TransportDataPartialView", "Transport", new { area = "Optimization" })
+}
+<h2>Detaylar</h2>
+
+<hr />
+<div>
+    <h4>Transport Maliyet</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DepoAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepoAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FabrikaAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FabrikaAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Deger)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Deger)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Listeye Dön", "Index")
+</p>

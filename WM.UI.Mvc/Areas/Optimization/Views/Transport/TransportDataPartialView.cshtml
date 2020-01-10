@@ -1,0 +1,56 @@
+﻿
+@using WM.UI.Mvc.Areas.Optimization.Models
+
+@model TransportDataPartialViewModel
+
+<h4>
+    <a class="text-dark" href="@Url.Action("Index", new { area = "Optimization" })"><i class="fa fa-hand-o-up" aria-hidden="true"></i> Ulaştırma Modeli</a>
+</h4>
+
+@*<h3>Ulaştırma Modeli</h3>*@
+<hr />
+
+<div class="list-group">
+
+    @foreach (var category in Model.Categories)
+    {
+        var css_a = "list-group-item list-group-item-action";
+        var css_badge = "badge badge-secondary";
+        var chk = Html.Raw("");
+
+        if (category.Key == Model.CurrentCategory)
+        {
+            css_a += " active";
+            css_badge = "badge badge-info";
+            chk = Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>&nbsp;");
+        }
+
+        string controller = "";
+        string action = "index";
+
+        switch (category.Key)
+        {
+            case 1:
+                controller = "Fabrika";
+                break;
+            case 2:
+                action = "createajax";
+                controller = "Depo";
+                break;
+            case 3:
+                controller = "TransportMaliyet";
+                break;
+            case 4:
+                controller = "TransportSonuc";
+                break;
+            default:
+                break;
+        }
+
+        <a class="@css_a" href="@Url.Action(action, controller, new { area = "Optimization" })">
+            @chk  @category.Value
+            <span class="@css_badge"><i class="fa fa-industry" aria-hidden="true"></i></span>
+        </a>
+    }
+
+</div>

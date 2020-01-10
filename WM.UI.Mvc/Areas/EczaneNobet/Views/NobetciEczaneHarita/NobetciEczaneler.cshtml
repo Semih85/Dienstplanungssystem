@@ -1,0 +1,731 @@
+﻿@model NobetciEczanelerViewModel
+
+@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+    ViewBag.Title = "Nöbetçi Eczaneler Harita | Nöbet Sistemi";
+}
+<!-- Bootstrap, font-awasome, Site CSS -->
+
+@section styles{
+    <style>
+
+        /*Extra small devices (portrait phones, less than 576px)*/
+        @@media (max-width: 575px) {
+            .network {
+                height: 300px;
+            }
+
+            .harita {
+                height: 450px;
+            }
+
+            .basliklar {
+                height: 30px;
+                font-size: xx-small;
+            }
+
+            .buyukEczane {
+                height: 118px;
+            }
+
+            .kucukEczane {
+                height: 130px;
+                font-size: smaller;
+            }
+        }
+
+        /*// Small devices (landscape phones, 576px and up)*/
+        @@media (min-width: 576px) and (max-width: 767px) {
+            .network {
+                height: 450px;
+            }
+
+            .harita {
+                height: 225px;
+            }
+
+            .basliklar {
+                height: 50px;
+            }
+
+            .buyukEczane {
+                height: 176px;
+            }
+
+            .kucukEczane {
+                height: 110px;
+            }
+        }
+
+        /*// Medium devices (tablets, 768px and up)*/
+        @@media (min-width: 768px) and (max-width: 991px) {
+            .network {
+                height: 600px;
+            }
+
+            .harita {
+                height: 300px;
+            }
+
+            .basliklar {
+                height: 95px;
+            }
+
+            .buyukEczane {
+                height: 230px;
+            }
+
+            .kucukEczane {
+                height: 106px;
+            }
+        }
+
+        /*// Large devices (desktops, 992px and up)*/
+        @@media (min-width: 992px) and (max-width: 1199px) {
+            .network {
+                height: 700px;
+            }
+
+            .harita {
+                height: 432px;
+            }
+
+            .basliklar {
+                height: 95px;
+            }
+            /*.labelBaslik {
+                font-size: x-small;
+                font-weight: 300;
+            }*/
+            .buyukEczane {
+                height: 268px;
+            }
+
+            .kucukEczane {
+                height: 135px; /*123px;*/
+                font-size: small;
+            }
+        }
+
+        /*// Extra large devices (large desktops, 1200px and up)*/
+        @@media (min-width: 1200px) and (max-width: 1399px) {
+            .network {
+                height: 800px;
+            }
+
+            .harita {
+                height: 400px;
+            }
+
+            .basliklar {
+                height: 95px;
+            }
+
+            .buyukEczane {
+                height: 306px;
+                font-size: large;
+            }
+
+            .kucukEczane {
+                height: 124px; /*141px*/
+                font-size: x-small;
+            }
+        }
+
+        /*// Extra x-large devices (large desktops, 1400px and up)*/
+        @@media (min-width: 1400px) {
+            .network {
+                height: 1000px;
+            }
+
+            .harita {
+                height: 750px;
+            }
+
+            .basliklar {
+                /*height: 95px;*/
+            }
+
+            .buyukEczane {
+                height: 395px;
+                font-size: x-large;
+            }
+
+            .kucukEczane {
+                height: 195px;
+                font-size: large;
+            }
+        }
+
+        html, body {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .buyukHarita {
+            display: none;
+            /*height: 430px;*/
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+            background-color: #000000
+        }
+
+        #labelTarih {
+            font-size: 16px;
+            border-color: #023e96;
+            text-align: center;
+            /*border: double;*/
+        }
+
+        #labelSaat {
+            /*font-size: 50px;*/
+            border-color: #023e96;
+            font-weight: 600;
+            text-align: center;
+            /*no-repeat center center fixed*/
+            background-repeat: no-repeat;
+            /*background:fixed*/
+        }
+
+        #ustRow {
+            /*height: 86px;*/
+        }
+    </style>
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+
+            <form class="form-inline mb-3">
+                <div class="form-group mr-2 mr-lg-5 ">
+
+                    <a class="h5 my-2 card-link text-primary text-center" target="_blank" href="@Url.RouteUrl("EczaneNobetSistemi")">
+                        <span class="text-danger font-weight-bold" data-toggle="tooltip" data-placement="top" title="Eczaneler" style="border:solid; border-width:medium">&nbsp;E&nbsp;</span> Nöbet Sistemi
+                        @*<span class="fa fa-hand-o-up"></span> Eczane Nöbet Sistemi*@
+                    </a>
+                </div>
+
+                <div class="form-group mr-lg-5">
+                    @*@Html.LabelFor(model => model.NobetUstGrupId, "Eczacı Odası", htmlAttributes: new { @class = "control-label mr-2" })*@
+
+                    @*<strong class="mr-2 ">Eczacı Odası</strong>*@
+                    @Html.DropDownList("NobetUstGrupId", null, htmlAttributes: new { @class = "form-control selectpicker mr-4",
+                       data_width = "auto",
+                       mobile = "true",
+                       data_live_search = "true",
+                       title = "Oda Seçiniz..."
+                       }
+                       //,optionLabel:"---Tümü---"
+                       )
+                    @Html.ValidationMessageFor(model => model.NobetUstGrupId, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group text-center">
+                    @*<strong class="mr-2 mt-0">Nöbet Tarihi</strong>*@
+                    @*<label for="NobetTarihi" class="sr-only">Password</label>*@
+                    @*@Html.LabelFor(model => model.NobetTarihi, "Tarih", htmlAttributes: new { @class = "control-label mr-2" })*@
+                                        
+                    @Html.TextBoxFor(model => model.NobetTarihi, new { @class = "form-control datepicker text-center", title = "Tarihi Değiştirmek İçin Tıklayınız !", autocomplete = "off", placeHolder = "NobetTarihi", style = "width:110px;" })
+                    @Html.ValidationMessageFor(model => model.NobetTarihi, "", new { @class = "text-danger" })
+                    <span class="mt-2" id="labelSaat" style="display:none">
+                        <label id="lbl_saat"></label>
+                    </span>
+                </div>
+                @*<h5 class="mt-2 mr-5">
+                        <span class="text-danger font-weight-bold" data-toggle="tooltip" data-placement="top" title="Eczaneler" style="border:solid; border-width:medium">&nbsp;E&nbsp;</span> Nöbetçi Eczaneler
+                    </h5>*@
+
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col mx-3">
+        <div id="map0" class="buyukHarita harita" style="display:none"></div>
+    </div>
+</div>
+
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @*@Scripts.Render("~/bundle/scriptsDetailTable/script")*@
+    <script>
+        function tarihDondur2(metin) {
+
+            var tarih = metin.split(' ', 1)[0];
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2];
+            ay = tarihTanim[1];
+            gun = tarihTanim[0];
+
+            if (gun.length != 4) {
+                return yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+
+        $(document).ready(function () {
+
+            var baslangicStr = tarihDondur2($("#NobetTarihi").val());
+            $("#NobetTarihi").datepicker("setDate", new Date(baslangicStr));
+
+            $('#NobetTarihi').change(function () {
+                var tarih = $('#NobetTarihi').val();
+                var nobetUstGrupId = $('#NobetUstGrupId').val();
+
+                getNobetciler(tarih, nobetUstGrupId)
+            });
+
+            $('#NobetUstGrupId').change(function () {
+                var tarih = $('#NobetTarihi').val();
+                var nobetUstGrupId = $('#NobetUstGrupId').val();
+
+                if (nobetUstGrupId == "---Tümü---") {
+                    nobetUstGrupId = 0;
+                }
+                getNobetciler(tarih, nobetUstGrupId)
+            });
+
+            function getNobetciler(nobetTarih, nobetUstGrup) {
+               // alert('onchange')
+                if (nobetUstGrup.length==0) {
+                    nobetUstGrup = 0;
+                }
+                $.ajax({
+                    type: "GET",
+                    url: "../../../EczaneNobet/NobetciEczaneHarita/NobetciEczaneListesi",
+                    data: {
+                        tarih: nobetTarih,
+                        nobetUstGrupId: nobetUstGrup
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        //alert('success')
+                       // location.reload();
+                        $('#map0').show();
+                        mapOlustur(data)
+
+                    },
+                    error: function (request, textStatus, thrownError) {
+                        alert(request.status);
+                        alert(thrownError);
+                        //location.reload();
+                    }
+                });
+                // $('#formALD').submit();
+                //location.reload();
+            }
+
+            function getTumEczaneler() {
+                // alert('onchange')
+                $.ajax({
+                    type: "GET",
+                    url: "../../../EczaneNobet/NobetciEczaneHarita/GetTumEczaneler",
+                    data: {
+                        //tarih: $('#NobetTarihi').val()
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        //alert('success')
+                        // location.reload();
+                        mapOlustur(data)
+                    },
+                    error: function (request, textStatus, thrownError) {
+                        alert(request.status);
+                        alert(thrownError);
+                        //location.reload();
+                    }
+                });
+                // $('#formALD').submit();
+                //location.reload();
+            }
+        });
+
+        function myMap() {
+            startTime()
+            @*var modelim = @Html.Raw(Json.Encode(Model));*@
+            //mapOlustur(modelim)
+        }
+
+        function mapOlustur(model) {
+
+            var counter = 1;
+            var bant = false;
+            var deviceHeight = document.documentElement.clientHeight;
+
+            var mapCanvas = document.getElementById("map0");
+
+            //alert(model.Enlem)
+            var myCenter = { lat: model.Enlem, lng: model.Boylam };
+
+            var mapOptions = {
+                center: myCenter,
+                zoom: 14,
+                disableDefaultUI: false
+            };
+
+
+            var map = new google.maps.Map(mapCanvas, mapOptions);
+            var today = new Date();
+            var saat = today.getHours();
+
+            if (parseInt(saat) >= 8)
+                $('#lbl_tarih').text(getDate() + ' 18:00 - ' + getTomorrow() + ' 08:00 tarihleri arası nöbet listesi');
+            else
+                $('#lbl_tarih').text(getYesterday() + ' 18:00 - ' + getDate() + ' 08:00 tarihleri arası nöbet listesi');
+
+            var nobetciEczaneler = new Array();
+            //alert('model')
+
+            //modelden nöbetçi eczaneleri alır:
+            for (var g = 0; g < model.NobetciEczaneler.length; g++) {
+                //quicksort:
+                //alert(model.NobetciEczaneler[g].Adi)
+                var newElement = {
+                    adi: model.NobetciEczaneler[g].Adi,
+                    gorevTipi: model.NobetciEczaneler[g].NobetGorevTipAdi,
+                    nobetGrupAdi: model.NobetciEczaneler[g].NobetGrupAdi,
+                    nobetUstGrupId: model.NobetciEczaneler[g].NobetUstGrupId,
+                    koordinatx: model.NobetciEczaneler[g].Enlem,
+                    koordinaty: model.NobetciEczaneler[g].Boylam,
+                    tel: model.NobetciEczaneler[g].TelefonNo,
+                    adres: model.NobetciEczaneler[g].Adres,
+                    adresTarifi: model.NobetciEczaneler[g].AdresTarifiKisa,
+                    altGrupAdi: model.NobetciEczaneler[g].NobetAltGrupAdi
+                }
+                nobetciEczaneler.push(newElement)
+            }
+
+            //alert(model.NobetciEczaneler[1].Adi)
+
+            //alert('nobetciEczaneImage')
+            var bosImage = '../../../../Content/images/bos.png';
+            var peopleIcon = '../../../../Content/images/peopleIcon.png';
+            var nobetciEczaneImage = '../../../../Content/images/NobetciEczaneLogoUfak.png';
+
+            //alert(model.NobetciEczaneler[1].Adi)
+            //nöbetçi eczanelerin markerları oluşturulur
+            //bu kullanılmıyor
+            var mymarkers = new Array();
+            //alert('marker1')
+
+            function adresTagOlustur(adres, renk) {
+
+                if (adres.length != 0) {
+                    return "<br/> <small class='text-primary'>" + adres + "</small>";
+                }
+                else {
+                    return "";
+                }
+            }
+
+            function adresTarifiTagOlustur(adresTarif, renk) {
+
+                if (adresTarif.length != 0) {
+                    return "</br > <h9 style = 'color:" + renk + "'>" + adresTarif + "</h9>";
+                }
+                else {
+                    return "";
+                }
+            }
+
+            function telefonTagOlustur(telefonNumarasi) {
+
+                if (telefonNumarasi != 0 && telefonNumarasi != null) {
+                    return "</br > 0 "
+                        + telefonNumarasi.substr(0, 3) + " "
+                        + telefonNumarasi.substr(3, 3) + " "
+                        + telefonNumarasi.substr(6, 2) + " "
+                        + telefonNumarasi.substr(8, 2);
+                }
+                else {
+                    return "";
+                }
+            }
+
+            //modelden nöbetçi eczanelerin merkerlar alır:
+            for (var f = 0; f < model.NobetciEczaneler.length; f++) {
+
+                var startLocationf = { lat: model.NobetciEczaneler[f].Enlem, lng: model.NobetciEczaneler[f].Boylam };
+                //alert('marker2')
+
+                var myInfoWindowContent;
+                var tur;
+                //if (model.NobetciEczaneler[f].NobetUstGrupId == 4) {
+                //    if (model.NobetciEczaneler[f].NobetGorevTipAdi.substring(14) == "Gece") {
+                //        myInfoWindowContent = "<h6>" + model.NobetciEczaneler[f].Adi
+                //            + "<br/>"
+                //            + "<small class='text-danger'>" + model.NobetciEczaneler[f].NobetGorevTipAdi.substring(14) + '</small>'
+                //            + "<br/>"
+                //            + "<small class='text-secondary'>" + model.NobetciEczaneler[f].NobetAltGrupAdi + '</small>'
+                //            + '</h6>'
+                //    }
+                //    else {
+                //        myInfoWindowContent = "<h6>" + model.NobetciEczaneler[f].Adi
+                //            + "<br/>"
+                //            + "<small class='text-primary'>" + model.NobetciEczaneler[f].NobetGorevTipAdi.substring(14) + '</small>'
+                //            + "<br/>"
+                //            + "<small class='text-secondary'>" + model.NobetciEczaneler[f].NobetAltGrupAdi + '</small>'
+                //            + '</h6>'
+                //    }
+                //}
+                //else if (model.NobetciEczaneler[f].NobetUstGrupId == 5) {
+                //    myInfoWindowContent = "<h6>" + model.NobetciEczaneler[f].Adi
+                //        + "<br/>"
+                //        + "<small class='text-danger'>" + model.NobetciEczaneler[f].NobetAltGrupAdi + '</small>'
+                //        + '</h6>';
+                //}
+                //else {
+                //    myInfoWindowContent = '<h6>'
+                //        + model.NobetciEczaneler[f].Adi
+                //        + "<br/>"
+                //        + "<small class='text-primary'>" + model.NobetciEczaneler[f].NobetGrupAdi + '</small>'
+                //        + '</h6>'
+                //}
+                var adres = model.NobetciEczaneler[f].Adres;
+                var tel = model.NobetciEczaneler[f].TelefonNo;
+                //console.log(adres)
+                myInfoWindowContent = '<h6>'
+                    + model.NobetciEczaneler[f].Adi + " ECZANESİ"
+                    + adresTagOlustur(adres, "red")
+                    + telefonTagOlustur(tel)
+                    + '</h6>'
+
+                //alert('marker3')
+
+                //$.each(obj, function (key, value) {
+                //    alert(key + ": " + value);
+                //});
+
+                var newMarker = {
+                    coordinates: startLocationf,
+                    content: myInfoWindowContent,
+                    image: nobetciEczaneImage
+                }
+                //alert('marker4')
+                AddMarker(newMarker)
+                mymarkers.push(newMarker)
+            }
+            //alert('marker5')
+            function AddMarker(options) {
+                //alert('3')
+
+                var marker = new google.maps.Marker({
+                    position: options.coordinates,
+                    map: map
+                    //,
+                    // icon: options.image
+                });
+
+
+                if (options.image) {
+                    marker.setIcon(options.image)
+                }
+
+                if (options.content) {
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: options.content
+                    });
+
+                    marker.addListener('click', function () {
+                        infoWindow.open(map, marker);
+                    });
+                }
+            }
+        }
+        function mesafeHesapla(startLocation, endLocation) {
+            var mesafe = "0";
+            //alert('mesafeHesapla counter: ' + counter)
+            var distance = google.maps.geometry.spherical.computeDistanceBetween
+                (new google.maps.LatLng(startLocation.lat, startLocation.lng),
+                new google.maps.LatLng(endLocation.lat, endLocation.lng));
+
+            mesafe = " " + (distance / 1000).toFixed(2) + " km.";
+
+            var today = new Date();
+            var saat = today.getHours();
+
+            if (parseInt(saat) >= 8)
+                $('#lbl_tarih').text(getDate() + ' 18:00 - ' + getTomorrow() + ' 08:00 tarihleri arası nöbet listesi');
+            else
+                $('#lbl_tarih').text(getYesterday() + ' 18:00 - ' + getDate() + ' 08:00 tarihleri arası nöbet listesi');
+
+            return distance;
+        }
+        function getDate() {
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1; //January is 0!
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            var today = dd + '.' + mm + '.' + yyyy;
+
+            var d = new Date();
+            var weekday = new Array(7);
+            weekday[0] = " Pazar";
+            weekday[1] = " Pazartesi";
+            weekday[2] = " Salı";
+            weekday[3] = " Çarşamba";
+            weekday[4] = " Perşembe";
+            weekday[5] = " Cuma";
+            weekday[6] = " Cumartesi";
+
+            var n = weekday[d.getDay()];
+            return today + n;
+        }
+        function getYesterday() {
+            var today = new Date();
+            var dd = today.getDate() - 1;
+            var mm = today.getMonth() + 1; //January is 0!
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            var today = dd + '.' + mm + '.' + yyyy;
+
+            var d = new Date();
+            var weekday = new Array(7);
+            weekday[0] = " Pazar";
+            weekday[1] = " Pazartesi";
+            weekday[2] = " Salı";
+            weekday[3] = " Çarşamba";
+            weekday[4] = " Perşembe";
+            weekday[5] = " Cuma";
+            weekday[6] = " Cumartesi";
+
+            var n = weekday[d.getDay() - 1];
+            return today + n;
+        }
+        function getTomorrow() {
+            var today = new Date();
+            var dd = today.getDate() + 1;
+            var mm = today.getMonth() + 1; //January is 0!
+
+            var yyyy = today.getFullYear();
+            if (dd < 10) {
+                dd = '0' + dd;
+            }
+            if (mm < 10) {
+                mm = '0' + mm;
+            }
+            var today = dd + '.' + mm + '.' + yyyy;
+
+            var d = new Date();
+            var weekday = new Array(7);
+            weekday[0] = " Pazar";
+            weekday[1] = " Pazartesi";
+            weekday[2] = " Salı";
+            weekday[3] = " Çarşamba";
+            weekday[4] = " Perşembe";
+            weekday[5] = " Cuma";
+            weekday[6] = " Cumartesi";
+
+            var n = weekday[d.getDay() + 1];
+            return today + n;
+        }
+        function startTime() {
+
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            h = checkTime(h);
+            m = checkTime(m);
+            s = checkTime(s);
+            document.getElementById('labelSaat').innerHTML =
+                h + ":" + m + ":" + s;
+            var t = setTimeout(startTime, 500);
+        }
+        function checkTime(i) {
+            if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+            return i;
+        }
+
+        function quickSort(items, left, right) {
+
+            var index;
+
+            if (items.length > 1) {
+
+                index = partition(items, left, right);
+
+                if (left < index - 1) {
+                    quickSort(items, left, index - 1);
+                }
+
+                if (index < right) {
+                    quickSort(items, index, right);
+                }
+
+            }
+
+            return items;
+        }
+        function partition(items, left, right) {
+
+            var pivot = items[Math.floor((right + left) / 2)],
+                i = left,
+                j = right;
+
+            while (i <= j) {
+
+                while (items[i] < pivot) {
+                    i++;
+                }
+
+                while (items[j] > pivot) {
+                    j--;
+                }
+
+                if (i <= j) {
+                    swap(items, i, j);
+                    i++;
+                    j--;
+                }
+            }
+
+            return i;
+        }
+        function swap(items, firstIndex, secondIndex) {
+            var temp = items[firstIndex];
+            items[firstIndex] = items[secondIndex];
+            items[secondIndex] = temp;
+        }
+
+    //});
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP29ma6oCPNwQPFdXbilDCYBKP2Gk52CE&callback=myMap">
+    </script>
+}

@@ -1,0 +1,1557 @@
+﻿@model NobetYazViewModel
+
+@{
+    ViewBag.Title = "Nöbet Yaz | Nöbet Sistemi";
+}
+
+@*<div id="ytplayer"></div>*@
+
+<!-- #region ajaxOptions -->
+
+@{
+    var rolId = Model.RolId;
+    var sonrakiAy = Model.SonNobetTarihi.AddDays(1).ToString("MMMM yyyy"); // DateTime.Now.AddMonths(1).ToString("MMMM");
+    var buAy = DateTime.Now.ToString("MMMM");
+    var getAjaxOptions = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("NobetGruplarDDLPartialView"),
+        HttpMethod = "GET",
+        UpdateTargetId = "ddlNobetGruplar",
+        InsertionMode = InsertionMode.Replace
+    };
+}
+
+@Html.Hidden("SonNobetTarihi", Model.SonNobetTarihi.ToShortDateString())
+<!-- #endregion -->
+<!-- #region Nöbet Yaz card -->
+
+<div class="container-fluid mt-3">
+    @* col-md-9 col-lg-7 col-xl-6  *@
+    <div id="loading" align="center" style="margin-top: 10%">
+        <img src="~/Content/images/orig.gif" />
+    </div>
+    <div class="row" id="tumSayfa" style="visibility:hidden">
+
+        <div class="col-12 col-lg-6 mb-4">
+            <div class="card border-primary" id="nobetYazForm">
+                @* style="width:30rem;" *@
+                <div class="card-header">
+                    <span class="mr-2">Nöbet Yaz</span>
+                    <a id="sayfayiYenile" href="#" class="badge badge-warning" data-toggle="tooltip" data-placement="top" title="Sayfayı Yenile">
+                        <i class="fa fa-refresh" aria-hidden="true"></i> Yenile
+                    </a>
+                    <a data-toggle="modal" data-target="#aciklamaModal" href="#" class="badge badge-info pull-right mt-1">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> Açıklama
+                    </a>
+                </div>
+
+                <div class="card-body py-2">
+                    @* style="padding-top:0.3rem;padding-bottom:0.5rem;"   *@
+                    <div class="row mb-2">
+                        <div class="col">
+                            <!-- #region Nöbet üst grup form -->
+                            @*@if (ViewBag.NobetUstGrupSayisi > 1)
+                                {
+                                    using (Ajax.BeginForm(null, null, getAjaxOptions, new { @class = "form", id = "formNobetUstGrup" }))
+                                    {
+                                        <div class="form-group row mb-sm-3" style="margin-bottom:0.3rem;">
+                                            <label class="col-sm-2 col-lg-1 col-form-label font-weight-bold text-danger" title="Üst Grup">Ü. Grup</label>
+                                            <div class="col-sm-10 col-lg-11">
+                                                @Html.DropDownList("NobetUstGrupId", null, htmlAttributes: new { @class = "form-control", onchange = "SelectedIndexChanged()" })
+                                            </div>
+                                        </div>
+                                    }
+                                }*@
+
+                            <!-- #endregion -->
+                            <!-- #region Model çöz formu -->
+                            @using (Html.BeginForm("ModelCoz", null, FormMethod.Post, new { @class = "form my-2", id = "formModelCoz" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.Hidden("NobetUstGrupId")
+                                @Html.Hidden("rolId")
+                                @Html.HiddenFor(model => model.BaslangicTarihi)
+                                @Html.HiddenFor(model => model.BitisTarihi)
+
+                                <div class="row">
+                                    <div class="col mb-1 mb-md-2">
+                                        <label class="font-weight-bold mr-2"><i class="fa fa-calendar" aria-hidden="true"></i> Tarih Aralığı</label>
+                                        <a id="btnOncekiAy" href="#" class="badge badge-primary mr-2" data-toggle="tooltip" data-placement="top" title="Önceki Ay">
+                                            1 Ay <i class="fa fa-minus"></i>
+                                        </a>
+                                        <span class="mr-2">|</span>
+                                        <a id="btnSonrakiAy" href="#" class="badge badge-primary" data-toggle="tooltip" data-placement="top" title="Sonraki Ay">
+                                            1 Ay <i class="fa fa-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col mb-1">
+                                        <label for="TarihBaslangic" class="mb-0" style="margin-left: 5px;"><span class="badge badge-light">Başlangıç Tarihi</span></label>
+                                        <label for="TarihBitis" class="mb-0" style="margin-left: 48px;"><span class="badge badge-light">Bitiş Tarihi</span></label>
+                                    </div>
+                                </div>
+                                <div class="form-inline mb-2" id="fromTarihAraligi">
+                                    <div class="input-group input-daterange mb-2" style="width:260px; min-width:200px">
+
+                                        @Html.TextBox("TarihBaslangic", null, new
+                                        {
+                                            @class = "form-control datepicker mr-2",
+                                           //data_toggle = "tooltip",
+                                           //data_placement = "top",
+                                           //title = "Başlangıç Tarihi",
+                                           autocomplete = "off",
+                                           placeHolder = "Başlama Tarihi"
+                                       })
+
+                                        <div class="input-group-addon mr-2 mt-1 p-1">-</div>
+
+                                        @Html.TextBox("TarihBitis", null, new
+                                        {
+                                            @class = "form-control datepicker mr-2 mr-md-3",
+                                           //data_toggle = "tooltip",
+                                           //data_placement = "top",
+                                           //title = "Bitiş Tarihi",
+                                           autocomplete = "off",
+                                           placeHolder = "Bitiş Tarihi"
+                                       })
+
+                                    </div>
+                                    @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+                                    <div class="custom-control custom-checkbox mb-2">
+                                        @Html.CheckBox("BuAyVeSonrasi", new { @class = "custom-control-input" })
+                                        <label class="custom-control-label" for="BuAyVeSonrasi">Yıl Sonuna Kadar</label>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col mb-2">
+                                        <small class="text-danger" id="uyariOncekiNobet" style="display:none;">
+                                            Seçilen tarih aralığında daha önce yazılan nöbetler bulunmaktadır.
+                                        </small>
+                                        <p class="card-text">
+                                            <span class="text-muted" id="lblSonNobetTarihi">
+                                                <a id="tarihAraligiSonNobetTarihi" href="#" class="badge badge-primary mr-1" data-toggle="tooltip" data-placement="bottom" title="@sonrakiAy Ayarla">Son Nöbet Tarihi :</a>
+                                                @Model.SonNobetTarihi.ToString("dd.MM.yyyy")
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <hr class="mt-2 bg-danger" />
+
+                                <label class="font-weight-bold mb-3 mr-1"><i class="fa fa-bars" aria-hidden="true"></i> Nöbet Grupları</label>
+                                <a id="tumunuSecKaldir" href="#" class="badge badge-primary mr-2" data-toggle="tooltip" data-placement="top" title="Tüm Grupları Seç/Kaldır">
+                                    Tümü
+                                </a>
+
+                                <div id="ddlNobetGruplar" class="mb-2">
+                                    @{
+                                        Html.RenderAction("NobetGruplarDDLPartialView", new { nobetUstGrupId = Model.NobetUstGrupId });
+                                    }
+                                </div>
+
+                                <div id="CozumTercihleri" style="display:none;">
+                                    <div class="form-inline mb-3 mb-md-3">
+                                        <span class="font-weight-bold mr-md-2 d-none d-md-inline">Çözüm</span>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="cozumTercihOncelikli" name="CozumTercih" value=0 class="custom-control-input">
+                                            <label class="custom-control-label" data-toggle="tooltip" data-placement="top"
+                                                   title="Seçilen nöbet grupları yukarıdaki sıra ile çözülür. Her çözüm, önceki çözümleri dikkate alır. Örneğin, 1. ve 2. gruplar seçili ise; önce 1. grup çözülür sonra 2. grup 1.ye göre çözülür. Önceki çözümler sonradan değişmez." for="cozumTercihOncelikli">Öncelikli</label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="cozumTercihOnceliksiz" name="CozumTercih" value=1 class="custom-control-input">
+                                            <label class="custom-control-label" data-toggle="tooltip" data-placement="top" title="Seçilen nöbet grupları aynı zamanda çözülür. Örneğin, 1. ve 2. gruplar seçili ise her iki grubun birlikte mümkün olan ortak çözümü yapılır." for="cozumTercihOnceliksiz">Önceliksiz</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox" id="divSonrakiAylarRasgele" style="display:none;">
+                                            @Html.CheckBox("SonrakiAylarRasgele", new { @class = "custom-control-input" })
+                                            <label class="custom-control-label text-danger" data-toggle="tooltip" data-placement="top" title="Sonraki Aylar Rasgele" for="SonrakiAylarRasgele">Rasgele</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox" id="divSonrakiAylarRasgele" style="display:none;">
+                                            @Html.CheckBox("SonrakiAylarRasgele", new { @class = "custom-control-input" })
+                                            <label class="custom-control-label text-danger" data-toggle="tooltip" data-placement="top" title="Sonraki Aylar Rasgele" for="SonrakiAylarRasgele">Rasgele</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-inline">
+                                    <label class="control-label font-weight-bold mr-1" data-toggle="tooltip" data-placement="top" title="Süre Limiti (saniye)" for="timeLimit">Limit sn.</label>
+                                    <input type="number" id="timeLimit" name="timeLimit" value=@Model.TimeLimit class="form-control w-25 mr-2">
+
+                                    @*@Html.LabelFor(model => model.EczaneId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+
+                                    @Html.DropDownList("CalismaSayisi", null, htmlAttributes: new
+                                    {
+                                        @class = "form-control selectpicker mr-2 mr-md-5",
+                                       mobile = "true",
+                                       title = "Çalışma Sayısını Seçiniz..."
+                                   })
+                                    @Html.ValidationMessageFor(model => model.CalismaSayisi, "", new { @class = "text-danger" })
+                                    @*<small class="form-text text-muted">Kapanmamış veya herhangi bir gruba atanmamış eczaneler.</small>*@
+
+
+                                    <button type="button" id="submitCoz" class="btn btn-primary pull-right" title="Nöbet Yaz" data-toggle="modal" data-target="#nobetYazModal">
+                                        <i class="fa fa-coffee"></i> Nöbet Yaz
+                                    </button>
+                                </div>
+
+                                @*if (rolId == 1)
+                                    {
+                                        <button type="button" id="modalButton" class="btn btn-outline-primary mb-3" data-toggle="modal" data-target="#demoCozum">
+                                            3 Yıllık Demo Çöz
+                                        </button>
+                                    }*@
+                            }
+
+                            <!-- #endregion -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <!-- #region uyarılar -->
+
+                            @if (ViewBag.KesinlesenGrup != null //&& ViewBag.KesinlesenAy != null
+                                )
+                            {
+                                <div class="row justify-content-sm-center">
+                                    <div class="col-12">
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <i class="fa fa-check"></i>
+                                            <strong> @ViewBag.KesinlesenGrup</strong>
+                                            @if (ViewBag.KesinlesenGrupSayisi > 1)
+                                            {
+                                                <span>gruplarının</span>
+                                            }
+                                            else
+                                            {
+                                                <span>grubunun</span>
+                                            }
+                                            <strong>@Model.BaslangicTarihi.ToShortDateString() - @Model.BitisTarihi.ToShortDateString() </strong> tarih aralığındaki nöbetleri kesinleştirilmiştir.
+                                            <small class="text-muted"> @DateTime.Now</small>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            @if (ViewBag.BaslangicTarihiUyari != null)
+                            {
+                                <div class="row justify-content-sm-center">
+                                    <div class="col-12">
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            <i class="fa fa-warning"></i> @ViewBag.BaslangicTarihiUyari
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            @if (ViewBag.KayitYokUyari != null)
+                            {
+                                <div class="row justify-content-sm-center">
+                                    <div class="col-12">
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            <i class="fa fa-warning"></i> Kriterlere uygun daha önce
+                                            <a class="alert-link" target="_blank" href="@Url.Action( "PivotSonuclar", "EczaneNobetSonuc",new { area = "EczaneNobet" })">
+                                                yazılmış nöbetler
+                                            </a>
+                                            bulunmaktadır. Lütfen kontrol ediniz!
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                            <!-- #endregion -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer text-muted">
+                    <a href="@Url.Action("KisitAyarla", "NobetUstGrupKisit")" target="_blank" class="card-link mr-sm-2 mr-md-3">
+                        <i class="fa fa-gear" aria-hidden="true"></i> Ayarlar
+                    </a>
+
+                    <a href="@Url.Action("PivotSonuclar", "EczaneNobetSonuc")" target="_blank" class="card-link ml-sm-0 mr-sm-2 mr-md-3">
+                        <i class="fa fa-cube" aria-hidden="true"></i> İstatistik
+                        @*Nöbetçi <span class="text-danger font-weight-bold" data-toggle="tooltip" data-placement="top" title="Eczaneler" style="border:solid; border-width:medium">&nbsp;E&nbsp;</span>*@
+                    </a>
+
+                    <a href="@Url.Action("Index", "NobetciEczaneHarita")" target="_blank" class="card-link ml-sm-0" data-toggle="tooltip" data-placement="top" title="Nöbetçi Eczaneler Harita">
+                        <i class="fa fa-map" aria-hidden="true"></i> Harita
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        @* col-md-3 col-lg-5 col-xl-6 *@
+        <div class="col-12 col-lg-6">
+            <div class="card border-info">
+                <div class="card-header">
+                    Eczanelerin Dağılımı
+                </div>
+                <div class="card-body">
+                    <canvas id="myChartNobetGrup"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- #endregion -->
+<!-- #region modal -->
+<div class="modal" tabindex="-1" id="nobetYazModal" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        @* modal-lg *@
+        <div class="modal-content">
+            <div class="modal-header alert-warning">
+                <h5 class="modal-title">
+                    <i class="fa fa-warning"></i> 
+                    <a class="alert-link" target="_blank" href="@Url.Action( "KisitAyarla", "NobetUstGrupKisit",new { area = "EczaneNobet" })">
+                        @*<span class="text-primary">*@
+                        <span id="degisenKistiSayisi"></span> kural
+                        @*<i class="fa fa-external-link" aria-hidden="true"></i>*@
+                        @*</span>*@
+
+                    </a>
+                    varsayılandan farklıdır.
+                </h5>
+                @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>*@
+            </div>
+            <div class="modal-body">
+                @*<div class="row justify-content-sm-center" id="degisenKisitUyari" style="display:none">
+                    <div class="col-12">
+                        <div class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+                            <i class="fa fa-warning"></i> Dikkat!
+                            <a class="alert-link" target="_blank" href="@Url.Action( "KisitAyarla", "NobetUstGrupKisit",new { area = "EczaneNobet" })">
+                                <span id="degisenKistiSayisi"></span> kural
+                            </a>
+                            varsayılandan farklıdır.
+
+                        </div>
+                    </div>
+                </div>*@
+
+                <p>
+                    Devam etmek istediğinizden
+                    <span class="text-danger"> emin misiniz?</span>
+                </p>
+                <label class="mb-1" id="seilenKriterler"></label>
+
+                <div class="row mb-2">
+                    <div class="col">
+                        <span id="nobetlerYaziliyor" class="text-success font-weight-bold" style="display:none;">Nöbetler yazılıyor. Lütfen bekleyiniz...</span>
+                        <img class="img-fluid" id="calistir" src="~/Content/images/nobetYaz.gif" alt="İşleminiz devam ediyor..." style="height:4rem; display:none;" />
+                        @*<small class="form-text font-weight-bold text-success" id="labelSaat"></small>*@
+                        <div id="time" style="display:none; font-size:larger">
+                            <span id="hours">00</span> :
+                            <span id="minutes">00</span> :
+                            <span id="seconds">00</span> ::
+                            <span id="milliseconds">000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="spinner-border text-primary" role="status" id="kisitDurumuLoadingElement" style="display:none">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-success" id="btnModalClickSubmit">Evet</button>
+                <button type="button" class="btn btn-outline-danger"
+                        @*onclick="return confirm('Çözüm iptal edilecek. Emin misiniz?');"*@
+                        id="btnModeliKapat" data-dismiss="modal">
+                    İptal
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" id="aciklamaModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        @* modal-lg *@
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Açıklama</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        @* öncesi *@
+                        <p class="font-weight-bold">
+                            1. Nöbet yazmadan önce;
+                        </p>
+
+                        <div class="list-group">
+                            <a href="@Url.Action("Index", "Eczane")" target="_blank" class="list-group-item list-group-item-action list-group-item-success">
+                                <i class="fa fa-medkit" aria-hidden="true"></i> Eczane ekleyebilir,
+                            </a>
+                            <a href="@Url.Action("Index", "EczaneNobetGrup")" target="_blank" class="list-group-item list-group-item-action list-group-item-warning">
+                                <i class="fa fa-gear" aria-hidden="true"></i> Eczaneleri nöbet grubuna atayabilir,
+                            </a>
+                            <a href="@Url.Action("Index", "EczaneNobetMazeret")" target="_blank" class="list-group-item list-group-item-action list-group-item-info">
+                                <i class="fa fa-bug" aria-hidden="true"></i> Mazeret ya da istekleri girebilir,
+                            </a>
+                            <a href="@Url.Action("Index", "EczaneGrupTanim")" target="_blank" class="list-group-item list-group-item-action list-group-item-light">
+                                <i class="fa fa-group" aria-hidden="true"></i> Eş grupları belirleyebilir,
+                            </a>
+                            <a href="@Url.Action("KisitAyarla", "NobetUstGrupKisit")" target="_blank" class="list-group-item list-group-item-action list-group-item-primary">
+                                <i class="fa fa-gear" aria-hidden="true"></i> Nöbet ayarlarını değiştirebilirsiniz.
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @* sonrası *@
+                        <p class="font-weight-bold">
+                            2. Nöbet yazdıktan sonra;
+                        </p>
+                        <div class="list-group mb-2">
+
+                            <a href="@Url.Action("PivotSonuclar","EczaneNobetSonuc")" target="_blank" class="list-group-item list-group-item-action list-group-item-info">
+                                <i class="fa fa-bar-chart" aria-hidden="true"></i> İstatistikleri inceleyebilir,
+                            </a>
+
+                            <a href="@Url.Action("Index","NobetciEczaneHarita")" target="_blank" class="list-group-item list-group-item-action list-group-item-secondary">
+                                <i class="fa fa-map" aria-hidden="true"></i> Nöbetçi eczaneleri haritada görebilir,
+                            </a>
+
+                            <a href="@Url.Action("NobetDegistir","EczaneNobetSonuc")" target="_blank" class="list-group-item list-group-item-action list-group-item-success">
+                                <i class="fa fa-edit" aria-hidden="true"></i> Nöbet değiştirebilir,
+                            </a>
+
+                            <a href="@Url.Action("GelecekDonemSil","EczaneNobetSonuc")" target="_blank" class="list-group-item list-group-item-action list-group-item-danger">
+                                <i class="fa fa-trash" aria-hidden="true"></i> Nöbet silebilirsiniz.*
+                            </a>
+
+                        </div>
+
+                        <small class="text-muted">
+                            * Silme işlemi bu ay (<span class="badge badge-light">@buAy</span>) ve öncesi için yapılamamaktadır.
+                        </small>
+                    </div>
+                </div>
+
+                <hr class="bg-danger" />
+                <p class="font-weight-bold mb-2">
+                    Nöbet yazdırmak için;
+                </p>
+
+                <p class="mb-1">
+                    @*Gerekli verileri girdikten sonra*@ <span class="badge badge-secondary">Tarih aralığı</span> ve <span class="badge badge-secondary">nöbet gruplarını</span> seçip
+                    <span class="badge badge-primary">nöbet yaz</span> butonuna tıklayınız.
+                </p>
+
+                <hr class="bg-info mb-2" />
+
+                <p class="mt-0 mb-1">
+                    <i class="fa fa-warning" aria-hidden="true"></i>
+                    <small class="text-muted">
+                        Dilerseniz nöbetleri 1 aylık periyotta
+                        @*seçtiğiniz <span class="badge badge-secondary">tarih aralığından</span> itibaren her yıl*@ <span class="badge badge-warning">yıl sonuna kadar</span> otomatik olarak yazdırabilirsiniz.
+                    </small>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" id="demoCozum" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Demo Çözüm Yapılacak !</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>3 yıllık demo çözüm yapılacak. Emin misiniz?</p>
+            </div>
+            <div class="modal-footer">
+
+                @Html.ActionLink("Devam", "ModelCoz", new { area = "EczaneNobet", rolId = rolId }, new { @class = "btn btn-outline-success", id = "demoCoz" })
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">İptal</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- #endregion -->
+
+@section styles{
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
+
+<!-- #region Scripts -->
+@section Scripts{
+    @*@Scripts.Render("~/bundle/globalize/scripts")*@
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
+    @Scripts.Render("~/bundle/validation/scripts")
+    @Scripts.Render("~/bundle/chart/scripts")
+
+    @*<script>
+            // Load the IFrame Player API code asynchronously.
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/player_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            // Replace the 'ytplayer' element with an <iframe> and
+            // YouTube player after the API code downloads.
+            var player;
+            function onYouTubePlayerAPIReady() {
+                player = new YT.Player('ytplayer', {
+                    height: '360',
+                    width: '640',
+                    videoId: 'M7lc1UVf-VE',
+                    playerVars: { 'autoplay': 1, 'controls': 0 },
+                });
+            }
+        </script>*@
+
+    <script>
+
+        function cozumTercihiGosterGizle() {
+            secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+            if (secilenGrupSayisi > 1) {
+                $("#CozumTercihleri").show();
+            }
+            else {
+                $("#CozumTercihleri").hide();
+            }
+        }
+
+        function oncelikButonlariniGosterGizle() {
+            secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+            if (secilenGrupSayisi > 1) {
+                $("#butonlar").show();
+            }
+            else {
+                $("#butonlar").hide();
+            }
+        }
+
+        $('#NobetGrupGorevTipId').change(function () {
+            //var selected = $("#NobetGrupId option:selected").map(function () { return this.value }).get().join(", ");
+            //console.log(selected);
+            cozumTercihiGosterGizle();
+        });
+
+        $('#CozumTercihleri').change(function () {
+
+        });
+
+        $('#rasgeleSirala').click(function () {
+            $('#NobetGrupGorevTipId option').shuffle();
+            secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+        });
+
+        $('#sirala').click(function () {
+            var selectList = $('#NobetGrupGorevTipId option');
+
+            selectList.sort(function (a, b) {
+                a = a.value;
+                b = b.value;
+
+                return a - b;
+            });
+
+            $('#NobetGrupGorevTipId').html(selectList);
+            secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+        });
+
+        (function ($) {
+            $.fn.shuffle = function () {
+                var allElems = this.get(),
+                    getRandom = function (max) {
+                        return Math.floor(Math.random() * max);
+                    },
+                    shuffled = $.map(allElems, function () {
+                        var random = getRandom(allElems.length),
+                            randEl = $(allElems[random]).clone(true)[0];
+                        allElems.splice(random, 1);
+                        return randEl;
+                    });
+
+                this.each(function (i) {
+                    $(this).replaceWith($(shuffled[i]));
+                });
+                return $(shuffled);
+            };
+        })(jQuery);
+
+        function moveUp() {
+            $('#ddlNobetGruplar select :selected').each(function (i, selected) {
+                if (!$(this).prev().length) return false;
+                $(this).insertBefore($(this).prev());
+            });
+            $('#ddlNobetGruplar select').focus().blur();
+        }
+
+        function moveDown() {
+            $($('#ddlNobetGruplar select :selected').get().reverse()).each(function (i, selected) {
+                if (!$(this).next().length) return false;
+                $(this).insertAfter($(this).next());
+            });
+            $('#ddlNobetGruplar select').focus().blur();
+        }
+
+        var tumuSeciliMi = false;
+
+        $('#tumunuSecKaldir').click(function () {
+            if (tumuSeciliMi == false && secilenGrupSayisi == 0) {
+                tumuSeciliMi = true;
+                $('#NobetGrupGorevTipId option').prop('selected', true);
+                $("#CozumTercihleri").show();
+            }
+            else {
+                tumuSeciliMi = false;
+                $('#NobetGrupGorevTipId option').prop('selected', false);
+                $("#CozumTercihleri").hide();
+            }
+            secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+        });
+
+    </script>
+
+    <script>
+
+        var yil = $('#Yil').val();
+        var ay = $('#Ay').val();
+        var gunSayisi = daysInMonth(ay, yil);
+        var baslangicGunu = 1;
+        var bitisGunu = gunSayisi;
+
+        $("#TumAy").click(function () {
+            baslangicGunu = 1;
+            bitisGunu = gunSayisi;
+
+            $('#BaslangicGunu').val(baslangicGunu);
+            $('#BitisGunu').val(bitisGunu);
+        });
+
+        $("#Yil").change(function (e) {
+            yil = this.value;
+            gunSayisi = daysInMonth(ay, yil);
+            //var tarih = getFormattedDate(new Date(yil, ay - 1, 1));
+            $('#BaslangicGunu').val(1);
+            $('#BitisGunu').val(gunSayisi);
+
+            gecerliYildaEskiAylariGosterme();
+        });
+
+        function gecerliYildaEskiAylariGosterme() {
+            var bugun = new Date();
+
+            if (yil == bugun.getFullYear()) {
+                var ay = bugun.getMonth() + 2;
+
+                $('#Ay option').each(function () {
+                    if ($(this).val() < ay) {
+                        $(this).hide();
+                    }
+                });
+            }
+            else {
+                var ay = bugun.getMonth() + 2;
+                $('#Ay option').each(function () {
+                    if ($(this).val() < ay) {
+                        $(this).show();
+                    }
+                });
+            }
+        }
+
+        $("#Ay").change(function () {
+            ay = this.value;
+            gunSayisi = daysInMonth(ay, yil);
+            //var tarih = getFormattedDate(new Date(yil, ay - 1, 1));
+            $('#BaslangicGunu').val(1);
+            $('#BitisGunu').val(gunSayisi);
+        });
+
+        $("#BaslangicGunu").change(function () {
+            baslangicGunu = this.value;
+
+            if (!(baslangicGunu >= 1 && baslangicGunu <= gunSayisi)) {
+                alert("Başlangıç Günü 1-" + gunSayisi + " arasında olmalıdır...")
+                baslangicGunu = 1;
+                this.value = baslangicGunu;
+            };
+        });
+
+        $("#BitisGunu").change(function () {
+            bitisGunu = this.value;
+            if (!(bitisGunu >= 1 && bitisGunu <= gunSayisi)) {
+                alert("Bitiş Günü 1-" + gunSayisi + " arasında olmalıdır...")
+                bitisGunu = gunSayisi;
+                this.value = bitisGunu;
+            };
+        });
+
+        $("#BuAyVeSonrasi").change(function () {
+            if (this.checked) {
+                $("#BaslangicGunu").val(1);
+                $("#BitisGunu").val(gunSayisi);
+
+                $("#BaslangicGunu").prop('disabled', true);
+                $("#BitisGunu").prop('disabled', true);
+                $("#TumAy").prop('disabled', true);
+
+                if ($("#cozumTercihOncelikli").prop("checked")) {
+                    $("#divSonrakiAylarRasgele").show();
+                }
+            }
+            else {
+                $("#BaslangicGunu").val(baslangicGunu);
+                $("#BitisGunu").val(bitisGunu);
+
+                $("#BaslangicGunu").prop('disabled', false);
+                $("#BitisGunu").prop('disabled', false);
+                $("#TumAy").prop('disabled', false);
+                $("#divSonrakiAylarRasgele").hide();
+            }
+        });
+
+        $("#cozumTercihOnceliksiz").click(function () {
+            if (this.checked) {
+                $("#butonlar").hide();
+                $("#divSonrakiAylarRasgele").hide();
+            }
+        });
+
+        $("#cozumTercihOncelikli").click(function () {
+            if (this.checked && $("#BuAyVeSonrasi").prop("checked")) {
+                $("#divSonrakiAylarRasgele").show();
+            }
+            else if (this.checked) {
+                oncelikButonlariniGosterGizle();
+            }
+        });
+
+        function SelectedIndexChanged() {
+            $('#formNobetUstGrup').submit();
+            $('#formModelCoz #NobetUstGrupId').val($('#formNobetUstGrup #NobetUstGrupId').val());
+        }
+
+        function daysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        function getFormattedDate(date) {
+            var year = date.getFullYear();
+
+            var month = (1 + date.getMonth()).toString();
+            month = month.length > 1 ? month : '0' + month;
+
+            var day = date.getDate().toString();
+            day = day.length > 1 ? day : '0' + day;
+
+            return year + '.' + month + '.' + day;
+        }
+
+    </script>
+
+    <script>
+
+        var nobetGrupAdlar = @Html.Raw(Json.Encode(TempData["NobetGrupAdi"]));
+        var gruptakiEczaneSayisi = @Html.Raw(Json.Encode(TempData["GruptakiEczaneSayisi"]));
+        var nobetUstGrupId = @Model.NobetUstGrupId;
+        //alert(nobetGrupAdlar)
+        //new Chart(document.getElementById("chartjs-1"), {
+        //    "type": "bar", "data": {
+        //        "labels": ["January", "February", "March", "April", "May", "June", "July"], "datasets": [{
+        //            "label": "My First Dataset", "data": [65, 59, 80, 81, 56, 55, 40], "fill": false,
+        //            "backgroundColor": [
+        //                "rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
+        //                "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
+        //            "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)",
+        //                "rgb(153, 102, 255)", "rgb(201, 203, 207)"], "borderWidth": 1
+        //        }]
+        //    }, "options": { "scales": { "yAxes": [{ "ticks": { "beginAtZero": true } }] } }
+        //});
+
+        //alert(nobetUstGrupId)
+        window.chartColors = {
+            red: 'rgb(255, 99, 132)',
+            orange: 'rgb(255, 159, 64)',
+            yellow: 'rgb(255, 205, 86)',
+            green: 'rgb(75, 192, 192)',
+            blue: 'rgb(54, 162, 235)',
+            purple: 'rgb(153, 102, 255)',
+            grey: 'rgb(201, 203, 207)',
+            hos: 'rgba(255, 99, 132, 0.2)',
+            hos2: 'rgba(54, 162, 235, 0.2)',
+            hos3: 'rgba(255, 206, 86, 0.2)',
+            hos4: 'rgba(75, 192, 192, 0.2)',
+            hos5: 'rgba(153, 102, 255, 0.2)',
+            hos6: 'rgba(255, 159, 64, 0.2)'
+        };
+
+        var bgColorsMersin = [
+            window.chartColors.hos, window.chartColors.hos,
+            window.chartColors.hos2, window.chartColors.hos2, window.chartColors.hos2,
+            window.chartColors.hos5, window.chartColors.hos5, window.chartColors.hos5,
+            window.chartColors.hos6, window.chartColors.hos6
+        ];
+
+        var chartBordersMersin = [
+            window.chartColors.red, window.chartColors.red,
+            window.chartColors.blue, window.chartColors.blue, window.chartColors.blue,
+            window.chartColors.purple, window.chartColors.purple, window.chartColors.purple,
+            window.chartColors.yellow, window.chartColors.yellow
+        ];
+
+        var bgColorsAlanya = [
+            window.chartColors.hos,
+            window.chartColors.hos2,
+            window.chartColors.hos5
+        ];
+
+        var chartBordersAlanya = [
+            window.chartColors.red,
+            window.chartColors.blue,
+            window.chartColors.purple
+        ];
+
+        var bgColorsGiresun = [
+            window.chartColors.hos,
+            window.chartColors.hos2
+        ];
+
+        var chartBordersGiresun = [
+            window.chartColors.red,
+            window.chartColors.blue
+        ];
+        var bgColors = [
+            "rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)",
+            "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)", "rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)",
+            "rgba(75, 192, 192, 0.2)"
+        ];
+        var chartBorders = [
+            "rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)",
+            "rgb(153, 102, 255)", "rgb(201, 203, 207)", "rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)",
+            "rgb(75, 192, 192)"
+        ];
+
+        //var nobetGrupAdlarKisa = new Array();
+
+        //$.each(nobetGrupAdlar, function (key, value) {
+        //    alert(value)
+
+        //    if (key >= 4 && key <= 7) {
+        //        nobetGrupAdlarKisa.push(value.substring(0, 11));
+        //    }
+        //    else if (key >= 25 && key <= 26) {
+        //        alert(value)
+        //        nobetGrupAdlarKisa.push(value);
+        //    }
+        //    else {
+        //        nobetGrupAdlarKisa.push(value.substring(0, 10));
+        //    }
+        //});
+
+        var ctx3 = document.getElementById("myChartNobetGrup");
+
+        //ctx3.height = 110;
+        if (nobetUstGrupId == 1) {
+            var myChart2 = new Chart(ctx3, {
+                "type": "bar",
+                "data": {
+                    "labels": nobetGrupAdlar,
+                    "datasets": [{
+                        "label": "Eczane Sayısı",
+                        "data": gruptakiEczaneSayisi,
+                        "fill": false,
+                        "backgroundColor": bgColorsAlanya,
+                        "borderColor": chartBordersAlanya,
+                        "borderWidth": 1
+                    }]
+                },
+                "options": {
+                    "legend": {
+                        "display": false
+                    },
+                    "scales":
+                        { "yAxes": [{ "ticks": { "beginAtZero": true } }] }
+                }
+            });
+        }
+        else if (nobetUstGrupId == 3) {
+            var myChart2 = new Chart(ctx3, {
+                "type": "bar",
+                "data": {
+                    "labels": nobetGrupAdlar,
+                    "datasets": [{
+                        "label": "Eczane Sayısı",
+                        "data": gruptakiEczaneSayisi,
+                        "fill": false,
+                        "backgroundColor": bgColorsMersin,
+                        "borderColor": chartBordersMersin,
+                        "borderWidth": 1
+                    }]
+                },
+                "options": {
+                    "legend": {
+                        "display": false
+                    },
+                    "scales":
+                        { "yAxes": [{ "ticks": { "beginAtZero": true } }] }
+                }
+            });
+        }
+        else if (nobetUstGrupId == 4) {
+            var myChart2 = new Chart(ctx3, {
+                "type": "bar",
+                "data": {
+                    "labels": nobetGrupAdlar,
+                    "datasets": [{
+                        "label": "Eczane Sayısı",
+                        "data": gruptakiEczaneSayisi,
+                        "fill": false,
+                        "backgroundColor": bgColorsGiresun,
+                        "borderColor": chartBordersGiresun,
+                        "borderWidth": 1
+                    }]
+                },
+                "options": {
+                    "legend": {
+                        "display": false
+                    },
+                    "scales":
+                        { "yAxes": [{ "ticks": { "beginAtZero": true } }] }
+                }
+            });
+        }
+        else {
+            var myChart2 = new Chart(ctx3, {
+                "type": "bar",
+                "data": {
+                    "labels": nobetGrupAdlar,
+                    "datasets": [{
+                        "label": "Eczane Sayısı",
+                        "data": gruptakiEczaneSayisi,
+                        "fill": false,
+                        "backgroundColor": bgColors,
+                        "borderColor": chartBorders,
+                        "borderWidth": 1
+                    }]
+                },
+                "options": {
+                    "legend": {
+                        "display": false
+                    },
+                    "scales":
+                        { "yAxes": [{ "ticks": { "beginAtZero": true } }] }
+                }
+            });
+        }
+
+    </script>
+
+    <script>
+        //setTimeout(function () { $('.alert').fadeOut(500); }, 3000);
+        //$(function () {
+        //    if ($(window).width() < 700) {
+        //        $("#eczaneGrupGrafik").hide();
+        //    }
+        //});
+        //var nobetGrupListe = [];
+
+        var hours = minutes = seconds = milliseconds = 0;
+        var prev_hours = prev_minutes = prev_seconds = prev_milliseconds = undefined;
+        var timeUpdate;
+
+        function startTime() {
+            updateTime(0, 0, 0, 0);
+        }
+
+        // Update time in stopwatch periodically - every 25ms
+        function updateTime(prev_hours, prev_minutes, prev_seconds, prev_milliseconds) {
+
+            var startTime = new Date();    // fetch current time
+
+            timeUpdate = setInterval(function () {
+                var timeElapsed = new Date().getTime() - startTime.getTime();    // calculate the time elapsed in milliseconds
+
+                // calculate hours
+                hours = parseInt(timeElapsed / 1000 / 60 / 60) + prev_hours;
+
+                // calculate minutes
+                minutes = parseInt(timeElapsed / 1000 / 60) + prev_minutes;
+                if (minutes > 60) minutes %= 60;
+
+                // calculate seconds
+                seconds = parseInt(timeElapsed / 1000) + prev_seconds;
+                if (seconds > 60) seconds %= 60;
+
+                // calculate milliseconds
+                milliseconds = timeElapsed + prev_milliseconds;
+                if (milliseconds > 1000) milliseconds %= 1000;
+
+                // set the stopwatch
+                setStopwatch(hours, minutes, seconds, milliseconds);
+
+            }, 25); // update time in stopwatch after every 25ms
+
+        }
+
+        // Set the time in stopwatch
+        function setStopwatch(hours, minutes, seconds, milliseconds) {
+            $("#hours").html(prependZero(hours, 2));
+            $("#minutes").html(prependZero(minutes, 2));
+            $("#seconds").html(prependZero(seconds, 2));
+            $("#milliseconds").html(prependZero(milliseconds, 3));
+        }
+
+        // Prepend zeros to the digits in stopwatch
+        function prependZero(time, length) {
+            time = new String(time);    // stringify time
+            return new Array(Math.max(length - time.length + 1, 0)).join("0") + time;
+        }
+
+        function checkTime(i) {
+            if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+            return i;
+        }
+
+        var secilenGrupSayisi = 0;
+
+        $(function () {
+            //ready
+
+            if (@rolId > 3) {
+                $("#submitCoz").attr("disabled", true);
+            }
+
+            if ($("#BuAyVeSonrasi").prop("checked")) {
+                $("#BaslangicGunu").prop('disabled', true);
+                $("#BitisGunu").prop('disabled', true);
+                $("#TumAy").prop('disabled', true);
+            }
+
+            $("#cozumTercihOnceliksiz").prop("checked", true);
+
+            $("#viewBagMesaj").attr("disabled", true);
+            $('#formModelCoz #NobetUstGrupId').val(@Model.NobetUstGrupId);
+            if (@ViewBag.NobetUstGrupSayisi > 1) {
+                $('#formNobetUstGrup').show();
+            }
+
+            gecerliYildaEskiAylariGosterme();
+
+            $('#move-up').click(moveUp);
+            $('#move-down').click(moveDown);
+
+            var nobetGrupSayisi = $("#NobetGrupGorevTipId > option").length;
+
+            $('#NobetGrupGorevTipId option').prop('selected', true);
+
+            if (nobetGrupSayisi == 1 || $("#cozumTercihOnceliksiz").prop("checked", true)) {
+                //$('#tumunuSecKaldir').hide();
+                $("#butonlar").hide();
+            }
+            else {
+                $("#butonlar").show();
+            }
+
+            secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+
+            if (secilenGrupSayisi < 2) {
+                $("#CozumTercihleri").hide();
+            }
+            else if (secilenGrupSayisi > 1) {
+                $("#CozumTercihleri").show();
+            }
+
+            //SonNobetSonrasiTarihAraliginiSec();
+
+            var sonNobetTarihi = tarihDondur2($("#SonNobetTarihi").val());
+            //alert(sonNobetTarihi)
+            var d = new Date(sonNobetTarihi);
+
+            var sonNobetGunu = d.getDate();
+            //alert(sonNobetGunu)
+
+            var aydakiGunSayisi = daysInMonth(d.getMonth() + 1, d.getFullYear());
+            var tarih;
+            //alert(aydakiGunSayisi)
+            var bsl;
+
+            if (sonNobetGunu < aydakiGunSayisi) {
+                tarih = d;
+                bsl = baslangicTarihindenSonrakiGunuSec(tarih);
+            }
+            else {
+                tarih = add_months(d, 1);
+                bsl = baslangicTarihininIlkGununuSec(tarih);
+            }
+
+            //var bsl = baslangicTarihindenSonrakiGunuSec(tarih);
+            var bit = bitisTarihininSonGununuSec(tarih);
+            var baslangicStr = tarihDondur2($("#BaslangicTarihi").val());
+
+            //alert(bsl)
+            //alert(baslangicStr)
+            //$("#BaslangicTarihi").datepicker("setDate", new Date(baslangicStr));
+            $("#TarihBaslangic").datepicker("setDate", new Date(bsl));
+            $("#TarihBaslangic").datepicker("setStartDate", new Date(baslangicStr));
+
+            //var bitisStr = tarihDondur2($("#BitisTarihi").val());
+
+            //$("#BitisTarihi").datepicker("setDate", new Date(bitisStr));
+            $("#TarihBitis").datepicker("setDate", new Date(bit));
+            $("#TarihBitis").datepicker("setStartDate", new Date(baslangicStr));
+
+            $('.input-daterange').datepicker();
+
+            veriyiGizleLoadingGifiGoster();
+
+        });
+
+        function veriyiGizleLoadingGifiGoster() {
+            document.getElementById("tumSayfa").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
+            // document.getElementById("div_searching").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
+            document.getElementById("loading").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
+            acilisiGeciktir()
+        }
+        function acilisiGeciktir() {
+            setTimeout(
+                loadingGifiGizleVeriyiGoster, /* Request next message  */
+                200 /* ..after ms seconds */
+            );
+        }
+        function loadingGifiGizleVeriyiGoster() {
+            document.getElementById("tumSayfa").style.visibility = "visible";//tablo gösterilir
+            // document.getElementById("div_searching").style.visibility = "visible";//sayfa yüklenirken tablo gizlenir
+            document.getElementById("loading").style.visibility = "hidden";//gif gizlenir
+            document.getElementById("loading").style.display = "none";//gif yer kaplamasın
+        }
+        function tarihDondur2(metin) {
+
+            var tarih = metin.split(' ', 1)[0];
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2];
+            ay = tarihTanim[1];
+            gun = tarihTanim[0];
+
+            if (gun.length != 4) {
+                return yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+
+        function gecerliYildaEskiAylariGosterme2() {
+
+            var bugun = new Date();
+
+            if (yil == bugun.getFullYear()) {
+                var ay = bugun.getMonth() + 2;
+
+                $('#Ay option').each(function () {
+                    if ($(this).val() < ay) {
+                        $(this).hide();
+                    }
+                });
+            }
+            else {
+                var ay = bugun.getMonth() + 2;
+                $('#Ay option').each(function () {
+                    if ($(this).val() < ay) {
+                        $(this).show();
+                    }
+                });
+            }
+        }
+
+        function tercih(secilenGrupSayisi) {
+
+            var mesaj = "<br />" + "Çözüm Tercihi : ";
+
+            if (secilenGrupSayisi == 1) {
+                return mesaj = "";
+            }
+            else {
+                if ($("#cozumTercihOncelikli").prop("checked")) {
+                    return mesaj
+                        + "<span class='font-weight-bold'><i class='fa fa-check-square'></i> Öncelikli</span> | <span class='text-muted'><i class='fa fa-square-o'></i> Önceliksiz</span>"
+                        ;
+                }
+                else {
+                    return mesaj
+                        + "<span class='text-muted'><i class='fa fa-square-o'></i> Öncelikli</span> | <span class='font-weight-bold'><i class='fa fa-check-square'></i> Önceliksiz</span>"
+                        ;
+                }
+            }
+        }
+
+        $('#nobetYazModal').on('shown.bs.modal', function (e) {
+
+            var baslangicStr = $("#TarihBaslangic").val();
+            var bitisStr = $("#TarihBitis").val();
+
+            var grupSayisi = $("#NobetGrupGorevTipId :selected").length;
+            var toplamGrupSayisi = $("#NobetGrupGorevTipId > option").length;
+
+            var grup = "<br/>"
+                + "<span class='mr-4'>Grup Sayısı</span>:"
+                + "<span class='font-weight-bold'> " + grupSayisi + "/" + toplamGrupSayisi + "</span>";
+
+            var mesaj =
+                //"<strong>Nöbet yazdırma kriterleri :</strong>" +
+                //"<br />" +
+                "<span class='mr-3'>Tarih Aralığı</span>: " + "<strong>" + baslangicStr + " - " + bitisStr + "</strong>" +
+                yilSonu() +
+                (toplamGrupSayisi > 1 ? grup : "") +
+                tercih(grupSayisi) +
+                "<br />"
+                ;
+
+            $('#seilenKriterler').html(mesaj);
+        })
+
+        function yilSonu() {
+            if ($("#BuAyVeSonrasi").prop("checked")) {
+                return "<span class='text-danger font-weight-bold'> ( <i class='fa fa-check-square'></i> Yıl sonuna kadar )</span>";
+            }
+            else {
+                return "";
+            }
+        }
+
+        $("#btnModeliKapat").click(function (e) {
+            @*var urlDagilimlar = '@Url.Action("ModeliKapat")';
+            modeliSonlandir(urlDagilimlar)*@
+        });
+
+        function modeliSonlandir(url) {
+            $.ajax({
+                //dataType: "json",
+                url: url,
+                type: "get",
+                success: function (data) {
+                    //alert("Çözüm İptal Edildi")
+                },
+                complete: function (data) {
+                    alert("Çözüm İptal Edildi")
+                    location.reload();
+                },
+                error: function (data) {
+                    alert('Hata. Model kapatılamadı!');
+                },
+            });
+        }
+
+        $("#btnModalClickSubmit").click(function (e) {
+
+            //var now = $.now();
+            //var baslamaZamani = now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+
+            //if (baslangicDate > bitisDate) {
+            //    alert("Başlangıç tarihi (" + baslangicStr + ") bitiş tarihinden (" + bitisStr + ") büyük olamaz!!!.");
+            //    $("#BitisTarihi").val("");
+            //    $("#BitisTarihi").focus();
+            //};
+
+            //if (bitisGunu < baslangicGunu) {
+            //    alert("Bitiş Günü (" + bitisGunu + ") Başlangıç Gününden (" + baslangicGunu + ") küçük olamaz...")
+            //    e.preventDefault();
+            //    return false;
+            //};
+
+            document.getElementById("nobetYazForm").style.cursor = "wait";
+            $("#time").show();
+            $("#nobetlerYaziliyor").show();
+            startTime();
+
+            //$('#formModelCoz #Yil').val($('#formYil #Yil').val());
+
+            $("#btnModalClickSubmit").attr("disabled", true);
+            //$('#submitCoz').hide();
+            //$('#kriter').text("Nöbetler yazılıyor. Lütfen bekleyiniz...(" + baslamaZamani + ")");
+            $('#calistir').show();
+            $('#demoCoz').hide();
+            $('#modalButton').hide();
+            if (@rolId > 3) {
+                $("#viewBagMesaj").attr("disabled", false);
+            }
+
+            $('#submitCoz').attr("disabled", true);
+            $("#formModelCoz").submit();
+        });
+
+        $("#submitCoz").click(function (e) {
+
+            secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+
+            tarihKontrol();
+
+            if (secilenGrupSayisi == 0) {
+                alert("Lütfen nöbet grubu seçiniz")
+                e.preventDefault();
+                return false;
+            };
+
+            var url = "/NobetUstGrupKisit/GetDegisenKisitlar";
+
+            $.get(url, { nobetUstGrupId: @Model.NobetUstGrupId }, function (data) {
+
+                $("#kisitDurumuLoadingElement").show();
+
+                if (parseInt(data) >= 0) {
+                    $("#degisenKisitUyari").show();
+                    $("#degisenKistiSayisi").html(data);
+                }
+                else {
+                    $("#degisenKisitUyari").hide();
+                }
+            }).done(function () {
+                $("#kisitDurumuLoadingElement").hide();
+            });
+
+        });
+
+        $("#ModelCoz").click(function () {
+            $('#ModelCoz').hide();
+            $('#submitCoz').attr("disabled", true);
+        });
+
+        function tarihiTrdenCevir(metin) {
+
+            var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2];
+            ay = tarihTanim[1];
+            gun = tarihTanim[0];
+
+            return yil + "." + ay + "." + gun;
+        }
+
+        $("#TarihBaslangic").change(function () {
+            var d = tarihiTrdenCevir(this.value);
+            $('#BaslangicTarihi').val(d);
+            var d1 = new Date(d);
+
+            var sonNobetTarihi = tarihDondur2($("#SonNobetTarihi").val());
+            var d2 = new Date(sonNobetTarihi);
+
+            if (d1 < d2) {
+                $("#lblSonNobetTarihi").removeClass('text-muted').addClass("text-danger");
+                //$("#fromTarihAraligi").removeClass('mb-2');
+                $("#uyariOncekiNobet").show();
+            }
+            else {
+                $("#uyariOncekiNobet").hide();
+
+                //if (!$("#fromTarihAraligi").hasClass('mb-2')) {
+                //    $("#fromTarihAraligi").addClass('mb-2')
+                //}
+                if ($("#lblSonNobetTarihi").hasClass('text-danger')){
+                    $("#lblSonNobetTarihi").removeClass('text-danger').addClass("text-muted");
+                }
+            }
+        });
+
+        $("#TarihBitis").change(function () {
+            var d = tarihiTrdenCevir(this.value);
+            $('#BitisTarihi').val(d);
+        });
+
+        //$("#BaslangicTarihi").change(function () {
+        //    //$('#BitisTarihi').datepicker('setStartDate', this.value);
+        //});
+
+        //$("#BitisTarihi").change(function () {
+        //    //tarihKontrol();
+        //    //var tarih = tarihDondur2(this.value);
+        //    //$('#BaslangicTarihi').datepicker('setEndDate', new Date(tarih));
+        //});
+
+        $("#btnOncekiAy").click(function () {
+            var baslangicStr = tarihDondur2($("#TarihBaslangic").val());
+            var bsl = new Date(baslangicStr);
+            var oncekiAyBaslangic = add_months(bsl, -1);
+
+            var d = new Date();
+            var kriter = add_months(d, 1);
+            var bslTarihiKriter = baslangicTarihininIlkGununuSec(kriter);
+
+            bsl = baslangicTarihininIlkGununuSec(oncekiAyBaslangic);
+            var bit = bitisTarihininSonGununuSec(oncekiAyBaslangic);
+
+            if (bslTarihiKriter > oncekiAyBaslangic) {
+                alert("Başlangıç tarihi: " + oncekiAyBaslangic.toLocaleString().substring(0, 10) + ", " + bslTarihiKriter.toLocaleString().substring(0, 10) + " tarihinden daha önce olamaz!!!.");
+                event.stopPropagation(); //this line prevents the element's event propagation
+                event.preventDefault();
+                return false;
+            }
+
+            $("#TarihBaslangic").datepicker("setDate", bsl);
+            $("#TarihBitis").datepicker("setDate", bit);
+        });
+
+        $("#btnSonrakiAy").click(function () {
+            var bslStr = tarihDondur2($("#TarihBitis").val());
+            var _baslangic = new Date(bslStr);
+            //console.log(_baslangic)
+            var sonrakiAy = add_months(_baslangic, 1);
+
+            var bas = baslangicTarihininIlkGununuSec(sonrakiAy);
+            //console.log(bas)
+
+            $("#TarihBaslangic").datepicker("setDate", bas);
+
+            var bit = bitisTarihininSonGununuSec(sonrakiAy);
+            $("#TarihBitis").datepicker("setDate", bit);
+            //$('#BaslangicTarihi').datepicker('setEndDate', bit);
+        });
+
+        function baslangicTarihindenSonrakiGunuSec(d) {
+            //console.log(d)
+            var bsl = new Date(d.getFullYear(), d.getMonth(), d.getDate()+1);
+            //d.setDate(d.getDate()+1);
+            //console.log(bsl)
+            return bsl;
+        }
+
+        function baslangicTarihininIlkGununuSec(d) {
+            //console.log(d)
+            var bsl = new Date(d.getFullYear(), d.getMonth(), 1);
+            //d.setDate(1);
+            //console.log(bsl)
+            return bsl;
+        }
+
+        function bitisTarihininSonGununuSec(d) {
+            var aydakiGunSayisi = daysInMonth(d.getMonth() + 1, d.getFullYear());
+            var bitisTarihi = d.setDate(aydakiGunSayisi);
+            return new Date(bitisTarihi);
+        }
+
+        function add_months(d, n) {
+            d.setMonth(d.getMonth() + n, 1);
+            return d;
+        }
+
+        function tarihKontrol() {
+            var baslangicStr = $("#TarihBaslangic").val();
+            var baslangicArr = baslangicStr.split(".");
+            var baslangicDate = new Date(baslangicArr[0], baslangicArr[1], baslangicArr[2]);
+            var bitisStr = $("#TarihBitis").val();
+            var bitisArr = bitisStr.split(".");
+            var bitisDate = new Date(bitisArr[0], bitisArr[1], bitisArr[2]);
+
+            if (baslangicStr == "") {
+                alert("Başlangıç tarihi boş olamaz!!!.");
+                event.stopPropagation(); //this line prevents the element's event propagation
+                event.preventDefault();
+            }
+
+            if (bitisStr == "") {
+                alert("Bitiş tarihi boş olamaz!!!.");
+                event.stopPropagation(); //this line prevents the element's event propagation
+                event.preventDefault();
+            }
+
+            //if (baslangicDate > bitisDate) {
+            //    alert("Başlangıç tarihi (" + baslangicStr + ") bitiş tarihinden (" + bitisStr + ") büyük olamaz!!!.");
+            //    event.stopPropagation(); //this line prevents the element's event propagation
+            //    event.preventDefault();
+            //};
+
+            //$("#tarihAraligiGelecekAy").show();
+        }
+
+        $("#tarihAraligiSonNobetTarihi").click(function () {
+            SonNobetSonrasiTarihAraliginiSec();
+        });
+
+        $("#tarihAraligiGelecekAy").click(function () {
+            //SonrakiAyTarihAraliginiSec();
+            SonNobetSonrasiTarihAraliginiSec();
+        });
+
+        function SonNobetSonrasiTarihAraliginiSec() {
+            var sonNobetTarihi = tarihDondur2($("#SonNobetTarihi").val());
+            var d = new Date(sonNobetTarihi);
+            var sonNobetGunu = d.getDate();
+            var aydakiGunSayisi = daysInMonth(d.getMonth() + 1, d.getFullYear());
+
+            var tarih;
+            var bsl;
+
+            if (sonNobetGunu < aydakiGunSayisi) {
+                tarih = d;
+                bsl = baslangicTarihindenSonrakiGunuSec(tarih);
+            }
+            else {
+                tarih = add_months(d, 1);
+                bsl = baslangicTarihininIlkGununuSec(tarih);
+            }
+
+            var bit = bitisTarihininSonGununuSec(tarih);
+
+            $("#TarihBaslangic").datepicker("setDate", bsl);
+            $("#TarihBitis").datepicker("setDate", bit);
+        }
+        function SonrakiAyTarihAraliginiSec() {
+            var d = new Date();
+            //d.setMonth(d.getMonth() + 1);
+            var tarih = add_months(d, 1);
+
+            var bsl = baslangicTarihininIlkGununuSec(tarih);
+            var bit = bitisTarihininSonGununuSec(tarih);
+
+            $("#TarihBaslangic").datepicker("setDate", bsl);
+            $("#TarihBitis").datepicker("setDate", bit);
+        }
+
+        $('#sayfayiYenile').click(function () {
+            location.reload();
+        });
+
+        //$("#AyBitis").change(function () {
+        //    alert($("#AyBitis").val())
+
+        //    if ($("#AyBitis").val()>0) {
+        //        $("#BuAyVeSonrasi").attr("disabled", false);
+        //    }
+        //});
+
+    </script>
+}
+<!-- #endregion -->
+<!-- #region diğer -->
+@*@section SolTaraf*@
+@* sık kullanılanlar *@
+@*@Html.Action("EczaneNobetDataPartialView", "EczaneNobet", new { area = "EczaneNobet" })*@
+
+@*<h4>Nöbet Yaz <span><a class="alert-link" href="@Url.Action( "Index", "Home",new { area = "" })"><i class="fa fa-home" aria-hidden="true"></i></a></span></h4>*@
+@*<hr />*@
+
+<!-- #endregion -->
+
+

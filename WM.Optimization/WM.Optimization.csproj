@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E208CAC6-9FF2-40F7-B4AA-F57D3B8F2F0E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WM.Optimization</RootNamespace>
+    <AssemblyName>WM.Optimization</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FParsec, Version=1.0.0.0, Culture=neutral, PublicKeyToken=40ccfc0a09edbb5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\FParsec.1.0.3\lib\net40-client\FParsec.dll</HintPath>
+    </Reference>
+    <Reference Include="FParsecCS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=40ccfc0a09edbb5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\FParsec.1.0.3\lib\net40-client\FParsecCS.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.Core, Version=4.7.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FSharp.Core.4.7.0\lib\net45\FSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ILOG.Concert, Version=12.6.0.0, Culture=neutral, PublicKeyToken=7906592bc7cc7340, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\IBM\ILOG\CPLEX_Studio128\cplex\bin\x64_win64\ILOG.Concert.dll</HintPath>
+    </Reference>
+    <Reference Include="ILOG.CPLEX, Version=12.6.0.0, Culture=neutral, PublicKeyToken=7906592bc7cc7340, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\IBM\ILOG\CPLEX_Studio128\cplex\bin\x64_win64\ILOG.CPLEX.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=4.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.4.9.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics.FSharp, Version=4.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.FSharp.4.9.0\lib\net45\MathNet.Numerics.FSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Symbolics, Version=0.20.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Symbolics.0.20.0\lib\net461\MathNet.Symbolics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Solver.Foundation, Version=3.0.2.10889, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Solver.Foundation.3.1.0\lib\Microsoft.Solver.Foundation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Z3, Version=4.8.6.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>..\packages\Microsoft.Z3.x64.4.8.6\lib\netstandard1.4\Microsoft.Z3.dll</HintPath>
+    </Reference>
+    <Reference Include="optano.modeling, Version=3.0.1.451, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OPTANO.Modeling.3.0.1.451\lib\netstandard20\optano.modeling.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstract\Education\University\IExamLocationAssignmentOpt.cs" />
+    <Compile Include="Abstract\Education\University\IExamSchedulingOpt.cs" />
+    <Compile Include="Abstract\Education\University\IProctorAssignmentOpt.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetAlanyaOptimizationV2.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetOrduMerkezOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetManavgatOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetDiyarbakirOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetKirikhanOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetZonguldakOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetBartinOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetCorumOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetIskenderunOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetOsmaniyeOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetGiresunOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetMersinMerkezOptimizationV2.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetMersinMerkezOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetCokGrupAltOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetAlanyaOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetAntalyaMerkezOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetCokGrupOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetKisit.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetTekGrupAltOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetTekGrupOptimization.cs" />
+    <Compile Include="Abstract\Samples\IBlendOptimization.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetOptimization.cs" />
+    <Compile Include="Abstract\Samples\ITransportOptimization.cs" />
+    <Compile Include="Concrete\GoogleOptimization\Education\University\GoExamLocationAssignmentOpt.cs" />
+    <Compile Include="Concrete\GoogleOptimization\Sample\LinearExample.cs" />
+    <Compile Include="Concrete\IbmCplex\Education\University\IcExamLocationAssignmentOpt.cs" />
+    <Compile Include="Concrete\IbmCplex\Samples\BlendCplexModelVer2.cs" />
+    <Compile Include="Concrete\IbmCplex\Samples\BlendCplex.cs" />
+    <Compile Include="Concrete\MicrosoftSolverFoundation\Examples\SimpleSamples.cs" />
+    <Compile Include="Concrete\MicrosoftSolverFoundation\Examples\Taha\BoyaUretim.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\OrduMerkezOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\ManavgatOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\DiyarbakirOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\KirikhanOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\ZonguldakOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\CorumOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\EczaneNobetKisit.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\AlanyaOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\Eski\GiresunOptanoEski.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\BartinOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\IskenderunOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\OsmaniyeOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\GiresunOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\HedefProgramlama\HpMersinMerkezOptanoV2.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\HedefProgramlama\HpMersinMerkezOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\AntalyaMerkezOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\Eski\AntalyaMerkezOptanoEski.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\MersinMerkezOptano.cs" />
+    <Compile Include="Concrete\Optano\Samples\EczaneNobetCokGrupAltOptano.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\Eski\AlanyaOptanoEski.cs" />
+    <Compile Include="Concrete\Optano\Samples\EczaneNobetCokGrupOptano.cs" />
+    <Compile Include="Concrete\Optano\Samples\EczaneNobetTekGrupAltOptano.cs" />
+    <Compile Include="Concrete\Optano\Samples\EczaneNobetTekGrupOptano.cs" />
+    <Compile Include="Concrete\Optano\Samples\EczaneNobetOptano.cs" />
+    <Compile Include="Concrete\Optano\Samples\TransportOptano.cs" />
+    <Compile Include="Concrete\Optano\Samples\TransportOptanoSolve.cs" />
+    <Compile Include="Entities\KisitParametre\KpAyIcindeSadece1KezAyniGunNobetGiresunAltGrup.cs" />
+    <Compile Include="Entities\KisitParametre\KpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu.cs" />
+    <Compile Include="Entities\KisitParametre\KpAltGruplarlaAyniGunNobetGrupAltGrup.cs" />
+    <Compile Include="Entities\KisitParametre\KpGorevTipineGorevDagilim.cs" />
+    <Compile Include="Entities\KisitParametre\KpEsGrubaAyniGunNobetYazma.cs" />
+    <Compile Include="Entities\KisitParametre\KpKumulatifToplam.cs" />
+    <Compile Include="Entities\KisitParametre\KpHerAyPespeseGorev.cs" />
+    <Compile Include="Entities\KisitParametre\KpMazereteGorevYazma.cs" />
+    <Compile Include="Entities\KisitParametre\KpIstegiKarsila.cs" />
+    <Compile Include="Entities\KisitParametre\KpPespeseFarkliTurNobet.cs" />
+    <Compile Include="Entities\KisitParametre\KpHerAyHaftaIciPespeseGorev.cs" />
+    <Compile Include="Entities\KisitParametre\KpAyIcindeSadece1KezAyniGunNobet.cs" />
+    <Compile Include="Entities\KisitParametre\KpAyniGunSadece1NobetTuru.cs" />
+    <Compile Include="Entities\KisitParametre\KpTarihAraligindaEnAz1NobetYaz.cs" />
+    <Compile Include="Entities\KisitParametre\KpPesPeseGorevEnAz.cs" />
+    <Compile Include="Entities\KisitParametre\KpTalebiKarsila.cs" />
+    <Compile Include="Entities\KisitParametre\KpIstenenEczanelerinNobetGunleriniKisitla.cs" />
+    <Compile Include="Entities\KisitParametre\KpBase.cs" />
+    <Compile Include="Entities\KisitParametre\KpTarihVeAltGrupBazliEnFazla.cs" />
+    <Compile Include="Entities\KisitParametre\KpTarihAraligiOrtalamaEnFazla.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WM.Core\WM.Core.csproj">
+      <Project>{56e1d3ca-5512-4fc7-8595-d401cc20badd}</Project>
+      <Name>WM.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WM.Northwind.Entities\WM.Northwind.Entities.csproj">
+      <Project>{aac6410f-016d-4c53-b268-f8cbaa677c5c}</Project>
+      <Name>WM.Northwind.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Concrete\CSP\Health\EczaneNobet\" />
+    <Folder Include="Concrete\GeneticAlgorithm\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MipCL213WrapperCpp.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

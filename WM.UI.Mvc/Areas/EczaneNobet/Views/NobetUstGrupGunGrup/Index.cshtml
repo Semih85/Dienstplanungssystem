@@ -1,0 +1,61 @@
+﻿@model IEnumerable<NobetUstGrupGunGrupDetay>
+
+@{
+    ViewBag.Title = "Nöbet Gün Gruplar | Nöbet Sistemi.";
+}
+
+<h4>
+    <span class="mr-5">Nöbet Gün Gruplar</span>
+    <a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+</h4>
+
+<hr />
+<table class="table table-hover table-sm">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.GunGrupAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NobetUstGrupAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AmacFonksiyonuKatsayisi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GunGrupAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetUstGrupAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmacFonksiyonuKatsayisi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aciklama)
+            </td>
+            <td>
+                @{
+                    var target = $"#islem{@item.Id}";
+                }
+                <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fa fa-cog"></span>
+                </button>
+                <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                    <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                    <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                    <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

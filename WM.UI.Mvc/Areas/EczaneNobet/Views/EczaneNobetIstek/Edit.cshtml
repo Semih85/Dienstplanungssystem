@@ -1,0 +1,74 @@
+﻿@model EczaneNobetIstek
+
+@{
+    ViewBag.Title = "Nöbet İstek Düzenle | Nöbet Sistemi";
+}
+
+
+<h4>Eczane Nöbet İstek Düzenle</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.EczaneNobetGrupId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new { @class = "form-control selectpicker",
+               data_live_search = "true",
+               data_actions_box = "true",
+               title = "Eczane seçiniz..."
+           })
+                @Html.ValidationMessageFor(model => model.EczaneNobetGrupId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IstekId, "İstek Tipi", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IstekId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IstekId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.TakvimId, "Tarih", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.DropDownList("TakvimId", null, htmlAttributes: new { @class = "form-control selectpicker",
+               data_live_search = "true",
+               data_actions_box = "true",
+               title = "Tarih seçiniz..."
+           })
+                @Html.ValidationMessageFor(model => model.TakvimId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Aciklama, "Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-primary" />
+                @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/validation/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+}

@@ -1,0 +1,545 @@
+﻿
+@{
+    ViewBag.Title = "Eczane Nöbet Sistemi Detaylar";
+    ViewBag.MetaDescription = "Nöbetçi Eczane Sisteminin arayüzleri ile nöbet yönetimi artık çok kolay.";
+    ViewBag.MetaKeywords = "Eczane Nöbet Sistemi, Online Nöbetçi Eczane Ekranı";
+}
+
+<style>
+    .jumbotron {
+        background-image: url("../Content/images/digital_background4.jpg");
+        /*background-color: aliceblue;*/
+        background-size: cover;
+        /*height:100px;*/
+    }
+</style>
+
+@section jumbotronMaster{
+
+    <div class="jumbotron jumbotron-fluid pt-3 pb-2 py-lg-5 mt-5 mb-2">
+        <div class="container-fluid ml-lg-4 text-white">
+            <h1 class="display-4" style="font-size:300%">Sistem Arayüzleri</h1>
+            <p class="lead">
+                <a class="text-white" href="@Url.Action("EczaneNobetSistemi")">
+                    <i class="fa fa-hand-o-left" aria-hidden="true"></i> Eczane Nöbet Sistemi
+                </a>                
+            </p>
+        </div>
+    </div>
+}
+
+<div class="container-fluid ">
+    @*<hr class="bg-info mb-4" />*@
+
+    @*<div class="row">
+        <div class="col-lg-12 text-center mb-2">
+            
+                <a class="btn btn-outline-warning" href="@Url.Action("EczaneNobetSistemi")">
+                    <i class="fa fa-hand-o-up" aria-hidden="true"></i> Eczane Nöbet Sistemi
+                </a>
+            
+        </div>
+    </div>*@
+
+    @*<hr class="bg-secondary mb-4 w-50" />*@
+
+    <div class="accordion" id="accordionExample">
+
+        @* harita *@
+
+        <div class="card">
+            <div class="card-header" id="headingHarita">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseHarita" aria-expanded="false" aria-controls="collapseHarita">
+                        <span class="badge badge-pill badge-secondary">1</span> Harita ile Gösterim
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseHarita" class="collapse show" aria-labelledby="headingHarita" data-parent="#accordionExample">
+
+                <div class="modal fade bd-harita-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/nobetciEczanelerHarita.png" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row mb-4">
+
+                        @*<div class="col-lg-12 mb-3 text-center text-md-left">
+                                <h4>
+                                    <span class="badge badge-pill badge-secondary">5</span> Harita ile Gösterim
+                                </h4>
+                            </div>*@
+
+
+                        <div class="col-md-12 text-center">
+                            <h5>
+                                <i class="fa fa-info-circle text-primary" aria-hidden="true"></i> Nöbetçi eczaneleri istediğiniz bir günü seçerek harita <i class="fa fa-map text-danger" aria-hidden="true"></i> üzerinde görüntüleyin.
+                            </h5>
+
+                        </div>
+
+                        <div class="col-md-12 text-center mb-2">
+                            <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/nobetciEczanelerHarita.png" data-toggle="modal" data-target=".bd-harita-modal-xl" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* istatistik *@
+
+        <div class="card">
+            <div class="card-header" id="headingIstatistik">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseIstatistik" aria-expanded="false" aria-controls="collapseIstatistik">
+                        <span class="badge badge-pill badge-secondary">2</span> İstatistikler
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseIstatistik" class="collapse" aria-labelledby="headingIstatistik" data-parent="#accordionExample">
+
+                <div class="modal fade bd-istatistik-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/4_gunDagilimi3.jpg" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row mb-4">
+
+                        @*<div class="col-lg-12 mb-3 text-center text-md-left">
+                                <h4>
+                                    <span class="badge badge-pill badge-secondary">4</span> İstatistikler
+                                </h4>
+                            </div>*@
+                        <div class="col-md-12 text-center">
+                            <h5>
+                                <i class="fa fa-info-circle text-primary" aria-hidden="true"></i>
+                                Çok sayıda <strong>istatistiğe</strong> <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i> ulaşın
+                            </h5>
+
+
+                        </div>
+                        <div class="col-md-12 text-center mb-2">
+                            <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/4_gunDagilimi3.jpg" data-toggle="modal" data-target=".bd-istatistik-modal-xl" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* eczane gruplar *@
+        <div class="card">
+            <div class="card-header" id="headingEczaneGrup">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseEczaneGrup" aria-expanded="true" aria-controls="collapseEczaneGrup">
+                        <span class="badge badge-pill badge-secondary">3</span> Eczane Grup İşlemleri
+                    </button>
+                </h2>
+            </div>
+
+            <div id="collapseEczaneGrup" class="collapse" aria-labelledby="headingEczaneGrup" data-parent="#accordionExample">
+
+                <div class="modal fade bd-eczaneGrup-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/6_eczaneGrupEkrani-2.jpg" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row mb-4">
+
+                        @*<div class="col-lg-12 mb-3 text-center text-md-left">
+                                <h4>
+                                    <span class="badge badge-pill badge-secondary">1</span> Eczane Grup İşlemleri
+
+                                    <a class="btn btn-outline-warning pull-right d-none d-lg-inline" href="@Url.Action("EczaneNobetSistemi")">
+                                        <i class="fa fa-hand-o-left" aria-hidden="true"></i> Eczane Nöbet Sistemine Dön
+                                    </a>
+                                </h4>
+                            </div>*@
+
+                        <div class="col-md-8 text-center mb-2">
+                            <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/6_eczaneGrupEkrani-2.jpg" data-toggle="modal" data-target=".bd-eczaneGrup-modal-xl" />
+                        </div>
+
+                        <div class="col-md-4 ">
+                            @*<p class="text-center">
+                                    <span class="badge badge-pill badge-secondary">Şekil-2</span> Eczane grup sayfası
+                                </p>*@
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <ul class="list-group list-group-flush">
+
+                                        <li class="list-group-item list-group-item-action">
+                                            <span class="badge badge-pill badge-info">1</span> Eczaneler için<strong>
+                                                <a class="card-link" href="#collapseEczaneGruplar" data-toggle="collapse" data-target="#collapseEczaneGruplar" aria-expanded="false" aria-controls="collapseExample">
+                                                    çeşitli nedenlerle
+                                                </a>
+                                                istediğiniz kadar grup
+                                            </strong> ekleyin.
+                                            <ul class="list-group list-group-flush collapse" id="collapseEczaneGruplar">
+                                                <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> İsim benzerliği</li>
+                                                <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> Coğrafi yakınlık</li>
+                                                <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> Eş eczaneler</li>
+                                                <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> Aynı dağıtım grubu</li>
+                                            </ul>
+                                        </li>
+                                        <li class="list-group-item list-group-item-action">
+                                            <span class="badge badge-pill badge-info">2</span> Eczaneleri <strong>ilgili gruplara ekleyin/çıkarın</strong>.
+                                        </li>
+                                        <li class="list-group-item list-group-item-action">
+                                            <span class="badge badge-pill badge-info">3</span> İstediğiniz grupları ya da gruplardaki eczaneleri <strong>aktif/pasif olarak değiştirin</strong>.
+                                        </li>
+                                        <li class="list-group-item list-group-item-action">
+                                            <span class="badge badge-pill badge-info">4</span> Her gruba özel <strong>"Ardışık Boş Gün Sayısı"</strong> kadar gün aralığında, bu gruplardaki eczanelerin nöbet tutmasını engelleyin.
+                                        </li>
+                                        <li class="list-group-item list-group-item-action">
+                                            <span class="badge badge-pill badge-info">5</span> Her gruba özel <strong> "Aynı Gündeki Nöbetçi Sayısı"</strong> ile bu gruplardaki eczanelerden kaç tanesinin aynı gün nöbetçi olacağını belirleyin.
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* istek ve mazeretler *@
+
+        <div class="card">
+            <div class="card-header" id="headingIstekMazeret">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseIstekMazeret" aria-expanded="false" aria-controls="collapseIstekMazeret">
+                        <span class="badge badge-pill badge-secondary">4</span> <span class="text-primary">İstek</span> / <span class="text-danger">Mazeret</span> Girişi
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseIstekMazeret" class="collapse" aria-labelledby="headingIstekMazeret" data-parent="#accordionExample">
+
+                <div class="modal fade bd-istekMazeret-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/1_mazeretler.jpg" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row mb-4">
+
+                        @*<div class="col-lg-12 mb-3 text-center text-md-left">
+                                <h4>
+                                    <span class="badge badge-pill badge-secondary">2</span> <span class="text-primary">İstek</span> / <span class="text-danger">Mazeret</span> Girişi
+                                </h4>
+                            </div>*@
+
+                        <div class="col-md-8 text-center mb-2">
+                            <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/1_mazeretler.jpg" data-toggle="modal" data-target=".bd-istekMazeret-modal-xl" />
+                        </div>
+
+                        <div class="col-md-4 ">
+
+                            <ul class="list-group list-group-flush">
+
+                                <li class="list-group-item list-group-item-action">
+                                    <span class="badge badge-pill badge-info">1</span> Aynı tarih aralığındaki bir ya da birden çok eczanenin <strong>istek ya da mazeretlerini</strong> sisteme kolaylıkla ekleyin.
+                                </li>
+                                <li class="list-group-item list-group-item-action">
+                                    <span class="badge badge-pill badge-info">2</span> Bu işlemi tarih aralığındaki <strong>istediğiniz günler</strong> için sınırlandırabilirsiniz.
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* nöbet yaz *@
+
+        <div class="card">
+            <div class="card-header" id="headingNobetYaz">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseNobetYaz" aria-expanded="false" aria-controls="collapseNobetYaz">
+                        <span class="badge badge-pill badge-secondary">5</span> Nöbet Yazma
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseNobetYaz" class="collapse" aria-labelledby="headingNobetYaz" data-parent="#accordionExample">
+
+                <div class="modal fade bd-nobetYaz-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/3_nobetYazMersin2.jpg" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row mb-4">
+
+                        @*<div class="col-lg-12 mb-3 text-center text-md-left">
+                                <h4>
+                                    <span class="badge badge-pill badge-secondary">3</span> Nöbet Yazma
+                                </h4>
+                            </div>*@
+
+                        <div class="col-md-8 text-center mb-2">
+                            <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/3_nobetYazMersin2.jpg" data-toggle="modal" data-target=".bd-nobetYaz-modal-xl" />
+                        </div>
+
+                        <div class="col-md-4 ">
+                            @*<p class="text-center">
+                                    <span class="badge badge-pill badge-secondary">Şekil-3</span> Nöbet yaz sayfası
+                                </p>*@
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-info">1</span> <strong>Tarih Aralığını</strong> seçin.</li>
+                                        <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-info">2</span> <strong>Nöbet gruplarını</strong> beliryelin.</li>
+                                        <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-info">3</span> Grup <strong>öncelik</strong> durumunu ayarlayın.</li>
+                                        <li class="list-group-item list-group-item-action">
+                                            <span class="badge badge-pill badge-primary">4</span> <strong>Nöbet Yaz</strong> butonuna basın ve
+                                            kahvenizi <i class="fa fa-coffee text-primary" aria-hidden="true"></i> yudumlayın!
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+    @* eczane grup *@
+
+    @*<div class="row mb-4">
+
+            <div class="col-lg-12 mb-3 text-center text-md-left">
+                <h4>
+                    <span class="badge badge-pill badge-secondary">1</span> Eczane Grup İşlemleri
+
+                    <a class="btn btn-outline-warning pull-right d-none d-lg-inline" href="@Url.Action("EczaneNobetSistemi")">
+                        <i class="fa fa-hand-o-left" aria-hidden="true"></i> Eczane Nöbet Sistemine Dön
+                    </a>
+                </h4>
+            </div>
+
+            <div class="col-md-8 text-center mb-2">
+                <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/6_eczaneGrupEkrani-2.jpg" />
+            </div>
+
+            <div class="col-md-4 ">
+                @*<p class="text-center">
+                        <span class="badge badge-pill badge-secondary">Şekil-2</span> Eczane grup sayfası
+                    </p>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="list-group list-group-flush">
+
+                            <li class="list-group-item list-group-item-action">
+                                <span class="badge badge-pill badge-info">1</span> Eczaneler için<strong>
+                                    <a class="card-link" href="#collapseEczaneGruplar" data-toggle="collapse" data-target="#collapseEczaneGruplar" aria-expanded="false" aria-controls="collapseExample">
+                                        çeşitli nedenlerle
+                                    </a>
+                                    istediğiniz kadar grup
+                                </strong> ekleyin.
+                                <ul class="list-group list-group-flush collapse" id="collapseEczaneGruplar">
+                                    <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> İsim benzerliği</li>
+                                    <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> Coğrafi yakınlık</li>
+                                    <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> Eş eczaneler</li>
+                                    <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> Aynı dağıtım grubu</li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item list-group-item-action">
+                                <span class="badge badge-pill badge-info">2</span> Eczaneleri <strong>ilgili gruplara ekleyin/çıkarın</strong>.
+                            </li>
+                            <li class="list-group-item list-group-item-action">
+                                <span class="badge badge-pill badge-info">3</span> İstediğiniz grupları ya da gruplardaki eczaneleri <strong>aktif/pasif olarak değiştirin</strong>.
+                            </li>
+                            <li class="list-group-item list-group-item-action">
+                                <span class="badge badge-pill badge-info">4</span> Her gruba özel <strong>"Ardışık Boş Gün Sayısı"</strong> kadar gün aralığında, bu gruplardaki eczanelerin nöbet tutmasını engelleyin.
+                            </li>
+                            <li class="list-group-item list-group-item-action">
+                                <span class="badge badge-pill badge-info">5</span> Her gruba özel <strong> "Aynı Gündeki Nöbetçi Sayısı"</strong> ile bu gruplardaki eczanelerden kaç tanesinin aynı gün nöbetçi olacağını belirleyin.
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <hr class="bg-secondary mb-4 w-50" />*@
+
+    @* istek / mazeret *@
+
+    @*<div class="row mb-4">
+
+            <div class="col-lg-12 mb-3 text-center text-md-left">
+                <h4>
+                    <span class="badge badge-pill badge-secondary">2</span> <span class="text-primary">İstek</span> / <span class="text-danger">Mazeret</span> Girişi
+                </h4>
+            </div>
+
+            <div class="col-md-8 text-center mb-2">
+                <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/1_mazeretler.jpg" />
+            </div>
+
+            <div class="col-md-4 ">
+
+                <ul class="list-group list-group-flush">
+
+                    <li class="list-group-item list-group-item-action">
+                        <span class="badge badge-pill badge-info">1</span> Aynı tarih aralığındaki bir ya da birden çok eczanenin <strong>istek ya da mazeretlerini</strong> sisteme kolaylıkla ekleyin.
+                    </li>
+                    <li class="list-group-item list-group-item-action">
+                        <span class="badge badge-pill badge-info">2</span> Bu işlemi tarih aralığındaki <strong>istediğiniz günler</strong> için sınırlandırabilirsiniz.
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <hr class="bg-secondary mb-4 w-50">*@
+
+    @* nöbet yaz *@
+
+    @*<div class="row mb-4">
+
+            <div class="col-lg-12 mb-3 text-center text-md-left">
+                <h4>
+                    <span class="badge badge-pill badge-secondary">3</span> Nöbet Yazma
+                </h4>
+            </div>
+
+            <div class="col-md-8 text-center mb-2">
+                <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/3_nobetYazMersin.jpg" />
+            </div>
+
+            <div class="col-md-4 ">
+                @*<p class="text-center">
+                        <span class="badge badge-pill badge-secondary">Şekil-3</span> Nöbet yaz sayfası
+                    </p>
+
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-info">1</span> <strong>Tarih Aralığını</strong> seçin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-info">2</span> <strong>Nöbet gruplarını</strong> beliryelin.</li>
+                            <li class="list-group-item list-group-item-action"><span class="badge badge-pill badge-info">3</span> Grup <strong>öncelik</strong> durumunu ayarlayın.</li>
+                            <li class="list-group-item list-group-item-action">
+                                <span class="badge badge-pill badge-primary">4</span> <strong>Nöbet Yaz</strong> butonuna basın ve
+                                kahvenizi <i class="fa fa-coffee text-primary" aria-hidden="true"></i> yudumlayın!
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <hr class="bg-secondary mb-4 w-50">*@
+
+    @* istatistik *@
+
+    @*<div class="row mb-4">
+
+            <div class="col-lg-12 mb-3 text-center text-md-left">
+                <h4>
+                    <span class="badge badge-pill badge-secondary">4</span> İstatistikler
+                </h4>
+            </div>
+
+            <div class="col-md-8 text-center mb-2">
+                <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/4_gunDagilimi3.jpg" />
+            </div>
+
+            <div class="col-md-4 ">
+                @*<p class="text-center">
+                        <span class="badge badge-pill badge-secondary">Şekil-3</span> Nöbet yaz sayfası
+                    </p>
+
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> Çok sayıda <strong>istatistiğe</strong> <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i> ulaşın.</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <hr class="bg-secondary mb-4 w-50">*@
+
+    @* harita *@
+
+    @*<div class="row mb-4">
+
+            <div class="col-lg-12 mb-3 text-center text-md-left">
+                <h4>
+                    <span class="badge badge-pill badge-secondary">5</span> Harita ile Gösterim
+                </h4>
+            </div>
+
+            <div class="col-md-8 text-center mb-2">
+                <img class="img-thumbnail" src="~/Content/images/EczaneNobetSistemi/7_harita.jpg" />
+            </div>
+
+            <div class="col-md-4 ">
+                @*<p class="text-center">
+                        <span class="badge badge-pill badge-secondary">Şekil-3</span> Nöbet yaz sayfası
+                    </p>
+
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item list-group-item-action"><i class="fa fa-check text-success" aria-hidden="true"></i> Her bir gündeki nöbetçi olan eczaneleri harita <i class="fa fa-map text-danger" aria-hidden="true"></i> ile inceleyin/görüntüleyin.</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>*@
+
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            //$('#jumbotronYazi').text("Dijital nöbetçi eczane tabelası");
+            $('#navItemReferans').hide();
+
+        });
+
+    </script>
+}

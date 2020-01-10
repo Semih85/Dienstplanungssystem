@@ -1,0 +1,180 @@
+﻿@model IEnumerable<EczaneNobetFeragatDetay>
+
+@{
+    ViewBag.Title = "Nöbet Feragat | Nöbet Sistemi";
+}
+
+<h4>
+    Eczane Nöbet Feragat
+    <a class="btn btn-outline-success btn-sm ml-5 mr-4" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+
+    <a data-toggle="modal" data-target="#aciklamaModal" href="#" class="btn btn-outline-info btn-sm" title="Açıklama" role="button">
+        <i class="fa fa-info-circle"></i> Açıklama
+    </a>
+</h4>
+
+<hr />
+
+<div class="modal" tabindex="-1" id="aciklamaModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <h5 class="modal-title"><i class="fa fa-info-circle"></i> Nöbet Feragat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Feragat kaydı oluşturulurken
+                    <span class="badge badge-warning">feragat eden eczane</span> ve varsa
+                    <span class="badge badge-success">yeni nöbetçi</span> için aşağıdaki gibi <strong>5 farklı senaryo</strong> söz konusu olabilmektedir.
+                </p>
+                <h4>Feragat Senaryoları</h4>
+                <hr class="bg-info" />
+                <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">1</span> Normal feragat</h6>
+                <p>
+                    <ul>
+                        <li><mark>Feragat tipi</mark> "normal nöbet" seçilerek feragat kaydı eklenir.</li>
+                    </ul>
+                    <footer class="blockquote-footer">Nöbet Sayılma Durumu: <span class="badge badge-warning">feragat eden eczane</span> </footer>
+                </p>
+
+                <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">2</span> Sadece <span class="text-primary">feragat eden eczanenin</span> nöbeti sayılsın</h6>
+                <p>
+                    <ul>
+                        <li><mark>Feragat tipi</mark> "sadece feragat edenin nöbeti sayılsın" seçilirek feragat kayıdı eklenir.</li>
+                        <li>Sonrasında nöbet değişimi ile yeni nöbetçi belirlenir.</li>
+                    </ul>
+
+                    <footer class="blockquote-footer">Nöbet Sayılma Durumu: <span class="badge badge-warning">feragat eden eczane</span> </footer>
+                    @*<footer class="blockquote-footer">Bu durumda <strong>sadece <span class="badge badge-warning">feragat eden eczanenin</span> nöbeti sayılır.</strong> Ancak nöbet listesinde yeni nöbetçi görünür.</footer>*@
+                </p>
+
+                <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">3</span> Sadece <span class="text-primary">yeni nöbetçinin</span> nöbeti sayılsın</h6>
+                <p>
+                    <ul>
+                        <li><mark>Feragat tipi</mark> "normal nöbet" seçilerek feragat kaydı eklenir.</li>
+                        <li>Sonrasında nöbet değişimi ile yeni nöbetçi belirlenir. @*<strong class="alert-info">normal nöbet değişimi</strong>*@</li>
+                    </ul>
+                    <footer class="blockquote-footer">Nöbet Sayılma Durumu: <span class="badge badge-success">yeni nöbetçi eczane</span> </footer>
+                    @*<footer class="blockquote-footer">Bu durumda feragat edenin nöbeti sayılmaz. <strong>Sadece <span class="badge badge-success">yeni nöbetçinin</span> nöbeti sayılır.</strong></footer>*@
+
+                </p>
+
+                <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">4</span> <span class="text-primary">Her iki nöbetçinin</span> de nöbeti <u><span class="text-danger">sayılmasın</span></u></h6>
+                <p>
+                    <ul>
+                        <li><mark>Feragat tipi</mark> "her iki nöbetçinin de nöbeti sayılmasın" olarak seçilirek feragat kaydı eklenir.</li>
+                        <li>Sonrasında nöbet değişimi ile yeni nöbetçi belirlenir.</li>
+                    </ul>
+
+                    @*<footer class="blockquote-footer">Bu durumda her iki nöbetçi için de bu nöbet sayılmaz.</footer>*@
+
+                    <footer class="blockquote-footer">Nöbet Sayılma Durumu: <span class="badge badge-danger">hiçbiri</span> </footer>
+                </p>
+
+                <h6 class="font-weight-bold"><span class="badge badge-pill badge-secondary">5</span> <span class="text-primary">Her iki nöbetçinin</span> de nöbeti sayılsın</h6>
+                <p>
+                    <ul>
+                        <li><mark>Feragat tipi</mark> "normal nöbet" seçilerek feragat kaydı eklenir.</li>
+                        <li>Program menüsünden Sonuç > Nöbet Ekle sayfası kullanılarak yeni nöbetçi eklenir.</li>
+                    </ul>
+
+                    <footer class="blockquote-footer">Nöbet Sayılma Durumu: <span class="badge badge-warning">feragat eden eczane</span> ve <span class="badge badge-success">yeni nöbetçi eczane</span> </footer>
+                    @*<footer class="blockquote-footer">Bu durumda her iki nöbetçi için de bu nöbet sayılır.</footer>*@
+                </p>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<table class="table table-hover table-sm">
+    <thead class="thead-light">
+        <tr>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.EczaneNobetSonucId)
+                </th>*@
+            <th>
+                @Html.DisplayName("Nöbetçi")
+            </th>
+            <th style="width:13%">
+                @Html.DisplayNameFor(model => model.NobetGrupAdi)
+            </th>
+            <th>
+                @Html.DisplayName("Görev Tipi")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tarih)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NobetFeragatTipAdi)
+            </th>
+            <th>
+                @Html.DisplayName("Feragat Eden")
+            </th>
+            <th style="width:30%">
+                @Html.DisplayNameFor(model => model.Aciklama)
+            </th>
+            <th style="width:10%"></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.EczaneNobetSonucId)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.EczaneAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tarih)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NobetFeragatTipAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EczaneAdiFeragatEden)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aciklama)
+            </td>
+            <td>
+                @{
+                    var target = $"#islem{@item.EczaneNobetSonucId}";
+                }
+                <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fa fa-cog"></span>
+                </button>
+                <div class="collapse d-md-block" id="@target.Remove(0,1)">
+
+                    <a class="btn btn-outline-success py-0 btn-sm" title="Gerçek Nöbetçi Ekle" href="@Url.Action("CreateGercekNobetci", "EczaneNobetSonuc", new { takvimId = item.TakvimId, area= "EczaneNobet" })"><span class="fa fa-plus"></span></a>
+                    <a class="btn btn-outline-warning py-0 btn-sm" title="Nöbetçiyi Değiştir" href="@Url.Action("Edit", "EczaneNobetSonuc", new { id = item.EczaneNobetSonucId, nobetGrupId = item.NobetGrupId, takvimId = item.TakvimId, area= "EczaneNobet" })"><span class="fa fa-hand-o-right"></span></a>
+
+                    @*@Html.ActionLink(" ", "Edit", "EczaneNobetSonuc", new { id = item.EczaneNobetSonucId, nobetGrupId = item.NobetGrupId, takvimId = item.TakvimId }, new { @class = "btn btn-outline-warning btn-sm fa fa-hand-o-right" })*@
+                    <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.EczaneNobetSonucId, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                    <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.EczaneNobetSonucId, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                    <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.EczaneNobetSonucId, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+
+                    @*@Html.ActionLink(" ", "Edit", new { id = item.EczaneNobetSonucId }, new { @class = "btn btn-outline-success btn-sm fa fa-edit", @style = "height:23px;" })
+                        @Html.ActionLink(" ", "Details", new { id = item.EczaneNobetSonucId }, new { @class = "btn btn-outline-primary btn-sm fa fa-info-circle", @style = "height:23px;" })
+                        @Html.ActionLink(" ", "Delete", new { id = item.EczaneNobetSonucId }, new { @class = "btn btn-outline-danger btn-sm fa fa-remove ", @style = "height:23px;" })*@
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

@@ -1,0 +1,50 @@
+﻿
+@{
+    int? silinenKayitSayisi = ViewBag.SilinenKayitSayisi;
+    int? yayimlananKayitSayisi = ViewBag.YayimlananKayitSayisi;
+    int? silinenKayitSayisiPost = ViewBag.SilinenKayitSayisiPost;
+}
+
+@if (silinenKayitSayisi > 0)
+{
+    <div class="row justify-content-sm-center">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa fa-check"></i>
+                @silinenKayitSayisi adet kayıt silindi.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (yayimlananKayitSayisi > 0)
+{
+    <div class="row justify-content-sm-center">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa fa-check"></i>
+                @silinenKayitSayisi adet nöbet yayımlandı.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (silinenKayitSayisiPost == 1)
+{
+    <div class="row justify-content-sm-center" id="bosSilmeUyari">
+        <div class="col-12">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <i class="fa fa-info-circle"></i> Seçilen kriterlere uygun kayıt bulunamadı.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}

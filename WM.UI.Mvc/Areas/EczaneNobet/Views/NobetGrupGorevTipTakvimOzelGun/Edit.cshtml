@@ -1,0 +1,129 @@
+﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.NobetGrupGorevTipTakvimOzelGun
+
+@{
+    ViewBag.Title = "Özel Günleri Ekle | Nöbet Sistemi";
+}
+
+<h4>Özel Günü Düzenle</h4>
+
+<hr />
+
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-row mx-2">
+                <div class="form-group col-md-5">
+                    @Html.LabelFor(model => model.TakvimId, "Tarih", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("TakvimId", null, htmlAttributes: new { @class = "form-control selectpicker",
+                   mobile = "true",
+                   data_live_search = "true",
+                   title = "Tarih seçiniz..."
+               })
+                    @Html.ValidationMessageFor(model => model.TakvimId, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-5">
+                    @Html.LabelFor(model => model.NobetOzelGunId, "Bayram Türü", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("NobetOzelGunId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NobetOzelGunId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-row mx-2">
+                <div class="form-group col-md-5">
+                    @Html.LabelFor(model => model.AgirlikDegeri, "Puan Değeri", null)
+                    @Html.TextBox("AgirlikDegeri", null , new { @class = "form-control mr-2 pl-3",
+                                       placeHolder = "Puan değerini giriniz.."
+                                   })
+                    @Html.ValidationMessageFor(model => model.AgirlikDegeri, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group col-md-5">
+                    @Html.LabelFor(model => model.NobetOzelGunKategoriId)
+                    @Html.DropDownList("NobetOzelGunKategoriId", null, htmlAttributes: new { @class = "form-control" })
+
+                    @Html.ValidationMessageFor(model => model.NobetOzelGunKategoriId, "", new { @class = "text-danger" })
+                </div>
+
+            </div>
+            <div class="form-group">
+                @*@Html.LabelFor(model => model.EczaneNobetGrupId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.DropDownList("NobetGrupGorevTipGunKuralId", null, htmlAttributes: new { @class = "form-control selectpicker",
+                   title = "Haftanın gününü seçiniz..."
+               })
+                    @Html.ValidationMessageFor(model => model.NobetGrupGorevTipGunKuralId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-md-10">
+                <div class="custom-control custom-checkbox mb-2">
+                    @Html.CheckBox("FarkliGunGosterilsinMi", new { @class = "custom-control-input" })
+                    <label class="custom-control-label" for="FarkliGunGosterilsinMi">Farklı gün gösterilsin mi?</label>
+                </div>
+            </div>
+            <div class="form-group col-md-10">
+                @*@Html.LabelFor(model => model.NobetGunKuralId, "Farklı görünmesi istenen haftanın günü", htmlAttributes: new { @class = "control-label" })*@
+                @Html.DropDownList("NobetGunKuralId", null, htmlAttributes: new { @class = "form-control selectpicker", disabled = true, title = "Farklı görünmesi istenen haftanın günü" })
+                @Html.ValidationMessageFor(model => model.NobetGunKuralId, "", new { @class = "text-danger" })
+            </div>
+            <hr />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Kaydet" id="formSubmitButton" class="btn btn-outline-primary" />
+                    @Html.ActionLink("Bayram Listesi", "Index", null, new { @class = "btn btn-outline-warning" })
+                </div>
+            </div>
+
+
+        </div>
+    }
+</div>
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
+
+@section Scripts{
+
+    @Scripts.Render("~/bundle/validation/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+
+    <script>
+
+        var deger;
+
+        @*$(document).ready(function () {
+            var secilenHaftaninGunuSayisi = @ViewBag.SecilenHaftaninGunuSayisi
+
+            if (secilenHaftaninGunuSayisi == 0) {
+                $('#Deger').selectpicker('selectAll');
+                secilenHaftaninGunuSayisi = $("#Deger :selected").length;
+            }
+        });*@
+
+        $("#FarkliGunGosterilsinMi").change(function () {
+
+            if (this.checked) {
+                $("#NobetGunKuralId").prop("disabled", false);
+                $(".selectpicker[data-id='NobetGunKuralId']").removeClass("disabled");
+                $('.selectpicker').selectpicker('refresh');
+
+                //if ($('#NobetGunKuralId').is(':disabled'))
+                //    $("#NobetGunKuralId").prop('disabled', false);
+            }
+            else {
+                $("#NobetGunKuralId").prop("disabled", true);
+                $(".selectpicker[data-id='NobetGunKuralId']").addClass("disabled");
+                $('.selectpicker').selectpicker('refresh');
+            }
+        });
+
+    </script>
+}
+

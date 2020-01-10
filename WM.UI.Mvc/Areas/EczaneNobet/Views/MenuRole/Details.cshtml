@@ -1,0 +1,34 @@
+﻿@model WM.Northwind.Entities.ComplexTypes.EczaneNobet.MenuRoleDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MenuRole</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MenuAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MenuAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RolAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Role.RolAdi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

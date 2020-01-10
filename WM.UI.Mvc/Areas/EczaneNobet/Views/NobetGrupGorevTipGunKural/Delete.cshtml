@@ -1,0 +1,66 @@
+﻿@model NobetGrupGorevTipGunKuralDetay
+
+
+@{
+    ViewBag.Title = "Nöbet Grup Gorev Tip Gün Kural | Nöbet Sistemi";
+}
+
+<h4>Nöbet Grup Gorev Tip Gün Kural</h4>
+<hr />
+
+<h5 class="text-danger">Silmek istediğinizden emin misiniz?</h5>
+<div>
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGrupGorevTipId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGrupGorevTipId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGunKuralAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGunKuralAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GunGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GunGrupAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BaslangicTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BaslangicTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BitisTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BitisTarihi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-danger" />
+            @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+        </div>
+    }
+</div>

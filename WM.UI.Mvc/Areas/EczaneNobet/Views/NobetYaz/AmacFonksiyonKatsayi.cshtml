@@ -1,0 +1,488 @@
+﻿@model AmacFonksiyonKatsayiViewModel
+
+@{
+    ViewBag.Title = "Amaç Fonksiyon Katsayıları";
+}
+
+<h4>
+    <span class="mr-4">Amaç Fonksiyon Katsayıları</span>
+</h4>
+
+@using (Ajax.BeginForm("GetAmacFonksiyonuKatsayilari", "NobetYaz", null, new { @class = "form-inline mr-md-5 my-2 my-lg-0", id = "formTumu" }))
+{
+
+    @Html.Hidden("SonNobetTarihi", Model.SonNobetTarihi.ToShortDateString())
+
+    <div class="input-group input-daterange mr-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text p-2">
+                <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
+                <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
+            </span>
+        </div>
+        @Html.TextBox("BaslangicTarihi", null, new
+        {
+            @class = "form-control datepicker mr-2",
+           //data_toggle = "tooltip",
+           //data_placement = "top",
+           //title = "Başlangıç Tarihi",
+           autocomplete = "off",
+           placeHolder = "Başlama Tarihi",
+           style = "width:100px;"
+       })
+
+        <div class="input-group-addon mr-2 mt-1 p-1">-</div>
+        <div class="input-group-prepend">
+            <span class="input-group-text p-2">
+                <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
+                <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
+            </span>
+        </div>
+        @Html.TextBox("BitisTarihi", null, new
+        {
+            @class = "form-control datepicker",
+           //data_toggle = "tooltip",
+           //data_placement = "top",
+           //title = "Bitiş Tarihi",
+           autocomplete = "off",
+           placeHolder = "Bitiş Tarihi",
+           style = "width:100px;"
+       })
+
+    </div>
+
+    <div class="form-group mr-3">
+        @*@Html.LabelFor(model => model.EczaneId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+
+        @Html.DropDownList("NobetGrupGorevTipId", null, htmlAttributes: new
+        {
+            @class = "form-control selectpicker",
+           multiple = "true",
+           //data_width = "auto",
+           data_actions_box = "true",
+           mobile = "true",
+           data_live_search = "true",
+           data_selected_text_format = "count > 4",
+           title = "Nöbet Grubu Seçiniz..."
+       })
+        @*@Html.ValidationMessageFor(model => model.EczaneId, "", new { @class = "text-danger" })*@
+
+    </div>
+
+
+    @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+
+    <button type="button" id="btnGetAmacFonksiyonu" class="btn btn-primary btn-sm mr-5">
+        Amaç Fonk kats hesapla
+    </button>
+
+    <button type="button" class="btn btn-warning btn-sm mr-4" id="btnAlanlariGizleGosterKalibrasyonluDetayli">
+        Alanları Göster
+    </button>
+
+    <button class="btn btn-dark btn-sm ml-5 mr-2" type="button" id="btnExceleAktar" onclick="tableToExcel('testTable', 'Nöbet Yaz')">
+        <i class="fa fa-file-excel-o text-success"></i> Excele Aktar
+        <i class="fa fa-download"></i>
+    </button>
+
+}
+
+<div class="row mt-3">
+    <div class="col-sm-12">
+
+        <div class="spinner-border text-info ml-3" role="status" id="LoadingImage" style="display:none;">
+            <span class="sr-only">Loading...</span>
+        </div>
+
+        <div id="amacFonkKatsayilar">
+            @* Pivot tablo *@
+        </div>
+    </div>
+</div>
+
+@section styles{
+
+    @Styles.Render("~/bundle/pivot/style")
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+    @Styles.Render("~/bundle/bootstrap-select/style")
+    @Styles.Render("~/bundle/jqueryui/style")
+
+    <style>
+        .toast-message {
+            font-weight: bold;
+        }
+    </style>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/queryui/scripts", "~/bundle/pivot/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @*@Scripts.Render("~/bundle/queryui/scripts")*@
+
+    <script>
+
+        var pivotAlanlariGosterKalibrasyonluDetayli = true;
+        var nobetGrubu = new Array();
+        var secilenGrupSayisi = 0;
+
+        $('#btnAlanlariGizleGosterKalibrasyonluDetayli').click(function () {
+            //alert(pivotAlanlariGosterNobetciListesi)
+            if (pivotAlanlariGosterKalibrasyonluDetayli) {
+                pivotAlanlariGosterKalibrasyonluDetayli = false;
+                $('#btnAlanlariGizleGosterKalibrasyonluDetayli').text("Alanları Göster")
+            }
+            else {
+                $('#btnAlanlariGizleGosterKalibrasyonluDetayli').text("Alanları Gizle")
+                pivotAlanlariGosterKalibrasyonluDetayli = true;
+            }
+            istatistikOlustur();
+        });
+
+        $("#BaslangicTarihi").change(function () {
+            //alert(1)
+            if ($("#BaslangicTarihi").val() != null) {
+                $("#btnSilBaslangicTarihiFiltre").hide();
+                $("#btnSilBaslangicTarihi").show();
+            }
+        });
+        $("#BitisTarihi").change(function () {
+            //alert($("#BitisTarihi").val())
+            if ($("#BitisTarihi").val() != null) {
+                $("#btnSilBitisTarihiFiltre").hide();
+                $("#btnSilBitisTarihi").show();
+            }
+            else {
+                //alert($("#BitisTarihi").val())
+                $("#btnSilBitisTarihi").hide();
+                $("#btnSilBitisTarihiFiltre").show();
+            }
+        });
+        $("#btnSilBaslangicTarihi").click(function () {
+            baslangicTarihi = null;
+            $('#BaslangicTarihi').data('datepicker').setDate(null);
+            $("#btnSilBaslangicTarihi").hide();
+            $("#btnSilBaslangicTarihiFiltre").show();
+            //tarihAraligi();
+        });
+        $("#btnSilBitisTarihi").click(function () {
+            bitisTarihi = null;
+            $('#BitisTarihi').data('datepicker').setDate(null);
+            $("#btnSilBitisTarihi").hide();
+            $("#btnSilBitisTarihiFiltre").show();
+            //tarihAraligi();
+        });
+
+        var baslangicTarihi;
+        var bitisTarihi;
+        var dagilimlar;
+        var nobetUstGrupId;
+        var nobetUstGrupId;
+        var serializedForm;
+
+        var urlAmacFonksiyonuKatsayilar = '@Url.Action("GetAmacFonksiyonuKatsayilari")';
+
+        $("#btnGetAmacFonksiyonu").click(function () {
+
+            var basTarih = $('#BaslangicTarihi').val();
+            var bitTarih = $('#BitisTarihi').val();
+
+            nobetGrubu = getNobetGrubu();
+
+            if (secilenGrupSayisi == 0) {
+
+                alert("Nöbet grubu seçiniz..")
+                e.preventDefault();
+                //$("#raporId option:selected").prop("selected", false)
+                return false;
+            }
+
+            serializedForm = $('#formTumu').serialize();
+
+            //alert(serializedForm)
+            getJsonDagilimlar(urlAmacFonksiyonuKatsayilar, serializedForm);
+        });
+
+        function getJsonDagilimlar(url, formElements) {
+            $("#LoadingImage").show();
+            $.ajax({
+                dataType: "json",
+                url: url,
+                data: formElements,
+                //data: {
+                //    baslangicTarihi: t1,
+                //    bitisTarihi: t2
+                //},
+                type: "get",
+                success: function (data) {
+                    $("#LoadingImage").hide();
+                    dagilimlar = JSON.parse(JSON.stringify(data));
+                    //alert(data.length);
+
+                    //$.each(dagilimlar, function (index, n) {
+                    //    //console.log(n.NobetGorevTipAdi)
+                    //    //console.log("dagilimlar: " + n.TarihKisa)
+                    //    mazeretSonuclar.push({
+                    //        Eczane: n.EczaneAdi,
+                    //        EczaneId: n.EczaneId,
+                    //        Mazeret: n.MazeretIstekAdi,
+                    //        NöbetGrubu: n.NobetGrupAdi,
+                    //        Tarih: n.TarihKisa,
+                    //        //Tarih2: tarihGoster(n.TarihKisa),
+                    //        TarihUzun: n.TarihAciklama,
+                    //        YılAy: n.Yil + "_" + n.Ay,
+                    //        //Tur: n.MazeretIstekTuru,
+                    //        Açıklama: n.Aciklama,
+                    //        Id: n.Id,
+                    //        Tip: n.MazeretIstekTipAdi,
+                    //        TipId: n.MazeretIstekId,
+                    //        ["Görev Tipi"]: n.NobetGorevTipAdi
+                    //    });
+                    //});
+
+                    //mazeretSonuclarFiltreli = mazeretSonuclar;
+                    istatistikOlustur();
+                    //d = new Date();
+                    //$('#BaslangicTarihi').data('datepicker').setDate(d);
+                    //$('#BitisTarihi').data('datepicker').setDate(null);
+                    //$("#btnSilBitisTarihi").hide();
+                    //$("#btnSilBitisTarihiFiltre").show();
+                    //tabloOlustur();
+                    //sayfalamaYap(mazeretSonuclarFiltreli, safyaBoyutu);
+                    //veriyiGizleLoadingGifiGoster();
+                },
+                error: function (data) {
+                    $("#LoadingImage").hide();
+                    alert('Hata. Veri okunamadı!');
+                },
+            });
+        }
+
+        const istatistikOlustur = () => {
+            //alert(dagilimlar.length)
+            if (dagilimlar.length > 0) {
+                //alert(dagilimlar.length)
+
+                //var mazeretSonuclarPivot = new Array();
+
+                //$.each(mazeretSonuclarFiltreli, function (index, n) {
+                //    //console.log("mazeretSonuclarFiltreli: " + n.Tarih)
+                //    mazeretSonuclarPivot.push({
+                //        Eczane: n.Eczane,
+                //        Mazeret: n.Mazeret,
+                //        NöbetGrubu: n.NöbetGrubu,
+                //        Tarih: n.Tarih,
+                //        //Tarih2: n.Tarih2,
+                //        TarihUzun: n.TarihUzun,
+                //        YılAy: n.YılAy,
+                //        //Tur: n.MazeretIstekTuru,
+                //        Açıklama: n.Açıklama,
+                //        //Id: n.Id,
+                //        Tip: n.Tip,
+                //        //TipId: n.MazeretIstekId
+                //        ["Görev Tipi"]: n["Görev Tipi"]
+                //    });
+                //});
+                var pivotRows = ["NobetGrupAdi", "EczaneAdi"];
+                var pivotCols = ["Tarih2", "GunGrupAdi"];
+                var pivotRendererName = "Sıcaklık haritası";
+
+                if (nobetUstGrupId == 5 || nobetUstGrupId == 6) {
+                    pivotRows = ["EczaneAdi"];
+                }
+
+                mazeretListe = $("#amacFonkKatsayilar").pivotUI(dagilimlar, {
+                    rows: pivotRows,
+                    cols: pivotCols,
+                    vals: ["AmacFonksiyonKatsayi"],
+                    aggregatorName: "Toplam",
+                    rendererName: pivotRendererName,
+                    onRefresh: function (config) {
+                        //$("#amacFonkKatsayilar").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                        //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                        if (pivotAlanlariGosterKalibrasyonluDetayli == false) {
+                            $("#amacFonkKatsayilar").parent().find('.pvtAxisContainer').hide();
+                            $("#amacFonkKatsayilar").parent().find('.pvtAttrDropdown').hide();
+                            $("#amacFonkKatsayilar").parent().find('.pvtRenderer').hide();
+                            $("#amacFonkKatsayilar").parent().find('.pvtVals').hide();
+                        }
+                        else {
+                            $("#amacFonkKatsayilar").parent().find('.pvtAxisContainer').show();
+                            $("#amacFonkKatsayilar").parent().find('.pvtAttrDropdown').show();
+                            $("#amacFonkKatsayilar").parent().find('.pvtRenderer').show();
+                            $("#amacFonkKatsayilar").parent().find('.pvtVals').show();
+                        }
+                    }
+                    //onRefresh: function (config) {
+                    //    $("#amacFonkKatsayilar").parent().find('.pvtAggregator').hide();
+                    //    $("#amacFonkKatsayilar").parent().find('.pvtAttrDropdown').hide();
+                    //    $("#amacFonkKatsayilar").parent().find('.pvtRenderer').hide();
+                    //}
+                });
+            }
+            else {
+                //nobetciEczaneler;
+                var mesaj = 'eczane nöbet mazeret/istek istatistiği';
+                var divId = 'divUyariEczaneNobetMazeretİstatistik';
+                var parentDivId = 'amacFonkKatsayilar';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+            }
+        }
+
+        function getNobetGrubu() {
+            //alert(1)
+
+            nobetGrubu = [];
+
+            //if ($('#nobetGrupGorevTipId :selected').length == 0) {
+            //    nobetGrubu.push({ Id: -9 });
+            //}
+            //else {
+            $('#NobetGrupGorevTipId :selected').each(function () {
+                nobetGrubu.push({ Id: parseInt($(this).val()) });
+            });
+
+            if ($('#NobetGrupGorevTipId option').length == 1) {
+                $('#NobetGrupGorevTipId').hide()
+                //$('#lblnobetGrupGorevTipId').hide()
+            }
+
+            secilenGrupSayisi = nobetGrubu.length;
+            //}
+            //alert(2)
+            //console.log(nobetGrubu)
+            return nobetGrubu;// + ' ' + selected.text();
+        }
+
+        $(function () {
+
+            var sonNobetTarihi = tarihDondur2($("#SonNobetTarihi").val());
+            //alert(sonNobetTarihi)
+            var d = new Date(sonNobetTarihi);
+            //alert(d)
+            var sonNobetGunu = d.getDate();
+            //alert(sonNobetGunu)
+
+            var aydakiGunSayisi = daysInMonth(d.getMonth() + 1, d.getFullYear());
+            var tarih;
+            //alert(aydakiGunSayisi)
+            var bsl;
+
+            if (sonNobetGunu < aydakiGunSayisi) {
+                tarih = d;
+                //alert("tarih: " + tarih)
+                bsl = baslangicTarihindenSonrakiGunuSec(tarih);
+            }
+            else {
+                tarih = add_months(d, 1);
+                //alert("tarih: " + tarih)
+                bsl = baslangicTarihininIlkGununuSec(tarih);
+            }
+
+            var bit = bitisTarihininSonGununuSec(tarih);
+            //var baslangicStr = tarihDondur2($("#SonNobetTarihi").val());
+
+            //alert(bsl)
+            //alert(baslangicStr)
+            //$("#BaslangicTarihi").datepicker("setDate", new Date(baslangicStr));
+            $("#BaslangicTarihi").datepicker("setDate", new Date(bsl));
+            //$("#BaslangicTarihi").datepicker("setStartDate", new Date(baslangicStr));
+
+            //var bitisStr = tarihDondur2($("#BitisTarihi").val());
+
+            //$("#BitisTarihi").datepicker("setDate", new Date(bitisStr));
+            $("#BitisTarihi").datepicker("setDate", new Date(bit));
+            //$("#BitisTarihi").datepicker("setStartDate", new Date(baslangicStr));
+
+            $('.input-daterange').datepicker();
+
+            nobetUstGrupId = @Model.NobetUstGrupId;
+
+            //nobetGrubu = getNobetGrubu();
+
+        });
+
+        function tarihDondur2(metin) {
+
+            //alert(metin)
+            var tarih = metin.split(' ', 1)[0];
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2];
+            ay = tarihTanim[1];
+            gun = tarihTanim[0];
+
+            //alert(metin)
+
+            if (gun.length != 4) {
+                return yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+
+        function baslangicTarihininIlkGununuSec(d) {
+            //console.log(d)
+            var bsl = new Date(d.getFullYear(), d.getMonth(), 1);
+            //d.setDate(1);
+            //console.log(bsl)
+            return bsl;
+        }
+
+        function bitisTarihininSonGununuSec(d) {
+            //alert(d)
+            var aydakiGunSayisi = daysInMonth(d.getMonth() + 1, d.getFullYear());
+            var bitisTarihi = d.setDate(aydakiGunSayisi);
+            return new Date(bitisTarihi);
+        }
+
+        function daysInMonth(month, year) {
+            return new Date(year, month, 0).getDate();
+        }
+
+        function add_months(d, n) {
+            d.setMonth(d.getMonth() + n, 1);
+            return d;
+        }
+
+    </script>
+
+    <!-- #region export to excel -->
+    <script type="text/javascript">
+        var tableToExcel = (function () {
+
+            var uri = 'data:application/vnd.ms-excel;base64,'
+                , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+                , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+                , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+            return function (table, name) {
+                //$('#testTable thead tr:first').find('th:last').remove();
+                //$('#testTable tr').find('td:last').remove();
+                //$('#testTable').find('tr:last').remove();
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+
+        $root = $('<xml/>');
+
+        //create a workbook
+        $workbook = $('<ss:Workbook/>').attr({
+            "xmlns:ss": "urn:schemas-microsoft-com:office:spreadsheet",
+            "xmlns:x": "urn:schemas-microsoft-com:office:excel",
+            "xmlns:o": "urn:schemas-microsoft-com:office:office"
+        });
+
+        $root.append($workbook);
+
+            //xlsObject = 'data:application/vnd.ms-excel;base64,' + base64.encode(testXML);
+    </script>
+    <!-- #endregion -->
+}

@@ -1,0 +1,121 @@
+﻿@model UserNobetUstGrupDetay
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>UserNobetUstGrup</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NobetUstGrupId, "NobetUstGrupId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("NobetUstGrupId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NobetUstGrupId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserId, "UserId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("UserId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group col-md-4 ml-3">
+                @*@Html.LabelFor(model => model.AcilisTarihi, htmlAttributes: new { @class = "control-label" })*@
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text p-2">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    @Html.TextBoxFor(model => model.BaslamaTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Başlama Tarihi" })
+                </div>
+                @Html.ValidationMessageFor(model => model.BaslamaTarihi, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-md-4 ml-3">
+                @*@Html.LabelFor(model => model.KapanisTarihi, htmlAttributes: new { @class = "control-label" })*@
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text p-2">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    @Html.TextBoxFor(model => model.BitisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Bitiş Tarihi" })
+                </div>
+                @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-outline-primary" />
+                @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @*@Scripts.Render("~/bundle/bootstrap-datepicker/scripts")*@
+    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
+    @*@Scripts.Render("~/bundle/validation/scripts")*@
+
+    <script>
+        //$("#btnSubmitForm").click(function () {
+        //    $("#Enlem").text().replace(".", ",");
+        //    $("#Boylam").text().replace(".", ",");
+        //});
+        $(function () {
+
+            $('.datepicker').datepicker('setStartDate', "01-01-1900");
+
+            var baslangicStr = tarihDondur2($("#BaslamaTarihi").val());
+
+            $("#BaslamaTarihi").datepicker("setDate", baslangicStr);
+
+        });
+
+        function tarihDondur2(metin) {
+
+            var tarih = metin.split(' ', 1)[0];
+            //alert(tarih)
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2] * 1;
+            //alert(yil)
+            ay = tarihTanim[1] * 1;
+            gun = tarihTanim[0] * 1;
+
+            if (gun.length != 4) {
+
+                return new Date(yil, ay - 1, gun);//yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+    </script>
+
+}

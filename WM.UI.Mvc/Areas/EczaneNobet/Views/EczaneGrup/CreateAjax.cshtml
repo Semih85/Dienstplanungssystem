@@ -1,0 +1,91 @@
+﻿@model EczaneGrup
+
+@{
+    ViewBag.Title = "Create";
+    var insertAjaxOptions = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("Create"),
+        HttpMethod = "post",
+        UpdateTargetId = "eczaneGruplar",
+        InsertionMode = InsertionMode.ReplaceWith,
+        OnSuccess = "OnSuccess"
+    };
+}
+
+@section Styles{
+
+    @Styles.Render("~/bundle/gridmvc/style")
+}
+
+@section scripts{
+    @Scripts.Render("~/bundle/ajax");
+    @Scripts.Render("~/bundle/gridmvc/scripts")
+    <script>
+        function OnSuccess(data) {
+            alert("eklendi");
+        }
+
+        (function () {
+            var gridName = 'EczaneNobetGrid';
+            var pagingUrl = '/EczaneGrup/EczaneGrupPartialPager';
+            $('.grid-mvc').gridmvc();
+            pageGrids[gridName].ajaxify({
+                getData: pagingUrl,
+                getPagedData: pagingUrl
+            });
+        }())
+    </script>
+}
+
+<h2>Eczane Grup Ekle</h2>
+<hr />
+
+@using (Ajax.BeginForm(null, null, insertAjaxOptions, new { @class = "form-inline", id = "formEczaneGrup" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.EczaneGrupTanimId, "Grup: ", htmlAttributes: new { @class = "control-label font-weight-bold text-dark col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("EczaneGrupTanimId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.EczaneGrupTanimId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.EczaneId, "Eczane: ", htmlAttributes: new { @class = "control-label font-weight-bold text-dark col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("EczaneId", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.EczaneId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" value="Ekle" class="btn btn-outline-primary" />
+        </div>
+    </div>
+}
+
+<hr />
+
+@*@if (ViewBag.EklenenEczane != null)
+    {
+        <div class="alert alert-success" role="alert">
+            Eczane @ViewBag.EklenenEczane eklendi.
+        </div>
+    }*@
+
+
+<div class="row mt-5">
+    <div class="col-md-12">
+        <div id="eczaneGruplar">
+            @{
+                Html.RenderAction("EczaneGrupPartial");
+            }
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,331 @@
+﻿@model IEnumerable<EczaneGrupTanimDetaylarViewModel>
+
+<div class="row">
+    <div class="col-lg-3">
+    </div>
+    <div class="col-lg-4">
+        <div id="loading" align="center" style="margin-top: 10%">
+            <img src="~/Content/images/orig.gif" />
+        </div>
+    </div>
+    <div class="col-lg-4">
+    </div>
+</div>
+
+<div id="div1" style="visibility:hidden" class="row">
+
+    @if (TempData["DurumuDegisenGrupTanimSayisi"] != null)
+    {
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa fa-check"></i> @TempData["DurumuDegisenGrupTanimSayisi"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+        </div>
+    }
+    @if (Model.Count() > 0)
+    {
+        <div id="main" class="col-12">
+
+            <table class="table table-sm table-hover" id="gridT">
+                <thead class="thead-light tableRowDesign">
+                    <tr>
+                        <th></th>
+                        @*<th id="hepsiniAcKapa" class="hoverEffforHeader collapsemForHeader">
+
+                            </th>*@
+                        <th style="width:1%">
+                            <input class="" id="checkAll" type="checkbox" />
+                        </th>
+                        <th style="width:24%">
+                            @Html.DisplayName("Eczane Grubu")
+                        </th>
+                        <th style="width:12%" title="Gruptaki eczanelerin ardışık nöbet tutamayacağı gün aralığı (örn. 0: aynı gün nöbet tutamaz.)">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().EczaneGrupTanimDetay.ArdisikNobetSayisi)
+                        </th>
+                        <th style="width:14%">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().EczaneGrupTanimDetay.EczaneGrupTanimTipAdi)
+                        </th>
+                        <th style="width:14%">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().EczaneGrupTanimDetay.NobetGorevTipAdi)
+                        </th>
+                        <th style="width:13%" title="Gruptaki eczanelerin aynı gün nöbetçi olabilecekleri en fazla sayı.(örn. 1: aynı gün bu gruptan sadece 1 eczane nöbetçi olabilir.)">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().EczaneGrupTanimDetay.AyniGunNobetTutabilecekEczaneSayisi)
+                        </th>
+                        <th style="width:6%">
+                            @Html.DisplayName("Kapalı mı")
+                        </th>
+                        <th style="width:6%">
+                            @Html.DisplayName("Durumu")
+                        </th>
+                        <th style="width:7%">
+                            işlem
+                        </th>
+                        <th style="width:0%"></th>
+                        <th style="width:0%"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model.ToList())
+                    {
+                        <tr id="nester_@item.EczaneGrupTanimDetay.Id" class="tableRowDesign">
+                            <td></td>
+                            <td>
+                                <input class="gridCheckBox" id="teklifDetay_@item.EczaneGrupTanimDetay.Id"
+                                       value="@item.EczaneGrupTanimDetay.Id" type="checkbox" />
+                            </td>
+                            <td>
+                                @item.EczaneGrupTanimDetay.Adi <span title="Gruptaki eczane sayısı" class="badge badge-info">@item.EczaneGrupTanimDetay.GruptakiEczaneSayisi</span>
+                            </td>
+                            <td>
+                                @item.EczaneGrupTanimDetay.ArdisikNobetSayisi
+                            </td>
+                            <td>
+                                @item.EczaneGrupTanimDetay.EczaneGrupTanimTipAdi
+                            </td>
+                            <td>
+                                @item.EczaneGrupTanimDetay.NobetGorevTipAdi
+                            </td>
+                            <td>
+                                @item.EczaneGrupTanimDetay.AyniGunNobetTutabilecekEczaneSayisi
+                            </td>
+                            <td>
+                                @if (item.EczaneGrupTanimDetay.BitisTarihi == null)
+                                {
+                                    <span class="font-weight-bold text-primary">Açık</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">Kapalı</span>
+                                }
+                            </td>
+                            <td>
+                                @if (item.EczaneGrupTanimDetay.PasifMi == true)
+                                {
+                                    <span class="badge badge-danger"> Pasif </span>
+                                }
+                                else
+                                {
+                                    <span class="font-weight-bold text-success"><i class="fa fa-check" aria-hidden="true"></i> Aktif </span>
+                                }
+                            </td>
+                            <td>
+                                @{
+                                    var target = $"#islem{@item.EczaneGrupTanimDetay.Id}";
+                                }
+                                <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="fa fa-cog"></span>
+                                </button>
+                                <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                                    <a class="btn btn-outline-primary py-0 btn-sm mr-2" title="Gruba eczane ekle" href="@Url.Action("Create2", "EczaneGrup", new { eczaneGrupTanimId = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-plus"></span></a>
+                                    <a class="btn btn-outline-success py-0 btn-sm mr-2" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                                    <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" onclick="return confirm('Eş grup silinecek! Emin misiniz?');"
+                                       href="@Url.Action("Delete", null, new { id = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                                </div>
+                            </td>
+                            <td>
+                                @{Html.RenderPartial("EczaneGrupDetayPartial", item.EczaneGrupDetaylar);}
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="...">
+                <ul class="navbar-nav">
+                    <li class="nav-link" id="myPaging">
+                    </li>
+                </ul>
+                <div class="nav-item">Toplam Kayıt: <span id="toplamKayitSayisi"></span></div>
+            </nav>
+
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info alert-dismissible fade show mt-2" role="alert">
+            <i class="fa fa-info-circle"></i> Seçilen kritere uygun eş grup kaydı bulunmamaktadır.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @Scripts.Render("~/bundle/scriptsDetailTable/script")
+}
+<script>
+    $(document).ready(function () {
+        //model string halde çekilir
+        var model = @Html.Raw(Json.Encode(Model));
+        //-----------------------myPaging-------------------------
+        var totalRow = model.length;
+
+        $("#toplamKayitSayisi").text(totalRow);
+
+        //alert('totalRow: ' + totalRow)
+
+        var expandedIDs = new Array();
+
+        $("#checkAll").click(function () {
+            $(".gridCheckBox").prop('checked',
+                $(this).prop('checked'));
+
+            $(".subGridCheckBox").prop('checked',
+                $(this).prop('checked'));
+        });
+
+        veriyiGizleLoadingGifiGoster()
+        createNestedTable()
+        checkBeforeChecked()
+        //alert('333')
+        function createNestedTable() {
+            //nested table
+            var size = $("#main #gridT > thead > tr >th").length; // get total column
+            //alert('size: ' + size);
+            $("#main #gridT > thead > tr >th").last().remove(); // remove last column
+            $("#main #gridT > thead > tr").prepend("<th></th>"); // add one column at first for collapsible column
+            $("#main #gridT > tbody > tr").each(function (i, el) {
+                var eczaneGrupTanimDetayid = model[i].EczaneGrupTanimDetay.Id
+                //alert('eczaneGrupTanimDetayid: ' + eczaneGrupTanimDetayid)
+                $(this).prepend(
+                    $("<td id=\"" + eczaneGrupTanimDetayid + "\" ></td>")//sytle=\"width:150px\"
+                        .addClass("expandm")
+                        .addClass("hoverEff")
+                        .attr('title', "Grup detayları için tıklayınız.")
+                );
+                //Now get sub table from last column and add this to the next new added row
+                var table = $("table", this).parent().html();
+                //add new row with this subtable
+                $(this).after("<tr><td></td><td style='padding:5px; margin:0px;' colspan='" + (size - 1) + "'>" + table + "</td></tr>");
+                $("table", this).parent().remove();
+            });
+            //by default make all subgrid in collapse mode
+            $("#main #gridT > tbody > tr td.expandm").each(function (i, el) {
+                $(this).toggleClass("expandm collapsem");
+                $(this).parent().closest("tr").next().slideToggle(1);
+                //alert('i: ' + i)
+                var compareString2 = model[i].EczaneGrupTanimDetay.Expanded;//grid de genişletilmiş satırlar genişletilmiş gösterilir
+                //alert('compareString2: ' + compareString2)
+                //alert('model[i].EczaneGrupTanimDetay.Id : ' + model[i].EczaneGrupTanimDetay.Id)
+
+                if (true == compareString2) {
+                    //alert('if true model[i].EczaneGrupTanimDetay.Id: ' + model[i].EczaneGrupTanimDetay.Id)
+                    expandedIDs.push(model[i].EczaneGrupTanimDetay.Id);
+                    $("#expandedList").val(expandedIDs);
+
+                    $(this).toggleClass("expandm collapsem");
+                    $(this).parent().closest("tr").next().slideToggle(1);
+                }
+            });
+            //set what to do + and - icons
+            $('.hoverEff').click(function () {
+                $(this).parent().closest("tr").next().slideToggle(100);
+                $(this).toggleClass("expandm collapsem");
+
+                var id = $(this).attr("id");
+                //alert('$(this).attr("id"): ' + id);
+                var compareStringForClass = $(this).attr("class");
+                //alert('compareStringForClass: ' + compareStringForClass)
+                if (compareStringForClass == "hoverEff expandm")
+                {
+                    //alert('if')
+                    expandedIDs.push(id);
+                }
+                else
+                {
+                    //alert('else')
+                    expandedIDs.pop(id);
+                }
+                $("#expandedList").val(expandedIDs);
+               // alert('expandedList :' + $("#expandedList").val());
+            });
+
+        }
+        function checkBeforeChecked() {
+            //alert(JSON.stringify(model));
+            // alert(model.length);
+
+            for (var i = 0; i < model.length; i++) {
+                var compareString = model[i].EczaneGrupTanimDetay.Checked;//grid için bir önceki işlemden check edilenler alınır ve true ise check edilir
+                if (true == compareString) { //compare to the checkbox value
+                    document.getElementById('eczaneGrupTanim_' + model[i].EczaneGrupTanimDetay.Id).checked = true;
+                    //continue;
+                }
+
+                //for (var j = 0; j < model[i].EczaneGrupDetaylar.length; j++) {//subgrid için aynı işlem tekrarlanır
+                //    var compareString3 = model[i].EczaneGrupDetaylar[j].Checked;
+                //    //alert('compareString3: ' + compareString3)
+                //    if (true == compareString3) {
+                //        document.getElementById('eczaneGrup_' + model[i].EczaneGrupDetaylar[j].Id).checked = true;
+                //        alert(document.getElementById('eczaneGrup_' + model[i].EczaneGrupDetaylar[j].Id).checked)
+                //        continue;
+                //    }
+                //}
+            }
+        }
+
+        function veriyiGizleLoadingGifiGoster() {
+            document.getElementById("loading").style.visibility = "visible";//sayfa yüklenirken loading gif i gösterilir
+            document.getElementById("div1").style.visibility = "hidden";//sayfa yüklenirken tablo gizlenir
+            acilisiGeciktir()
+        }
+        function acilisiGeciktir() {
+            setTimeout(
+                loadingGifiGizleVeriyiGoster, /* Request next message  */
+                200 /* ..after ms seconds */
+            );
+        }
+        function loadingGifiGizleVeriyiGoster() {
+            document.getElementById("div1").style.visibility = "visible";//tablo gösterilir
+            //alert('visible')
+            document.getElementById("loading").style.visibility = "hidden";//gif gizlenir
+            document.getElementById("loading").style.display = "none";//gif yer kaplamasın
+        }
+
+        //    var id = $(this).attr("id");
+        //    var idBaslangic = $(this).attr("id").indexOf('_');
+        //    var intIdBaslangic = parseInt(idBaslangic) + 1;
+        //    //alert('intIdBaslangic: ' + intIdBaslangic)
+        //    var idUzunluk = $(this).attr("id").length;
+        //    //alert('idUzunluk: ' + idUzunluk)
+        //    var intIdUzunluk = parseInt(idUzunluk) - intIdBaslangic;
+        //    //alert('intIdUzunluk: ' + intIdUzunluk)
+
+        //    var eczaneGrupTanimId = id.substr(intIdBaslangic, intIdUzunluk)
+        //    $("#expandedList").val(eczaneGrupTanimId);
+
+        //    //alert('eczaneGrupTanimId: ' + eczaneGrupTanimId);
+
+        //    //$.ajax({
+        //    //    type: "POST",
+        //    //    url: "../../../EczaneNobet/EczaneGrupTanim/ExpandDurumuDegistir",
+        //    //    data: "{'id':" + eczaneGrupTanimId + "}",
+        //    //    contentType: "application/json; charset=utf-8",
+        //    //    dataType: "json",
+
+        //    //    success: function (data) {
+
+        //    //        alert('success');
+        //    //        // location.reload();
+        //    //    },
+        //    //    error: function (XMLHttpRequest, textStatus, errorThrown) {
+        //    //        addmsg("error", textStatus + " (" + errorThrown + ")");
+        //    //        alert(textStatus + " (" + errorThrown + ")");
+        //    //    }
+        //    //});
+        //});
+
+    });
+
+</script>
+

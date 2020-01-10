@@ -1,0 +1,82 @@
+﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.Kalibrasyon
+
+@{
+    ViewBag.Title = "Kalibrasyon Ekle |  Nöbet Yaz";
+}
+
+<h4>Kalibrasyon Ekle</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.EczaneNobetGrupId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new { @class = "form-control selectpicker",
+               //multiple = "true",
+               //data_width = "auto",
+               //data_actions_box = "true",
+               mobile = "true",
+               data_live_search = "true",
+               data_selected_text_format = "count > 4",
+               title = "Eczane Seçiniz..."
+           })
+                @Html.ValidationMessageFor(model => model.EczaneNobetGrupId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.KalibrasyonTipId, "Kalibrasyon Tipi", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("KalibrasyonTipId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.KalibrasyonTipId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NobetUstGrupGunGrupId, "Gün Grubu", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("NobetUstGrupGunGrupId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NobetUstGrupGunGrupId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Deger, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Deger, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Deger, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Aciklama, "Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" id="submitEkle" value="Ekle" class="btn btn-outline-primary" />
+                @Html.ActionLink("Kalibrasyon Listesi", "Index", null, new { @class = "btn btn-outline-warning" })
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/validation/scripts")
+
+}

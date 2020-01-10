@@ -1,0 +1,342 @@
+﻿@model IEnumerable<EczaneGrupTanimDetay>
+
+@{
+    ViewBag.Title = "Eş Gruplar |  Nöbet Yaz";
+}
+<!-- #region ajaxOptions -->
+@{
+
+    var postAjaxAktifYap = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("SecilenleriAktifYap", "EczaneGrupTanim"),
+        HttpMethod = "POST",
+        UpdateTargetId = "eczaneGrupTanimlar",
+        InsertionMode = InsertionMode.Replace
+        //,LoadingElementId = "islem"
+    };
+
+    var postAjaxPasifYap = new AjaxOptions
+    {
+        AllowCache = false,
+
+        Url = Url.Action("SecilenleriPasifYap", "EczaneGrupTanim"),
+        HttpMethod = "POST",
+        UpdateTargetId = "eczaneGrupTanimlar",
+        InsertionMode = InsertionMode.Replace
+        //, LoadingElementId = "islem"
+    };
+
+    var getAjaxOptionsTumu = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("SearchWithEczaneAdi", "EczaneGrupTanim"),
+        HttpMethod = "GET",
+        UpdateTargetId = "eczaneGrupTanimlar",
+        InsertionMode = InsertionMode.Replace
+        // ,LoadingElementId = "islem"
+    };
+
+    //var deleteAjaxOptionsSecili = new AjaxOptions
+    //{
+    //    AllowCache = false,
+    //    Url = Url.Action("SecilenleriSil", "EczaneGrupTanim"),
+    //    //HttpMethod = "POST",
+    //    //UpdateTargetId = "DivTablo",
+    //    //InsertionMode = InsertionMode.Replace,
+    //    //OnBegin = "OnBegin",
+    //    LoadingElementId = "wait",
+    //    OnSuccess = "OnSuccess(this)"
+    //};
+}
+<div class="form-inline">
+    <h4 class="mr-5">Eczane Gruplar</h4>
+    <div class="form-group mr-5">
+        <a class="btn btn-outline-success btn-sm mr-3" href="@Url.Action("Create", null, new { area = "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+        <a data-toggle="modal" data-target="#aciklamaModal" href="#" class="btn btn-outline-info btn-sm" title="Açıklama" role="button">
+            <i class="fa fa-info-circle"></i> Açıklama
+        </a>
+    </div>
+
+    <div class="input-group mr-2">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+        </div>
+        <input type="text" id="myInput" class="form-control" placeholder="Eczane Grup Ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"><i class="fa fa-filter"></i></span>
+        </div>
+        <input type="text" id="myInputEczane" class="form-control" placeholder="Eczane Ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+    </div>
+</div>
+
+@*<h4>
+        <span class="mr-3">Eczane Grup Tanımlar</span>
+        <a class="btn btn-outline-success btn-sm mr-3" href="@Url.Action("Create", null, new { area = "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+        <a class="btn btn-outline-info btn-sm" title="Açıklama" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <i class="fa fa-info-circle"></i> Açıklama
+        </a>
+    </h4>*@
+<div class="modal" tabindex="-1" id="aciklamaModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        @* modal-lg *@
+        <div class="modal-content">
+            <div class="modal-header alert-info">
+                <h5 class="modal-title"><i class="fa fa-info-circle"></i> Eczane Gruplar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <strong>Eş durumu, coğrafi yakınlık, isim benzerliği vb.</strong> nedenlerle aynı gün aralığında nöbet tutması istenmeyen <strong>eczaneler bu sayfa üzerinden gruplanmaktadır.</strong>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Not:</span> Eş grup tanımları nöbet grubu değişiminden etkilenebilmektedir.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="collapse" id="collapseExample">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="fa fa-info-circle"></i>
+            <strong>Eş durumu, coğrafi yakınlık, isim benzerliği vb.</strong> nedenlerle aynı gün aralığında nöbet tutması istenmeyen <strong>eczaneler bu sayfa üzerinden gruplanmaktadır.</strong>
+            <br /> Eczanelerin eş grup tanımları nöbet grubu değişiminden etkilenmemektedir.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>*@
+<hr />
+
+@{
+    SelectList eczaneGruptanimTipler = ViewBag.EczaneGruptanimTipId;
+}
+<div class="row mb-3">
+    <div class="col-4">
+        <div class="form-inline">
+            <div class="form-group">
+                @using (Ajax.BeginForm(null, null, getAjaxOptionsTumu, new { @class = "form-inline", id = "formTumu" }))
+                {
+                    <div class="form-group">
+                        <input type="search" id="search" name="Keywords" class="form-control" value="@Request["Keywords"]" style="display:none;" placeholder="Grup Adı ile ara.." />
+                    </div>
+                    <div id="ddlEczaneGruptanimTipId" class="form-group mr-3" style="display:none;">
+                        @Html.DropDownList("EczaneGruptanimTipId", null, htmlAttributes: new
+                      {
+                          @class = "form-control",
+                          @id = "Id",
+                          onchange = "myFunction(event)"
+                      }, optionLabel: "---Tümü---")
+                    </div>
+                    <div class="form-group mr-5">
+                        <span class="input-group-btn">
+                            <button type="submit" id="submitSorgula" class="btn btn-secondary my-2 pull-right" style="display:none;"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                }
+                <div class="form-group mr-3">
+                    <div class="mr-3">
+                        @using (Ajax.BeginForm(null, null, postAjaxAktifYap, new { id = "formAktif" }))
+                        {
+                            <div style="display:none" class="form-group mr-3">
+                                <input type="search" id="searchForAktif" name="Keywords" class="form-control" value="@Request["Keywords"]" placeholder="Grup Adı ile ara.." />
+                                @Html.TextBox("EczaneGruptanimTipIdForAktif")
+                                @Html.TextArea("ExpandedForAktif")
+
+                            </div>
+
+                            <input type="submit" id="aktif" class="btn btn-success"
+                                   value="Seçilenleri Aktif Yap" />
+                            @Html.Hidden("aktifYapilacakEczaneGrupTanimlar")
+
+
+                        }
+                    </div>
+
+                    @using (Ajax.BeginForm(null, null, postAjaxPasifYap, new { id = "formPasif" }))
+                    {
+                        <div style="display:none" class="form-group mr-3">
+                            <input type="search" id="searchForPasif" name="Keywords" class="form-control" value="@Request["Keywords"]" placeholder="Grup Adı ile ara.." />
+                            @Html.TextBox("EczaneGruptanimTipIdForPasif")
+                            @Html.TextArea("ExpandedForPasif")
+
+                        </div>
+
+                        <input type="submit" id="pasif" class="btn btn-danger mr-3"
+                               value="Seçilenleri Pasif Yap" />
+                        @Html.Hidden("pasifYapilacakEczaneGrupTanimlar")
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="progress" id="islem" style="display:none;">
+    <div class="progress-bar progress-bar-striped bg-primary progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+</div>
+
+<div class="row">
+    @if (TempData["DurumuDegisenGrupTanimSayisiIndex"] != null)
+    {
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                <i class="fa fa-check"></i>@TempData["DurumuDegisenGrupTanimSayisiIndex"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+        </div>
+    }
+    <div class="col-12">
+        <div id="eczaneGrupTanimlar">
+            @*@{Html.RenderAction("SearchWithEczaneAdi", "EczaneGrupTanim");}*@
+        </div>
+    </div>
+</div>
+
+
+@section Styles{
+    @Styles.Render("~/bundle/jqueryui/style")
+}
+
+@section Scripts{
+    @*@Scripts.Render("~/bundle/scriptsDetailTable/script")*@
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/queryui/scripts")
+
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#formTumu").submit();
+
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLocaleLowerCase('tr-TR');
+                $("#gridT tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                });
+                 //teklif aramasından sonra açık ve kapalı satırları aramadan önceki hale getir
+                @*if ($(this).val().length == 0) {
+                    var modelim = @Html.Raw(Json.Encode(Model))
+                    afterSearchingSetExpand(modelim);
+                }*@
+            });
+
+            $("#myInputEczane").on("keyup", function () {
+                //arama başlayınca tüm alt satırları aç
+                $("#main #gridT > tbody > tr td.collapsem").each(function (i, el) {
+                    $(this).parent().closest("tr").next().slideToggle(1);
+                    $(this).toggleClass("expandm collapsem");
+                });
+                var value = $(this).val().toLocaleLowerCase('tr-TR');
+                $("#subT tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                });
+
+                //arama bitince yani arama kelimesi uzunluğu sıfır olunca tüm açılan satırları kapat
+                if ($(this).val().length == 0) {
+                    $("#main #gridT > tbody > tr td.expandm").each(function (i, el) {
+                        $(this).toggleClass("expandm collapsem");
+                        $(this).parent().closest("tr").next().slideToggle(1);
+                    });
+                }
+            });
+
+            //function afterSearchingSetExpand(model) {
+            //    $("#main #gridT > tbody > tr td.collapsem").each(function (i, el) {
+            //        var compareString = model[i].EczaneGrupTanimDetay.Expanded;
+            //        if (!compareString) {
+            //            //kapalıysa, default açık geri geldiğin için kapatsın, açıksa açık kalsın
+            //            $(this).parent().closest("tr").next().slideToggle(1);
+            //        }
+            //        else {//açıksa, default + geri geldiğin için - yapsın,
+            //            $(this).toggleClass("collapsem expandm");
+            //        }
+            //    });
+            //}
+        });
+
+        $("#submitSorgula").click(function (e) {
+            aktifVePasifButonlariGoster()
+            aramaKelimesiniAktifPasifButonuAjaxinaAktar()
+            aramaEczaneGrupTanimTipIdiAktifPasifButonuAjaxinaAktar()
+        });
+
+        $("#aktif").click(function (e) {
+            checkEdilenCeheckBoxlariAktifHiddenFieldeAktar()
+        });
+
+        $("#pasif").click(function (e) {
+            checkEdilenCeheckBoxlariPasifHiddenFieldeAktar()
+        });
+
+        function aktifVePasifButonlariGoster() {
+            $("#pasif").show();//pasif yap butonu göster
+            $("#aktif").show();
+        }
+        function aramaKelimesiniAktifPasifButonuAjaxinaAktar() {
+            $("#searchForPasif").val($("#search").val());//search keywords u pasif yap using ajax formu içine de taşı
+            $("#searchForAktif").val($("#search").val());
+        }
+        function aramaEczaneGrupTanimTipIdiAktifPasifButonuAjaxinaAktar() {
+            $("#EczaneGruptanimTipIdForPasif").val($('#ddlEczaneGruptanimTipId :selected').val());//tipi pasif using ajax formu içine taşı
+            $("#EczaneGruptanimTipIdForAktif").val($('#ddlEczaneGruptanimTipId :selected').val());
+        }
+        function checkEdilenCeheckBoxlariPasifHiddenFieldeAktar() {
+            // alert('pasif.click');
+            var selectedIDs = new Array();
+            var subGridSeletedeIDs = new Array();
+            $('input:checkbox.gridCheckBox').each(function () {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+                }
+            });
+            $('input:checkbox.subGridCheckBox').each(function () {
+                if ($(this).prop('checked')) {
+                    subGridSeletedeIDs.push($(this).val());
+                }
+            });
+            var toplamString = selectedIDs + ";" + subGridSeletedeIDs
+            $("#pasifYapilacakEczaneGrupTanimlar").val(toplamString);
+
+            $("#ExpandedForPasif").val($("#expandedList").val());
+            //alert('ExpandedForPasif :' + $("#ExpandedForPasif").val());
+        }
+        function checkEdilenCeheckBoxlariAktifHiddenFieldeAktar() {
+            // alert('aktif.click');
+            var selectedIDs = new Array();
+            var subGridSeletedeIDs = new Array();
+            $('input:checkbox.gridCheckBox').each(function () {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+                }
+            });
+            $('input:checkbox.subGridCheckBox').each(function () {
+                if ($(this).prop('checked')) {
+                    subGridSeletedeIDs.push($(this).val());
+                }
+            });
+            var toplamString = selectedIDs + ";" + subGridSeletedeIDs
+            $("#aktifYapilacakEczaneGrupTanimlar").val(toplamString);
+            // alert('aktifYapilacakEczaneGrupTanimlar :' + $("#aktifYapilacakEczaneGrupTanimlar").val());
+            $("#ExpandedForAktif").val($("#expandedList").val());
+            //alert('ExpandedForAktif :' + $("#ExpandedForAktif").val());
+        }                
+
+    </script>
+}

@@ -1,0 +1,116 @@
+﻿@model IEnumerable<BayramDetay>
+
+
+@if (TempData["SilinenBayramSayisi"] != null)
+{
+    <div class="row justify-content-sm-center">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                <i class="fa fa-check"></i> @TempData["SilinenBayramSayisi"] adet bayram silinmiştir.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+@if (Model.Count() > 0)
+{
+    <table class="table table-hover table-sm">
+        <thead class="thead-light">
+            <tr>
+                <th><input type="checkbox" id="checkAll" /></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tarih)
+                </th>
+                <th>
+                    @Html.DisplayName("Bayram")
+                </th>
+                <th>
+                    @Html.DisplayName("Nöbet Grubu")
+                </th>
+                <th>
+                    @Html.DisplayName("Görev Tipi")
+                </th>
+                <th>
+                    @Html.DisplayName("Bayram Grubu")
+                </th>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.TakvimAciklama)
+                    </th>*@
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="bayramTablo">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" class="checkBox"
+                               value="@item.Id" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tarih)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BayramTurAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetGrupGorevTipAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetGunKuralAdi)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.TakvimAciklama)
+                        </td>*@
+                    <td>
+                        @{
+                            var target = $"#islem{@item.Id}";
+                        }
+                        <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="fa fa-cog"></span>
+                        </button>
+                        <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                            <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                            <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                            <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info alert-dismissible fade show mt-2" role="alert">
+        <i class="fa fa-info-circle"></i> Seçilen kritere uygun nöbet grubu kaydı bulunmamaktadır.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+}
+<script>
+    $(document).ready(function () {
+
+        $("#checkAll").click(function () {
+
+            $(".checkBox").prop('checked',
+                $(this).prop('checked'));
+        });
+
+    });
+
+</script>
+
+

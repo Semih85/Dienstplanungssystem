@@ -1,0 +1,77 @@
+﻿@model WM.Northwind.Entities.Concrete.Transport.Depo
+
+@{
+    ViewBag.Title = "Create";
+    var insertAjaxOptions = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("CreateAjax"),
+        HttpMethod = "post",
+        UpdateTargetId = "tblDepo",
+        InsertionMode = InsertionMode.Replace
+    };
+}
+
+@section SolTaraf{
+    @Html.Action("TransportDataPartialView", "Transport", new { area = "Optimization" })
+}
+
+@section scripts{
+    @Scripts.Render("~/bundle/ajax");
+
+    <script>
+        function OnSuccess() {
+            alert("silindi");
+        }
+    </script>
+}
+
+<h2>Depo Ekle</h2>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+
+        @using (Ajax.BeginForm(insertAjaxOptions))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-inline">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Adi, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Adi, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Adi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Talep, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Talep, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Talep, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Ekle" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-6">
+        <div id="tblDepo">
+            @{
+                Html.RenderAction("DepoPartialViewList");
+            }
+        </div>
+    </div>
+</div>
+

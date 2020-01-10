@@ -1,0 +1,49 @@
+﻿@model IEnumerable<WM.Northwind.Entities.ComplexTypes.EczaneNobet.MenuRoleDetay>
+
+@{
+    ViewBag.Title = "Menü Rol | Nöbet Sistemi";
+}
+
+<h4>Menü Rol</h4>
+
+<p>
+    @Html.ActionLink("Ekle", "Create")
+</p>
+<table class="table table-hover table-sm">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MenuAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RolAdi)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MenuAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RolAdi)
+            </td>
+            <td>
+                @{
+                    var target = $"#islem{@item.Id}";
+                }
+                <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fa fa-cog"></span>
+                </button>
+                <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                    <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                    <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                    <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

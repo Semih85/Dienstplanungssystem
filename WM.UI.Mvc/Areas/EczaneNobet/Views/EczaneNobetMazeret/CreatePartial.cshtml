@@ -1,0 +1,84 @@
+﻿
+@if (ViewBag.Mesaj != null)
+{
+    <div class="form-group">
+        <div class="col-md-10">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                Başlangıç ve bitiş tarih aralığı en az  <strong>@ViewBag.minYil</strong> ila en çok <strong>@ViewBag.maxYil</strong> arasında olmalıdır!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ViewBag.MesajBayram != null)
+{
+    <div class="form-group">
+        <div class="col-md-10">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <i class="fa fa-warning"></i> @ViewBag.MesajBayram
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ViewBag.Mesaj2 != null)
+{
+    <div class="form-group">
+        <div class="col-md-10">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                Başlangıç tarihi (<strong>@Model.BaslangicTarihi.ToShortDateString()</strong>) bitiş tarihinden (<strong>@Model.BitisTarihi.ToShortDateString()</strong>) büyük olamaz!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+@if (TempData["EklenenMazeretSayisi"] != null)
+{
+    <div class="form-group">
+        <div class="col-10">
+            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                <i class="fa fa-check"></i> @TempData["EklenenMazeretSayisi"] günlük mazeret eklenmiştir.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+@if (TempData["EklenenMazeretler"] != null)
+{
+    <div class="row mx-1">
+        <div class="col-10">
+            <table class="table table-hover table-sm" id="eklenenMazeretlerTablosu">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Eczane Adı</th>
+                        <th scope="col">Görev Tipi</th>
+                        <th scope="col">Mazeret Tarihi</th>
+                        <th scope="col">Açıklama</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var eczaneNobetMazeret in (List<EczaneNobetMazeretDetay>)TempData["EklenenMazeretler"])
+                    {
+                    <tr class="myRow">
+                        <td>@eczaneNobetMazeret.EczaneAdi</td>
+                        <td>@eczaneNobetMazeret.NobetGorevTipAdi</td>
+                        <td>@eczaneNobetMazeret.TarihUzun</td>
+                        <td>@eczaneNobetMazeret.Aciklama</td>
+                    </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

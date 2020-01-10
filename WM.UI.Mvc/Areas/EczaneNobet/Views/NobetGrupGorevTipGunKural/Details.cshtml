@@ -1,0 +1,53 @@
+﻿@model NobetGrupGorevTipGunKuralDetay
+
+
+    <div>
+        <h4>NobetGrupGorevTipGunKural</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.NobetGrupGorevTipId)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.NobetGrupGorevTipId)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.NobetGunKuralAdi)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.NobetGunKuralAdi)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.NobetGorevTipAdi)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.NobetUstGrupGunGrupAdi)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.NobetUstGrupGunGrupAdi)
+            </dd>
+    
+            @*<dt>
+                @Html.DisplayNameFor(model => model.BitisTarihi)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.BitisTarihi)
+            </dd>*@
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>

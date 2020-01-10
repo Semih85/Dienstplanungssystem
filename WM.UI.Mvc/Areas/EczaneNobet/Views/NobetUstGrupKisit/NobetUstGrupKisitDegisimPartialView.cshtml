@@ -1,0 +1,160 @@
+﻿@model List<NobetUstGrupKisitDetayDegisimTakip>
+
+@if (Model.Count() > 0)
+{
+    <h5 class="card-title">Son Yapılan Nöbet Kural Değişimleri <span class="badge badge-info">@Model.Count()</span></h5>
+    <div class="row justify-content-between mb-2">
+        <div class="col-md-4 col-xl-3">
+
+            <button class="btn btn-dark btn-sm" type="button" id="btnExceleAktarDegisenKurallar">
+                <i class="fa fa-file-excel-o text-success"></i> Excele Aktar
+                <i class="fa fa-download"></i>
+            </button>
+        </div>
+
+        <div class="col-md-4 col-xl-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+                </div>
+                <input type="text" id="myInputDegisenKurallar" class="form-control" placeholder="Tabloda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+            </div>
+        </div>
+    </div>
+
+    <table id="gridT" class="table table-sm table-hover table-bordered table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th rowspan="2" class="text-center">Sıra Nu.</th>
+                <th class="text-center" colspan="3">Nöbet Kural</th>
+                <th class="text-center" colspan="3" style="background-color:lightblue; border-left-width:thick; border-right-width:thick">Önce</th>
+                <th class="text-center" colspan="3" style="background-color:lightgreen; border-right-width:thick">Sonra</th>
+                <th rowspan="2" style="text-align:center">Güncellenme Tarihi</th>
+            </tr>
+            <tr>
+                @*<th>Sıra</th>*@
+                <th>Kodu</th>
+                <th>Kategorisi</th>
+                <th>Adı</th>
+
+                <th class="text-center" style="background-color:lightblue; border-left-width:thick">Durum</th>
+                <th class="text-center" style="background-color:lightblue">Değer</th>
+                <th class="text-center" style="background-color:lightblue; border-right-width:thick">Grup Sayısı</th>
+
+                <th class="text-center" style="background-color:lightgreen">Durum</th>
+                <th class="text-center" style="background-color:lightgreen">Değer</th>
+                <th class="text-center" style="background-color:lightgreen; border-right-width:thick">Grup Sayısı</th>
+                @*<th>Tarihi</th>*@
+            </tr>
+        </thead>
+        <tbody id="degisenKurallarTableBody">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.SiraNumarasi</td>
+                    <td>@item.NobetUstGrupKisitDetayOnce.KisitKodu</td>
+                    <td>@item.NobetUstGrupKisitDetayOnce.KisitKategorisi</td>
+                    <td>@item.NobetUstGrupKisitDetayOnce.KisitAdiGosterilen</td>
+
+                    @* önce *@
+                    <td class="text-center" style="border-left-width:thick">@(item.NobetUstGrupKisitDetayOnce.PasifMi ? "Pasif" : "Aktif")</td>
+                    <td class="text-center" >@(item.NobetUstGrupKisitDetayOnce.DegerPasifMi ? "-" : item.NobetUstGrupKisitDetayOnce.SagTarafDegeri.ToString())</td>
+                    <td class="text-center" style="border-right-width:thick">@item.NobetUstGrupKisitDetayOnce.NobetGrupGorevtipKisitSayisi</td>
+
+                    @* sonra *@
+                    <td class="text-center">
+                        @(item.NobetUstGrupKisitDetaySonra.PasifMi ? "Pasif" : "Aktif")
+                        @if (item.NobetUstGrupKisitDetayOnce.PasifMi != item.NobetUstGrupKisitDetaySonra.PasifMi)
+                        {
+                            <span class="text-danger font-weight-bold">*</span>
+                        }
+                    </td>
+                    <td class="text-center">
+                        @(item.NobetUstGrupKisitDetaySonra.DegerPasifMi ? "-" : item.NobetUstGrupKisitDetaySonra.SagTarafDegeri.ToString())
+                        @if (item.NobetUstGrupKisitDetayOnce.SagTarafDegeri != item.NobetUstGrupKisitDetaySonra.SagTarafDegeri)
+                        {
+                            <span class="text-danger font-weight-bold">*</span>
+                        }
+                    </td>
+                    <td class="text-center" style="border-right-width:thick">
+                        @item.NobetUstGrupKisitDetaySonra.NobetGrupGorevtipKisitSayisi
+                        @if (item.NobetUstGrupKisitDetayOnce.NobetGrupGorevtipKisitSayisi != item.NobetUstGrupKisitDetaySonra.NobetGrupGorevtipKisitSayisi)
+                        {
+                            <span class="text-danger font-weight-bold">*</span>
+                        }
+                    </td>
+
+                    <td>@item.DegisimTarihi</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info" role="alert">
+        Bu oturumda hiç nöbet kural değişimi yapılmamıştır.
+    </div>
+}
+
+
+<script>
+
+    $(document).ready(function () {
+
+            $("#myInputDegisenKurallar").on("keyup", function () {
+                //alert(1)
+                var value = $(this).val().toLocaleLowerCase('tr-TR');
+                $("#degisenKurallarTableBody tr").filter(function () {
+                    $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                });
+                if ($(this).val().length == 0) {
+                    getPaging(currentPage)
+                }
+            });
+
+            $('#btnExceleAktarDegisenKurallar').click(function () {
+                //alert('ConfirmSubmit')
+                //$("#gridT > tbody > tr").each(function (i, el) {
+                //    $(this).css('display', 'table-row');
+                //});
+                exportToExcel();
+                //location.reload();
+                //sayfalamaYap(model, 15);
+            });
+
+            function exportToExcel() {
+                //alert(1)
+                var htmls = "";
+
+                var uri = 'data:application/vnd.ms-excel;base64,';
+
+                var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+
+                var base64 = function (s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                };
+
+                var format = function (s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) {
+                        return c[p];
+                    })
+                };
+
+                htmls = $("table").html();
+
+                var ctx = {
+                    worksheet: 'Worksheet',
+                    table: htmls
+                }
+
+                var simdi = new Date();
+                var zaman = simdi.getDay() + "-" + simdi.getHours() + "-" + simdi.getMinutes() + "-" + simdi.getSeconds();
+                var link = document.createElement("a");
+                link.download = "degisenKurallar_" + zaman + ".xls";
+                link.href = uri + base64(format(template, ctx));
+                link.click();
+            }
+    });
+
+</script>

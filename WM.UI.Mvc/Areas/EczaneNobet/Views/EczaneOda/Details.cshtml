@@ -1,0 +1,55 @@
+﻿@model EczaneOda
+
+
+<h2>Detaylar</h2>
+
+<div>
+    <h4>Eczane Oda</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TelefonNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TelefonNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MailAdresi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MailAdresi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WebSitesi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WebSitesi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" }) 
+    @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+</p>

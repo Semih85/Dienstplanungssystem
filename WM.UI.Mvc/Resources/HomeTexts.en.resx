@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Almanca" xml:space="preserve">
+    <value>German</value>
+  </data>
+  <data name="AnaSayfa" xml:space="preserve">
+    <value>Home Page</value>
+  </data>
+  <data name="AncakIhtiyacaGore" xml:space="preserve">
+    <value>However, according to need, numerous duty scheduling rules are added to the problem</value>
+  </data>
+  <data name="BasindaBiz" xml:space="preserve">
+    <value>We in the press</value>
+  </data>
+  <data name="BeniHatırla" xml:space="preserve">
+    <value>Remember me</value>
+  </data>
+  <data name="BirBaskaSorunIseSonradanOrtayaCikanMazeretlerin" xml:space="preserve">
+    <value>Another problem is that any subsequent excuses are taken into account without breaking the rules</value>
+  </data>
+  <data name="BirDeOlasiHatadaGelecekItirazlar" xml:space="preserve">
+    <value>In addition, consideration  when a possible error, future objections are taken into, &lt;b&gt;the existence of the "Duty Scheduling System" becomes important&lt;/b&gt;</value>
+  </data>
+  <data name="BuProblemdeEnyalinHaliyle" xml:space="preserve">
+    <value>In this problem, in the most simple form, it is decided which period of duty is assigned to which institution/person</value>
+  </data>
+  <data name="BuYonuyleNoberYazmaSureci" xml:space="preserve">
+    <value>In this respect, &lt;b class='text-danger'&gt;the process of duty scheduling causes too much time, labor and mental fatigue&lt;/b&gt;</value>
+  </data>
+  <data name="Cikis" xml:space="preserve">
+    <value>Log out</value>
+  </data>
+  <data name="Detaylar" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="DilSecenegi" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="DilSecenegiLogo" xml:space="preserve">
+    <value>flags/en.png</value>
+  </data>
+  <data name="Duzenle" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EczaciOdasi" xml:space="preserve">
+    <value>Pharmacist Chamber</value>
+  </data>
+  <data name="Eczane" xml:space="preserve">
+    <value>Pharmacy</value>
+  </data>
+  <data name="EczaneNobetSistemi" xml:space="preserve">
+    <value>Pharmacy Duty Scheduling</value>
+  </data>
+  <data name="ElleYazilirkenBileEnCokIstenenKuallarGozdenKacabilir" xml:space="preserve">
+    <value>Even the most requested rules can be overlooked when writing manually</value>
+  </data>
+  <data name="Eposta" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EpostayadaParolaHatali" xml:space="preserve">
+    <value>E-mail or password is incorrect</value>
+  </data>
+  <data name="ExcelGibiProgramlar" xml:space="preserve">
+    <value>These lists, which are tried to be followed by using programs such as Excel, &lt;b&gt;become inextricable over time&lt;/b&gt;</value>
+  </data>
+  <data name="Faaliyetlerimiz" xml:space="preserve">
+    <value>About Us</value>
+  </data>
+  <data name="Giris" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="HemenBaslayalim" xml:space="preserve">
+    <value>Let's start now.</value>
+  </data>
+  <data name="HemsireNobetSistemi" xml:space="preserve">
+    <value>Nurse Duty Scheduling</value>
+  </data>
+  <data name="HerNobetPeriyodundaGrubaYeniKatilan" xml:space="preserve">
+    <value>In each duty period, there may be new institution/person who have joined or left the group</value>
+  </data>
+  <data name="Hesabim" xml:space="preserve">
+    <value>My Account</value>
+  </data>
+  <data name="Iletisim" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="Ingilizce" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Istatistik" xml:space="preserve">
+    <value>Statistic</value>
+  </data>
+  <data name="IstatistiklerinKeyfiniCikarin" xml:space="preserve">
+    <value>Enjoy with statistics</value>
+  </data>
+  <data name="KayitIcinIletisimeGecin" xml:space="preserve">
+    <value>Contact for registration</value>
+  </data>
+  <data name="KullaniciGirisi" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="MatematikHayatinIcindeGuzel" xml:space="preserve">
+    <value>Math is nice in life</value>
+  </data>
+  <data name="MetaDescription" xml:space="preserve">
+    <value>The best solutions in many areas such as Pharmacy Duty Scheduling System, Online Pharmacy Screen and Nurse Duty Scheduling System are in the Duty Scheduling System.</value>
+  </data>
+  <data name="NobetBolgesi" xml:space="preserve">
+    <value>Duty Schedule Area</value>
+  </data>
+  <data name="NobetHakkindaHerSey" xml:space="preserve">
+    <value>All about "Duty Scheduling"</value>
+  </data>
+  <data name="NobetlerinIstatistikOlarakTakipZorunluluguVardır" xml:space="preserve">
+    <value>Duties have to be followed up statistically</value>
+  </data>
+  <data name="NobetSistemi" xml:space="preserve">
+    <value>Duty Scheduling System</value>
+  </data>
+  <data name="NobetSistemiDetaylar" xml:space="preserve">
+    <value>Duty Scheduling System Details</value>
+  </data>
+  <data name="NobetYaz" xml:space="preserve">
+    <value>Run</value>
+  </data>
+  <data name="NobetYazmakSanildigiKadar" xml:space="preserve">
+    <value>Duty scheduling &lt;b&gt;is not as easy as it seems&lt;/b&gt; and is a multi-component problem </value>
+  </data>
+  <data name="OnlineEczaneEkrani" xml:space="preserve">
+    <value>Online Pharmacy Screen</value>
+  </data>
+  <data name="Parola" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Paylas" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="Planlama" xml:space="preserve">
+    <value>Planning</value>
+  </data>
+  <data name="ProbleminYapisiGeregi" xml:space="preserve">
+    <value>Since the problem has &lt;b class='text-danger'&gt;thousands of combinations&lt;/b&gt; due to its nature, &lt;b&gt;it is very difficult to find the solution manually, even with software&lt;/b&gt;</value>
+  </data>
+  <data name="Referanslarimiz" xml:space="preserve">
+    <value>References</value>
+  </data>
+  <data name="SaniyelerIcindeNobetlerinizYazilsin" xml:space="preserve">
+    <value>Your duties is written in seconds</value>
+  </data>
+  <data name="SizSadeceKurallariBelirleyin" xml:space="preserve">
+    <value>Just set your rules</value>
+  </data>
+  <data name="SizUgrasmayinZamaninizSizeKalsin" xml:space="preserve">
+    <value>Don't waste your time</value>
+  </data>
+  <data name="SurecFazlasiylaDinamiktir" xml:space="preserve">
+    <value>The process is extremely dynamic</value>
+  </data>
+  <data name="TumCihazlardan7/24ulasin" xml:space="preserve">
+    <value>Use always with all devices</value>
+  </data>
+  <data name="TumVerilerSSLileGuvende" xml:space="preserve">
+    <value>Data is secure with SSL</value>
+  </data>
+  <data name="Turkce" xml:space="preserve">
+    <value>Turkish</value>
+  </data>
+  <data name="UcretsizDemoIcinBizeUlasin" xml:space="preserve">
+    <value>Contact us for free demo.</value>
+  </data>
+  <data name="Urunlerimiz" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="Uygulama" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="YazilanNobet" xml:space="preserve">
+    <value>Scheduled Duty</value>
+  </data>
+  <data name="ZamaniSizeKalsin" xml:space="preserve">
+    <value>Save your time</value>
+  </data>
+</root>

@@ -1,0 +1,221 @@
+﻿
+@{
+    Layout = null;
+}
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>Bilgi Ekranı - nobetyaz.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=0.4, shrink-to-fit=no, maximum-scale=2, user-scalable=yes">
+
+    <!-- Bootstrap, font-awasome, Site CSS -->
+    @Styles.Render("~/bundle/style")
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="card">
+                                @* header *@
+                                <div class="card-header text-center">
+                                    <h1 class="card-title">Sağlık</h1>
+                                </div>
+
+                                @* body *@
+                                <div class="card-body" style="height:49rem;">
+                                    <div class="row mb-3" style="font-size:xx-large">
+                                        <div class="col">
+                                            <div class="card text-center">
+                                                <div class="text-center">
+                                                    <img class="rounded" src="~/Content/images/smile2.jpg" alt="Gülmek" style="width:20rem; height:10rem;" />
+                                                </div>
+
+                                                <div class="card-body">
+                                                    <h3 class="card-title">1</h3>
+                                                    <p class="card-text">Gülmekten korkmayın.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card text-center">
+                                                <div class="text-center">
+                                                    <img class="rounded" src="~/Content/images/breakfast.jpg" alt="Gülmek" style="width:20rem; height:10rem;" />
+                                                </div>
+                                                <div class="card-body">
+                                                    <h3 class="card-title">2</h3>
+                                                    <p class="card-text">Kahvaltıyı atlamayın.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="font-size:xx-large">
+                                        <div class="col">
+                                            <div class="card text-center">
+                                                <div class="text-center">
+                                                    <img class="rounded" src="~/Content/images/coloredVegatables.jpg" alt="Gülmek" style="width:20rem; height:10rem;" />
+                                                </div>
+                                                <div class="card-body">
+                                                    <h3 class="card-title">3</h3>
+                                                    <p class="card-text">Renkli besinleri tercih edin.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="card text-center">
+                                                <div class="text-center">
+                                                    <img class="rounded" src="~/Content/images/vegatables.jpg" alt="Gülmek" style="width:20rem; height:10rem;" />
+                                                </div>
+                                                <div class="card-body">
+                                                    <h3 class="card-title">4</h3>
+                                                    <p class="card-text">Yeşilin büyüsü.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                @* footer *@
+                                <div class="card-footer" style="font-size:x-large">
+                                    <img src="~/Content/images/NobetciEczaneLogoUfak.png" />
+                                    <span class="pt-3"> Yalçın Eczanesi <i class="fa fa-phone"></i> 0324 233 83 85</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                @* header *@
+                                <div class="card-header text-center">
+                                    <h1 class="card-title">Tarihte Bugün 1</h1>
+                                </div>
+
+                                @* body *@
+                                <div class="card-body" style="height:49rem;">
+                                    <div class="row" style="font-size:xx-large">
+                                        <div class="col">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h3 class="card-title">1923</h3>
+                                                    <p class="card-text">İstiklal marşı için Ali Rıfat Bey'in bestelediği eser seçildi. Bu marş 7 yıl okunduktan sonra 1930'da Zeki Üngör'ün bestesiyle değiştirildi.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="font-size:xx-large">
+                                        <div class="col">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h3 class="card-title">1932</h3>
+                                                    <p class="card-text">Türk Dil Kurumu kuruldu.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="font-size:xx-large">
+                                        <div class="col">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h3 class="card-title">2016</h3>
+                                                    <p class="card-text">Hürkuş, Avrupa'dan sertifika alan ilk Türk uçağı oldu.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @* footer *@
+                                <div class="card-footer" style="font-size:x-large">
+                                    <img src="~/Content/images/NobetciEczaneLogoUfak.png" />
+                                    <span class="pt-3"> Yalçın Eczanesi <i class="fa fa-phone"></i> 0324 233 83 85</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card">
+                                @* header *@
+                                <div class="card-header text-center">
+                                    <h1 class="card-title">Tarihte Bugün 2</h1>
+                                </div>
+
+                                @* body *@
+                                <div class="card-body" style="height:49rem;">
+                                    <div class="row" style="font-size:xx-large">
+                                        <div class="col">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h3 class="card-title">1921</h3>
+                                                    <p class="card-text">Gazi Mustafa Kemal, Türk Orduları Başkomutanlığı'na seçildi.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="font-size:xx-large">
+                                        <div class="col">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h3 class="card-title">1930</h3>
+                                                    <p class="card-text">Ayda ilk yürüyen Amerikalı astronot Neil Armstrong.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="font-size:xx-large">
+                                        <div class="col">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h3 class="card-title">2032</h3>
+                                                    <p class="card-text">İlk Venedik Film Festivali başladı.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @* footer *@
+                                <div class="card-footer" style="font-size:x-large">
+                                    <img src="~/Content/images/NobetciEczaneLogoUfak.png" />
+                                    <span class="pt-3"> Yalçın Eczanesi <i class="fa fa-phone"></i> 0324 233 83 85</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>*@
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+@Scripts.Render("~/bundle/scripts")
+<script>
+
+</script>
+
+

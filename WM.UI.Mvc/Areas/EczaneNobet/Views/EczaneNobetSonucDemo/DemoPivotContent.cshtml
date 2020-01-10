@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "DemoPivotContent";
+    int sekil = ViewBag.sekil;
+}
+
+<h2>DemoPivotContent</h2>
+
+@section styles{
+    @Styles.Render("~/bundle/pivot/style")
+}
+
+
+@* Sonuç Analiz *@
+<div class="row mt-4">
+    <div class="col-sm-12 col-md-12">
+        <div id="output">
+            @* Pivot Tablo *@
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    @Scripts.Render("~/bundle/queryui/scripts",
+                        "~/bundle/pivot/scripts")
+
+    <script>
+        //pivot tablo
+        var _sonuclar = @Html.Raw(Json.Encode(Model.Sonuclar));
+
+        var deger = @sekil;
+
+        if (deger == 1) {
+            $(function table1() {
+                $("#output").pivotUI(_sonuclar,
+                    {
+                        rows: ["Yil", "Ay", "Tarih"],
+                        cols: ["NobetGrupAdi"],
+                        vals: ["EczaneAdi"],
+                        aggregatorName: "List Unique Values",
+                        rendererName: "Heatmap"
+                    }
+                );
+            });
+        }
+        else if (deger == 2) {
+            $(function table2() {
+                $("#output").pivotUI(_sonuclar,
+                    {
+                        rows: ["NobetGrupAdi", "EczaneAdi"],
+                        cols: ["GunDeger", "GunTanim"],
+                        vals: ["NobetGrupAdi"],
+                        aggregatorName: "Count",
+                        rendererName: "Heatmap"
+                    }
+                );
+            });
+        }
+        else if (deger == 3) {
+             $(function table3() {
+                $("#output").pivotUI(_sonuclar,
+                    {
+                        rows: ["NobetGrupAdi", "EczaneAdi"],
+                        cols: ["Yil", "Ay"],
+                        vals: ["NobetGrupAdi"],
+                        aggregatorName: "Count",
+                        rendererName: "Heatmap"
+                    }
+                );
+            });
+        }
+        else
+        {
+            //_sonuclar = Html.Raw(Json.Encode(Model.Sonuclar.Where(s=>s.Ay==1)));
+
+             $(function table3() {
+                $("#output").pivotUI(_sonuclar,
+                    {
+                        rows: ["NobetGrupAdi", "EczaneAdi"],
+                        cols: ["Yil", "Ay", "Tarih"],
+                        vals: ["NobetGrupAdi"],
+                        aggregatorName: "Count",
+                        rendererName: "Heatmap"
+                    }
+                );
+            });
+        }
+
+    </script>
+}
+

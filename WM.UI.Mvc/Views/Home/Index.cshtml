@@ -1,0 +1,561 @@
+﻿@*@addTagHelper "*,Microsoft.AspNetCore.Mvc.TagHelpers"
+    @addTagHelper "*,Abc.Northwind.UI.Mvc"*@
+
+@{
+    ViewBag.Title = MultiLanguage.HomeTexts.NobetSistemi;
+    ViewBag.MetaDescription = MultiLanguage.HomeTexts.MetaDescription;
+    //"Nöbetçi Eczane Sistemi, Online Eczane Ekranı ve Hemşire Nöbet Sistemi gibi bir çok alanda en iyi çözümler Nöbet Sistemi'nde.";
+    //Nöbet sistemi ile siz sadece nöbet kurallarını belirledikten sonra, adaletli ve en hızlı şekilde nöbet yazabilir, çok sayıda istatistik sayesinde sonuçları kolayca takip edebilirsiniz.
+
+    ViewBag.MetaKeywords = "Nöbetçi Eczane, Nöbetçi Eczane Belirleme, Nöbet Sistemi, Eczane Nöbet Sistemi, " +
+                "Hemşire Nöbet Sistemi, Krankenschwester Dienstplanungsystem, Nurse Duty Scheduling System, " +
+                "Çizelgeleme, Scheduling, Duty Scheduling, Dienstplanungsystem, Nöbet Çizelgeleme, Nöbetçi Eczane Belirleme";
+}
+
+<style>
+    .isHidden {
+        display: none
+    }
+
+    .sVissible {
+        display: block
+    }
+
+    .circle {
+        /*background: #007bff;*/
+        width: 130px;
+        line-height: 130px;
+        display: inline-block;
+        /*color: #fff;*/
+        border-radius: 100%;
+        font-size: xx-large
+    }
+
+    .seviye {
+        /*color: #007bff;*/
+        font-size: x-large;
+    }
+
+    .ref {
+        font-size: xx-large;
+        font-weight: 500;
+    }
+</style>
+
+<style>
+
+    .jumbotron {
+        background: url("../Content/images/digital_background4.jpg");
+        /*background-color: aliceblue;*/
+        background-size: cover;
+        /*height:100px;*/
+        /*height: 50%;*/
+    }
+</style>
+
+@section jumbotronMaster{
+
+    <div class="jumbotron jumbotron-fluid py-4 py-lg-5 mt-5 mb-0 mb-md-2 mb-lg-3">
+        <div class="container text-white">
+            <h1 class="display-4 font-weight-bold" style="font-size:300%;" id="jumbotronYazi">@MultiLanguage.HomeTexts.NobetSistemi</h1>
+            <p class="lead text-capitalize">@MultiLanguage.HomeTexts.NobetHakkindaHerSey... @*bu sistemde*@</p>
+            @*Nöbetlerinizi yazalım ve istatistikleri dinamik olarak gösterelim.*@
+            <hr class="my-lg-4 my-3 bg-info text-left w-50" align="left">
+            @*<p>Gelin birlikte matematiği hayatın içine taşıyalım</p>*@
+            <p>@MultiLanguage.HomeTexts.SizUgrasmayinZamaninizSizeKalsin</p>
+            <a class="btn btn-outline-info btn-lg" href="@Url.RouteUrl("NobetYazDetay")" role="button">
+                <span class="fa fa-bars"></span> @MultiLanguage.HomeTexts.Detaylar
+            </a>
+        </div>
+    </div>
+}
+
+<section class="mb-3">
+
+    <div class="container">
+
+        <div class="row mb-md-2 mb-lg-3">
+
+            <div class="col-lg-4">
+                <ul class="list-group list-group-flush text-left">
+                    <li class="list-group-item">
+                        <i class="fa fa-cogs text-danger" aria-hidden="true"></i>
+                        <a onmouseover="bigImg(imgKural)" onmouseout="normalImg(imgKural)">
+                            @MultiLanguage.HomeTexts.SizSadeceKurallariBelirleyin
+                        </a>
+
+                    </li>
+
+                    <li class="list-group-item">
+                        <i class="fa fa-hourglass-end text-danger" aria-hidden="true"></i>
+                        <a onmouseover="bigImg(imgSn)" onmouseout="normalImg(imgSn)">
+                            @MultiLanguage.HomeTexts.SaniyelerIcindeNobetlerinizYazilsin
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa fa-bar-chart text-danger" aria-hidden="true"></i>
+                        <a onmouseover="bigImg(imgGrafik)" onmouseout="normalImg(imgGrafik)">
+                            @MultiLanguage.HomeTexts.IstatistiklerinKeyfiniCikarin
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="col-md-4 mb-4 text-center">
+
+                <div class="success_img">
+                    <img id="imgGrafik" src="~/Content/images/GrafikAnaSayfa.png" />
+                    <img id="imgHarita" src="~/Content/images/HaritaAnaSayfa.png" />
+                    <img id="imgKural" src="~/Content/images/KuralAnaSayfa.png" />
+                    <img id="imgSSL" src="~/Content/images/SSLAnaSayfa.png" />
+                    <img id="imgSn" src="~/Content/images/SnAnaSayfa.png" />
+                    @* <img id="imgGrafik" src="~/Content/images/laptopGrafik.jpg" />
+                        <img id="imgHarita" src="~/Content/images/laptopMap.jpg" />
+                        <img id="imgKural" src="~/Content/images/laptopKural.jpg" />
+                        <img id="imgSSL" src="~/Content/images/laptopSSL.jpg" />
+                        <img id="imgSn" src="~/Content/images/laptopSn.jpg" />*@
+                    <img id="imgMobil" src="~/Content/images/mobil-uyumlu-site-duyarli-tasarim.jpg" />
+                    <img id="imgMeeting" src="~/Content/images/meeting-peoples-1080x625.png" alt="En iyi plan süresi" width="240" />
+                    <br />
+                    <span class="font-weight-bold">
+                        @MultiLanguage.HomeTexts.MatematikHayatinIcindeGuzel
+                    </span>
+                </div>
+
+
+            </div>
+
+            <div class="col-lg-4 mb-4 text-center">
+
+                <ul class="list-group list-group-flush text-left">
+                    <li class="list-group-item">
+                        <i class="fa fa-desktop text-danger" aria-hidden="true"></i>
+                        <i class="fa fa-tablet text-danger" aria-hidden="true"></i>
+                        <i class="fa fa-mobile-phone text-danger" aria-hidden="true"></i>
+                        <a onmouseover="bigImg(imgMobil)" onmouseout="normalImg(imgMobil)">
+                            @MultiLanguage.HomeTexts.TumCihazlardan7_24ulasin
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa fa-shield text-danger" aria-hidden="true"></i>
+                        <a onmouseover="bigImg(imgSSL)" onmouseout="normalImg(imgSSL)">
+                            @MultiLanguage.HomeTexts.TumVerilerSSLileGuvende
+                        </a>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fa fa-map text-danger" aria-hidden="true"></i>
+                        <a onmouseover="bigImg(imgHarita)" onmouseout="normalImg(imgHarita)">
+                            Harita üzerinde görüntüleyin.
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
+
+        <div class="row mb-md-0">
+
+            <div class="col-12 text-center mb-2 mt-2">
+
+                <h4><a class="card-link" href="@Url.RouteUrl("Contact")"><span class="fa fa-envelope"></span></a> @MultiLanguage.HomeTexts.UcretsizDemoIcinBizeUlasin @MultiLanguage.HomeTexts.HemenBaslayalim</h4>
+            </div>
+
+        </div>
+
+        <hr class="bg-info" />
+
+
+
+
+
+    </div>
+
+</section>
+
+<section>
+    <div class="container">
+
+        <div class="row mb-3 pt-4">
+
+            <div class="col-md-6 mb-3">
+                <div class="card border-primary bg-light">
+                    <div class="card-header">
+                        @*<a class="h4 card-link text-primary text-center" href="@Url.RouteUrl("EczaneNobetSistemi")">
+                                <small class="text-danger bg-white font-weight-bolder" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">
+                                    &nbsp;E&nbsp;
+                                </small> <span>@MultiLanguage.HomeTexts.NobetSistemi</span>
+                            </a>*@
+                        <span class="h4">
+                            @*<small class="text-danger bg-white font-weight-bolder" data-toggle="tooltip" data-placement="bottom" title="Eczane" style="border:solid; border-width:medium; ">
+                                    &nbsp;E&nbsp;
+                                </small>*@
+                            <span>@MultiLanguage.HomeTexts.EczaneNobetSistemi</span>
+                        </span>
+                    </div>
+                    <div class="card-body text-center">
+                        <a title="Nöbetçi Eczaneleri Görmek için Tıklayınız." target="_blank" href="@Url.RouteUrl("NobetciEczaneler")">
+                            <img class="img-fluid img-thumbnail" src="~/Content/images/nobetciEczaneResim2.jpg" alt="Nöbetçi Eczane Belirleme" style="height:40%; width:40%" />
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <div class="card border-primary bg-light">
+                    <div class="card-header">
+                        <span class="h4">@MultiLanguage.HomeTexts.HemsireNobetSistemi</span>
+                    </div>
+                    <div class="card-body text-center">
+
+                        <img class="img-thumbnail" src="~/Content/images/hemsireCizelgeleme2.jpg" alt="Hemşire Nöbet Çizelgeleme" style="height:52%; width:52%" />
+                        <div id="referanlarimiz"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section>
+    <div class="container">
+        <hr class="bg-info mt-4" />
+
+        <div class="row text-center mb-3">
+            <div class="col-md-12 mb-3">
+                <h2>@MultiLanguage.HomeTexts.Referanslarimiz</h2>
+            </div>
+            <div class="col-md-3">
+                <div style="display:none" id="odaSayisiSabit">6</div>
+                <div class="Counter circle bg-light font-weight-bold text-dark" id="odaSayisi">6</div>
+                @*<span class="Counter bg-light font-weight-bold text-dark" id="odaSayisi">100</span>*@
+                <div class="seviye text-dark">@MultiLanguage.HomeTexts.EczaciOdasi</div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div style="display:none" id="ustGrupSayisiSabit">50</div>
+                @*<span>+</span>*@
+                <div class="Counter circle bg-light font-weight-bold text-dark" id="ustGrupSayisi">50</div>
+                @*<span class="Counter bg-light font-weight-bold text-dark">1500</span>*@
+                <div class="seviye text-dark">@MultiLanguage.HomeTexts.NobetBolgesi</div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div style="display:none" id="grupSayisiSabit">1200</div>
+                @*<span>+</span>*@
+                <div class="Counter circle bg-light font-weight-bold text-dark" id="grupSayisi">1200</div>
+                <div class="seviye text-dark">@MultiLanguage.HomeTexts.Eczane</div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div style="display:none" id="eczaneSayisiSabit">20672</div>
+                @*<span></span>*@
+                <div class="Counter circle bg-light font-weight-bold text-dark" id="eczaneSayisi">20672</div>
+                <div id="nobetSistemi"></div>
+                <div class="seviye text-dark">@MultiLanguage.HomeTexts.YazilanNobet</div>
+            </div>
+        </div>
+
+        <div class="row text-center mt-4 mb-3">
+
+            <div class="col-md-4 mb-2">
+                <a class="nav-link" target="_blank" href="https://www.antalyaeo.org.tr/tr">
+                    <img class="img-fluid" src="~/Content/images/logoAntalya.png" title="Antalya Eczacı Odası" alt="Antalya Eczacı Odası" style="height:50%; width:50%" />
+                </a>
+            </div>
+
+
+            <div class="col-md-4 mb-2">
+                <a class="nav-link" target="_blank" href="https://www.mersineczaciodasi.org.tr/">
+                    <img class="img-fluid" src="~/Content/images/logoMersin.png" title="Mersin Eczacı Odası" alt="Mersin Eczacı Odası" style="height:50%; width:50%" />
+                </a>
+            </div>
+
+            <div class="col-md-4 mb-2">
+                <a class="nav-link" target="_blank" href="http://www.giresuneczaciodasi.org.tr/v2/">
+                    <img class="img-fluid" src="~/Content/images/logoGiresun.jpg" title="Giresun Eczacı Odası" alt="Giresun Eczacı Odası" style="height:50%; width:50%" />
+                </a>
+            </div>
+
+        </div>
+
+        <div class="row text-center mb-3">
+
+            <div class="col-md-4 mb-2">
+                <a class="nav-link" target="_blank" href="https://www.osmaniyeeczaciodasi.org.tr/">
+                    <img class="img-fluid img-rounded" src="~/Content/images/logoOsmaniye.png" title="Osmaniye Eczacı Odası" alt="Osmaniye Eczacı Odası" style="height:50%; width:50%" />
+                </a>
+            </div>
+
+            <div class="col-md-4 mb-2">
+                <a class="nav-link" target="_blank" href="http://www.corumeo.org/">
+                    <img class="img-fluid img-rounded" src="~/Content/images/logoCorum.png" title="Çorum Eczacı Odası" alt="Çorum Eczacı Odası" style="height:55%; width:55%" />
+                </a>
+            </div>
+
+            <div class="col-md-4 mb-2">
+                <a class="nav-link" target="_blank" href="https://www.zeo.org.tr/">
+                    <img class="img-fluid" src="~/Content/images/logoZonguldakbuyuk1.png" title="Zonguldak Eczacı Odası" alt="Zonguldak Eczacı Odası" style="height:50%; width:50%" />
+                </a>
+            </div>
+
+        </div>
+
+        <hr />
+        <div class="row text-center mb-2">
+
+            <div class="col-md-4 mb-2">
+                <a class="nav-link" target="_blank" href="http://www.alanyaeo.org.tr/tr">
+                    <img class="img-fluid img-rounded" src="~/Content/images/logoAlanya.png" title="Alanya Eczacı Odası Temsilciliği" alt="Alanya Eczacı Odası Temsilciliği" style="height:50%; width:50%" />
+                </a>
+            </div>
+
+            <div class="col-md-4 mb-2">
+                <a class="nav-link" target="_blank" href="https://www.zeo.org.tr/">
+                    <img class="img-fluid img-rounded" src="~/Content/images/logoBartin.png" title="Zonguldak Eczacı Odası Bartın Temsilciliği" alt="Zonguldak Eczacı Odası Bartın Temsilciliği" style="height:50%; width:50%" />
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<div class="row text-center">
+
+    <div class="col-md-12">
+        <table width="135" border="0" cellpadding="2" cellspacing="0" title="Click to Verify - This site chose GeoTrust SSL for secure e-commerce and confidential communications.">
+            <tr>
+                <td width="135" align="center" valign="top">
+                    <script type="text/javascript" src="https://seal.geotrust.com/getgeotrustsslseal?host_name=www.nobetyaz.com&amp;size=S&amp;lang=en"></script><br />
+                    <a href="http://www.geotrust.com/ssl/" target="_blank" style="color:#000000; text-decoration:none; font:bold 7px verdana,sans-serif; letter-spacing:.5px; text-align:center; margin:0px; padding:0px;"></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+@section scripts{
+
+    <script>
+        //var counterlar = 0;
+
+        $('.Counter').each(function () {
+            //alert(counterlar)
+            var $this = $(this);
+            var ilkSayi = parseInt($this.text());
+
+            //alert(ilkSayi)
+            jQuery({ Counter: 0 })
+                .animate(
+                    {
+                        Counter: $this.text()
+                    },
+                    {
+                        duration: 2000,
+                        easing: 'swing',
+                        step: function () {
+                            $this.text(Math.ceil(this.Counter));
+                            //if (counterlar > 0 && this.Counter < ilkSayi) {
+                            //    $this.text(Math.ceil(this.Counter));
+                            //    //alert(counterlar)
+                            //}
+                            //else {
+                            //    $this.text(Math.ceil(this.Counter) + "+");
+                            //}
+                        },
+                        complete: function () {
+                            if (ilkSayi > 10)
+                                $this.text("+" + Math.ceil(this.Counter));
+                        }
+                    }
+                );
+            //counterlar++;
+            //alert(counterlar)
+        });
+
+    </script>
+
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-36251023-1']);
+        _gaq.push(['_setDomainName', 'jqueryscript.net']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            resimleriGizle()
+            setTimeout(
+                sayilariArttir,
+                200 /*200 milisaniye sonra sayilariArttir fonksiyonunu çağır */
+            );
+        });
+        function resimleriGizle() {
+            //alert("resimleriGizle: ")
+            document.getElementById("imgHarita").style.display = "none"
+            document.getElementById("imgGrafik").style.display = "none"
+            document.getElementById("imgSSL").style.display = "none"
+            document.getElementById("imgSn").style.display = "none"
+            document.getElementById("imgKural").style.display = "none"
+            document.getElementById("imgMobil").style.display = "none"
+        }
+        function sayilariArttir() {
+            //alert("artisMiktari: ")
+            odaSayisiSaydir();
+            ustGrupSayisiSaydir();
+            grupSayisiSaydir();
+            eczaneSayisiSaydir();
+        }
+
+        var toplamSure = 3000;
+
+        function beklemeSuresiAyarla(toplamSure, toplamAdimSayisi) {
+
+            var zaman = toplamSure / toplamAdimSayisi;
+
+            return parseFloat(zaman);
+        }
+
+        var odaSayisiSabit = document.getElementById("odaSayisiSabit").innerText;
+        var intOdaSayisiSabit = parseInt(odaSayisiSabit);
+        console.log("odaSayisiSabit: " + intOdaSayisiSabit)
+
+        var enKucukSayi = intOdaSayisiSabit;
+
+        function odaSayisiSaydir() {
+            var odaSayim = document.getElementById("odaSayisi").innerText;
+            var intOdaSayim = parseInt(odaSayim);
+            var artisMiktari = intOdaSayisiSabit / enKucukSayi;
+            intOdaSayim += parseInt(artisMiktari);
+            document.getElementById("odaSayisi").innerText = intOdaSayim;
+
+            console.log("1. oda: " + beklemeSuresiAyarla(toplamSure, intOdaSayisiSabit))
+
+            if (intOdaSayim < intOdaSayisiSabit) {
+                setTimeout(
+                    odaSayisiSaydir
+                    , beklemeSuresiAyarla(toplamSure, intOdaSayisiSabit) //1200
+                );
+            }
+            else {
+                document.getElementById("odaSayisi").innerText = intOdaSayim + "+";
+            }
+        }
+
+        var ustGrupSayisiSabit = document.getElementById("ustGrupSayisiSabit").innerText;
+        var intUstGrupSayisiSabit = parseInt(ustGrupSayisiSabit);
+        console.log("ustGrupSayisiSabit: " + intUstGrupSayisiSabit)
+
+        function ustGrupSayisiSaydir() {
+            var ustGrupSayim = document.getElementById("ustGrupSayisi").innerText;
+            var intustGrupSayim = parseInt(ustGrupSayim);
+            var artisMiktari = intUstGrupSayisiSabit / enKucukSayi;
+            intustGrupSayim += parseInt(artisMiktari);
+            document.getElementById("ustGrupSayisi").innerText = intustGrupSayim;
+            console.log("2. üst grup: " + beklemeSuresiAyarla(toplamSure, intUstGrupSayisiSabit))
+            if (intustGrupSayim < intUstGrupSayisiSabit) {
+                setTimeout(
+                    ustGrupSayisiSaydir
+                    , beklemeSuresiAyarla(toplamSure, intUstGrupSayisiSabit)//120//1000
+                );
+            }
+            else {
+                document.getElementById("ustGrupSayisi").innerText = intustGrupSayim + "+";
+            }
+        }
+
+        var grupSayisiSabit = document.getElementById("grupSayisiSabit").innerText;
+        var intGrupSayisiSabit = parseInt(grupSayisiSabit);
+        console.log("grupSayisiSabit: " + intGrupSayisiSabit)
+
+        function grupSayisiSaydir() {
+            var grupSayim = document.getElementById("grupSayisi").innerText;
+            var intgrupSayim = parseInt(grupSayim);
+            var artisMiktari = intGrupSayisiSabit / enKucukSayi;
+            intgrupSayim += parseInt(artisMiktari);
+            document.getElementById("grupSayisi").innerText = intgrupSayim;
+
+            console.log("3. grup: " + beklemeSuresiAyarla(toplamSure, intGrupSayisiSabit))
+            if (intgrupSayim < intGrupSayisiSabit) {
+                setTimeout(
+                    grupSayisiSaydir
+                    , beklemeSuresiAyarla(toplamSure, intGrupSayisiSabit)//55//100
+                );
+            }
+            else {
+                document.getElementById("grupSayisi").innerText = intgrupSayim + "+";
+            }
+        }
+
+        var eczaneSayisiSabit = document.getElementById("eczaneSayisiSabit").innerText;
+        var inteczaneSayisiSabit = parseInt(eczaneSayisiSabit);
+        console.log("eczaneSayisiSabit: " + inteczaneSayisiSabit)
+
+        function eczaneSayisiSaydir() {
+            var eczaneSayim = document.getElementById("eczaneSayisi").innerText;
+            var inteczaneSayim = parseInt(eczaneSayim);
+            var artisMiktari = inteczaneSayisiSabit / enKucukSayi;
+            inteczaneSayim += parseInt(artisMiktari);
+            //if (inteczaneSayim < 100)
+            //    inteczaneSayim += 1;
+            //if (inteczaneSayim < 300)
+            //    inteczaneSayim += 20;
+            ////if (inteczaneSayim < 1000)
+            ////    inteczaneSayim = inteczaneSayim + 20;
+            //else
+            //    inteczaneSayim += 30;
+
+            document.getElementById("eczaneSayisi").innerText = inteczaneSayim;
+
+            console.log("4. eczane: " + beklemeSuresiAyarla(toplamSure, inteczaneSayisiSabit))
+
+            if (inteczaneSayim < inteczaneSayisiSabit) {
+                setTimeout(
+                    eczaneSayisiSaydir
+                    , beklemeSuresiAyarla(toplamSure, inteczaneSayisiSabit)//7.3
+                );
+            }
+            else {
+                document.getElementById("eczaneSayisi").innerText = inteczaneSayim + "+";
+            }
+
+        }
+    </script>
+
+    <script>
+        function bigImg(x) {
+            x.style.display = "block"
+            //document.getElementById("imgHarita").style.display = "block"
+            //x.addClass('isHidden')
+            document.getElementById("imgMeeting").style.display = "none"
+            x.style.height = "139px";
+            x.style.width = "300px";
+        }
+
+        function normalImg(x) {
+            //alert(x.attr('id'))
+            //x.addClass('isVissible')
+            x.style.display = "none"
+            document.getElementById("imgMeeting").style.display = "block"
+            document.getElementById("imgMeeting").style.marginLeft = "15%"
+
+
+            // x.style.height = "2px";
+            //x.style.width = "2px";
+        }
+    </script>
+}

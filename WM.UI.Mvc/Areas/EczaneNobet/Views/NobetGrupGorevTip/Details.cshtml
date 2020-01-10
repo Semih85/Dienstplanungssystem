@@ -1,0 +1,51 @@
+﻿@model NobetGrupGorevTipDetay
+
+@{
+    ViewBag.Title = "Nöbet Grup Görev Tip Detaylar | Nöbet Sistemi";
+}
+
+<h4>Nöbet Grup Görev Tip Detaylar</h4>
+<hr />
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGorevTipAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGrupAdi)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BaslamaTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BaslamaTarihi)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BitisTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BitisTarihi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

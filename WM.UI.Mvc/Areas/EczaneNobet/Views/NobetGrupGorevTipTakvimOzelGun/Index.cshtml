@@ -1,0 +1,238 @@
+﻿@model IEnumerable<NobetGrupGorevTipTakvimOzelGunDetay>
+
+@{
+    ViewBag.Title = "Nöbet Grup Özel Günler | Nöbet Sistemi";
+
+    var postAjaxSecilenleriSil = new AjaxOptions
+    {
+        AllowCache = false,
+
+        Url = Url.Action("SecilenleriSil"),
+        HttpMethod = "POST",
+        UpdateTargetId = "bayramlar",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "loading"
+    };
+
+    var getAjaxSearch = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("SearchWithBayram"),
+        HttpMethod = "GET",
+        UpdateTargetId = "bayramlar",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "loading"
+    };
+}
+
+<div class="row justify-content-between mb-2">
+    <div class="col-md-8 mb-2">
+        <div class="form-inline">
+
+            <h4 class="mr-5">Nöbet Grup Görev Tip Özel Günler</h4>
+
+            <div class="btn-group mr-4">
+                <a class="btn btn-outline-success btn-sm mr-3" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+
+                @using (Ajax.BeginForm(null, null, postAjaxSecilenleriSil, new { @class = "form-inline", id = "formAktif" }))
+                {
+                    <button type="submit" style="display:none" id="delete" class="btn btn-outline-danger btn-sm"
+                            value="Seçilenleri Sil">
+                        Seçilenleri Sil <i class="fa fa-remove"></i>
+                    </button>
+                    @Html.Hidden("NobetGrupGorevTipId")
+                    @Html.Hidden("NobetOzelGunId")
+                    @Html.Hidden("silinecekBayramlar")
+                    @*@Html.Hidden("silinMEyecekBayramlar")*@
+                }
+            </div>
+            <button class="btn btn-dark btn-sm" type="button" id="btnExceleAktar">
+                <i class="fa fa-file-excel-o text-success"></i> Excele Aktar
+                <i class="fa fa-download"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="col-md-4 col-xl-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="text" id="myInput" class="form-control" placeholder="Tabloda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+        </div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-4">
+        <div class="form-inline">
+            @using (Ajax.BeginForm(null, null, getAjaxSearch, new { @class = "form-inline mb-2", id = "formTumu" }))
+            {
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="form-group mr-3">
+                            @Html.DropDownList("NobetGrupGorevTipId", null, htmlAttributes: new
+                       {
+                           @class = "form-control selectpicker",
+                           //@id = "Id",
+                           onchange = "myFunction(event)",
+                           data_width = "auto",
+                           mobile = "true",
+                           data_live_search = "true"
+                       }, optionLabel: "Tüm Gruplar")
+                        </div>
+                        <div class="form-group mr-3">
+                            @Html.DropDownList("NobetOzelGunId", null, htmlAttributes: new
+                       {
+                           @class = "form-control selectpicker",
+                           //@id = "Id",
+                           onchange = "myFunction(event)",
+                           data_width = "auto",
+                           mobile = "true",
+                           data_live_search = "true"
+                       }, optionLabel: "Tüm Bayram Türleri")
+                        </div>
+                        <div class="form-group mr-3">
+                            <span class="input-group-btn">
+                                <button type="submit" id="submitSorgula" class="btn btn-primary my-2 pull-right"><i class="fa fa-search"></i> Sorgula</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="spinner-border text-primary" role="status" style="display:none" id="loading">
+    <span class="sr-only">Loading...</span>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div id="silinenBayramlar">
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div id="bayramlar">
+            @*@{
+                    Html.RenderAction("EczaneNobetMazeretPartialView", "EczaneNobetMazeret");
+                }*@
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/pager")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+
+    <script>
+
+        $("#checkAll").click(function () {
+            $(".checkBox").prop('checked',
+                $(this).prop('checked'));
+        });
+
+        $(document).ready(function () {
+        
+                $("#myInput").on("keyup", function () {
+
+                    var value = $(this).val().toLocaleLowerCase('tr-TR');
+
+                    $("#ozelTakvimTablo tr").filter(function () {
+                        $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                    });
+                    
+                    if ($(this).val().length == 0) {
+                        getPaging(currentPage)
+                    }
+                });
+
+                $('#btnExceleAktar').click(function () {
+                    // alert('ConfirmSubmit')
+                    $("#gridT > tbody > tr").each(function (i, el) {
+                        $(this).css('display', 'table-row');
+                    });
+                    exportToExcel();
+                    //location.reload();
+                    //sayfalamaYap(model, 15);
+                });
+                function exportToExcel() {
+                    var htmls = "";
+                    var uri = 'data:application/vnd.ms-excel;base64,';
+                    var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+                    var base64 = function (s) {
+                        return window.btoa(unescape(encodeURIComponent(s)))
+                    };
+
+                    var format = function (s, c) {
+                        return s.replace(/{(\w+)}/g, function (m, p) {
+                            return c[p];
+                        })
+                    };
+
+                    htmls = $("table").html();
+
+                    var ctx = {
+                        worksheet: 'Worksheet',
+                        table: htmls
+                    }
+
+                    var link = document.createElement("a");
+                    link.download = "ozelTakvim.xls";
+                    link.href = uri + base64(format(template, ctx));
+                    link.click();
+                }
+        });
+
+        $("#submitSorgula").click(function (e) {
+            $("#delete").show();
+        });
+
+        $("#delete").click(function (e) {
+            //alert('aktif.click');
+            //var selectedIDs = new Array();
+            var selectedIDs = new Array();
+            var unseletedeIDs = new Array();
+
+            $('input:checkbox.checkBox').each(function () {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+                }
+                else {
+                    unseletedeIDs.push($(this).val());
+                }
+            });
+
+            //alert('aktif.click 2');
+            secilenBayramSayisi = selectedIDs.length;
+
+            if (secilenBayramSayisi == 0) {
+                alert("Lütfen en az 1 bayram seçiniz.")
+                e.preventDefault();
+                return false;
+            }
+            //$('#formModelCoz #NobetUstGrupId').val($('#formNobetUstGrup #NobetUstGrupId').val());
+
+            $("#formAktif #NobetGrupGorevTipId").val($("#formTumu #NobetGrupGorevTipId").val());
+            $("#formAktif #NobetOzelGunId").val($("#formTumu #NobetOzelGunId").val());
+
+            $("#silinecekBayramlar").val(selectedIDs);
+            $("#silinMEyecekBayramlar").val(unseletedeIDs);
+
+            return confirm("Seçilen kayıtları (" + secilenBayramSayisi + ") kalıcı olarak silmek istediğinizden emin misiniz?");
+
+            //alert('selectedIDs :' + selectedIDs);
+        });
+
+    </script>
+}

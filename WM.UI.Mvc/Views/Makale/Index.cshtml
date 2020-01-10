@@ -1,0 +1,54 @@
+﻿
+<h2>Makaleler</h2>
+<hr />
+@{
+    var text1 = "Nunc elit dolor, luctus placerat scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio.";
+
+    var text2 = "Ut fusce varius nisl ac ipsum gravida vel pretium tellus tincidunt integer eu augue augue nunc elit dolor, luctus placerat.";
+
+    var text3 = "Scelerisque euismod, iaculis eu lacus nunc mi elit, vehicula ut laoreet ac, aliquam sit amet justo nunc tempor, metus vel placerat suscipit, orci nisl iaculis eros, a tincidunt nisi odio eget lorem nulla condimentum tempor mattis ut vitae feugiat augue.";
+}
+<div class="card-deck">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Card title</h4>
+
+            <p class="card-text"> @(text1.Length > 100 ? text1.Substring(0, 100) + "..." : text1) </p>
+            <a href="#" class="btn btn-primary">more</a>
+        </div>
+        <div class="card-footer text-muted">
+            <a href="#" class="badge badge-success">tag1</a>&nbsp;
+            <a href="#" class="badge badge-success">tag2</a>&nbsp;
+            <a href="#" class="badge badge-success">tag3</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Card title</h4>
+
+            <p class="card-text"> @(text2.Length > 100 ? text2.Substring(0, 100) + "..." : text2)</p>
+            <a href="#" class="btn btn-primary">more</a>
+        </div>
+        <div class="card-footer text-muted">
+            <a href="#" class="badge badge-danger">tag1</a>&nbsp;
+            <a href="#" class="badge badge-danger">tag2</a>&nbsp;
+            <a href="#" class="badge badge-danger">tag3</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Card title</h4>
+
+            <p class="card-text"> @(text3.Length > 100 ? text3.Substring(0, 100) + "..." : text3)</p>
+            <a href="#" class="btn btn-primary">more</a>
+        </div>
+        <div class="card-footer text-muted">
+            <a href="#" class="badge badge-warning">tag1</a>&nbsp;
+            <a href="#" class="badge badge-warning">tag2</a>&nbsp;
+            <a href="#" class="badge badge-warning">tag3</a>
+        </div>
+    </div>
+
+</div>

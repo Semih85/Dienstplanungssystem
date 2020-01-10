@@ -1,0 +1,124 @@
+﻿@model IEnumerable<AyniGunTutulanNobetDetay>
+
+@{
+    ViewBag.Title = "İkili Eczaneler | Nöbet Sistemi";
+}
+
+<div class="row justify-content-between mb-2">
+    <div class="col-md-4 mb-2">
+        <div class="form-inline">
+            <h4 class="mr-5">İkili Eczaneler</h4>
+            <div class="form-group">
+                @*<a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>*@
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-xl-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="text" id="myInput" class="form-control" placeholder="Tabloda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <a class="btn btn-primary mb-3 mr-3 mr-md-4" id="btnIkiliEczaneleriOlustur"
+           onclick="return confirm('İkili eczaneler oluşturulacak! Emin misiniz?');"
+           href="@Url.Action("IkiliEczaneleriOlustur", null, new { area = "EczaneNobet" })">
+            İkili Eczaneleri Oluştur
+        </a>
+        <a class="btn btn-warning mb-3 mr-3 mr-md-4"
+           onclick="return confirm('Aynı gün nöbet tutan eczane istatistiği güncellenecek! Emin misiniz?');"
+           href="@Url.Action("AyniGunNobetTutanlariTabloyaEkle", null, new { area = "EczaneNobet" })">
+            İstatistiği Güncelle
+        </a>
+
+        <a class="btn btn-danger mb-3"
+           onclick="return confirm('Aynı gün nöbet tutan eczanelerin istatistiği sıfırlanacak! Emin misiniz?');"
+           href="@Url.Action("IkiliEczaneIstatistiginiSifirla", null, new { area = "EczaneNobet" })">
+            İstatistiği Sıfırla
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-3">
+    </div>
+    <div class="col-lg-4">
+        <div id="loading" align="center" style="margin-top: 10%; display:none;">
+            <img src="~/Content/images/orig.gif" />
+        </div>
+    </div>
+    <div class="col-lg-4">
+    </div>
+</div>
+
+@* style="visibility:hidden"
+    table-hover table-striped table-bordered
+*@
+
+@if (ViewBag.AyniGunNobetTutanEczaneler != null)
+{
+    <div class="row justify-content-sm-center">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa fa-check"></i> Aynı gün nöbet tutan eczaneler
+                <span class="badge badge-light">
+                    @ViewBag.AyniGunNobetTutanEczaneler
+                </span> başarılı bir şekilde güncellenmiştir.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ViewBag.SifirlananKayitSayisi != null)
+{
+    <div class="row justify-content-sm-center">
+        <div class="col-12">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa fa-check"></i> Aynı gün nöbet tutan eczanelerin istatistiği
+                <span class="badge badge-light">
+                    @ViewBag.SifirlananKayitSayisi
+                </span> başarılı bir şekilde sıfırlanmıştır.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ViewBag.IkiliEczaneSayisi != null)
+{
+    <div class="row justify-content-sm-center">
+        <div class="col-12">
+            <i class="fa fa-minus"></i> İkili eczane sayısı: 
+            <span class="badge badge-light">
+                @ViewBag.IkiliEczaneSayisi
+            </span>
+        </div>
+    </div>
+}
+
+
+@*<div class="row">
+        <div class="col">
+            <div class="form-inline">
+                <div class="form-group">
+                    @Html.Label("AyniGunNobetSayisi", "Aynı Gün Nöbet  Sayısı: ", htmlAttributes: new { @class = "control-label mr-1" })
+                    @Html.DropDownList("AyniGunNobetSayisi", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+
+
+            </div>
+        </div>
+    </div>*@
+
+

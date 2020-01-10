@@ -1,0 +1,34 @@
+﻿@model EczaneGrupDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detaylar</h2>
+
+<div>
+    <h4>Eczane Grup</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneGrupTanimAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneGrupTanimAdi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.Id }, new { @class = "btn btn-outline-primary" }) 
+    @Html.ActionLink("Eczane Grup Listesi", "Index", null, new { @class = "btn btn-outline-warning" })
+</p>

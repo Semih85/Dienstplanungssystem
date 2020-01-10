@@ -1,0 +1,48 @@
+﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.EczaneNobetSonucDemo
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h5 class="text-danger">Silmek istediğinizden emin misiniz?</h5>
+<div>
+    <h4>EczaneNobetSonucDemo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneNobetGrup.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneNobetGrup.Aciklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Takvim.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Takvim.Aciklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGorevTipId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGorevTipId)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

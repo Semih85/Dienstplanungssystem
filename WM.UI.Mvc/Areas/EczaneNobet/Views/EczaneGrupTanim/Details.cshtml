@@ -1,0 +1,74 @@
+﻿@model EczaneGrupTanimDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EczaneGrupTanim</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetUstGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetUstGrupAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ArdisikNobetSayisi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArdisikNobetSayisi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneGrupTanimTipAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneGrupTanimTipAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BaslangicTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BaslangicTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BitisTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BitisTarihi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

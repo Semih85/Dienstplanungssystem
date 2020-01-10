@@ -1,0 +1,3291 @@
+﻿@model EczaneNobetSonuclarViewModel
+
+@{
+    ViewBag.Title = "Nöbet İstatistik | Nöbet Sistemi";
+    var nobetGruplar = (SelectList)ViewBag.NobetGruplar;
+    int nobetGrup = ViewBag.nobetGrup;
+    int toplamUzunluk = 8500;
+    double sure = 0;
+
+    if (TempData["ModelSure"] != null)
+    {
+        sure = Math.Round((double)TempData["ModelSure"], 1);
+    }
+
+
+    var getAjaxSearch = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("SearchWithBayram"),
+        HttpMethod = "GET",
+        UpdateTargetId = "bayramlar",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "loading"
+    };
+}
+
+<h4>
+    İstatistikler
+    <button class="btn btn-outline-dark btn-sm mx-2" type="button" data-toggle="collapse" data-target="#collapseKriterler" aria-expanded="false" aria-controls="collapseKriterler" style="display:none;" id="filtre">
+        <i class="fa fa-unsorted"></i> Filtre
+    </button>
+    <button class="btn btn-dark btn-sm ml-5 mr-2" type="button" id="btnExceleAktar" style="display:none;" onclick="tableToExcel('testTable', 'Nöbet Yaz')">
+        <i class="fa fa-file-excel-o text-success"></i> Excele Aktar
+        <i class="fa fa-download"></i>
+    </button>
+    <button type="button" id="btnCozumIstatistik" class="btn btn-success btn-sm" style="display:none;">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        İstatistik
+    </button>
+</h4>
+
+@Html.Hidden("sure", Model.EczaneNobetSonuclar.ToplamSure)
+@Html.Hidden("CozumSuresi", Model.EczaneNobetSonuclar.CozumSuresi)
+
+<!-- #region form -->
+<div class="collapse" id="collapseKriterler">
+    <div class="row">
+        <div class="col my-2">
+            @Html.Hidden("sure", sure)
+
+            @*@using (Html.BeginForm("PivotSonuclar", "EczaneNobetSonuc", FormMethod.Post, new { @class = "form-inline" }))*@
+
+            @using (Ajax.BeginForm(null, null, getAjaxSearch, new { @class = "form-inline mb-2", id = "formTumu" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group mr-2">
+                    @Html.DropDownList("nobetGrup", nobetGruplar, htmlAttributes:
+                        new
+                        {
+                            @class = "form-control selectpicker",
+                            data_width = "auto",
+                            mobile = "true",
+                            data_live_search = "true"
+                        },
+                            optionLabel: "Tüm Gruplar")
+                </div>
+
+                <div class="form-group mr-5" id="inputTarihAralik">
+                    <label class="d-none d-md-inline mr-2">Tarih Aralığı</label>
+                    <div class="input-group mr-2" style="width:140px;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
+                                <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
+                            </span>
+                        </div>
+                        @Html.TextBoxFor(model => model.BaslangicTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="input-group" style="width:140px;">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text p-2">
+                                <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
+                                <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
+                            </span>
+                        </div>
+                        @Html.TextBoxFor(model => model.BitisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+
+<div id="wait" style="position:absolute;">
+    <img src='~/Content/images/orig.gif' />
+</div>
+
+<!-- #region raporlar -->
+
+<div class="row" id="raporlar" style="display:none">
+    <div class="col mt-1">
+
+        <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs" id="pills-tab2" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-dagilim-tab" data-toggle="pill" href="#pills-dagilim" role="tab" aria-controls="pills-dagilim" aria-selected="true">Dağılımlar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-gunFarki-tab" data-toggle="pill" href="#pills-gunFarki" role="tab" aria-controls="pills-gunFarki" aria-selected="true">Gün Farkları</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-nobetBorc-tab" data-toggle="pill" href="#pills-nobetBorc" role="tab" aria-controls="pills-nobetBorc" aria-selected="true">
+                        <span class="d-none d-md-inline">Nöbet</span> Borç
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-altGrupTakip-tab" data-toggle="pill" href="#pills-altGrupTakip" role="tab" aria-controls="pills-altGrupTakip" aria-selected="true">
+                        Alt Grup
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link px-md-2 px-lg-3" style="padding-left:9px; padding-right:9px;" id="pills-ayniGuneYazilanlar-tab" data-toggle="pill" href="#pills-ayniGuneYazilanlar" role="tab" aria-controls="pills-ayniGuneYazilanlar" aria-selected="true">
+                        Aynı Gün <span class="d-none d-md-inline">Nöbet</span>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="tab-content mt-2" id="pills-tabContent">
+            <!-- #region dağılımlar -->
+            <div class="tab-pane fade show active" id="pills-dagilim" role="tabpanel" aria-labelledby="pills-dagilim-tab">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-nobetci-tab" data-toggle="pill" href="#pills-nobetci" role="tab" aria-controls="pills-nobetci" aria-selected="true">
+                                        <span class="d-none d-md-inline">Nöbetçi Eczaneler</span>
+                                        <span class="d-md-none">Liste</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-gun-tab" data-toggle="pill" href="#pills-gun" role="tab" aria-controls="pills-gun" aria-selected="false">Gün</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-gunDagilimGrafik-tab" data-toggle="pill" href="#pills-gunDagilimGrafik" role="tab" aria-controls="pills-gunDagilimGrafik" aria-selected="false">
+                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                        Gün
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-ay-tab" data-toggle="pill" href="#pills-ay" role="tab" aria-controls="pills-ay" aria-selected="false">Ay</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-mevsim-tab" data-toggle="pill" href="#pills-mevsim" role="tab" aria-controls="pills-mevsim" aria-selected="false">Mevsim</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-tarih-tab" data-toggle="pill" href="#pills-tarih" role="tab" aria-controls="pills-tarih" aria-selected="false">Tarih</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-gunOzetGrafik-tab" data-toggle="pill" href="#pills-gunOzetGrafik" role="tab" aria-controls="pills-gunOzetGrafik" aria-selected="false">
+                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                        Nöbet Farkı
+                                    </a>
+                                </li>
+                                @if (Model.NobetUstGrupId == 5)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-kalibrasyonluNobet-tab" data-toggle="pill" href="#pills-kalibrasyonluNobet" role="tab" aria-controls="pills-kalibrasyonluNobet" aria-selected="false">
+                                            Kalibrasyonlu <span class="d-none d-md-inline">Nöbet</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="pills-nobetDurumlari-tab" data-toggle="pill" href="#pills-nobetDurumlari" role="tab" aria-controls="pills-nobetDurumlari" aria-selected="false">
+                                            <span class="d-none d-md-inline">Nöbet</span> Durum
+                                        </a>
+                                    </li>
+                                }
+
+                            </ul>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-nobetci" role="tabpanel" aria-labelledby="pills-nobetci-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>
+                                            <span class="mr-4">Nöbetçi Eczane Listesi</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterNobetciEczaneListesi">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
+                                        <div id="nobetciEczaneListesi">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-gun" role="tabpanel" aria-labelledby="pills-gun-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>
+                                            <span class="mr-4">Nöbet Gün Dağılımı</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGostergunDegerDagilim">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
+                                        <div id="gunDegerDagilim">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-gunDagilimGrafik" role="tabpanel" aria-labelledby="pills-gunDagilimGrafik-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>
+                                            <span class="mr-4">Nöbet Gün Dağılım Grafiği</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGostergunDagilimGrafik">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
+                                        <div id="gunDagilimGrafik">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-ay" role="tabpanel" aria-labelledby="pills-ay-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>
+                                            <span class="mr-4">Aylık Nöbet Dağılımı</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterAylikDagilim">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
+                                        <div id="aylikDagilim">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-mevsim" role="tabpanel" aria-labelledby="pills-mevsim-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>
+                                            <span class="mr-4">Mevsimsel Nöbet Dağılımı</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterMevsimDagilim">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
+                                        <div id="mevsimDagilim">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-tarih" role="tabpanel" aria-labelledby="pills-tarih-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>Tarihsel Görünüm</h5>
+                                        <div class="alert alert-info alert-dismissible fade show" role="alert" id="tarihVeriSinirUyari">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i> Aşağıdaki Yıl-Ay, Nöbet Grubu, Gün Grubu vb. alanları seçerek <strong>veriyi sınırlandırınız !!!</strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div id="gunlukDagilim">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-gunOzetGrafik" role="tabpanel" aria-labelledby="pills-gunOzetGrafik-tab">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 pt-3">
+                                        <h5>
+                                            <span class="mr-4">Nöbet Farkları Dağılımı</span>
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGostergunOzetGrafik">
+                                                Alanları Göster
+                                            </button>
+                                        </h5>
+                                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i> Bu grafikte nöbet ve gün grubu bazında <strong>en az/çok nöbet sayıları arasındaki farklar gösterilmektedir!!!</strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div id="gunOzetGrafik">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if (Model.NobetUstGrupId == 5)
+                            {
+                                <div class="tab-pane fade" id="pills-kalibrasyonluNobet" role="tabpanel" aria-labelledby="pills-kalibrasyonluNobet-tab">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 pt-3">
+                                            <h5>
+                                                <span class="mr-4">Kalibrasyonlu Nöbet Dağılımı</span>
+                                                <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterKalibrasyonluDetayli">
+                                                    Alanları Göster
+                                                </button>
+                                            </h5>
+                                            @*<div class="alert alert-info alert-dismissible fade show" role="alert">
+                                                    <i class="fa fa-info-circle" aria-hidden="true"></i> Bu istatistikte eski ve yeni nöbetlerin <strong>2'şer aylık dönemdeki dağılımı gösterilmektedir!!!</strong>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>*@
+                                            <div id="kalibrasyonluDetayli">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="pills-nobetDurumlari" role="tabpanel" aria-labelledby="pills-nobetDurumlari-tab">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 pt-3">
+                                            <h5>
+                                                <span class="mr-4">Nöbet Durumları</span>
+                                                <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterNobetDurumlari">
+                                                    Alanları Göster
+                                                </button>
+                                            </h5>
+                                            @*<div class="alert alert-info alert-dismissible fade show" role="alert">
+                                                    <i class="fa fa-info-circle" aria-hidden="true"></i> Bu istatistikte <strong>nöbet durumlarının dağılımı gösterilmektedir!!!</strong>
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>*@
+                                            <div id="nobetDurumlar">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #endregion -->
+            <!-- #region gün farkları -->
+            <div class="tab-pane fade" id="pills-gunFarki" role="tabpanel" aria-labelledby="pills-gunFarki-tab">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        @*<h5 class="card-title text-center" id="mdo">Gün Farkları</h5>*@
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-gunFarkiGrafik-tab" data-toggle="pill" href="#pills-gunFarkiGrafik" role="tab" aria-controls="pills-gunFarkiGrafik" aria-selected="true">
+                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-ozet-tab" data-toggle="pill" href="#pills-ozet" role="tab" aria-controls="pills-ozet" aria-selected="true">
+                                        <i class="fa fa-table" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-frekans-tab" data-toggle="pill" href="#pills-frekans" role="tab" aria-controls="pills-frekans" aria-selected="false">
+                                        <i class="fa fa-signal" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-dongu-tab" data-toggle="pill" href="#pills-dongu" role="tab" aria-controls="pills-dongu" aria-selected="false">
+                                        <i class="fa fa-repeat" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-detayliArtan-tab" data-toggle="pill" href="#pills-detayliArtan" role="tab" aria-controls="pills-detayliArtan" aria-selected="false">
+                                        <i class="fa fa-list-ul" aria-hidden="true"></i>
+                                        <i class="fa fa-sort-numeric-asc" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-detayliAzalan-tab" data-toggle="pill" href="#pills-detayliAzalan" role="tab" aria-controls="pills-detayliAzalan" aria-selected="false">
+                                        <i class="fa fa-list-ul" aria-hidden="true"></i>
+                                        <i class="fa fa-sort-numeric-desc" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-gunFarkiGrafik" role="tabpanel" aria-labelledby="pills-gunFarkiGrafik-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Gün Farkları Grafiği</h5>
+                                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i> Aşağıdaki diğer (enk., ort., std.sap. vb.) alanları seçerek <strong>istediğiniz türde</strong> sonuçları inceleyebilirsiniz!!!
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div id="gunFarkiGrafik">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-ozet" role="tabpanel" aria-labelledby="pills-ozet-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Gün Farkı Özet Dağılımı</h5>
+                                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i> Aşağıdaki diğer (enk., ort., std.sap. vb.) alanları seçerek <strong>istediğiniz türde</strong> sonuçları inceleyebilirsiniz!!!
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div id="gunFarkiOzet">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-frekans" role="tabpanel" aria-labelledby="pills-frekans-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Gün Farkı Frekans Aralıkları</h5>
+                                        <div id="gunFarkiFrekans">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-dongu" role="tabpanel" aria-labelledby="pills-dongu-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Gün Grup Döngüleri</h5>
+                                        @if (ViewBag.ToplamUzunluk > toplamUzunluk)
+                                        {
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir. Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir. Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        }
+                                        <div id="donguler">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-detayliArtan" role="tabpanel" aria-labelledby="pills-detayliArtan-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        @if (ViewBag.ToplamUzunluk > toplamUzunluk)
+                                        {
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir. Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir. Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        }
+                                        <h5>Gün Farkı Detaylı (Baştan Sona)</h5>
+                                        <div id="gunFarkiDetayli">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-detayliAzalan" role="tabpanel" aria-labelledby="pills-detayliAzalan-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        @if (ViewBag.ToplamUzunluk > toplamUzunluk)
+                                        {
+                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                                Görüntülenmek istenen veri sayısı <strong>@ViewBag.ToplamUzunluk</strong> adettir. Bu tabloda en çok <strong>@toplamUzunluk</strong> adet veri gösterilebilmektedir. Lütfen aşağıdaki seçenekleri kullanarak veriyi sınırlandırınız !!!
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                        }
+                                        <h5>Gün Farkı Detaylı (Sondan Başa)</h5>
+                                        <div id="gunFarkiDetayli2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #endregion -->
+            <!-- #region nöbet borçlar -->
+            <div class="tab-pane fade" id="pills-nobetBorc" role="tabpanel" aria-labelledby="pills-nobetBorc-tab">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-alacakVerecekGrafik-tab" data-toggle="pill" href="#pills-alacakVerecekGrafik" role="tab" aria-controls="pills-alacakVerecekGrafik" aria-selected="true">
+                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-alacakVerecek-tab" data-toggle="pill" href="#pills-alacakVerecek" role="tab" aria-controls="pills-alacakVerecek" aria-selected="true">
+                                        <i class="fa fa-table" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-alacakVerecekListesi-tab" data-toggle="pill" href="#pills-alacakVerecekListesi" role="tab" aria-controls="pills-alacakVerecekListesi" aria-selected="false">
+                                        <i class="fa fa-list-ol" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-planlananVsGerceklesen-tab" data-toggle="pill" href="#pills-planlananVsGerceklesen" role="tab" aria-controls="pills-planlananVsGerceklesen" aria-selected="false">
+                                        <i class="fa fa-list-ol" aria-hidden="true"></i>
+                                        Planlanan Vs Gerceklesen
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-alacakVerecekGrafik" role="tabpanel" aria-labelledby="pills-alacakVerecekGrafik-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Nöbet Borç Alacak/Verecek Grafik</h5>
+                                        <div id="alacakVerecekGrafik">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-alacakVerecek" role="tabpanel" aria-labelledby="pills-alacakVerecek-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Nöbet Borç Alacak/Verecek Özet</h5>
+                                        <div id="alacakVerecekler">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-alacakVerecekListesi" role="tabpanel" aria-labelledby="pills-alacakVerecekListesi-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Nöbet Borç Alacak/Verecek Listesi</h5>
+                                        <div id="alacakVereceklerListe">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-planlananVsGerceklesen" role="tabpanel" aria-labelledby="pills-planlananVsGerceklesen-tab">
+                                <div class="row my-2">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>
+                                            Planlanan ve Gerceklesen Nöbetler
+                                            <button type="button" class="btn btn-warning btn-sm" id="btnAlanlariGizleGosterPlanlananVsGerceklesen">
+                                                Alanları Gizle
+                                            </button>
+                                        </h5>
+                                        <div id="planlananVsGerceklesen">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- #endregion -->
+            <!-- #region alt grup -->
+            <div class="tab-pane fade" id="pills-altGrupTakip" role="tabpanel" aria-labelledby="pills-altGrupTakip-tab">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-altGrup-tab" data-toggle="pill" href="#pills-altGrup" role="tab" aria-controls="pills-altGrup" aria-selected="true">Alt Grup</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-altGrupGunGrupDagilim-tab" data-toggle="pill" href="#pills-altGrupGunGrupDagilim" role="tab" aria-controls="pills-altGrupGunGrupDagilim" aria-selected="false">
+                                        Gün Grup Dağılım
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="pills-altGrupSirali-tab" data-toggle="pill" href="#pills-altGrupSirali" role="tab" aria-controls="pills-altGrupSirali" aria-selected="false">
+                                        Alt Grup Sıralı
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-altGrup" role="tabpanel" aria-labelledby="pills-altGrup-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Alt Grupla Aynı Gün Nöbet Tutma Sayısı</h5>
+                                        <div id="altGrupListesi">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-altGrupGunGrupDagilim" role="tabpanel" aria-labelledby="pills-altGrupGunGrupDagilim-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Alt Grupların Aynı Gün Nöbetlerin Gün Grubu Dağılımı</h5>
+                                        <div id="altGrupGunGrupDagilim">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-altGrupSirali" role="tabpanel" aria-labelledby="pills-altGrupSirali-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Alt Grupla Sıralı Aynı Gün Nöbet Tutma Sayısı</h5>
+                                        <div id="altGrupSirali">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- #endregion -->
+            <!-- #region aynı gün nöbet -->
+            <div class="tab-pane fade" id="pills-ayniGuneYazilanlar" role="tabpanel" aria-labelledby="pills-ayniGuneYazilanlar-tab">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <div class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="pills-ayniGunTumu-tab" data-toggle="pill" href="#pills-ayniGunTumu" role="tab" aria-controls="pills-ayniGunTumu" aria-selected="true">
+                                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link px-md-2 px-lg-3" style="padding-left:8px; padding-right:8px;" id="pills-ayniGunTumuTablo-tab" data-toggle="pill" href="#pills-ayniGunTumuTablo" role="tab" aria-controls="pills-ayniGunTumuTablo" aria-selected="false">
+                                        <i class="fa fa-table" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link px-md-2 px-lg-3" style="padding-left:8px; padding-right:8px;" id="pills-esGrup-tab" data-toggle="pill" href="#pills-esGrup" role="tab" aria-controls="pills-esGrup" aria-selected="false">Eş Grup</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-content" id="pills-tabContent">
+
+                            <div class="tab-pane fade show active" id="pills-ayniGunTumu" role="tabpanel" aria-labelledby="pills-ayniGunTumu-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Tüm Eczanelerin Aynı Gün Nöbet Dağılımı</h5>
+                                        <div id="ayniGunNobetTutanlar">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-ayniGunTumuTablo" role="tabpanel" aria-labelledby="pills-ayniGunTumuTablo-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Tüm Eczanelerin Aynı Gün Nöbet Tutma Sayısı</h5>
+                                        <div id="ayniGunNobetTutanlarTablo">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-esGrup" role="tabpanel" aria-labelledby="pills-esGrup-tab">
+                                <div class="row mt-4">
+                                    <div class="col-sm-12 col-md-12">
+                                        <h5>Aynı Eş Gruptaki Eczanelerin Aynı Gün Nöbet Durumu</h5>
+                                        <div id="DivTablo" class="w-100"></div>
+                                        <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="...">
+                                            <ul class="navbar-nav">
+                                                <li class="nav-link" id="myPaging">
+                                                </li>
+                                            </ul>
+                                            <div class="nav-item">Toplam Kayıt: <span id="toplamKayitSayisi"></span></div>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- #endregion -->
+        </div>
+    </div>
+</div>
+<!-- #endregion -->
+<!-- #region styles -->
+@section styles{
+
+    @Styles.Render("~/bundle/c3/style")
+    @Styles.Render("~/bundle/pivot/style")
+    @Styles.Render("~/bundle/alert_toastr/style")
+    @Styles.Render("~/bundle/bootstrap-select/style")
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+
+    <style>
+        .toast-message {
+            font-weight: bold;
+        }
+
+        .toast {
+            opacity: 1 !important;
+        }
+    </style>
+
+    <style>
+        /*body {
+            font-family: Verdana;
+        }*/
+
+        .c3-line, .c3-focused {
+            stroke-width: 3px !important;
+        }
+
+        .c3-bar {
+            stroke: white !important;
+            stroke-width: 1;
+        }
+
+        .c3 text {
+            font-size: 12px;
+            color: grey;
+        }
+
+        .tick line {
+            stroke: white;
+        }
+
+        .c3-axis path {
+            stroke: grey;
+        }
+
+        .c3-circle {
+            opacity: 1 !important;
+        }
+
+        .c3-xgrid-focus {
+            visibility: hidden !important;
+        }
+    </style>
+}
+<!-- #endregion -->
+<!-- #region scripts -->
+
+@section scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @Scripts.Render("~/bundle/alert_toastr/scripts")
+    @Scripts.Render("~/bundle/d3/scripts")
+    @Scripts.Render("~/bundle/c3/scripts")
+    @Scripts.Render("~/bundle/queryui/scripts")
+    @Scripts.Render("~/bundle/pivot/scripts")
+    @Scripts.Render("~/bundle/c3_renderers/scripts")
+    @Scripts.Render("~/bundle/pager")
+
+    <!-- #region ajax json data -->
+    <script>
+
+        function uyariDivOlustur(mesaj, divId, parentDivId) {
+            var uyariMesaj = "<i class='fa fa-warning'></i> Bu istatistiği görüntülemek için; <strong>" + mesaj + " bulanmamaktadır...</strong>";
+
+            if ($('#' + divId).length === 0) {
+                $('<div/>', {
+                    id: divId,
+                    class: 'alert alert-warning alert-dismissible fade show',
+                    html: uyariMesaj
+                }).appendTo('#' + parentDivId);
+
+                var node = $('<span aria-hidden="true" />').html("&times;");
+                $('<button type="button" class="close" data-dismiss="alert" aria-label="Close" />')
+                    .appendTo('#' + divId)
+                    .append(node);
+            }
+        }
+
+        var urlDagilimlar = '@Url.Action("GetSonuclar")';
+
+        var dagilimlar = null;
+        var dagilimlarFiltreli = null;
+        var gunDagilimiMaxMin = new Array();
+        var gunDagilimiMaxMinFiltreli = null;
+        var gunDagilimiMaxMinTumu = null;
+        var dagilimlarTumu = null;
+        var dagilimlarPivot = new Array();
+        var dagilimlarPlanlananGerceklesen = new Array();
+
+        var dagilimlarPlanlananGerceklesenTumu = null;
+
+        var gunFarklariFrekanslar = new Array();
+        var gunFarklariFrekanslarTumu = null;
+        var gunFarklariFrekanslarFiltreli = null;
+
+        var gunFarklariTumSonuclar = new Array();
+        var gunFarklariTumSonuclarTumu = null;
+        var gunFarklariTumSonuclarFiltreli = null;
+
+        var alacakVerecekLitesi = new Array();
+        var alacakVerecekLitesiTumu = null;
+        var alacakVerecekLitesiFiltreli = null;
+        var dagilimlarPlanlananGerceklesenFiltreli = null;
+
+        var ayniGunNobetTutanEczaneler = new Array();
+        var altGrupAyniGunNobetTutanEczaneler = new Array();
+        var altGrupSiraliAyniGunNobetTutanEczaneler = new Array();
+        var esGrubaAyniGunYazilanNobetler = new Array();
+        var kalibrasyonEslemeliNobetler = new Array();
+        var nobetUstGrupId;
+
+        var pivotAlanlariGosterNobetciListesi = false;
+        var pivotAlanlariGosterGunOzetGrafik = false;
+        var pivotAlanlariGosterGunDagilim = false;
+        var pivotAlanlariGosterGunDagilimGrafikler = false;
+        var pivotAlanlariGosterAyDagilimGrafikler = false;
+        var pivotAlanlariGosterMevsimDagilim = false;
+        var pivotAlanlariGosterKalibrasyonluDetayli = false;
+        var pivotAlanlariGosterNobetDurumlari = false;
+        var pivotAlanlariGosterPlanlanaGerceklesen = true;
+
+        //function getJsonDagilimlarTekli(url) {
+        //    $.ajax({
+        //        dataType: "json",
+        //        url: url,
+        //        type: "get",
+        //        success: function (data) {
+        //            dagilimlar = JSON.parse(JSON.stringify(data));
+        //            //PivotSonuclar
+        //            $.each(dagilimlar, function (index, n) {
+        //                dagilimlarPivot.push({
+        //                    ["Yıl-Ay"]: n.Yıl_Ay,
+        //                    ["Gün"]: n.Gun,
+        //                    ["Gün Tanım"]: n.GunTanim,
+        //                    ["Gün Grup"]: n.GunGrup,
+        //                    ["Nöbet Grubu"]: n.NobetGrubu,
+        //                    Eczane: n.Eczane,
+        //                    Tarih: n.Tarih,
+        //                    ["Mazerete Nöbet"]: n.MazereteNobet
+        //                });
+        //            });
+        //            dagilimlarTumu = dagilimlarPivot;
+        //            nobetciListesi();
+        //        },
+        //        error: function (data) {
+        //            alert('Hata. Veri okunamadı!');
+        //        },
+        //    });
+        //}
+
+        function getJsonDagilimlar(url) {
+            $.ajax({
+                dataType: "json",
+                url: url,
+                type: "get",
+                success: function (data) {
+                    dagilimlar = JSON.parse(JSON.stringify(data));
+
+                    //PivotSonuclar
+                    $.each(dagilimlar.PivotSonuclar, function (index, n) {
+                        dagilimlarPivot.push({
+                            EczaneNobetGrupId: n.EczaneNobetGrupId,
+                            EczaneId: n.EczaneId,
+                            ["NöbetGrupGörevTipId"]: n.NobetGrupGorevTipId,
+                            ["Yıl-Ay"]: n.Yıl_Ay,
+                            ["Yıl"]: n.Yil,
+                            Ay: n.Ay,
+                            Hafta: n.Hafta,
+                            //["Gün"]: n.Gun,
+                            ["Gün Tanım"]: n.GunTanim,
+                            ["Gün Grup"]: n.GunGrup,
+                            ["Görev Tipi"]: n.GorevTipi,
+                            ["Nöbet Grubu"]: n.NobetGrubu,
+                            Eczane: n.Eczane,
+                            Tarih: n.Tarih,
+                            Tarih2: n.Tarih2,
+                            ["Ay İkili"]: n.AyIkili,
+                            Mevsim: n.Mevsim,
+                            //["Mazerete Nöbet"]: n.MazereteNobet,
+                            //["Nöbet Tip"]: n.NobetTipId,
+                            ["Mazeret/İstek"]: n.NobetTipi,
+                            ["Eczane Sonuç"]: n.EczaneSonucAdi,
+                            ["Alt Grup Adı"]: n.NobetAltGrubu,
+
+                            ["Nöbet Durumu"]: n.NobetDurumAdi,
+                            ["Nöbet Durum Tipi"]: n.NobetDurumTipAdi,
+                            ["Nöbet Sayısı"]: 1,
+                            ["Kalibrasyon Değeri"]: n.KalibrasyonDeger,
+                            ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi,
+                            ["Gün Ağırlık"]: n.AgirlikDegeri,
+                            ["Özel Gün"]: n.NobetOzelGunAdi,
+                            ["Özel Gün Ktg."]: n.NobetOzelGunKategoriAdi
+                        });
+                    });
+
+                    dagilimlarTumu = dagilimlarPivot;
+                    nobetUstGrupId = dagilimlar.NobetUstGrupId;
+
+                    nobetciListesi();
+
+                    //PivotSonuclar
+                    $.each(dagilimlar.SonuclarPlanlananVeGercek, function (index, n) {
+                        dagilimlarPlanlananGerceklesen.push({
+                            //EczaneNobetGrupId: n.EczaneNobetGrupId,
+                            //EczaneId: n.EczaneId,
+                            ["NöbetGrupGörevTipId"]: n.NobetGrupGorevTipId,
+                            ["Yıl-Ay"]: n.Yıl_Ay,
+                            ["Yıl"]: n.Yil,
+                            Ay: n.Ay,
+                            //["Gün"]: n.Gun,
+                            ["Gün Tanım"]: n.GunTanim,
+                            ["Gün Grup"]: n.GunGrup,
+                            //["Görev Tipi"]: n.GorevTipi,
+                            ["Nöbet Grubu"]: n.NobetGrubu,
+                            Eczane: n.EczaneAdi,
+                            Tarih: n.TarihAciklama,
+                            Tarih2: n.Tarih2,
+                            ["Ay İkili"]: n.AyIkili,
+                            Mevsim: n.Mevsim,
+                            //["Mazerete Nöbet"]: n.MazereteNobet,
+                            //["Nöbet Tip"]: n.NobetTipId,
+                            ["Mazeret/İstek"]: n.NobetTipi,
+                            ["Eczane Sonuç"]: n.EczaneSonucAdi,
+                            ["Alt Grup Adı"]: n.NobetAltGrubu,
+
+                            //["Nöbet Sayısı"]: 1,
+                            ["Eczane Kapanma Tarihi"]: n.EczaneKapanmaTarihi,
+                            ["Sonuç Türü"]: n.SonucTuru
+                        });
+                    });
+
+                    dagilimlarPlanlananGerceklesenTumu = dagilimlarPlanlananGerceklesen;
+
+                    $.each(dagilimlar.GunDagilimiMaxMin, function (index, n) {
+                        gunDagilimiMaxMin.push({
+                            ["Gün Grup"]: n.GunGrup,
+                            ["Nöbet Grubu"]: n.NobetGrubu,
+                            ["Nöbet Sayısı (En çok)"]: n.NobetSayisiMax,
+                            ["Nöbet Sayısı (En az)"]: n.NobetSayisiMin,
+                            ["Nöbet Sayısı Farkı"]: n.NobetSayisiFarki,
+                            ["Borçlu Gün Sayısı Farkı"]: n.BorcluGunSayisiFarki,
+                            //["Son Nöbet Tarihi"]: n.SonNobetTarihiAciklama
+                        });
+                    });
+
+                    gunDagilimiMaxMinTumu = gunDagilimiMaxMin;
+
+                    //alert(gunDagilimiMaxMin.length)
+                    //gün farkı frekanslar
+                    $.each(dagilimlar.GunFarklariFrekanslar, function (index, n) {
+                        gunFarklariFrekanslar.push({
+                            ["Hafta Farkı"]: n.HaftaFarki,
+                            ["Ay Farkı"]: n.AyFarki,
+                            ["Gün Farkı"]: n.GunFarki,
+                            Eczane: n.EczaneAdi,
+                            ["Gün Grup"]: n.GunGrup,
+                            ["Nöbet Grubu"]: n.NobetGrupAdi,
+                            ["Görev Tipi"]: n.NobetGorevTipAdi,
+                            ["Eczane Sayısı"]: n.FrekanstakiEczaneSayisi,
+                        });
+                    });
+                    gunFarklariFrekanslar = JSON.parse(JSON.stringify(gunFarklariFrekanslar));
+                    gunFarklariFrekanslarTumu = gunFarklariFrekanslar;
+
+                    //gün farkı tüm sonuçlar
+                    $.each(dagilimlar.GunFarklariTumSonuclar, function (index, s) {
+                        gunFarklariTumSonuclar.push({
+                            ["Hafta Farkı"]: s.HaftaFarki,
+                            ["Ay Farkı"]: s.AyFarki,
+                            ["Gün Farkı"]: s.GunFarki,
+                            Index: s.Index,
+                            Nöbet1: s.Nobet1,
+                            N1Yıl: s.Nobet1Yil,
+                            N1Ay: s.Nobet1Ay,
+                            N1Gun: s.Nobet1Gun,
+
+                            Nöbet2: s.Nobet2,
+                            N2Yıl: s.Nobet2Yil,
+                            N2Ay: s.Nobet2Ay,
+                            N2Gun: s.Nobet2Gun,
+                            Eczane: s.EczaneAdi,
+                            ["Gün Grup"]: s.GunGrup,
+                            ["Görev Tipi"]: s.NobetGorevTipAdi,
+                            ["Nöbet Grubu"]: s.NobetGrupAdi
+                        });
+                    });
+                    gunFarklariTumSonuclar = JSON.parse(JSON.stringify(gunFarklariTumSonuclar));
+                    gunFarklariTumSonuclarTumu = gunFarklariTumSonuclar;
+
+                    //eczane nöbet alacak verecek
+                    $.each(dagilimlar.EczaneNobetAlacakVerecek, function (index, s) {
+                        alacakVerecekLitesi.push({
+                            Eczane: s.EczaneAdi,
+                            //AnahtarSıra: s.AnahtarSıra,
+                            ["Gün Grup"]: s.GunGrup,
+                            ["Nöbet Grubu"]: s.NobetGrupId + ' ' + s.NobetGrupAdi,
+                            AnahtarTarih: s.AnahtarTarihAciklama,
+                            ["Borç Durumu"]: borcDurum(s.BorcluGunSayisi),
+                            BorçluGünSayısı: s.BorcluGunSayisi,
+                            NöbetSayısı: s.NobetSayisi,
+                            SonNöbetTarihi: s.SonNobetTarihiAciklama
+                        });
+                    });
+                    alacakVerecekLitesi = JSON.parse(JSON.stringify(alacakVerecekLitesi));
+                    alacakVerecekLitesiTumu = alacakVerecekLitesi;
+
+                    function borcDurum(borcSayisi) {
+
+                        var borcluGunSayisi = parseFloat(borcSayisi);
+
+                        if (borcluGunSayisi == 0) {
+                            return "Borç/alacak yok."
+                        }
+                        else if (borcluGunSayisi > 0) {
+                            return "Sistemden alacaklı"
+                        }
+                        else {
+                            return "Sisteme borçlu"
+                        }
+                    }
+                    //aynı Gün Nöbet Tutan Eczaneler
+                    //alert(dagilimlar.AltGrupAyniGunNobetTutanEczaneler.length)
+                    $.each(dagilimlar.AyniGunNobetTutanEczaneler, function (index, s) {
+                        ayniGunNobetTutanEczaneler.push({
+                            G1Eczane: s.G1Eczane,
+                            G2Eczane: s.G2Eczane,
+                            Grup: s.Grup,
+                            ["Alt Grup"]: s.AltGrupAdi,
+                            AynıGünNöbetSayısı: s.AyniGunNobetSayisi,
+                            ["Son Nöbet Tarihi"]: s.TarihAciklama,
+                            ["Yıl-Ay"]: s.YilAy
+                        });
+                    });
+                    ayniGunNobetTutanEczaneler = JSON.parse(JSON.stringify(ayniGunNobetTutanEczaneler));
+
+                    var altGrup = $.grep(dagilimlar.AltGrupAyniGunNobetTutanEczaneler, function (n, i) {
+                        return n.AltGrupAdi != "Kendisi";
+                    });
+
+                    //alt grupla aynı Gün Nöbet Tutan Eczaneler
+                    $.each(altGrup, function (index, s) {
+                        altGrupAyniGunNobetTutanEczaneler.push({
+                            G1Eczane: s.G1Eczane,
+                            G2Eczane: s.G2Eczane,
+                            Grup: s.Grup,
+                            AltGrup: s.AltGrupAdi,
+                            AynıGünNöbetSayısı: s.AyniGunNobetSayisi,
+                            //Tarih: s.Tarih.toDateString("yyy MM dd, ddd"),
+                            //Yıl_Ay: $.datepicker.formatDate('yyyyMM', s.Tarih),
+                            //Tarih = String.Format("{0:yyy MM dd, ddd}", s.Tarih),
+                            //Yıl_Ay = Convert.ToInt32(String.Format("{0:yyyyMM}", s.Tarih)),
+                            //["Gün Grup"] : s.GunGrup
+                        });
+                    });
+                    altGrupAyniGunNobetTutanEczaneler = JSON.parse(JSON.stringify(altGrupAyniGunNobetTutanEczaneler));
+
+                    //alt grup sirali aynı Gün Nöbet Tutan Eczaneler
+                    $.each(altGrup, function (index, s) {
+                        altGrupSiraliAyniGunNobetTutanEczaneler.push({
+                            G1Eczane: s.G1Eczane,
+                            G2Eczane: s.G2Eczane,
+                            Grup: s.Grup,
+                            AltGrup: s.AltGrupAdi,
+                            AynıGünNöbetSayısı: s.AyniGunNobetSayisi,
+                            Tarih: s.TarihAciklama,
+                            ["Gün Grup"]: s.GunGrup,
+                            ["Yıl-Ay"]: s.YilAy
+                        });
+                    });
+                    altGrupSiraliAyniGunNobetTutanEczaneler = JSON.parse(JSON.stringify(altGrupSiraliAyniGunNobetTutanEczaneler));
+
+                    //eş grup
+                    esGrubaAyniGunYazilanNobetler = JSON.parse(JSON.stringify(dagilimlar.EsGrubaAyniGunYazilanNobetler));
+
+                    //kalibrasyon Eslemeli Nobetler
+                    kalibrasyonEslemeliNobetler = JSON.parse(JSON.stringify(dagilimlar.KalibrasyonluToplamlar));
+                },
+                error: function (data) {
+                    alert('Hata. Veri okunamadı!');
+                },
+            });
+        }
+    </script>
+    <!-- #endregion -->
+    <!-- #region dağılımlar -->
+    <script type="text/javascript">
+
+        $('#pills-dagilim-tab').click(function () {
+            $('#inputTarihAralik').show();
+
+            if ($("#pills-nobetci-tab").hasClass("active")) {
+                $('#btnExceleAktar').show();
+                if (nobetciEczaneler != null) {
+                    nobetciEczaneler;
+                }
+                else {
+                    nobetciListesi();
+                }
+            }
+            else if ($("#pills-gunOzetGrafik-tab").hasClass("active")) {
+                $('#btnExceleAktar').hide();
+                if (gunDagilimiMaxMin != null) {
+                    gunDagilimiMaxMin;
+                }
+                else {
+                    gunGrafikOlustur();
+                }
+            }
+            else if ($("#pills-gunDagilimGrafik-tab").hasClass("active")) {
+                $('#btnExceleAktar').hide();
+                if (gunDagilim2 != null) {
+                    gunDagilim2;
+                }
+                else {
+                    gunDagilimGrafikler();
+                }
+            }
+            else if ($("#pills-gun-tab").hasClass("active")) {
+                $('#btnExceleAktar').hide();
+                if (gunDagilim != null) {
+                    gunDagilim;
+                }
+                else {
+                    gunDagilimlar();
+                }
+            }
+            else if ($("#pills-ay-tab").hasClass("active")) {
+                $('#btnExceleAktar').hide();
+                if (ayDagilim != null) {
+                    ayDagilim;
+                }
+                else {
+                    ayDagilimlar();
+                }
+            }
+            else if ($("#pills-mevsim-tab").hasClass("active")) {
+                $('#btnExceleAktar').hide();
+                if (mevsimDagilim != null) {
+                    mevsimDagilim;
+                }
+                else {
+                    mevsimDagilimlar();
+                }
+            }
+            else if ($("#pills-tarih-tab").hasClass("active")) {
+                $('#btnExceleAktar').hide();
+                if (tarihDagilim != null) {
+                    tarihDagilim;
+                }
+                else {
+                    tarihDagilimlar();
+                }
+            }
+            else if ($("#pills-kalibrasyonluDetayli-tab").hasClass("active")) {
+                $('#btnExceleAktar').hide();
+                if (kalibrasyonluNobetDagilim != null) {
+                    kalibrasyonluNobetDagilim;
+                }
+                else {
+                    kalibrasyonluNobetDagilimlar();
+                }
+            }
+            else if ($("#pills-nobetDurumlari-tab").hasClass("active")) {
+                $('#btnExceleAktar').hide();
+                if (nobetDurumDagilim != null) {
+                    nobetDurumDagilim;
+                }
+                else {
+                    nobetDurumTabloOlustur();
+                }
+            }
+        });
+
+        $('#btnAlanlariGizleGosterNobetciEczaneListesi').click(function () {
+            //alert(pivotAlanlariGosterNobetciListesi)
+            if (pivotAlanlariGosterNobetciListesi) {
+                pivotAlanlariGosterNobetciListesi = false;
+                $('#btnAlanlariGizleGosterNobetciEczaneListesi').text("Alanları Göster")
+            }
+            else {
+                pivotAlanlariGosterNobetciListesi = true;
+                $('#btnAlanlariGizleGosterNobetciEczaneListesi').text("Alanları Gizle")
+            }
+            nobetciListesi();
+        });
+
+        $('#btnAlanlariGizleGostergunOzetGrafik').click(function () {
+            //alert(pivotAlanlariGosterNobetciListesi)
+            if (pivotAlanlariGosterGunOzetGrafik) {
+                pivotAlanlariGosterGunOzetGrafik = false;
+                $('#btnAlanlariGizleGostergunOzetGrafik').text("Alanları Göster")
+            }
+            else {
+                pivotAlanlariGosterGunOzetGrafik = true;
+                $('#btnAlanlariGizleGostergunOzetGrafik').text("Alanları Gizle")
+            }
+            gunGrafikOlustur();
+        });
+
+        $('#btnAlanlariGizleGostergunDegerDagilim').click(function () {
+            //alert(pivotAlanlariGosterNobetciListesi)
+            if (pivotAlanlariGosterGunDagilim) {
+                pivotAlanlariGosterGunDagilim = false;
+                $('#btnAlanlariGizleGostergunDegerDagilim').text("Alanları Göster")
+            }
+            else {
+                $('#btnAlanlariGizleGostergunDegerDagilim').text("Alanları Gizle")
+                pivotAlanlariGosterGunDagilim = true;
+            }
+            gunDagilimlar();
+        });
+
+        $('#btnAlanlariGizleGostergunDagilimGrafik').click(function () {
+            //alert(pivotAlanlariGosterNobetciListesi)
+            if (pivotAlanlariGosterGunDagilimGrafikler) {
+                pivotAlanlariGosterGunDagilimGrafikler = false;
+                $('#btnAlanlariGizleGostergunDagilimGrafik').text("Alanları Göster")
+            }
+            else {
+                $('#btnAlanlariGizleGostergunDagilimGrafik').text("Alanları Gizle")
+                pivotAlanlariGosterGunDagilimGrafikler = true;
+            }
+            gunDagilimGrafikler();
+        });
+
+        $('#btnAlanlariGizleGosterAylikDagilim').click(function () {
+            //alert(pivotAlanlariGosterNobetciListesi)
+            if (pivotAlanlariGosterAyDagilimGrafikler) {
+                pivotAlanlariGosterAyDagilimGrafikler = false;
+                $('#btnAlanlariGizleGosterAylikDagilim').text("Alanları Göster")
+            }
+            else {
+                $('#btnAlanlariGizleGosterAylikDagilim').text("Alanları Gizle")
+                pivotAlanlariGosterAyDagilimGrafikler = true;
+            }
+            ayDagilimlar();
+        });
+
+        $('#btnAlanlariGizleGosterMevsimDagilim').click(function () {
+            //alert(pivotAlanlariGosterNobetciListesi)
+            if (pivotAlanlariGosterMevsimDagilim) {
+                pivotAlanlariGosterMevsimDagilim = false;
+                $('#btnAlanlariGizleGosterMevsimDagilim').text("Alanları Göster")
+            }
+            else {
+                $('#btnAlanlariGizleGosterMevsimDagilim').text("Alanları Gizle")
+                pivotAlanlariGosterMevsimDagilim = true;
+            }
+            mevsimDagilimlar();
+        });
+
+        $('#btnAlanlariGizleGosterKalibrasyonluDetayli').click(function () {
+            //alert(pivotAlanlariGosterNobetciListesi)
+            if (pivotAlanlariGosterKalibrasyonluDetayli) {
+                pivotAlanlariGosterKalibrasyonluDetayli = false;
+                $('#btnAlanlariGizleGosterKalibrasyonluDetayli').text("Alanları Göster")
+            }
+            else {
+                $('#btnAlanlariGizleGosterKalibrasyonluDetayli').text("Alanları Gizle")
+                pivotAlanlariGosterKalibrasyonluDetayli = true;
+            }
+            kalibrasyonluNobetDagilimlar();
+        });
+
+        $('#btnAlanlariGizleGosterNobetDurumlari').click(function () {
+            //alert(pivotAlanlariGosterNobetciListesi)
+            if (pivotAlanlariGosterNobetDurumlari) {
+                pivotAlanlariGosterNobetDurumlari = false;
+                $('#btnAlanlariGizleGosterNobetDurumlari').text("Alanları Göster")
+            }
+            else {
+                $('#btnAlanlariGizleGosterNobetDurumlari').text("Alanları Gizle")
+                pivotAlanlariGosterNobetDurumlari = true;
+            }
+            nobetDurumTabloOlustur();
+        });
+
+        var tpl = $.pivotUtilities.aggregatorTemplates;
+
+        var sum = tpl.sum;
+        var numberFormat = $.pivotUtilities.numberFormat;
+        var intFormat = numberFormat({ digitsAfterDecimal: 0 });
+
+        var pivotAggregators = {
+            //"Nöbet #": function () { return tpl.count()() }
+            //"Average": function () { return tpl.average()(["Age"]) }
+            "Say": $.pivotUtilities.aggregators['Say'],
+            "Benzersiz Değerleri Say": $.pivotUtilities.aggregators['Benzersiz Degerleri Say'],
+            "Benzersiz Değerleri Listele": $.pivotUtilities.aggregators['Benzersiz Degerleri Listele'],
+            "Topla": $.pivotUtilities.aggregators['Topla'],
+            "Topla (Tamsayı)": $.pivotUtilities.aggregators['Topla (Tamsayi)'],
+            "Ortalama": $.pivotUtilities.aggregators['Ortalama'],
+            "En Az": $.pivotUtilities.aggregators['En Az'],
+            "En Fazla": $.pivotUtilities.aggregators['En Fazla'],
+            "Örneklem Varyansı": $.pivotUtilities.aggregators['Orneklem Varyansi'],
+            "Örneklem Standart Sapması": $.pivotUtilities.aggregators['Orneklem Standart Sapmasi'],
+            "İlk": $.pivotUtilities.aggregators['Ilk'],
+            "Son": $.pivotUtilities.aggregators['Son'],
+            "Genel Toplam % (Topla)": $.pivotUtilities.aggregators['Genel Toplam % (Topla)'],
+            "Satır Toplam % (Topla)": $.pivotUtilities.aggregators['Satir Toplam % (Topla)'],
+            "Sütun Toplam % (Topla)": $.pivotUtilities.aggregators['Sutun Toplam % (Topla)'],
+            "Genel Toplam % (Say)": $.pivotUtilities.aggregators['Genel Toplam % (Say)'],
+            "Satır Toplam % (Say)": $.pivotUtilities.aggregators['Satir Toplam % (Say)'],
+            "Sütun Toplam % (Say)": $.pivotUtilities.aggregators['Sutun Toplam % (Say)'],
+        };
+
+        var pivotRenderers = {
+            "Tablo": $.pivotUtilities.renderers['Tablo'],
+            "Tablo Çubuk Grafik": $.pivotUtilities.renderers['Tablo Cubuk Grafik'],
+            "Sıcaklık Haritası": $.pivotUtilities.renderers['Sicaklik Haritasi'],
+            "Sıcaklık Haritası (Satır)": $.pivotUtilities.renderers['Satir Sicaklik Haritasi'],
+            "Sıcaklık Haritası (Sütun)": $.pivotUtilities.renderers['Sutun Sicaklik Haritasi'],
+        };
+
+        var pivotRenderersGrafik = {
+            "Çubuk Grafik": $.pivotUtilities.c3_renderers['Cubuk Grafik'],
+            "Yığılmış Çubuk Grafik": $.pivotUtilities.c3_renderers['Yigilmis Cubuk Grafik'],
+            "Sütun Grafik": $.pivotUtilities.c3_renderers['Sutun Grafik'],
+            "Yığılmış Sütun Grafik": $.pivotUtilities.c3_renderers['Yigilmis Sutun Grafik'],
+            "Çizgi Grafik": $.pivotUtilities.c3_renderers['Cizgi Grafik'],
+            "Yüzey Grafik": $.pivotUtilities.c3_renderers['Yuzey Grafik'],
+            "Dağılım Grafiği": $.pivotUtilities.c3_renderers['Dagilim Grafigi'],
+        };
+
+        //nöbetçi eczane listesi
+        var nobetciEczaneler;
+        const nobetciListesi = () => {
+
+            //pivotAlanlariGosterNobetciListesi = pivotAlanlariGoster;
+            if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
+                //alert("nobetciListesi")
+                //alert(nobetUstGrupId)
+                var pivotCols = ["Nöbet Grubu"];
+
+                if (nobetUstGrupId == 4) {
+                    pivotCols = ["Görev Tipi"];
+                }
+
+                nobetciEczaneler = $("#nobetciEczaneListesi").pivotUI(dagilimlarPivot, {
+                    rows: ["Yıl-Ay", "Tarih", "Gün Grup"],
+                    cols: pivotCols,
+                    vals: ["Eczane"],
+                    aggregatorName: "Benzersiz Değerleri Listele",
+                    aggregators: pivotAggregators,
+                    //rendererName: "Table",
+                    renderers: pivotRenderers,
+                    onRefresh: function (config) {
+                        $("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                        //alert(0)
+                        if (pivotAlanlariGosterNobetciListesi == false) {
+                            $("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+                            $("#nobetciEczaneListesi").parent().find('.pvtAxisContainer').hide();
+                            $("#nobetciEczaneListesi").parent().find('.pvtAttrDropdown').hide();
+                            $("#nobetciEczaneListesi").parent().find('.pvtRenderer').hide();
+                            $("#nobetciEczaneListesi").parent().find('.pvtVals').hide();
+                        }
+                        else {
+                            $("#nobetciEczaneListesi").parent().find('.pvtAggregator').show();
+                            $("#nobetciEczaneListesi").parent().find('.pvtAxisContainer').show();
+                            $("#nobetciEczaneListesi").parent().find('.pvtAttrDropdown').show();
+                            $("#nobetciEczaneListesi").parent().find('.pvtRenderer').show();
+                            $("#nobetciEczaneListesi").parent().find('.pvtVals').show();
+                        }
+
+                        //$('#nobetciEczaneListesi .pvtAttrDropdown option').each(function () {
+                        //    //$(this).hide();
+                        //    if ($(this).val() != "Eczane") {
+                        //        $(this).remove();
+                        //    }
+                        //    //else {
+                        //    //    $(this).text("Liste");
+                        //    //}
+                        //});
+                    }
+                }
+                    //   , false, "fr"
+                );
+            }
+            else {
+                //nobetciEczaneler;
+                var mesaj = 'Nöbet listesi';
+                var divId = 'divUyariNobetciEczaneListesi';
+                var parentDivId = 'nobetciEczaneListesi';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert(mesaj);
+                //alert('Nöbetçi eczane listesi yok.');
+            }
+        }
+        $('#pills-nobetci-tab').click(function () {
+            $('#btnExceleAktar').show();
+            if (nobetciEczaneler != null) {
+                nobetciEczaneler;
+            }
+            else {
+                nobetciListesi();
+            }
+        });
+
+        //gün dağılım
+        var gunDagilim;
+        function gunDagilimlar() {
+            if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
+
+                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotCols = ["Gün Grup"];
+                var pivotRendererName = "Sıcaklık Haritası";
+
+                if (nobetUstGrupId == 4) {
+                    pivotRows = ["Eczane"];
+                    pivotCols = ["Görev Tipi", "Gün Grup"];
+                }
+                else if (nobetUstGrupId == 5) {
+                    pivotRows = ["Eczane"];
+                    pivotCols = ["Gün Grup"];
+                    pivotRendererName = "Sıcaklık Haritası (Sütun)"
+                }
+
+                gunDagilim = $(function table2() {
+                    $("#gunDegerDagilim").pivotUI(dagilimlarPivot,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols, //, "GunDeger", "GunTanim"
+                            vals: ["Eczane"],
+                            aggregatorName: "Say",
+                            aggregators: pivotAggregators,
+                            renderers: pivotRenderers,
+                            rendererName: pivotRendererName,
+                            onRefresh: function (config) {
+                                //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                if (pivotAlanlariGosterGunDagilim == false) {
+                                    $("#gunDegerDagilim").parent().find('.pvtAxisContainer').hide();
+                                    $("#gunDegerDagilim").parent().find('.pvtAttrDropdown').hide();
+                                    $("#gunDegerDagilim").parent().find('.pvtRenderer').hide();
+                                    $("#gunDegerDagilim").parent().find('.pvtVals').hide();
+                                }
+                                else {
+                                    $("#gunDegerDagilim").parent().find('.pvtAxisContainer').show();
+                                    $("#gunDegerDagilim").parent().find('.pvtAttrDropdown').show();
+                                    $("#gunDegerDagilim").parent().find('.pvtRenderer').show();
+                                    $("#gunDegerDagilim").parent().find('.pvtVals').show();
+                                }
+                            }
+                        }
+                    );
+                });
+            }
+            else {
+                var mesaj = 'Gün dağılımı listesi';
+                var divId = 'divUyariGunDegerDagilim';
+                var parentDivId = 'gunDegerDagilim';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Gün dağılımı listesi yok.');
+            }
+        }
+        $('#pills-gun-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (gunDagilim != null) {
+                gunDagilim;
+            }
+            else {
+                gunDagilimlar();
+            }
+        });
+
+        //gün dağılım grafik
+        var gunGrafik2;
+        function gunDagilimGrafikler() {
+            if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
+
+                var pivotRows = ["Gün Grup"];
+                var pivotCols = ["NöbetGrupGörevTipId", "Eczane"];
+
+                if (nobetUstGrupId == 5 // osmaniye
+                    || nobetUstGrupId == 6//bartın
+                ) {
+                    pivotCols = ["Eczane"];
+                }
+
+                gunGrafik2 = $(function table2() {
+                    $("#gunDagilimGrafik").pivotUI(dagilimlarPivot,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols, //, "GunDeger", "GunTanim"
+                            vals: ["Eczane"],
+                            aggregatorName: "Say",
+                            aggregators: pivotAggregators,
+                            rendererName: "Yığılmış Sütun Grafik",
+                            renderers: $.extend(
+                                pivotRenderers,
+                                pivotRenderersGrafik
+                            ),
+                            onRefresh: function (config) {
+                                //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                if (pivotAlanlariGosterGunDagilimGrafikler == false) {
+                                    $("#gunDagilimGrafik").parent().find('.pvtAxisContainer').hide();
+                                    $("#gunDagilimGrafik").parent().find('.pvtAttrDropdown').hide();
+                                    $("#gunDagilimGrafik").parent().find('.pvtRenderer').hide();
+                                    $("#gunDagilimGrafik").parent().find('.pvtVals').hide();
+                                }
+                                else {
+                                    $("#gunDagilimGrafik").parent().find('.pvtAxisContainer').show();
+                                    $("#gunDagilimGrafik").parent().find('.pvtAttrDropdown').show();
+                                    $("#gunDagilimGrafik").parent().find('.pvtRenderer').show();
+                                    $("#gunDagilimGrafik").parent().find('.pvtVals').show();
+                                }
+                            }
+                        }
+                    );
+                });
+
+            }
+            else {
+                var mesaj = 'Gün dağılımı listesi';
+                var divId = 'divUyariGunDegerDagilim';
+                var parentDivId = 'gunDagilimGrafik';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Gün dağılımı listesi yok.');
+            }
+        }
+        $('#pills-gunDagilimGrafik-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (gunGrafik2 != null) {
+                gunGrafik2;
+            }
+            else {
+                gunDagilimGrafikler();
+            }
+        });
+
+        //gün dağılım grafik - özet grafik - max min
+        var gunGrafik;
+        function gunGrafikOlustur() {
+            if (gunDagilimiMaxMin != null && gunDagilimiMaxMin.length > 0) {
+                gunGrafik = $(function table2() {
+                    $("#gunOzetGrafik").pivotUI(gunDagilimiMaxMin,
+                        {
+                            rows: ["Gün Grup"],
+                            cols: ["Nöbet Grubu"], //, "GunDeger", "GunTanim"
+                            vals: ["Nöbet Sayısı Farkı"],
+                            aggregatorName: "Topla (Tamsayı)",
+                            aggregators: pivotAggregators,
+                            rendererName: "Yığılmış Sütun Grafik",
+                            renderers: $.extend(
+                                pivotRenderers,
+                                pivotRenderersGrafik
+                            ),
+                            onRefresh: function (config) {
+                                //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                if (pivotAlanlariGosterGunOzetGrafik == false) {
+                                    $("#gunOzetGrafik").parent().find('.pvtAxisContainer').hide();
+                                    $("#gunOzetGrafik").parent().find('.pvtAttrDropdown').hide();
+                                    $("#gunOzetGrafik").parent().find('.pvtRenderer').hide();
+                                    $("#gunOzetGrafik").parent().find('.pvtVals').hide();
+                                }
+                                else {
+                                    $("#gunOzetGrafik").parent().find('.pvtAxisContainer').show();
+                                    $("#gunOzetGrafik").parent().find('.pvtAttrDropdown').show();
+                                    $("#gunOzetGrafik").parent().find('.pvtRenderer').show();
+                                    $("#gunOzetGrafik").parent().find('.pvtVals').show();
+                                }
+                            }
+                        }
+                    );
+                });
+            }
+            else {
+                var mesaj = 'Gün dağılım grafiği';
+                var divId = 'divUyariGunDagilimGrafik';
+                var parentDivId = 'gunOzetGrafik';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Gün dağılımı listesi yok.');
+            }
+        }
+        $('#pills-gunOzetGrafik-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (gunGrafik != null) {
+                gunGrafik;
+            }
+            else {
+                gunGrafikOlustur();
+            }
+        });
+
+        //ay dağılım
+        var ayDagilim;
+        function ayDagilimlar() {
+            if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
+
+                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotCols = ["Yıl-Ay"];
+
+                if (nobetUstGrupId == 4) {
+                    pivotRows = ["Görev Tipi", "Eczane"];
+                }
+                else if (nobetUstGrupId == 5) {
+                    pivotRows = ["Eczane"];
+                }
+
+                ayDagilim = $(function table3() {
+                    $("#aylikDagilim").pivotUI(dagilimlarPivot,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols,
+                            vals: ["Nöbet Grubu"],
+                            aggregatorName: "Say",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası",
+                            renderers: pivotRenderers,
+                            onRefresh: function (config) {
+                                //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                if (pivotAlanlariGosterAyDagilimGrafikler == false) {
+                                    $("#aylikDagilim").parent().find('.pvtAxisContainer').hide();
+                                    $("#aylikDagilim").parent().find('.pvtAttrDropdown').hide();
+                                    $("#aylikDagilim").parent().find('.pvtRenderer').hide();
+                                    $("#aylikDagilim").parent().find('.pvtVals').hide();
+                                }
+                                else {
+                                    $("#aylikDagilim").parent().find('.pvtAxisContainer').show();
+                                    $("#aylikDagilim").parent().find('.pvtAttrDropdown').show();
+                                    $("#aylikDagilim").parent().find('.pvtRenderer').show();
+                                    $("#aylikDagilim").parent().find('.pvtVals').show();
+                                }
+                            }
+                        }
+                    );
+                });
+
+            }
+            else {
+                var mesaj = 'Ay dağılımı listesi';
+                var divId = 'divUyariAylikDagilim';
+                var parentDivId = 'aylikDagilim';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Ay dağılımı listesi yok.');
+            }
+        }
+        $('#pills-ay-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (ayDagilim != null) {
+                ayDagilim;
+            }
+            else {
+                ayDagilimlar();
+            }
+        });
+
+        //mevsim dağılım
+        var mevsimDagilim;
+        function mevsimDagilimlar() {
+            if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
+
+                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotCols = ["Gün Grup", "Mevsim"];
+
+                if (nobetUstGrupId == 4) {
+                    pivotRows = ["Görev Tipi", "Eczane"];
+                    //pivotCols = ["Gün Grup", "Mevsim"];
+                }
+                else if (nobetUstGrupId == 5) {
+                    pivotRows = ["Nöbet Grubu", "Eczane"];
+                }
+
+                mevsimDagilim = $(function table3() {
+                    $("#mevsimDagilim").pivotUI(dagilimlarPivot,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols,
+                            vals: ["Eczane"],
+                            aggregatorName: "Say",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası",
+                            renderers: pivotRenderers,
+                            onRefresh: function (config) {
+                                //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                if (pivotAlanlariGosterMevsimDagilim == false) {
+                                    $("#mevsimDagilim").parent().find('.pvtAxisContainer').hide();
+                                    $("#mevsimDagilim").parent().find('.pvtAttrDropdown').hide();
+                                    $("#mevsimDagilim").parent().find('.pvtRenderer').hide();
+                                    $("#mevsimDagilim").parent().find('.pvtVals').hide();
+                                }
+                                else {
+                                    $("#mevsimDagilim").parent().find('.pvtAxisContainer').show();
+                                    $("#mevsimDagilim").parent().find('.pvtAttrDropdown').show();
+                                    $("#mevsimDagilim").parent().find('.pvtRenderer').show();
+                                    $("#mevsimDagilim").parent().find('.pvtVals').show();
+                                }
+                            }
+                        }
+                    );
+                });
+
+            }
+            else {
+                var mesaj = 'Mevsim dağılımı listesi';
+                var divId = 'divUyariMevsimDagilim';
+                var parentDivId = 'mevsimDagilim';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Ay dağılımı listesi yok.');
+            }
+        }
+        $('#pills-mevsim-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (mevsimDagilim != null) {
+                mevsimDagilim;
+            }
+            else {
+                mevsimDagilimlar();
+            }
+        });
+
+        //tarih dağılım
+        var tarihDagilim;
+        function tarihDagilimlar() {
+            if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
+
+                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotCols = ["Yıl-Ay", "Tarih"];
+
+                if (nobetUstGrupId == 4) {
+                    pivotRows = ["Görev Tipi", "Eczane"];
+                    //pivotCols = ["Gün Grup", "Mevsim"];
+                }
+                //else if (nobetUstGrupId == 5) {
+                //    pivotRows = ["Nöbet Grubu", "Eczane"];
+                //}
+
+                tarihDagilim = $(function table4() {
+                    $("#gunlukDagilim").pivotUI(dagilimlarPivot,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols,
+                            vals: ["Nöbet Grubu"],
+                            aggregatorName: "Say",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası",
+                            renderers: pivotRenderers,
+                        }
+                    );
+                });
+
+            }
+            else {
+                $('#tarihVeriSinirUyari').hide();
+                var mesaj = 'Tarih dağılımı listesi';
+                var divId = 'divUyariGunlukDagilim';
+                var parentDivId = 'gunlukDagilim';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Tarih dağılımı listesi yok.');
+            }
+        }
+        $('#pills-tarih-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (tarihDagilim != null) {
+                tarihDagilim;
+            }
+            else {
+                tarihDagilimlar();
+            }
+        });
+
+        //kalibrasyonlu nöbet dağılımı
+        var kalibrasyonluNobetDagilim;
+        function kalibrasyonluNobetDagilimlar() {
+            if (kalibrasyonEslemeliNobetler.length > 0) {
+                kalibrasyonluNobetDagilim = $(function table8() {
+                    $("#kalibrasyonluDetayli").pivotUI(kalibrasyonEslemeliNobetler,
+                        {
+                            rows: ["EczaneAdi"],
+                            cols: ["GunGrupAdi", "Durum", "KalibrasyonTipAdi"],
+                            vals: ["Deger"],
+                            aggregatorName: "Topla (Tamsayı)",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası (Sütun)",
+                            renderers: $.extend(
+                                pivotRenderers,
+                                pivotRenderersGrafik
+                            ),
+                            onRefresh: function (config) {
+                                $("#kalibrasyonluDetayli").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                if (pivotAlanlariGosterKalibrasyonluDetayli == false) {
+                                    $("#kalibrasyonluDetayli").parent().find('.pvtAxisContainer').hide();
+                                    $("#kalibrasyonluDetayli").parent().find('.pvtAttrDropdown').hide();
+                                    $("#kalibrasyonluDetayli").parent().find('.pvtRenderer').hide();
+                                    $("#kalibrasyonluDetayli").parent().find('.pvtVals').hide();
+                                }
+                                else {
+                                    $("#kalibrasyonluDetayli").parent().find('.pvtAxisContainer').show();
+                                    $("#kalibrasyonluDetayli").parent().find('.pvtAttrDropdown').show();
+                                    $("#kalibrasyonluDetayli").parent().find('.pvtRenderer').show();
+                                    $("#kalibrasyonluDetayli").parent().find('.pvtVals').show();
+                                }
+                            }
+                        }
+                    );
+                });
+            }
+            else {
+                $("#listeVeriUayri").html(uyariMesaj);
+                $("#listeVeriUayri").append(" (Kalibrasyon dağılım listesi yok.)");
+                $("#listeVeriUayri").show();
+                //alert('Aynı gün dağılım listesi yok.');
+            }
+        }
+        $('#pills-kalibrasyonluNobet-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (kalibrasyonluNobetDagilim != null) {
+                kalibrasyonluNobetDagilim;
+            }
+            else {
+                kalibrasyonluNobetDagilimlar();
+            }
+        });
+
+        //nöbet durumları
+        var nobetDurumDagilim;
+        function nobetDurumTabloOlustur() {
+            if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
+                nobetDurumDagilim = $(function table3() {
+                    $("#nobetDurumlar").pivotUI(dagilimlarPivot,
+                        {
+                            rows: ["Alt Grup Adı", "Eczane"],
+                            cols: ["Gün Grup", "Nöbet Durum Tipi"],
+                            vals: ["Nöbet Grubu"],
+                            aggregatorName: "Satır Toplam % (Say)",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası",
+                            renderers: pivotRenderers,
+                            onRefresh: function (config) {
+                                //$("#nobetciEczaneListesi").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                                //$("#nobetciEczaneListesi").parent().find('.pvtAggregator').hide();
+
+                                if (pivotAlanlariGosterNobetDurumlari == false) {
+                                    $("#nobetDurumlar").parent().find('.pvtAxisContainer').hide();
+                                    $("#nobetDurumlar").parent().find('.pvtAttrDropdown').hide();
+                                    $("#nobetDurumlar").parent().find('.pvtRenderer').hide();
+                                    $("#nobetDurumlar").parent().find('.pvtVals').hide();
+                                }
+                                else {
+                                    $("#nobetDurumlar").parent().find('.pvtAxisContainer').show();
+                                    $("#nobetDurumlar").parent().find('.pvtAttrDropdown').show();
+                                    $("#nobetDurumlar").parent().find('.pvtRenderer').show();
+                                    $("#nobetDurumlar").parent().find('.pvtVals').show();
+                                }
+                            }
+                        }
+                    );
+                });
+            }
+            else {
+                var mesaj = 'Nöbet durum listesi';
+                var divId = 'divUyariNobetDurum';
+                var parentDivId = 'nobetDurumlar';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Ay dağılımı listesi yok.');
+            }
+        }
+        $('#pills-nobetDurumlari-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (nobetDurumDagilim != null) {
+                nobetDurumDagilim;
+            }
+            else {
+                nobetDurumTabloOlustur();
+            }
+        });
+    </script>
+    <!-- #endregion -->
+    <!-- #region gün farkı -->
+    <script type="text/javascript">
+        //setTimeout(function () { $('.alert').fadeOut(500); }, 3000);
+
+        $('#pills-gunFarki-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            $('#inputTarihAralik').hide();
+
+            if ($("#pills-gunFarkiGrafik-tab").hasClass("active")) {
+                //alert(1)
+                if (gunFarkiGrafikVeri != null) {
+
+                    gunFarkiGrafikVeri;
+                }
+                else {
+                    gunFarkiGrafik();
+                }
+            }
+            else if ($("#pills-ozet-tab").hasClass("active")) {
+                //alert(1)
+                if (gunFarkiOzetListesi != null) {
+
+                    gunFarkiOzetListesi;
+                }
+                else {
+                    gunFarkiOzet();
+                }
+            }
+            else if ($("#pills-frekans-tab").hasClass("active")) {
+                if (gunFarkiFrekansListesi != null) {
+
+                    gunFarkiFrekansListesi;
+                }
+                else {
+                    gunFarkiFrekans();
+                }
+            }
+            else if ($("#pills-dongu-tab").hasClass("active")) {
+                if (gunFarkiDonguListesi != null) {
+
+                    gunFarkiDonguListesi;
+                }
+                else {
+                    donguler();
+                }
+            }
+            else if ($("#pills-detayliArtan-tab").hasClass("active")) {
+                if (gunFarkiDetaliArtanListesi != null) {
+
+                    gunFarkiDetaliArtanListesi;
+                }
+                else {
+                    gunFarkiDetaliArtanlar();
+                }
+            }
+            else if ($("#pills-detayliAzalan-tab").hasClass("active")) {
+                if (gunFarkiDetayliAzalanListesi != null) {
+
+                    gunFarkiDetayliAzalanListesi;
+                }
+                else {
+                    gunFarkiDetaliAzalanlar();
+                }
+            }
+        });
+
+        //maks, min, ort., std sap. vb.
+
+        var gunFarkiGrafikVeri;
+        function gunFarkiGrafik() {
+            if (gunFarklariFrekanslar != null && gunFarklariFrekanslar.length > 0) {
+                //alert(1)
+                var pivotRows = ["Gün Grup"];
+                var pivotCols = ["Nöbet Grubu"];
+
+                if (nobetUstGrupId == 4) {
+                    pivotRows = ["Görev Tipi"];
+                    //pivotCols = ["Gün Grup", "Mevsim"];
+                }
+                //else if (nobetUstGrupId == 5) {
+                //    pivotRows = ["Nöbet Grubu", "Eczane"];
+                //}
+
+                gunFarkiGrafikVeri = $(function table5() {
+                    $("#gunFarkiGrafik").pivotUI(gunFarklariFrekanslar,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols,
+                            vals: ["Gün Farkı"],
+                            aggregatorName: "En Fazla",
+                            aggregators: pivotAggregators,
+                            rendererName: "Yığılmış Sütun Grafik",
+                            renderers: $.extend(
+                                pivotRenderers,
+                                pivotRenderersGrafik
+                            ),
+                        });
+                });
+
+            }
+            else {
+                var mesaj = 'Gün farkı özet listesi';
+                var divId = 'divUyariGunFarkiGrafik';
+                var parentDivId = 'gunFarkiGrafik';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Gün farkı özet listesi yok.');
+            }
+        }
+        $('#pills-gunFarkiGrafik-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (gunFarkiGrafikVeri != null) {
+                gunFarkiGrafikVeri;
+            }
+            else {
+                gunFarkiGrafik();
+            }
+        });
+
+        var gunFarkiOzetListesi;
+        function gunFarkiOzet() {
+            if (gunFarklariFrekanslar != null && gunFarklariFrekanslar.length > 0) {
+
+                var pivotRows = ["Nöbet Grubu"];
+                var pivotCols = ["Gün Grup"];
+
+                if (nobetUstGrupId == 4) {
+                    pivotRows = ["Görev Tipi"];
+                    //pivotCols = ["Gün Grup", "Mevsim"];
+                }
+                //else if (nobetUstGrupId == 5) {
+                //    pivotRows = ["Nöbet Grubu", "Eczane"];
+                //}
+
+                gunFarkiOzetListesi = $(function table1() {
+                    $("#gunFarkiOzet").pivotUI(gunFarklariFrekanslar,
+                        {
+                            rows: pivotRows,
+                            cols: pivotCols,
+                            vals: ["Gün Farkı"],
+                            aggregatorName: "En Fazla",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası",
+                            renderers: pivotRenderers
+                        });
+                });
+
+            }
+            else {
+                var mesaj = 'Gün farkı özet listesi';
+                var divId = 'divUyariGunFarkiOzet';
+                var parentDivId = 'gunFarkiOzet';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Gün farkı özet listesi yok.');
+            }
+        }
+        $('#pills-ozet-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (gunFarkiOzetListesi != null) {
+
+                gunFarkiOzetListesi;
+            }
+            else {
+                gunFarkiOzet();
+            }
+        });
+
+        //frekans
+        var gunFarkiFrekansListesi;
+        function gunFarkiFrekans() {
+            if (gunFarklariFrekanslar != null && gunFarklariFrekanslar.length > 0) {
+
+                if (nobetUstGrupId == 4) {
+                    gunFarkiFrekansListesi = $(function table2() {
+                        $("#gunFarkiFrekans").pivotUI(gunFarklariFrekanslar,
+                            {
+                                rows: ["Görev Tipi", "Gün Grup", "Nöbet Grubu"],
+                                cols: ["Ay Farkı", "Hafta Farkı"],
+                                vals: ["Eczane Sayısı"],
+                                aggregatorName: "Topla (Tamsayi)",
+                                rendererName: "Sicaklik Haritasi"
+                            }
+                        );
+                    });
+                }
+                else {
+                    gunFarkiFrekansListesi = $(function table2() {
+                        $("#gunFarkiFrekans").pivotUI(gunFarklariFrekanslar,
+                            {
+                                rows: ["Gün Grup", "Nöbet Grubu"],
+                                cols: ["Ay Farkı", "Hafta Farkı"],
+                                vals: ["Eczane Sayısı"],
+                                aggregatorName: "Topla (Tamsayi)",
+                                rendererName: "Sicaklik Haritasi"
+                            }
+                        );
+                    });
+                }
+            }
+            else {
+                var mesaj = 'Gün farkı frekans listesi';
+                var divId = 'divUyariGunFarkiFrekans';
+                var parentDivId = 'gunFarkiFrekans';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Gün farkı frekans listesi yok.');
+            }
+        }
+        $('#pills-frekans-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (gunFarkiFrekansListesi != null) {
+
+                gunFarkiFrekansListesi;
+            }
+            else {
+                gunFarkiFrekans();
+            }
+        });
+
+        //döngü
+        var gunFarkiDonguListesi;
+        function donguler() {
+            if (gunFarklariTumSonuclar != null && gunFarklariTumSonuclar.length > 0) {
+                if (nobetUstGrupId == 4) {
+                    gunFarkiDonguListesi = $(function table5() {
+                        $("#donguler").pivotUI(gunFarklariTumSonuclar,
+                            {
+                                rows: ["Görev Tipi", "Nöbet Grubu", "Gün Grup", "Index"],
+                                cols: ["N1Yıl", "N1Ay"],
+                                vals: ["Gün Farkı"],
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi"
+                            }
+                        );
+                    });
+                }
+                else {
+                    gunFarkiDonguListesi = $(function table5() {
+                        $("#donguler").pivotUI(gunFarklariTumSonuclar,
+                            {
+                                rows: ["Nöbet Grubu", "Gün Grup", "Index"],
+                                cols: ["N1Yıl", "N1Ay"],
+                                vals: ["Gün Farkı"],
+                                aggregatorName: "Say",
+                                rendererName: "Sicaklik Haritasi"
+                            }
+                        );
+                    });
+                }
+            }
+            else {
+                var mesaj = 'Döngü listesi';
+                var divId = 'divUyariDonguler';
+                var parentDivId = 'donguler';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Döngü listesi yok.');
+            }
+        }
+        $('#pills-dongu-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (gunFarkiDonguListesi != null) {
+
+                gunFarkiDonguListesi;
+            }
+            else {
+                donguler();
+            }
+        });
+
+        //detaylı artan
+        var gunFarkiDetaliArtanListesi;
+        function gunFarkiDetaliArtanlar() {
+            if (gunFarklariTumSonuclar != null && gunFarklariTumSonuclar.length > 0) {
+
+                if (nobetUstGrupId == 4) {
+                    gunFarkiDetaliArtanListesi = $(function table3() {
+                        $("#gunFarkiDetayli").pivotUI(gunFarklariTumSonuclar,
+                            {
+                                rows: ["Görev Tipi", "Nöbet Grubu", "Nöbet1", "Nöbet2", "Index", "Eczane"],
+                                cols: ["Gün Grup"],
+                                vals: ["Gün Farkı"],
+                                aggregatorName: "Topla (Tamsayi)",
+                                rendererName: "Sicaklik Haritasi"
+                            }
+                        );
+                    });
+                }
+                else {
+                    gunFarkiDetaliArtanListesi = $(function table3() {
+                        $("#gunFarkiDetayli").pivotUI(gunFarklariTumSonuclar,
+                            {
+                                rows: ["Nöbet Grubu", "Nöbet1", "Nöbet2", "Index", "Eczane"],
+                                cols: ["Gün Grup"],
+                                vals: ["Gün Farkı"],
+                                aggregatorName: "Topla (Tamsayi)",
+                                rendererName: "Sicaklik Haritasi"
+                            }
+                        );
+                    });
+                }
+            }
+            else {
+                var mesaj = 'Gün farkı detaylı-artan listesi';
+                var divId = 'divUyariGunFarkiDetayli';
+                var parentDivId = 'gunFarkiDetayli';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Gün farkı detaylı-artan liste yok.');
+            }
+        }
+        $('#pills-detayliArtan-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (gunFarkiDetaliArtanListesi != null) {
+
+                gunFarkiDetaliArtanListesi;
+            }
+            else {
+                gunFarkiDetaliArtanlar();
+            }
+        });
+
+        //detaylı azalan
+        var gunFarkiDetayliAzalanListesi;
+        function gunFarkiDetaliAzalanlar() {
+            if (gunFarklariTumSonuclar != null && gunFarklariTumSonuclar.length > 0) {
+                if (nobetUstGrupId == 4) {
+                    gunFarkiDetayliAzalanListesi = $(function table4() {
+                        $("#gunFarkiDetayli2").pivotUI(gunFarklariTumSonuclar,
+                            {
+                                rows: ["Görev Tipi", "Nöbet Grubu", "Nöbet2", "Nöbet1", "Index", "Eczane"],
+                                cols: ["Gün Grup"],
+                                vals: ["Gün Farkı"],
+                                aggregatorName: "Topla (Tamsayi)",
+                                rendererName: "Sicaklik Haritasi"
+                            }
+                        );
+                    });
+                }
+                else {
+                    gunFarkiDetayliAzalanListesi = $(function table4() {
+                        $("#gunFarkiDetayli2").pivotUI(gunFarklariTumSonuclar,
+                            {
+                                rows: ["Nöbet Grubu", "Nöbet2", "Nöbet1", "Index", "Eczane"],
+                                cols: ["Gün Grup"],
+                                vals: ["Gün Farkı"],
+                                aggregatorName: "Topla (Tamsayi)",
+                                rendererName: "Sicaklik Haritasi"
+                            }
+                        );
+                    });
+                }
+            }
+            else {
+                var mesaj = 'Gün farkı detaylı-azalan listesi';
+                var divId = 'divUyariGunFarkiDetayli2';
+                var parentDivId = 'gunFarkiDetayli2';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert('Gün farkı detaylı-azalan liste yok.');
+            }
+        }
+        $('#pills-detayliAzalan-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (gunFarkiDetayliAzalanListesi != null) {
+
+                gunFarkiDetayliAzalanListesi;
+            }
+            else {
+                gunFarkiDetaliAzalanlar();
+            }
+        });
+
+    </script>
+    <!-- #endregion -->
+    <!-- #region nöbet borç ödeme -->
+    <script type="text/javascript">
+
+        $('#pills-nobetBorc-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            $('#inputTarihAralik').hide();
+
+            if ($("#pills-alacakVerecekGrafik-tab").hasClass("active")) {
+                //alert(1)
+                if (alacakVerecekGrafikVeri != null) {
+                    //$("#alacakVerecekGrafik").hide();
+                    //alert(1)
+                    alacakVerecekGrafikVeri;
+                }
+                else {
+                    alacakVerecekGrafik();
+                }
+            }
+            else if ($("#pills-alacakVerecek-tab").hasClass("active")) {
+                if (alacakVereceklerOzet != null) {
+                    $("#divAlacakVerecekler").hide();
+                    alacakVereceklerOzet;
+                }
+                else {
+                    alacakVerecekOzet();
+                }
+            }
+            else if ($("#pills-alacakVerecekListesi-tab").hasClass("active")) {
+                if (alacakVereceklerList != null) {
+                    $("#divAlacakVereceklerListe").hide();
+                    alacakVereceklerList;
+                }
+                else {
+                    alacakVerecekListe();
+                }
+            }
+            else if ($("#pills-planlananVsGerceklesen-tab").hasClass("active")) {
+                if (planlananVeGerceklesenNobetListesi != null) {
+                    //$("#divAlacakVereceklerListe").hide();
+                    planlananVeGerceklesenNobetListesi;
+                }
+                else {
+                    planlananVeGerceklesenNobetler();
+                }
+            }
+        });
+
+        $('#btnAlanlariGizleGosterPlanlananVsGerceklesen').click(function () {
+            //alert(pivotAlanlariGosterNobetciListesi)
+            if (pivotAlanlariGosterPlanlanaGerceklesen) {
+                pivotAlanlariGosterPlanlanaGerceklesen = false;
+                $('#btnAlanlariGizleGosterPlanlananVsGerceklesen').text("Alanları Göster")
+            }
+            else {
+                pivotAlanlariGosterPlanlanaGerceklesen = true;
+                $('#btnAlanlariGizleGosterPlanlananVsGerceklesen').text("Alanları Gizle")
+            }
+            planlananVeGerceklesenNobetler();
+        });
+
+        //alacakVerecek grafik
+        var alacakVerecekGrafikVeri;
+        function alacakVerecekGrafik() {
+            if (alacakVerecekLitesi != null && alacakVerecekLitesi.length > 0) {
+
+                alacakVerecekGrafikVeri = $(function table7() {
+                    $("#alacakVerecekGrafik").pivotUI(alacakVerecekLitesi,
+                        {
+                            rows: ["Gün Grup"],
+                            cols: ["BorçluGünSayısı"],
+                            vals: ["BorçluGünSayısı"],
+                            aggregatorName: "Say",
+                            aggregators: pivotAggregators,
+                            rendererName: "Yığılmış Sütun Grafik",
+                            renderers: $.extend(
+                                pivotRenderers,
+                                pivotRenderersGrafik
+                            ),
+                        }
+                    );
+                });
+            }
+            else {
+                var mesaj = 'Nöbet borç özet listesi';
+                var divId = 'divAlacakVerecekGrafik';
+                var parentDivId = 'alacakVerecekGrafik';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert(mesaj);
+            }
+        }
+        $('#pills-alacakVerecekGrafik-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (alacakVerecekGrafikVeri != null) {
+                //$("#alacakVerecekGrafik").hide();
+                alacakVerecekGrafikVeri;
+            }
+            else {
+                alacakVerecekGrafik();
+            }
+        });
+
+        //alacakVerecek özet
+        var alacakVereceklerOzet;
+        function alacakVerecekOzet() {
+            if (alacakVerecekLitesi != null && alacakVerecekLitesi.length > 0) {
+
+                alacakVereceklerOzet = $(function table6() {
+                    $("#alacakVerecekler").pivotUI(alacakVerecekLitesi,
+                        {
+                            rows: ["Nöbet Grubu"],
+                            cols: ["Gün Grup", "BorçluGünSayısı"],
+                            vals: ["BorçluGünSayısı"],
+                            aggregatorName: "Say",
+                            aggregators: pivotAggregators,
+                            rendererName: "Sıcaklık Haritası",
+                            renderers: $.extend(
+                                pivotRenderers,
+                                pivotRenderersGrafik
+                            ),
+                        }
+                    );
+                });
+            }
+            else {
+                var mesaj = 'Nöbet borç özet listesi';
+                var divId = 'divAlacakVerecekler';
+                var parentDivId = 'alacakVerecekler';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert(mesaj);
+            }
+        }
+        $('#pills-alacakVerecek-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (alacakVereceklerOzet != null) {
+                $("#divAlacakVerecekler").hide();
+                alacakVereceklerOzet;
+            }
+            else {
+                alacakVerecekOzet();
+            }
+        });
+
+        //alacakVerecek liste
+        var alacakVereceklerList;
+        function alacakVerecekListe() {
+            if (alacakVerecekLitesi != null && alacakVerecekLitesi.length > 0) {
+                alacakVereceklerList = $(function table7() {
+                    $("#alacakVereceklerListe").pivotUI(alacakVerecekLitesi,
+                        {
+                            rows: ["Gün Grup", "Nöbet Grubu", "AnahtarTarih", "Eczane", "SonNöbetTarihi", "NöbetSayısı", "Borç Durumu"],
+                            //cols: ["Gün Grup"],
+                            vals: ["BorçluGünSayısı"],
+                            aggregatorName: "Topla (Tamsayi)",
+                            rendererName: "Sicaklik Haritasi"
+                        }
+                    );
+                });
+            }
+            else {
+                var mesaj = 'Nöbet borç listesi';
+                var divId = 'divAlacakVereceklerListe';
+                var parentDivId = 'alacakVereceklerListe';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert(mesaj);
+            }
+        }
+        $('#pills-alacakVerecekListesi-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (alacakVereceklerList != null) {
+                $("#divAlacakVereceklerListe").hide();
+                alacakVereceklerList;
+            }
+            else {
+                alacakVerecekListe();
+            }
+        });
+
+        var planlananVeGerceklesenNobetListesi;
+        const planlananVeGerceklesenNobetler = () => {
+
+            //pivotAlanlariGosterNobetciListesi = pivotAlanlariGoster;
+            if (dagilimlarPlanlananGerceklesen != null && dagilimlarPlanlananGerceklesen.length > 0) {
+                //alert("nobetciListesi")
+                //alert(nobetUstGrupId)
+                var pivotCols = ["Sonuç Türü"];
+
+                if (nobetUstGrupId == 4) {
+                    pivotCols = ["Görev Tipi"];
+                }
+
+                planlananVeGerceklesenNobetListesi = $("#planlananVsGerceklesen").pivotUI(dagilimlarPlanlananGerceklesen, {
+                    rows: ["Nöbet Grubu", "Gün Grup", "Yıl-Ay", "Eczane"],
+                    cols: pivotCols,
+                    vals: ["Tarih"],
+                    aggregatorName: "Benzersiz Değerleri Listele",
+                    aggregators: pivotAggregators,
+                    //rendererName: "Table",
+                    renderers: pivotRenderers,
+                    onRefresh: function (config) {
+                        $("#planlananVsGerceklesen").parent().find('.pvtTotal, .pvtTotalLabel, .pvtGrandTotal').remove();
+                        //alert(0)
+                        //pivotAlanlariGosterPlanlanaGerceklesen = true;
+
+                        if (pivotAlanlariGosterPlanlanaGerceklesen == false) {
+                            $("#planlananVsGerceklesen").parent().find('.pvtAxisContainer').hide();
+                            $("#planlananVsGerceklesen").parent().find('.pvtAttrDropdown').hide();
+                            $("#planlananVsGerceklesen").parent().find('.pvtRenderer').hide();
+                            $("#planlananVsGerceklesen").parent().find('.pvtVals').hide();
+                        }
+                        else {
+                            $("#planlananVsGerceklesen").parent().find('.pvtAxisContainer').show();
+                            $("#planlananVsGerceklesen").parent().find('.pvtAttrDropdown').show();
+                            $("#planlananVsGerceklesen").parent().find('.pvtRenderer').show();
+                            $("#planlananVsGerceklesen").parent().find('.pvtVals').show();
+                        }
+
+                        //$('#nobetciEczaneListesi .pvtAttrDropdown option').each(function () {
+                        //    //$(this).hide();
+                        //    if ($(this).val() != "Eczane") {
+                        //        $(this).remove();
+                        //    }
+                        //    //else {
+                        //    //    $(this).text("Liste");
+                        //    //}
+                        //});
+                    }
+                }
+                    //   , false, "fr"
+                );
+            }
+            else {
+                //nobetciEczaneler;
+                var mesaj = 'Nöbet listesi';
+                var divId = 'divUyariNobetciEczaneListesi';
+                var parentDivId = 'nobetciEczaneListesi';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert(mesaj);
+                //alert('Nöbetçi eczane listesi yok.');
+            }
+        }
+        $('#pills-planlananVsGerceklesen-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (planlananVeGerceklesenNobetListesi != null) {
+                planlananVeGerceklesenNobetListesi;
+            }
+            else {
+                planlananVeGerceklesenNobetler();
+            }
+        });
+    </script>
+    <!-- #endregion -->
+    <!-- #region alt grup -->
+    <script type="text/javascript">
+        //aynı gün nöbet
+
+        //var ayniGunNobetTutanEczaneler = dagilimlar.AltGrupAyniGunNobetTutanEczaneler;
+        //var altGrupAyniGunNobetTutanEczaneler = dagilimlar.AltGrupAyniGunNobetTutanEczaneler;
+        //aynı gün nöbet tutanlar
+
+        $('#pills-altGrupTakip-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            $('#inputTarihAralik').hide();
+
+            if ($("#pills-altGrup-tab").hasClass("active")) {
+                //alert(1)
+                if (altGrupDagilim != null) {
+                    altGrupDagilim;
+                }
+                else {
+                    altGrupDagilimlar();
+                }
+            }
+            else if ($("#pills-altGrupGunGrupDagilim-tab").hasClass("active")) {
+                //alert(1)
+                if (altGrupGunGrup != null) {
+                    altGrupGunGrup;
+                }
+                else {
+                    altGrupGunGrupDagilimlar();
+                }
+            }
+            else if ($("#pills-altGrupSirali-tab").hasClass("active")) {
+                //alert(1)
+                if (altGrupSirali != null) {
+                    altGrupSirali;
+                }
+                else {
+                    altGrupSiraliDagilimlar();
+                }
+            }
+        });
+
+        //alt grup
+        var altGrupDagilim;
+        function altGrupDagilimlar() {
+            if (altGrupAyniGunNobetTutanEczaneler.length > 0) {
+                //alert(2)
+                altGrupDagilim = $(function table8() {
+                    $("#altGrupListesi").pivotUI(altGrupAyniGunNobetTutanEczaneler,
+                        {
+                            rows: ["Grup", "G1Eczane"],
+                            cols: ["AltGrup"],
+                            vals: ["AltGrup"],
+                            aggregatorName: "Say",
+                            rendererName: "Sicaklik Haritasi"
+                        }
+                    );
+                });
+            }
+            else {
+                var mesaj = 'Alt grup dağılım listesi';
+                var divId = 'divUyariAltGrup';
+                var parentDivId = 'altGrupListesi';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert(mesaj);
+            }
+        }
+        $('#pills-altGrup-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (altGrupDagilim != null) {
+                altGrupDagilim;
+            }
+            else {
+                altGrupDagilimlar();
+            }
+        });
+
+        //alt grup gün grup dağılım
+        var altGrupGunGrup;
+        function altGrupGunGrupDagilimlar() {
+            if (altGrupSiraliAyniGunNobetTutanEczaneler.length > 0) {
+                //alert(2)
+                altGrupGunGrup = $(function table8() {
+                    $("#altGrupGunGrupDagilim").pivotUI(altGrupSiraliAyniGunNobetTutanEczaneler,
+                        {
+                            rows: ["Grup", "G1Eczane"],
+                            cols: ["Gün Grup", "AltGrup"],
+                            vals: ["AltGrup"],
+                            aggregatorName: "Say",
+                            rendererName: "Sicaklik Haritasi"
+                        }
+                    );
+                });
+            }
+            else {
+                var mesaj = 'Alt grup gün grup dağılım listesi';
+                var divId = 'divUyariAltGrupGunGrup';
+                var parentDivId = 'altGrupGunGrupDagilim';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+                //alert(mesaj);
+            }
+        }
+        $('#pills-altGrupGunGrupDagilim-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (altGrupGunGrup != null) {
+                altGrupGunGrup;
+            }
+            else {
+                altGrupGunGrupDagilimlar();
+            }
+        });
+
+        //alt grup sıralı
+        var altGrupSirali;
+        function altGrupSiraliDagilimlar() {
+            if (altGrupSiraliAyniGunNobetTutanEczaneler.length > 0) {
+                altGrupSirali = $(function table8() {
+                    $("#altGrupSirali").pivotUI(altGrupSiraliAyniGunNobetTutanEczaneler,
+                        {
+                            rows: ["Grup", "G1Eczane", "Gün Grup", "Tarih"],
+                            cols: ["AltGrup"],
+                            vals: ["AltGrup"],
+                            aggregatorName: "Say",
+                            rendererName: "Sicaklik Haritasi"
+                        }
+                    );
+                });
+            }
+            else {
+
+                var mesaj = 'Aynı gün dağılım listesi';
+                var divId = 'divUyariAltGrupSirali';
+                var parentDivId = 'altGrupSirali';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+
+                //alert(mesaj);
+            }
+        }
+        $('#pills-altGrupSirali-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (altGrupSirali != null) {
+                altGrupSirali;
+            }
+            else {
+                altGrupSiraliDagilimlar();
+            }
+        });
+    </script>
+    <!-- #endregion -->
+    <!-- #region aynı gün nöbet -->
+    <script type="text/javascript">
+        $('#pills-ayniGuneYazilanlar-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            $('#inputTarihAralik').hide();
+
+            //alert(1)
+            if ($("#pills-ayniGunTumu-tab").hasClass("active")) {
+                $('#btnExceleAktar').hide();
+                if (ayniGunDagilim != null) {
+                    ayniGunDagilim;
+                }
+                else {
+                    ayniGunDagilimlar();
+                }
+            }
+            else if ($("#pills-ayniGunTumuTablo-tab").hasClass("active")) {
+                $('#btnExceleAktar').hide();
+                if (ayniGunDagilimTablo != null) {
+                    ayniGunDagilimTablo;
+                }
+                else {
+                    ayniGunDagilimlarTablo();
+                }
+            }
+        });
+
+        //aynı gün nöbet dağılımı grafik
+        var ayniGunDagilim;
+        function ayniGunDagilimlar() {
+            if (ayniGunNobetTutanEczaneler.length > 0) {
+                ayniGunDagilim = $(function table8() {
+                    $("#ayniGunNobetTutanlar").pivotUI(ayniGunNobetTutanEczaneler,
+                        {
+                            rows: ["AynıGünNöbetSayısı"],
+                            cols: ["Grup"],
+                            vals: ["AynıGünNöbetSayısı"],
+                            aggregatorName: "Say",
+                            rendererName: "Sutun Grafik",
+                            renderers: $.extend(
+                                $.pivotUtilities.renderers,
+                                $.pivotUtilities.c3_renderers
+                            )
+                        }
+                    );
+                });
+            }
+            else {
+                $("#listeVeriUayri").html(uyariMesaj);
+                $("#listeVeriUayri").append(" (Aynı gün dağılım listesi yok.)");
+                $("#listeVeriUayri").show();
+                //alert('Aynı gün dağılım listesi yok.');
+            }
+        }
+        $('#pills-ayniGunTumu-tab').click(function () {
+            $('#btnExceleAktar').hide();
+            if (ayniGunDagilim != null) {
+                ayniGunDagilim;
+            }
+            else {
+                ayniGunDagilimlar();
+            }
+        });
+
+        //aynı gün nöbet dağılımı grafik
+        var ayniGunDagilimTablo;
+        function ayniGunDagilimlarTablo() {
+            if (ayniGunNobetTutanEczaneler.length > 0) {
+                ayniGunDagilimTablo = $(function table8() {
+                    $("#ayniGunNobetTutanlarTablo").pivotUI(ayniGunNobetTutanEczaneler,
+                        {
+                            rows: ["Grup"],
+                            cols: ["AynıGünNöbetSayısı"],
+                            vals: ["AynıGünNöbetSayısı"],
+                            aggregatorName: "Say",
+                            rendererName: "Sicaklik Haritasi",
+                            //renderers: $.extend(
+                            //    $.pivotUtilities.renderers,
+                            //    $.pivotUtilities.c3_renderers
+                            //)
+                        }
+                    );
+                });
+            }
+            else {
+                $("#listeVeriUayri").html(uyariMesaj);
+                $("#listeVeriUayri").append(" (Aynı gün dağılım listesi yok.)");
+                $("#listeVeriUayri").show();
+                //alert('Aynı gün dağılım listesi yok.');
+            }
+        }
+        $('#pills-ayniGunTumuTablo-tab').click(function () {
+            //alert(1)
+            $('#btnExceleAktar').hide();
+            if (ayniGunDagilimTablo != null) {
+                ayniGunDagilimTablo;
+            }
+            else {
+                ayniGunDagilimlarTablo();
+            }
+        });
+
+        //eş grupla aynı gün tutulan nöbetler
+        function AyniGunNobetTutanEsGruplar() {
+            if (esGrubaAyniGunYazilanNobetler.length > 0) {
+                //Aynı Gün Nöbet Tutan
+                var tablo = "<table id='gridT' class=\"table table-hover table-striped table-bordered table-sm text-left\">";
+                tablo += "<thead class=\"thead-light\">" +
+                    "<tr>" +
+                    "<th>Grup Tipi</th>" +
+                    "<th>Grup Adı</th>" +
+                    "<th>Nöbet Tarihi</th>" +
+                    "<th>Eczane Sayısı</th>" +
+                    "</tr>" +
+                    "</thead>" +
+                    "<tbody>";
+                for (var i = 0; i < esGrubaAyniGunYazilanNobetler.length; i++) {
+                    tablo += "<tr class='gridtr'><td>" + esGrubaAyniGunYazilanNobetler[i].EczaneGrupTanimTipAdi
+                        + "</td><td>" + esGrubaAyniGunYazilanNobetler[i].EczaneGrupTanimAdi
+                        + "</td><td>" + esGrubaAyniGunYazilanNobetler[i].NobetTarihi
+                        + "</td><td>" + esGrubaAyniGunYazilanNobetler[i].AyniGunNobetTutanEczaneSayisi + "</td></tr>";
+                }
+
+                tablo += "</tbody></table>";
+                document.getElementById("DivTablo").innerHTML = tablo;
+            }
+            else {
+                var mesaj = 'Aynı gün aralığında, aynı eş gruptan belirlenen eczane sayısından fazla nöbet yazılan eczane';
+                var divId = 'divUyariEsGrup';
+                var parentDivId = 'DivTablo';
+                uyariDivOlustur(mesaj, divId, parentDivId);
+
+                //alert(mesaj);
+            }
+        }
+        $('#pills-esGrup-tab').click(function () {
+            AyniGunNobetTutanEsGruplar();
+            sayfalamaYap(esGrubaAyniGunYazilanNobetler, 15);
+        });
+
+    </script>
+    <!-- #endregion -->
+    <!-- #region export to excel -->
+    <script type="text/javascript">
+        var tableToExcel = (function () {
+
+            var uri = 'data:application/vnd.ms-excel;base64,'
+                , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><meta http-equiv="content-type" content="text/plain; charset=UTF-8"/></head><body><table>{table}</table></body></html>'
+                , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+                , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+            return function (table, name) {
+                //$('#testTable thead tr:first').find('th:last').remove();
+                //$('#testTable tr').find('td:last').remove();
+                //$('#testTable').find('tr:last').remove();
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+
+        $root = $('<xml/>');
+
+        //create a workbook
+        $workbook = $('<ss:Workbook/>').attr({
+            "xmlns:ss": "urn:schemas-microsoft-com:office:spreadsheet",
+            "xmlns:x": "urn:schemas-microsoft-com:office:excel",
+            "xmlns:o": "urn:schemas-microsoft-com:office:office"
+        });
+
+        $root.append($workbook);
+
+        //xlsObject = 'data:application/vnd.ms-excel;base64,' + base64.encode(testXML);
+    </script>
+    <!-- #endregion -->
+    <!-- #region arama -->
+    <script>
+
+        var nobetGrubu;
+        var baslangicTarihi;
+        var bitisTarihi;
+
+        function getNobetGrubu() {
+            var selected = $("#nobetGrup :selected").select();
+            return selected.val() + ' ' + selected.text();
+        }
+
+        function sonucAra() {
+            //dağılımlar
+            dagilimlarFiltreli = $.grep(dagilimlarTumu, function (n, i) {
+                return n["Nöbet Grubu"] == nobetGrubu || nobetGrubu == " Tüm Gruplar";
+            });
+            dagilimlarPivot = dagilimlarFiltreli;
+
+            //alert(gunDagilimiMaxMinTumu.length)
+            //gün dağılım grafik
+            gunDagilimiMaxMinFiltreli = $.grep(gunDagilimiMaxMinTumu, function (n, i) {
+                return n["Nöbet Grubu"] == nobetGrubu || nobetGrubu == " Tüm Gruplar";
+            });
+            gunDagilimiMaxMin = gunDagilimiMaxMinFiltreli;
+
+            //gün farkları
+            //özet
+            gunFarklariFrekanslarFiltreli = $.grep(gunFarklariFrekanslarTumu, function (n, i) {
+                return n["Nöbet Grubu"] == nobetGrubu || nobetGrubu == " Tüm Gruplar";
+            });
+            gunFarklariFrekanslar = gunFarklariFrekanslarFiltreli;
+
+            //diğer
+            gunFarklariTumSonuclarFiltreli = $.grep(gunFarklariTumSonuclarTumu, function (n, i) {
+                return n["Nöbet Grubu"] == nobetGrubu || nobetGrubu == " Tüm Gruplar";
+            });
+            gunFarklariTumSonuclar = gunFarklariTumSonuclarFiltreli;
+
+            //nöbet borç
+            alacakVerecekLitesiFiltreli = $.grep(alacakVerecekLitesiTumu, function (n, i) {
+                return n["Nöbet Grubu"] == nobetGrubu || nobetGrubu == " Tüm Gruplar";
+            });
+            alacakVerecekLitesi = alacakVerecekLitesiFiltreli;
+
+            dagilimlarPlanlananGerceklesenFiltreli = $.grep(dagilimlarPlanlananGerceklesenTumu, function (n, i) {
+                return n["Nöbet Grubu"] == nobetGrubu || nobetGrubu == " Tüm Gruplar";
+            });
+            dagilimlarPlanlananGerceklesen = dagilimlarPlanlananGerceklesenFiltreli;
+
+            //if (nobetGrubu == " Tüm Gruplar") {
+            //    dagilimlarPivot = dagilimlarTumu;
+            //    gunFarklariFrekanslar = gunFarklariFrekanslarTumu;
+            //    gunFarklariTumSonuclar = gunFarklariTumSonuclarTumu;
+            //    alacakVerecekLitesi = alacakVerecekLitesiTumu;
+            //}
+            //else {
+            //    //dağılımlar
+            //    dagilimlarFiltreli = $.grep(dagilimlarTumu, function (n, i) {
+            //        return n["Nöbet Grubu"] == nobetGrubu;
+            //    });
+            //    dagilimlarPivot = dagilimlarFiltreli;
+
+            //    //gün farkları
+            //    //özet
+            //    gunFarklariFrekanslarFiltreli = $.grep(gunFarklariFrekanslarTumu, function (n, i) {
+            //        return n["Nöbet Grubu"] == nobetGrubu;
+            //    });
+            //    gunFarklariFrekanslar = gunFarklariFrekanslarFiltreli;
+
+            //    //diğer
+            //    gunFarklariTumSonuclarFiltreli = $.grep(gunFarklariTumSonuclarTumu, function (n, i) {
+            //        return n["Nöbet Grubu"] == nobetGrubu;
+            //    });
+            //    gunFarklariTumSonuclar = gunFarklariTumSonuclarFiltreli;
+
+            //    //nöbet borç
+            //    alacakVerecekLitesiFiltreli = $.grep(alacakVerecekLitesiTumu, function (n, i) {
+            //        return n["Nöbet Grubu"] == nobetGrubu;
+            //    });
+            //    alacakVerecekLitesi = alacakVerecekLitesiFiltreli;
+            //}
+        }
+
+        function pivotSekilleriSifirla() {
+            nobetciEczaneler = null;
+            gunGrafik = null;
+            gunDagilim = null;
+            gunDagilim2 = null;
+            ayDagilim = null;
+            mevsimDagilim = null;
+            tarihDagilim = null;
+
+            gunFarkiGrafikVeri = null;
+            gunFarkiOzetListesi = null;
+            gunFarkiFrekansListesi = null;
+            gunFarkiDonguListesi = null;
+            gunFarkiDetaliArtanListesi = null;
+            gunFarkiDetayliAzalanListesi = null;
+
+            alacakVerecekGrafikVeri = null;
+            alacakVereceklerOzet = null;
+            alacakVereceklerList = null;
+
+            altGrupDagilim = null;
+            altGrupSirali = null;
+            ayniGunDagilim = null;
+            ayniGunDagilimTablo = null;
+            planlananVeGerceklesenNobetListesi = null;
+        }
+
+        function pivotlariGuncelle() {
+            if ($("#pills-dagilim-tab").hasClass("active")) {
+                if ($("#pills-nobetci-tab").hasClass("active")) {
+                    //alert("#pills-nobetci-tab")
+                    pivotSekilleriSifirla();
+                    nobetciListesi();
+                }
+                else if ($("#pills-gunOzetGrafik-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    gunGrafikOlustur();
+                }
+                else if ($("#pills-gunDagilimGrafik-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    gunDagilimGrafikler();
+                }
+                else if ($("#pills-gun-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    gunDagilimlar();
+                }
+                else if ($("#pills-ay-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    ayDagilimlar();
+                }
+                else if ($("#pills-mevsim-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    mevsimDagilimlar();
+                }
+                else if ($("#pills-tarih-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    tarihDagilimlar();
+                }
+            }
+            else if ($("#pills-gunFarki-tab").hasClass("active")) {
+                if ($("#pills-gunFarkiGrafik-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    gunFarkiGrafik();
+                }
+                if ($("#pills-ozet-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    gunFarkiOzet();
+                }
+                else if ($("#pills-frekans-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    gunFarkiFrekans();
+                }
+                else if ($("#pills-dongu-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    donguler();
+                }
+                else if ($("#pills-detayliArtan-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    gunFarkiDetaliArtanlar();
+                }
+                else if ($("#pills-detayliAzalan-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    gunFarkiDetaliAzalanlar();
+                }
+            }
+            else if ($("#pills-nobetBorc-tab").hasClass("active")) {
+                if ($("#pills-alacakVerecekGrafik-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    alacakVerecekGrafik();
+                }
+                else if ($("#pills-alacakVerecek-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    alacakVerecekOzet();
+                }
+                else if ($("#pills-alacakVerecekListesi-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    alacakVerecekListe();
+                }
+                else if ($("#pills-planlananVsGerceklesen-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    planlananVeGerceklesenNobetler();
+                }
+            }
+            else if ($("#pills-altGrupTakip-tab").hasClass("active")) {
+                if ($("#pills-altGrup-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    altGrupDagilimlar();
+                }
+                else if ($("#pills-altGrupGunGrupDagilim-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    altGrupGunGrupDagilimlar();
+                }
+                else if ($("#pills-altGrupSirali-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    altGrupSiraliDagilimlar();
+                }
+            }
+            else if ($("#pills-ayniGuneYazilanlar-tab").hasClass("active")) {
+                if ($("#pills-ayniGunTumu-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    ayniGunDagilimlar();
+                }
+                else if ($("#pills-esGrup-tab").hasClass("active")) {
+                    pivotSekilleriSifirla();
+                    ayniGunDagilimlar();
+                }
+            }
+        }
+
+        function tarihDondur(metin) {
+            var tarihTanim = metin.split(" ");
+            yil = parseInt(tarihTanim[0]);
+            ay = parseInt(tarihTanim[1]);
+            gun = parseInt(tarihTanim[2]);
+            return new Date(yil, ay - 1, gun);
+        }
+
+        function tarihAralik() {
+
+            if ($('#BaslangicTarihi').val().length > 0) {
+                //alert("BaslangicTarihi dolu")
+                baslangicTarihi = $('#BaslangicTarihi').val();
+            }
+            else {
+                //alert("BaslangicTarihi boş")
+                baslangicTarihi = null;
+            }
+
+            if ($('#BitisTarihi').val().length > 0) {
+                //alert("BitisTarihi dolu")
+                bitisTarihi = $('#BitisTarihi').val();
+            }
+            else {
+                //alert("BitisTarihi boş")
+                bitisTarihi = null;
+            }
+            //alert('baş. tarihi: ' + baslangicTarihi + ', bit. tarihi: ' + bitisTarihi)
+
+            if (baslangicTarihi == null && bitisTarihi == null) {
+                //alert(1 + " baslangicTarihi == null && bitisTarihi == null")
+                //dagilimlarPivot = dagilimlarTumu;
+                sonucAra();
+                pivotlariGuncelle();
+            }
+            else if (bitisTarihi == null) {
+                //alert(2 + " baş. tarihi: " + baslangicTarihi + " bitisTarihi == null")
+                dagilimlarFiltreli = $.grep(dagilimlarTumu, function (n, i) {
+                    var tarih = tarihDondur(n.Tarih2);
+                    return tarih >= new Date(baslangicTarihi) && (n["Nöbet Grubu"] == nobetGrubu || nobetGrubu == " Tüm Gruplar");
+                });
+
+                dagilimlarPivot = dagilimlarFiltreli;
+                pivotlariGuncelle();
+            }
+            else if (baslangicTarihi == null) {
+                //alert(3)
+                dagilimlarFiltreli = $.grep(dagilimlarTumu, function (n, i) {
+                    var tarih = tarihDondur(n.Tarih2);
+                    return tarih <= new Date(bitisTarihi) && (n["Nöbet Grubu"] == nobetGrubu || nobetGrubu == " Tüm Gruplar");
+                });
+
+                dagilimlarPivot = dagilimlarFiltreli;
+                pivotlariGuncelle();
+            }
+            else if (baslangicTarihi != null && bitisTarihi != null) {
+                //alert(4 + " baslangicTarihi != null && bitisTarihi != null")
+                if (baslangicTarihi > bitisTarihi) {
+                    alert("Başlangıç tarihi (" + baslangicTarihi + ") bitiş tarihinden (" + bitisTarihi + ") büyük olamaz!!!.");
+                    //e.preventDefault();
+                    return false;
+                };
+
+                dagilimlarFiltreli = $.grep(dagilimlarTumu, function (n, i) {
+                    var tarih = tarihDondur(n.Tarih2);
+                    return (tarih >= new Date(baslangicTarihi) && tarih <= new Date(bitisTarihi)) && (n["Nöbet Grubu"] == nobetGrubu || nobetGrubu == " Tüm Gruplar");
+                });
+
+                dagilimlarPivot = dagilimlarFiltreli;
+                pivotlariGuncelle();
+            }
+            else if (baslangicTarihi != null) {
+                //alert(5 + " baslangicTarihi != null")
+                dagilimlarFiltreli = $.grep(dagilimlarTumu, function (n, i) {
+                    var tarih = tarihDondur(n.Tarih2);
+                    return tarih >= new Date(baslangicTarihi) && (n["Nöbet Grubu"] == nobetGrubu || nobetGrubu == " Tüm Gruplar");
+                });
+
+                dagilimlarPivot = dagilimlarFiltreli;
+                pivotlariGuncelle();
+            }
+            else {
+                //alert(6 + " bitisTarihi != null")
+                dagilimlarFiltreli = $.grep(dagilimlarTumu, function (n, i) {
+                    var tarih = tarihDondur(n.Tarih2);
+                    return tarih <= new Date(bitisTarihi) && (n["Nöbet Grubu"] == nobetGrubu || nobetGrubu == " Tüm Gruplar");
+                });
+
+                dagilimlarPivot = dagilimlarFiltreli;
+                pivotlariGuncelle();
+            }
+        }
+
+        $("#btnSilBaslangicTarihi").click(function () {
+            baslangicTarihi = null;
+            $('#BaslangicTarihi').data('datepicker').setDate(null);
+            $("#btnSilBaslangicTarihi").hide();
+            $("#btnSilBaslangicTarihiFiltre").show();
+        });
+
+        $("#btnSilBitisTarihi").click(function () {
+            bitisTarihi = null;
+            $('#BitisTarihi').data('datepicker').setDate(null);
+            $("#btnSilBitisTarihi").hide();
+            $("#btnSilBitisTarihiFiltre").show();
+        });
+
+        $("#nobetGrup").change(function () {
+            nobetGrubu = getNobetGrubu();
+            tarihAralik();
+            //pivotlariGuncelle();
+        });
+
+        $("#BaslangicTarihi").change(function () {
+            //alert("BaslangicTarihi change")
+            if ($("#BaslangicTarihi").val() != null) {
+                //alert("BaslangicTarihi != null " + $("#BaslangicTarihi").val())
+                $("#btnSilBaslangicTarihiFiltre").hide();
+                $("#btnSilBaslangicTarihi").show();
+            }
+            tarihAralik();
+            //pivotlariGuncelle();
+        });
+
+        $("#BitisTarihi").change(function () {
+            if ($("#BitisTarihi").val() != null) {
+                $("#btnSilBitisTarihiFiltre").hide();
+                $("#btnSilBitisTarihi").show();
+            }
+            tarihAralik();
+            //pivotlariGuncelle();
+        });
+
+    </script>
+    <!-- #endregion -->
+    <!-- #region document ready -->
+    <script>
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": false,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "2000",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "2000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        var cozumModel = @Html.Raw(Json.Encode(Model.EczaneNobetSonuclar));
+
+        //var baslangicTarihi = $('#baslangicTarihi').val();
+        //var bitisTarihi = $('#bitisTarihi').val();
+        var kisitSayisi = cozumModel.KisitSayisi;
+        var calismaSayisi = cozumModel.CalismaSayisi;
+        var iterasyonSayisi = cozumModel.IterasyonSayisi;
+
+        var kararDegiskeniSayisi = cozumModel.KararDegikeniSayisi;
+        var objectiveValue = cozumModel.ObjectiveValue;//.replace(".", ",");
+        var cozumSuresi = $('#CozumSuresi').val();
+        var sure = $('#sure').val();//.replace(",", ".");
+
+        var s = timeSpanAyir(cozumSuresi);
+
+        function denemeSayisi() {
+            if (parseInt(calismaSayisi) > 0) {
+                return '<br/>-------------'
+                    + '<br/>Çalışma Sayısı : ' + calismaSayisi;
+            }
+            else {
+                return "";
+            }
+        }
+
+        function iterasyon() {
+            if (parseInt(iterasyonSayisi) > 0) {
+                return '<br/>İterasyon Sayısı : ' + iterasyonSayisi;
+            }
+            else {
+                return "";
+            }
+        }
+
+        function toastMesaj() {
+
+            toastr.clear();
+
+            if (parseInt(s[1]) > 0) {
+                var mesaj = //'( ' + tarihAyir(baslangicTarihi) + '-' + tarihAyir(bitisTarihi) + ' )'
+                      'Amaç Değeri : ' + objectiveValue.toFixed(3)
+                    + '<br/>Kural Sayısı : ' + kisitSayisi
+                    + '<br/>Değişken Sayısı : ' + kararDegiskeniSayisi
+                    + '<br/>Çözüm Süresi : ' + timeSpanFormatla(cozumSuresi)
+                    + '<br/>Toplam Süre  : ' + timeSpanFormatla(sure)
+                    + denemeSayisi()
+                    + iterasyon();
+                toastr.success(mesaj, "Çözüm İstatistiği");
+            }
+        }
+
+        function timeSpanAyir(zaman) {
+            var tarihParcali = zaman.split(".");
+            return tarihParcali; //[1] + "." + tarihParcali[0] + "." + tarihParcali[2];
+        }
+
+        function timeSpanFormatla(zaman) {
+            var tarihParcali = zaman.split(".");
+            return tarihParcali[0] + "." + tarihParcali[1].substring(0,2);
+        }
+
+        $('#btnCozumIstatistik').click(function () {
+           // alert(1)
+            toastMesaj();
+        });
+
+        function tarihAyir(tarih) {
+            var tarihParcali = tarih.substring(0, 10).split("/");
+            return tarihParcali[1] + "." + tarihParcali[0] + "." + tarihParcali[2];
+        }
+
+        $(function () {
+            getJsonDagilimlar(urlDagilimlar);
+            nobetGrubu = getNobetGrubu();
+            //var sure = parseInt($('#sure').val());
+
+            if (parseInt(s[1]) > 0 || s[1] != null) {
+                $('#btnCozumIstatistik').show();
+            }
+
+            toastMesaj();
+
+            //if (sure > 0) {
+            //    toastr.success('Çözüm Süresi: ' + sure + ' saniye');
+            //}
+            $(document).ajaxStart(function () {
+                $("#wait").show();
+            });
+            $(document).ajaxComplete(function () {
+                $("#wait").hide();
+                $("#filtre").show();
+                $("#btnExceleAktar").show();
+                $("#raporlar").show();
+            });
+        });
+    </script>
+    <!-- #endregion -->
+
+}

@@ -1,0 +1,133 @@
+﻿@{
+    Layout = null;
+}
+
+@* Eczane Nöbet Layout *@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <!-- Required meta tags -->
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @*<link rel="icon" href="../Content/images/schedule1.png" type="image/x-icon">*@
+
+    <link rel="icon" type="image/png" href="~/Content/images/favicon-32x32-transperent.png" sizes="32x32" />
+    <meta name="description" content="Siz uğraşmayın! Zamanınız size kalsın.">
+    <meta name="author" content="">
+    <meta name="keywords" content="Nöbetçi Eczane, Hemşire Nöbeti, Çizelgeleme, Akademik çözümler">
+
+    @*<link rel="icon" href="~/Content/images/logo-nobetyaz.png" sizes="16x16">*@
+    @*<link rel="icon" href="~/Content/images/logo3.jpg" type="image/x-icon">*@
+    @*<link rel="icon" href="../Content/images/icon.png" type="image/x-icon">
+        font-family: 'Oleo Script Swash Caps';
+    *@
+    <title>@ViewBag.Title</title>
+    <!-- Bootstrap, font-awasome, Site CSS -->
+
+    @Styles.Render("~/bundle/style")
+    @RenderSection("styles", false)
+
+</head>
+<body>
+    @*  *@
+    <!-- Navbar -->
+
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark fixed-top mb-5">
+
+        @*<a class="navbar-brand" href="@Url.Action( "Index", "NobetYaz",new { area = "EczaneNobet" })">
+                Nöbet Yaz
+            </a>*@
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        @Html.Action("MenuPartial", "Menu", new { area = "EczaneNobet" })
+    </nav>
+
+    <!-- Body -->
+
+    <div class="container-fluid mt-4 pt-5">
+        @if (IsSectionDefined("SolTaraf"))
+        {
+            <div class="row">
+                <!-- Kategoriler -->
+                <div class="col-md-2">
+                    @RenderSection("SolTaraf", false)
+                </div>
+                <!-- Render Body -->
+                <div class="col-md-10">
+                    @RenderBody()
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <!-- Render Body -->
+                <div class="col-md-12">
+                    @RenderBody()
+                    @*<div class="container-fluid">
+                        </div>*@
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Footer #bee5eb #f5f5f5-->
+    @*<footer class="footer fixed-bottom bg-dark">
+            <div class="container-fluid">
+                <div class="navbar navbar-expand-lg">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"> <a class="nav-link" href="@Url.Action( "About", "Home",new { area = "" })"><span class="fa fa-info-circle"> Hakkımızda</span></a> </li>
+                        <li class="nav-item"> <a class="nav-link" href="@Url.RouteUrl("Default", new { controller = "Home", action = "Contact" })"><span class="fa fa-envelope"> İletişim</span></a> </li>
+
+                    </ul>
+                    <a class="navbar text-right text-muted">&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</a>
+                </div>
+
+            </div>
+        </footer>*@
+
+    @*<div class="card">
+            <div class="card-body">
+                    &copy; 2017 - @DateTime.Now.Year
+                    <a class="card-link" target="_blank" href="http://www.eniyiplan.com">  En İyi Plan</a>
+            </div>
+        </div>*@
+    @*<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript"
+        SRC="//smarticon.geotrust.com/si.js"></SCRIPT>*@
+
+    @Scripts.Render("~/bundle/scripts")
+    @RenderSection("scripts", false)
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+
+            var $navbar = $(".navbar-collapse");
+            //var isExpanded = (".navbar-toggler").attr("aria-expanded");
+
+            //$(document).click(function (event) {
+            //    var clickover = $(event.target);
+
+            //    var _opened = $navbar.hasClass("collapse show");
+            //    if (_opened === true //&& !clickover.hasClass("navbar-collapse")
+            //    ) {
+            //        $navbar.collapse('hide');
+            //    }
+            //});
+
+            //if (isExpanded) {
+            //}
+        });
+
+         $("#formNobetUstGrupId #NobetUstGrupId").change(function (e) {
+            //alert(2)
+            $( "#formNobetUstGrupId" ).submit();
+            //var secilenGrupSayisi = $("#NobetGrupGorevTipId :selected").length;
+            //var secilenEczaneSayisi = $("#EczaneId :selected").length;
+        })
+
+    </script>
+</body>
+</html>

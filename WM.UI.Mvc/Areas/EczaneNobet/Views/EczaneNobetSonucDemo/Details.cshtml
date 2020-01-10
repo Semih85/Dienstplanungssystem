@@ -1,0 +1,42 @@
+﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.EczaneNobetSonucDemo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EczaneNobetSonucDemo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneNobetGrup.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneNobetGrup.Aciklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Takvim.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Takvim.Aciklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGorevTipId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGorevTipId)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

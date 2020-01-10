@@ -1,0 +1,156 @@
+﻿@model EczaneNobetGrupAltGrupCoklu
+
+@{
+    ViewBag.Title = "Eczane Nöbet Grup Alt Grup Ekle | Nöbet Sistemi";
+}
+
+<h4>Eczane Nöbet Grup Alt Grup Ekle</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-row mx-2">
+
+            <div class="form-group col-md-3">
+                @*@Html.LabelFor(model => model.EczaneNobetGrupId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new
+                    {
+                        @class = "form-control selectpicker",
+                   multiple = "true",
+                   //data_width = "auto",
+                   //data_actions_box = "true",
+                   mobile = "true",
+                   data_live_search = "true",
+                   data_selected_text_format = "count > 4",
+                   title = "Eczane Seçiniz..."
+               })
+                    @Html.ValidationMessageFor(model => model.EczaneNobetGrupId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-2">
+                @*@Html.LabelFor(model => model.BaslangicTarihi, htmlAttributes: new { @class = "control-label" })*@
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text p-2">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    @Html.TextBoxFor(model => model.BaslangicTarihi, new { @class = "form-control datepicker p-2", placeHolder = "Gruba Giriş Tarihi", autocomplete = "off" })
+                </div>
+                @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-md-2">
+                @*@Html.LabelFor(model => model.BitisTarihi, htmlAttributes: new { @class = "control-label" })*@
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text p-2">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    @Html.TextBoxFor(model => model.BitisTarihi, new { @class = "form-control datepicker p-2", placeHolder = "Grutan Çıkış Tarihi", autocomplete = "off" })
+                </div>
+                @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+
+        <div class="form-group mb-4">
+            @Html.LabelFor(model => model.NobetAltGrupId, "Nöbet Alt Grubu", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("NobetAltGrupId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NobetAltGrupId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ekle" class="btn btn-primary" />
+                @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+            </div>
+        </div>
+    </div>
+}
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/validation/scripts")
+
+    <script>
+
+        function tarihDondur2(metin) {
+
+            var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2];
+            ay = tarihTanim[1];
+            gun = tarihTanim[0];
+
+            if (gun.length != 4) {
+                return yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+
+        $(function () {
+            var baslamaTarihi = tarihDondur2($("#BaslangicTarihi").val());
+
+            if (baslamaTarihi != null || baslamaTarihi != "") {
+                var d = new Date(baslamaTarihi);
+                $("#BaslangicTarihi").datepicker("setDate", new Date(d));
+            }
+        });
+
+        $("#submitEkle").click(function (e) {
+
+            var secilenGrupSayisi = $("#EczaneNobetGrupId :selected").length;
+            var secilenEczaneSayisi = $("#EczaneId :selected").length;
+            //alert($("#EczaneNobetGrupId :selected").val())
+
+            if (secilenEczaneSayisi < 1 && secilenGrupSayisi < 1) {
+                alert("Lütfen kriterleri seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+            else if (secilenEczaneSayisi < 1) {
+                alert("Lütfen eczane seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+            else if (secilenGrupSayisi < 1) {
+                alert("Lütfen grup seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+            var grup = $("#EczaneNobetGrupId :selected").text();
+
+            if ($("#Aciklama").val().length > 0) {
+                return confirm(secilenEczaneSayisi + ' eczane ' + grup + ' isimli gruba eklenecek. Emin misiniz?');
+            }
+        });
+    </script>
+}

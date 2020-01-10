@@ -1,0 +1,220 @@
+﻿@model IEnumerable<EczaneNobetGrupDetay>
+
+@{
+    ViewBag.Title = "Eczane Nöbet Gruplar | Nöbet Sistemi";
+
+    //var postAjaxSecilenleriSil = new AjaxOptions
+    //{
+    //    AllowCache = false,
+
+    //    Url = Url.Action("SecilenleriSil"),
+    //    HttpMethod = "POST",
+    //    UpdateTargetId = "eczaneNobetGruplarListe",
+    //    InsertionMode = InsertionMode.Replace,
+    //    LoadingElementId = "loading"
+    //};
+
+    var getAjaxSearch = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("SearchWithNobetGrupGorevTipId"),
+        HttpMethod = "GET",
+        UpdateTargetId = "eczaneNobetGruplarListe",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "loading"
+    };
+}
+
+
+@*<div class="well">
+        <div class="form-inline">
+            <h4 class="mr-5">Eczane Nöbet Gruplar</h4>
+            <div class="form-group mr-5">
+                <a class="btn btn-outline-success btn-sm pull-right" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+                </div>
+                <input type="text" id="myInput" class="form-control" placeholder="Tabloda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+            </div>
+        </div>
+    </div>*@
+
+<div class="row justify-content-between mb-2">
+    <div class="col-md-4 mb-2">
+        <div class="form-inline">
+            <h4 class="mr-5">Eczane Nöbet Gruplar</h4>
+            <div class="form-group">
+                <a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-xl-3">
+
+        <button class="btn btn-dark btn-sm" type="button" id="btnExceleAktar">
+            <i class="fa fa-file-excel-o text-success"></i> Excele Aktar
+            <i class="fa fa-download"></i>
+        </button>
+    </div>
+
+    <div class="col-md-4 col-xl-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="text" id="myInput" class="form-control" placeholder="Tabloda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+        </div>
+    </div>
+</div>
+
+<div class="row mb-2">
+    <div class="col-4">
+        <div class="form-inline">
+            @using (Ajax.BeginForm(null, null, getAjaxSearch, new { @class = "form-inline mb-2", id = "formTumu" }))
+            {
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="form-group mr-3">
+                            @Html.DropDownList("NobetGrupGorevTipId", null, htmlAttributes: new
+                               {
+                                   @class = "form-control selectpicker",
+                                   //@id = "Id",
+                                   onchange = "myFunction(event)",
+                                   data_width = "auto",
+                                   mobile = "true",
+                                   data_live_search = "true"
+                               }, optionLabel: "Tüm Gruplar")
+                        </div>
+                        <div class="form-group mr-3">
+                            <span class="input-group-btn">
+                                <button type="submit" id="submitSorgula" class="btn btn-primary my-2 pull-right"><i class="fa fa-search"></i> Sorgula</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*----------------loading gif--------------------*@
+@*<div class="row">
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-4">
+            <div id="loading" align="center" style="margin-top: 10%">
+                <img src="~/Content/images/orig.gif" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+        </div>
+    </div>*@
+
+
+<div class="spinner-border text-primary" role="status" style="display:none" id="loading">
+    <span class="sr-only">Loading...</span>
+</div>
+
+@if (TempData["EklenenEczane"] != null)
+{
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa fa-check"></i>
+                <strong> @TempData["EklenenEczane"]</strong>
+                Arama kutusundan eklenen eczaneleri kontrol edebilirsiniz.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="row">
+    <div class="col">
+        <div id="silinenBayramlar">
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div id="eczaneNobetGruplarListe">
+            @*@{
+                    Html.RenderAction("EczaneNobetMazeretPartialView", "EczaneNobetMazeret");
+                }*@
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/pager")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+
+    <script>
+        $(document).ready(function () {
+
+            $("#myInput").on("keyup", function () {
+
+                    var value = $(this).val().toLocaleLowerCase('tr-TR');
+
+                    $("#eczaneNobetGrupTablo tr").filter(function () {
+                        $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                    });
+                    
+                    if ($(this).val().length == 0) {
+                        getPaging(currentPage)
+                    }
+            });
+
+            $('#btnExceleAktar').click(function () {
+                // alert('ConfirmSubmit')
+                $("#gridT > tbody > tr").each(function (i, el) {
+                    $(this).css('display', 'table-row');
+                });
+                exportToExcel();
+                //location.reload();
+                //sayfalamaYap(model, 15);
+            });
+
+            function exportToExcel() {
+
+                var htmls = "";
+
+                var uri = 'data:application/vnd.ms-excel;base64,';
+
+                var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+
+                var base64 = function (s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                };
+
+                var format = function (s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) {
+                        return c[p];
+                    })
+                };
+
+                htmls = $("table").html();
+
+                var ctx = {
+                    worksheet: 'Worksheet',
+                    table: htmls
+                }
+
+                var link = document.createElement("a");
+                link.download = "eczaneNobetGruplar.xls";
+                link.href = uri + base64(format(template, ctx));
+                link.click();
+            }
+        });
+    </script>
+}

@@ -1,0 +1,208 @@
+﻿@model EczaneUzaklikMatrisViewModel
+@{
+    Layout = null;
+}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @*<link rel="icon" href="~/Content/images/logo-nobetyaz.png" type="image/x-icon">*@
+    <link rel="icon" type="image/png" href="~/Content/images/favicon-32x32-transperent.png" sizes="32x32" />
+    <title>Nöbetçi Eczane Ekranı | Nöbet Sistemi</title>
+
+    <!-- Bootstrap, font-awasome, Site CSS -->
+    @Styles.Render("~/bundle/pivot/style", "~/bundle/alert_toastr/style")
+    @Styles.Render("~/bundle/style")
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+</head>
+
+
+<body>
+    <div id="map" style="height:800px; visibility:hidden" class="col-lg-9">
+        @*Harita burada*@
+    </div>
+
+    @section Scripts{
+        @Scripts.Render("~/bundle/queryui/scripts", "~/bundle/pivot/scripts", "~/bundle/alert_toastr/scripts")
+        @Scripts.Render("~/bundle/ajax")
+        @Scripts.Render("~/bundle/bootstrap-select/scripts")
+        @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+        @Scripts.Render("~/bundle/scriptsDetailTable/script")
+    }
+    <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false&libraries=geometry"></script>
+
+    <script>
+
+    //$(document).ready(function () {
+    function myMap() {
+         //alert('ready')
+        var counter = 1;
+        var bant = false;
+        var deviceHeight = document.documentElement.clientHeight;
+        //Google Metodları
+        //myMap()
+        //alert('myMap')
+        //alert('deviceHeight: ' + deviceHeight);
+        var mapCanvas = document.getElementById("map");
+        var model = @Html.Raw(Json.Encode(Model));
+
+        var myCenter = { lat: 36.805533, lng: 34.626287 };
+        var mapOptions = {
+            center: myCenter,
+            zoom: 10,
+            disableDefaultUI: true
+        };
+        var mapOptions2 = {
+            center: myCenter,
+            zoom: 15,
+            disableDefaultUI: true
+        };
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+
+
+        var nobetciEczaneler = new Array();
+        var mesafeler = new Array();
+        var mesafelerNewArray = new Array();
+        var mesafeCounter = 0;
+        //modelden nöbetçi eczaneleri alır:
+        for (var g = 0; g < model.NobetciEczaneler.length; g++) {
+
+            var newElement = {
+                id: model.NobetciEczaneler[g].EczaneId,
+                adi: model.NobetciEczaneler[g].Adi,
+                koordinatx: model.NobetciEczaneler[g].Enlem,
+                koordinaty: model.NobetciEczaneler[g].Boylam,
+                tel: model.NobetciEczaneler[g].TelefonNo,
+                adres: model.NobetciEczaneler[g].Adres,
+                adresTarifi: model.NobetciEczaneler[g].AdresTarifiKisa,
+            }
+            nobetciEczaneler.push(newElement)
+        }
+        alert('nobetciEczaneler.length: ' + nobetciEczaneler.length)
+        //mesafeMatrisiOlustur()
+        var counter = 0;
+        function mesafeMatrisiOlustur() {
+
+            //var arr = [];
+
+            for (var i = 0; i < nobetciEczaneler.length; i++)
+            {
+                //arr.push([0])
+                //alert('nobetciEczaneler[i].koordinatx: ' + nobetciEczaneler[i].koordinatx)
+                //alert('nobetciEczaneler[i].koordinaty: ' + nobetciEczaneler[i].koordinaty)
+                var startLocation = {
+                    lat: nobetciEczaneler[i].koordinatx,
+                    lng: nobetciEczaneler[i].koordinaty,
+                    id:  nobetciEczaneler[i].id
+                };
+                //alert('for startLocation: ' + startLocation.lat + ' ' + startLocation.lng)
+
+                for (var j = 0; j < nobetciEczaneler.length; j++)
+                {
+                    //alert('nobetciEczaneler[j].koordinatx: ' + nobetciEczaneler[j].koordinatx)
+                    //alert('nobetciEczaneler[j].koordinaty: ' + nobetciEczaneler[j].koordinaty)
+                    var endLocation = {
+                        lat: nobetciEczaneler[j].koordinatx,
+                        lng: nobetciEczaneler[j].koordinaty,
+                        id:  nobetciEczaneler[j].id
+                    };
+
+                    //alert('for endLocation: ' + endLocation.lat + ' ' + endLocation.lng)
+                    //arr[i][j] = mesafeHesapla(startLocation, endLocation);
+
+                    var mesafe = mesafeHesapla(startLocation, endLocation);//google
+                    //var mesafe = distanceInKmBetweenEarthCoordinates(startLocation, endLocation);//kus ucusu
+                    counter++;
+                    postUzakliklar(startLocation.id, endLocation.id, mesafe)
+                }
+            }
+
+            alert('counter: ' + counter);
+        }
+        function degreesToRadians(degrees) {
+            return degrees * Math.PI / 180;
+        }
+        function distanceInKmBetweenEarthCoordinates(startLocation, endLocation) {
+            var earthRadiusKm = 6371000;
+
+            var lat1 = startLocation.lat;
+            var lon1 = startLocation.lng;
+            var lat2 = endLocation.lat;
+            var lon2 = endLocation.lng;
+
+            var dLat = degreesToRadians(lat2 - lat1);
+            var dLon = degreesToRadians(lon2 - lon1);
+
+            lat1 = degreesToRadians(lat1);
+            lat2 = degreesToRadians(lat2);
+
+            var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+            var distance = earthRadiusKm * c;
+            return distance.toFixed(0)
+        }
+        function mesafeHesapla(startLocation, endLocation) {
+            var mesafe = "0";
+            //alert('for startLocation: ' + startLocation.lat + ' ' + startLocation.lng)
+            //alert('for endLocation: ' + endLocation.lat + ' ' + endLocation.lng)
+
+            var distance = google.maps.geometry.spherical.computeDistanceBetween
+                (new google.maps.LatLng(startLocation.lat, startLocation.lng),
+                new google.maps.LatLng(endLocation.lat, endLocation.lng));
+
+            mesafe = " " + (distance / 1000).toFixed(2) + " km.";
+
+            return distance.toFixed(0);
+        }
+        function postUzakliklar(eczaneFromid, eczaneToid, mesafe) {
+
+            //var form = $('#__AjaxAntiForgeryForm');
+            //var token = $('input[name="__RequestVerificationToken"]', form).val();
+            //alert(token)
+            //alert('eczaneFromid: ' + eczaneFromid)
+            //alert('eczaneToid: ' + eczaneToid)
+            //alert('mesafe: ' + mesafe)
+            $.ajax({
+                type: "POST",
+                url: "../../../EczaneNobet/EczaneUzaklikMatris/SetUzakliklar",
+                data: {
+                    //__RequestVerificationToken: token,
+                    eczaneIdFrom: eczaneFromid,
+                    eczaneIdTo: eczaneToid,
+                    mesafe: mesafe,
+                },
+                //data: "{'eczaneIdFrom':" + eczaneFromid + ",'eczaneIdTo':" + eczaneToid +
+                //    ",'mesafe': " + mesafe + ",'__RequestVerificationToken':" + token + "  }",
+                //__RequestVerificationToken: token,
+                // contentType: "application/json; charset=utf-8",
+                dataType: "html",
+                success: function (data) {
+                    alert('success');
+                    //alert(data)
+                    //location.reload();
+                    //$("#partialView").html(data);
+                },
+                error: function (request, textStatus, thrownError) {
+                    //alert(request.status);
+                    alert(thrownError);
+                    //alert("Lütfen Seçim Yapınız")
+                    //location.reload();
+                }
+            });
+            // $('#formALD').submit();
+            //location.reload();
+        }
+    }
+    //});
+    </script>
+
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP29ma6oCPNwQPFdXbilDCYBKP2Gk52CE&callback=myMap">
+    </script>
+</body>
+
+
+

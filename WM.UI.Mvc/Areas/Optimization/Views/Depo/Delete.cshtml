@@ -1,0 +1,45 @@
+﻿@model WM.Northwind.Entities.Concrete.Depo
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+@section SolTaraf{
+    @Html.Action("TransportDataPartialView", "Transport", new { area = "Optimization" })
+}
+
+
+<h2>Kayıt Sil</h2>
+
+<h3>Bu kayıt silinecek! Emin misiniz?</h3>
+<div>
+    <h4>Depo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Talep)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Talep)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-default" /> |
+            @Html.ActionLink("Listeye Dön", "Index")
+        </div>
+    }
+</div>

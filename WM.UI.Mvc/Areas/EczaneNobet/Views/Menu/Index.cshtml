@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Menu>
+
+@{
+    ViewBag.Title = "Menüler | Nöbet Sistemi";
+}
+
+<h4>Menü</h4>
+
+<p>
+    @Html.ActionLink("Yeni Kayıt", "Create")
+</p>
+<table class="table table-hover table-sm">
+    <thead class="thead-light">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LinkText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActionName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ControllerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AreaName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SpanCssClass)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PasifMi)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LinkText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActionName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ControllerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AreaName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpanCssClass)
+            </td>
+            <td>
+                @if (item.PasifMi)
+                {
+                    <label class="badge badge-danger">
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        Pasif
+                    </label>
+                }
+                else
+                {
+                    <label class="badge badge-success">
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        Aktif
+                    </label>
+                }
+                @*@Html.DisplayFor(modelItem => item.PasifMi)*@
+            </td>
+            <td>
+                @{
+                    var target = $"#islem{@item.Id}";
+                }
+                <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="fa fa-cog"></span>
+                </button>
+                <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                    <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                    <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                    <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>

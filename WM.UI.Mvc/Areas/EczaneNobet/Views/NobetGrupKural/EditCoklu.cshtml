@@ -1,0 +1,216 @@
+﻿@model NobetGrupKuralCoklu
+
+<h4>Nöbet Grup Kural Düzenle</h4>
+<hr />
+
+<div class="container">
+    @using (Html.BeginForm("EditCoklu", null, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+    <div class="form">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.NobetKuralId)
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.EczaneNobetGrupId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.DropDownList("NobetGrupId", null, htmlAttributes: new { @class = "form-control selectpicker",
+               multiple = "true", data_live_search = "true", data_actions_box = "true", title = "Grup seçiniz...",
+               data_selected_text_format = "count > 4"
+           })
+                @Html.ValidationMessageFor(model => model.NobetGrupId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none" id="div_nobetKural">
+            @Html.LabelFor(model => model.NobetKuralId, "Kural", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NobetKuralId, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NobetKuralId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-row mx-2">
+            <div class="form-group col-md-4" style="display:none" id="div_baslangicTarihi">
+                @Html.LabelFor(model => model.BaslangicTarihi)
+                @Html.EditorFor(model => model.BaslangicTarihi, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-md-4">
+                @Html.LabelFor(model => model.BitisTarihi)
+                @Html.EditorFor(model => model.BitisTarihi, new { htmlAttributes = new { @class = "form-control", @id = "bitisTarihi", autocomplete = "off" } })
+                @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group col-md-2">
+                @Html.LabelFor(model => model.Deger)
+                @Html.EditorFor(model => model.Deger, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Deger, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">                
+                <button type="submit" id="formSubmitButton" class="btn btn-outline-primary"><i class="fa fa-save"></i> Güncelle</button>
+
+                @Html.ActionLink("Nöbet Grup Kural Listesi", "Index", null, new { @class = "btn btn-outline-warning" })
+            </div>
+        </div>
+
+        @if (TempData["DegisenNobetGrupKuralSayisi"] != null)
+        {
+            <div class="row justify-content-sm-center">
+                <div class="col-12">
+                    <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                        <i class="fa fa-check"></i> @TempData["DegisenNobetGrupKuralSayisi"] nöbet grup kural değişnmiştir.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (ViewBag.Mesaj != null)
+        {
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        Başlangıç ve bitiş tarih aralığı en az  <strong>@ViewBag.minYil</strong> ila en çok <strong>@ViewBag.maxYil</strong> arasında olmalıdır!
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (ViewBag.MesajBayram != null)
+        {
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <i class="fa fa-warning"></i> @ViewBag.MesajBayram
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (ViewBag.Mesaj2 != null)
+        {
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Başlangıç tarihi (<strong>@Model.BaslangicTarihi.ToShortDateString()</strong>) bitiş tarihinden (<strong>@Model.BitisTarihi.ToShortDateString()</strong>) büyük olamaz!
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    }
+</div>
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
+
+@section Scripts{
+
+    @Scripts.Render("~/bundle/validation/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+
+    <script>
+
+        var deger;
+        alert('b');
+
+        //function getir(data) {
+        //    //$("#EczaneId").html(data).selectpicker('refresh');
+        //    alert(a)
+        //    $('#NobetGrupId').selectpicker('selectAll');
+        //}
+
+        $(document).ready(function () {
+            alert('b');
+            //getir();
+            $("div_nobetKural").disable();
+            $("div_baslangicTarihi").disable();
+            $("bitisTarihi").val('');
+            alert('a');
+
+            var secilenHaftaninGunuSayisi = @ViewBag.SecilenHaftaninGunuSayisi;
+
+            if (secilenHaftaninGunuSayisi == 0) {
+                $('#Deger').selectpicker('selectAll');
+                secilenHaftaninGunuSayisi = $("#Deger :selected").length;
+            }
+        });
+
+        $('#NobetGrupId').selectpicker();
+
+        $("#BitisTarihi").change(function () {
+
+            var baslangicStr = $("#BaslangicTarihi").val();
+            var baslangicArr = baslangicStr.split(".");
+            var baslangicDate = new Date(baslangicArr[2], baslangicArr[1], baslangicArr[0]);
+
+            var bitisStr = $("#BitisTarihi").val();
+            var bitisArr = bitisStr.split(".");
+            var bitisDate = new Date(bitisArr[2], bitisArr[1], bitisArr[0]);
+
+            if (baslangicDate > bitisDate) {
+                alert("Başlangıç tarihi (" + baslangicStr + ") bitiş tarihinden (" + bitisStr + ") büyük olamaz!!!.");
+                $("#BitisTarihi").val("");
+                $("#BitisTarihi").focus();
+            };
+        });
+
+        $("#formSubmitButton").click(function (e) {
+
+            var bitisTarihi = $('#BitisTarihi').val();
+            var baslangicTarihi = $('#BaslangicTarihi').val();
+
+            if (baslangicTarihi != "" && bitisTarihi != "") {
+                if (bitisTarihi < baslangicTarihi) {
+                    alert("Bitiş tarihi (" + bitisTarihi + ") başlangıç tarihinden (" + baslangicTarihi + ") küçük olamaz...")
+                    e.preventDefault();
+                    return false;
+                };
+            }
+
+            secilenGrupSayisi = $("#NobetGrupId :selected").length;
+
+            if (secilenGrupSayisi == 0) {
+                alert("Lütfen en az 1 grup seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+            else if (secilenGrupSayisi > 100) {
+                alert("En fazla 100 grup seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+            deger = $("#Deger :selected").length;
+
+            if (deger == 0) {
+                alert("Lütfen haftanin günlerini seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+        });
+
+    </script>
+}

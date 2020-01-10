@@ -1,0 +1,58 @@
+﻿@model EczaneNobetDegisimDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EczaneNobetDegisim</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneNobetGrup.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneNobetGrup.Aciklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneNobetSonuc.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneNobetSonuc.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KayitTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KayitTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

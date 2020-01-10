@@ -1,0 +1,31 @@
+﻿@using WM.UI.Mvc.Areas.Northwind.Models
+
+@model CategoryListPartialViewModel
+
+<h2>Kategoriler</h2>
+<hr />
+
+<div class="list-group">
+
+    @foreach (var category in Model.CategoryNbProducts)
+    {
+        var css_a = "list-group-item list-group-item-action";
+        var css_badge = "badge badge-secondary";
+        var chk = Html.Raw("");
+
+        if (category.CategoryId == Model.CurrentCategory)
+        {
+            css_a += " active";
+            css_badge = "badge badge-info";
+            chk = Html.Raw("<i class='fa fa-check-square' aria-hidden='true'></i>&nbsp;");
+        }
+
+        <a class="@css_a"
+           href="@Url.Action("Index", "Product", new { area = "Northwind", categoryId = category.CategoryId })">
+            @chk
+            @category.CategoryName
+            <span class="@css_badge">@category.ProductsInCategory</span>
+        </a>
+    }
+
+</div>

@@ -1,0 +1,269 @@
+﻿@using GridMvc.Html
+@using WM.UI.Mvc.Areas.Optimization.Models
+@model TransportSonucIndexModel
+
+@section SolTaraf{
+    @Html.Action("TransportDataPartialView", "Transport", new { area = "Optimization" })
+}
+
+@section styles{
+    @Styles.Render("~/bundle/gridmvc/style",
+                   "~/bundle/pivot/style",
+                   "~/bundle/network/style")
+    <style>
+        #mynetwork {
+            height: 500px;
+            border: 1px solid lightgray;
+        }
+    </style>
+}
+
+<h2>Sonuçlar</h2>
+
+<hr />
+<p>
+    <a class="btn btn-outline-success" href="@Url.Action("Create", null, new { @class= "btn btn-success" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+</p>
+
+
+@* Sonuç Tablosu *@
+<div class="row">
+    <div class="col-md-8">
+
+        @Html.Grid(Model.TransportSonucDetails).Named("sonuclar").Columns(col =>
+           {
+               //her kolona özel seçenek belirlenebilir.
+
+               //Id kolonu (gizli)
+               col.Add(x => x.Id, true);
+
+               //düzenle
+               col.Add().Encoded(false).Sanitized(false).RenderValueAs(html =>
+               {
+                   string htmlStr = "<a href='/Optimization/TransportSonuc/Edit/" + html.Id.ToString() + "' class='btn btn-warning btn-sm'><span class='fa fa-edit fa-lg'></span> </a>";
+                   return MvcHtmlString.Create(htmlStr);
+               }).SetWidth(30);
+
+               //sil
+               col.Add().Encoded(false).Sanitized(false).RenderValueAs(html =>
+               {
+                   string htmlStr = "<a  href='/Optimization/TransportSonuc/Delete/" + html.Id.ToString() + "' class='btn btn-danger btn-sm'><span class='fa fa-remove fa-lg'></span> </a>";
+                   return MvcHtmlString.Create(htmlStr);
+               }).SetWidth(30);
+
+               //detay
+               col.Add().Encoded(false).Sanitized(false).RenderValueAs(x => $"<a href='{Url.Action("Details", "TransportSonuc", new { area = "Optimization", id = x.Id })}' class='btn btn-info btn-sm'> <span class='fa fa-info-circle fa-lg'> </span></a>").SetWidth(30);
+
+               //gösterilen kolonlar
+               col.Add(x => x.FabrikaAdi).Titled("Fabrika");
+               col.Add(x => x.DepoAdi).Titled("Depo");
+               col.Add(x => x.Sonuc);
+
+           }).Filterable(true).Sortable(true).WithPaging(10, 10, "grid1_page").SetLanguage("tr")
+
+    </div>
+
+    <div class="col-md-4">
+        <div id="detaylar">
+
+            <div class="card border-info mb-3" style="max-width: 20rem;">
+                <div class="card-header">Detaylar</div>
+                <div class="card-body text-info">
+                    <h4 class="card-title">Sonuçlar</h4>
+                    <span class="card-text font-weight-bold">Id: </span><span id="Id"></span><br />
+                    <span class="card-text font-weight-bold">Fabrika Adı: </span><span id="FabrikaAdi"></span><br />
+                    <span class="card-text font-weight-bold">Depo Adı: </span><span id="DepoAdi"></span><br />
+                    <span class="card-text font-weight-bold">Sonuc: </span><span id="Sonuc"></span><br />
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* Sonuç Analiz *@
+<div class="row mt-5">
+
+    <div class="col-sm-6 col-md-6">
+        <h3>Pivot Tablo</h3><br />
+
+        <div id="output">
+            @* Pivot Table *@
+        </div>
+    </div>
+
+    <div class="col-sm-6 col-md-6">
+        <h3>Veri Görseli</h3><br />
+
+        <div id="mynetwork" style="border:ridge;">
+            @* Veri Görseli *@
+        </div>
+    </div>
+</div>
+
+@section scripts{
+
+    @Scripts.Render("~/bundle/gridmvc/scripts",
+                    "~/bundle/queryui/scripts",
+                    "~/bundle/pivot/scripts",
+                    "~/bundle/vis/scripts")
+
+    <script>
+
+        //vis
+        var _sonuclar = @Html.Raw(Json.Encode(Model.TransportSonucDetails));
+        var _nodes = @Html.Raw(Json.Encode(Model.TransportNodes));
+        var _edges = @Html.Raw(Json.Encode(Model.TransportEdges));
+
+        var nodes = null;
+        var edges = null;
+        var network = null;
+
+        //detayları gizle
+        $("#detaylar").hide();
+
+        draw();
+
+        //-------------------------------------------
+        //görseli çiz
+        function draw() {
+
+            nodes = [];
+            edges = [];
+
+            $.each(_nodes, function (key, val) {
+                nodes.push({
+                    id: val.Id,
+                    value: val.Value,
+                    label: val.Label,
+                    group: val.Group,
+                    level: val.Level
+                });
+            });
+
+            $.each(_edges, function (key, val) {
+                edges.push({
+                    from: val.From,
+                    to: val.To,
+                    value: val.Value,
+                    label: val.Label,
+                    title: val.Title
+                });
+            });
+
+            nodes = nodes;
+            edges = edges;
+
+            // Instantiate our network object.
+            var container = document.getElementById('mynetwork');
+            var data = {
+                nodes: nodes,
+                edges: edges
+            };
+
+            var options = {
+                nodes: {
+                    shape: 'triangle'
+                    //shape: ellipse, dot, triangle
+                    //scaling: {
+                    //    label: {
+                    //        min: 15,
+                    //        max: 31
+                    //    }
+                    //}
+                },
+                edges: {
+                    color: {
+                        color: 'rgba(30,30,30,0.2)',
+                        highlight: 'blue'
+                    },
+                    width: 0.80,
+                    smooth: {
+                        type: 'straightCross'
+                         //types: cubicBezier, curvedCW
+                    }
+                },
+                layout: {
+                    hierarchical: {
+                        direction: "LR"
+                    }
+                },
+                physics: true
+            };
+            network = new vis.Network(container, data, options);
+        }
+               
+        //-------------------------------------------
+        //detayları göster
+        $(function () {
+            pageGrids.sonuclar.onRowSelect(function (e) {
+                $("#detaylar").show();
+
+                var data = e.row;
+
+                $("#Id").text(data.Id);
+                $("#FabrikaAdi").text(data.FabrikaAdi);
+                $("#DepoAdi").text(data.DepoAdi);
+                $("#Sonuc").text(data.Sonuc);
+
+            });
+            pageGrids.sonuclar.addFilterWidget(new CustomersFilterWidget());
+        })
+
+        //-------------------------------------------
+        //pivot table
+        $(function () {
+            $("#output").pivotUI(_sonuclar,
+                {
+                    rows: ["FabrikaAdi"],
+                    cols: ["DepoAdi"],
+                    vals: ["Sonuc"],
+                    aggregatorName: "Sum",
+                    rendererName: "Heatmap"
+                }
+            );
+        });
+
+        //var objs = [
+            //    { Fabrika: "A", Depo: "E", Sonuc: 6 },
+            //    { Fabrika: "A", Depo: "F", Sonuc: 4 },
+            //    { Fabrika: "B", Depo: "F", Sonuc: 8 },
+            //    { Fabrika: "B", Depo: "G", Sonuc: 15 },
+            //    { Fabrika: "C", Depo: "E", Sonuc: 15 },
+            //    { Fabrika: "C", Depo: "F", Sonuc: 2 },
+            //    { Fabrika: "C", Depo: "G", Sonuc: 10 }
+            //]
+
+         //nodes = [
+            //    { id: 01, value: 15, label: 'A', group: 0, level:0 },
+            //    { id: 02, value: 23, label: 'B', group: 0, level:0 },
+            //    { id: 03, value: 27, label: 'C', group: 0, level:0 },
+            //    { id: 04, value: 20, label: 'D', group: 0, level:0 },
+
+            //    { id: 11, value: 31, label: 'E', group: 1, level:1 },
+            //    { id: 12, value: 24, label: 'F', group: 1, level:1 },
+            //    { id: 13, value: 30, label: 'G', group: 1, level:1 }
+            //];
+
+            //console.log(nodes);
+
+         //edges = [
+            //    { from: 01, to: 11, value: 1,  label: 1,  title: 'FA->DE: 1 adet' },
+            //    { from: 01, to: 12, value: 11, label: 11, title: 'FA->DF: 11 adet' },
+            //    { from: 01, to: 13, value: 3,  label: 3,  title: 'FA->DG: 3 adet' },
+
+            //    { from: 02, to: 11, value: 8,  label: 8,  title: 'FB->DF: 8 adet' },
+            //    { from: 02, to: 12, value: 15, label: 15, title: 'FB->DG: 15 adet' },
+
+            //    { from: 03, to: 11, value: 15, label: 15, title: 'FC->DE: 15 adet' },
+            //    { from: 03, to: 13, value: 12, label: 12, title: 'FC->DG: 12 adet' },
+
+            //    { from: 04, to: 11, value: 15, label: 15, title: 'FD->DE: 15 adet' },
+            //    { from: 04, to: 12, value: 5,  label: 5,  title: 'FD->DF: 5 adet' }
+            //];
+
+    </script>
+}
+
+

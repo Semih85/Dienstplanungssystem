@@ -1,0 +1,100 @@
+﻿@model IEnumerable<EczaneNobetGrupAltGrupDetay>
+
+
+<div id="div1">
+    <table id="gridT" class="table table-hover table-striped table-bordered table-sm">
+        <thead class="thead-light">
+            <tr>
+                @*<th>
+                        @Html.DisplayNameFor(model => model.EczaneNobetGrupId)
+                    </th>*@
+                <th>
+                    @Html.DisplayName("Nöbet Grubu")
+                </th>
+                <th>
+                    @Html.DisplayName("Görev Tipi")
+                </th>
+                <th>
+                    @Html.DisplayName("Eczane")
+                </th>
+                <th>
+                    @Html.DisplayName("Başlama Tarihi")
+                </th>
+                <th>
+                    @Html.DisplayName("Bitiş Tarihi")
+                </th>
+                <th>
+                    @Html.DisplayName("Alt Grup Adı")
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="eczaneNobetGrupAltGrupTablo">
+            @foreach (var item in Model)
+            {
+                <tr class="gridtr">
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.EczaneNobetGrupId)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetGrupAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetGorevTipAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EczaneAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BaslangicTarihi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BitisTarihi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NobetAltGrupAdi)
+                    </td>
+                    <td>
+                        @{
+                            var target = $"#islem{@item.Id}";
+                        }
+                        <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="fa fa-cog"></span>
+                        </button>
+                        <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                            <a class="btn btn-outline-success py-0 btn-sm" title="Düzenle" href="@Url.Action("Edit", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-edit"></span></a>
+                            <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
+                            <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="...">
+        <ul class="navbar-nav">
+            <li class="nav-link" id="myPaging">
+            </li>
+        </ul>
+        <div class="nav-item">Toplam Kayıt: <span id="toplamKayitSayisi"></span></div>
+    </nav>
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#checkAll").click(function () {
+
+            $(".checkBox").prop('checked',
+                $(this).prop('checked'));
+        });
+
+        var model = @Html.Raw(Json.Encode(Model));
+        sayfalamaYap(model, 15);
+    });
+
+</script>

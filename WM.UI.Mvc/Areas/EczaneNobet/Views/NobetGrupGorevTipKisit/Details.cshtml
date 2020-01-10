@@ -1,0 +1,74 @@
+﻿@model NobetGrupGorevTipKisitDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>NobetGrupGorevTipKisit</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetGrupGorevTipId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetGrupGorevTipId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PasifMi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PasifMi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SagTarafDegeri)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SagTarafDegeri)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VarsayilanPasifMi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VarsayilanPasifMi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SagTarafDegeriVarsayilan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SagTarafDegeriVarsayilan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

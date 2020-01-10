@@ -1,0 +1,44 @@
+﻿
+    <h4>Ulaştırma Problemi</h4>
+
+<hr />
+
+@section SolTaraf{
+    @Html.Action("TransportDataPartialView", "Transport", new { area = "Optimization" })
+}
+
+<div class="card" style="width: 30rem;">
+    <img class="card-img-top" src="~/Content/images/transport.jpg" alt="Card image cap">
+    <div class="card-body">
+        @*<h4 class="card-title">Ulaştırma Probelemi</h4>*@
+        <p class="card-text">
+            Bu tip problemler m tane kaynağın, n tane hedefe <strong>minimum maliyetle</strong> dağıtımı amacı ile kullanılmaktadır.
+        </p>
+        <a href="@Url.Action("ModelCoz","Transport",null)" class="btn btn-outline-danger">Modeli Çöz</a>
+    </div>
+</div>
+
+@*<img src="~/Img/transport.jpg" />*@
+
+
+@*@Html.ActionLink("Modeli Çöz!", "ModelCoz", "Transport", null, new { @class = "btn btn-outline-danger" })*@
+
+
+@*<div id="output"></div>
+
+
+
+    <script>
+        var utils = $.pivotUtilities;
+        var heatmap = utils.renderers["Heatmap"];
+        var sumOverSum = utils.aggregators["Sum over Sum"];
+
+        $("#output").pivot(
+            utils.tipsData, {
+                rows: ["sex", "smoker"],
+                cols: ["day", "time"],
+                aggregator: sumOverSum(["tip", "total_bill"]),
+                renderer: heatmap
+            });
+
+    </script>*@

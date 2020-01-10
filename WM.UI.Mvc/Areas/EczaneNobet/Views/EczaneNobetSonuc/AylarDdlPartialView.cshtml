@@ -1,0 +1,20 @@
+﻿
+
+@{    
+//SelectList aylar = ViewBag.Aylar;  
+//int ay = ViewBag.Ay;
+}
+
+<div class="form-group row">
+    <label class="col-sm-2 col-lg-1 col-form-label pt-0 font-weight-bold text-secondary">Ay</label>    
+    <div class="col-sm-10 col-lg-11">
+        @Html.DropDownList("ay", null, htmlAttributes: new { @class = "form-control" })
+    </div>
+</div>
+
+
+@*<div class="form-group mb-2">
+    <label class="form-control-label font-weight-bold text-secondary mr-sm-2">Ay: </label>
+    @Html.DropDownList("ay", aylar, htmlAttributes: new { @class = "form-control" })
+</div>*@
+

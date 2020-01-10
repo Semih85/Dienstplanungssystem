@@ -1,0 +1,202 @@
+﻿@model EczaneNobetGrup
+
+@{
+    ViewBag.Title = "Eczane Nöbet Grup Düzenle |  Nöbet Yaz";
+}
+
+<h4>Eczane Nöbet Grup Düzenle</h4>
+<hr />
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmEczaneNobetGrup" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <fieldset disabled>
+            <div class="form-group">
+                @Html.LabelFor(model => model.EczaneId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("EczaneId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.EczaneId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NobetGrupGorevTipId, "Nöbet Grubu", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("NobetGrupGorevTipId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NobetGrupGorevTipId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </fieldset>
+
+        @Html.HiddenFor(m => m.EczaneId)
+        @Html.HiddenFor(m => m.NobetGrupGorevTipId)
+
+        <div class="form-row ml-2">
+            <div class="form-group col-md-3">
+                @*@Html.LabelFor(model => model.BaslangicTarihi, htmlAttributes: new { @class = "control-label" })*@
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text p-2">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    @Html.TextBoxFor(model => model.BaslangicTarihi, new
+                   {
+                       @class = "form-control datepicker mr-2 p-2",
+                       data_toggle = "tooltip",
+                       data_placement = "top",
+                       title = "Başlangıç Tarihi",
+                       autocomplete = "off",
+                       placeHolder = "Başlangıç Tarihi"
+                   })
+
+                    @*@Html.TextBoxFor(model => model.AcilisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Açılış Tarihi" })*@
+                </div>
+                @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-md-3">
+                @*@Html.LabelFor(model => model.BitisTarihi, htmlAttributes: new { @class = "control-label" })*@
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text p-2">
+                            <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
+                            <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" data-toggle="tooltip" id="btnSilBitisTarihi" title="Bitiş Tarihini Sil" />
+                        </span>
+                    </div>
+                    @Html.TextBoxFor(model => model.BitisTarihi, new {
+                   @class = "form-control datepicker p-2",
+                   data_toggle = "tooltip",
+                   data_placement = "top",
+                   title = "Bitiş Tarihi",
+                   autocomplete = "off",
+                   placeHolder = "Bitiş Tarihi"
+               })
+                </div>
+                @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-row ml-2">
+            <div class="form-group col">
+                <div class="custom-control custom-checkbox" id="divEnErkenTarihteNobetYazilsinMi">
+                    @Html.CheckBox("EnErkenTarihteNobetYazilsinMi", new { @class = "custom-control-input" })
+                    <label class="custom-control-label text-primary" data-toggle="tooltip" data-placement="top"
+                           title="Yeni açılış ya da grup değişikliği nedeniyle gruba yeni katılan eczaneye hemen nöbet yazılması istenirse bu seçeneğin işaretlenmesi gerekecektir."
+                           for="EnErkenTarihteNobetYazilsinMi">
+                        En Erken Tarihte Nöbet Yazılsın Mı?
+                    </label>
+                </div>
+            </div>
+            @*<div class="alert alert-info" role="alert">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i> Yeni açılış ya da grup değişikliği nedeniyle gruba yeni katılan eczanelere hemen nöbet yazılması istenirse bu seçeneğin işaretlenmesi gerekecektir.
+                </div>*@
+            @*@Html.LabelFor(model => model.EnErkenTarihteNobetYazilsinMi, "En Erken Tarihte Nöbet Yazılsın Mı?", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.EnErkenTarihteNobetYazilsinMi, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EnErkenTarihteNobetYazilsinMi, "", new { @class = "text-danger" })
+                    <div class="alert alert-info" role="alert">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i> Yeni açılış ya da grup değişikliği nedeniyle gruba yeni katılan eczanelere hemen nöbet yazılması istenirse bu seçeneğin işaretlenmesi gerekecektir.
+                    </div>
+                </div>*@
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Aciklama, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-outline-primary" />
+                @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-outline-warning" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Styles{
+    @*@Styles.Render("~/bundle/jqueryui/style")*@
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
+
+@section Scripts{
+    @*@Scripts.Render("~/bundle/queryui/scripts")*@
+    @*@Scripts.Render("~/bundle/bootstrap-datepicker/scripts")*@
+    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
+
+    <script>
+
+        $(function () {
+
+            $('.datepicker').datepicker('setStartDate', "01-01-1900");
+
+            var baslangicStr = tarihDondur2($("#BaslangicTarihi").val());
+
+            $("#BaslangicTarihi").datepicker("setDate", baslangicStr);
+
+            var bitisStr = tarihDondur2($("#BitisTarihi").val());
+
+            $("#BitisTarihi").datepicker("setDate", bitisStr);
+
+            bitisTarihiKontol()
+
+            //alert($("#BitisTarihi").length)
+            $('#btnSilTarihAraligi, #btnSilBaslangicTarihi, #btnSilBitisTarihi, #navbarBrand').css('cursor','pointer');
+
+        });
+
+        $("#btnSilBitisTarihi").click(function () {
+            //bitisTarihi = null;
+            $('#BitisTarihi').data('datepicker').setDate(null);
+            $("#btnSilBitisTarihi").hide();
+            $("#btnSilBitisTarihiFiltre").show();
+        });
+
+        $("#BitisTarihi").change(function () {
+            bitisTarihiKontol()
+            //var d = tarihiTrdenCevir(this.value);
+            //$('#BitisTarihi').val(d);
+        });
+
+        function bitisTarihiKontol() {
+            //alert($("#BitisTarihi").val().length)
+
+            if ($("#BitisTarihi").val().length > 1) {
+                $("#btnSilBitisTarihiFiltre").hide();
+                $("#btnSilBitisTarihi").show();
+            }
+        }
+         
+        function tarihDondur2(metin) {
+
+            var tarih = metin.split(' ', 1)[0];
+            //alert(tarih)
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2] * 1;
+            //alert(yil)
+            ay = tarihTanim[1] * 1;
+            gun = tarihTanim[0] * 1;
+
+            if (gun.length != 4) {
+
+                return new Date(yil, ay - 1, gun);//yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+    </script>
+}

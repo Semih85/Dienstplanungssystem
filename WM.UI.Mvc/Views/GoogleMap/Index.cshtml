@@ -1,0 +1,37 @@
+﻿
+<h1>My First Google Map</h1>
+
+
+<h2>Google Map Index</h2>
+
+
+<style>
+    #map {
+        height: 400px;
+        width: 100%;
+        border:thin;
+    }
+</style>
+
+
+<div>My map will go here</div>
+
+<div id="map">
+
+</div>
+
+<script>
+    function myMap() {
+        var mapCanvas = document.getElementById("map");
+        var mapOptions = {
+            center: new google.maps.LatLng(41.015137, 28.979530),
+            zoom: 9
+        };
+        var map = new google.maps.Map(mapCanvas, mapOptions);
+    }
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAP29ma6oCPNwQPFdXbilDCYBKP2Gk52CE&callback=myMap">
+
+</script>

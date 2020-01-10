@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Almanca" xml:space="preserve">
+    <value>Almanca</value>
+  </data>
+  <data name="AnaSayfa" xml:space="preserve">
+    <value>Ana Sayfa</value>
+  </data>
+  <data name="AncakIhtiyacaGore" xml:space="preserve">
+    <value>Ancak ihtiyaca göre, çok sayıda &lt;b&gt;nöbet kuralları&lt;/b&gt; probleme ilave olmaktadır</value>
+  </data>
+  <data name="BasindaBiz" xml:space="preserve">
+    <value>Basında Biz</value>
+  </data>
+  <data name="BeniHatırla" xml:space="preserve">
+    <value>Beni hatırla</value>
+  </data>
+  <data name="BirBaskaSorunIseSonradanOrtayaCikanMazeretlerin" xml:space="preserve">
+    <value>Bir başka sorun ise &lt;b&gt;sonradan ortaya çıkan mazeretlerin&lt;/b&gt; kurallar ihlal edilmeden göz önünde bulundurulmasıdır</value>
+  </data>
+  <data name="BirDeOlasiHatadaGelecekItirazlar" xml:space="preserve">
+    <value>Bir de olası bir hatada gelecek itirazlar dikkate alındığında &lt;b&gt;"Nöbet Sistemi"nin varlığı önem kazanmaktadır&lt;/b&gt;</value>
+  </data>
+  <data name="BuProblemdeEnyalinHaliyle" xml:space="preserve">
+    <value>Bu problemde -en yalın haliyle- hangi periyotta hangi nöbetçilere görev yazılacağına karar verilir</value>
+  </data>
+  <data name="BuYonuyleNoberYazmaSureci" xml:space="preserve">
+    <value>Bu yönüyle nöbet &lt;b class='text-danger'&gt;yazma süreci fazlasıyla zaman, emek ve zihin yorgunluğu oluşturmaktadır&lt;/b&gt;</value>
+  </data>
+  <data name="Cikis" xml:space="preserve">
+    <value>Çıkış</value>
+  </data>
+  <data name="Detaylar" xml:space="preserve">
+    <value>Detaylar</value>
+  </data>
+  <data name="DilSecenegi" xml:space="preserve">
+    <value>Dil Seçeneği</value>
+  </data>
+  <data name="DilSecenegiLogo" xml:space="preserve">
+    <value>flags/tr.png</value>
+  </data>
+  <data name="Duzenle" xml:space="preserve">
+    <value>Düzenle</value>
+  </data>
+  <data name="EczaciOdasi" xml:space="preserve">
+    <value>Eczacı Odası</value>
+  </data>
+  <data name="Eczane" xml:space="preserve">
+    <value>Eczane</value>
+  </data>
+  <data name="EczaneNobetSistemi" xml:space="preserve">
+    <value>Eczane Nöbet Sistemi</value>
+  </data>
+  <data name="ElleYazilirkenBileEnCokIstenenKuallarGozdenKacabilir" xml:space="preserve">
+    <value>Elle nöbet yazılırken en çok istenen kurallar bile &lt;b&gt;gözden kaçabilmektedir&lt;/b&gt;</value>
+  </data>
+  <data name="Eposta" xml:space="preserve">
+    <value>E-Posta</value>
+  </data>
+  <data name="EpostayadaParolaHatali" xml:space="preserve">
+    <value>E-Posta ya da parola hatalı</value>
+  </data>
+  <data name="ExcelGibiProgramlar" xml:space="preserve">
+    <value>Excel gibi programlar kullanılarak takip edilmeye çalışılan bu listeler, &lt;b&gt;zamanla içinden çıkılmaz&lt;/b&gt; bir hale dönüşmektedir</value>
+  </data>
+  <data name="Faaliyetlerimiz" xml:space="preserve">
+    <value>Faaliyetlerimiz</value>
+  </data>
+  <data name="Giris" xml:space="preserve">
+    <value>Giriş</value>
+  </data>
+  <data name="HemenBaslayalim" xml:space="preserve">
+    <value>Hemen başlayalım.</value>
+  </data>
+  <data name="HemsireNobetSistemi" xml:space="preserve">
+    <value>Hemşire Nöbet Sistemi</value>
+  </data>
+  <data name="HerNobetPeriyodundaGrubaYeniKatilan" xml:space="preserve">
+    <value>Her nöbet periyodunda gruba yeni katılan ya da gruptan ayrılan nöbetçiler olabilmektedir</value>
+  </data>
+  <data name="Hesabim" xml:space="preserve">
+    <value>Hesabım</value>
+  </data>
+  <data name="Iletisim" xml:space="preserve">
+    <value>İletişim</value>
+  </data>
+  <data name="Ingilizce" xml:space="preserve">
+    <value>İngilizce</value>
+  </data>
+  <data name="Istatistik" xml:space="preserve">
+    <value>İstatistik</value>
+  </data>
+  <data name="IstatistiklerinKeyfiniCikarin" xml:space="preserve">
+    <value>İstatistiklerin keyfini çıkarın</value>
+  </data>
+  <data name="KayitIcinIletisimeGecin" xml:space="preserve">
+    <value>Kayıt için iletişime geçin</value>
+  </data>
+  <data name="KullaniciGirisi" xml:space="preserve">
+    <value>Giriş</value>
+  </data>
+  <data name="MatematikHayatinIcindeGuzel" xml:space="preserve">
+    <value>Matematik hayatın içinde güzel</value>
+  </data>
+  <data name="MetaDescription" xml:space="preserve">
+    <value>Nöbetçi Eczane Sistemi, Online Eczane Ekranı ve Hemşire Nöbet Sistemi gibi bir çok alanda en iyi çözümler Nöbet Sistemi'nde.</value>
+  </data>
+  <data name="NobetBolgesi" xml:space="preserve">
+    <value>Nöbet Bölgesi</value>
+  </data>
+  <data name="NobetHakkindaHerSey" xml:space="preserve">
+    <value>"Nöbet" hakkında her şey</value>
+  </data>
+  <data name="NobetlerinIstatistikOlarakTakipZorunluluguVardır" xml:space="preserve">
+    <value>Nöbetlerin &lt;b&gt;istatistik olarak takip zorunluluğu&lt;/b&gt; vardır</value>
+  </data>
+  <data name="NobetSistemi" xml:space="preserve">
+    <value>Nöbet Sistemi</value>
+  </data>
+  <data name="NobetSistemiDetaylar" xml:space="preserve">
+    <value>Nöbet Sistemi Detaylar</value>
+  </data>
+  <data name="NobetYaz" xml:space="preserve">
+    <value>Nöbet Yaz</value>
+  </data>
+  <data name="NobetYazmakSanildigiKadar" xml:space="preserve">
+    <value>Nöbet yazmak &lt;b&gt;sanıldığı kadar kolay olmayan&lt;/b&gt; ve çok bileşenli bir problemdir</value>
+  </data>
+  <data name="OnlineEczaneEkrani" xml:space="preserve">
+    <value>Online Eczane Ekranı</value>
+  </data>
+  <data name="Parola" xml:space="preserve">
+    <value>Parola</value>
+  </data>
+  <data name="Paylas" xml:space="preserve">
+    <value>Paylaş</value>
+  </data>
+  <data name="Planlama" xml:space="preserve">
+    <value>Planlama</value>
+  </data>
+  <data name="ProbleminYapisiGeregi" xml:space="preserve">
+    <value>Problemin yapısı gereği &lt;b class='text-danger'&gt;binlerce kombinasyon&lt;/b&gt; olduğundan çözümü &lt;b&gt;elle bulmak bir yana yazılım ile dahi bulmak oldukça zordur&lt;/b&gt;</value>
+  </data>
+  <data name="Referanslarimiz" xml:space="preserve">
+    <value>Referanslarımız</value>
+  </data>
+  <data name="SaniyelerIcindeNobetlerinizYazilsin" xml:space="preserve">
+    <value>Saniyeler içinde nöbetleriniz yazılsın</value>
+  </data>
+  <data name="SizSadeceKurallariBelirleyin" xml:space="preserve">
+    <value>Siz sadece kurallarınızı belirleyin</value>
+  </data>
+  <data name="SizUgrasmayinZamaninizSizeKalsin" xml:space="preserve">
+    <value>Siz uğraşmayın! Zamanınız size kalsın</value>
+  </data>
+  <data name="SurecFazlasiylaDinamiktir" xml:space="preserve">
+    <value>Süreç fazlasıyla dinamiktir</value>
+  </data>
+  <data name="TumCihazlardan7/24ulasin" xml:space="preserve">
+    <value>Tüm cihazlardan ve 7/24 ulaşın</value>
+  </data>
+  <data name="TumVerilerSSLileGuvende" xml:space="preserve">
+    <value>Tüm veriler SSL ile güvende</value>
+  </data>
+  <data name="Turkce" xml:space="preserve">
+    <value>Türkçe</value>
+  </data>
+  <data name="UcretsizDemoIcinBizeUlasin" xml:space="preserve">
+    <value>Ücretsiz demo için bize ulaşın.</value>
+  </data>
+  <data name="Urunlerimiz" xml:space="preserve">
+    <value>Ürünlerimiz</value>
+  </data>
+  <data name="Uygulama" xml:space="preserve">
+    <value>Uygulama</value>
+  </data>
+  <data name="YazilanNobet" xml:space="preserve">
+    <value>Yazılan Nöbet</value>
+  </data>
+  <data name="ZamaniSizeKalsin" xml:space="preserve">
+    <value>Zaman Size Kalsın</value>
+  </data>
+</root>

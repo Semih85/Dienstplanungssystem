@@ -1,0 +1,52 @@
+﻿@helper Input(string name, string typ, string val)
+{
+    <input name="@name" id="@name" type="@typ" value="@val" />
+}
+
+@helper Table(string name, int rows, int columns, params string[] headers)
+{
+    <table id="@name" name="@name" border="1">
+        <tr>
+            @for (int i = 0; i < columns; i++)
+            {
+                <th>
+                    @headers[i]
+                </th>
+            }
+
+        </tr>
+        @for (int i = 0; i < rows; i++)
+        {
+            <tr>
+                @for (int k = 0; k < columns; k++)
+                {
+                    <td>
+                        @("(" + k.ToString() + i.ToString() + ")" )
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+}
+
+@*int? PageSize,*@
+@helper Paging(int PageCount, int CurrentCategory, int CurrentPage, string area, string controller, string action)
+{
+    <div>
+        <ul class="pagination">
+            @for (int i = 1; i <= PageCount; i++)
+            {
+                string yol = $"/{area}/{controller}/{action}?page={i}&categoryId={CurrentCategory}";
+                string className = "page-item";
+
+                if (i == CurrentPage) { className += " active"; }
+
+                <li class="@className">
+                    <a class="page-link" href="@yol">@i</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+}
+

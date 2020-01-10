@@ -1,0 +1,89 @@
+﻿@model NobetUstGrupDetay
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h5 class="text-danger">Silmek istediğinizden emin misiniz?</h5>
+<div>
+    <h4>NobetUstGrup</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EczaneOdaAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EczaneOdaAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BaslangicTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BaslangicTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BitisTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BitisTarihi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Enlem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Enlem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Boylam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Boylam)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeLimit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeLimit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,268 @@
+﻿@model EczaneNobetIstekCoklu
+
+@{
+    ViewBag.Title = "Nöbet İstek Ekle | Nöbet Sistemi";
+}
+
+<!-- #region ajaxOptions -->
+@{
+    var getAjaxOptions = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("CreatePartial"),
+        HttpMethod = "POST",
+        UpdateTargetId = "sonuclar",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "wait",
+        OnSuccess = "OnSuccess"
+    };
+}
+<!-- #endregion -->
+
+<h4>Eczane Nöbet <span class="text-primary">İstek</span> Ekle</h4>
+
+<hr />
+
+<div class="container">
+
+    @using (Ajax.BeginForm(null, null, getAjaxOptions, new { @class = "form-horizontal" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.EczaneNobetGrupId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new
+                {
+                    @class = "form-control selectpicker",
+               multiple = "true",
+               data_live_search = "true",
+               data_actions_box = "true",
+               title = "Eczane seçiniz...",
+               data_selected_text_format = "count > 4"
+           })
+                @Html.ValidationMessageFor(model => model.EczaneNobetGrupId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IstekId, "İstek Tipi", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IstekId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IstekId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-row ml-2">
+            <div class="form-group" id="fromTarihAraligi" style="margin-left:8px;">
+                <div class="input-group input-daterange" style="width:350px;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text p-2">
+                            <i class="fa fa-calendar" aria-hidden="true" id="btnSilBaslangicTarihiFiltre"></i>
+                            <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBaslangicTarihi" />
+                        </span>
+                    </div>
+                    @Html.TextBox("BaslangicTarihi", null, new
+                    {
+                        @class = "form-control datepicker mr-2",
+                       //data_toggle = "tooltip",
+                       //data_placement = "top",
+                       //title = "Başlangıç Tarihi",
+                       autocomplete = "off",
+                       placeHolder = "Başlama Tarihi"
+                   })
+
+                    <div class="input-group-addon mr-2 mt-1 p-1">-</div>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text p-2">
+                            <i class="fa fa-calendar" aria-hidden="true" id="btnSilBitisTarihiFiltre"></i>
+                            <img src="~/Content/images/Icons8-Windows-8-Data-Clear-Filters.ico" style="width:15px; display:none;" id="btnSilBitisTarihi" />
+                        </span>
+                    </div>
+                    @Html.TextBox("BitisTarihi", null, new
+                    {
+                        @class = "form-control datepicker mr-3",
+                       //data_toggle = "tooltip",
+                       //data_placement = "top",
+                       //title = "Bitiş Tarihi",
+                       autocomplete = "off",
+                       placeHolder = "Bitiş Tarihi"
+                   })
+
+                </div>
+                @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HaftaninGunu, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("HaftaninGunu", null, htmlAttributes: new { @class = "form-control selectpicker", multiple = "true", data_actions_box = "true" })
+                @Html.ValidationMessageFor(model => model.HaftaninGunu, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.Aciklama, "Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control", placeHolder = "İstek açıklaması giriniz..." })
+                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <div class="custom-control custom-checkbox mb-2" id="divYinedeEklensinMi" style="display:none;">
+                    @Html.CheckBox("YinedeEklensinMi", new { @class = "custom-control-input" })
+                    <label class="custom-control-label text-danger" data-toggle="tooltip" data-placement="top" title="Eş grup çakışmasına rağmen yine de eklensin mi" for="YinedeEklensinMi">Yinede eklensin mi?</label>
+                    <span class="text-muted small">Lütfen bu durumu not alıp hangi tarihler için istisna girdiğinizi <strong>yönetime de bildiriniz...</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ekle" class="btn btn-primary" id="formSubmitButton" />
+                @Html.ActionLink("Eczane Nöbet İstek Listesine Dön", "Index", null, new { @class = "btn btn-warning" })
+            </div>
+        </div>
+    }
+
+    <div class="spinner-border text-info ml-3" role="status" id="wait" style="display:none;">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+    <div id="sonuclar">
+    </div>
+</div>
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-select/style")
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @*@Scripts.Render("~/bundle/bootstrap-datepicker/scripts")*@
+    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
+    @Scripts.Render("~/bundle/validation/scripts")
+
+    <script>
+
+        var secilenHaftaninGunuSayisi;
+
+        $(document).ready(function () {
+            var secilenHaftaninGunuSayisi = @ViewBag.SecilenHaftaninGunuSayisi;
+
+            if (secilenHaftaninGunuSayisi == 0 || secilenHaftaninGunuSayisi == 9) {
+                $('#HaftaninGunu').selectpicker('selectAll');
+                secilenHaftaninGunuSayisi = $("#HaftaninGunu :selected").length;
+            }
+        });
+
+        $('#EczaneNobetGrupId').selectpicker();
+
+        $("#BitisTarihi").change(function () {
+
+            var baslangicStr = $("#BaslangicTarihi").val();
+            var baslangicArr = baslangicStr.split(".");
+            var baslangicDate = new Date(baslangicArr[2], baslangicArr[1], baslangicArr[0]);
+
+            var bitisStr = $("#BitisTarihi").val();
+            var bitisArr = bitisStr.split(".");
+            var bitisDate = new Date(bitisArr[2], bitisArr[1], bitisArr[0]);
+
+            if (baslangicDate > bitisDate) {
+                alert("Başlangıç tarihi (" + baslangicStr + ") bitiş tarihinden (" + bitisStr + ") büyük olamaz!!!.");
+                $("#BitisTarihi").val("");
+                $("#BitisTarihi").focus();
+            };
+        });
+
+        $("#formSubmitButton").click(function (e) {
+
+            var baslangicTarihi = tarihDondur2($('#BaslangicTarihi').val());
+            var bitisTarihi = tarihDondur2($('#BitisTarihi').val());
+
+            if (baslangicTarihi != "" && bitisTarihi != "") {
+                if (bitisTarihi < baslangicTarihi) {
+                    alert("Bitiş tarihi (" + bitisTarihi + ") başlangıç tarihinden (" + baslangicTarihi + ") küçük olamaz...")
+                    e.preventDefault();
+                    return false;
+                };
+            }
+
+            secilenEczaneSayisi = $("#EczaneNobetGrupId :selected").length;
+
+            var basTarihi = new Date(baslangicTarihi);
+            var bitTarihi = new Date(bitisTarihi);
+
+            var secilenGunSayisi = new Date(bitTarihi - basTarihi);
+
+            days = secilenGunSayisi / 1000 / 60 / 60 / 24;
+
+            return confirm(secilenEczaneSayisi + ' eczaneye ' + parseInt(Math.round(days) + 1) + ' günlük istek eklensin mi?');
+
+            if (secilenEczaneSayisi == 0) {
+                alert("Lütfen en az 1 eczane seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+            else if (secilenEczaneSayisi > 100) {
+                alert("En fazla 100 eczane seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+            secilenHaftaninGunuSayisi = $("#HaftaninGunu :selected").length;
+
+            if (secilenHaftaninGunuSayisi == 0) {
+                alert("Lütfen haftanin günlerini seçiniz...")
+                e.preventDefault();
+                return false;
+            };
+
+        });
+
+        $('.input-daterange').datepicker();
+
+        function OnSuccess() {
+            var rows = $('#eklenenIsteklerTablosu tbody .myRow').length;
+
+            if (rows > 0) {
+                $('#EczaneNobetGrupId').selectpicker('deselectAll');
+                $('#BaslangicTarihi').datepicker("setDate", null);
+                $('#BitisTarihi').datepicker("setDate", null);
+                $('#divYinedeEklensinMi').hide();
+            }
+            else {
+                //alert(1)
+                $('#divYinedeEklensinMi').show();
+            }
+        }
+
+        function tarihDondur2(metin) {
+
+            var tarih = metin.split(' ', 1)[0];
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2];
+            ay = tarihTanim[1];
+            gun = tarihTanim[0];
+
+            if (gun.length != 4) {
+                return yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+
+    </script>
+}

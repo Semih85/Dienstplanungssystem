@@ -1,0 +1,96 @@
+﻿@model EczaneNobetGrupAltGrup
+
+@{
+    ViewBag.Title = "Alt Grup Ekle | Nöbet Sistemi";
+    var insertAjaxOptions = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("Create"),
+        HttpMethod = "post",
+        UpdateTargetId = "eczaneNobetGrupAltGruplar",
+        InsertionMode = InsertionMode.Replace,
+        OnComplete = "OnComplete"
+    };
+}
+
+@section scripts{
+    @Scripts.Render("~/bundle/ajax");
+    <script>
+
+        function OnComplete() {
+            alert("eklendi");
+        }
+
+        $(function () {
+
+            var nobetGrupSayisi = $("#NobetAltGrupId > option").length;
+
+            if (nobetGrupSayisi == 0) {
+                //$("#altGruplar").hide();
+                //$("#btnEkle").hide();
+                $("#alertUyari").show();
+                //alert("Bu grup için tanumlı alt grup bulunmamaktadır.")
+            }
+            else {
+                //$("#altGruplar").show();
+                $("#alertUyari").hide();
+                //$("#btnEkle").show();
+            }
+
+        });
+
+        $("#btnEkle").click(function (e) {
+            var nobetGrupSayisi = $("#NobetAltGrupId > option").length;
+
+            if (nobetGrupSayisi == 0) {
+                alert("Bu grup için tanımlı alt grup bulunmamaktadır.")
+                e.preventDefault();
+                return false;
+            }
+
+        });
+
+    </script>
+}
+
+<h4>Eczane Nöbet Grup Alt Grup Ekle</h4>
+<hr />
+
+@using (Ajax.BeginForm(null, null, insertAjaxOptions, new { @class = "form-inline mb-2", id = "formeczaneNobetGrupAltGrup" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group mr-2">
+        @Html.LabelFor(model => model.EczaneNobetGrupId, "Eczane", htmlAttributes: new { @class = "control-label font-weight-bold text-dark mr-2" })
+        @Html.DropDownList("EczaneNobetGrupId", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.EczaneNobetGrupId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group mr-4" id="altGruplar">
+        @Html.LabelFor(model => model.NobetAltGrupId, "Alt Grup", htmlAttributes: new { @class = "control-label font-weight-bold text-dark mr-2" })
+        @Html.DropDownList("NobetAltGrupId", null, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.NobetAltGrupId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Ekle" id="btnEkle" class="btn btn-primary" />
+        @*@Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })*@
+    </div>
+
+}
+
+    <div class="alert alert-warning" role="alert" id="alertUyari" style="display:none">
+        Bu grup için tanımlı alt grup bulunmamaktadır.
+    </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="eczaneNobetGrupAltGruplar">
+            @{
+                Html.RenderAction("EczaneNobetGrupAltGrupPartial", new { nobetGrupId = @ViewBag.NobetGrupId });
+            }
+        </div>
+    </div>
+</div>

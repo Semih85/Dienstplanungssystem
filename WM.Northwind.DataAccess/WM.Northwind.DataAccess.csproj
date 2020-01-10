@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{255D8FEA-7A4F-417F-BAB0-BBB07FB36AAF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WM.Northwind.DataAccess</RootNamespace>
+    <AssemblyName>WM.Northwind.DataAccess</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstract\Authorization\IUserRoleDal.cs" />
+    <Compile Include="Abstract\Authorization\IRoleDal.cs" />
+    <Compile Include="Abstract\Authorization\IUserDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IAyniGunNobetTakipGrupAltGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IAyniGunTutulanNobetDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IBayramDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IBayramTurDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IDebugEczaneDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneGorevTipDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneGrupTanimTipDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetDegisimDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetFeragatDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetGrupAltGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetMuafiyetDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetSanalSonucDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\ILogDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporKategoriDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucDemoDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucPlanlananDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneUzaklikMatrisDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IGorevTipDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IGunDegerDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IGunGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IIstekTurDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IKalibrasyonDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IKalibrasyonTipDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IKisitDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IKisitKategoriDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMazeretTurDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMenuAltRoleDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMenuAltDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IIlceDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneIlceDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetAltGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetDurumDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetDurumTipDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetFeragatTipDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipGunKuralDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipKisitDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipTakvimOzelGunDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupGunKuralDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupKuralDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupTalepDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGunKuralDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetKuralDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGorevTipDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetOzelGunDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetOzelGunKategoriDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetSonucDemoTipDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetUstGrupGunGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetUstGrupKisitDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporNobetUstGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporRolDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\ISehirDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMenuRoleDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMenuDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IUserEczaneOdaDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IUserNobetUstGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IUserEczaneDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetIstekDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IIstekDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMazeretDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneOdaDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneGrupTanimDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetUstGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucAktifDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetMazeretDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\ITakvimDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneDal.cs" />
+    <Compile Include="Abstract\ICategoryDal.cs" />
+    <Compile Include="Abstract\Transport\ITransportSonucDal.cs" />
+    <Compile Include="Abstract\Transport\ITransportMaliyetDal.cs" />
+    <Compile Include="Abstract\Transport\IDepoDal.cs" />
+    <Compile Include="Abstract\Transport\IFabrikaDal.cs" />
+    <Compile Include="Abstract\IProductDal.cs" />
+    <Compile Include="Concrete\EntityFramework\Authorization\EfUserRoleDal.cs" />
+    <Compile Include="Concrete\EntityFramework\Authorization\EfRoleDal.cs" />
+    <Compile Include="Concrete\EntityFramework\Authorization\EfUserDal.cs" />
+    <Compile Include="Concrete\EntityFramework\Contexts\IdentityContext.cs" />
+    <Compile Include="Concrete\EntityFramework\Contexts\EczaneNobetContext.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfAyniGunNobetTakipGrupAltGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfAyniGunTutulanNobetDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfBayramDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfBayramTurDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfDebugEczaneDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneGorevTipDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneGrupTanimTipDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetDegisimDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetFeragatDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetGrupAltGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetIstekDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetMuafiyetDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSanalSonucDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfLogDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporKategoriDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSonucDemoDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSonucPlanlananDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneUzaklikMatrisDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfGorevTipDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfGunDegerDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfGunGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfIstekTurDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfKalibrasyonDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfKalibrasyonTipDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfKisitDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfKisitKategoriDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMazeretTurDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMenuAltRoleDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMenuAltDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfIlceDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneIlceDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetAltGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetDurumDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetDurumTipDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetFeragatTipDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGrupGorevTipDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGrupGorevTipGunKuralDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGrupGorevTipKisitDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGrupGorevTipTakvimOzelGunDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGrupGunKuralDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGrupKuralDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGrupTalepDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGunKuralDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetKuralDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGorevTipDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetOzelGunDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetOzelGunKategoriDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetSonucDemoTipDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetUstGrupGunGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetUstGrupKisitDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporNobetUstGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporRolDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfSehirDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMenuRoleDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMenuDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfIstekDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMazeretDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneOdaDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneGrupTanimDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSonucDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfUserEczaneOdaDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfUserNobetUstGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfUserEczaneDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetUstGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetMazeretDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfTakvimDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfCategoryDal.cs" />
+    <Compile Include="Concrete\EntityFramework\Initializers\IdentityInitializer.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\AyniGunNobetTakipGrupAltGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\AyniGunTutulanNobetMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\BayramTurMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\DebugEczaneMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneGorevTipMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneGrupTanimTipMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneIlceMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetDegisimMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetFeragatMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetGrupAltGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSanalSonucMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporKategoriMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSonucEskiMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSonucPlanlananMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneUzaklikMatrisMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\GorevTipMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\GunGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\KalibrasyonMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\KalibrasyonTipMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\KisitKategoriMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\KisitMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetAltGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetDurumMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetDurumTipMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetFeragatTipMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetGorevTipMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\IlceMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetGrupGorevTipGunKuralMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetGrupGorevTipKisitMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetGrupGorevTipMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetGrupGorevTipTakvimOzelGunMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetGrupGunKuralMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetGrupTalepMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetGunKuralMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetOzelGunKategoriMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetOzelGunMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetSonucDemoTipMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetUstGrupGunGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetUstGrupKisitMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporNobetUstGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporRolMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\SehirMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MenuAltMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MenuAltRoleMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MenuRoleMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MenuMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetIstekMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSonucDemoMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\IstekTurMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\IstekMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\UserEczaneMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetKuralMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetGrupKuralMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\UserNobetUstGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\UserEczaneOdaMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Transport\EfDepoDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSonucAktifDal.cs" />
+    <Compile Include="Concrete\EntityFramework\Transport\EfTransportSonucDal.cs" />
+    <Compile Include="Concrete\EntityFramework\Transport\EfTransportMaliyetDal.cs" />
+    <Compile Include="Concrete\EntityFramework\Transport\EfFabrikaDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EfProductDal.cs" />
+    <Compile Include="Concrete\EntityFramework\Contexts\NorthwindContext.cs" />
+    <Compile Include="Concrete\EntityFramework\Contexts\TransportContext.cs" />
+    <Compile Include="Concrete\EntityFramework\Initializers\EczaneNobetInitializerAlanya.cs" />
+    <Compile Include="Concrete\EntityFramework\Initializers\EczaneNobetInitializer.cs" />
+    <Compile Include="Concrete\EntityFramework\Initializers\TransportInitializer.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\Authorization\UserRoleMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\Authorization\RoleMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\Authorization\UserMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\CategoryMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\DepoMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\BayramMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\LogMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\GunDegerMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneGrupTanimMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetMazeretMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSonucAktifMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSonucMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MazeretTurMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetUstGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MazeretMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneOdaMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetMuafiyetMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\TakvimMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\FabrikaMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\ProductMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\TransportMaliyetMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\TransportSonucMap.cs" />
+    <Compile Include="Migrations\201801131747416_initial.cs" />
+    <Compile Include="Migrations\201801131747416_initial.Designer.cs">
+      <DependentUpon>201801131747416_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WM.Core\WM.Core.csproj">
+      <Project>{56e1d3ca-5512-4fc7-8595-d401cc20badd}</Project>
+      <Name>WM.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WM.Northwind.Entities\WM.Northwind.Entities.csproj">
+      <Project>{aac6410f-016d-4c53-b268-f8cbaa677c5c}</Project>
+      <Name>WM.Northwind.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201801131747416_initial.resx">
+      <DependentUpon>201801131747416_initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    if not exist "$(TargetDir)x86" md "$(TargetDir)x86"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\x86\*.*" "$(TargetDir)x86"
+    if not exist "$(TargetDir)amd64" md "$(TargetDir)amd64"
+    xcopy /s /y "$(SolutionDir)packages\Microsoft.SqlServer.Compact.4.0.8876.1\NativeBinaries\amd64\*.*" "$(TargetDir)amd64"</PostBuildEvent>
+  </PropertyGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" />
+</Project>

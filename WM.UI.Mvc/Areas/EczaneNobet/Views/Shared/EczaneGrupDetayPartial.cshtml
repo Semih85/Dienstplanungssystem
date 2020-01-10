@@ -1,0 +1,150 @@
+﻿
+@model IEnumerable<EczaneGrupDetay>
+
+<div id="altTablo">
+    <table class="table table-sm table-hover" id="subT">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EczaneAdi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NobetGrupAdi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EczaneGrupTanimAdi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.EczaneGrupTanimTipAdi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NobetGorevTipAdi)
+                </th>
+
+                <th>
+                    @Html.DisplayName("Durumu")
+                </th>
+                <th>
+                    İşlem
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var subItem in Model)
+            {
+                var deleteAjaxOptionsSecili = new AjaxOptions
+                {
+                    AllowCache = false,
+                    HttpMethod = "POST",
+                    UpdateTargetId = $"subtr_{subItem.Id}",
+                    InsertionMode = InsertionMode.Replace,
+                    //OnBegin = "OnBegin",
+                    Confirm = "Eczane, eş grup silinecek! Emin misiniz?",
+                    LoadingElementId = "wait",
+                    OnSuccess = "OnSuccess(this)"
+                };
+                <tr id="subtr_@subItem.Id" class="tableInnerRowDesign" name="subtr_@subItem.EczaneGrupTanimId">
+                    <td>
+                        <input class="subGridCheckBox" id="alimDetay_@subItem.Id" name="eczaneGrupIdList"
+                               value="@subItem.Id" type="checkbox" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => subItem.EczaneAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => subItem.NobetGrupAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => subItem.EczaneGrupTanimAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => subItem.EczaneGrupTanimTipAdi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => subItem.NobetGorevTipAdi)
+                    </td>
+            
+                    <td>
+                        @if (subItem.PasifMi == true)
+                        {
+                            <span class="font-weight-bold text-danger">Pasif</span>
+                        }
+                        else
+                        {
+                            <span class="font-weight-bold text-success"><i class="fa fa-check" aria-hidden="true"></i> Aktif</span>
+                        }
+                    </td>
+                    <td>
+                        @{
+                            var eczaneGrup = $"#eczaneGrup{subItem.Id}";
+                        }
+                        <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@eczaneGrup" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="fa fa-cog"></span>
+                        </button>
+                        <div class="collapse d-md-block" id="@eczaneGrup.Remove(0,1)">
+                            <a class="btn btn-primary py-0 btn-sm" href="@Url.Action("Edit", "EczaneGrup", new { id = subItem.Id, area= "EczaneNobet" })">Düzenle</a>
+                            @*<a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Details", null, new { id = item.EczaneGrupTanimDetay.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>*@
+                            @*<a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", "EczaneGrup", new { id = subItem.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>*@
+                            @Ajax.ActionLink("Sil", "AjaxSil", "EczaneGrup", 
+                           new { id = subItem.Id, eczaneGrupTanimId = subItem.EczaneGrupTanimId, area = "EczaneNobet" }, 
+                           deleteAjaxOptionsSecili, 
+                           new { @class="btn btn-sm btn-danger py-0" })
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        @*<tfoot>
+                <tr>
+                    <td colspan="9">
+
+                        <button type="submit" id="delete" value="Seçilenleri Sil" class="btn btn-danger"
+                                    onclick="return confirm('Seçilen kayıtları kalıcı olarak silmek istediğinizden emin misiniz?');">
+                                <i class="fa fa-trash"></i> <span class="d-none d-sm-inline"> Seçilenleri</span> Sil
+                            </button>
+                    </td>
+                </tr>
+            </tfoot>*@
+    </table>
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+
+    <script>
+        function OnSuccess() {
+            alert("silindi")
+            //if (selectedIDs.length > 0) {
+            //    //alert(selectedIDs.length)
+            //    $.each(selectedIDs, function (key, item) {
+            //        //console.log(key + ": " + value);
+            //        //console.log("bşl. uzunluk: " + mazeretSonuclarFiltreli.length)
+            //        mazeretSonuclarFiltreli = $.grep(mazeretSonuclarFiltreli, function (n, i) {
+            //            //console.log("filtreli sonuçlar: " + n.Id + ";" + n.TipId + " - silinecek id: " + item)
+            //            //if (n.Id + ";" + n.TipId == item) {
+            //            //    console.log("eşit - filtreli sonuçlar: " + n.Id + ";" + n.TipId + " - silinecek id: " + item)
+            //            //}
+            //            return n.Id + ";" + n.TipId != item;
+            //        });
+
+            //        mazeretSonuclar = $.grep(mazeretSonuclar, function (n, i) {
+            //            //console.log("mevcut sonuçlar: " + n.Id + ";" + n.TipId + " - silinecek id: " + item)
+            //            return n.Id + ";" + n.TipId != item;
+            //        });
+            //    });
+            //    //$(data).closest('tr').remove();
+            //    //console.log("bit. uzunluk: " + mazeretSonuclarFiltreli.length)
+            //    pivotSekilleriSifirla();
+            //    tabloOlustur();
+            //    sayfalamaYap(mazeretSonuclarFiltreli, safyaBoyutu, currentPage);
+            //    $("#silinenKayitSayisi").text(selectedIDs.length);
+            //    $("#silmeDurumMesaj").show();
+            //}
+
+            ////getPaging(currentPage);
+            ////sayfalamaYap(data, 10);
+        }
+    </script>
+}

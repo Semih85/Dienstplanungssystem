@@ -1,0 +1,180 @@
+﻿@model WM.Northwind.Entities.ComplexTypes.EditUser
+
+@{
+    Layout = "~/Areas/EczaneNobet/Views/Shared/_Layout.cshtml";
+
+    ViewBag.Title = "Kullanıcı Düzenle |  Nöbet Yaz";
+}
+
+<h4>Kullanıcı Düzenle</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()//herkese açık bir yer, güvenlik açısından
+
+    @Html.Hidden("kullaniciAdiMevcut", Model.UserName)
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.FirstName, "Ad", new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", @placeholder = "Adınız..." })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.LastName, "Soyad", new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", @placeholder = "Soyadınız..." })
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.Email, "E-Posta", new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @placeholder = "E-posta adresi yazınız..." })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-row">
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.BaslamaTarihi, htmlAttributes: new { @class = "control-label" })
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text p-2">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                </div>
+                @Html.TextBoxFor(model => model.BaslamaTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Başlama Tarihi" })
+            </div>
+            @Html.ValidationMessageFor(model => model.BaslamaTarihi, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.BitisTarihi, htmlAttributes: new { @class = "control-label" })
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text p-2">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                </div>
+                @Html.TextBoxFor(model => model.BitisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Bitiş Tarihi" })
+            </div>
+            @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            @Html.LabelFor(model => model.UserName, "Kullanıcı Adı", new { @class = "control-label" })
+            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @placeholder = "Soyadınız..." })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <hr class="bg-danger" />
+
+    <div class="custom-control custom-checkbox mb-2">
+        @Html.CheckBox("ParolaDegistir", new { @class = "custom-control-input" })
+        <label class="custom-control-label" for="ParolaDegistir">Parola Değiştir</label>
+    </div>
+
+    <div class="form-row" id="parolaDegistirDiv" style="display:none">
+
+        <div class="col-md-4 offset-md-0">
+            <div class="form-group">
+                @Html.LabelFor(model => model.PasswordLast, new { @class = "control-label" })
+                @Html.PasswordFor(model => model.PasswordLast, new { @class = "form-control", @placeholder = "Son parolanızı yazınız..." })
+                @Html.ValidationMessageFor(model => model.PasswordLast, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, "Yeni parolanız", new { @class = "control-label" })
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control", @placeholder = "Yeni parolayı yazınız..." })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PasswordVerify, "Yeni parolanız", new { @class = "control-label" })
+                @Html.PasswordFor(model => model.PasswordVerify, new { @class = "form-control", @placeholder = "Yeni parolayı yazınız..." })
+                @Html.ValidationMessageFor(model => model.PasswordVerify, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.PasswordVreify, new { @class = "control-label" })
+            @Html.PasswordFor(model => model.PasswordVreify, new { @class = "form-control", @placeholder = "parolasını tekrar yazınız..." })
+            @Html.ValidationMessageFor(model => model.PasswordVreify, "", new { @class = "text-danger" })
+        </div>*@
+    @*<div class="form-group">
+            @ReCaptcha.GetHtml("6LfnxisUAAAAAHnxY6Oxa82qaVwaSHdyxtBBGrGo")
+        </div>*@
+
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+}
+
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @*@Scripts.Render("~/bundle/bootstrap-datepicker/scripts")*@
+    @Scripts.Render("~/bundle/bootstrap-datepicker_tr/scripts")
+    @Scripts.Render("~/bundle/validation/scripts")
+
+    <script>
+        //$("#btnSubmitForm").click(function () {
+        //    $("#Enlem").text().replace(".", ",");
+        //    $("#Boylam").text().replace(".", ",");
+        //});
+        $(function () {
+
+            $('.datepicker').datepicker('setStartDate', "01-01-1900");
+
+            var baslangicStr = tarihDondur2($("#BaslamaTarihi").val());
+
+            $("#BaslamaTarihi").datepicker("setDate", baslangicStr);
+
+        });
+
+        $("#ParolaDegistir").change(function () {
+            if (this.checked) {
+                $("#parolaDegistirDiv").show();
+            }
+            else {
+                $("#parolaDegistirDiv").hide();
+            }
+        });
+
+        function tarihDondur2(metin) {
+
+            //alert(metin)
+            var tarih = metin.split(' ', 1)[0];
+            //alert(tarih)
+            var tarihTanim = tarih.split(".");
+            //var tarihTanim = metin.substring(0, 10).split(".");
+
+            yil = tarihTanim[2] * 1;
+            //alert(yil)
+            ay = tarihTanim[1] * 1;
+            gun = tarihTanim[0] * 1;
+
+            if (gun.length != 4) {
+
+                return new Date(yil, ay - 1, gun);//yil + "." + ay + "." + gun;
+            }
+            else {
+                //alert(gun)
+                return metin;
+            }
+        }
+    </script>
+
+}

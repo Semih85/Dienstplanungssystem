@@ -1,0 +1,137 @@
+﻿@{
+    Layout = null;
+}
+
+@Styles.Render("~/Content/css")
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrapjs")
+@Scripts.Render("~/bundles/myjs")
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>jQuery Examples Index</title>
+</head>
+<body>
+    <input id="btnAcKapa"
+           type="button"
+           style="display:none"
+           class="btn btn-danger" name="name" value="Göster/Gizle" />
+
+    <input id="chkAcKapa"
+           type="checkbox"
+           data-toggle="toggle"
+           data-onstyle="success"
+           data-offstyle="danger">
+    <hr />
+
+    @*checked*@ 
+
+    <div class="jumbotron" id="wizard" style="display:none">
+        <h1>
+            Consectetur adipiscing elit fusce vel.
+        </h1>
+        <p>...</p>
+        <p><a id="btnGizle" class="btn btn-primary btn-lg" href="#" role="button">Gizle</a></p>
+    </div>
+
+    @*<script src="~/Scripts/MyJavaScript.js"></script>*@
+
+    <script>
+        document.write("Merhaba");
+        //document.write("Nasılsın");
+
+        var i = 5;
+
+        document.write(i);
+
+    </script>
+
+    <script>
+
+        var t = 4;
+
+        var y = t + i;
+
+        y += 5;
+
+        document.write(y);
+    </script>
+
+    <div id="bolum">
+
+
+    </div>
+
+    <script>
+        document.getElementById("bolum").innerHTML = "selam";
+
+        //-window.alert("Java Mesajı");
+
+        console.log("Consola LOg");
+
+        function mesaj() {
+            window.alert("Java Mesajı");
+        }
+
+        //mesaj();
+
+        function topla(a, b) {
+
+            return Math.round(a + b);
+        }
+
+        var ar = [1, 2, 3];
+
+        document.write(ar);
+    </script>
+
+    <button onclick="mesaj()">Tıkla Mesaj</button>
+
+    <input type="button" value="Tıkla Topla" onclick="window.alert(topla(5.5, 4))" />
+
+    <hr />
+
+    <h1>Array</h1>
+
+    <script>
+
+        var sayilar = [1, 2, 3, 4, 5];
+        //var sayilar2 = [1..5];
+        //document.write("<br/>" + "2 Uzunluk:" + sayilar2.length);
+
+        document.write("<br/>" + "Array Metotları (Sayılar):");
+
+        document.write("<br/>" + "Uzunluk:" + sayilar.length);
+
+        var t = sayilar.toString();
+
+        var g = sayilar.join(";");
+
+        //join: elemanların arasına istediğimiz karakterleri yazdırmayı sağlıyor.
+        document.write("<br/>" + "tostring:" + t);
+        document.write("<br/>" + "join:" + g);
+
+        var c = sayilar.pop(); //son elemanı diziden atıyor
+
+        document.write("<br/>" + "pop:" + c);
+
+
+        //push: diziye eleman ekliyor. Dönüş değeri dizinin uzunluğu
+        var h = sayilar.push(200);
+
+        document.write("<br/>" + "push:" + h);
+
+
+        //array içindeki elemanın değerini değiştirme
+
+        sayilar[0] = 500;
+
+        document.write("<br/>" + "eleman değerini değiştirme:" + sayilar);
+
+    </script>    
+</body>
+</html>
+
+

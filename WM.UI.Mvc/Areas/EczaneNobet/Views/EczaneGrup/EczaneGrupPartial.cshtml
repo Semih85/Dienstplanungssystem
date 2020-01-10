@@ -1,0 +1,62 @@
+﻿@using GridMvc;
+@using GridMvc.Html;
+@using GridMvc.Sorting;
+@using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
+
+@model Grid.Mvc.Ajax.GridExtensions.AjaxGrid<EczaneGrupDetay>
+
+<div class="col-md-12">
+    @(
+        Html.Grid(Model).Named("EczaneNobetGrid")
+            .Columns(columns =>
+            {
+                columns.Add(f => f.EczaneId, true).Titled("Id");
+                columns.Add(f => f.EczaneAdi).Titled("Eczane");
+                columns.Add(f => f.EczaneGrupTanimAdi).Titled("Grup Adı");
+                columns.Add(f => f.EczaneGrupTanimTipAdi).Titled("Grup Türü");
+                columns.Add(f => f.NobetGrupAdi).Titled("Nöbet Grubu");
+                columns.Add(f => f.EczaneGrupTanimBitisTarihi, true).Titled("EczaneGrupTanimBitisTarihi");
+                //her kolona özel seçenek belirlenebilir.
+
+                //düzenle
+                columns.Add().Encoded(false).Sanitized(false).RenderValueAs(html =>
+                {
+                    string htmlStr = "<a href='/EczaneNobet/EczaneGrup/Edit/" + html.Id.ToString() + "' class='btn btn-outline-success btn-sm'><span class='fa fa-edit fa-lg'></span></a>";
+                    return MvcHtmlString.Create(htmlStr);
+                }).SetWidth(15);
+
+                //detay
+                columns.Add().Encoded(false).Sanitized(false).RenderValueAs(x => $"<a href='{Url.Action("Details", "EczaneGrup", new { area = "EczaneNobet", id = x.Id })}' class='btn btn-outline-primary btn-sm'> <span class='fa fa-info-circle fa-lg'></span></a>").SetWidth(15);
+
+                //sil
+                columns.Add().Encoded(false).Sanitized(false).RenderValueAs(html =>
+                {
+                    string htmlStr = "<a onclick='return confirm('Eczane eş grup silinecek! Emin misiniz?');' href='/EczaneNobet/EczaneGrup/Delete/" + html.Id.ToString() + "' class='btn btn-outline-danger btn-sm'><span class='fa fa-remove fa-lg'></span></a>";
+                    return MvcHtmlString.Create(htmlStr);
+                }).SetWidth(15);
+
+            })
+            .Filterable()
+            .Sortable()
+            //.WithPaging(500)
+            .SetLanguage("tr")
+    )
+</div>
+@*<div class="col-md-4">
+    <div id="detaylar">
+
+        <div class="card border-info mb-3" style="max-width: 20rem;">
+            <div class="card-header">Detaylar</div>
+            <div class="card-body text-info">
+                <h4 class="card-title">Grup Detay</h4>
+                <span class="card-text font-weight-bold">EczaneId: </span><span id="EczaneId"></span><br />
+                <span class="card-text font-weight-bold">Eczane: </span><span id="Eczane"></span><br />
+                <span class="card-text font-weight-bold">Grup Adı: </span><span id="FabrikaAdi"></span><br />
+                <span class="card-text font-weight-bold">Grup Türü: </span><span id="DepoAdi"></span><br />
+                <span class="card-text font-weight-bold">Nöbet Grubu: </span><span id="Sonuc"></span><br />
+                <span class="card-text font-weight-bold">Grup Bitiş Tarihi: </span><span id="BitisTarihi"></span><br />
+            </div>
+        </div>
+    </div>
+</div>*@
+

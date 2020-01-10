@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F30E4964-F6FF-4D3C-A30E-07F2DF0D71E9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WM.Northwind.Business</RootNamespace>
+    <AssemblyName>WM.Northwind.Business</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <DontImportPostSharp>True</DontImportPostSharp>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.8.5.0\lib\net45\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp, Version=4.2.17.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <HintPath>..\packages\PostSharp.4.2.17\lib\net35-client\PostSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.6.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abstract\Authorization\IUserRoleService.cs" />
+    <Compile Include="Abstract\Authorization\IRoleService.cs" />
+    <Compile Include="Abstract\Authorization\IUserService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IAyniGunNobetTakipGrupAltGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IAyniGunTutulanNobetService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IBayramService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IBayramTurService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IDebugEczaneService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneGorevTipService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneGrupTanimTipService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetDegisimService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetFeragatService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetGrupAltGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetMuafiyetService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetOrtakService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetSanalSonucService.cs" />
+    <Compile Include="Abstract\EczaneNobet\ILogService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporKategoriService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucPlanlananService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneUzaklikMatrisService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IGunGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IKalibrasyonService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IKalibrasyonTipService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IKisitKategoriService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IKisitService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetDurumService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetDurumTipService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetFeragatTipService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipGunKuralService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipKisitService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipTakvimOzelGunService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetOzelGunKategoriService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetOzelGunService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetSonucDemoTipService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetUstGrupGunGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetUstGrupKisitService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporNobetUstGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IRaporRolService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IAlanyaOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IOrduMerkezOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IManavgatOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IDiyarbakirOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IKirikhanOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IZonguldakOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IBartinOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IIskenderunOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\ICorumOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IOsmaniyeOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IGiresunOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IMersinMerkezOptimizationServiceV2.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IMersinMerkezOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IAntalyaMerkezOptimizationService.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IAlanyaOptimizationServiceEski.cs" />
+    <Compile Include="Abstract\Optimization\EczaneNobet\IEczaneNobetOptimizationService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneKullaniciService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucDemoService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IGorevTipService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IGunDegerService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMazeretTurService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMenuRoleService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMenuAltRoleService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IIlceService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneIlceService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IIstekTurService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetAltGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGorevTipService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupGorevTipService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupGunKuralService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupTalepService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGunKuralService.cs" />
+    <Compile Include="Abstract\EczaneNobet\ISehirService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupKuralService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetKuralService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMenuService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IOdaYonetimService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMenuAltService.cs" />
+    <Compile Include="Abstract\IAdminService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetIstekService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IUserEczaneOdaService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IUserNobetUstGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IUserEczaneService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IIstekService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMazeretService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneOdaService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneGrupTanimService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetMazeretService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetUstGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\ITakvimService.cs" />
+    <Compile Include="Abstract\IBlendService.cs" />
+    <Compile Include="Abstract\ICategoryService.cs" />
+    <Compile Include="Abstract\Transport\IDepoService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucAktifService.cs" />
+    <Compile Include="Abstract\Transport\ITransportSonucService.cs" />
+    <Compile Include="Abstract\Transport\ITransportMaliyetService.cs" />
+    <Compile Include="Abstract\Transport\IFabrikaService.cs" />
+    <Compile Include="Abstract\IProductService.cs" />
+    <Compile Include="Abstract\Transport\ITransportService.cs" />
+    <Compile Include="Concrete\Managers\AdminManager.cs" />
+    <Compile Include="Concrete\Managers\Authorization\UserRoleManager.cs" />
+    <Compile Include="Concrete\Managers\Authorization\RoleManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\AyniGunNobetTakipGrupAltGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\AyniGunTutulanNobetManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\BagGrup.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\BayramManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\BayramTurManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\DebugEczaneManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneGorevTipManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneGrupTanimTipManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetDegisimManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetFeragatManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetGrupAltGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetMuafiyetManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSanalSonucManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\LogManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\RaporKategoriManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\RaporManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSonucDemoManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetOrtakManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSonucPlanlananManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneUzaklikMatrisManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\GorevTipManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\GunDegerManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\GunGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\KalibrasyonManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\KalibrasyonTipManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\KisitKategoriManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\KisitManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\MazeretTurManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\MenuAltManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\MenuAltRoleManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\IlceManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneIlceManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\IstekTurManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetAltGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetDurumManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetDurumTipManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetFeragatTipManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetGorevTipManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupGorevTipGunKuralManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupGorevTipKisitManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupGorevTipManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupGorevTipTakvimOzelGunManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupGunKuralManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupTalepManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetGunKuralManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetOzelGunKategoriManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetOzelGunManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetSonucDemoTipManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetUstGrupGunGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetUstGrupKisitManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\RaporNobetUstGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\RaporRolManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\SehirManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupKuralManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetKuralManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\MenuRoleManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\MenuManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneKullaniciManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetUstGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\OdaYonetimManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\UserEczaneOdaManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\UserNobetUstGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\UserEczaneManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetIstekManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\IstekManager.cs" />
+    <Compile Include="Concrete\Managers\Transport\DepoManager.cs" />
+    <Compile Include="Concrete\Managers\Authorization\UserManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\MazeretManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneOdaManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneGrupTanimManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetMazeretManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSonucManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\TakvimManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSonucAktifManager.cs" />
+    <Compile Include="Concrete\Managers\Transport\TransportSonucManager.cs" />
+    <Compile Include="Concrete\Managers\Transport\TransportMaliyetManager.cs" />
+    <Compile Include="Concrete\Managers\Transport\FabrikaManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\AlanyaOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\OrduMerkezOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\ManavgatOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\DiyarbakirOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\KirikhanOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\ZonguldakOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\BartinOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\CorumOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\IskenderunOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\OsmaniyeOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\GiresunOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\Eski\MersinMerkezOptimizationManagerV2.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\Eski\MersinMerkezOptimizationManagerV1.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\AntalyaMerkezOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\Eski\AlanyaOptimizationManagerEski.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\EczaneNobetOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Health\EczaneNobet\MersinMerkezOptimizationManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Samples\BlendManager.cs" />
+    <Compile Include="Concrete\Managers\CategoryManager.cs" />
+    <Compile Include="Concrete\Managers\ProductManager.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Education\University\ExamLocationAssignment.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Education\University\ExamScheduling.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Education\University\ProctorAssignment.cs" />
+    <Compile Include="Concrete\OptimizationManagers\Samples\TransportManager.cs" />
+    <Compile Include="DependencyResolvers\Ninject\BusinessModule.cs" />
+    <Compile Include="DependencyResolvers\Ninject\InstanceFactory.cs" />
+    <Compile Include="DependencyResolvers\Ninject\ValidationModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidationRules\FluentValidation\EczaneGrupTanimValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidation\EczaneNobetGrupCokluValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidation\EczaneNobetGrupValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidation\EczaneGrupValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidation\EczaneNobetIstekCokluValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidation\EczaneNobetMazeretCokluValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidation\EczaneNobetIstekValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidation\EczaneNobetMazeretValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidation\UserValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidation\LoginItemValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidation\EczaneValidator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WM.Core\WM.Core.csproj">
+      <Project>{56E1D3CA-5512-4FC7-8595-D401CC20BADD}</Project>
+      <Name>WM.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WM.Northwind.DataAccess\WM.Northwind.DataAccess.csproj">
+      <Project>{255d8fea-7a4f-417f-bab0-bbb07fb36aaf}</Project>
+      <Name>WM.Northwind.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WM.Northwind.Entities\WM.Northwind.Entities.csproj">
+      <Project>{aac6410f-016d-4c53-b268-f8cbaa677c5c}</Project>
+      <Name>WM.Northwind.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WM.Optimization\WM.Optimization.csproj">
+      <Project>{e208cac6-9ff2-40f7-b4aa-f57d3b8f2f0e}</Project>
+      <Name>WM.Optimization</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Concrete\OptimizationManagers\Education\College\" />
+    <Folder Include="Concrete\OptimizationManagers\Health\NurseShcedule\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\PostSharp.4.2.17\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.4.2.17\tools\PostSharp.targets')" />
+  <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
+    <Error Condition="!Exists('..\packages\PostSharp.4.2.17\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
+    <Error Condition="Exists('..\packages\PostSharp.4.2.17\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
+  </Target>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.3.0\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.3.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.3.0\build\EntityFramework.targets')" />
+</Project>
