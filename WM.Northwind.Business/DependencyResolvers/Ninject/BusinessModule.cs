@@ -135,7 +135,7 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<INobetGrupService>().To<NobetGrupManager>().InSingletonScope();
             Bind<INobetGrupDal>().To<EfNobetGrupDal>();
 
-            Bind<IEczaneNobetOrtakService>().To<EczaneNobetOrtakManager>().InSingletonScope();
+            //Bind<IEczaneNobetOrtakService>().To<EczaneNobetOrtakManager>().InSingletonScope();
 
             Bind<IEczaneNobetMuafiyetService>().To<EczaneNobetMuafiyetManager>().InSingletonScope();
             Bind<IEczaneNobetMuafiyetDal>().To<EfEczaneNobetMuafiyetDal>();
