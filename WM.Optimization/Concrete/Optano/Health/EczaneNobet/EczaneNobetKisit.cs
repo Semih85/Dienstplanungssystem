@@ -1903,7 +1903,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                             foreach (var tarih in tarihler)
                             {
-                                var kisitAdi = $" {kisitAdiAltGrupIliski} ile birlikte {tarih.Tarih.ToShortDateString()} tarihinde nöbet tuttu mu";
+                                var kisitAdi = $" {kisitAdiAltGrupIliski} ile birlikte {tarih.Tarih.ToShortDateString()} tarihinde nöbet tuttu mu?";
 
                                 var kisitAdiBuyuktur = kisitAdi + " &ge;";
 

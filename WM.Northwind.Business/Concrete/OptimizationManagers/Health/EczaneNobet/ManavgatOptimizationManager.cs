@@ -44,6 +44,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private IKalibrasyonService _kalibrasyonService;
         private IDebugEczaneService _debugEczaneService;
         private INobetAltGrupService _nobetAltGrupService;
+        private IAyniGunNobetTakipGrupAltGrupService _ayniGunNobetTakipGrupAltGrupService;
 
         public ManavgatOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -72,6 +73,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     INobetGrupGorevTipTakvimOzelGunService nobetGrupGorevTipTakvimOzelGunService,
                     IKalibrasyonService kalibrasyonService,
                     IDebugEczaneService debugEczaneService,
+                    IAyniGunNobetTakipGrupAltGrupService ayniGunNobetTakipGrupAltGrupService,
                     INobetAltGrupService nobetAltGrupService
             )
         {
@@ -101,6 +103,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _nobetGrupGorevTipTakvimOzelGunService = nobetGrupGorevTipTakvimOzelGunService;
             _kalibrasyonService = kalibrasyonService;
             _debugEczaneService = debugEczaneService;
+            _ayniGunNobetTakipGrupAltGrupService = ayniGunNobetTakipGrupAltGrupService;
             _nobetAltGrupService = nobetAltGrupService;
         }
         #endregion
@@ -304,6 +307,10 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             //var sure_eczaneNobetTarihAralik = stopwatch.Elapsed;
 
+            //2. karar değişkeni. her eczane ve ilgili altgrup
+            var eczaneNobetAltGrupTarihAralik = _takvimService.GetEczaneNobetAltGrupTarihAralik(baslangicTarihi, bitisTarihi, nobetGorevTipId, nobetGrupIdListe)
+                .Where(w => eczaneNobetGruplar.Select(s => s.EczaneId).Contains(w.EczaneId)).ToList();
+
             var eczaneNobetIstekler = _eczaneNobetIstekService.GetDetaylarByNobetGrupIdList(baslangicTarihi, bitisTarihi, nobetGrupIdListe)
                 .Where(w => eczaneNobetGruplar.Select(s => s.EczaneId).Contains(w.EczaneId)).ToList();
 
@@ -400,6 +407,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 NobetGrupGorevTipKisitlar = grupBazliKisitlar,
                 Kalibrasyonlar = _kalibrasyonService.GetKalibrasyonlarYatay(nobetUstGrupId),
                 DebugYapilacakEczaneler = debugYapilacakEczaneler,
+                EczaneNobetAltGrupTarihAralik = eczaneNobetAltGrupTarihAralik,
+                AyniGunNobetTakipGrupAltGruplar = _ayniGunNobetTakipGrupAltGrupService.GetDetaylar(nobetUstGrupId),
                 NobetAltGruplar = nobetAltGruplar
             };
 

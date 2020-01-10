@@ -2440,6 +2440,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 || nobetUstGrupId == 6//bartın
                 || nobetUstGrupId == 9//çorum
                 || nobetUstGrupId == 11//d.bakır
+                || nobetUstGrupId == 12//manavgat
                 )
             {
                 var tarihler = sonuclar.Select(s => new { s.TakvimId, s.NobetGorevTipId }).Distinct().ToArray();
@@ -3376,6 +3377,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         /// <summary>
         /// İstenen bir gruptaki eczaneler en son hangi alt grupla nöbet tuttuysa 
         /// çözülen ayda aynı alt grupla aynı gün nöbet yazılmaz.
+        /// Ay içinde gün grubu bazında birden fazla nöbet düşerse bu kısıt en son nöbet tuttuğu alt grubun dışındaki ile 2 kez nöbet tutabilir. 
+        /// buna dikkat edilmesi gerekir.
         /// </summary>
         /// <param name="eczaneNobetTarihAralik"></param>
         /// <param name="eczaneNobetSonuclar"></param>
@@ -3394,7 +3397,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             int[] ayniGunNobetTutmasiTakipEdilecekGruplar,
             int[] altGrubuOlanNobetGrupGorevTipler,
             int indisId)
-        {//ay içinde gün grubu bazında birden fazla nöbet düşerse bu kısıt en son nöbet tuttuğu alt grubun dışındaki ile 2 kez nöbet tutabilir. buna dikkat.
+        {
             var eczaneGruplar = new List<EczaneGrupDetay>();
 
             if (!nobetUstGrupKisitDetay.PasifMi)

@@ -19,6 +19,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
     {
         //Karar değişkeni model çalıştıktan sonra değer aldığından burada tanımlandı
         private VariableCollection<EczaneNobetTarihAralik> _x { get; set; }
+        private VariableCollection<EczaneNobetAltGrupTarihAralik> _y { get; set; }
 
         private Model Model(ManavgatDataModel data)
         {
@@ -51,6 +52,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             #endregion            
 
             #region Karar Değişkenleri
+
             _x = new VariableCollection<EczaneNobetTarihAralik>(
                     model,
                     data.EczaneNobetTarihAralik,
@@ -59,6 +61,15 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     item => 0,//data.LowerBound,
                     item => 1,//data.UpperBound,
                     item => VariableType.Binary);
+
+            _y = new VariableCollection<EczaneNobetAltGrupTarihAralik>(
+                    model,
+                    data.EczaneNobetAltGrupTarihAralik,
+                    "y",
+                    t => $"{t.EczaneNobetGrupId}_{t.TakvimId}, {t.NobetGrupAdi}, {t.NobetAltGrupAdi}, {t.EczaneAdi}, {t.Tarih.ToShortDateString()}",
+                    h => data.LowerBound,
+                    h => data.UpperBound,
+                    a => VariableType.Binary);
 
             #endregion
 
@@ -106,7 +117,19 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var gunGruplarGrupBazli = tarihler
                     .Select(s => new { s.GunGrupId, s.GunGrupAdi })
                     .Distinct()
-                    .OrderBy(o => o.GunGrupId).ToList();
+                    .OrderBy(o => o.GunGrupId).ToArray();
+
+                var gunGruplarGrupBazli2 = new List<NobetUstGrupGunGrupDetay>();
+
+                for (int i = 0; i < gunGruplarGrupBazli.Length; i++)
+                {
+                    gunGruplarGrupBazli2.Add(new NobetUstGrupGunGrupDetay
+                    {
+                        GunGrupId = gunGruplarGrupBazli[i].GunGrupId,
+                        GunGrupAdi = gunGruplarGrupBazli[i].GunGrupAdi,
+                        NobetUstGrupId = data.NobetUstGrupId
+                    });
+                }
 
                 var nobetGrupTalepler = tarihler
                     .GroupBy(g => g.TalepEdilenNobetciSayisi)
@@ -297,41 +320,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 TalebiKarsila(talebiKarsila);
 
-                //foreach (var gunGrup in gunGruplarGrupBazli)
-                //{
-                //    var tarihlerGunGrupBazli = tarihler.Where(w => w.GunGrupId == gunGrup.GunGrupId).ToArray();
-
-                //    for (int i = 0; i < tarihlerGunGrupBazli.Length; i++)
-                //    {
-                //        var tarih = tarihlerGunGrupBazli[i];
-
-                //        var mod6 = i % 6;
-
-                //        switch (mod6)
-                //        {
-                //            case 0:
-                //                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 53 || w.NobetAltGrupId == 54).ToList();
-                //                break;
-                //            case 1:
-                //                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 56 || w.NobetAltGrupId == 57).ToList();
-                //                break;
-                //            case 2:
-                //                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 53 || w.NobetAltGrupId == 56).ToList();
-                //                break;
-                //            case 3:
-                //                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 54 || w.NobetAltGrupId == 57).ToList();
-                //                break;
-                //            case 4:
-                //                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 53 || w.NobetAltGrupId == 57).ToList();
-                //                break;
-                //            case 5:
-                //                talebiKarsila.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 54 || w.NobetAltGrupId == 57).ToList();
-                //                break;
-                //        }
-
-                //        TalebiKarsila(talebiKarsila, tarih);
-                //    }
-                //}
+                //TalepKisitlariniOlusturAltGrupBazli(tarihler, gunGruplarGrupBazli2, eczaneNobetTarihAralikGrupBazli, talebiKarsila);
 
                 var altGruplar = data.NobetAltGruplar;
 
@@ -343,24 +332,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     NobetUstGrupKisit = new NobetUstGrupKisitDetay { KisitKategoriAdi = "Talep", KisitAdiGosterilen = "Gerekli Nöbetçi Eczane Sayısı", KisitId = -1 }
                 };
 
-                for (int i = 0; i < tarihler.Count; i++)
-                {
-                    var tarih = tarihler[i];
-
-                    tarihVeAltGrupBazliEnFazla.Tarih = tarih;
-
-                    var eczaneNobetTarihAralikGrupBazliTarihBazli = eczaneNobetTarihAralikGrupBazli.Where(w => w.TakvimId == tarih.TakvimId).ToList();
-
-                    foreach (var altGrup in altGruplar)
-                    {
-                        tarihVeAltGrupBazliEnFazla.GunKuralAdi = altGrup.Adi;
-
-                        tarihVeAltGrupBazliEnFazla.EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazliTarihBazli
-                            .Where(w => w.NobetAltGrupId == altGrup.Id).ToList();
-
-                        TarihVeAltGrupBazliEnFazla(tarihVeAltGrupBazliEnFazla);
-                    }
-                }
+                HerGunAyniAltGruptanEnFazla1NobetciOlsun(tarihler, eczaneNobetTarihAralikGrupBazli, altGruplar, tarihVeAltGrupBazliEnFazla);
 
                 #endregion
 
@@ -1169,11 +1141,185 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 EsGruptakiEczanelereAyniGunNobetYazma(kpEsGrubaAyniGunNobetYazmaGunGrup);
             }
 
-            #endregion           
+            #endregion
+
+            #region Alt gruplarla eşit sayıda nöbet tutulsun
+
+            //1. çarşı - ssk acil
+            //2. ssk   - gelişim palmiye (uzak)
+            //3. ssk   - gelişim yeni devlet
+
+            #region eski nöbetler
+
+            var gecmisNobetSayilari = new List<AltGrupIleTutulanNobetDurumu>
+                {
+                    #region çarşı - acil
+
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1196, NobetAltGrupId=37, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1186, NobetAltGrupId=37, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1187, NobetAltGrupId=37, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1199, NobetAltGrupId=37, NobetSayisi=2},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1436, NobetAltGrupId=37, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1198, NobetAltGrupId=37, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1184, NobetAltGrupId=37, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1197, NobetAltGrupId=37, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1188, NobetAltGrupId=37, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1189, NobetAltGrupId=37, NobetSayisi=2},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1190, NobetAltGrupId=37, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1191, NobetAltGrupId=37, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1192, NobetAltGrupId=37, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1193, NobetAltGrupId=37, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1194, NobetAltGrupId=37, NobetSayisi=2},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1195, NobetAltGrupId=37, NobetSayisi=2},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1200, NobetAltGrupId=37, NobetSayisi=3},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1201, NobetAltGrupId=37, NobetSayisi=2},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1202, NobetAltGrupId=37, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1203, NobetAltGrupId=37, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1185, NobetAltGrupId=37, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1204, NobetAltGrupId=37, NobetSayisi=2},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1205, NobetAltGrupId=37, NobetSayisi=2},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1206, NobetAltGrupId=37, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1207, NobetAltGrupId=37, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1208, NobetAltGrupId=37, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1209, NobetAltGrupId=37, NobetSayisi=2},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1210, NobetAltGrupId=37, NobetSayisi=0},
+
+	                    #endregion
+
+                    #region ssk - palmiye
+
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1251, NobetAltGrupId=43, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1253, NobetAltGrupId=43, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1263, NobetAltGrupId=43, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1242, NobetAltGrupId=43, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1248, NobetAltGrupId=43, NobetSayisi=2},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1255, NobetAltGrupId=43, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1243, NobetAltGrupId=43, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1244, NobetAltGrupId=43, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1256, NobetAltGrupId=43, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1258, NobetAltGrupId=43, NobetSayisi=3},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1245, NobetAltGrupId=43, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1261, NobetAltGrupId=43, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1262, NobetAltGrupId=43, NobetSayisi=0},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1246, NobetAltGrupId=43, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1247, NobetAltGrupId=43, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1249, NobetAltGrupId=43, NobetSayisi=2},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1250, NobetAltGrupId=43, NobetSayisi=3},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1252, NobetAltGrupId=43, NobetSayisi=2},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1254, NobetAltGrupId=43, NobetSayisi=3},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1257, NobetAltGrupId=43, NobetSayisi=2},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1259, NobetAltGrupId=43, NobetSayisi=1},
+                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1260, NobetAltGrupId=43, NobetSayisi=1}
+
+	                    #endregion
+                };
+
+            #endregion
+
+            var ayniGunNobetTakipEdilecekNobetGrupGorevTipIdList = data.AyniGunNobetTakipGrupAltGruplar
+                .Select(s => s.NobetGrupGorevTipId).Distinct().ToList();
+
+            var nobetGrupGorevTipler = data.NobetGrupGorevTipler
+                .Where(w => ayniGunNobetTakipEdilecekNobetGrupGorevTipIdList.Contains(w.Id)).ToList();
+
+            var altGruplarlaAyniGunNobet = new KpAltGruplarlaAyniGunNobetGrupAltGrup
+            {
+                AltGrupIleTutulanNobetDurumlari = gecmisNobetSayilari,
+                AyniGunNobetTakipGrupAltGruplar = data.AyniGunNobetTakipGrupAltGruplar,
+                EczaneNobetAltGrupTarihAralik = data.EczaneNobetAltGrupTarihAralik,
+                EczaneNobetGrupAltGruplar = data.EczaneNobetGrupAltGruplar,
+                EczaneNobetGruplar = data.EczaneNobetGruplar,
+                EczaneNobetSonuclar = data.EczaneGrupNobetSonuclarTumu,
+                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                KararDegiskeni = _x,
+                KararDegiskeni2 = _y,
+                Model = model,
+                NobetGrupGorevTipler = nobetGrupGorevTipler,
+                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k29"),
+                Tarihler = data.TarihAraligi
+            };
+
+            AltGruplarlaAyniGunNobetGrupAltGrup(altGruplarlaAyniGunNobet);
+
+            #endregion
 
             #endregion
 
             return model;
+        }
+
+        private void HerGunAyniAltGruptanEnFazla1NobetciOlsun(
+            List<TakvimNobetGrup> tarihler,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralikGrupBazli,
+            List<NobetAltGrupDetay> altGruplar,
+            KpTarihVeAltGrupBazliEnFazla tarihVeAltGrupBazliEnFazla)
+        {
+            for (int i = 0; i < tarihler.Count; i++)
+            {
+                var tarih = tarihler[i];
+
+                tarihVeAltGrupBazliEnFazla.Tarih = tarih;
+
+                var eczaneNobetTarihAralikGrupBazliTarihBazli = eczaneNobetTarihAralikGrupBazli.Where(w => w.TakvimId == tarih.TakvimId).ToList();
+
+                foreach (var altGrup in altGruplar)
+                {
+                    tarihVeAltGrupBazliEnFazla.GunKuralAdi = altGrup.Adi;
+
+                    tarihVeAltGrupBazliEnFazla.EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazliTarihBazli
+                        .Where(w => w.NobetAltGrupId == altGrup.Id).ToList();
+
+                    TarihVeAltGrupBazliEnFazla(tarihVeAltGrupBazliEnFazla);
+                }
+            }
+        }
+
+        private void TalepKisitlariniOlusturAltGrupBazli(
+            List<TakvimNobetGrup> tarihler,
+            List<NobetUstGrupGunGrupDetay> gunGruplarGrupBazli2,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralikGrupBazli,
+            KpTalebiKarsila talebiKarsila)
+        {
+            foreach (var gunGrup in gunGruplarGrupBazli2)
+            {
+                var tarihlerGunGrupBazli = tarihler.Where(w => w.GunGrupId == gunGrup.GunGrupId).ToArray();
+
+                for (int i = 0; i < tarihlerGunGrupBazli.Length; i++)
+                {
+                    var tarih = tarihlerGunGrupBazli[i];
+
+                    var mod6 = i % 6;
+
+                    switch (mod6)
+                    {
+                        case 0:
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskenindenAltGruplariFiltrele(eczaneNobetTarihAralikGrupBazli, new int[] { 53, 54 });
+                            break;
+                        case 1:
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskenindenAltGruplariFiltrele(eczaneNobetTarihAralikGrupBazli, new int[] { 56, 57 });
+                            break;
+                        case 2:
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskenindenAltGruplariFiltrele(eczaneNobetTarihAralikGrupBazli, new int[] { 53, 56 });
+                            break;
+                        case 3:
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskenindenAltGruplariFiltrele(eczaneNobetTarihAralikGrupBazli, new int[] { 54, 57 });
+                            break;
+                        case 4:
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskenindenAltGruplariFiltrele(eczaneNobetTarihAralikGrupBazli, new int[] { 53, 57 });
+                            break;
+                        case 5:
+                            talebiKarsila.EczaneNobetTarihAralikTumu = GetKararDegiskenindenAltGruplariFiltrele(eczaneNobetTarihAralikGrupBazli, new int[] { 54, 57 });
+                            break;
+                    }
+
+                    TalebiKarsila(talebiKarsila, tarih);
+                }
+            }
+        }
+
+        private List<EczaneNobetTarihAralik> GetKararDegiskenindenAltGruplariFiltrele(List<EczaneNobetTarihAralik> eczaneNobetTarihAralikGrupBazli, int[] nobetAltGrupIdList)
+        {
+            return eczaneNobetTarihAralikGrupBazli.Where(w => nobetAltGrupIdList.Contains(w.NobetAltGrupId)).ToList();
         }
 
         public EczaneNobetSonucModel Solve(ManavgatDataModel data)

@@ -309,9 +309,6 @@
     <Content Include="Content\images\flags\de.png" />
     <Content Include="Content\images\flags\en.png" />
     <Content Include="Content\images\flags\tr.png" />
-    <Content Include="Content\images\GrafikAnaSayfa.png" />
-    <Content Include="Content\images\HaritaAnaSayfa.png" />
-    <Content Include="Content\images\KuralAnaSayfa.png" />
     <Content Include="Content\images\pivotAnimation.gif" />
     <Content Include="Content\images\ekran.png" />
     <Content Include="Content\images\eniyiplansuresi.png" />
@@ -358,12 +355,10 @@
     <Content Include="Content\images\schedule1.png" />
     <Content Include="Content\images\smile.jpg" />
     <Content Include="Content\images\smile2.jpg" />
-    <Content Include="Content\images\SnAnaSayfa.png" />
     <Content Include="Content\images\SonsuzCozumKumesi.jpg" />
     <Content Include="Content\images\squarespace-logo-symbol-black.gif" />
     <Content Include="Content\images\3-min-countdown-animated.gif" />
     <Content Include="Content\images\MeoLogo.png" />
-    <Content Include="Content\images\SSLAnaSayfa.png" />
     <Content Include="Content\images\sudoku.jpg" />
     <Content Include="Content\images\sudoku2.png" />
     <Content Include="Content\images\takvim_planlama.png" />
@@ -886,7 +881,6 @@
     <Content Include="Areas\EczaneNobet\Views\DebugEczane\Edit.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\DebugEczane\Index.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetGrup\EczaneNobetGrupPartialView.cshtml" />
-    <None Include="Properties\PublishProfiles\dutyscheduling - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
