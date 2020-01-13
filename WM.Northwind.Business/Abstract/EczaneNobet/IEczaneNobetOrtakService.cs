@@ -117,6 +117,16 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
             List<int> ayniGunNobetTutmasiTakipEdilecekAltGruplar,
             List<int> altGrubuOlanNobetGruplar);
 
+        List<EczaneGrupDetay> AltGruplarlaSiraliNobetListesiniOlusturManavgat(
+            List<EczaneNobetSonucListe2> eczaneNobetSonuclar,
+            List<EczaneNobetGrupDetay> eczaneNobetGruplar,
+            List<EczaneNobetGrupAltGrupDetay> eczaneNobetGrupAltGruplar,
+            NobetUstGrupKisitDetay nobetUstGrupKisitDetay,
+            DateTime nobetUstGrupBaslamaTarihi,
+            int[] ayniGunNobetTutmasiTakipEdilecekGruplar,
+            int[] altGrubuOlanNobetGrupGorevTipler,
+            int indisId);
+
         List<EczaneNobetTarihAralik> AmacFonksiyonuKatsayisiBelirle(List<EczaneNobetTarihAralik> eczaneNobetTarihAralik,
             List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetGrupGunKuralIstatistikYatay,
             List<KalibrasyonYatay> kalibrasyonDetaylar = null,
