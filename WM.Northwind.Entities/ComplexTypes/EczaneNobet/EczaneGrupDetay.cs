@@ -39,6 +39,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         [Display(Name = "Görev Tipi")]
         public string NobetGorevTipAdi { get; set; }
         public List<EczaneNobetGrup> EczaneNobetGruplar { get; set; }
+        public string EczaneAdiBakilan { get; set; }
 
         public EczaneGrupDetay Clone()
         {
