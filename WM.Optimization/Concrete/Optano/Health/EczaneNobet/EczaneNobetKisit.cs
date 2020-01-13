@@ -143,7 +143,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             if (!p.NobetUstGrupKisit.PasifMi)
             {
                 if (p.NobetUstGrupKisit.SagTarafDegeri > 0)
-                    p.OrtalamaNobetSayisi += p.NobetUstGrupKisit.SagTarafDegeri;
+                    p.OrtalamaNobetSayisi = p.NobetUstGrupKisit.SagTarafDegeri;
 
                 var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanimKisa}" +
                     $" {p.OrtalamaNobetSayisi}" +
