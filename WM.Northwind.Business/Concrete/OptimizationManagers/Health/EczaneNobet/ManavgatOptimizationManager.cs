@@ -330,7 +330,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var oncekiAylardaAyniGunNobetTutanEczaneler = new List<EczaneCiftGrup>();
 
-            var altGruplarlaAyniGunNobetTutma = _nobetUstGrupKisitService.GetDetay("altGruplarlaAyniGunNobetTutma", nobetUstGrupId);
+            var altGruplarlaAyniGunNobetTutma = _nobetUstGrupKisitService.GetDetay(29, nobetUstGrupId);
 
             var eczaneNobetSonuclarAltGruplaAyniGun = new List<EczaneNobetSonucListe2>();
             var altGruplarlaAyniGunNobetTutmayacakEczaneler = new List<EczaneGrupDetay>();
@@ -341,13 +341,12 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
                 var altGrupluTakipEdilecekNobetGrupGorevTipIdList =
                      new List<int> {
-                                   64, //manavgat-1
-                                   65  //manavgat-2
+                                   64
                      };
 
                 var ayniGunNobetTutmasiTakipEdilecekGruplar = new int[]
                 {
-                    65//Manavgat-2
+                    64//Manavgat-1
                 };
 
                 var altGrubuOlanNobetGruplar = new int[]
@@ -361,7 +360,15 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 eczaneNobetSonuclarAltGruplaAyniGun = eczaneNobetSonuclar
                         .Where(w => altGrupluTakipEdilecekNobetGrupGorevTipIdList.Contains(w.NobetGrupGorevTipId)).ToList();
 
-                altGruplarlaAyniGunNobetTutmayacakEczaneler = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlustur(eczaneNobetSonuclarAltGruplaAyniGun, eczaneNobetGruplarAltGruplaAyniGun, eczaneNobetGrupAltGruplar, altGruplarlaAyniGunNobetTutma, nobetUstGrupBaslangicTarihi, ayniGunNobetTutmasiTakipEdilecekGruplar, altGrubuOlanNobetGruplar, indisId);
+                altGruplarlaAyniGunNobetTutmayacakEczaneler = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturManavgat(
+                    eczaneNobetSonuclarAltGruplaAyniGun,
+                    eczaneNobetGruplarAltGruplaAyniGun,
+                    eczaneNobetGrupAltGruplar,
+                    altGruplarlaAyniGunNobetTutma,
+                    nobetUstGrupBaslangicTarihi,
+                    ayniGunNobetTutmasiTakipEdilecekGruplar,
+                    altGrubuOlanNobetGruplar,
+                    indisId);
             }
 
             #endregion
