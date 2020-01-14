@@ -31,7 +31,7 @@ namespace WM.Northwind.DataAccess.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-            bool guncelle = true;
+            bool guncelle = false;
 
             if (guncelle)
             {
@@ -73,7 +73,7 @@ namespace WM.Northwind.DataAccess.Migrations
             //    }
             //}
 
-            //NobetGrupGorevTipTakvimOzelGunEkle(context, 66);
+            //NobetGrupGorevTipTakvimOzelGunEkle(context, 71);
             //NobetGrupGorevTipTakvimOzelGunEkle(context, 67);
             //NobetGrupGorevTipTakvimOzelGunEkle(context, 60);
             ;
@@ -141,9 +141,9 @@ namespace WM.Northwind.DataAccess.Migrations
 
             //NobetGrupGorevTipTakvimOzelGunEkle(context, 65);
 
-            var baslamaTarihi = new DateTime(2020, 6, 1);
-            var odaId = 10;
-            var nobetUstGrupId = 14;
+            var baslamaTarihi = new DateTime(2020, 4, 1);
+            var odaId = 9;
+            var nobetUstGrupId = 13;
             var nobetGrupGorevTipId = context.NobetGrupGorevTipler.Max(x => x.Id) + 1;
             var varsayilanNobetciSayisi = 1;
 
@@ -558,16 +558,15 @@ new Eczane{ Adi="REYHAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1
             };
 
             //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 53, 54 }, varsayilanNobetciSayisi, 42);
-            //NobetGrupGorevTipTakvimOzelGunEkle(context, 53);
+            //NobetGrupGorevTipTakvimOzelGunEkle(context, 71);
             //NobetGrupGorevTipTakvimOzelGunEkle(context, 54);
 
-            UstGrupPaketiEkle(gerekliBilgilerKayseri);
-            //NobetGrupGorevTipTakvimOzelGunEkle(context, 62);
-            //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 62 }, varsayilanNobetciSayisi, 61);
+            //UstGrupPaketiEkle(gerekliBilgilerKayseri);
+            //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 71 }, varsayilanNobetciSayisi, 70);
+            //NobetGrupGorevTipTakvimOzelGunEkle(context, 71);
             //TalepEkle(context, 28, 2);
 
             //UstGrupPaketiEkleKompakt(gerekliBilgilerKirikhan);
-
         }
 
         private static void VeriEkleGuncelleMaster(Concrete.EntityFramework.Contexts.EczaneNobetContext context)
