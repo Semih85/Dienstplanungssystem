@@ -5250,7 +5250,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
             {
                 foreach (var kullanici in kullanicilar)
                 {
-                    SHA256(kullanici.Password);
+                    kullanici.Password = SHA256(kullanici.Password);
                 }
 
                 b.EczaneNobetContext.Users.AddOrUpdate(s => new { s.Email }, kullanicilar.ToArray());
