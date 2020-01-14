@@ -31,7 +31,7 @@ namespace WM.Northwind.DataAccess.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
-            bool guncelle = false;
+            bool guncelle = true;
 
             if (guncelle)
             {
@@ -141,13 +141,13 @@ namespace WM.Northwind.DataAccess.Migrations
 
             //NobetGrupGorevTipTakvimOzelGunEkle(context, 65);
 
-            var baslamaTarihi = new DateTime(2020, 4, 1);
-            var odaId = 9;
-            var nobetUstGrupId = 13;
+            var baslamaTarihi = new DateTime(2020, 6, 1);
+            var odaId = 10;
+            var nobetUstGrupId = 14;
             var nobetGrupGorevTipId = context.NobetGrupGorevTipler.Max(x => x.Id) + 1;
             var varsayilanNobetciSayisi = 1;
 
-            var gerekliBilgilerOrdu = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)
+            var gerekliBilgilerKayseri = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)
             {
                 //var baslamaTarihi = new DateTime(2019, 3, 5);
                 //var odaId = 6;
@@ -156,113 +156,382 @@ namespace WM.Northwind.DataAccess.Migrations
 
                 BaslamaTarihi = baslamaTarihi, // new DateTime(2019, 3, 5),
 
-                EczaneOdalalar = context.EczaneOdalar.Where(w => w.Id == 1).ToList(),
+                EczaneOdalalar = context.EczaneOdalar.Where(w => w.Id == odaId).ToList(),
 
                 Eczaneler = new List<Eczane>()
                             {
-                                #region manavgat
-new Eczane{ Adi="ALTAÞ", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ALTINORDU", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ARSLAN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="CANDAN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="CANSUDERE", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="DEMÝR", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="DEVA", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="DÝLEK", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="DÝRÝM", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="DOÐA", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="DURU", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ERGÜL", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="GÜNDOÐDU", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="GÜNEÞ", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ÝBNÝSÝNA", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="KATIRCIOÐLU", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="KAYMAK", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="KOÇAK", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="NÝLÜFER", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="PARK", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="PINAR", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="POYRAZ", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="SANAYÝ", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ÞEYMA", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ÞÝMÞEK", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="TUBA", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="TÜRKMENLER", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ACAR", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="AYDIN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="BERRÝN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="BOZTEPE", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="BÜYÜK", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ÇELENK", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="DEFNE", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="DEMÝRTAÞ", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="DENÝZ", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="DERMAN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="HASTANELER", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="HIZIR", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ÝTÝMAT", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="KARAMANOÐLU", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="KAYAHAN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="MERKEZ", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="MURAT", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ODABAÞ", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ÖMÜR", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="SAÐLIK", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="SELÝN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="SUBAÞI", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="TEPE", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="TUNA", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="TÜLÝN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="UÐUR", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="YENÝÇARÞI", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="YENÝMAHALLE", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="YÜRÜR", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ARDA", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="BAHÇELÝEVLER", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ÇAKIR", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ELÝF", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ESER", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ESÝN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="FATÝH", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="FIRAT", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="FÝLÝZ", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="GÜLER", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="GÜNAYDIN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="GÜVEN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="KARÞIYAKA", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="KOÇYÝÐÝT", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="MERTGERÇEKER", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="NAZ", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="NUR", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ONUR", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="PELÝN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="SERDAROÐLU", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ÞÝFA", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="TAYFUN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="TÜRKMEN", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="UFUK", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ULUS", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ZAÝMOÐLU", AcilisTarihi=new DateTime(2020,4,1)},
-new Eczane{ Adi="ZEYNEP", AcilisTarihi=new DateTime(2020,4,1)}
-
+                                #region Kayseri
+new Eczane{ Adi="ATALAY", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BÝLLURBAÞKAL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BÜYÜKGÖNCÜ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="CEREN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="CINGILLIOÐLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇANDIR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇAYIRAÐASI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇETÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DAMLA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DEDEMEN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DEMÝR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DENGÝZ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DERYA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="EFE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ELÝF", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ERDÝNÇ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="FAZÝLET", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÜNAYDIN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="IRMAK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÝPEKBÝRER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÝSTANBUL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÝÞLER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KENT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MUAZZEZ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MURAT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NALBANTOÐLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NEÞE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÖNDER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÖZSOY", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="STAD", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TEKÝNER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TEPE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TÜRKYAR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="UZUNLULU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YAÐCI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YAÞAM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YONCA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ALTINDÝÞ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ALPARSLAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AYDEMÝR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BETÜL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BÝLAL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BODUROÐLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇÝFTLÝK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇÝÐDEM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DEMET", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DEVA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÖLGELÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="HALE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÝRFAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KÜBRA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MERMERKAYA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NUR ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="RÜZGAR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SELAM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SIHHAT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SÜMER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÞAYLAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÞULE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TAÞHAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="UMAY", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YILDIRIM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YÜKSEL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MERKEZ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇÝLÝNGÝR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇÖL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DARÜÞÞÝFA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DEMÝREZEN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DENÝZ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DERVÝÞ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DÜNYA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="EKÝNCÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="EMEL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ENAR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ESEN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÖKTÜRK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÜLÞAH", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KARACALAR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KARAGÖZ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NANELÝMON", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NART", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÖZLEM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÖZTÜRK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="POLAT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SOYLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÞAHÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TRABZONLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="UMUT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="VEFA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="VÝTAMÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YANGIN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ARZU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ATA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BÝLLUR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BÜYÜKTAÞKIN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="EGE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="EMEK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ERCÝYES", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="EREM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="FEVZÝÇAKMAK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÖKÞEN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÝNCÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KATARTAÞ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MAVÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NAR ÇÝÇEÐÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÞAFAK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÞENKAYA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="CEM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="CEMÝLOÐLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MERAL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ESRAÖZKAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÖKTAÞ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TUNA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ALARA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ASLI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BAÞALP", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="CANDAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÞAYESTE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TEKÝNBEY", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AYÞEGÜL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AYTAÇ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="FURKAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ELÇÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KÖÞK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KÜBRA AKSOY", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MACÝT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MÝRAÇ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NESLÝHAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SELVABAYER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SÜMEYYE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BAÞOÐLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ELA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GAYE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MEHTAP", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="OKUTAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="PAMUK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AYGÜN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YILDIZ ÜNAL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DERMAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ALÇILAR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YENÝDOÐUMEVÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="HARMANCI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ARICI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BAÞAK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DEDEOÐLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÜÇLÜ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KARABULUT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SARIALP", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SARIGÜL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SELÇUK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SERÇEÖNÜ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇÝSEM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ESENYURT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GAMZEGÜNEY", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÜNEÞ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="EYLÜL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MELÝKE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ECEM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="LEYLA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NEHÝR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SAYILI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="Y.BEYAZIT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ENES GÜLER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÜLTEPE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MELTEM ZENGER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NEVÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÖKKENT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SERKAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TOPRAK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="CIRGALAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="CÝHANGÝR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GAZÝOSMAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="OSMAN GAZÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GONCA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AKIN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ALTINOLUK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ASLIM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AYDINLIKEVLER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BAKKALOÐLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BALIM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BURCU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇEVREYOL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇINAR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇÝÇEK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DÝLEK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DUYGU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ERTÜRK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ESMA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="EYMEN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="HAKAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="HIZIR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="HÝLAL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="HÝSAR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="HUZUR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÝREM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KÝÇÝKAPU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MESUT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SALÝH", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÞÜKRAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TEKÝNSOY", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TÝRÝTOÐLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TURGUT REÝS", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TÜFEKÇÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÜNLÜ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YAKUT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ZAFER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ZEHRA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ZEKÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ZEYNEP", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KALKANOÐLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MELEHAT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇAY BAÐLARI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ULUTAÞ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BUSE KÖSE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BAHÇELÝEVLER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TAÞKIN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NEFES", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BAÞAKAKSOY", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KAYSERÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SONCAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YENÝ CURA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÜNVER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÞEREF", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KEREM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KAHRAMAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BAHADIR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇAKMAK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÖZLEM DEDEOÐLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SEVÝNÇ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TALAS", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TUÐBA ÞAHÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇAÐRI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MELTEM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BETA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NÝSAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YENÝDOÐAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÖKKUÞAÐI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MENEKÞE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NEÞEM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SEDEF", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MELÝKÞAH", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AYSUN ÝLGÜN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KOZA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="PAPATYAM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÖZCAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="VARDIR BÝR HÝKMETÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AKDEMÝR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TOLGACAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÝNCE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ERSAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ANAYURT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="PARK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÖZDE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ZORLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TURKUAZ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GENÝÞER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SADE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ONUR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SENÝHA ÇELEBÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YUSUF", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AKÝF", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ALPER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BELSÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="FATÝH", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="HÝPOKRAT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KARDEÞLER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KAÞIKÇI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KUÞÇUZADE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÖZGE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SEÇKÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SELEN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SOMTAÞ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÞÝFA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TAMER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="HASÇALIK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="HASEKÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÜNGÖREN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KEVSER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MARMARA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SELÝN ERDEM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GENÇ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="EKÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NURHAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BÝZÝM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KORKMAZ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YENÝÞEHÝR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ATEÞ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AYHAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BAYKARA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MAHZEMÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NARÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÞEKER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="DURU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ELEM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KARDELEN ÇAPA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KAVAFOÐLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AYAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÖZERCÝYES", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AZE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="SERAP", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇALIÞKAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="EROÐLU", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÖKÞEN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÝSTÝKBAL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MAYIS", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="NÝLGÜN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="OCAK", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="OSMANLI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÖMER", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TUÐBA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YENÝ HÝLAL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="LÝDYA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="HAYAT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ASLAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="EDA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ELÝT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GÜLÇÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="HÜLYA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TOKÝ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ULUDAÐ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AKBULUT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ASLI ÜNLÜEL", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AYDIN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BÜYÜKBAKIRCI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÝLDEM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KILIÇ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MERHEM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="MUHSÝN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÖRTEN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÖZKAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="PIRILTI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÞÝFA ÝLDEM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="AYSUN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="BEYAZÞEHÝR", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÇINARIM", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="GESÝ BAÐLARI", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="ÝLDEM SEMT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="KARAKAYA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="TOLGA", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YEDÝTEPE", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YILMAZ", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="YÝÐÝT", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14},
+new Eczane{ Adi="REYHAN", AcilisTarihi=new DateTime(2020,6,1), Enlem=1, Boylam=1, NobetUstGrupId=14}
                                 #endregion
                             },
 
                 NobetUstGruplar = new List<NobetUstGrup>() {
-                                new NobetUstGrup(){ Adi = "Ordu", Aciklama = "Ordu Merkez", EczaneOdaId = odaId, BaslangicTarihi=baslamaTarihi, TimeLimit = 60, Enlem = 40.986166, Boylam = 37.879721 },
+                                new NobetUstGrup(){ Adi = "Kayseri", Aciklama = "Kayseri Merkez", EczaneOdaId = odaId, BaslangicTarihi=baslamaTarihi, TimeLimit = 60, Enlem = 38.720489, Boylam = 35.482597 },
                             },
 
                 NobetGruplar = new List<NobetGrup>() {
-                                new NobetGrup(){ Adi = "Ordu-1", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
-                                new NobetGrup(){ Adi = "Ordu-2", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
-                                new NobetGrup(){ Adi = "Ordu-3", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Kayseri-1", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Kayseri-2", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Kayseri-4", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Kayseri-5", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Kayseri-6", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Kayseri-7", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Kayseri-8", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Kayseri-9", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Kayseri-10", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Kayseri-11", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Kayseri-12", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Kayseri-13", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
                             },
 
                 Kullanicilar = new List<User>()
-                            {
+                            {//ordu2019
                                 //new User(){ Email="odaDiyarbakir@nobetyaz.com", FirstName="Oda Diyarbakýr", LastName="Oda Diyarbakýr", Password="odaDiyarbakir8", UserName="odaDiyarbakir", BaslamaTarihi = baslamaTarihi},
                                 //new User(){ Email="ustGrupDiyarbakir@nobetyaz.com", FirstName="Üst Grup", LastName="Üst grp", Password="ustGrup8", UserName="ustGrupDiyarbakir", BaslamaTarihi = baslamaTarihi},
-                                new User(){ Email="ecz.zynp@gmail.com", FirstName="Zeynep", LastName="Ordu", Password="ordu2019", UserName="zeynepHaným", BaslamaTarihi = baslamaTarihi}
+                                new User(){ Email="meh_met38@hotmail.com", FirstName="Mehmet", LastName="Hazýr", Password="kayseri2020", UserName="Mehmet", BaslamaTarihi = baslamaTarihi}
                             },
 
                 NobetGrupKurallar = new List<NobetGrupKural>(),
@@ -283,7 +552,7 @@ new Eczane{ Adi="ZEYNEP", AcilisTarihi=new DateTime(2020,4,1)}
                                 new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 1, AmacFonksiyonuKatsayisi = 1000 },
                                 new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 2, AmacFonksiyonuKatsayisi = 8000 },
                                 new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 3, AmacFonksiyonuKatsayisi = 900 },
-                                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 4, AmacFonksiyonuKatsayisi = 100 },
+                                //new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 4, AmacFonksiyonuKatsayisi = 100 },
                                 //new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 5, AmacFonksiyonuKatsayisi = 7000 }
                             }
             };
@@ -292,7 +561,7 @@ new Eczane{ Adi="ZEYNEP", AcilisTarihi=new DateTime(2020,4,1)}
             //NobetGrupGorevTipTakvimOzelGunEkle(context, 53);
             //NobetGrupGorevTipTakvimOzelGunEkle(context, 54);
 
-            UstGrupPaketiEkle(gerekliBilgilerOrdu);
+            UstGrupPaketiEkle(gerekliBilgilerKayseri);
             //NobetGrupGorevTipTakvimOzelGunEkle(context, 62);
             //NobetGrupGunKuralEkle(context, baslamaTarihi, nobetUstGrupId, new List<int> { 62 }, varsayilanNobetciSayisi, 61);
             //TalepEkle(context, 28, 2);
@@ -5168,34 +5437,54 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
 
                 //birden fazla nöbet grubu olursa ayarla mutlaka
 
-                if (indisEczaneSayisi <= 27)
+                if (indisEczaneSayisi <= 37)
                 {
                     nobetGrupGorevTipId = b.NobetGrupGorevTipId;
                 }
-                else if (indisEczaneSayisi <= 56)
+                else if (indisEczaneSayisi <= 64)
                 {
                     nobetGrupGorevTipId = b.NobetGrupGorevTipId + 1;
                 }
-                else //if (indisEczaneSayisi <= 42)
+                else if (indisEczaneSayisi <= 92)
                 {
                     nobetGrupGorevTipId = b.NobetGrupGorevTipId + 2;
                 }
-                //else if (indisEczaneSayisi <= 52)
-                //{
-                //    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 2;
-                //}
-                //else if (indisEczaneSayisi <= 58)
-                //{
-                //    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 3;
-                //}
-                //else if (indisEczaneSayisi <= 67)
-                //{
-                //    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 4;
-                //}
-                //else if (indisEczaneSayisi <= 84)
-                //{
-                //    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 5;
-                //}
+                else if (indisEczaneSayisi <= 140)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 3;
+                }
+                else if (indisEczaneSayisi <= 175)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 4;
+                }
+                else if (indisEczaneSayisi <= 214)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 5;
+                }
+                else if (indisEczaneSayisi <= 239)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 6;
+                }
+                else if (indisEczaneSayisi <= 261)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 7;
+                }
+                else if (indisEczaneSayisi <= 275)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 8;
+                }
+                else if (indisEczaneSayisi <= 301)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 9;
+                }
+                else if (indisEczaneSayisi <= 314)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 10;
+                }
+                else if (indisEczaneSayisi <= 344)
+                {
+                    nobetGrupGorevTipId = b.NobetGrupGorevTipId + 11;
+                }
 
                 eczaneNobetGruplar.Add(new EczaneNobetGrup()
                 {
@@ -5500,3 +5789,147 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
         //public List<UserRole> KullaniciRoller { get; internal set; }
     }
 }
+
+/*ordu
+ 
+    var gerekliBilgilerOrdu = new GerekliBilgiler(context, odaId, nobetUstGrupId, nobetGrupGorevTipId, baslamaTarihi, varsayilanNobetciSayisi)
+            {
+                //var baslamaTarihi = new DateTime(2019, 3, 5);
+                //var odaId = 6;
+                //var nobetUstGrupId = 7;
+                //var nobetGrupGorevTipId = 30;
+
+                BaslamaTarihi = baslamaTarihi, // new DateTime(2019, 3, 5),
+
+                EczaneOdalalar = context.EczaneOdalar.Where(w => w.Id == 1).ToList(),
+
+                Eczaneler = new List<Eczane>()
+                            {
+                                #region manavgat
+new Eczane{ Adi="ALTAÞ", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ALTINORDU", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ARSLAN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="CANDAN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="CANSUDERE", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="DEMÝR", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="DEVA", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="DÝLEK", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="DÝRÝM", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="DOÐA", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="DURU", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ERGÜL", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="GÜNDOÐDU", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="GÜNEÞ", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ÝBNÝSÝNA", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="KATIRCIOÐLU", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="KAYMAK", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="KOÇAK", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="NÝLÜFER", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="PARK", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="PINAR", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="POYRAZ", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="SANAYÝ", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ÞEYMA", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ÞÝMÞEK", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="TUBA", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="TÜRKMENLER", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ACAR", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="AYDIN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="BERRÝN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="BOZTEPE", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="BÜYÜK", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ÇELENK", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="DEFNE", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="DEMÝRTAÞ", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="DENÝZ", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="DERMAN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="HASTANELER", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="HIZIR", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ÝTÝMAT", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="KARAMANOÐLU", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="KAYAHAN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="MERKEZ", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="MURAT", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ODABAÞ", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ÖMÜR", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="SAÐLIK", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="SELÝN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="SUBAÞI", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="TEPE", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="TUNA", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="TÜLÝN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="UÐUR", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="YENÝÇARÞI", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="YENÝMAHALLE", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="YÜRÜR", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ARDA", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="BAHÇELÝEVLER", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ÇAKIR", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ELÝF", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ESER", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ESÝN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="FATÝH", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="FIRAT", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="FÝLÝZ", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="GÜLER", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="GÜNAYDIN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="GÜVEN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="KARÞIYAKA", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="KOÇYÝÐÝT", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="MERTGERÇEKER", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="NAZ", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="NUR", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ONUR", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="PELÝN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="SERDAROÐLU", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ÞÝFA", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="TAYFUN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="TÜRKMEN", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="UFUK", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ULUS", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ZAÝMOÐLU", AcilisTarihi=new DateTime(2020,4,1)},
+new Eczane{ Adi="ZEYNEP", AcilisTarihi=new DateTime(2020,4,1)}
+
+                                #endregion
+                            },
+
+                NobetUstGruplar = new List<NobetUstGrup>() {
+                                new NobetUstGrup(){ Adi = "Ordu", Aciklama = "Ordu Merkez", EczaneOdaId = odaId, BaslangicTarihi=baslamaTarihi, TimeLimit = 60, Enlem = 40.986166, Boylam = 37.879721 },
+                            },
+
+                NobetGruplar = new List<NobetGrup>() {
+                                new NobetGrup(){ Adi = "Ordu-1", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Ordu-2", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                new NobetGrup(){ Adi = "Ordu-3", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                            },
+
+                Kullanicilar = new List<User>()
+                            {
+                                //new User(){ Email="odaDiyarbakir@nobetyaz.com", FirstName="Oda Diyarbakýr", LastName="Oda Diyarbakýr", Password="odaDiyarbakir8", UserName="odaDiyarbakir", BaslamaTarihi = baslamaTarihi},
+                                //new User(){ Email="ustGrupDiyarbakir@nobetyaz.com", FirstName="Üst Grup", LastName="Üst grp", Password="ustGrup8", UserName="ustGrupDiyarbakir", BaslamaTarihi = baslamaTarihi},
+                                new User(){ Email="ecz.zynp@gmail.com", FirstName="Zeynep", LastName="Ordu", Password="ordu2019", UserName="zeynepHaným", BaslamaTarihi = baslamaTarihi}
+                            },
+
+                NobetGrupKurallar = new List<NobetGrupKural>(),
+                //{
+                //new NobetGrupKural(){ NobetKuralId=1, BaslangicTarihi=baslamaTarihi, Deger=5},//Ardýþýk Boþ Gün Sayýsý
+                //new NobetGrupKural(){ NobetGrupGorevTipId=28, NobetKuralId=2, BaslangicTarihi=baslamaTarihi, Deger=5},
+                //new NobetGrupKural(){ NobetKuralId=3, BaslangicTarihi=baslamaTarihi, Deger=1}//Varsayýlan günlük nöbetçi sayýsý
+                //},
+
+                NobetKurallar = context.NobetKurallar.Where(w => new int[]
+                {
+                    1, //Ardýþýk Boþ Gün Sayýsý
+                    3  //Varsayýlan günlük nöbetçi sayýsý
+                }.Contains(w.Id)).ToList(),
+
+                NobetUstGrupGunGruplar = new List<NobetUstGrupGunGrup>()
+                            {
+                                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 1, AmacFonksiyonuKatsayisi = 1000 },
+                                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 2, AmacFonksiyonuKatsayisi = 8000 },
+                                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 3, AmacFonksiyonuKatsayisi = 900 },
+                                new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 4, AmacFonksiyonuKatsayisi = 100 },
+                                //new NobetUstGrupGunGrup(){ NobetUstGrupId = nobetUstGrupId, GunGrupId = 5, AmacFonksiyonuKatsayisi = 7000 }
+                            }
+            };
+ */
