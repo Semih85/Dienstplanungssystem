@@ -21,7 +21,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
         private Model Model(KirikhanDataModel data)
         {
-            var model = new Model() { Name = "Giresun Eczane Nöbet" };
+            var model = new Model() { Name = "Kırıkhan Eczane Nöbet" };
 
             #region Veriler
 
