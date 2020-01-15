@@ -5227,6 +5227,7 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
             foreach (var eczane in b.Eczaneler)
             {
                 eczane.NobetUstGrupId = b.NobetUstGrupId;
+                eczane.Adi = eczane.Adi.Trim();
             }
 
             b.EczaneNobetContext.Eczaneler.AddOrUpdate(s => new { s.Adi, s.AcilisTarihi, s.NobetUstGrupId }, b.Eczaneler.ToArray());
@@ -5235,6 +5236,11 @@ new EczaneNobetSonucDemo(){ EczaneNobetGrupId=41, TakvimId=34, NobetGorevTipId=1
             #endregion
 
             #region nöbet gruplar
+
+            foreach (var nobetGrup in b.NobetGruplar)
+            {
+                nobetGrup.Adi = nobetGrup.Adi.Trim();
+            }
 
             b.EczaneNobetContext.NobetGruplar.AddOrUpdate(s => new { s.Adi }, b.NobetGruplar.ToArray());
             b.EczaneNobetContext.SaveChanges();
