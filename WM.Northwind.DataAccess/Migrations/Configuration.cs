@@ -31,6 +31,7 @@ namespace WM.Northwind.DataAccess.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            //  örneðin yaz dönemi cts. ile ilgili bir þey yapýlmak isteniyorsa bunun için ayrý bir görev tipine gerek olmayabilir. bayramlar gibi özel gün olarak eklenip devam edilebilir.
             bool guncelle = false;
 
             if (guncelle)
@@ -143,7 +144,7 @@ namespace WM.Northwind.DataAccess.Migrations
 
             var baslamaTarihi = new DateTime(2020, 2, 1);
             var odaId = 6;
-            var nobetUstGrupId = context.NobetUstGruplar.Max(x => x.Id) + 1;
+            var nobetUstGrupId = 15;// context.NobetUstGruplar.Max(x => x.Id) + 1;
             var nobetGrupGorevTipId = context.NobetGrupGorevTipler.Max(x => x.Id) + 1;
             var varsayilanNobetciSayisi = 1;
 
@@ -325,14 +326,14 @@ new Eczane{ Adi="ZEYNEP", AcilisTarihi=new DateTime(2020,2,1), Enlem=1, Boylam=1
                             },
 
                 NobetUstGruplar = new List<NobetUstGrup>() {
-                                new NobetUstGrup(){ Adi = "Antakya", Aciklama = "Antakya Merkez", EczaneOdaId = odaId, BaslangicTarihi=baslamaTarihi, TimeLimit = 60, Enlem = 36.1968031, Boylam = 36.1612344 },
+                                //new NobetUstGrup(){ Adi = "Antakya", Aciklama = "Antakya Merkez", EczaneOdaId = odaId, BaslangicTarihi=baslamaTarihi, TimeLimit = 60, Enlem = 36.1968031, Boylam = 36.1612344 },
                             },
 
                 NobetGruplar = new List<NobetGrup>() {
                                 new NobetGrup(){ Adi = "Antakya-1", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
-                                new NobetGrup(){ Adi = "Antakya-2", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
-                                new NobetGrup(){ Adi = "Antakya-3", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
-                                new NobetGrup(){ Adi = "Antakya-4", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                //new NobetGrup(){ Adi = "Antakya-2", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                //new NobetGrup(){ Adi = "Antakya-3", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
+                                //new NobetGrup(){ Adi = "Antakya-4", BaslamaTarihi = baslamaTarihi, NobetUstGrupId = nobetUstGrupId },
                             },
 
                 Kullanicilar = new List<User>()
