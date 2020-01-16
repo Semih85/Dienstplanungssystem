@@ -2957,11 +2957,27 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetGrupGunKuralIstatistikYatay> GetEczaneBazliGunKuralIstatistikYatay(List<EczaneNobetGrupGunKuralIstatistik> eczaneNobetGrupGunKuralIstatistik)
         {
-            //var a = eczaneNobetGrupGunKuralIstatistik.Select(s => s.NobetGorevTipId).Distinct().ToList();
-            //var eczaneNobetGruplar = eczaneNobetGrupGunKuralIstatistik.Select(s => s.EczaneNobetGrupId).Distinct().ToList();
-            //var nobetAltGruplar = eczaneNobetGrupGunKuralIstatistik.Select(s => s.NobetAltGrupId).Distinct().ToList();
-            //var NobetGorevTiler = eczaneNobetGrupGunKuralIstatistik.Select(s => s.NobetGorevTipId).Distinct().ToList();
-            ;
+            var kontrolEdilecekEczaneler = new List<string>();
+
+            #region kontrol
+
+            var kontrol = false;
+
+            if (kontrol)
+            {
+                var nobetUstGrupId = eczaneNobetGrupGunKuralIstatistik.FirstOrDefault().NobetUstGrupId;
+
+                var debugYapilacakEczaneler = _debugEczaneService.GetDetaylarAktifOlanlar(nobetUstGrupId);
+
+                kontrolEdilecekEczaneler = debugYapilacakEczaneler.Select(s => s.EczaneAdi).ToList();
+
+                var a = eczaneNobetGrupGunKuralIstatistik.Select(s => s.NobetGorevTipId).Distinct().ToList();
+                var eczaneNobetGruplar = eczaneNobetGrupGunKuralIstatistik.Select(s => s.EczaneNobetGrupId).Distinct().ToList();
+                var nobetAltGruplar = eczaneNobetGrupGunKuralIstatistik.Select(s => s.NobetAltGrupId).Distinct().ToList();
+                var NobetGorevTiler = eczaneNobetGrupGunKuralIstatistik.Select(s => s.NobetGorevTipId).Distinct().ToList();
+            }
+
+            #endregion
 
             var eczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistik
                  .GroupBy(g => new
@@ -3025,7 +3041,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                  }).ToList();
 
-            //var eczane = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.EczaneAdi == "ALBİSTAN").ToList();
+            if (kontrol)
+            {
+                var eczane = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => kontrolEdilecekEczaneler.Contains(w.EczaneAdi)).ToList();
+            }
 
             return eczaneNobetGrupGunKuralIstatistikYatay;
         }
