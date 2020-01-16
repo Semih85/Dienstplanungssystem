@@ -1192,80 +1192,22 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     #endregion
                 }
 
-                #region aynı gün nöbet
+                #region mesafe - grup içi
 
-                var tarihAraligi = data.TarihAraligi
-                    .Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
-
-                var tarihAraligiIstisna = tarihAraligi;
-                //.Where(w => w.GunGrupId != 2
-                //).ToList();//istisna -- ekim 2019 sonrası "w.GunGrupId != 2" olarak düeltildi. Öncesinde "w.GunGrupId > 2" idi. bu istisna da mayıs 2020'de son bulacak.
-
-                #region eczane gruplar
-
-                var esGrubaAyniGunNobetYazma = new KpEsGrubaAyniGunNobetYazma
+                var esGrubaAyniGunNobetYazmaMesafeler = new KpEsGrubaAyniGunNobetYazma
                 {
                     Model = model,
                     EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
                     EczaneNobetSonuclar = eczaneNobetSonuclarGorevTipBazli,
-                    Tarihler = tarihAraligi,
-                    KararDegiskeni = _x
+                    KararDegiskeni = _x,
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k59"),
+                    EczaneGruplar = data.MesafeKontrolEczaneler.Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList(),
+                    Tarihler = data.TarihAraligi
+                                    .Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList(),
+                    NobetGrupGorevTipAdi = nobetGrupGorevTip.NobetGrupGorevTipAdi,
                 };
 
-                var esGrubaAyniGunNobetYazmaEczaneGruplar = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
-                esGrubaAyniGunNobetYazmaEczaneGruplar.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k11");
-                esGrubaAyniGunNobetYazmaEczaneGruplar.EczaneGruplar = data.EczaneGruplar;
-
-                EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaEczaneGruplar);
-
-                #endregion
-
-                #region önceki aylar
-
-                var esGrubaAyniGunNobetYazmaOncekiAylar = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
-                esGrubaAyniGunNobetYazmaOncekiAylar.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k41");
-                esGrubaAyniGunNobetYazmaOncekiAylar.EczaneGruplar = data.OncekiAylardaAyniGunNobetTutanEczaneler;
-                esGrubaAyniGunNobetYazmaOncekiAylar.Tarihler = tarihAraligiIstisna;//.Where(w => w.GunGrupId != 3).ToList();
-
-                EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaOncekiAylar);
-
-                #endregion
-
-                #region ikili eczaneler
-
-                var esGrubaAyniGunNobetYazmaIkiliEczaneler = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
-
-                esGrubaAyniGunNobetYazmaIkiliEczaneler.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k45");
-                esGrubaAyniGunNobetYazmaIkiliEczaneler.EczaneGruplar = data.ArasindaAyniGun2NobetFarkiOlanIkiliEczaneler;
-                esGrubaAyniGunNobetYazmaIkiliEczaneler.Tarihler = tarihAraligiIstisna;
-
-                EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaIkiliEczaneler);
-
-                #endregion
-
-                #region mesafe
-
-                var esGrubaAyniGunNobetYazmaMesafeler = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
-                esGrubaAyniGunNobetYazmaMesafeler.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k59");
-                esGrubaAyniGunNobetYazmaMesafeler.EczaneGruplar = data.MesafeKontrolEczaneler.Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
-                esGrubaAyniGunNobetYazmaMesafeler.Tarihler = tarihAraligiIstisna;
-                esGrubaAyniGunNobetYazmaMesafeler.NobetGrupGorevTipAdi = nobetGrupGorevTip.NobetGrupGorevTipAdi;
-
                 EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaMesafeler);
-
-                #endregion
-
-                #region sonraki aylarda istek girilenler
-
-                var sonrakiAylarAyniGunIstekGirilenler = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
-                sonrakiAylarAyniGunIstekGirilenler.EczaneNobetSonuclar = data.EczaneGrupNobetSonuclarTumu;
-                sonrakiAylarAyniGunIstekGirilenler.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k41");
-                sonrakiAylarAyniGunIstekGirilenler.EczaneGruplar = data.SonrakiDonemAyniGunNobetIstekGirilenler;
-                sonrakiAylarAyniGunIstekGirilenler.Tarihler = data.TarihAraligi;
-
-                EsGruptakiEczanelereAyniGunNobetYazma(sonrakiAylarAyniGunIstekGirilenler);
-
-                #endregion
 
                 #endregion
 
@@ -1363,6 +1305,71 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 #endregion
             }
+
+            #region aynı gün nöbet
+
+            var tarihAraligi = data.TarihAraligi;
+            //.Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
+
+            var tarihAraligiIstisna = tarihAraligi;
+            //.Where(w => w.GunGrupId != 2
+            //).ToList();//istisna -- ekim 2019 sonrası "w.GunGrupId != 2" olarak düeltildi. Öncesinde "w.GunGrupId > 2" idi. bu istisna da mayıs 2020'de son bulacak.
+
+            #region eczane gruplar
+
+            var esGrubaAyniGunNobetYazma = new KpEsGrubaAyniGunNobetYazma
+            {
+                Model = model,
+                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                EczaneNobetSonuclar = data.EczaneGrupNobetSonuclarTumu,
+                Tarihler = tarihAraligi,
+                KararDegiskeni = _x
+            };
+
+            var esGrubaAyniGunNobetYazmaEczaneGruplar = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
+            esGrubaAyniGunNobetYazmaEczaneGruplar.NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k11");
+            esGrubaAyniGunNobetYazmaEczaneGruplar.EczaneGruplar = data.EczaneGruplar;
+
+            EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaEczaneGruplar);
+
+            #endregion
+
+            #region önceki aylar
+
+            var esGrubaAyniGunNobetYazmaOncekiAylar = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
+            esGrubaAyniGunNobetYazmaOncekiAylar.NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k41");
+            esGrubaAyniGunNobetYazmaOncekiAylar.EczaneGruplar = data.OncekiAylardaAyniGunNobetTutanEczaneler;
+            esGrubaAyniGunNobetYazmaOncekiAylar.Tarihler = tarihAraligiIstisna;//.Where(w => w.GunGrupId != 3).ToList();
+
+            EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaOncekiAylar);
+
+            #endregion
+
+            #region ikili eczaneler
+
+            var esGrubaAyniGunNobetYazmaIkiliEczaneler = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
+
+            esGrubaAyniGunNobetYazmaIkiliEczaneler.NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k45");
+            esGrubaAyniGunNobetYazmaIkiliEczaneler.EczaneGruplar = data.ArasindaAyniGun2NobetFarkiOlanIkiliEczaneler;
+            esGrubaAyniGunNobetYazmaIkiliEczaneler.Tarihler = tarihAraligiIstisna;
+
+            EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaIkiliEczaneler);
+
+            #endregion
+
+            #region sonraki aylarda istek girilenler
+
+            var sonrakiAylarAyniGunIstekGirilenler = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
+            sonrakiAylarAyniGunIstekGirilenler.EczaneNobetSonuclar = data.EczaneGrupNobetSonuclarTumu;
+            sonrakiAylarAyniGunIstekGirilenler.NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k41");
+            sonrakiAylarAyniGunIstekGirilenler.EczaneGruplar = data.SonrakiDonemAyniGunNobetIstekGirilenler;
+            sonrakiAylarAyniGunIstekGirilenler.Tarihler = data.TarihAraligi;
+
+            EsGruptakiEczanelereAyniGunNobetYazma(sonrakiAylarAyniGunIstekGirilenler);
+
+            #endregion
+
+            #endregion
 
             #region mesafe
 
