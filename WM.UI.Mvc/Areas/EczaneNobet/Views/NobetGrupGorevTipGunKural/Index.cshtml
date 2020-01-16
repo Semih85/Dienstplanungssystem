@@ -69,17 +69,17 @@
             </div>
             <div class="modal-body">
                 <p>
-                    Nöbet gruplarının <strong>gün grupları</strong> ve <strong>günlük nöbetçi sayıları</strong> bu sayfada yapılmaktadır.
+                    Nöbet gruplarının <strong>gün grupları</strong> ve <strong>günlük nöbetçi sayıları</strong> bu sayfada belirlenmektedir.
                 </p>
-                <p>
+                @*<p>
                     <span class="font-weight-bold text-success">
-                        @*<i class="fa fa-check" aria-hidden="true"></i>*@
+                        <i class="fa fa-check" aria-hidden="true"></i>
                         Aktif
                     </span> olarak belirlenen günlerde nöbetler <strong>grup ortalamasına göre</strong> takip edilmektedir.
                 </p>
                 <p>
                     İstediğiniz bir günü <strong class="text-success">Aktif</strong> ya da <strong class="text-danger">Pasif</strong> olarak değiştirmek için <strong>Nöbet Grubu</strong> ve <strong>Gün</strong> seçeneklerini kullanarak <strong>Güncelle</strong> butonu ile güncelleyiniz.
-                </p>
+                </p>*@
 
             </div>
             <div class="modal-footer">
@@ -109,7 +109,7 @@
     }
 
 
-    @using (Ajax.BeginForm(null, null, getAjaxOptionsAktifYap, new { @class = "form-inline mb-2", id = "formAktif" }))
+    @*@using (Ajax.BeginForm(null, null, getAjaxOptionsAktifYap, new { @class = "form-inline mb-2", id = "formAktif" }))
     {
         @Html.Hidden("nobetGrupGorevTipId")
         @Html.Hidden("nobetGunKuralId")
@@ -127,7 +127,7 @@
         <span class="spinner-border text-primary" role="status" style="display:none" id="loading">
             <span class="sr-only">Loading...</span>
         </span>
-    }
+    }*@
 
 </div>
 
