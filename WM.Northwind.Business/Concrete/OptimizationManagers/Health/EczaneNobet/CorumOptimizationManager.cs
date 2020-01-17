@@ -380,34 +380,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             //mesafe kriterinden büyük olanlar (birbirleri ile aynı gün nöbet tutabilirler ama 1 ayda 2 kez üst üste tutamazlar.)
 
             var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetGrupIdListe);
-            var ikiliEczanelerMesafe = new List<AyniGunTutulanNobetDetay>();
             var kritereUygunSayilar = mesafeler.Where(w => w.Mesafe > mesafeKriter).ToList();
-
-            foreach (var mesafe in kritereUygunSayilar)
-            {
-                var eczaneFrom = eczaneNobetGruplarGorevTip1.SingleOrDefault(x => x.EczaneId == mesafe.EczaneIdFrom) ?? new EczaneNobetGrupDetay();
-                var eczaneTo = eczaneNobetGruplarGorevTip1.SingleOrDefault(x => x.EczaneId == mesafe.EczaneIdTo) ?? new EczaneNobetGrupDetay();
-
-                if (eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneId).Contains(mesafe.EczaneIdFrom)
-                 || eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneId).Contains(mesafe.EczaneIdTo))
-                {
-                    continue;
-                }
-
-                if (eczaneFrom.EczaneId == 0 || eczaneTo.EczaneId == 0)
-                {
-                    throw new Exception($"{eczaneFrom.EczaneAdi} {eczaneTo.EczaneAdi} ikilisi listeye eklenemedi!");
-                }
-
-                ikiliEczanelerMesafe.Add(new AyniGunTutulanNobetDetay
-                {
-                    Id = mesafe.Id,
-                    EczaneAdi1 = mesafe.EczaneAdiFrom,
-                    EczaneAdi2 = eczaneTo.EczaneAdi,
-                    EczaneNobetGrupId1 = eczaneFrom.Id,
-                    EczaneNobetGrupId2 = eczaneTo.Id
-                });
-            }
+            var ikiliEczanelerMesafe = _eczaneNobetOrtakService.MesafelerListesiniOlustur(eczaneNobetMazeretNobettenDusenler, eczaneNobetGruplarGorevTip1, kritereUygunSayilar);
 
             var eczaneNobetTarihAralikIkiliEczaneler = (from m in ikiliEczanelerMesafe
                                                         from t in tarihAralik

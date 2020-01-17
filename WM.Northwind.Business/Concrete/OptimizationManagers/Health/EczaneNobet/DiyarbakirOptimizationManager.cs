@@ -171,9 +171,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             if (baslangicTarihi < nobetUstGrupBaslangicTarihi)
                 throw new Exception($"Nöbet başlangıç tarihi <strong>({baslangicTarihi.ToShortDateString()})</strong> üst grup başlama tarihinden <strong>({nobetUstGrupBaslangicTarihi.ToShortDateString()})</strong> küçük olamaz.");
-            
+
             var debugYapilacakEczaneler = _debugEczaneService.GetDetaylarAktifOlanlar(nobetUstGrupId);
-            
+
             var nobetGruplar = _nobetGrupService.GetDetaylar(nobetGrupIdListe).OrderBy(s => s.Id).ToList();
             //var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetGrupIdListe); //nobetGorevTipId,
             var eczaneNobetSonuclar = _eczaneNobetSonucService.GetSonuclar(nobetUstGrupId);
@@ -386,34 +386,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             //mesafe kriterinden büyük olanlar (birbirleri ile aynı gün nöbet tutabilirler ama 1 ayda 2 kez üst üste tutamazlar.)
 
             var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetGrupIdListe);
-            var ikiliEczanelerMesafe = new List<AyniGunTutulanNobetDetay>();
             var kritereUygunSayilar = mesafeler.Where(w => w.Mesafe > mesafeKriter).ToList();
-
-            foreach (var mesafe in kritereUygunSayilar)
-            {
-                var eczaneFrom = eczaneNobetGruplarGorevTip1.SingleOrDefault(x => x.EczaneId == mesafe.EczaneIdFrom) ?? new EczaneNobetGrupDetay();
-                var eczaneTo = eczaneNobetGruplarGorevTip1.SingleOrDefault(x => x.EczaneId == mesafe.EczaneIdTo) ?? new EczaneNobetGrupDetay();
-
-                if (eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneId).Contains(mesafe.EczaneIdFrom)
-                 || eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneId).Contains(mesafe.EczaneIdTo))
-                {
-                    continue;
-                }
-
-                if (eczaneFrom.EczaneId == 0 || eczaneTo.EczaneId == 0)
-                {
-                    throw new Exception($"{eczaneFrom.EczaneAdi} {eczaneTo.EczaneAdi} ikilisi listeye eklenemedi!");
-                }
-
-                ikiliEczanelerMesafe.Add(new AyniGunTutulanNobetDetay
-                {
-                    Id = mesafe.Id,
-                    EczaneAdi1 = mesafe.EczaneAdiFrom,
-                    EczaneAdi2 = eczaneTo.EczaneAdi,
-                    EczaneNobetGrupId1 = eczaneFrom.Id,
-                    EczaneNobetGrupId2 = eczaneTo.Id
-                });
-            }
+            var ikiliEczanelerMesafe = _eczaneNobetOrtakService.MesafelerListesiniOlustur(eczaneNobetMazeretNobettenDusenler, eczaneNobetGruplarGorevTip1, kritereUygunSayilar);
 
             var eczaneNobetTarihAralikIkiliEczaneler = (from m in ikiliEczanelerMesafe
                                                         from t in tarihAralik
@@ -531,7 +505,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
                 //Birbiri ile ilişkili grupların gruplanması
                 var nobetGruplarBagDurumu = _eczaneGrupService.EsGrupluEczanelerinGruplariniBelirleTumu(eczaneGruplar, nobetGruplar);
-                
+
                 var tumNobetGruplar = from g in nobetGruplarSirali
                                       let e = nobetGruplarBagDurumu.SingleOrDefault(x => x.NobetGrupId == g.NobetGrupId) ?? new NobetBagGrup()
                                       orderby e.Id, g.SiraId
