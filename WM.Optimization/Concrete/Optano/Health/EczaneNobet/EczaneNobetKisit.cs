@@ -36,19 +36,20 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 ? ""
                 : p.NobetGrupGorevTip.NobetGrupAdi;
 
-            var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim}";// +
-                                                                 //$" {p.KuralAciklama}" +
-                                                                 //$"{enAzNobetSayisi}"
-            ;
+            var kisitTanim = IsimleriBirlestir(p.NobetUstGrupKisit.KisitKodu
+                , p.NobetUstGrupKisit.KisitKategorisi
+                , p.NobetUstGrupKisit.KisitAciklama.Substring(0, p.NobetUstGrupKisit.KisitAciklama.Length - 3))
+                + $"{tarih.Tarih.ToString("dd.MM.yy-ddd.")}";
 
             var kisitAdi = IsimleriBirlestir(kisitTanim
-                ,
-                //$"{tarih.NobetGunKuralAdi}" +
-                $"{tarih.Tarih.ToString("dd.MM.yy-ddd.")}"
-                //, $""
                 , tarih.TalepEdilenNobetciSayisi.ToString()
+                //,
+                //$"{tarih.NobetGunKuralAdi}" +
+
+                //, $""
                 , p.TalepDetay
                 , nobetGrupBilgisi
+                //, 
                 );
 
             var kararIndex = p.EczaneNobetTarihAralikTumu
