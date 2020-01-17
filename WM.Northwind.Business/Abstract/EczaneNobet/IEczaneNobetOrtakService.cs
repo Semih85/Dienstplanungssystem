@@ -133,6 +133,11 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
             List<EczaneNobetAlacakVerecek> eczaneNobetAlacakVerecekler = null
             );
 
+        List<AyniGunTutulanNobetDetay> MesafelerListesiniOlustur(
+                List<EczaneNobetMazeretSayilari> eczaneNobetMazeretNobettenDusenler,
+                List<EczaneNobetGrupDetay> eczaneNobetGruplarGorevTip1,
+                List<EczaneUzaklikMatrisDetay> kritereUygunSayilar);
+
         void KurallariKontrolEtHaftaIciEnAzEnCok(int nobetUstGrupId, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetSonuclarYatay);
         void KurallariKontrolEtMazeretIstek(int nobetUstGrupId, List<EczaneNobetMazeretDetay> eczaneNobetMazeretler, List<EczaneNobetIstekDetay> eczaneNobetIstekler);
         void KurallariKontrolEtIstek(int nobetUstGrupId, List<EczaneNobetIstekDetay> eczaneNobetIstekler, List<NobetGrupKuralDetay> nobetGrupKuralDetaylar);

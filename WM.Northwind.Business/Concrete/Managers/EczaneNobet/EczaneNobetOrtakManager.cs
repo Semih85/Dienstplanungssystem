@@ -2961,7 +2961,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             #region kontrol
 
-            var kontrol = false;
+            var kontrol = true;
 
             if (kontrol)
             {
@@ -4916,6 +4916,43 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     return toplamFark;
                 }
             }
+        }
+
+        public List<AyniGunTutulanNobetDetay> MesafelerListesiniOlustur(
+                List<EczaneNobetMazeretSayilari> eczaneNobetMazeretNobettenDusenler,
+                List<EczaneNobetGrupDetay> eczaneNobetGruplarGorevTip1,
+                List<EczaneUzaklikMatrisDetay> kritereUygunSayilar)
+        {
+            var ikiliEczanelerMesafe = new List<AyniGunTutulanNobetDetay>();
+
+            foreach (var mesafe in kritereUygunSayilar)
+            {
+                var eczaneFrom = eczaneNobetGruplarGorevTip1.SingleOrDefault(x => x.EczaneId == mesafe.EczaneIdFrom) ?? new EczaneNobetGrupDetay();
+                var eczaneTo = eczaneNobetGruplarGorevTip1.SingleOrDefault(x => x.EczaneId == mesafe.EczaneIdTo) ?? new EczaneNobetGrupDetay();
+
+                if (eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneId).Contains(mesafe.EczaneIdFrom)
+                 || eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneId).Contains(mesafe.EczaneIdTo))
+                {
+                    continue;
+                }
+
+                if (eczaneFrom.EczaneId == 0 || eczaneTo.EczaneId == 0)
+                {
+                    continue;
+                    //throw new Exception($"{eczaneFrom.EczaneAdi} {eczaneTo.EczaneAdi} ikilisi listeye eklenemedi!");
+                }
+
+                ikiliEczanelerMesafe.Add(new AyniGunTutulanNobetDetay
+                {
+                    Id = mesafe.Id,
+                    EczaneAdi1 = mesafe.EczaneAdiFrom,
+                    EczaneAdi2 = eczaneTo.EczaneAdi,
+                    EczaneNobetGrupId1 = eczaneFrom.Id,
+                    EczaneNobetGrupId2 = eczaneTo.Id
+                });
+            }
+
+            return ikiliEczanelerMesafe;
         }
 
         #region kısıt kontrol
