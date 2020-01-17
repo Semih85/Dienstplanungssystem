@@ -2961,7 +2961,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             #region kontrol
 
-            var kontrol = true;
+            var kontrol = false;
 
             if (kontrol)
             {
