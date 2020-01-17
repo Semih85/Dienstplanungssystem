@@ -2,7 +2,7 @@
 using OPTANO.Modeling.Optimization;
 using OPTANO.Modeling.Optimization.Configuration;
 using OPTANO.Modeling.Optimization.Enums;
-using OPTANO.Modeling.Optimization.Solver.Cplex126;
+using OPTANO.Modeling.Optimization.Solver.Cplex128;
 using System.Collections.Generic;
 using System.Linq;
 using WM.Northwind.Entities.Concrete.Optimization.Transport;
