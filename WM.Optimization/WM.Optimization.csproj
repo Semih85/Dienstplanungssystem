@@ -209,6 +209,8 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\cplex1260.dll" />
+    <Content Include="bin\cplex1280.dll" />
     <Content Include="bin\Debug\ILOG.Concert.dll" />
     <Content Include="bin\Debug\ILOG.Concert.xml" />
     <Content Include="bin\Debug\ILOG.CPLEX.dll" />
