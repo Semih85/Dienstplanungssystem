@@ -209,6 +209,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\ILOG.Concert.dll" />
+    <Content Include="bin\Debug\ILOG.Concert.xml" />
+    <Content Include="bin\Debug\ILOG.CPLEX.dll" />
+    <Content Include="bin\Debug\ILOG.CPLEX.xml" />
     <Content Include="MipCL213WrapperCpp.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
