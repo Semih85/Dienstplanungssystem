@@ -1,0 +1,73 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  allOfProj: '**/*.csproj'
+
+steps:
+- task: NuGetToolInstaller@1
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '$(solution)'
+- task: MSBuild@1
+  inputs: 
+    solution: 'WM.Core/WM.Core.csproj'
+    configuration: 'debug'
+    platform: 'AnyCpu'
+    #clean: true
+- task: MSBuild@1
+  inputs: 
+    solution: 'WM.Northwind.DataAccess/WM.Northwind.DataAccess.csproj'
+    configuration: 'debug'
+    platform: 'AnyCpu'
+    #clean: true
+
+- task: MSBuild@1
+  inputs: 
+    solution: 'WM.Northwind.Business/WM.Northwind.Business.csproj'
+    configuration: 'debug'
+    platform: 'AnyCpu'
+    #clean: true
+    #restoreNugetPackages: true
+
+- task: MSBuild@1
+  inputs: 
+    solution: 'WM.Optimization/WM.Optimization.csproj'
+    configuration: 'debug'
+    platform: 'AnyCpu'
+- task: MSBuild@1
+  inputs: 
+    solution: 'WM.UI.Mvc/WM.UI.Mvc.csproj'
+    configuration: 'debug'
+    platform: 'AnyCpu'
+
+
+- task: VSBuild@1
+  inputs:
+    solution: '$(solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+    clean: true
+
+- task: VSTest@2
+  inputs:
+    platform: '$(buildPlatform)'
+    configuration: '$(buildConfiguration)'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
