@@ -19,34 +19,48 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
         {
             using (var ctx = new EczaneNobetContext())
             {
-                return ctx.EczaneUzaklikMatrisler
-                    .Select(s => new EczaneUzaklikMatrisDetay
-                    {
-                        Id = s.Id,
-                        EczaneIdFrom = s.EczaneIdFrom,
-                        EczaneIdTo = s.EczaneIdTo,
-                        Mesafe = s.Mesafe,
-                        NobetUstGrupId = s.EczaneFrom.NobetUstGrupId,
-                        EczaneAdiFrom = s.EczaneFrom.Adi,
-                        EczaneAdiTo = s.EczaneTo.Adi
-                    }).SingleOrDefault(filter);
+                return (from s in ctx.EczaneUzaklikMatrisler
+                            //let eczaneNobetGrupFrom = s.EczaneFrom.EczaneNobetGruplar.Where(w => w.BitisTarihi != null || w.BitisTarihi <= DateTime.Now).SingleOrDefault() ?? new EczaneNobetGrup()
+                            //let eczaneNobetGrupTo = s.EczaneTo.EczaneNobetGruplar.Where(w => w.BitisTarihi != null || w.BitisTarihi <= DateTime.Now).SingleOrDefault() ?? new EczaneNobetGrup()
+                        select new EczaneUzaklikMatrisDetay
+                        {
+                            Id = s.Id,
+                            EczaneIdFrom = s.EczaneIdFrom,
+                            EczaneIdTo = s.EczaneIdTo,
+                            Mesafe = s.Mesafe,
+                            NobetUstGrupId = s.EczaneFrom.NobetUstGrupId,
+                            EczaneAdiFrom = s.EczaneFrom.Adi,
+                            EczaneAdiTo = s.EczaneTo.Adi,
+                            //EczaneNobetGrupIdFrom = eczaneNobetGrupFrom.Id,
+                            //EczaneNobetGrupIdTo = eczaneNobetGrupTo.Id,
+                            //NobetGrupGorevTipIdFrom = eczaneNobetGrupFrom.NobetGrupGorevTipId,
+                            //NobetGrupGorevTipIdTo = eczaneNobetGrupTo.NobetGrupGorevTipId
+                            //NobetGrupAdiFrom = eczaneNobetGrupFrom.NobetGrupGorevTip.NobetGrup.Adi,
+                        }).SingleOrDefault(filter);
             }
         }
         public List<EczaneUzaklikMatrisDetay> GetDetayList(Expression<Func<EczaneUzaklikMatrisDetay, bool>> filter = null)
         {
             using (var ctx = new EczaneNobetContext())
             {
-                var liste = ctx.EczaneUzaklikMatrisler
-                    .Select(s => new EczaneUzaklikMatrisDetay
-                    {
-                        Id = s.Id,
-                        EczaneIdFrom = s.EczaneIdFrom,
-                        EczaneIdTo = s.EczaneIdTo,
-                        Mesafe = s.Mesafe,
-                        NobetUstGrupId = s.EczaneFrom.NobetUstGrupId,
-                        EczaneAdiFrom = s.EczaneFrom.Adi,
-                        EczaneAdiTo = s.EczaneTo.Adi
-                    });
+                var liste = from s in ctx.EczaneUzaklikMatrisler
+                                //let eczaneNobetGrupFrom = s.EczaneFrom.EczaneNobetGruplar.Where(w => w.BitisTarihi != null || w.BitisTarihi <= DateTime.Now).SingleOrDefault() ?? new EczaneNobetGrup()
+                                //let eczaneNobetGrupTo = s.EczaneTo.EczaneNobetGruplar.Where(w => w.BitisTarihi != null || w.BitisTarihi <= DateTime.Now).SingleOrDefault() ?? new EczaneNobetGrup()
+                            select new EczaneUzaklikMatrisDetay
+                            {
+                                Id = s.Id,
+                                EczaneIdFrom = s.EczaneIdFrom,
+                                EczaneIdTo = s.EczaneIdTo,
+                                Mesafe = s.Mesafe,
+                                NobetUstGrupId = s.EczaneFrom.NobetUstGrupId,
+                                EczaneAdiFrom = s.EczaneFrom.Adi,
+                                EczaneAdiTo = s.EczaneTo.Adi,
+                                //EczaneNobetGrupIdFrom = eczaneNobetGrupFrom.Id,
+                                //EczaneNobetGrupIdTo = eczaneNobetGrupTo.Id,
+                                //NobetGrupGorevTipIdFrom = eczaneNobetGrupFrom.NobetGrupGorevTipId,
+                                //NobetGrupGorevTipIdTo = eczaneNobetGrupTo.NobetGrupGorevTipId
+                                //NobetGrupAdiFrom = eczaneNobetGrupFrom.NobetGrupGorevTip.NobetGrup.Adi,
+                            };
 
                 return filter == null
                     ? liste.ToList()
@@ -57,7 +71,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
         public virtual void CokluEkle(List<EczaneUzaklikMatrisDetay> eczaneUzaklikMatrisDetaylar)
         {
             var liste = new List<EczaneUzaklikMatris>();
-            
+
             using (var ctx = new EczaneNobetContext())
             {
                 foreach (var eczaneUzaklik in eczaneUzaklikMatrisDetaylar)
