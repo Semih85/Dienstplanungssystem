@@ -1114,7 +1114,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return (from e in eczaneNobetGruplar
                     from t in takvimNobetGrupGorevTipler
                     where e.NobetGrupGorevTipId == t.NobetGrupGorevTipId
-                    let altGrup = eczaneNobetGrupAltGruplar.SingleOrDefault(x => x.EczaneNobetGrupId == e.Id) ?? new EczaneNobetGrupAltGrupDetay()
+                    let altGrup = eczaneNobetGrupAltGruplar.SingleOrDefault(x => x.EczaneNobetGrupId == e.Id && x.BitisTarihi == null) ?? new EczaneNobetGrupAltGrupDetay()
                     //e.NobetGrupId == t.NobetGrupId
                     select new EczaneNobetTarihAralik
                     {
