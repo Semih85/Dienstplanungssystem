@@ -1201,9 +1201,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     EczaneNobetSonuclar = eczaneNobetSonuclarGorevTipBazli,
                     KararDegiskeni = _x,
                     NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k59"),
-                    EczaneGruplar = data.MesafeKontrolEczaneler.Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList(),
+                    EczaneGruplar = data.MesafeKontrolEczanelerGrupBazli.Where(w => w.NobetGrupGorevTipIdFrom == nobetGrupGorevTip.Id).ToList(),
                     Tarihler = data.TarihAraligi
-                                    .Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList(),
+                                    .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
                     NobetGrupGorevTipAdi = nobetGrupGorevTip.NobetGrupGorevTipAdi,
                 };
 
