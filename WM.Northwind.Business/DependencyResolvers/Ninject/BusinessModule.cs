@@ -310,6 +310,9 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IOrduMerkezOptimizationService>().To<OrduMerkezOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetOrduMerkezOptimization>().To<OrduMerkezOptano>().InSingletonScope();
 
+            Bind<IKayseriOptimizationService>().To<KayseriOptimizationManager>().InSingletonScope();
+            Bind<IEczaneNobetKayseriOptimization>().To<KayseriOptano>().InSingletonScope();
+
             Bind<IZonguldakOptimizationService>().To<ZonguldakOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetZonguldakOptimization>().To<ZonguldakOptano>().InSingletonScope();
 

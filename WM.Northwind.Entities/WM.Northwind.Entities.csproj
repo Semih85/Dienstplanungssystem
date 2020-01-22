@@ -293,6 +293,7 @@
     <Compile Include="Concrete\Optimization\Blend\BlendDataModel.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\AlanyaDataModelEski.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\AlanyaDataModel.cs" />
+    <Compile Include="Concrete\Optimization\EczaneNobet\KayseriDataModel.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\OrduMerkezDataModel.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\ManavgatDataModel.cs" />
     <Compile Include="Concrete\Optimization\EczaneNobet\DiyarbakirDataModel.cs" />
