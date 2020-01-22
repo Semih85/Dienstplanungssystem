@@ -1250,32 +1250,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             return model;
         }
 
-        private void HerGunAyniAltGruptanEnFazla1NobetciOlsun(
-            List<TakvimNobetGrup> tarihler,
-            List<EczaneNobetTarihAralik> eczaneNobetTarihAralikGrupBazli,
-            List<NobetAltGrupDetay> altGruplar,
-            KpTarihVeAltGrupBazliEnFazla tarihVeAltGrupBazliEnFazla)
-        {
-            for (int i = 0; i < tarihler.Count; i++)
-            {
-                var tarih = tarihler[i];
-
-                tarihVeAltGrupBazliEnFazla.Tarih = tarih;
-
-                var eczaneNobetTarihAralikGrupBazliTarihBazli = eczaneNobetTarihAralikGrupBazli.Where(w => w.TakvimId == tarih.TakvimId).ToList();
-
-                foreach (var altGrup in altGruplar)
-                {
-                    tarihVeAltGrupBazliEnFazla.GunKuralAdi = altGrup.Adi;
-
-                    tarihVeAltGrupBazliEnFazla.EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazliTarihBazli
-                        .Where(w => w.NobetAltGrupId == altGrup.Id).ToList();
-
-                    TarihVeAltGrupBazliEnFazla(tarihVeAltGrupBazliEnFazla);
-                }
-            }
-        }
-
         private void TalepKisitlariniOlusturAltGrupBazli(
             List<TakvimNobetGrup> tarihler,
             List<NobetUstGrupGunGrupDetay> gunGruplarGrupBazli2,

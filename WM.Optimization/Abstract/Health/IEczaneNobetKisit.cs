@@ -12,6 +12,12 @@ namespace WM.Optimization.Abstract.Health
     {
         void TalebiKarsila(KpTalebiKarsila talebiKarsilaKisitParametreModel);
         void TalebiKarsila(KpTalebiKarsila kpTalebiKarsila, TakvimNobetGrup tarih);
+        void HerGunAyniAltGruptanEnFazla1NobetciOlsun(
+            List<TakvimNobetGrup> tarihler,
+            List<EczaneNobetTarihAralik> eczaneNobetTarihAralikGrupBazli,
+            List<NobetAltGrupDetay> altGruplar,
+            KpTarihVeAltGrupBazliEnFazla tarihVeAltGrupBazliEnFazla);
+
         void TarihAraligiOrtalamaEnFazla(KpTarihAraligiOrtalamaEnFazla tarihAraligiOrtalamaEnFazlaKisitParametreModel);
         void TarihVeAltGrupBazliEnFazla(KpTarihVeAltGrupBazliEnFazla kpTarihVeAltGrupBazliEnFazla);
         void PesPeseGorevEnAz(KpPesPeseGorevEnAz kisitParametreModel);
