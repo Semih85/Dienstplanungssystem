@@ -19,12 +19,15 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
     {
         private IEczaneUzaklikMatrisDal _eczaneUzaklikMatrisDal;
         private IEczaneService _eczaneService;
+        private IEczaneNobetGrupService _eczaneNobetGrupService;
 
         public EczaneUzaklikMatrisManager(IEczaneUzaklikMatrisDal eczaneUzaklikMatrisDal,
-            IEczaneService eczaneService)
+            IEczaneService eczaneService,
+            IEczaneNobetGrupService eczaneNobetGrupService)
         {
             _eczaneUzaklikMatrisDal = eczaneUzaklikMatrisDal;
             _eczaneService = eczaneService;
+            _eczaneNobetGrupService = eczaneNobetGrupService;
         }
 
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
@@ -161,8 +164,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             var nobetUstGrupId = eczaneMesafeler.Select(s => s.NobetUstGrupId).FirstOrDefault();
 
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGrupId);
+
             foreach (var eczaneMesafe in eczaneMesafeler)
             {
+                var eczaneNobetGrupFrom = eczaneNobetGruplar.FirstOrDefault(x => x.EczaneId == eczaneMesafe.EczaneIdFrom);
+                var eczaneNobetGrupTo = eczaneNobetGruplar.FirstOrDefault(x => x.EczaneId == eczaneMesafe.EczaneIdTo);
+                ;
                 var eczaneGrupMaster = new EczaneGrupDetay
                 {
                     EczaneGrupTanimId = eczaneMesafe.Id,
@@ -176,8 +184,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     //EczaneAdi = eczaneMesafe.EczaneAdiFrom,
                     NobetGrupAdi = "Mesafe",
                     //EczaneNobetGrupId = eczaneMesafe.EczaneIdFrom,
-                    AyniGunNobetTutabilecekEczaneSayisi = 1
+                    AyniGunNobetTutabilecekEczaneSayisi = 1,
                     //BirlikteNobetTutmaSayisi = item.BirlikteNobetTutmaSayisi
+                    NobetGrupGorevTipIdFrom = eczaneNobetGrupFrom.NobetGrupGorevTipId,
+                    NobetGrupGorevTipIdTo = eczaneNobetGrupTo.NobetGrupGorevTipId
                 };
 
                 #region eczane from
