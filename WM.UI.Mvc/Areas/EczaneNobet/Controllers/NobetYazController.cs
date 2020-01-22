@@ -32,6 +32,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IManavgatOptimizationService _manavgatOptimizationService;
         private IOrduMerkezOptimizationService _orduMerkezOptimizationService;
         private IKayseriOptimizationService _kayseriOptimizationService;
+        private IAntakyaOptimizationService _antakyaOptimizationService;
 
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
@@ -62,6 +63,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                   IManavgatOptimizationService manavgatOptimizationService,
                                   IOrduMerkezOptimizationService orduMerkezOptimizationService,
                                   IKayseriOptimizationService kayseriOptimizationService,
+                                  IAntakyaOptimizationService antakyaOptimizationService,
 
                                   IEczaneNobetGrupService eczaneNobetGrupService,
                                   INobetGrupGorevTipService nobetGrupGorevTipService,
@@ -93,6 +95,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _diyarbakirOptimizationService = diyarbakirOptimizationService;
             _manavgatOptimizationService = manavgatOptimizationService;
             _orduMerkezOptimizationService = orduMerkezOptimizationService;
+            _kayseriOptimizationService = kayseriOptimizationService;
+            _antakyaOptimizationService = antakyaOptimizationService;
 
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _nobetGrupGorevTipService = nobetGrupGorevTipService;
@@ -110,7 +114,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _zonguldakOptimizationService = zonguldakOptimizationService;
             _eczaneNobetSonucPlanlananService = eczaneNobetSonucPlanlananService;
             _nobetUstGrupSessionService = nobetUstGrupSessionService;
-            _kayseriOptimizationService = kayseriOptimizationService;
         }
         #endregion
 
@@ -314,9 +317,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 case 14:
                     sonucModel = _kayseriOptimizationService.ModelCoz(eczaneNobetModelCoz);
                     break;
-                //case 15:
-                //    sonucModel = _orduMerkezOptimizationService.ModelCoz(eczaneNobetModelCoz);
-                //    break;
+                case 15:
+                    sonucModel = _antakyaOptimizationService.ModelCoz(eczaneNobetModelCoz);
+                    break;
                 default:
                     return RedirectToAction("Index");
             }

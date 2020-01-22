@@ -313,11 +313,11 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IKayseriOptimizationService>().To<KayseriOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetKayseriOptimization>().To<KayseriOptano>().InSingletonScope();
 
+            Bind<IAntakyaOptimizationService>().To<AntakyaOptimizationManager>().InSingletonScope();
+            Bind<IEczaneNobetAntakyaOptimization>().To<AntakyaOptano>().InSingletonScope();
+
             Bind<IZonguldakOptimizationService>().To<ZonguldakOptimizationManager>().InSingletonScope();
             Bind<IEczaneNobetZonguldakOptimization>().To<ZonguldakOptano>().InSingletonScope();
-
-
-
 
 
             Bind<ITransportService>().To<TransportManager>().InSingletonScope();
