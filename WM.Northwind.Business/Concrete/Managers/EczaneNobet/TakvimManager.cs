@@ -34,6 +34,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         private INobetGrupTalepService _nobetGrupTalepService;
         private INobetGrupKuralService _nobetGrupKuralService;
         private INobetUstGrupGunGrupService _nobetUstGrupGunGrupService;
+        private IDebugEczaneService _debugEczaneService;
 
         public TakvimManager(ITakvimDal takvimDal,
             IBayramService bayramService,
@@ -50,7 +51,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             IEczaneNobetSonucPlanlananService eczaneNobetSonucPlanlananService,
             INobetGrupTalepService nobetGrupTalepService,
             INobetGrupKuralService nobetGrupKuralService,
-            INobetUstGrupGunGrupService nobetUstGrupGunGrupService)
+            INobetUstGrupGunGrupService nobetUstGrupGunGrupService,
+            IDebugEczaneService debugEczaneService)
         {
             _takvimDal = takvimDal;
             _bayramService = bayramService;
@@ -68,6 +70,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             _nobetGrupTalepService = nobetGrupTalepService;
             _nobetGrupKuralService = nobetGrupKuralService;
             _nobetUstGrupGunGrupService = nobetUstGrupGunGrupService;
+            _debugEczaneService = debugEczaneService;
         }
         #endregion
 
@@ -1524,9 +1527,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             var anahtarListeTumEczanelerHepsi = new List<AnahtarListe>();
 
+            var nobetUstGrupId = eczaneNobetGruplarTumu.Select(s => s.NobetUstGrupId).FirstOrDefault();
+
             var gunGruplar = anahtarListeTumu
                 //.Where(w => w.GunGrup != "Bayram")
-                .Select(s => s.GunGrupAdi)
+                .Select(s => new { s.GunGrupAdi, s.GunGrupId })
                 .Distinct().ToList();
 
             foreach (var gunGrup in gunGruplar)
@@ -1535,15 +1540,23 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 //    continue;
 
                 var anahtarListeGunGrup = anahtarListeTumu
-                  .Where(w => w.GunGrupAdi == gunGrup).ToList();
+                  .Where(w => w.GunGrupId == gunGrup.GunGrupId).ToList();
 
-                var anahtarListeTumEczaneler = AnahtarListeyiBuGuneTasiAntalya(nobetGrupGorevTipler, eczaneNobetGruplarTumu, eczaneNobetGrupGunKuralIstatistikYatayTumu, anahtarListeGunGrup, gunGrup);
+                var anahtarListeTumEczaneler = AnahtarListeyiBuGuneTasiAntalya(nobetGrupGorevTipler, eczaneNobetGruplarTumu, eczaneNobetGrupGunKuralIstatistikYatayTumu, anahtarListeGunGrup, gunGrup.GunGrupAdi);
 
                 anahtarListeTumEczanelerHepsi.AddRange(anahtarListeTumEczaneler);
             }
 
-            //var kontrol1 = eczaneNobetGrupGunKuralIstatistikYatayTumu.Where(w => w.EczaneAdi == "YALÇIN").ToList();
-            //var kontrol3 = anahtarListeTumEczanelerHepsi.Where(w => w.EczaneAdi == "YALÇIN").ToList();
+            var kontrol = true;
+
+            var debugYapilacakEczaneler = _debugEczaneService.GetDetaylarAktifOlanlar(nobetUstGrupId);
+
+            if (kontrol)
+            {
+
+                var kontrol1 = eczaneNobetGrupGunKuralIstatistikYatayTumu.Where(w => debugYapilacakEczaneler.Select(s => s.EczaneAdi).Contains(w.EczaneAdi)).ToList();
+                var kontrol3 = anahtarListeTumEczanelerHepsi.Where(w => debugYapilacakEczaneler.Select(s => s.EczaneAdi).Contains(w.EczaneAdi)).ToList();
+            }
 
             var eczaneNobetAlacakVerecek = (from s in eczaneNobetGrupGunKuralIstatistikYatayTumu
                                             from b in anahtarListeTumEczanelerHepsi
@@ -1617,7 +1630,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                 AnahtarSıra = b.NobetSayisi
                                             }).ToList();
 
-            //var kontrol2 = eczaneNobetAlacakVerecek.Where(w => w.EczaneAdi == "YALÇIN").ToList();
+
+            if (kontrol)
+            {
+                var kontrol2 = eczaneNobetAlacakVerecek.Where(w => debugYapilacakEczaneler.Select(s => s.EczaneAdi).Contains(w.EczaneAdi)).ToList();
+            }
 
             return eczaneNobetAlacakVerecek;
         }
@@ -1626,16 +1643,17 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         public List<AnahtarListe> GetSonuclarSirali(List<EczaneNobetSonucListe2> sonuclar, List<EczaneNobetGrupDetay> eczaneNobetGruplar)
         {
             var eczaneNobetSonucListeSirali = new List<AnahtarListe>();
+            var nobetUstGrupId = eczaneNobetGruplar.Select(s => s.NobetUstGrupId).FirstOrDefault();
+
+            var kontrol = true;
+            var debugYapilacakEczaneler = _debugEczaneService.GetDetaylarAktifOlanlar(nobetUstGrupId);
 
             foreach (var eczaneNobetGrup in eczaneNobetGruplar)
             {
-                var kontrol = true;
-
-                if (kontrol
-                    && eczaneNobetGrup.EczaneAdi == "SEVDA")
+                if (kontrol && debugYapilacakEczaneler.Select(s => s.EczaneAdi).Contains(eczaneNobetGrup.EczaneAdi))
                 {
-
                 }
+
                 var indis = 0;
 
                 var sonuclarEczane = sonuclar
@@ -1662,6 +1680,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                     indis++;
                 }
+            }
+
+            if (kontrol)
+            {
+                var eczaneKontrol = eczaneNobetSonucListeSirali.Where(w => debugYapilacakEczaneler.Select(s => s.EczaneAdi).Contains(w.EczaneAdi)).ToList();
             }
 
             return eczaneNobetSonucListeSirali;
