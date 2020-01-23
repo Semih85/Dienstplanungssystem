@@ -1054,16 +1054,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var kpEsGrubaAyniGunNobetYazma = new KpEsGrubaAyniGunNobetYazma
             {
                 Model = model,
-                KararDegiskeni = _x
+                KararDegiskeni = _x,
+                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                Tarihler = data.TarihAraligi
             };
 
             var esGrubaAyniGunNobetYazmaEczaneGruplar = (KpEsGrubaAyniGunNobetYazma)kpEsGrubaAyniGunNobetYazma.Clone();
 
-            esGrubaAyniGunNobetYazmaEczaneGruplar.EczaneNobetTarihAralik = data.EczaneNobetTarihAralik;
             esGrubaAyniGunNobetYazmaEczaneGruplar.EczaneNobetSonuclar = data.EczaneGrupNobetSonuclarTumu;
-            esGrubaAyniGunNobetYazmaEczaneGruplar.NobetUstGrupKisit = eczaneGrup;
+            esGrubaAyniGunNobetYazmaEczaneGruplar.NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k11");
             esGrubaAyniGunNobetYazmaEczaneGruplar.EczaneGruplar = data.EczaneGruplar;
-            esGrubaAyniGunNobetYazmaEczaneGruplar.Tarihler = data.TarihAraligi;
 
             EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaEczaneGruplar);
 
@@ -1074,7 +1074,6 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var esGrubaAyniGunNobetYazmaOncekiAylar = (KpEsGrubaAyniGunNobetYazma)kpEsGrubaAyniGunNobetYazma.Clone();
             esGrubaAyniGunNobetYazmaOncekiAylar.NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k41");
             esGrubaAyniGunNobetYazmaOncekiAylar.EczaneGruplar = data.OncekiAylardaAyniGunNobetTutanEczaneler;
-            esGrubaAyniGunNobetYazmaOncekiAylar.Tarihler = data.TarihAraligi;//.Where(w => w.GunGrupId != 3).ToList();
 
             EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaOncekiAylar);
 
