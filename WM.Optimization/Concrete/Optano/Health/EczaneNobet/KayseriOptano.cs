@@ -329,6 +329,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     TalebiKarsila(talebiKarsilaAltGrup);
                 }
 
+                //var tarihVeAltGrupBazliEnFazla = new KpTarihVeAltGrupBazliEnFazla
+                //{
+                //    Model = model,
+                //    KararDegiskeni = _x,
+                //    OrtalamaNobetSayisi = 1,
+                //    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k90")
+                //};
+
+                //HerGunAyniAltGruptanEnFazla1NobetciOlsun(cumartesiGunleri, eczaneNobetTarihAralikGrupBazli, altGruplar, tarihVeAltGrupBazliEnFazla);
+
                 #endregion
 
                 foreach (var eczaneNobetGrup in eczaneNobetGruplar)
