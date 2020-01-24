@@ -11,6 +11,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
     public class NobetciEczaneMesafe : EczaneUzaklikMatrisDetay, IComplexType
     {           
         public DateTime NobetTarihi { get; set; }
+        public string NobetGrupGorevTipAdiTo { get; set; }
+        public string NobetGrupGorevTipAdiFrom { get; set; }
     }
 }
 

@@ -19,6 +19,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void Delete(int eczaneUzaklikMatrisId);
         EczaneUzaklikMatrisDetay GetDetayById(int eczaneUzaklikMatrisId);
         EczaneUzaklikMatrisDetay GetDetay(int eczaneIdFrom, int eczaneIdTo);
+        EczaneUzaklikMatrisDetay GetDetay(int eczaneIdFrom, int eczaneIdTo, List<EczaneUzaklikMatrisDetay> eczaneUzaklikMatrisDetaylar);
         List <EczaneUzaklikMatrisDetay> GetDetaylar();
         List<EczaneUzaklikMatrisDetay> GetDetaylar(int nobetUstGrupId);
         List<EczaneUzaklikMatrisDetay> GetDetaylar(int nobetUstGrupId, int mesafeKriteri);

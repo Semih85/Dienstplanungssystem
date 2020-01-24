@@ -2,53 +2,75 @@
 
 @if (Model.Count() > 0)
 {
-    <table class="table table-hover table-bordered table-sm">
-        <thead class="thead-light">
-            <tr>
-                <th>
-                    Eczane-1
-                </th>
-                <th>
-                    Eczane-2
-                </th>
-                <th>
-                    @Html.DisplayName("Mesafe (m)")
-                </th>
-                <th>
-                    @Html.DisplayName("Nöbet Tarihi")
-                </th>
-                @*<th></th>
-                    <th></th>*@
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div id="div1">
+        <table id="gridT" class="table table-hover table-striped table-bordered table-sm">
+            <thead class="thead-light">
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EczaneAdiFrom)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EczaneAdiTo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Mesafe)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NobetTarihi)
-                    </td>
-        
-                    @*<td>
-                            @Html.ActionLink("Nöbet Değiştir", "UpdateSonuclarInsertDegisim", new { eczaneNobetSonucId = item.Id })
+                    <th>
+                        Nöbet Grubu-from
+                    </th>
+                    <th>
+                        Eczane-from
+                    </th>
+                    <th>
+                        Nöbet Grubu-to
+                    </th>
+                    <th>
+                        Eczane-to
+                    </th>
+                    <th>
+                        @Html.DisplayName("Mesafe (m)")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Nöbet Tarihi")
+                    </th>
+                    @*<th></th>
+                <th></th>*@
+                </tr>
+            </thead>
+            <tbody id="nobetciEczanelerArasiMesafe">
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetGrupGorevTipAdiFrom)
                         </td>
                         <td>
-                            @Html.ActionLink("Alternatif Nöbetçi Eczaneler", "AlternatifNobetciOnerileri", new { eczaneNobetSonucId = item.Id })
-                        </td>*@
-                </tr>
+                            @Html.DisplayFor(modelItem => item.EczaneAdiFrom)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetGrupGorevTipAdiTo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EczaneAdiTo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Mesafe)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NobetTarihi)
+                        </td>
 
-            }
-        </tbody>
-    </table>
+                        @*<td>
+                        @Html.ActionLink("Nöbet Değiştir", "UpdateSonuclarInsertDegisim", new { eczaneNobetSonucId = item.Id })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Alternatif Nöbetçi Eczaneler", "AlternatifNobetciOnerileri", new { eczaneNobetSonucId = item.Id })
+                    </td>*@
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="...">
+            <ul class="navbar-nav">
+                <li class="nav-link" id="myPaging">
+                </li>
+            </ul>
+            <div class="nav-item">Toplam Kayıt: <span id="toplamKayitSayisi"></span></div>
+        </nav>
+
+    </div>
 }
 else
 {
@@ -57,3 +79,12 @@ else
     </div>
 }
 
+<script>
+
+    $(document).ready(function () {
+
+        var model = @Html.Raw(Json.Encode(Model));
+        sayfalamaYap(model, 15);
+    });
+
+</script>

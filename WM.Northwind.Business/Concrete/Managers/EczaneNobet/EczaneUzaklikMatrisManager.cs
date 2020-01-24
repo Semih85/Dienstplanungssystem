@@ -69,6 +69,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _eczaneUzaklikMatrisDal.GetDetay(x => x.EczaneIdFrom == eczaneIdFrom && x.EczaneIdTo == eczaneIdTo);
         }
 
+        public EczaneUzaklikMatrisDetay GetDetay(int eczaneIdFrom, int eczaneIdTo, List<EczaneUzaklikMatrisDetay> eczaneUzaklikMatrisDetaylar)
+        {
+            return eczaneUzaklikMatrisDetaylar.SingleOrDefault(x => x.EczaneIdFrom == eczaneIdFrom && x.EczaneIdTo == eczaneIdTo) ?? new EczaneUzaklikMatrisDetay();
+        }
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneUzaklikMatrisDetay> GetDetaylar()
         {
