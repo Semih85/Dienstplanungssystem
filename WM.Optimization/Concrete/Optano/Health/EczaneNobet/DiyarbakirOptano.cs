@@ -329,6 +329,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     talebiKarsilaAltGrup.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 55).ToList();
 
                     TalebiKarsila(talebiKarsilaAltGrup);
+
+                    var tarihVeAltGrupBazliEnFazla = new KpTarihVeAltGrupBazliEnFazla
+                    {
+                        Model = model,
+                        KararDegiskeni = _x,
+                        OrtalamaNobetSayisi = 1,
+                        NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k90")
+                    };
+
+                    HerGunAyniAltGruptanEnFazla1NobetciOlsun(tarihler, eczaneNobetTarihAralikGrupBazli, altGruplar, tarihVeAltGrupBazliEnFazla);
                 }
 
                 #endregion
