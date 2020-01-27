@@ -299,9 +299,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 TalebiKarsila(talebiKarsilaTumu);
 
-                var altGruplar = data.NobetAltGruplar.Where(w => w.Id == 55 && w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+                var altGruplarTumu = data.NobetAltGruplar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+                var altGrupHastaneCivari = altGruplarTumu.SingleOrDefault(w => w.Id == 55);
 
-                if (altGruplar.Count > 0)
+                if (altGrupHastaneCivari != null)
                 {
                     var talebiKarsilaAltGrup = (KpTalebiKarsila)talebiKarsila.Clone();
 
@@ -329,17 +330,17 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     talebiKarsilaAltGrup.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 55).ToList();
 
                     TalebiKarsila(talebiKarsilaAltGrup);
-
-                    var tarihVeAltGrupBazliEnFazla = new KpTarihVeAltGrupBazliEnFazla
-                    {
-                        Model = model,
-                        KararDegiskeni = _x,
-                        OrtalamaNobetSayisi = 1,
-                        NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k90")
-                    };
-
-                    HerGunAyniAltGruptanEnFazla1NobetciOlsun(tarihler, eczaneNobetTarihAralikGrupBazli, altGruplar, tarihVeAltGrupBazliEnFazla);
                 }
+
+                var tarihVeAltGrupBazliEnFazla = new KpTarihVeAltGrupBazliEnFazla
+                {
+                    Model = model,
+                    KararDegiskeni = _x,
+                    OrtalamaNobetSayisi = 1,
+                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k90")
+                };
+
+                HerGunAyniAltGruptanEnFazla1NobetciOlsun(tarihler, eczaneNobetTarihAralikGrupBazli, altGruplarTumu, tarihVeAltGrupBazliEnFazla);
 
                 #endregion
 
