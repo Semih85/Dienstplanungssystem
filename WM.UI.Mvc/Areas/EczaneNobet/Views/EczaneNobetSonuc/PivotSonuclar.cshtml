@@ -1839,7 +1839,8 @@
                 }
                 else if (nobetUstGrupId == 5
                     || nobetUstGrupId == 9
-                    || nobetUstGrupId == 11) {
+                    //|| nobetUstGrupId == 11 // d.bakır
+                ) {
                     pivotCols = ["Nöbet Grubu Günlük"];
                 }
 
@@ -2060,16 +2061,16 @@
 
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
 
-                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotRows = ["Nöbet Grubu", "Katılış Tarihi", "Eczane"];
                 var pivotCols = ["Gün Grup"];
                 var pivotRendererName = "Sıcaklık Haritası";
 
                 if (nobetUstGrupId == 4) {
-                    pivotRows = ["Eczane"];
+                    pivotRows = ["Katılış Tarihi", "Eczane"];
                     pivotCols = ["Görev Tipi", "Gün Grup"];
                 }
                 else if (nobetUstGrupId == 5 || nobetUstGrupId == 9 || nobetUstGrupId == 10) {
-                    pivotRows = ["Eczane"];
+                    pivotRows = ["Katılış Tarihi", "Eczane"];
                     pivotCols = ["Gün Grup"];
                     pivotRendererName = "Sıcaklık Haritası (Sütun)"
                 }
@@ -2109,24 +2110,24 @@
 
             if (bayramlar != null && bayramlar.length > 0) {
 
-                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotRows = ["Nöbet Grubu", "Katılış Tarihi", "Eczane"];
                 var pivotCols = ["Gün Tanım", "Özel Gün",];
                 var pivotRendererName = "Sıcaklık Haritası";
                 var pivotAggregatorName = "Say";
                 var pivotVals = ["Eczane"];
 
                 if (nobetUstGrupId == 4 || nobetUstGrupId == 9) {
-                    pivotRows = ["Görev Tipi", "Eczane"];
+                    pivotRows = ["Görev Tipi", "Katılış Tarihi", "Eczane"];
                 }
                 else if (nobetUstGrupId == 5) {
-                    pivotRows = ["Eczane"];
+                    pivotRows = ["Katılış Tarihi", "Eczane"];
                     pivotCols = ["Gün Tanım", "Özel Gün", "Özel Gün Ktg."];
                     pivotRendererName = "Sıcaklık Haritası"
                     pivotAggregatorName = "Toplam (Tam Sayı)";
                     pivotVals = ["Gün Ağırlık"];
                 }
                 else if (nobetUstGrupId == 9) {
-                    pivotRows = ["Eczane"];
+                    pivotRows = ["Katılış Tarihi", "Eczane"];
                 }
 
                 gunDagilimBayramlar = $(function table2() {
@@ -2162,21 +2163,21 @@
 
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
 
-                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotRows = ["Nöbet Grubu", "Katılış Tarihi", "Eczane"];
                 var pivotCols = ["Gün Grup", "Gün Tanım"];
                 var pivotRendererName = "Sıcaklık Haritası";
 
                 if (nobetUstGrupId == 4) {
-                    pivotRows = ["Eczane"];
+                    pivotRows = ["Katılış Tarihi", "Eczane"];
                     pivotCols = ["Görev Tipi", "Gün Grup", "Gün Tanım"];
                 }
                 else if (nobetUstGrupId == 5) {
-                    pivotRows = ["Eczane"];
+                    pivotRows = ["Katılış Tarihi", "Eczane"];
                     pivotCols = ["Gün Grup", "Gün Tanım"];
                     pivotRendererName = "Sıcaklık Haritası (Sütun)"
                 }
                 else if (nobetUstGrupId == 9 || nobetUstGrupId == 10) {
-                    pivotRows = ["Eczane"];
+                    pivotRows = ["Katılış Tarihi", "Eczane"];
                 }
 
                 gunDagilim = $(function table2() {
@@ -2213,13 +2214,13 @@
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
 
                 var pivotRows = ["Gün Grup"];
-                var pivotCols = ["NöbetGrupGörevTipId", "Eczane"];
+                var pivotCols = ["NöbetGrupGörevTipId", "Katılış Tarihi", "Eczane"];
 
                 if (nobetUstGrupId == 5 // osmaniye
                     || nobetUstGrupId == 6//bartın
                     || nobetUstGrupId == 9//çorum
                 ) {
-                    pivotCols = ["Eczane"];
+                    pivotCols = ["Katılış Tarihi", "Eczane"];
                 }
 
                 gunGrafik2 = $(function table2() {
@@ -2289,17 +2290,17 @@
         function ayDagilimlar() {
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
 
-                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotRows = ["Nöbet Grubu", "Katılış Tarihi", "Eczane"];
                 var pivotCols = ["Yıl-Ay"];
 
                 if (nobetUstGrupId == 4) {
-                    pivotRows = ["Görev Tipi", "Eczane"];
+                    pivotRows = ["Görev Tipi", "Katılış Tarihi", "Eczane"];
                 }
                 else if (nobetUstGrupId == 5) {
-                    pivotRows = ["Eczane"];
+                    pivotRows = ["Katılış Tarihi", "Eczane"];
                 }
                 else if (nobetUstGrupId == 9 || nobetUstGrupId == 10) {
-                    pivotRows = ["Eczane"];
+                    pivotRows = ["Katılış Tarihi", "Eczane"];
                 }
 
                 ayDagilim = $(function table3() {
@@ -2334,15 +2335,15 @@
         function mevsimDagilimlar() {
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
 
-                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotRows = ["Nöbet Grubu", "Katılış Tarihi", "Eczane"];
                 var pivotCols = ["Gün Grup", "Mevsim"];
 
                 if (nobetUstGrupId == 4) {
-                    pivotRows = ["Görev Tipi", "Eczane"];
+                    pivotRows = ["Görev Tipi", "Katılış Tarihi", "Eczane"];
                     //pivotCols = ["Gün Grup", "Mevsim"];
                 }
                 else if (nobetUstGrupId == 5 || nobetUstGrupId == 9 || nobetUstGrupId == 10) {
-                    pivotRows = ["Eczane"];
+                    pivotRows = ["Katılış Tarihi", "Eczane"];
                 };
 
                 mevsimDagilim = $(function table3() {
@@ -2377,18 +2378,18 @@
             //alert("ikiliAyDagilimlar")
             if (dagilimlarPivot != null && dagilimlarPivot.length > 0) {
 
-                var pivotRows = ["Nöbet Grubu", "Eczane"];
+                var pivotRows = ["Nöbet Grubu", "Katılış Tarihi", "Eczane"];
                 var pivotCols = ["Gün Grup", "Ay İkili"];
 
                 if (nobetUstGrupId == 4) {
-                    pivotRows = ["Görev Tipi", "Eczane"];
+                    pivotRows = ["Görev Tipi", "Katılış Tarihi", "Eczane"];
                     //pivotCols = ["Gün Grup", "Mevsim"];
                 }
                 else if (nobetUstGrupId == 5) {
-                    pivotRows = ["Eczane"];
+                    pivotRows = ["Katılış Tarihi", "Eczane"];
                 }
                 else if (nobetUstGrupId == 9 || nobetUstGrupId == 10) {
-                    pivotRows = ["Eczane"];
+                    pivotRows = ["Katılış Tarihi", "Eczane"];
                 }
 
                 ikiliAyDagilim = $(function table3() {
