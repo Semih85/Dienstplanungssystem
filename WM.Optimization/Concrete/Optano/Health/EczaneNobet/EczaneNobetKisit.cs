@@ -391,23 +391,32 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 //    p.PespeseNobetSayisi = (int)p.NobetUstGrupKisit.SagTarafDegeri;
 
                 var tarihler = p.Tarihler.Take(p.Tarihler.Count - p.PespeseNobetSayisi).ToList();
+                var sonTarih = tarihler.Max(x => x.Tarih);
 
                 foreach (var tarih in tarihler)
                 {
-                    var altLimit = tarih.Tarih;
-                    var ustLimit = tarih.Tarih.AddDays(p.PespeseNobetSayisi);
+                    var altLimit = tarih;
+                    var altLimitTarihi = tarih.Tarih;
+                    var ustLimitZamani = tarih.Tarih.AddDays(p.PespeseNobetSayisi);
+                    var ustLimit = tarihler.SingleOrDefault(x => x.Tarih == ustLimitZamani) ?? tarihler.SingleOrDefault(x => x.Tarih == sonTarih);
+                    var ustLimitTarihi = ustLimit.Tarih;
 
                     var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
-                        + $"{altLimit.ToString("dd.MM.yy")}-{ustLimit.ToString("dd.MM.yy")}=>"
+                        + $"{altLimitTarihi.ToString("dd.MM.yy")}-{ustLimitTarihi.ToString("dd.MM.yy")}=>"
                         + $"{p.PespeseNobetSayisi} gün"
                         + $"";
+
+                    //if (altLimit.GunGrupId == 1)
+                    //{
+
+                    //}
 
                     var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
 
                     var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, p.EczaneNobetGrup.EczaneAdi);
 
                     var kararIndex = p.EczaneNobetTarihAralik
-                                       .Where(e => (e.Tarih >= altLimit && e.Tarih <= ustLimit)).ToList();
+                                       .Where(e => (e.Tarih >= altLimitTarihi && e.Tarih <= ustLimitTarihi)).ToList();
 
                     var std = 1;
                     var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
