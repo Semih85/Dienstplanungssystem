@@ -1839,9 +1839,12 @@
                 }
                 else if (nobetUstGrupId == 5
                     || nobetUstGrupId == 9
-                    //|| nobetUstGrupId == 11 // d.bakır
                 ) {
                     pivotCols = ["Nöbet Grubu Günlük"];
+                }
+                else if (nobetUstGrupId == 11 // d.bakır
+                ) {
+                    pivotCols = ["Nöbet Grubu", "Alt Grup"];
                 }
 
                 nobetciEczaneler = $(icRaporDivId).pivotUI(dagilimlarPivot, {
