@@ -84,7 +84,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var kisitlarGrupBazli = data.NobetGrupGorevTipKisitlar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                var kisitlarAktif = GetKisitlarNobetGrupBazli(data.Kisitlar, kisitlarGrupBazli); 
+                var kisitlarAktif = GetKisitlarNobetGrupBazli(data.Kisitlar, kisitlarGrupBazli);
 
                 #endregion
 
@@ -107,9 +107,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 #region tarihler
 
-                var tarihler = data.TarihAraligi
-                    .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id)
-                             .OrderBy(o => o.Tarih).ToList();
+                var tarihler = TarihleriFiltreleVeSirala(data.TarihAraligi, nobetGrupGorevTip.Id);
 
                 var nobetGrupTalepler = tarihler
                     .GroupBy(g => g.TalepEdilenNobetciSayisi)
@@ -1296,7 +1294,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             //+ $"<br/>Elenen eczane sayısı: <strong>{data.AyIcindeAyniGunNobetTutanEczaneler.Count}</strong>."
                             ;
                     }
-                    
+
                     var celiskiler = results.Celiskiler.Split('*');
 
                     mesaj = CeliskileriTabloyaAktar(data.BaslangicTarihi, data.BitisTarihi, data.CalismaSayisi, iterasyonMesaj, data.NobetGrupGorevTipler, celiskiler);

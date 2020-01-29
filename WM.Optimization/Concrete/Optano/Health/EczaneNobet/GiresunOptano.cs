@@ -176,7 +176,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var tarihler = data.TarihAraligi
                     .Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
-                             && w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
+                             && w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId)
+                    .OrderBy(o => o.Tarih)
+                    .ToList();
 
                 var cumartesiTumGorevTipleri = data.TarihAraligi.Where(w => w.NobetGunKuralId == 7).ToList();
 

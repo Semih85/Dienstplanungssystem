@@ -328,8 +328,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet.Eski
                 #region tarihler
                 var tarihler = data.TarihAraligi.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
                 var bayramlar = tarihler.Where(w => w.NobetGunKuralId > 7).OrderBy(o => o.Tarih).ToList();
-                var cumartesiGunleri = tarihler.Where(w => w.NobetGunKuralId == 7).OrderBy(o => o.Tarih).ToList();
-                var pazarGunleri = tarihler.Where(w => w.NobetGunKuralId == 1).OrderBy(o => o.Tarih).ToList();
+                var cumartesiGunleri = TarihleriFiltrele(tarihler, 7);
+                var pazarGunleri = TarihleriFiltrele(tarihler, 1);
                 var haftaIciGunleri = tarihler.Where(w => (w.NobetGunKuralId >= 2 && w.NobetGunKuralId <= 7)).OrderBy(o => o.Tarih).ToList();
 
                 var gunSayisi = tarihler.Count();

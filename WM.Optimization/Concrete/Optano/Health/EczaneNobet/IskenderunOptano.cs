@@ -211,9 +211,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 //var nobetGrupTalepler = data.NobetGrupTalepler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                var tarihler = data.TarihAraligi
-                    .Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
-                             && w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
+                var tarihler = TarihleriFiltreleVeSirala(data.TarihAraligi, nobetGrupGorevTip.Id);
 
                 var nobetGrupTalepler = tarihler
                     .GroupBy(g => g.TalepEdilenNobetciSayisi)
@@ -224,13 +222,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     }).ToList();
                 //TalepleriTakvimeIsle(nobetGrupTalepler, gunlukNobetciSayisi, tarihler);
 
-                var pazarGunleri = tarihler.Where(w => w.GunGrupId == 1).OrderBy(o => o.Tarih).ToList();
+                var pazarGunleri = TarihleriFiltrele(tarihler, 1);
+                var cumaGunleri = TarihleriFiltrele(tarihler, 6);
+                var cumartesiGunleri = TarihleriFiltrele(tarihler, 7);
+                var cumaVeCumartesiGunleri = TarihleriFiltrele(tarihler, new int[] { 6, 7 });
+                var cumartesiVePazarGunleri = TarihleriFiltrele(tarihler, new int[] { 1, 7 });
                 var bayramlar = tarihler.Where(w => w.GunGrupId == 2).OrderBy(o => o.Tarih).ToList();
                 var haftaIciGunleri = tarihler.Where(w => w.GunGrupId == 3).OrderBy(o => o.Tarih).ToList();
-                var cumartesiGunleri = tarihler.Where(w => w.GunGrupId == 4).OrderBy(o => o.Tarih).ToList();
-                var cumaGunleri = tarihler.Where(w => w.NobetGunKuralId == 6).OrderBy(o => o.Tarih).ToList();
-                var cumaVeCumartesiGunleri = tarihler.Where(w => w.NobetGunKuralId >= 6 && w.NobetGunKuralId <= 7).OrderBy(o => o.Tarih).ToList();
-                var cumartesiVePazarGunleri = tarihler.Where(w => w.NobetGunKuralId == 1 || w.NobetGunKuralId == 7).OrderBy(o => o.Tarih).ToList();
 
                 var gunGruplar = tarihler.Select(s => new { s.GunGrupId, s.GunGrupAdi }).Distinct().OrderBy(o => o.GunGrupId).ToList();
 

@@ -100,8 +100,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 //var nobetGrupTalepler = data.NobetGrupTalepler.Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
 
-                var tarihler = data.TarihAraligi
-                    .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+                var tarihler = TarihleriFiltreleVeSirala(data.TarihAraligi, nobetGrupGorevTip.Id);
 
                 var nobetGrupTalepler = tarihler
                     .GroupBy(g => g.TalepEdilenNobetciSayisi)
@@ -113,17 +112,17 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 //TalepleriTakvimeIsle(nobetGrupTalepler, gunlukNobetciSayisi, tarihler);
 
-                var pazarGunleri = tarihler.Where(w => w.NobetGunKuralId == 1).OrderBy(o => o.Tarih).ToList();
-                var pazartesiGunleri = tarihler.Where(w => w.NobetGunKuralId == 2).OrderBy(o => o.Tarih).ToList();
-                var saliGunleri = tarihler.Where(w => w.NobetGunKuralId == 3).OrderBy(o => o.Tarih).ToList();
-                var carsambaGunleri = tarihler.Where(w => w.NobetGunKuralId == 4).OrderBy(o => o.Tarih).ToList();
-                var persembeGunleri = tarihler.Where(w => w.NobetGunKuralId == 5).OrderBy(o => o.Tarih).ToList();
-                var cumaGunleri = tarihler.Where(w => w.NobetGunKuralId == 6).OrderBy(o => o.Tarih).ToList();
-                var cumaVeCumartesiGunleri = tarihler.Where(w => w.NobetGunKuralId == 6 || w.NobetGunKuralId == 7).OrderBy(o => o.Tarih).ToList();
-                var cumartesiVePazarGunleri = tarihler.Where(w => w.NobetGunKuralId == 1 || w.NobetGunKuralId == 7).OrderBy(o => o.Tarih).ToList();
-                var bayramlar = tarihler.Where(w => w.GunGrupId == 2).OrderBy(o => o.Tarih).ToList();
-                var haftaIciGunleri = tarihler.Where(w => w.GunGrupId == 3).OrderBy(o => o.Tarih).ToList();
-                var cumartesiGunleri = tarihler.Where(w => w.NobetGunKuralId == 7).OrderBy(o => o.Tarih).ToList();
+                var pazarGunleri = tarihler.Where(w => w.NobetGunKuralId == 1).ToList();
+                var pazartesiGunleri = TarihleriFiltrele(tarihler, 2);
+                var saliGunleri = TarihleriFiltrele(tarihler, 3);
+                var carsambaGunleri = TarihleriFiltrele(tarihler, 4);
+                var persembeGunleri = TarihleriFiltrele(tarihler, 5);
+                var cumaGunleri = TarihleriFiltrele(tarihler, 6);
+                var cumaVeCumartesiGunleri = TarihleriFiltrele(tarihler, new int[] { 6, 7 });
+                var cumartesiVePazarGunleri = TarihleriFiltrele(tarihler, new int[] { 1, 7 });
+                var bayramlar = tarihler.Where(w => w.GunGrupId == 2).ToList();
+                var haftaIciGunleri = tarihler.Where(w => w.GunGrupId == 3).ToList();
+                var cumartesiGunleri = TarihleriFiltrele(tarihler, 7);
 
                 var gunSayisi = tarihler.Count();
                 var haftaIciSayisi = haftaIciGunleri.Count();

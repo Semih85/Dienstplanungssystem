@@ -106,9 +106,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 #region tarihler
 
-                var tarihler = data.TarihAraligi
-                    .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id)
-                             .OrderBy(o => o.Tarih).ToList();
+                var tarihler = TarihleriFiltreleVeSirala(data.TarihAraligi, nobetGrupGorevTip.Id);
 
                 var nobetGrupTalepler = tarihler
                     .GroupBy(g => g.TalepEdilenNobetciSayisi)

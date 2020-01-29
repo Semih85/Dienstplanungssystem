@@ -91,6 +91,10 @@ namespace WM.Optimization.Abstract.Health
             int gunKuralNobetSayisi,
             int haftaIciEnCokVeGunKuralNobetleriArasindakiFark,
             int haftaIciEnAzVeEnCokNobetSayisiArasindakiFark);
+
+        List<TakvimNobetGrup> TarihleriFiltrele(List<TakvimNobetGrup> tarihler, int nobetGunKuralId);
+        List<TakvimNobetGrup> TarihleriFiltrele(List<TakvimNobetGrup> tarihler, int[] nobetGunKuralIds);
+        List<TakvimNobetGrup> TarihleriFiltreleVeSirala(List<TakvimNobetGrup> tarihler, int nobetGrupGorevTipId);
     }
 }
 
