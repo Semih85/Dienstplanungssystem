@@ -461,7 +461,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             //var eczaneNobetGrupAltGruplar = _eczaneNobetGrupAltGrupService.GetDetaylar(nobetUstGrupId);
 
-            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe);
+            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipler.Select(s => s.Id).ToList());
 
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupId);
             var grupBazliKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrupId);

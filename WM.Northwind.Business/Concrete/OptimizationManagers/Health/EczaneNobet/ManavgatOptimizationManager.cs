@@ -291,7 +291,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             //nöbet yazılacak tarih aralığı(örn. Ocak ayının tüm günleri)
             var tarihAralik = _takvimService.GetTakvimNobetGruplar(baslangicTarihi, bitisTarihi, nobetGrupIdListe, nobetGorevTipId);
-            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe);
+            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipler.Select(s => s.Id).ToList());
 
             //var gunGrupIstatistik = _eczaneNobetOrtakService.GetEczaneNobetGrupGunGrupIstatistik(enSonNobetler)
             //    .Where(w => new int[] { 1, 3 }.Contains(w.GunGrupId)).ToList();

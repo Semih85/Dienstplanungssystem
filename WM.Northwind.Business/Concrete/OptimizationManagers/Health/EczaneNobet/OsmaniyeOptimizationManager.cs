@@ -327,7 +327,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             #endregion
 
             var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetGrupIdListe);
-            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe);
+            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipler.Select(s => s.Id).ToList());
 
             var dataModel = new OsmaniyeDataModel()
             {

@@ -411,7 +411,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             #endregion
 
-            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylar(nobetGrupIdListe);
+            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipler.Select(s => s.Id).ToList());
 
             var corumDataModel = new CorumDataModel()
             {
