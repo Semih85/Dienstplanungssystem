@@ -176,9 +176,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 //var nobetGrupTalepler = data.NobetGrupTalepler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                var tarihler = data.TarihAraligi
-                    .Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
-                             && w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
+                var tarihler = TarihleriFiltreleVeSirala(data.TarihAraligi, nobetGrupGorevTip.Id);
 
                 var cumartesiTumGorevTipleri = data.TarihAraligi.Where(w => w.NobetGunKuralId == 7).ToList();
 
@@ -191,13 +189,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     }).ToList();
                 //TalepleriTakvimeIsle(nobetGrupTalepler, gunlukNobetciSayisi, tarihler);
 
-                var pazarGunleri = tarihler.Where(w => w.GunGrupId == 1).OrderBy(o => o.Tarih).ToList();
+                var pazarGunleri = TarihleriFiltrele(tarihler, 1);
+                var cumaGunleri = TarihleriFiltrele(tarihler, 6);
+                var cumartesiGunleri = TarihleriFiltrele(tarihler, 7);
+                var cumaVeCumartesiGunleri = TarihleriFiltrele(tarihler, new int[] { 6, 7 });
+                var cumartesiVePazarGunleri = TarihleriFiltrele(tarihler, new int[] { 1, 7 });
                 var bayramlar = tarihler.Where(w => w.GunGrupId == 2).OrderBy(o => o.Tarih).ToList();
                 var haftaIciGunleri = tarihler.Where(w => w.GunGrupId == 3).OrderBy(o => o.Tarih).ToList();
-                var cumartesiGunleri = tarihler.Where(w => w.GunGrupId == 4).OrderBy(o => o.Tarih).ToList();
-                var cumaGunleri = tarihler.Where(w => w.NobetGunKuralId == 6).OrderBy(o => o.Tarih).ToList();
-                var cumaVeCumartesiGunleri = tarihler.Where(w => w.NobetGunKuralId >= 6 && w.NobetGunKuralId <= 7).OrderBy(o => o.Tarih).ToList();
-                var cumartesiVePazarGunleri = tarihler.Where(w => w.NobetGunKuralId == 1 || w.NobetGunKuralId == 7).OrderBy(o => o.Tarih).ToList();
 
                 var gunGruplar = tarihler.Select(s => new { s.GunGrupId, s.GunGrupAdi }).Distinct().OrderBy(o => o.GunGrupId).ToList();
 
@@ -1281,129 +1279,77 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 }
 
                 #endregion
-
-                #region eczane gruplar - aynı gün nöbet
-
-                var tarihAraligi = data.TarihAraligi
-                    .Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
-
-                var esGrubaAyniGunNobetYazmaEczaneGruplar = new KpEsGrubaAyniGunNobetYazma
-                {
-                    Model = model,
-                    EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
-                    EczaneNobetSonuclar = eczaneNobetSonuclarGorevTipBazli,
-                    NobetUstGrupKisit = eczaneGrup,
-                    EczaneGruplar = data.EczaneGruplar.Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList(),
-                    Tarihler = tarihAraligi,
-                    KararDegiskeni = _x
-                };
-                EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaEczaneGruplar);
-
-                var esGrubaAyniGunNobetYazmaOncekiAylar = new KpEsGrubaAyniGunNobetYazma
-                {
-                    Model = model,
-                    EczaneNobetTarihAralik = data.EczaneNobetTarihAralik, //eczaneNobetTarihAralikGrupBazli,
-                    EczaneNobetSonuclar = data.EczaneNobetSonuclar, //eczaneNobetSonuclarGorevTipBazli,
-                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k41"),
-                    EczaneGruplar = data.OncekiAylardaAyniGunNobetTutanEczaneler,
-                    Tarihler = tarihAraligi,
-                    KararDegiskeni = _x
-                };
-                EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaOncekiAylar);
-
-                #endregion
-
-                #region alt gruplar - aynı gün nöbet
-
-                var eczaneNobetTarihAralikAtlGruplu = eczaneNobetTarihAralikGrupBazli;
-
-                var kpEsGrubaAyniGunNobetYazma = new KpEsGrubaAyniGunNobetYazma
-                {
-                    Model = model,
-                    EczaneNobetTarihAralik = eczaneNobetTarihAralikAtlGruplu,
-                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k29"),
-                    KararDegiskeni = _x
-                };
-
-                foreach (var gunGrup in gunGruplar
-                    .Where(w => w.GunGrupId == 3).ToArray()
-                    )
-                {
-                    #region ş.dışı
-
-                    kpEsGrubaAyniGunNobetYazma.Tarihler = tarihAraligi.Where(w => w.GunGrupId == gunGrup.GunGrupId).ToList();
-                    kpEsGrubaAyniGunNobetYazma.EczaneNobetSonuclar = GetSonuclarByGunGrup(data.EczaneNobetSonuclarAltGruplarlaBirlikte, gunGrup.GunGrupId);
-
-                    var kpEsGrubaAyniGunNobetYazmaSehirDisi = (KpEsGrubaAyniGunNobetYazma)kpEsGrubaAyniGunNobetYazma.Clone();
-
-                    kpEsGrubaAyniGunNobetYazmaSehirDisi.EczaneGruplar = GetEczaneGruplarByEczaneGrupTanimTipId(data.AltGruplarlaAyniGunNobetTutmayacakEczanelerSehirDisi, gunGrup.GunGrupId);
-
-                    EsGruptakiEczanelereAyniGunNobetYazma(kpEsGrubaAyniGunNobetYazmaSehirDisi);
-
-                    #endregion
-
-                    #region ş.içi - 1
-
-                    var kpEsGrubaAyniGunNobetYazmaSehirIci1 = (KpEsGrubaAyniGunNobetYazma)kpEsGrubaAyniGunNobetYazma.Clone();
-
-                    kpEsGrubaAyniGunNobetYazmaSehirIci1.EczaneGruplar = GetEczaneGruplarByEczaneGrupTanimTipId(data.AltGruplarlaAyniGunNobetTutmayacakEczanelerSehirIci1, gunGrup.GunGrupId);
-
-                    EsGruptakiEczanelereAyniGunNobetYazma(kpEsGrubaAyniGunNobetYazmaSehirIci1);
-
-                    #endregion
-
-                    #region ş.içi - 2
-
-                    var kpEsGrubaAyniGunNobetYazmaSehirIci2 = (KpEsGrubaAyniGunNobetYazma)kpEsGrubaAyniGunNobetYazma.Clone();
-
-                    kpEsGrubaAyniGunNobetYazmaSehirIci2.EczaneGruplar = GetEczaneGruplarByEczaneGrupTanimTipId(data.AltGruplarlaAyniGunNobetTutmayacakEczanelerSehirIci2, gunGrup.GunGrupId);
-
-                    EsGruptakiEczanelereAyniGunNobetYazma(kpEsGrubaAyniGunNobetYazmaSehirIci2);
-
-                    #endregion
-                }
-
-                #endregion
-
-                #region istek ve mazeret
-
-                var istegiKarsilaKisit = new KpIstegiKarsila
-                {
-                    Model = model,
-                    EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
-                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k12"),
-                    EczaneNobetIstekler = data.EczaneNobetIstekler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
-                    KararDegiskeni = _x
-                };
-                IstegiKarsila(istegiKarsilaKisit);
-
-                var mazereteGorevYazmaKisit = new KpMazereteGorevYazma
-                {
-                    Model = model,
-                    EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
-                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k13"),
-                    EczaneNobetMazeretler = data.EczaneNobetMazeretler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
-                    KararDegiskeni = _x
-                };
-                MazereteGorevYazma(mazereteGorevYazmaKisit);
-
-                #endregion
-
-                #region bazı eczanelerin nöbet günlerini kısıtla
-
-                var kpIstenenEczanelerinNobetGunleriniKisitla = new KpIstenenEczanelerinNobetGunleriniKisitla
-                {
-                    Model = model,
-                    EczaneNobetTutamazGunler = eczaneNobetTutamazGunler,
-                    EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
-                    NobetUstGrupKisit = eczanelerinNobetGunleriniKisitla,
-                    KararDegiskeni = _x
-                };
-                IstenenEczanelerinNobetGunleriniKisitla(kpIstenenEczanelerinNobetGunleriniKisitla);
-
-                #endregion
-
             }
+
+            #region eczane gruplar - aynı gün nöbet
+
+            var tarihAraligi = data.TarihAraligi;
+                //.Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList();
+
+            var esGrubaAyniGunNobetYazmaEczaneGruplar = new KpEsGrubaAyniGunNobetYazma
+            {
+                Model = model,
+                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                EczaneNobetSonuclar = data.EczaneGrupNobetSonuclarTumu,
+                NobetUstGrupKisit = eczaneGrup,
+                EczaneGruplar = data.EczaneGruplar,//.Where(w => w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId).ToList(),
+                Tarihler = tarihAraligi,
+                KararDegiskeni = _x
+            };
+            EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaEczaneGruplar);
+
+            var esGrubaAyniGunNobetYazmaOncekiAylar = new KpEsGrubaAyniGunNobetYazma
+            {
+                Model = model,
+                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik, //eczaneNobetTarihAralikGrupBazli,
+                EczaneNobetSonuclar = data.EczaneNobetSonuclar, //eczaneNobetSonuclarGorevTipBazli,
+                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k41"),
+                EczaneGruplar = data.OncekiAylardaAyniGunNobetTutanEczaneler,
+                Tarihler = tarihAraligi,
+                KararDegiskeni = _x
+            };
+            EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaOncekiAylar);
+
+            #endregion
+
+            #region istek ve mazeret
+
+            var istegiKarsilaKisit = new KpIstegiKarsila
+            {
+                Model = model,
+                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k12"),
+                EczaneNobetIstekler = data.EczaneNobetIstekler,//.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
+                KararDegiskeni = _x
+            };
+            IstegiKarsila(istegiKarsilaKisit);
+
+            var mazereteGorevYazmaKisit = new KpMazereteGorevYazma
+            {
+                Model = model,
+                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k13"),
+                EczaneNobetMazeretler = data.EczaneNobetMazeretler,//.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList(),
+                KararDegiskeni = _x
+            };
+            MazereteGorevYazma(mazereteGorevYazmaKisit);
+
+            #endregion
+
+            #region bazı eczanelerin nöbet günlerini kısıtla
+
+            var kpIstenenEczanelerinNobetGunleriniKisitla = new KpIstenenEczanelerinNobetGunleriniKisitla
+            {
+                Model = model,
+                EczaneNobetTutamazGunler = eczaneNobetTutamazGunler,
+                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
+                NobetUstGrupKisit = eczanelerinNobetGunleriniKisitla,
+                KararDegiskeni = _x
+            };
+            IstenenEczanelerinNobetGunleriniKisitla(kpIstenenEczanelerinNobetGunleriniKisitla);
+
+            #endregion
+
             #endregion
 
             #region Cumartesi gündüz nöbetçileri
@@ -2130,59 +2076,59 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 #region eczane gruplar
 
-                var esGrubaAyniGunNobetYazmaEczaneGruplar = new KpEsGrubaAyniGunNobetYazma();
+                //var esGrubaAyniGunNobetYazmaEczaneGruplar = new KpEsGrubaAyniGunNobetYazma();
 
-                if (NobetUstGrupKisit(kisitlarAktif, "k48").PasifMi != true)
-                {
-                    esGrubaAyniGunNobetYazmaEczaneGruplar = new KpEsGrubaAyniGunNobetYazma
-                    {
-                        Model = model,
-                        EczaneNobetTarihAralik = eczaneNobetTarihAralikTumGorevTipleri,
-                        EczaneNobetSonuclar = eczaneNobetSonuclarGorevTipBazli,
-                        NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k48"),
-                        EczaneGruplar = eczaneGruplarGorevTip2,
-                        Tarihler = ilgiliTarihler,
-                        KararDegiskeni = _x
-                    };
-                }
-                else
-                {
-                    esGrubaAyniGunNobetYazmaEczaneGruplar = new KpEsGrubaAyniGunNobetYazma
-                    {
-                        Model = model,
-                        EczaneNobetTarihAralik = eczaneNobetTarihAralikTumGorevTipleri,
-                        EczaneNobetSonuclar = eczaneNobetSonuclarGorevTipBazli,
-                        NobetUstGrupKisit = eczaneGrup,
-                        EczaneGruplar = eczaneGruplarGorevTip2,
-                        Tarihler = cumartesiGunleri,
-                        KararDegiskeni = _x
-                    };
-                }
-                EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaEczaneGruplar);
+                //if (NobetUstGrupKisit(kisitlarAktif, "k48").PasifMi != true)
+                //{
+                //    esGrubaAyniGunNobetYazmaEczaneGruplar = new KpEsGrubaAyniGunNobetYazma
+                //    {
+                //        Model = model,
+                //        EczaneNobetTarihAralik = eczaneNobetTarihAralikTumGorevTipleri,
+                //        EczaneNobetSonuclar = eczaneNobetSonuclarGorevTipBazli,
+                //        NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k48"),
+                //        EczaneGruplar = eczaneGruplarGorevTip2,
+                //        Tarihler = ilgiliTarihler,
+                //        KararDegiskeni = _x
+                //    };
+                //}
+                //else
+                //{
+                //    esGrubaAyniGunNobetYazmaEczaneGruplar = new KpEsGrubaAyniGunNobetYazma
+                //    {
+                //        Model = model,
+                //        EczaneNobetTarihAralik = eczaneNobetTarihAralikTumGorevTipleri,
+                //        EczaneNobetSonuclar = eczaneNobetSonuclarGorevTipBazli,
+                //        NobetUstGrupKisit = eczaneGrup,
+                //        EczaneGruplar = eczaneGruplarGorevTip2,
+                //        Tarihler = cumartesiGunleri,
+                //        KararDegiskeni = _x
+                //    };
+                //}
+                //EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaEczaneGruplar);
 
                 #endregion
 
                 #region istek ve mazeretler
 
-                var istegiKarsilaKisit = new KpIstegiKarsila
-                {
-                    Model = model,
-                    EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
-                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k12"),
-                    EczaneNobetIstekler = data.EczaneNobetIstekler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip2.Id).ToList(),
-                    KararDegiskeni = _x
-                };
-                IstegiKarsila(istegiKarsilaKisit);
+                //var istegiKarsilaKisit = new KpIstegiKarsila
+                //{
+                //    Model = model,
+                //    EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
+                //    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k12"),
+                //    EczaneNobetIstekler = data.EczaneNobetIstekler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip2.Id).ToList(),
+                //    KararDegiskeni = _x
+                //};
+                //IstegiKarsila(istegiKarsilaKisit);
 
-                var mazereteGorevYazmaKisit = new KpMazereteGorevYazma
-                {
-                    Model = model,
-                    EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
-                    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k13"),
-                    EczaneNobetMazeretler = data.EczaneNobetMazeretler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip2.Id).ToList(),
-                    KararDegiskeni = _x
-                };
-                MazereteGorevYazma(mazereteGorevYazmaKisit);
+                //var mazereteGorevYazmaKisit = new KpMazereteGorevYazma
+                //{
+                //    Model = model,
+                //    EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
+                //    NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k13"),
+                //    EczaneNobetMazeretler = data.EczaneNobetMazeretler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip2.Id).ToList(),
+                //    KararDegiskeni = _x
+                //};
+                //MazereteGorevYazma(mazereteGorevYazmaKisit);
 
                 #endregion
             }
