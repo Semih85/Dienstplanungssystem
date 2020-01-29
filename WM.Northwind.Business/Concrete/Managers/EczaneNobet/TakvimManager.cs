@@ -328,9 +328,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     select new TakvimNobetGrup
                     {
                         TakvimId = t.TakvimId,
-                        Yil = t.Yil,
-                        Ay = t.Ay,
-                        Gun = t.Gun,
+                        //Yil = t.Yil,
+                        //Ay = t.Ay,
+                        //Gun = t.Gun,
                         HaftaninGunu = t.HaftaninGunu,
                         NobetGrupId = g.NobetGrupId,
                         NobetGorevTipId = g.NobetGorevTipId,
@@ -354,9 +354,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     select new TakvimNobetGrup
                     {
                         TakvimId = t.TakvimId,
-                        Yil = t.Yil,
-                        Ay = t.Ay,
-                        Gun = t.Gun,
+                        //Yil = t.Yil,
+                        //Ay = t.Ay,
+                        //Gun = t.Gun,
                         HaftaninGunu = t.HaftaninGunu,
                         NobetGrupId = nobetGrupGorevTip.NobetGrupId,
                         NobetGorevTipId = nobetGrupGorevTip.NobetGorevTipId,
@@ -415,9 +415,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                               select new TakvimNobetGrup
                                               {
                                                   TakvimId = t.TakvimId,
-                                                  Yil = t.Yil,
-                                                  Ay = t.Ay,
-                                                  Gun = t.Gun,
+                                                  //Yil = t.Yil,
+                                                  //Ay = t.Ay,
+                                                  //Gun = t.Gun,
                                                   HaftaninGunu = t.HaftaninGunu,
                                                   NobetGrupId = g.NobetGrupId,
                                                   NobetGorevTipId = g.NobetGorevTipId,
@@ -489,9 +489,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                               select new TakvimNobetGrup
                                               {
                                                   TakvimId = t.TakvimId,
-                                                  Yil = t.Yil,
-                                                  Ay = t.Ay,
-                                                  Gun = t.Gun,
+                                                  //Yil = t.Yil,
+                                                  //Ay = t.Ay,
+                                                  //Gun = t.Gun,
                                                   HaftaninGunu = t.HaftaninGunu,
                                                   NobetGrupId = g.NobetGrupId,
                                                   NobetGorevTipId = g.NobetGorevTipId,
@@ -800,9 +800,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                                select new TakvimNobetGrupPeriyot
                                                {
                                                    TakvimId = t.TakvimId,
-                                                   Yil = t.Yil,
-                                                   Ay = t.Ay,
-                                                   Gun = t.Gun,
+                                                   //Yil = t.Yil,
+                                                   //Ay = t.Ay,
+                                                   //Gun = t.Gun,
                                                    HaftaninGunu = t.HaftaninGunu,
                                                    NobetGrupId = t.NobetGrupId,
                                                    NobetGorevTipId = t.NobetGorevTipId,

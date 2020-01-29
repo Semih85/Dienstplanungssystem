@@ -11,9 +11,9 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
     public class TakvimNobetGrup : IComplexType
     {
         public int TakvimId { get; set; }
-        public int Yil { get; set; }
-        public int Ay { get; set; }
-        public int Gun { get; set; }
+        public int Yil => Tarih.Year;
+        public int Ay => Tarih.Month;
+        public int Gun => Tarih.Day;
         public string GunGrupAdi { get; set; }
         public int GunGrupId { get; set; }
         public string NobetGunKuralAdi { get; set; }
