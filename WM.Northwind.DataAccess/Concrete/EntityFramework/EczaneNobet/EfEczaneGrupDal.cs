@@ -45,6 +45,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                                  NobetGorevTipId = t.EczaneGrupTanim.NobetGorevTipId,
                                  NobetGorevTipAdi = t.EczaneGrupTanim.NobetGorevTip.Adi,
                                  AyniGunNobetTutabilecekEczaneSayisi = t.EczaneGrupTanim.AyniGunNobetTutabilecekEczaneSayisi,
+                                 NobetGrupGorevTipIdFrom = g.NobetGrupGorevTipId
                                  //EczaneGrupBitisTarihi = g.BitisTarihi
                              });
 
