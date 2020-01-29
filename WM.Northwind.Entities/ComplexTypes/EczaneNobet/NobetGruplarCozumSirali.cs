@@ -3,6 +3,7 @@
     public class NobetGruplarCozumSirali
     {
         public int NobetGrupId { get; set; }
+        //public int NobetGrupGorevTipId { get; set; }
         public int SiraId { get; set; }
     }
 }
