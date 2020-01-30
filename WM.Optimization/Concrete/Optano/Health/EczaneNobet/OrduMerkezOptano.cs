@@ -241,8 +241,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 // karar değişkeni - nöbet grup bazlı filtrelenmiş
                 var eczaneNobetTarihAralikGrupBazli = data.EczaneNobetTarihAralik
-                           .Where(e => e.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId
-                                    && e.NobetGrupId == nobetGrupGorevTip.NobetGrupId).ToList();
+                           .Where(e => e.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
                 #region hafta Ici Pespese Gorev EnAz
 
@@ -321,8 +320,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 #endregion
 
                 var nobetGrupBayramNobetleri = data.EczaneNobetSonuclar
-                    .Where(w => w.NobetGrupId == nobetGrupGorevTip.NobetGrupId
-                             && w.NobetGorevTipId == nobetGrupGorevTip.NobetGorevTipId
+                    .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
                              && w.GunGrupId == 2
                              && w.Tarih >= data.NobetUstGrupBaslangicTarihi)
                     .Select(s => new { s.TakvimId, s.NobetGunKuralId }).ToList();
