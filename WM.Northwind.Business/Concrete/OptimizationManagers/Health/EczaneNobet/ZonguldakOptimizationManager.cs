@@ -190,7 +190,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             if (mazeret)
                 eczaneNobetMazeretNobettenDusenler = _eczaneNobetMazeretService.GetEczaneNobetMazeretSayilari(baslangicTarihi, bitisTarihi, nobetGrupIdListe);
 
-            var eczaneNobetGruplarTumu = _eczaneNobetGrupService.GetDetaylar(nobetGrupIdListe, baslangicTarihi, bitisTarihi)
+            var eczaneNobetGruplarTumu = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(baslangicTarihi, bitisTarihi, nobetGrupGorevTiplerTumu.Select(s => s.Id).ToList())
                 .Where(w => !eczaneNobetMazeretNobettenDusenler.Select(s => s.EczaneNobetGrupId).Contains(w.Id)
                 //&& w.EczaneAdi == "ÖZGÜR"
                 ).ToList();
