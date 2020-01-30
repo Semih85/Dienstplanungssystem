@@ -2986,20 +2986,20 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                      //g.EczaneNobetGrupBaslamaTarihi,
                      g.EczaneId,
                      g.EczaneAdi,
-                     g.NobetGrupAdi,
-                     g.NobetGrupId,
+                     //g.NobetGrupAdi,
+                     //g.NobetGrupId,
                      //g.NobetGorevTipId,
-                     g.NobetAltGrupId
+                     //g.NobetAltGrupId
                  })
                  .Select(s => new EczaneNobetGrupGunKuralIstatistikYatay
                  {
                      //EczaneNobetGrupId = s.Key.EczaneNobetGrupId,
                      EczaneId = s.Key.EczaneId,
                      EczaneAdi = s.Key.EczaneAdi,
-                     NobetGrupId = s.Key.NobetGrupId,
-                     NobetGrupAdi = s.Key.NobetGrupAdi,
+                     //NobetGrupId = s.Key.NobetGrupId,
+                     //NobetGrupAdi = s.Key.NobetGrupAdi,
                      //NobetGorevTipId = s.Key.NobetGorevTipId,
-                     NobetAltGrupId = s.Key.NobetAltGrupId,
+                     //NobetAltGrupId = s.Key.NobetAltGrupId,
 
                      NobetSayisiToplam = s.Sum(f => f.NobetSayisiGercek),
                      SonNobetTarihi = s.Sum(f => f.NobetSayisi) > 0
