@@ -334,14 +334,18 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 //RedirectToAction("PivotCozum", "EczaneNobetSonuc",
                 //new { area = "EczaneNobet", nobetGrup = eczaneNobetModelCoz.NobetGrupId, yilBaslangic = eczaneNobetModelCoz.BaslangicTarihi.Year, yilBitis = eczaneNobetModelCoz.BitisTarihi.Year });
             }
-            else if (eczaneNobetModelCoz.CozumTercih == 0 && eczaneNobetModelCoz.NobetGrupId.Count() > 1)
+            else if (eczaneNobetModelCoz.CozumTercih == 0 && eczaneNobetModelCoz.NobetGrupId.Length > 1)
             {
                 return RedirectToAction("PivotSonuclar", "EczaneNobetSonuc");
 
                 //return RedirectToAction("PivotCozum", "EczaneNobetSonuc",
                 //    new { area = "EczaneNobet", nobetGrup = eczaneNobetModelCoz.NobetGrupId, yilBaslangic = eczaneNobetModelCoz.BaslangicTarihi.Year, yilBitis = eczaneNobetModelCoz.BitisTarihi.Year });
             }
-            else if (nobetUstGrup.Id == 6 || nobetUstGrup.Id == 7 || nobetUstGrup.Id == 8)
+            else if (nobetUstGrup.Id == 6 //bartın
+                || nobetUstGrup.Id == 7 //zonguldak
+                || nobetUstGrup.Id == 8 //iskenderun
+                //|| nobetUstGrup.Id == 13//ordu
+                )
             {
                 return RedirectToAction("PivotSonuclar", "EczaneNobetSonuc");
 
