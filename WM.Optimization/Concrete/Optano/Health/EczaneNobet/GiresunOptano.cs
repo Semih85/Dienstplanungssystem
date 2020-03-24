@@ -2159,7 +2159,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 #endregion
 
-                #region istek ve mazeretler
+                #region istek ve mazeret
 
                 var istegiKarsilaKisit = new KpIstegiKarsila
                 {
