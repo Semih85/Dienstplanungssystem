@@ -452,7 +452,8 @@
 
                 var myInfoWindowContent;
                 var tur;
-                if (model.NobetciEczaneler[f].NobetUstGrupId == 4) {
+                if (model.NobetciEczaneler[f].NobetUstGrupId == 4
+                    || model.NobetciEczaneler[f].NobetUstGrupId == 13) {
                     if (model.NobetciEczaneler[f].NobetGorevTipAdi.substring(14) == "Gece") {
                         myInfoWindowContent = "<h6>" + model.NobetciEczaneler[f].Adi
                             + "<br/>"
