@@ -379,7 +379,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var eczaneMesafeler = mesafeler.Where(w => w.Mesafe <= mesafeKriter).ToList();
 
-            var mesafeKontrolEczaneler = _eczaneUzaklikMatrisService.GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(mesafeKriter, eczaneMesafeler);
+            var mesafeKontrolEczaneler = _eczaneUzaklikMatrisService.GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(mesafeKriter, eczaneMesafeler, eczaneNobetGruplarTumu);
 
             var mesafeKontrolEczanelerGrupBazli = new List<EczaneGrupDetay>();
 
@@ -393,7 +393,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
                 var eczaneMesafelerGrupBazli = mesafeler.Where(w => w.Mesafe <= mesafeKriterGrupBazli).ToList();
 
-                var mesafeKontrolEczanelerGruplu = _eczaneUzaklikMatrisService.GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(mesafeKriter, eczaneMesafelerGrupBazli)
+                var eczaneNobetGruplarMesafeIcin = eczaneNobetGruplarTumu.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+
+                var mesafeKontrolEczanelerGruplu = _eczaneUzaklikMatrisService.GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(mesafeKriter, eczaneMesafelerGrupBazli, eczaneNobetGruplarMesafeIcin)
                     .Where(w=> w.NobetGrupGorevTipIdFrom == nobetGrupGorevTip.Id).ToList();
 
                 mesafeKontrolEczanelerGrupBazli.AddRange(mesafeKontrolEczanelerGruplu);
