@@ -163,19 +163,23 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return tumListe;
         }
 
-        public List<EczaneGrupDetay> GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(int mesafeKriter, List<EczaneUzaklikMatrisDetay> eczaneMesafeler)
+        public List<EczaneGrupDetay> GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(int mesafeKriter, List<EczaneUzaklikMatrisDetay> eczaneMesafeler, List<EczaneNobetGrupDetay> eczaneNobetGruplar)
         {
             var mesafeKontrolEczaneler = new List<EczaneGrupDetay>();
 
             var nobetUstGrupId = eczaneMesafeler.Select(s => s.NobetUstGrupId).FirstOrDefault();
 
-            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGrupId);
+            //var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGrupId);
 
             foreach (var eczaneMesafe in eczaneMesafeler)
             {
-                var eczaneNobetGrupFrom = eczaneNobetGruplar.FirstOrDefault(x => x.EczaneId == eczaneMesafe.EczaneIdFrom);
-                var eczaneNobetGrupTo = eczaneNobetGruplar.FirstOrDefault(x => x.EczaneId == eczaneMesafe.EczaneIdTo);
+                var eczaneNobetGrupFrom = eczaneNobetGruplar.FirstOrDefault(x => x.EczaneId == eczaneMesafe.EczaneIdFrom) ?? new EczaneNobetGrupDetay();
+                var eczaneNobetGrupTo = eczaneNobetGruplar.FirstOrDefault(x => x.EczaneId == eczaneMesafe.EczaneIdTo) ?? new EczaneNobetGrupDetay();
                 ;
+
+                if (eczaneNobetGrupTo.Id == 0 || eczaneNobetGrupFrom.Id == 0)
+                    continue;
+
                 var eczaneGrupMaster = new EczaneGrupDetay
                 {
                     EczaneGrupTanimId = eczaneMesafe.Id,

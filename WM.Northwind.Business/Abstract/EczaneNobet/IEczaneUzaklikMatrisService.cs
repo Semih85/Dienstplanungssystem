@@ -25,7 +25,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneUzaklikMatrisDetay> GetDetaylar(int nobetUstGrupId, int mesafeKriteri);
         List<EczaneUzaklikMatrisDetay> GetDetaylarByEczaneId(int eczaneId);
         List<EczaneUzaklikMatrisDetay> GetDetaylarByEczaneId(int eczaneId, int mesafe);
-        List<EczaneGrupDetay> GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(int mesafeKriter, List<EczaneUzaklikMatrisDetay> eczaneMesafeler);
+        List<EczaneGrupDetay> GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(int mesafeKriter, List<EczaneUzaklikMatrisDetay> eczaneMesafeler, List<EczaneNobetGrupDetay> eczaneNobetGruplar);
 
         void CokluEkle(List<EczaneUzaklikMatrisDetay> eczaneUzaklikMatrisDetaylar);
     }
