@@ -480,7 +480,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);
 
-                var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, p.EczaneNobetGrup.EczaneAdi);
+                var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, p.EczaneNobetGrup.EczaneAdi, p.Aciklama);
 
                 var kararIndex = p.EczaneNobetTarihAralik
                     .Where(e => ilgiliTarihler.Select(s => s.TakvimId).Contains(e.TakvimId)
@@ -560,8 +560,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             }
 
                             var kontrolEdilecekGruptakiEczaneler = new string[] { 
-                                //"ADALET"
-                                "DÜNYA"
+                                //"DİLEK",
+                                //"ESER"
                             };
 
                             if (eczaneGruplar.Where(w => kontrolEdilecekGruptakiEczaneler.Contains(w.EczaneAdi)).Count() > 0)
@@ -1465,28 +1465,33 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 foreach (var eczaneNobetMazeret in p.EczaneNobetMazeretler)
                 {
-                    var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
-                     //+ $"m{indis}. " +
-                     + $"{eczaneNobetMazeret.Tarih.ToString("dd.MM.yy-ddd.")} - {eczaneNobetMazeret.MazeretAdi}"
-                     //+ $"{eczaneNobetMazeret.MazeretAdi}"
-                     + $"";
-
-                    var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(eczaneNobetMazeret);
-
-                    var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, eczaneNobetMazeret.EczaneAdi);
-
-                    var kararIndex = p.EczaneNobetTarihAralik
-                        .Where(e => e.EczaneNobetGrupId == eczaneNobetMazeret.EczaneNobetGrupId
-                                 && e.TakvimId == eczaneNobetMazeret.TakvimId).ToList();
-
-                    var std = 0;
-                    var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
-                    var cns = Constraint.Equals(exp, std);
-                    p.Model.AddConstraint(cns, kisitAdi);
+                    MazereteGorevYazma(p, eczaneNobetMazeret);
 
                     indis++;
                 }
             }
+        }
+
+        public virtual void MazereteGorevYazma(KpMazereteGorevYazma p, EczaneNobetMazeretDetay eczaneNobetMazeret)
+        {
+            var kisitTanim = $"{p.NobetUstGrupKisit.KisitTanim} "
+             //+ $"m{indis}. " +
+             + $"{eczaneNobetMazeret.Tarih.ToString("dd.MM.yy-ddd.")} - {eczaneNobetMazeret.MazeretAdi}"
+             //+ $"{eczaneNobetMazeret.MazeretAdi}"
+             + $"";
+
+            var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(eczaneNobetMazeret);
+
+            var kisitAdi = IsimleriBirlestir(kisitTanim, nobetGrupBilgisi, eczaneNobetMazeret.EczaneAdi);
+
+            var kararIndex = p.EczaneNobetTarihAralik
+                .Where(e => e.EczaneNobetGrupId == eczaneNobetMazeret.EczaneNobetGrupId
+                         && e.TakvimId == eczaneNobetMazeret.TakvimId).ToList();
+
+            var std = 0;
+            var exp = Expression.Sum(kararIndex.Select(i => p.KararDegiskeni[i]));
+            var cns = Constraint.Equals(exp, std);
+            p.Model.AddConstraint(cns, kisitAdi);
         }
 
         /// <summary>
@@ -2728,7 +2733,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
         private string NobetGrupBilgisiDuzenle(EczaneNobetMazeretDetay eczaneNobetMazeretDetay)
         {
-            return eczaneNobetMazeretDetay.NobetUstGrupId == 4
+            return (eczaneNobetMazeretDetay.NobetUstGrupId == 4  //giresun
+                 || eczaneNobetMazeretDetay.NobetUstGrupId == 13 //ordu
+                 )
                         ? eczaneNobetMazeretDetay.NobetGorevTipAdi
                         : eczaneNobetMazeretDetay.NobetUstGrupId == 5
                         ? ""

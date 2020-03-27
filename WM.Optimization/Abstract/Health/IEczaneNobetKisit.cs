@@ -25,6 +25,7 @@ namespace WM.Optimization.Abstract.Health
         void KumulatifToplamEnFazla(KpKumulatifToplam kumulatifToplamEnFazlaKisitParametreModel);
         void HerAyPespeseGorev(KpHerAyPespeseGorev herAyPespeseGorevKisitParametreModel);
         void MazereteGorevYazma(KpMazereteGorevYazma mazereteGorevYazmaKisitParametreModel);
+        void MazereteGorevYazma(KpMazereteGorevYazma p, EczaneNobetMazeretDetay eczaneNobetMazeret);
         void IstegiKarsila(KpIstegiKarsila istegiKarsilaKisitParametreModel);
         void PespeseFarkliTurNobetYaz(KpPespeseFarkliTurNobet bayramPespeseFarkliTurKisitParametreModel);
 
