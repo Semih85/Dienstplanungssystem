@@ -297,8 +297,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 TalebiKarsila(talebiKarsilaTumu);
 
+                var ilgiliAltGrupId = 79;
                 var altGruplarTumu = data.NobetAltGruplar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
-                var altGrupHastaneCivari = altGruplarTumu.SingleOrDefault(w => w.Id == 55);
+                var altGrupHastaneCivari = altGruplarTumu.SingleOrDefault(w => w.Id == ilgiliAltGrupId);
 
                 if (altGrupHastaneCivari != null)
                 {
@@ -325,7 +326,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     }
 
                     talebiKarsilaAltGrup.Tarihler = tarihlerAltGruplarIcin;
-                    talebiKarsilaAltGrup.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == 55).ToList();
+                    talebiKarsilaAltGrup.EczaneNobetTarihAralikTumu = eczaneNobetTarihAralikGrupBazli.Where(w => w.NobetAltGrupId == ilgiliAltGrupId).ToList();
 
                     TalebiKarsila(talebiKarsilaAltGrup);
                 }
@@ -338,8 +339,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k90")
                 };
 
-                var ilgiliTarihler = tarihler
-                        .Where(w => !(w.GunGrupId == 1 || w.GunGrupId == 4)).ToList();//istisna:cts ve pazar hariç
+                var ilgiliTarihler = tarihler;
+                        //.Where(w => !(w.GunGrupId == 1 || w.GunGrupId == 4)).ToList();//istisna:cts ve pazar hariç
+                        //18.02.2020 tarihinde istisnaının kaldırılması talep edildi.
 
                 HerGunAyniAltGruptanEnFazla1NobetciOlsun(ilgiliTarihler, eczaneNobetTarihAralikGrupBazli, altGruplarTumu, tarihVeAltGrupBazliEnFazla);
 
@@ -1219,7 +1221,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     EczaneGruplar = data.MesafeKontrolEczanelerGrupBazli.Where(w => w.NobetGrupGorevTipIdFrom == nobetGrupGorevTip.Id).ToList(),
                     Tarihler = data.TarihAraligi
                                     .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
-                                             && !(w.GunGrupId == 1 || w.GunGrupId == 4)//istisna:
+                                             //&& !(w.GunGrupId == 1 || w.GunGrupId == 4)//istisna:
+                                             //18.02.2020 tarihinde istisnaının kaldırılması talep edildi.
                                              ).ToList(),
                     NobetGrupGorevTipAdi = nobetGrupGorevTip.NobetGrupGorevTipAdi,
                 };
@@ -1395,8 +1398,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 Model = model,
                 EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
                 EczaneNobetSonuclar = data.EczaneGrupNobetSonuclar,
-                Tarihler = data.TarihAraligi
-                            .Where(w => !(w.GunGrupId == 1 || w.GunGrupId == 4)).ToList(),//istisna:
+                Tarihler = data.TarihAraligi,
+                            //.Where(w => !(w.GunGrupId == 1 || w.GunGrupId == 4)).ToList(),//istisna:
+                            //18.02.2020 tarihinde istisnaının kaldırılması talep edildi.
                 KararDegiskeni = _x,
                 NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k59"),
                 EczaneGruplar = data.MesafeKontrolEczaneler,
@@ -1537,7 +1541,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                                 NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k10"),
                                 Tarihler = data.TarihAraligi,//.Where(w => w.GunGrupId != 2).ToList(),
                                 KararDegiskeni = _x,
-                                KararDegiskeniIkiliEczaneler = _y
+                                KararDegiskeniIkiliEczaneler = _y,
+                                EczaneGruplar = data.EczaneGruplar,
+                                NobetGrupKurallar = data.NobetGrupKurallar.Where(w => w.NobetKuralId == 1).ToList()
                             };
                             AyIcindeSadece1KezAyniGunNobetTutulsun(kpAyIcindeSadece1KezAyniGunNobetDegiskenDonusumlu);
 
