@@ -1675,6 +1675,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var feragatEdenNobetciEczane = _eczaneNobetSonucService.GetDetay2ById(eczaneNobetSonucId);
 
             var nobetGrupGorevTipId = feragatEdenNobetciEczane.NobetGrupGorevTipId;
+
+            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipId)
+                .Where(w => w.BitisTarihi == null).ToList();
+
             var nobetTarihi = feragatEdenNobetciEczane.Tarih;
 
             var pespeseGunAraligi = (int)_nobetGrupKuralService.GetDetay(nobetGrupGorevTipId, 1).Deger;
@@ -1730,7 +1734,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     .Where(w => w.EczaneIdFrom == nobetTarihindekiDigerEczane.EczaneId
                              || w.EczaneIdTo == nobetTarihindekiDigerEczane.EczaneId).ToList();
 
-                var mesafeKontrolEczaneler2 = _eczaneUzaklikMatrisService.GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(mesafeKriter, eczaneMesafelerDigerEczaneler);
+                var mesafeKontrolEczaneler2 = _eczaneUzaklikMatrisService.GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(mesafeKriter, eczaneMesafelerDigerEczaneler, eczaneNobetGruplar);
 
                 mesafeKontrolEczaneler.AddRange(mesafeKontrolEczaneler2);
             }
@@ -1740,9 +1744,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             nobetTarihindekiDigerEczanelerinEsGruplari.AddRange(mesafeKontrolEczaneler);
 
             var eklenecekEczanelerinEsGrupTanimlari = nobetTarihindekiDigerEczanelerinEsGruplari.Select(s => new { s.EczaneGrupTanimId, s.EczaneGrupTanimAdi }).Distinct().ToList();
-
-            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(nobetGrupGorevTipId)
-                .Where(w => w.BitisTarihi == null).ToList();
 
             var feragatEdenNobetciEczaneDetay = sonuclar
                 .Where(w => w.Id == eczaneNobetSonucId).SingleOrDefault();
@@ -1916,6 +1917,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var gunlukSonuclar = _eczaneNobetSonucService.GetDetaylarGunluk(nobetTarihi, nobetUstGrupId)
                        .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)
+                       .OrderBy(o => o.Tarih)
+                       .ThenBy(o => o.EczaneId)
                 .ToList();
 
             var eczanelerArasiMesafeler = new List<NobetciEczaneMesafe>();
@@ -1923,15 +1926,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var sonucSayi = gunlukSonuclar.Count;
 
             var mesafeler = _eczaneUzaklikMatrisService.GetDetaylar(nobetUstGrupId);
-            var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGrupId);
+            //var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGrupId);
 
             for (int i = 0; i < sonucSayi - 1; i++)
             {
                 for (int j = i + 1; j < sonucSayi; j++)
                 {
                     var s = _eczaneUzaklikMatrisService.GetDetay(gunlukSonuclar[i].EczaneId, gunlukSonuclar[j].EczaneId, mesafeler);
-                    var eczaneFrom = eczaneNobetGruplar.SingleOrDefault(x => x.EczaneId == gunlukSonuclar[i].EczaneId) ?? new EczaneNobetGrupDetay();
-                    var eczaneTo = eczaneNobetGruplar.SingleOrDefault(x => x.EczaneId == gunlukSonuclar[j].EczaneId) ?? new EczaneNobetGrupDetay();
+                    var eczaneFrom = gunlukSonuclar[i]; // eczaneNobetGruplar.FirstOrDefault(x => x.Id == gunlukSonuclar[i].EczaneNobetGrupId) ?? new EczaneNobetGrupDetay();
+                    var eczaneTo = gunlukSonuclar[j];//eczaneNobetGruplar.FirstOrDefault(x => x.Id == gunlukSonuclar[j].EczaneNobetGrupId) ?? new EczaneNobetGrupDetay();
 
                     var m = new NobetciEczaneMesafe
                     {
@@ -1945,9 +1948,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         EczaneNobetGrupIdFrom = eczaneFrom.Id,
                         EczaneNobetGrupIdTo = eczaneTo.Id,
                         NobetGrupGorevTipIdTo = eczaneTo.NobetGrupGorevTipId,
-                        NobetGrupGorevTipAdiTo = eczaneTo.NobetGrupGorevTipAdi,
+                        NobetGrupGorevTipAdiTo = eczaneTo.NobetGrupAdi + " " + eczaneTo.NobetGorevTipAdi,
                         NobetGrupGorevTipIdFrom = eczaneFrom.NobetGrupGorevTipId,
-                        NobetGrupGorevTipAdiFrom = eczaneFrom.NobetGrupGorevTipAdi
+                        NobetGrupGorevTipAdiFrom = eczaneFrom.NobetGrupAdi + " " + eczaneFrom.NobetGorevTipAdi
                     };
 
                     eczanelerArasiMesafeler.Add(m);
