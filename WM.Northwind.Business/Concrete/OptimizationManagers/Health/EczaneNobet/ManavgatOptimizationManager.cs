@@ -181,7 +181,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             if (baslangicTarihi < nobetUstGrupBaslangicTarihi)
                 throw new Exception($"Nöbet başlangıç tarihi <strong>({baslangicTarihi.ToShortDateString()})</strong> üst grup başlama tarihinden <strong>({nobetUstGrupBaslangicTarihi.ToShortDateString()})</strong> küçük olamaz.");
-            
+
             var debugYapilacakEczaneler = _debugEczaneService.GetDetaylarAktifOlanlar(nobetUstGrupId);
 
             var nobetGruplar = _nobetGrupService.GetDetaylar(nobetGrupIdListe).OrderBy(s => s.Id).ToList();
@@ -331,6 +331,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var oncekiAylardaAyniGunNobetTutanEczaneler = new List<EczaneCiftGrup>();
 
             var altGruplarlaAyniGunNobetTutma = _nobetUstGrupKisitService.GetDetay(29, nobetUstGrupId);
+            var altGruplarlaAyniGunNobetTutmaPerifer = (NobetUstGrupKisitDetay)altGruplarlaAyniGunNobetTutma.Clone();
+            altGruplarlaAyniGunNobetTutmaPerifer.SagTarafDegeri = 2;
 
             var eczaneNobetSonuclarAltGruplaAyniGun = new List<EczaneNobetSonucListe2>();
             var altGruplarlaAyniGunNobetTutmayacakEczaneler = new List<EczaneGrupDetay>();
@@ -346,12 +348,50 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
                 var ayniGunNobetTutmasiTakipEdilecekGruplar = new int[]
                 {
-                    64//Manavgat-1
+                    54, //demokrasi
+                    56, //karşı yaka
+                    57  //perifer
                 };
 
                 var altGrubuOlanNobetGruplar = new int[]
                 {
-                    64//Manavgat-1
+                    53//hastane
+                };
+
+                var ayniGunNobetTutmasiTakipEdilecekGruplarPerifer_Demokrasi = new int[]
+                {
+                    54//demokrasi
+                };
+
+                var altGrubuOlanNobetGruplar_Demokrasi = new int[]
+                {
+                    //54, //demokrasi
+                    56, //karşı yaka
+                    57  //perifer                    
+                };
+
+                var ayniGunNobetTutmasiTakipEdilecekGruplarPerifer_KarsiYaka = new int[]
+                {
+                    56//karşı yaka
+                };
+
+                var altGrubuOlanNobetGruplar_KarsiYaka = new int[]
+                {
+                    54, //demokrasi
+                    //56, //karşı yaka
+                    57  //perifer
+                };
+
+                var ayniGunNobetTutmasiTakipEdilecekGruplarPerifer_Perifer = new int[]
+                {
+                    57//perifer
+                };
+
+                var altGrubuOlanNobetGruplar_Perifer = new int[]
+                {
+                    54, //demokrasi
+                    56, //karşı yaka
+                    //57  //perifer
                 };
 
                 var eczaneNobetGruplarAltGruplaAyniGun = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(baslangicTarihi, bitisTarihi, altGrupluTakipEdilecekNobetGrupGorevTipIdList)
@@ -360,15 +400,53 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 eczaneNobetSonuclarAltGruplaAyniGun = eczaneNobetSonuclar
                         .Where(w => altGrupluTakipEdilecekNobetGrupGorevTipIdList.Contains(w.NobetGrupGorevTipId)).ToList();
 
-                altGruplarlaAyniGunNobetTutmayacakEczaneler = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturManavgat(
-                    eczaneNobetSonuclarAltGruplaAyniGun,
-                    eczaneNobetGruplarAltGruplaAyniGun,
-                    eczaneNobetGrupAltGruplar,
-                    altGruplarlaAyniGunNobetTutma,
-                    nobetUstGrupBaslangicTarihi,
-                    ayniGunNobetTutmasiTakipEdilecekGruplar,
-                    altGrubuOlanNobetGruplar,
-                    indisId);
+                var altGruplarlaAyniGunNobetTutmayacakEczanelerPerifer_Hastane = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturManavgatAltGruplu(
+                        eczaneNobetSonuclarAltGruplaAyniGun,
+                        eczaneNobetGruplarAltGruplaAyniGun,
+                        eczaneNobetGrupAltGruplar,
+                        altGruplarlaAyniGunNobetTutma,
+                        nobetUstGrupBaslangicTarihi,
+                        ayniGunNobetTutmasiTakipEdilecekGruplar,
+                        altGrubuOlanNobetGruplar,
+                        indisId);
+
+                altGruplarlaAyniGunNobetTutmayacakEczaneler.AddRange(altGruplarlaAyniGunNobetTutmayacakEczanelerPerifer_Hastane);
+
+                var altGruplarlaAyniGunNobetTutmayacakEczanelerPerifer_Demokrasi = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturManavgatAltGruplu(
+                        eczaneNobetSonuclarAltGruplaAyniGun,
+                        eczaneNobetGruplarAltGruplaAyniGun,
+                        eczaneNobetGrupAltGruplar,
+                        altGruplarlaAyniGunNobetTutmaPerifer,
+                        nobetUstGrupBaslangicTarihi,
+                        ayniGunNobetTutmasiTakipEdilecekGruplarPerifer_Demokrasi,
+                        altGrubuOlanNobetGruplar_Demokrasi,
+                        indisId);
+
+                altGruplarlaAyniGunNobetTutmayacakEczaneler.AddRange(altGruplarlaAyniGunNobetTutmayacakEczanelerPerifer_Demokrasi);
+                
+                var altGruplarlaAyniGunNobetTutmayacakEczanelerPerifer_KarsiYaka = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturManavgatAltGruplu(
+                        eczaneNobetSonuclarAltGruplaAyniGun,
+                        eczaneNobetGruplarAltGruplaAyniGun,
+                        eczaneNobetGrupAltGruplar,
+                        altGruplarlaAyniGunNobetTutmaPerifer,
+                        nobetUstGrupBaslangicTarihi,
+                        ayniGunNobetTutmasiTakipEdilecekGruplarPerifer_KarsiYaka,
+                        altGrubuOlanNobetGruplar_KarsiYaka,
+                        indisId);
+
+                //altGruplarlaAyniGunNobetTutmayacakEczaneler.AddRange(altGruplarlaAyniGunNobetTutmayacakEczanelerPerifer_KarsiYaka);
+
+                var altGruplarlaAyniGunNobetTutmayacakEczanelerPerifer_Perifer = _eczaneNobetOrtakService.AltGruplarlaSiraliNobetListesiniOlusturManavgatAltGruplu(
+                        eczaneNobetSonuclarAltGruplaAyniGun,
+                        eczaneNobetGruplarAltGruplaAyniGun,
+                        eczaneNobetGrupAltGruplar,
+                        altGruplarlaAyniGunNobetTutmaPerifer,
+                        nobetUstGrupBaslangicTarihi,
+                        ayniGunNobetTutmasiTakipEdilecekGruplarPerifer_Perifer,
+                        altGrubuOlanNobetGruplar_Perifer,
+                        indisId);
+
+                //altGruplarlaAyniGunNobetTutmayacakEczaneler.AddRange(altGruplarlaAyniGunNobetTutmayacakEczanelerPerifer_Perifer);
             }
 
             #endregion

@@ -1104,145 +1104,41 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             EsGruptakiEczanelereAyniGunNobetYazma(esGrubaAyniGunNobetYazmaEczaneGruplar);
 
-            #endregion
-
+            #endregion 
+            
             #region Alt gruplar (aynı gün nöbet)
 
-            var altGrupluTakipEdilecekNobetGrupGorevTipIdList =
+            var altGrupluTakipEdilecekNobetGrupIdList =
                 new List<int> {
                             64, //manavgat-1
-                            //65  //manavgat-2
                 };
-
             //altGruplarlaAyniGunNobetTutmayacakEczaneNobetTarihAralik
             var eczaneNobetTarihAralikAtlGruplu = data.EczaneNobetTarihAralik
-                .Where(w => altGrupluTakipEdilecekNobetGrupGorevTipIdList.Contains(w.NobetGrupGorevTipId)).ToList();
+                .Where(w => altGrupluTakipEdilecekNobetGrupIdList.Contains(w.NobetGrupId)).ToList();
 
-            //kpEsGrubaAyniGunNobetYazma.EczaneNobetTarihAralik = eczaneNobetTarihAralikAtlGruplu;
-            //kpEsGrubaAyniGunNobetYazma.NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k29");
+            kpEsGrubaAyniGunNobetYazma.EczaneNobetTarihAralik = eczaneNobetTarihAralikAtlGruplu;
+            kpEsGrubaAyniGunNobetYazma.NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k29");
 
             var gunGruplar = data.TarihAraligi
                 .Select(s => new { s.GunGrupId, s.GunGrupAdi })
                 .Distinct()
                 .OrderBy(o => o.GunGrupId).ToList();
 
-            foreach (var gunGrup in gunGruplar.Where(w => w.GunGrupId == 3).ToList())
+            foreach (var gunGrup in gunGruplar)
             {
                 kpEsGrubaAyniGunNobetYazma.Tarihler = data.TarihAraligi
-                    .Where(w => altGrupluTakipEdilecekNobetGrupGorevTipIdList.Contains(w.NobetGrupGorevTipId)
-                             && w.GunGrupId == gunGrup.GunGrupId).Distinct().ToList();
+                    .Where(w => altGrupluTakipEdilecekNobetGrupIdList.Contains(w.NobetGrupId)
+                             && w.GunGrupId == gunGrup.GunGrupId).ToList();
 
                 var kpEsGrubaAyniGunNobetYazmaGunGrup = (KpEsGrubaAyniGunNobetYazma)kpEsGrubaAyniGunNobetYazma.Clone();
 
-                kpEsGrubaAyniGunNobetYazmaGunGrup.EczaneNobetTarihAralik = eczaneNobetTarihAralikAtlGruplu;
-                kpEsGrubaAyniGunNobetYazmaGunGrup.NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k29");
                 kpEsGrubaAyniGunNobetYazmaGunGrup.EczaneNobetSonuclar = GetSonuclarByGunGrup(data.EczaneNobetSonuclarAltGruplarlaBirlikte, gunGrup.GunGrupId);
                 kpEsGrubaAyniGunNobetYazmaGunGrup.EczaneGruplar = GetEczaneGruplarByEczaneGrupTanimTipId(data.AltGruplarlaAyniGunNobetTutmayacakEczaneler, gunGrup.GunGrupId);
 
                 EsGruptakiEczanelereAyniGunNobetYazma(kpEsGrubaAyniGunNobetYazmaGunGrup);
             }
 
-            #endregion
-
-            #region Alt gruplarla eşit sayıda nöbet tutulsun
-
-            //1. çarşı - ssk acil
-            //2. ssk   - gelişim palmiye (uzak)
-            //3. ssk   - gelişim yeni devlet
-
-            #region eski nöbetler
-
-            var gecmisNobetSayilari = new List<AltGrupIleTutulanNobetDurumu>
-                {
-                    #region çarşı - acil
-
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1196, NobetAltGrupId=37, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1186, NobetAltGrupId=37, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1187, NobetAltGrupId=37, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1199, NobetAltGrupId=37, NobetSayisi=2},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1436, NobetAltGrupId=37, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1198, NobetAltGrupId=37, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1184, NobetAltGrupId=37, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1197, NobetAltGrupId=37, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1188, NobetAltGrupId=37, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1189, NobetAltGrupId=37, NobetSayisi=2},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1190, NobetAltGrupId=37, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1191, NobetAltGrupId=37, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1192, NobetAltGrupId=37, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1193, NobetAltGrupId=37, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1194, NobetAltGrupId=37, NobetSayisi=2},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1195, NobetAltGrupId=37, NobetSayisi=2},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1200, NobetAltGrupId=37, NobetSayisi=3},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1201, NobetAltGrupId=37, NobetSayisi=2},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1202, NobetAltGrupId=37, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1203, NobetAltGrupId=37, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1185, NobetAltGrupId=37, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1204, NobetAltGrupId=37, NobetSayisi=2},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1205, NobetAltGrupId=37, NobetSayisi=2},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1206, NobetAltGrupId=37, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1207, NobetAltGrupId=37, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1208, NobetAltGrupId=37, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1209, NobetAltGrupId=37, NobetSayisi=2},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 42, EczaneNobetGrupId =1210, NobetAltGrupId=37, NobetSayisi=0},
-
-	                    #endregion
-
-                    #region ssk - palmiye
-
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1251, NobetAltGrupId=43, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1253, NobetAltGrupId=43, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1263, NobetAltGrupId=43, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1242, NobetAltGrupId=43, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1248, NobetAltGrupId=43, NobetSayisi=2},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1255, NobetAltGrupId=43, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1243, NobetAltGrupId=43, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1244, NobetAltGrupId=43, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1256, NobetAltGrupId=43, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1258, NobetAltGrupId=43, NobetSayisi=3},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1245, NobetAltGrupId=43, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1261, NobetAltGrupId=43, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1262, NobetAltGrupId=43, NobetSayisi=0},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1246, NobetAltGrupId=43, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1247, NobetAltGrupId=43, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1249, NobetAltGrupId=43, NobetSayisi=2},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1250, NobetAltGrupId=43, NobetSayisi=3},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1252, NobetAltGrupId=43, NobetSayisi=2},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1254, NobetAltGrupId=43, NobetSayisi=3},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1257, NobetAltGrupId=43, NobetSayisi=2},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1259, NobetAltGrupId=43, NobetSayisi=1},
-                    new AltGrupIleTutulanNobetDurumu { NobetGrupGorevTipId = 53, EczaneNobetGrupId =1260, NobetAltGrupId=43, NobetSayisi=1}
-
-	                    #endregion
-                };
-
-            #endregion
-
-            var ayniGunNobetTakipEdilecekNobetGrupGorevTipIdList = data.AyniGunNobetTakipGrupAltGruplar
-                .Select(s => s.NobetGrupGorevTipId).Distinct().ToList();
-
-            var nobetGrupGorevTipler = data.NobetGrupGorevTipler
-                .Where(w => ayniGunNobetTakipEdilecekNobetGrupGorevTipIdList.Contains(w.Id)).ToList();
-
-            var altGruplarlaAyniGunNobet = new KpAltGruplarlaAyniGunNobetGrupAltGrup
-            {
-                AltGrupIleTutulanNobetDurumlari = gecmisNobetSayilari,
-                AyniGunNobetTakipGrupAltGruplar = data.AyniGunNobetTakipGrupAltGruplar,
-                EczaneNobetAltGrupTarihAralik = data.EczaneNobetAltGrupTarihAralik,
-                EczaneNobetGrupAltGruplar = data.EczaneNobetGrupAltGruplar,
-                EczaneNobetGruplar = data.EczaneNobetGruplar,
-                EczaneNobetSonuclar = data.EczaneGrupNobetSonuclarTumu,
-                EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
-                KararDegiskeni = _x,
-                KararDegiskeni2 = _y,
-                Model = model,
-                NobetGrupGorevTipler = nobetGrupGorevTipler,
-                NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k29"),
-                Tarihler = data.TarihAraligi
-            };
-
-            //AltGruplarlaAyniGunNobetGrupAltGrup(altGruplarlaAyniGunNobet);
-
-            #endregion
+            #endregion  
 
             #endregion
 
