@@ -62,7 +62,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             
             var eczaneGrupIdList = _nobetGrupService.GetListByNobetUstGrupId(nobetUstGrupId).Select(s => s.Id).ToList();
 
-            var nobetciEczaneler = _eczaneNobetGrupService.GetAktifEczaneNobetGrupList(eczaneGrupIdList);
+            var nobetciEczaneler = _eczaneService.GetDetaylar(nobetUstGrupId); //_eczaneNobetGrupService.GetAktifEczaneNobetGrupList(eczaneGrupIdList);
             //nobetciEczaneler = nobetciEczaneler.Take(10).ToList();
 
             var model = new EczaneUzaklikMatrisViewModel
@@ -74,16 +74,16 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             foreach (var item in nobetciEczaneler)
             {
-                var adres = _eczaneService.GetById(item.EczaneId).Adres;
-                var enlem = _eczaneService.GetById(item.EczaneId).Enlem;
-                var boylam = _eczaneService.GetById(item.EczaneId).Boylam;
-                var telefonNo = _eczaneService.GetById(item.EczaneId).TelefonNo;
-                var adresTarifi = _eczaneService.GetById(item.EczaneId).AdresTarifi;
-                var adresTarifiKisa = _eczaneService.GetById(item.EczaneId).AdresTarifiKisa;
+                var adres = item.Adres;
+                var enlem = item.Enlem;
+                var boylam = item.Boylam;
+                var telefonNo = item.TelefonNo;
+                var adresTarifi = item.AdresTarifi;
+                var adresTarifiKisa = item.AdresTarifiKisa;
 
                 model.Eczaneler.Add(new Eczane
                 {
-                    Id = item.EczaneId,
+                    Id = item.Id,
                     Adi = item.EczaneAdi,
                     Adres = adres,
                     Enlem = enlem,
