@@ -804,10 +804,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             //{
             var oncekiBakilacakAySayisi = -oncekiBakilacakAylar;
 
-            if (!(oncekiBakilacakAySayisi >= -8 && oncekiBakilacakAySayisi < 0))
-            {
-                throw new Exception("Geriye dönük aynı gün nöbet tutanlar en az 0 en fazla 8 ay engellenebilir");
-            }
+            //if (!(oncekiBakilacakAySayisi >= -8 && oncekiBakilacakAySayisi < 0))
+            //{
+            //    throw new Exception("Geriye dönük aynı gün nöbet tutanlar en az 0 en fazla 8 ay engellenebilir");
+            //}
 
             var oncekiAylardaBakilacakSonuclar = eczaneNobetSonuclarOncekiAylar.Where(w => w.Tarih >= baslangicTarihi.AddMonths(oncekiBakilacakAySayisi)).ToList();
 
