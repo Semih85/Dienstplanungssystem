@@ -407,6 +407,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             #endregion
 
+            var nobetGrupGorevTipKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrupId);
 
             #region mesafe kontrol
 
@@ -418,12 +419,34 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var eczaneMesafeler = mesafeler.Where(w => w.Mesafe <= mesafeKriter).ToList();
 
-            var mesafeKontrolEczaneler = _eczaneUzaklikMatrisService.GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(mesafeKriter, eczaneMesafeler);
+            var mesafeKontrolEczaneler = _eczaneUzaklikMatrisService.GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(mesafeKriter, eczaneMesafeler, eczaneNobetGruplarTumu);
+
+            var mesafeKontrolEczanelerGrupBazli = new List<EczaneGrupDetay>();
+
+            foreach (var nobetGrupGorevTip in nobetGrupGorevTipler)
+            {
+                var eczanelerArasiMesafeyiKoruGrupBazli = nobetGrupGorevTipKisitlar
+                    .FirstOrDefault(w => w.KisitId == 59
+                                       && w.NobetGrupGorevTipId == nobetGrupGorevTip.Id) ?? new NobetGrupGorevTipKisitDetay();
+
+                var mesafeKriterGrupBazli = (int)eczanelerArasiMesafeyiKoruGrupBazli.SagTarafDegeri;
+
+                var eczaneMesafelerGrupBazli = mesafeler.Where(w => w.Mesafe <= mesafeKriterGrupBazli).ToList();
+
+                var eczaneNobetGruplarMesafeIcin = eczaneNobetGruplarTumu.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
+
+                var mesafeKriteriSon = mesafeKriterGrupBazli == 0 ? mesafeKriter : mesafeKriterGrupBazli;
+
+                var mesafeKontrolEczanelerGruplu = _eczaneUzaklikMatrisService.GetMesafeKriterineGoreKontrolEdilecekEczaneGruplar(mesafeKriteriSon, eczaneMesafelerGrupBazli, eczaneNobetGruplarMesafeIcin)
+                    .Where(w => w.NobetGrupGorevTipIdFrom == nobetGrupGorevTip.Id).ToList();
+
+                mesafeKontrolEczanelerGrupBazli.AddRange(mesafeKontrolEczanelerGruplu);
+            }
 
             #endregion
 
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupId);
-            var grupBazliKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrupId);
+            //var grupBazliKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrupId);
 
             var dataModel = new OrduMerkezDataModel()
             {
@@ -464,8 +487,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneNobetGrupGunKuralIstatistikYataySon3Ay = eczaneNobetGrupGunKuralIstatistikYataySon3Ay,
                 EczaneBazliGunKuralIstatistikYatay = eczaneBazliGunKuralIstatistikYatay,
                 EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
-                NobetGrupGorevTipKisitlar = grupBazliKisitlar,
+                NobetGrupGorevTipKisitlar = nobetGrupGorevTipKisitlar,
                 MesafeKontrolEczaneler = mesafeKontrolEczaneler,
+                MesafeKontrolEczanelerGrupBazli = mesafeKontrolEczanelerGrupBazli,                
                 IkiliEczaneler = ikiliEczaneler,
                 DebugYapilacakEczaneler = debugYapilacakEczaneler
             };
