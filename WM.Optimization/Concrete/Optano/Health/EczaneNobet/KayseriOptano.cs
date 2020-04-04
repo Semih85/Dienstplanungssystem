@@ -361,6 +361,30 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #region eczane bazlı veriler
 
+                    #region eczaneye nöbet yazılamayacak gün mazeretleri.
+
+                    var eczaneyeNobetYazilamaycakGunMazeretleri = new List<EczaneNobetMazeretDetay>();
+
+                    var eczaneyeNobetYazilamaycakTarihler = tarihler
+                        .Where(w => w.Tarih < eczaneNobetGrup.BaslangicTarihi
+                                && (w.Tarih >= eczaneNobetGrup.BitisTarihi || eczaneNobetGrup.BitisTarihi == null)).ToArray();
+
+                    foreach (var eczaneyeNobetYazilamaycakTarih in eczaneyeNobetYazilamaycakTarihler)
+                    {
+                        eczaneyeNobetYazilamaycakGunMazeretleri.Add(new EczaneNobetMazeretDetay
+                        {
+                            TakvimId = eczaneyeNobetYazilamaycakTarih.TakvimId,
+                            Tarih = eczaneyeNobetYazilamaycakTarih.Tarih,
+                            EczaneAdi = eczaneNobetGrup.EczaneAdi,
+                            EczaneNobetGrupId = eczaneNobetGrup.Id,
+                            Aciklama = "Eczaneye sadece açık olduğu dönemde nöbet yazılabilir.",
+                            NobetGrupAdi = eczaneNobetGrup.NobetGrupAdi,
+                            NobetGrupId = eczaneNobetGrup.NobetGrupId
+                        });
+                    }
+
+                    #endregion
+
                     var eczaneKalibrasyon = data.Kalibrasyonlar
                         .Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id).ToList();
 
@@ -399,6 +423,21 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     #endregion
 
                     #region aktif kısıtlar
+
+                    #region kapalı olduğu zamanlarda eczaneye görev yazma.
+
+                    var kapaliOlduguZamanlardaEczaneyeGorevYazma = new KpMazereteGorevYazma
+                    {
+                        Model = model,
+                        EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli,
+                        NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k13"),
+                        EczaneNobetMazeretler = eczaneyeNobetYazilamaycakGunMazeretleri,
+                        KararDegiskeni = _x
+                    };
+
+                    MazereteGorevYazma(kapaliOlduguZamanlardaEczaneyeGorevYazma);
+
+                    #endregion
 
                     #region Peş peşe nöbet
 

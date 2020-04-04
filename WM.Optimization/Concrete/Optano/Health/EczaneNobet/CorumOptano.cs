@@ -308,7 +308,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #region eczane bazlı veriler
 
-                    #region eczaneye nöbet yazılamaycak gün mazeretleri.
+                    #region eczaneye nöbet yazılamayacak gün mazeretleri.
 
                     var eczaneyeNobetYazilamaycakGunMazeretleri = new List<EczaneNobetMazeretDetay>();
 
@@ -407,6 +407,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #region aktif kısıtlar
 
+                    #region kapalı olduğu zamanlarda eczaneye görev yazma.
+
                     var kapaliOlduguZamanlardaEczaneyeGorevYazma = new KpMazereteGorevYazma
                     {
                         Model = model,
@@ -415,7 +417,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         EczaneNobetMazeretler = eczaneyeNobetYazilamaycakGunMazeretleri,
                         KararDegiskeni = _x
                     };
-                    MazereteGorevYazma(kapaliOlduguZamanlardaEczaneyeGorevYazma);
+                    
+                    MazereteGorevYazma(kapaliOlduguZamanlardaEczaneyeGorevYazma); 
+                    
+                    #endregion
 
                     #region Peş peşe nöbet
 
