@@ -45,7 +45,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         : 0,
                         NobetUstGrupBaslamaTarihi = s.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
                         NobetGrupGorevTipBaslamaTarihi = s.NobetGrupGorevTip.BaslamaTarihi,
-                        EnErkenTarihteNobetYazilsinMi = s.EnErkenTarihteNobetYazilsinMi
+                        EnErkenTarihteNobetYazilsinMi = s.EnErkenTarihteNobetYazilsinMi,
+                        EczaneninAcikOlduguSaatAraligi = s.NobetGrupGorevTip.NobetGorevTip.EczaneninAcikOlduguSaatAraligi
                     }).SingleOrDefault(filter);
             }
         }
@@ -81,7 +82,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         : 0,
                         NobetUstGrupBaslamaTarihi = s.NobetGrupGorevTip.NobetGrup.NobetUstGrup.BaslangicTarihi,
                         NobetGrupGorevTipBaslamaTarihi = s.NobetGrupGorevTip.BaslamaTarihi,
-                        EnErkenTarihteNobetYazilsinMi = s.EnErkenTarihteNobetYazilsinMi
+                        EnErkenTarihteNobetYazilsinMi = s.EnErkenTarihteNobetYazilsinMi,
+                        EczaneninAcikOlduguSaatAraligi = s.NobetGrupGorevTip.NobetGorevTip.EczaneninAcikOlduguSaatAraligi
                     });
 
                 return filter == null

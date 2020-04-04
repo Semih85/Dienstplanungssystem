@@ -23,13 +23,30 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string NobetGorevTipAdi { get; set; }
         public string NobetGrupAdi { get; set; }
         public string NobetAltGrupAdi { get; set; }
-        public DateTime KapanisSaati =>
-            NobetGorevTipAdi != null ?
-            DateTime.Now.Hour >= 9 ?
-            DateTime.Today.AddDays(1).AddHours(Convert.ToDouble(NobetGorevTipAdi.Substring(8, 2))).AddMinutes(Convert.ToDouble(NobetGorevTipAdi.Substring(11, 2)))
-            : DateTime.Today.AddHours(Convert.ToDouble(NobetGorevTipAdi.Substring(8, 2))).AddMinutes(Convert.ToDouble(NobetGorevTipAdi.Substring(11, 2)))
-            : DateTime.Now;
-
         public string EczaneninAcikOlduguSaatAraligi { get; set; }
+        public DateTime KapanisSaati => KapanisSaatiniGetir(EczaneninAcikOlduguSaatAraligi);
+
+        //public DateTime KapanisSaati =>
+        //    NobetGorevTipAdi != null ?
+        //    DateTime.Now.Hour >= 9 ?
+        //    DateTime.Today.AddDays(1).AddHours(Convert.ToDouble(NobetGorevTipAdi.Substring(8, 2))).AddMinutes(Convert.ToDouble(NobetGorevTipAdi.Substring(11, 2)))
+        //    : DateTime.Today.AddHours(Convert.ToDouble(NobetGorevTipAdi.Substring(8, 2))).AddMinutes(Convert.ToDouble(NobetGorevTipAdi.Substring(11, 2)))
+        //    : DateTime.Now;
+
+        private DateTime KapanisSaatiniGetir(string eczaneninAcikOlduguSaatAraligi) {
+
+            var kapanisSaati = DateTime.Now;
+
+            var t1 = Convert.ToDouble(eczaneninAcikOlduguSaatAraligi.Substring(8, 2));
+            var t2 = Convert.ToDouble(eczaneninAcikOlduguSaatAraligi.Substring(11, 2));
+
+            kapanisSaati = kapanisSaati != null ?
+                DateTime.Now.Hour >= 9 ?
+                DateTime.Today.AddDays(1).AddHours(t1).AddMinutes(t2)
+                : DateTime.Today.AddHours(t1).AddMinutes(t2)
+                : DateTime.Now;
+
+            return kapanisSaati;
+        }
     }
 }

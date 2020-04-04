@@ -92,7 +92,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     Boylam = boylam,
                     TelefonNo = telefonNo,
                     AdresTarifi = adresTarifi,
-                    AdresTarifiKisa = adresTarifiKisa
+                    AdresTarifiKisa = adresTarifiKisa,
+                    EczaneninAcikOlduguSaatAraligi = item.EczaneninAcikOlduguSaatAraligi
                 });
             }
 
@@ -184,7 +185,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     TelefonNo = telefonNo,
                     AdresTarifi = adresTarifi,
                     AdresTarifiKisa = adresTarifiKisa,
-                    NobetAltGrupAdi = item.NobetAltGrupAdi
+                    NobetAltGrupAdi = item.NobetAltGrupAdi,
+                    EczaneninAcikOlduguSaatAraligi = item.EczaneninAcikOlduguSaatAraligi
                 });
             }
 
@@ -311,7 +313,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     TelefonNo = telefonNo,
                     AdresTarifi = adresTarifi,
                     AdresTarifiKisa = adresTarifiKisa,
-                    NobetAltGrupAdi = item.NobetAltGrupAdi
+                    NobetAltGrupAdi = item.NobetAltGrupAdi,
+                    EczaneninAcikOlduguSaatAraligi = item.EczaneninAcikOlduguSaatAraligi
                 });
             }
 

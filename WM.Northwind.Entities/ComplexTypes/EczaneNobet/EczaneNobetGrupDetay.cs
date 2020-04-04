@@ -49,5 +49,6 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 
         public bool EnErkenTarihteNobetYazilsinMi { get; set; }
         public DateTime? EczaneKapanmaTarihi { get; set; }
+        public string EczaneninAcikOlduguSaatAraligi { get; set; }
     }
 }
