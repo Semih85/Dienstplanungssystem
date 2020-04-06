@@ -309,6 +309,8 @@
     <Content Include="Content\images\flags\de.png" />
     <Content Include="Content\images\flags\en.png" />
     <Content Include="Content\images\flags\tr.png" />
+    <Content Include="Content\images\logoDiyarbakir.png" />
+    <Content Include="Content\images\logoOrdu.png" />
     <Content Include="Content\images\pivotAnimation.gif" />
     <Content Include="Content\images\ekran.png" />
     <Content Include="Content\images\eniyiplansuresi.png" />
@@ -434,6 +436,8 @@
     <Content Include="Scripts\cldr\event.js" />
     <Content Include="Scripts\cldr\supplemental.js" />
     <Content Include="Scripts\cldr\unresolved.js" />
+    <Content Include="Scripts\counter\countup.js" />
+    <Content Include="Scripts\counter\wayPoints.js" />
     <Content Include="Scripts\d3\d3.js" />
     <Content Include="Scripts\d3\d3.min.js" />
     <Content Include="Scripts\datetimepicker\bootstrap-datetimepicker.min.js" />
