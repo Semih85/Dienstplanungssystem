@@ -115,6 +115,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetGrupAltGrup> GetListAltGruptaAcikEczanelerByEczaneNobetGrupId(int eczaneNobetGrupId)
+        {
+            return _eczaneNobetGrupAltGrupDal.GetList(x => x.EczaneNobetGrupId == eczaneNobetGrupId
+            && x.BitisTarihi == null);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetAltGruptakiEczane> GetNobetAltGruptakiEczaneSayisi(int nobetUstGrupId)
         {
             var sonuc = _eczaneNobetGrupAltGrupDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId)
