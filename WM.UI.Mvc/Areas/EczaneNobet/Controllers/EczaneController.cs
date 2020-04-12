@@ -23,6 +23,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IUserService _userService;
         private IUserEczaneService _userEczaneService;
         private IEczaneNobetGrupService _eczaneNobetGrupService;
+        private IEczaneNobetGrupAltGrupService _eczaneNobetGrupAltGrup;
         private INobetUstGrupService _nobetUstGrupService;
         private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
@@ -31,7 +32,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                 IUserEczaneService userEczaneService,
                                 IEczaneNobetGrupService eczaneNobetGrupService,
                                 INobetUstGrupService nobetUstGrupService,
-                                INobetUstGrupSessionService nobetUstGrupSessionService)
+                                INobetUstGrupSessionService nobetUstGrupSessionService,
+                                IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrup)
         {
             _eczaneService = eczaneService;
             _userService = userService;
@@ -39,6 +41,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _nobetUstGrupService = nobetUstGrupService;
             _nobetUstGrupSessionService = nobetUstGrupSessionService;
             _userEczaneService = userEczaneService;
+            _eczaneNobetGrupAltGrup = eczaneNobetGrupAltGrup;
         }
 
         // GET: EczaneNobet/Eczane 
@@ -159,13 +162,64 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (eczane.KapanisTarihi != null)
+                {
+                    var gruplardakiEczaneler = _eczaneNobetGrupService.GetGruptaAktifOlanEczanelerByEczaneId(eczane.Id);
+
+                    foreach (var gruplardakiEczane in gruplardakiEczaneler)
+                    {
+                        KapananEczanelerinNobetGruplariniKapat(eczane, gruplardakiEczane);
+                    }
+                }
+
                 _eczaneService.Update(eczane);
+
                 return RedirectToAction("Index");
             }
             var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
             var nobetUstGruplar = _nobetUstGrupService.GetDetaylar(ustGrupSession.Id);
             ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar.Select(s => new { s.Id, s.Adi }), "Id", "Adi");
             return View(eczane);
+        }
+
+        private void KapananEczanelerinNobetGruplariniKapat(Eczane eczane, EczaneNobetGrup gruplardakiEczane)
+        {
+            var altGruplardakiEczaneler = _eczaneNobetGrupAltGrup.GetListAltGruptaAcikEczanelerByEczaneNobetGrupId(gruplardakiEczane.Id);
+
+            KapananEczaneninAltGruplariniKapat(eczane, altGruplardakiEczaneler);
+
+            var eczaneNobetGrup = new EczaneNobetGrup
+            {
+                Id = gruplardakiEczane.Id,
+                EczaneId = gruplardakiEczane.EczaneId,
+                NobetGrupGorevTipId = gruplardakiEczane.NobetGrupGorevTipId,
+                Aciklama = gruplardakiEczane.Aciklama + " (Eczane Kapandı.)",
+                BaslangicTarihi = gruplardakiEczane.BaslangicTarihi,
+                BitisTarihi = eczane.KapanisTarihi
+            };
+
+            _eczaneNobetGrupService.Update(eczaneNobetGrup);
+        }
+
+        private void KapananEczaneninAltGruplariniKapat(Eczane eczane, List<EczaneNobetGrupAltGrup> altGruplardakiEczaneler)
+        {
+            foreach (var altGruplardakiEczane in altGruplardakiEczaneler)
+            {
+                var eczaneNobetAltGrup = new EczaneNobetGrupAltGrup
+                {
+                    Aciklama = altGruplardakiEczane.Aciklama + " (Eczane Kapandı.)",
+                    BitisTarihi = eczane.KapanisTarihi,
+                    Id = altGruplardakiEczane.Id,
+                    BaslangicTarihi = altGruplardakiEczane.BaslangicTarihi,
+                    EczaneNobetGrupId = altGruplardakiEczane.EczaneNobetGrupId,
+                    NobetAltGrupId = altGruplardakiEczane.NobetAltGrupId
+                };
+
+                //altGruplardakiEczane.BitisTarihi = eczane.KapanisTarihi;
+                //altGruplardakiEczane.Aciklama += " Eczane Kapandı";
+
+                _eczaneNobetGrupAltGrup.Update(eczaneNobetAltGrup);
+            }
         }
 
         // GET: EczaneNobet/Eczane/Delete/5
