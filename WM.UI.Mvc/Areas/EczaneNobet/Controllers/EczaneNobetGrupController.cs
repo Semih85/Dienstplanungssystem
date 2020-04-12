@@ -198,51 +198,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             if (ModelState.IsValid && eklenecekEczaneSayisi > 0)
             {
-                var eklenenNobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
-
-                TempData["EklenenEczane"] = $"{eklenenNobetGrupGorevTip.NobetGrupGorevTipAdi} nöbet grubuna {eczaneNobetGrupCoklu.EczaneId.Count()} adet eczane başarılı bir şekilde eklenmiştir.";
-
-                _eczaneNobetGrupService.CokluEkle(eczaneNobetGruplar);
-
-                var gruptakiEczaneler = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
-                var eczaneIdList = eczaneNobetGruplar.Select(s => s.EczaneId).ToList();
-                var eczaneNobetGrupDetaylar = _eczaneNobetGrupService.GetDetaylar(eczaneIdList, eczaneNobetGrupCoklu.NobetGrupGorevTipId);
-
-                if (eklenenNobetGrupGorevTip.NobetUstGrupId == 2)
-                {//antalya'da planlanan nöbetleri yazmak için
-                    if (eczaneNobetGrupDetaylar.Count > 0)
-                    {//grupta eczaneler var. grup yeni değil. tekli olarak eklenen eczaneler için planlanan nöbetler yeniden yazılacak.
-                        #region planlanan nöbetler - sıralı nöbet yazma (gün grubu bazında)
-
-                        var baslangicTarihi = eczaneNobetGrupDetaylar.Min(s => s.BaslangicTarihi);
-
-                        var sonTarih = baslangicTarihi.AddYears(1);
-
-                        var planlananNobetlerinYazilacagiSonTarih = new DateTime(sonTarih.Year, 12, 31);
-
-                        var planlananNobetlerinYazilacagiNobetGrubu = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
-
-                        _takvimService.SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(planlananNobetlerinYazilacagiNobetGrubu, gruptakiEczaneler, baslangicTarihi, planlananNobetlerinYazilacagiSonTarih);
-
-                        #endregion
-                    }
-                    else
-                    {//gruba ilk kez eczane ekleniyor
-
-                    }
-                }
-
-                var nobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
-                var nobetUstGrupId = nobetGrupGorevTip.NobetUstGrupId;
-
-                if (nobetUstGrupId == 1   //alanya
-                    || nobetUstGrupId == 3//mersin
-                    || nobetUstGrupId == 4//giresun
-                    || nobetUstGrupId == 5//osmaniye
-                    )
-                {
-                    var eklenenIkiliEczaneler = _ayniGunTutulanNobetService.IkiliEczaneleriOlustur(eczaneNobetGrupDetaylar);
-                }
+                NobetGrubunaEczaneleriEkle(eczaneNobetGrupCoklu, eczaneNobetGruplar);
                 //else if (nobetUstGrupId == 1)
                 //{
 
@@ -263,6 +219,55 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             ViewBag.EczaneId = new SelectList(eczaneler, "Id", "Adi", eczaneNobetGrupCoklu.EczaneId);
             ViewBag.NobetGrupGorevTipId = new SelectList(nobetGruplar, "Id", "NobetGrupGorevTipAdi", eczaneNobetGrupCoklu.NobetGrupGorevTipId);
             return View(); //eczaneNobetGrup
+        }
+
+        private void NobetGrubunaEczaneleriEkle(EczaneNobetGrupCoklu eczaneNobetGrupCoklu, List<EczaneNobetGrup> eczaneNobetGruplar)
+        {
+            var eklenenNobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
+
+            TempData["EklenenEczane"] = $"{eklenenNobetGrupGorevTip.NobetGrupGorevTipAdi} nöbet grubuna {eczaneNobetGrupCoklu.EczaneId.Count()} adet eczane başarılı bir şekilde eklenmiştir.";
+
+            _eczaneNobetGrupService.CokluEkle(eczaneNobetGruplar);
+
+            var gruptakiEczaneler = _eczaneNobetGrupService.GetDetaylarByNobetGrupGorevTipler(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
+            var eczaneIdList = eczaneNobetGruplar.Select(s => s.EczaneId).ToList();
+            var eczaneNobetGrupDetaylar = _eczaneNobetGrupService.GetDetaylar(eczaneIdList, eczaneNobetGrupCoklu.NobetGrupGorevTipId);
+
+            if (eklenenNobetGrupGorevTip.NobetUstGrupId == 2)
+            {//antalya'da planlanan nöbetleri yazmak için
+                if (eczaneNobetGrupDetaylar.Count > 0)
+                {//grupta eczaneler var. grup yeni değil. tekli olarak eklenen eczaneler için planlanan nöbetler yeniden yazılacak.
+                    #region planlanan nöbetler - sıralı nöbet yazma (gün grubu bazında)
+
+                    var baslangicTarihi = eczaneNobetGrupDetaylar.Min(s => s.BaslangicTarihi);
+
+                    var sonTarih = baslangicTarihi.AddYears(1);
+
+                    var planlananNobetlerinYazilacagiSonTarih = new DateTime(sonTarih.Year, 12, 31);
+
+                    var planlananNobetlerinYazilacagiNobetGrubu = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
+
+                    _takvimService.SiraliNobetYazGrupBazindaOncekiNobetGrubaGore(planlananNobetlerinYazilacagiNobetGrubu, gruptakiEczaneler, baslangicTarihi, planlananNobetlerinYazilacagiSonTarih);
+
+                    #endregion
+                }
+                else
+                {//gruba ilk kez eczane ekleniyor
+
+                }
+            }
+
+            var nobetGrupGorevTip = _nobetGrupGorevTipService.GetDetayById(eczaneNobetGrupCoklu.NobetGrupGorevTipId);
+            var nobetUstGrupId = nobetGrupGorevTip.NobetUstGrupId;
+
+            if (nobetUstGrupId == 1   //alanya
+                || nobetUstGrupId == 3//mersin
+                || nobetUstGrupId == 4//giresun
+                || nobetUstGrupId == 5//osmaniye
+                )
+            {
+                var eklenenIkiliEczaneler = _ayniGunTutulanNobetService.IkiliEczaneleriOlustur(eczaneNobetGrupDetaylar);
+            }
         }
 
         // GET: EczaneNobet/EczaneNobetGrup/Edit/5
@@ -403,7 +408,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             #endregion
         }
 
-        private bool EczaneGruptaKapaniyorMu(DateTime? eczaneNobetGrupAyrilisTarihi)
+        public bool EczaneGruptaKapaniyorMu(DateTime? eczaneNobetGrupAyrilisTarihi)
         {//ayrılış tarihi null değilse eczane grupta kapanır.
             return eczaneNobetGrupAyrilisTarihi != null;
         }
