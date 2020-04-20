@@ -54,5 +54,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int BorcluNobetSayisiCumartesi { get; set; }
         public int NobetSayisiHaftaSonu { get; set; }
         public DateTime SonNobetTarihiHaftaSonu { get; set; }
+        public int NobetSayisiCumartesiYaz { get; set; }
+        public DateTime SonNobetTarihiCumartesiYaz { get; set; }
     }
 }

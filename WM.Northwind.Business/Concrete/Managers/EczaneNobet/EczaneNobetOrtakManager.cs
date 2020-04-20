@@ -3138,14 +3138,19 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                        ? s.Where(w => w.NobetGunKuralId == 9).Max(f => f.SonNobetTarihi)
                        : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
 
+                   NobetSayisiYilSonu = s.Where(w => w.NobetGunKuralId == 11).Sum(f => f.NobetSayisiGercek),
+                   SonNobetTarihiYilSonu = s.Where(w => w.NobetGunKuralId == 11).Sum(f => f.NobetSayisi) > 0
+                       ? s.Where(w => w.NobetGunKuralId == 11).Max(f => f.SonNobetTarihi)
+                       : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
+
                    NobetSayisi1Ocak = s.Where(w => w.NobetGunKuralId == 12).Sum(f => f.NobetSayisiGercek),
                    SonNobetTarihi1Ocak = s.Where(w => w.NobetGunKuralId == 12).Sum(f => f.NobetSayisi) > 0
                        ? s.Where(w => w.NobetGunKuralId == 12).Max(f => f.SonNobetTarihi)
                        : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
 
-                   NobetSayisiYilSonu = s.Where(w => w.NobetGunKuralId == 11).Sum(f => f.NobetSayisiGercek),
-                   SonNobetTarihiYilSonu = s.Where(w => w.NobetGunKuralId == 11).Sum(f => f.NobetSayisi) > 0
-                       ? s.Where(w => w.NobetGunKuralId == 11).Max(f => f.SonNobetTarihi)
+                   NobetSayisiCumartesiYaz = s.Where(w => w.NobetGunKuralId == 13).Sum(f => f.NobetSayisiGercek),
+                   SonNobetTarihiCumartesiYaz = s.Where(w => w.NobetGunKuralId == 13).Sum(f => f.NobetSayisi) > 0
+                       ? s.Where(w => w.NobetGunKuralId == 13).Max(f => f.SonNobetTarihi)
                        : new DateTime(2010, 1, 1), //s.Key.EczaneNobetGrupBaslamaTarihi,
                }).ToList();
 
