@@ -35,8 +35,8 @@
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action( menu.ActionName, menu.ControllerName, new { area = menu.AreaName })">
                         @if (menu.Id == 1)
-                        {//bu sadece Eczane logosu için
-                            <span class="text-danger bg-light font-weight-bold" data-toggle="tooltip" data-placement="bottom" title="Eczaneler" style="border:solid; border-width:medium">&nbsp;E&nbsp;</span>
+                        {//bu sadece Eczane logosu için  &nbsp;E&nbsp; data-toggle="tooltip" data-placement="bottom" title="Eczaneler"
+                        <span class="text-danger bg-light font-weight-bold" style="border:solid; border-width:medium">&nbsp;Eczaneler&nbsp;</span>
                             @*<img src="~/Content/images/NobetciEczaneLogo2.png" title="Eczaneler" style="height:25px;" />*@
                         }
                         else
