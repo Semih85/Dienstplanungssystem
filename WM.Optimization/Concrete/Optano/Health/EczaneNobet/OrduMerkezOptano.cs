@@ -1417,8 +1417,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 esGrubaAyniGunNobetYazmaMesafeler.NobetGrupGorevTipAdi = nobetGrupGorevTip.NobetGorevTipAdi;
                 esGrubaAyniGunNobetYazmaMesafeler.EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli
                     .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
-                                             && !(w.GunGrupId == 1)//istisna:
-                                                                   //26.03.2020 tarihinde istisnaının kaldırılması talep edildi.
+                                             //&& !(w.GunGrupId == 1)//istisna:
+                                             //26.03.2020 tarihinde istisnanın kaldırılması talep edildi.
+                                             //26.04.2020 tarihinde pazarlarda da dikkate alınsın dendi.
                                              ).ToList();
                 esGrubaAyniGunNobetYazmaMesafeler.EczaneNobetSonuclar = eczaneNobetSonuclarGorevTipBazli;
 
@@ -1433,9 +1434,10 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     Model = model,
                     EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
                     EczaneNobetSonuclar = data.EczaneGrupNobetSonuclar,
-                    Tarihler = data.TarihAraligi
-                    .Where(w => !(w.GunGrupId == 1)).ToList(),//istisna:
+                    Tarihler = data.TarihAraligi,
+                    //.Where(w => !(w.GunGrupId == 1)).ToList(),//istisna:
                     //26.03.2020 tarihinde istisnaının kaldırılması talep edildi.
+                    //26.04.2020 tarihinde pazarlarda da dikkate alınsın dendi.
                     KararDegiskeni = _x,
                     NobetUstGrupKisit = NobetUstGrupKisit(data.Kisitlar, "k59"),
                     EczaneGruplar = data.MesafeKontrolEczaneler,
