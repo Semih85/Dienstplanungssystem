@@ -145,10 +145,10 @@
     <value>In dieser Hinsicht verursacht &lt;b class='text-danger'&gt;der Prozess der Dienstplanung zu viel Zeit, Arbeit und geistige Ermüdung&lt;/b&gt;</value>
   </data>
   <data name="Cikis" xml:space="preserve">
-    <value>Ausloggen</value>
+    <value>Abmelden</value>
   </data>
   <data name="Detaylar" xml:space="preserve">
-    <value>Einzelheiten</value>
+    <value>Mehr dazu</value>
   </data>
   <data name="DilSecenegi" xml:space="preserve">
     <value>Sprache</value>
@@ -269,7 +269,7 @@
     <value>Legen Sie nur Ihre Regeln fest</value>
   </data>
   <data name="SizUgrasmayinZamaninizSizeKalsin" xml:space="preserve">
-    <value>Verschwenden Sie Ihre Zeit nicht</value>
+    <value>Verschwenden Sie keine Zeit</value>
   </data>
   <data name="SurecFazlasiylaDinamiktir" xml:space="preserve">
     <value>Der Prozess ist äußerst dynamisch</value>
