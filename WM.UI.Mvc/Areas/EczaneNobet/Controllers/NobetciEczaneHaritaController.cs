@@ -244,6 +244,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 var telefonNo = eczane.TelefonNo;
                 var adresTarifi = eczane.AdresTarifi;
                 var adresTarifiKisa = eczane.AdresTarifiKisa;
+                //var EczaneninAcikOlduguSaatAraligi = eczane;
 
                 model.NobetciEczaneler.Add(new NobetciEczane
                 {
@@ -258,7 +259,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     TelefonNo = telefonNo,
                     AdresTarifi = adresTarifi,
                     AdresTarifiKisa = adresTarifiKisa,
-                    NobetAltGrupAdi = item.NobetAltGrupAdi
+                    NobetAltGrupAdi = item.NobetAltGrupAdi,
+                    EczaneninAcikOlduguSaatAraligi = item.EczaneninAcikOlduguSaatAraligi
                 });
             }
 
