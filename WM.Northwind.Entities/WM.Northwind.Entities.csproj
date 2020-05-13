@@ -56,6 +56,7 @@
   <ItemGroup>
     <Compile Include="ComplexTypes\EczaneNobet\DebugEczaneDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\EczaneGrupTanimSayisi.cs" />
+    <Compile Include="ComplexTypes\EczaneNobet\EczaneNobetDegisimTalepDetay.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\NobetciEczaneMesafe.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\NobetciEczaneMesafelerViewModel.cs" />
     <Compile Include="ComplexTypes\EczaneNobet\NobetUstGrupKisitCoklu.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Concrete\EczaneNobet\DebugEczane.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneGorevTip.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneGrupTanimTip.cs" />
+    <Compile Include="Concrete\EczaneNobet\EczaneNobetDegisimTalep.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetDegisim.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetFeragat.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetIstek.cs" />
