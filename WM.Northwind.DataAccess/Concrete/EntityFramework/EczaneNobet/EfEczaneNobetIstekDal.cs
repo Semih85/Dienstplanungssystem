@@ -53,7 +53,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupId = t.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                         NobetGorevTipId = t.EczaneNobetGrup.NobetGrupGorevTip.NobetGorevTipId,
                         NobetGorevTipAdi = t.EczaneNobetGrup.NobetGrupGorevTip.NobetGorevTip.Adi,
-                        NobetGrupGorevTipId = t.EczaneNobetGrup.NobetGrupGorevTipId
+                        NobetGrupGorevTipId = t.EczaneNobetGrup.NobetGrupGorevTipId,
+                        Onay = t.Onay
                     }).SingleOrDefault(filter);
             }
         }
@@ -84,7 +85,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                                  NobetUstGrupId = t.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
                                  NobetGorevTipId = t.EczaneNobetGrup.NobetGrupGorevTip.NobetGorevTipId,
                                  NobetGorevTipAdi = t.EczaneNobetGrup.NobetGrupGorevTip.NobetGorevTip.Adi,
-                                 NobetGrupGorevTipId = t.EczaneNobetGrup.NobetGrupGorevTipId
+                                 NobetGrupGorevTipId = t.EczaneNobetGrup.NobetGrupGorevTipId,
+                                 Onay = t.Onay
                              });
                 return filter == null
                    ? liste.ToList()

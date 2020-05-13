@@ -18,6 +18,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public int TakvimId { get; set; }
         [Display(Name = "Açıklama")]
         public string Aciklama { get; set; }
+        public bool Onay { get; set; }
 
         public virtual EczaneNobetGrup EczaneNobetGrup { get; set; }
         public virtual Istek Istek { get; set; }
