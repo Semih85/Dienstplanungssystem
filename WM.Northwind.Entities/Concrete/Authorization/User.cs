@@ -53,11 +53,14 @@ namespace WM.Northwind.Entities.Concrete.Authorization
         [Display(Name = "Telefon")]
         public string TelefonNumarasi => new Iletisim().GetTelefonNumarasi();
 
+        public string CihazId { get; set; }
+
         public virtual List<UserRole> UserRoles { get; set; }
         public virtual List<UserEczaneOda> UserEczaneOdalar { get; set; }
         public virtual List<UserNobetUstGrup> UserNobetUstGruplar { get; set; }
         public virtual List<UserEczane> UserEczaneler { get; set; }
         public virtual List<EczaneNobetDegisim> EczaneNobetDegisimler { get; set; }
+        public virtual List<EczaneNobetDegisimArz> EczaneNobetDegisimArzlar { get; set; }
         public virtual List<EczaneNobetDegisimTalep> EczaneNobetDegisimTalepler { get; set; }
         public virtual List<EczaneNobetSanalSonuc> EczaneNobetSanalSonuclar { get; set; }
     }
