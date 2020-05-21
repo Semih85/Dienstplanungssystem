@@ -20,7 +20,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
 
             #region columns
             this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.EczaneNobetSonucId).HasColumnName("EczaneNobetSonucId");
+            this.Property(t => t.EczaneNobetDegisimArzId).HasColumnName("EczaneNobetDegisimArzId");
             this.Property(t => t.EczaneNobetGrupId).HasColumnName("EczaneNobetGrupId");
             this.Property(t => t.UserId).HasColumnName("UserId");
             this.Property(t => t.KayitTarihi).HasColumnName("KayitTarihi");
@@ -36,7 +36,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.Aciklama).IsRequired()
                         .HasMaxLength(400);
 
-            this.Property(t => t.EczaneNobetSonucId)
+            this.Property(t => t.EczaneNobetDegisimArzId)
                 .IsRequired()
                 .HasColumnAnnotation("Index",
                     new IndexAnnotation(
@@ -63,9 +63,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
                         .HasForeignKey(t => t.EczaneNobetGrupId)
                         .WillCascadeOnDelete(false);
 
-            this.HasRequired(t => t.EczaneNobetSonuc)
+            this.HasRequired(t => t.EczaneNobetDegisimArz)
                         .WithMany(et => et.EczaneNobetDegisimTalepler)
-                        .HasForeignKey(t => t.EczaneNobetSonucId)
+                        .HasForeignKey(t => t.EczaneNobetDegisimArzId)
                         .WillCascadeOnDelete(false);
 
             this.HasRequired(t => t.User)

@@ -43,9 +43,9 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _eczaneNobetDegisimTalepDal.Get(x => x.Id == eczaneNobetDegisimId);
         }
 
-        public EczaneNobetDegisimTalep GetBySonucIdVeNobetGrupId(int eczaneNobetSonucId, int eczaneNobetGrupId)
+        public EczaneNobetDegisimTalep GetBySonucIdVeNobetGrupId(int eczaneNobetDegisimArzId, int eczaneNobetGrupId)
         {
-            return _eczaneNobetDegisimTalepDal.Get(x => x.EczaneNobetSonucId == eczaneNobetSonucId && x.EczaneNobetGrupId == eczaneNobetGrupId);
+            return _eczaneNobetDegisimTalepDal.Get(x => x.EczaneNobetDegisimArzId == eczaneNobetDegisimArzId && x.EczaneNobetGrupId == eczaneNobetGrupId);
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
