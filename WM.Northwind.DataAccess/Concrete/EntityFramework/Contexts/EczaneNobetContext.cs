@@ -17,7 +17,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             //Database.SetInitializer(new EczaneNobetInitializerAlanya());
             //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EczaneNobetContext>());
 
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<EczaneNobetContext, Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<EczaneNobetContext, Configuration>());
         }
 
         public EczaneNobetContext() : base("Name=EczaneNobetContext")
@@ -30,6 +30,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<MenuRole> MenuRoles { get; set; }
         public DbSet<MenuAltRole> MenuAltRoles { get; set; }
+        public DbSet<MobilUygulamaYetki> MobilUygulamaYetkiler { get; set; }
+        public DbSet<NobetUstGrupMobilUygulamaYetki> NobetUstGrupMobilUygulamaYetkiler { get; set; }
 
         public DbSet<Menu> Menuler { get; set; }
         public DbSet<MenuAlt> MenuAltlar { get; set; }
@@ -129,6 +131,10 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
 
             modelBuilder.Configurations.Add(new MenuRoleMap());
             modelBuilder.Configurations.Add(new MenuAltRoleMap());
+
+            modelBuilder.Configurations.Add(new MobilUygulamaYetkiMap());
+            modelBuilder.Configurations.Add(new NobetUstGrupMobilUygulamaYetkiMap());            
+
 
             modelBuilder.Configurations.Add(new MenuMap());
             modelBuilder.Configurations.Add(new MenuAltMap());

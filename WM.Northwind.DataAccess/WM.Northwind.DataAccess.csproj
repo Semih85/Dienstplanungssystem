@@ -73,6 +73,8 @@
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetMuafiyetDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSanalSonucDal.cs" />
     <Compile Include="Abstract\EczaneNobet\ILogDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMobilUygulamaYetkiDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetUstGrupMobilUygulamaYetkiDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IRaporDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IRaporKategoriDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucDemoDal.cs" />
@@ -160,6 +162,8 @@
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetMuafiyetDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSanalSonucDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfLogDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMobilUygulamaYetkiDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetUstGrupMobilUygulamaYetkiDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporKategoriDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSonucDemoDal.cs" />
@@ -231,6 +235,8 @@
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetFeragatMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetGrupAltGrupMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSanalSonucMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MobilUygulamaYetkiMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetUstGrupMobilUygulamaYetkiMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporKategoriMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSonucEskiMap.cs" />

@@ -41,6 +41,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public virtual List<KalibrasyonTip> KalibrasyonTipler { get; set; }
         public virtual List<RaporNobetUstGrup>  RaporNobetUstGruplar { get; set; }
         //public virtual List<AyniGunTutulanNobet> AyniGunTutulanNobetler { get; set; }
+        public virtual List<NobetUstGrupMobilUygulamaYetki> NobetUstGrupMobilUygulamaYetkiler { get; set; }
 
     }
 }
