@@ -45,6 +45,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<NobetUstGrupKisit> NobetUstGrupKisitlar { get; set; }
         public DbSet<EczaneNobetFeragat> EczaneNobetFeragatlar { get; set; }
         public DbSet<EczaneNobetDegisim> EczaneNobetDegisimler { get; set; }
+        public DbSet<EczaneNobetDegisimArz> EczaneNobetDegisimArzlar { get; set; }
         public DbSet<EczaneNobetDegisimTalep> EczaneNobetDegisimTalepler { get; set; }
 
         public DbSet<Sehir> Sehirler { get; set; }
@@ -194,7 +195,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new NobetUstGrupKisitMap());
             modelBuilder.Configurations.Add(new EczaneNobetFeragatMap());
             modelBuilder.Configurations.Add(new EczaneNobetDegisimMap());
+            modelBuilder.Configurations.Add(new EczaneNobetDegisimArzMap());
             modelBuilder.Configurations.Add(new EczaneNobetDegisimTalepMap());
+
             modelBuilder.Configurations.Add(new EczaneNobetSonucEskiMap());
             modelBuilder.Configurations.Add(new NobetDurumTipMap());
             modelBuilder.Configurations.Add(new NobetDurumMap());

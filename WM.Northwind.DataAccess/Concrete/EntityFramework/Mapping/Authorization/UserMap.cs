@@ -31,6 +31,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.Authorization
             this.Property(t => t.BaslamaTarihi).HasColumnName("BaslamaTarihi");
             this.Property(t => t.BitisTarihi).HasColumnName("BitisTarihi");
             this.Property(t => t.TelefonNo).HasColumnName("TelefonNo");
+            this.Property(t => t.CihazId).HasColumnName("CihazId");
 
             #endregion
 
@@ -76,6 +77,10 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.Authorization
 
             this.Property(t => t.TelefonNo)
                 .HasMaxLength(10)
+                .IsOptional();
+
+            this.Property(t => t.CihazId)
+                .IsMaxLength()
                 .IsOptional();
             #endregion
 

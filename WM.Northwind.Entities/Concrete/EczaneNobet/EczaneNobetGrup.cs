@@ -38,6 +38,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public virtual List<EczaneNobetMazeret> EczaneNobetMazeretler { get; set; }
         public virtual List<EczaneNobetIstek> EczaneNobetIstekler { get; set; }
         public virtual List<EczaneNobetDegisim> EczaneNobetDegisimler { get; set; }
+        public virtual List<EczaneNobetDegisimArz> EczaneNobetDegisimArzlar { get; set; }
         public virtual List<EczaneNobetDegisimTalep> EczaneNobetDegisimTalepler { get; set; }
         public virtual List<Kalibrasyon> Kalibrasyonlar { get; set; }
         public virtual List<EczaneNobetFeragat> EczaneNobetFeragatlar { get; set; }

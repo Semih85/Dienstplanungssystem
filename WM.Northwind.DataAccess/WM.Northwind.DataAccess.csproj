@@ -65,6 +65,7 @@
     <Compile Include="Abstract\EczaneNobet\IDebugEczaneDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneGorevTipDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneGrupTanimTipDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetDegisimArzDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetDegisimTalepDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetDegisimDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetFeragatDal.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneGorevTipDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneGrupTanimTipDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetDegisimArzDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetDegisimTalepDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetDegisimDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetFeragatDal.cs" />
@@ -223,6 +225,7 @@
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneGorevTipMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneGrupTanimTipMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneIlceMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetDegisimArzMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetDegisimTalepMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetDegisimMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetFeragatMap.cs" />

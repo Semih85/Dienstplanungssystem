@@ -220,6 +220,7 @@
     <Compile Include="Concrete\EczaneNobet\DebugEczane.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneGorevTip.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneGrupTanimTip.cs" />
+    <Compile Include="Concrete\EczaneNobet\EczaneNobetDegisimArz.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetDegisimTalep.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetDegisim.cs" />
     <Compile Include="Concrete\EczaneNobet\EczaneNobetFeragat.cs" />
