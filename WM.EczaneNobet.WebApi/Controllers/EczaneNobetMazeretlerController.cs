@@ -44,7 +44,7 @@ namespace WM.EczaneNobet.WebApi.Controllers
         [Route("eczane-nobet-mazeretler/{eczaneNobetGrupId:int:min(1)}")]
         [HttpGet]
         public List<EczaneNobetMazeretDetay> Get(int eczaneNobetGrupId)
-        {
+        {//ates
             DateTime? dt = Convert.ToDateTime("2018-01-01");
             DateTime? dt2 = Convert.ToDateTime("2021-01-01");
             return _eczaneNobetMazeretService.GetDetaylarByEczaneNobetId(DateTime.Now.AddYears(-1), DateTime.Now.AddYears(1), eczaneNobetGrupId)
