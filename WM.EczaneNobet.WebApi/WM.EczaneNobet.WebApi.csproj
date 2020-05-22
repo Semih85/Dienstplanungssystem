@@ -140,15 +140,36 @@
   <ItemGroup>
     <Compile Include="App_Start\Ninject.Web.Common.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\EczaneNobetDegisimArzController.cs" />
+    <Compile Include="Controllers\EczaneNobetDegisimController.cs" />
+    <Compile Include="Controllers\EczaneNobetDegisimTalepController.cs" />
     <Compile Include="Controllers\EczaneNobetMazeretlerController.cs" />
     <Compile Include="Controllers\EczaneNobetSonuclarController.cs" />
     <Compile Include="Controllers\EkranlarController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MazeretController.cs" />
+    <Compile Include="Controllers\MazeretTurController.cs" />
     <Compile Include="Controllers\NobetGruplarController.cs" />
+    <Compile Include="Controllers\NobetUstGrupMobilUygulamaYetkiController.cs" />
+    <Compile Include="Controllers\UserEczaneController.cs" />
+    <Compile Include="Controllers\UserEczaneOdaController.cs" />
+    <Compile Include="Controllers\UserNobetUstGrupController.cs" />
+    <Compile Include="Controllers\UserRoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MessageHandlers\AuthenticationHandler.cs" />
+    <Compile Include="MessageHandlers\Yetkilendirme.cs" />
+    <Compile Include="Models\EczaneApi.cs" />
+    <Compile Include="Models\EczaneNobetDegisimApi.cs" />
+    <Compile Include="Models\EczaneNobetDegisimArzApi.cs" />
+    <Compile Include="Models\EczaneNobetDegisimTalepApi.cs" />
+    <Compile Include="Models\EczaneNobetMazeretApi.cs" />
+    <Compile Include="Models\EczaneNobetMazeretCokluApi.cs" />
+    <Compile Include="Models\EczaneNobetSonucApi.cs" />
+    <Compile Include="Models\MazeretTurApi.cs" />
+    <Compile Include="Models\NobetUstGrupMobilUygulamaApi.cs" />
+    <Compile Include="Models\UserApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +184,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WM.Northwind.Business\WM.Northwind.Business.csproj">
@@ -173,6 +193,10 @@
     <ProjectReference Include="..\WM.Northwind.Entities\WM.Northwind.Entities.csproj">
       <Project>{aac6410f-016d-4c53-b268-f8cbaa677c5c}</Project>
       <Name>WM.Northwind.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WM.UI.Mvc\WM.UI.Mvc.csproj">
+      <Project>{9C0610ED-27AC-401D-8A8B-6C1F9D8CF76F}</Project>
+      <Name>WM.UI.Mvc</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
