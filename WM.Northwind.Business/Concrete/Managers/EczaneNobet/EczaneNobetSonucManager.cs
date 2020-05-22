@@ -1466,6 +1466,75 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         #endregion
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetSonucMobilUygulama> GetSonuclarMobilUygulama(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId)
+
+        {
+            return _eczaneNobetSonucDal.GetDetayListMobilUygulama(x => (x.Tarih >= baslangicTarihi && x.Tarih <= bitisTarihi) && x.NobetUstGrupId == nobetUstGrupId);
+
+        }
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneGrupNobetSonuc> GetEczaneGrupNobetSonuc(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId)
+        {
+            var sonuclar = GetDetaylar(nobetUstGrupId);
+            var nobetGrupGorevTipler = _nobetGrupGorevTipService.GetDetaylar(nobetUstGrupId);
+            var nobetGrupGorevTipGunKurallar = _nobetGrupGorevTipGunKuralService.GetDetaylar(nobetUstGrupId);
+
+            var liste2 = (from s in sonuclar
+                          join b in nobetGrupGorevTipler
+                              on new { s.NobetGrupId, s.NobetGorevTipId }
+                              equals new { b.NobetGrupId, b.NobetGorevTipId }
+                          select new
+                          {
+                              s.NobetGorevTipId,
+                              s.TakvimId,
+                              s.EczaneNobetGrupId,
+                              s.EczaneAdi,
+                              s.NobetGrupAdi,
+                              s.NobetGrupId,
+                              NobetGrupGorevTipId = b.Id,
+                              s.Tarih,
+                              s.EczaneId,
+                              s.NobetUstGrupId,
+                              s.NobetUstGrupBaslamaTarihi,
+                              s.YayimlandiMi,
+                              s.NobetGorevTipAdi
+                          }).ToList();
+
+            var nobetGrupGorevTipTakvimOzelGunler = _nobetGrupGorevTipTakvimOzelGunService.GetDetaylar(nobetUstGrupId);
+            var eczaneNobetGrupAltGruplar = _eczaneNobetGrupAltGrupService.GetDetaylar(nobetUstGrupId);
+            var culture = new CultureInfo("tr-TR");
+
+            var eczaneNobetSonuclar = (from s in liste2
+                                       from b in nobetGrupGorevTipTakvimOzelGunler
+                                                     .Where(w => w.TakvimId == s.TakvimId
+                                                              && w.NobetGrupGorevTipId == s.NobetGrupGorevTipId).DefaultIfEmpty()
+                                       from a in eczaneNobetGrupAltGruplar
+                                                    .Where(w => w.EczaneNobetGrupId == s.EczaneNobetGrupId).DefaultIfEmpty()
+                                       select new EczaneGrupNobetSonuc
+                                       {
+                                           EczaneNobetGrupId = s.EczaneNobetGrupId,
+                                           EczaneId = s.EczaneId,
+                                           EczaneAdi = s.EczaneAdi,
+                                           NobetGrupAdi = s.NobetGrupAdi,
+                                           NobetGorevTipId = s.NobetGorevTipId,
+                                           TakvimId = s.TakvimId,
+                                           NobetGrupId = s.NobetGrupId,
+                                           Tarih = s.Tarih,
+                                           NobetAltGrupId = (a?.EczaneNobetGrupId == s.EczaneNobetGrupId) ? a.NobetAltGrupId : 0,
+                                           NobetGunKuralId = (b?.TakvimId == s.TakvimId
+                                                           && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId) ? b.NobetGunKuralId : (int)s.Tarih.DayOfWeek + 1,//SqlFunctions.DatePart("weekday", s.Tarih)
+                                           GunGrup = (b?.TakvimId == s.TakvimId && b?.NobetGrupGorevTipId == s.NobetGrupGorevTipId)
+                                                 ? b.GunGrupAdi
+                                                 : nobetGrupGorevTipGunKurallar.SingleOrDefault(w => w.NobetGrupGorevTipId == s.NobetGrupGorevTipId
+                                                    && w.NobetGunKuralId == (int)s.Tarih.DayOfWeek + 1).GunGrupAdi,
+                                           NobetUstGrupId = s.NobetUstGrupId,
+                                           NobetUstGrupBaslamaTarihi = s.NobetUstGrupBaslamaTarihi,
+                                           NobetGorevTipAdi = s.NobetGorevTipAdi,
+                                           YayimlandiMi = s.YayimlandiMi
+                                       }).Where(w => w.Tarih >= baslangicTarihi && w.Tarih <= bitisTarihi).ToList();
+            return eczaneNobetSonuclar;
+        }
 
     }
 }

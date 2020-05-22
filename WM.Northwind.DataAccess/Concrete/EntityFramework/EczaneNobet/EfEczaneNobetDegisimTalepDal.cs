@@ -15,57 +15,59 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
 {
     public class EfEczaneNobetDegisimTalepDal : EfEntityRepositoryBase<EczaneNobetDegisimTalep, EczaneNobetContext>, IEczaneNobetDegisimTalepDal
     {
-        //public EczaneNobetDegisimDetay GetDetay(Expression<Func<EczaneNobetDegisimDetay, bool>> filter)
-        //{
-        //    using (var ctx = new EczaneNobetContext())
-        //    {
-        //        return ctx.EczaneNobetDegisimler
-        //            .Select(s => new EczaneNobetDegisimDetay
-        //            {
-        //                EczaneNobetSonucId = s.EczaneNobetSonucId,
-        //                NobetGrupAdi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Adi,
-        //                NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Id,
-        //                EczaneAdi = s.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Adi,
-        //                EczaneId = s.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Id,
-        //                EczaneNobetGrupId = s.EczaneNobetGrupId,
-        //                UserId = s.UserId,
-        //                Kaydeden = s.User.Email,
-        //                Aciklama = s.Aciklama,
-        //                Id = s.Id,
-        //                KayitTarihi = s.KayitTarihi,
-        //                EskiNobetciEczaneAdi = s.EczaneNobetGrup.Eczane.Adi,
-        //                NobetTarihi = s.EczaneNobetSonuc.Takvim.Tarih,
-        //                NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId
-        //            }).SingleOrDefault(filter);
-        //    }
-        //}
-        //public List<EczaneNobetDegisimDetay> GetDetayList(Expression<Func<EczaneNobetDegisimDetay, bool>> filter = null)
-        //{
-        //    using (var ctx = new EczaneNobetContext())
-        //    {
-        //        var liste = ctx.EczaneNobetDegisimler
-        //            .Select(s => new EczaneNobetDegisimDetay
-        //            {
-        //                EczaneNobetSonucId = s.EczaneNobetSonucId,
-        //                NobetGrupAdi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Adi,
-        //                NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Id,
-        //                EczaneAdi = s.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Adi,
-        //                EczaneId = s.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Id,
-        //                EczaneNobetGrupId = s.EczaneNobetGrupId,
-        //                UserId = s.UserId,
-        //                Kaydeden = s.User.Email,
-        //                Aciklama = s.Aciklama,
-        //                Id = s.Id,
-        //                KayitTarihi = s.KayitTarihi,
-        //                EskiNobetciEczaneAdi = s.EczaneNobetGrup.Eczane.Adi,
-        //                NobetTarihi = s.EczaneNobetSonuc.Takvim.Tarih,
-        //                NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId
-        //            });
+        public EczaneNobetDegisimTalepDetay GetDetay(Expression<Func<EczaneNobetDegisimTalepDetay, bool>> filter)
+        {
+            using (var ctx = new EczaneNobetContext())
+            {
+                return ctx.EczaneNobetDegisimTalepler
+                    .Select(s => new EczaneNobetDegisimTalepDetay
+                    {
+                        //EczaneNobetSonucId = s.EczaneNobetSonucId,
+                        NobetGrupAdi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Adi,
+                        NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Id,
+                        EczaneAdi = s.EczaneNobetDegisimArz.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Adi,
+                        EczaneId = s.EczaneNobetDegisimArz.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Id,
+                        EczaneNobetGrupId = s.EczaneNobetGrupId,
+                        UserId = s.UserId,
+                        Kaydeden = s.User.Email,
+                        Aciklama = s.Aciklama,
+                        Id = s.Id,
+                        KayitTarihi = s.KayitTarihi,
+                        NobetTarihi = s.EczaneNobetDegisimArz.EczaneNobetSonuc.Takvim.Tarih,
+                        NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
+                        EczaneNobetDegisimArzId = s.EczaneNobetDegisimArzId
 
-        //        return filter == null
-        //            ? liste.ToList()
-        //            : liste.Where(filter).ToList();
-        //    }
-        //}
+                    }).SingleOrDefault(filter);
+            }
+        }
+        public List<EczaneNobetDegisimTalepDetay> GetDetayList(Expression<Func<EczaneNobetDegisimTalepDetay, bool>> filter = null)
+        {
+            using (var ctx = new EczaneNobetContext())
+            {
+                var liste = ctx.EczaneNobetDegisimTalepler
+                    .Select(s => new EczaneNobetDegisimTalepDetay
+                    {
+                        //EczaneNobetSonucId = s.EczaneNobetSonucId,
+                        NobetGrupAdi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Adi,
+                        NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Id,
+                        EczaneAdi = s.EczaneNobetDegisimArz.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Adi,
+                        EczaneId = s.EczaneNobetDegisimArz.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Id,
+                        EczaneNobetGrupId = s.EczaneNobetGrupId,
+                        UserId = s.UserId,
+                        Kaydeden = s.User.Email,
+                        Aciklama = s.Aciklama,
+                        Id = s.Id,
+                        KayitTarihi = s.KayitTarihi,
+                        NobetTarihi = s.EczaneNobetDegisimArz.EczaneNobetSonuc.Takvim.Tarih,
+                        NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
+                        EczaneNobetDegisimArzId = s.EczaneNobetDegisimArzId
+
+                    });
+
+                return filter == null
+                    ? liste.ToList()
+                    : liste.Where(filter).ToList();
+            }
+        }
     }
 }

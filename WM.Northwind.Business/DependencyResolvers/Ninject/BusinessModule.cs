@@ -263,6 +263,18 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IDebugEczaneService>().To<DebugEczaneManager>().InSingletonScope();
             Bind<IDebugEczaneDal>().To<EfDebugEczaneDal>();
 
+            Bind<IMobilUygulamaYetkiService>().To<MobilUygulamaYetkiManager>().InSingletonScope();
+            Bind<IMobilUygulamaYetkiDal>().To<EfMobilUygulamaYetkiDal>();
+
+            Bind<INobetUstGrupMobilUygulamaYetkiService>().To<NobetUstGrupMobilUygulamaYetkiManager>().InSingletonScope();
+            Bind<INobetUstGrupMobilUygulamaYetkiDal>().To<EfNobetUstGrupMobilUygulamaYetkiDal>();
+
+            Bind<IEczaneNobetDegisimArzService>().To<EczaneNobetDegisimArzManager>().InSingletonScope();
+            Bind<IEczaneNobetDegisimArzDal>().To<EfEczaneNobetDegisimArzDal>();
+
+            Bind<IEczaneNobetDegisimTalepService>().To<EczaneNobetDegisimTalepManager>().InSingletonScope();
+            Bind<IEczaneNobetDegisimTalepDal>().To<EfEczaneNobetDegisimTalepDal>();
+
             #endregion
 
             #region Optimization

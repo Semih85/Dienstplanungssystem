@@ -17,5 +17,8 @@ namespace WM.Northwind.DataAccess.Abstract.EczaneNobet
         void CokluSil(int[] ids);
         void CokluEkle(List<EczaneNobetCozum> eczaneNobetCozumler);
         void CokluYayimla(List<EczaneNobetSonuc> eczaneNobetSonuclar, bool yayimlandiMi);
+
+        List<EczaneNobetSonucMobilUygulama> GetDetayListMobilUygulama(Expression<Func<EczaneNobetSonucMobilUygulama, bool>> filter = null);
+
     }
 }

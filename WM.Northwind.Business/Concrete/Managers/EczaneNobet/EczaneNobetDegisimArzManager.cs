@@ -10,79 +10,65 @@ using WM.Core.Aspects.PostSharp.CacheAspects;
 using WM.Core.CrossCuttingConcerns.Caching.Microsoft;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
-using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
-using WM.Optimization.Abstract.Samples;
-using WM.Core.Aspects.PostSharp.TranstionAspects;
-using WM.Core.Aspects.PostSharp.LogAspects;
-using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
+//using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
+//using WM.Optimization.Abstract.Samples;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
     public class EczaneNobetDegisimArzManager : IEczaneNobetDegisimArzService
     {
-        private IEczaneNobetDegisimArzDal _eczaneNobetDegisimTalepDal;
-        //private IEczaneNobetSonucService _eczaneNobetSonucService;
+        private IEczaneNobetDegisimArzDal _eczaneNobetDegisimArzDal;
 
-        public EczaneNobetDegisimArzManager(IEczaneNobetDegisimArzDal eczaneNobetDegisimTalepDal
-            //IEczaneNobetSonucService eczaneNobetSonucService
-            )
+        public EczaneNobetDegisimArzManager(IEczaneNobetDegisimArzDal eczaneNobetDegisimArzDal)
         {
-            _eczaneNobetDegisimTalepDal = eczaneNobetDegisimTalepDal;
-            //_eczaneNobetSonucService = eczaneNobetSonucService;
+            _eczaneNobetDegisimArzDal = eczaneNobetDegisimArzDal;
         }
-
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
-        [LogAspect(typeof(DatabaseLogger))]
-        public void Delete(int eczaneNobetDegisimId)
+        public void Delete(int eczaneNobetDegisimArzId)
         {
-            _eczaneNobetDegisimTalepDal.Delete(new EczaneNobetDegisimArz { Id = eczaneNobetDegisimId });
+            _eczaneNobetDegisimArzDal.Delete(new EczaneNobetDegisimArz { Id = eczaneNobetDegisimArzId });
         }
 
-        public EczaneNobetDegisimArz GetById(int eczaneNobetDegisimId)
+        public EczaneNobetDegisimArz GetById(int eczaneNobetDegisimArzId)
         {
-            return _eczaneNobetDegisimTalepDal.Get(x => x.Id == eczaneNobetDegisimId);
+            return _eczaneNobetDegisimArzDal.Get(x => x.Id == eczaneNobetDegisimArzId);
         }
-
-        public EczaneNobetDegisimArz GetBySonucIdVeNobetGrupId(int eczaneNobetSonucId, int eczaneNobetGrupId)
-        {
-            return _eczaneNobetDegisimTalepDal.Get(x => x.EczaneNobetSonucId == eczaneNobetSonucId && x.EczaneNobetGrupId == eczaneNobetGrupId);
-        }
-
-        [CacheAspect(typeof(MemoryCacheManager))]
+         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetDegisimArz> GetList()
         {
-            return _eczaneNobetDegisimTalepDal.GetList();
+            return _eczaneNobetDegisimArzDal.GetList();
         }
-
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
-        [LogAspect(typeof(DatabaseLogger))]
-        public void Insert(EczaneNobetDegisimArz eczaneNobetDegisim)
+        public void Insert(EczaneNobetDegisimArz eczaneNobetDegisimArz)
         {
-            _eczaneNobetDegisimTalepDal.Insert(eczaneNobetDegisim);
+            _eczaneNobetDegisimArzDal.Insert(eczaneNobetDegisimArz);
         }
-
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
-        [LogAspect(typeof(DatabaseLogger))]
-        public void Update(EczaneNobetDegisimArz eczaneNobetDegisim)
+        public void Update(EczaneNobetDegisimArz eczaneNobetDegisimArz)
         {
-            _eczaneNobetDegisimTalepDal.Update(eczaneNobetDegisim);
+            _eczaneNobetDegisimArzDal.Update(eczaneNobetDegisimArz);
         }
+        public EczaneNobetDegisimArzDetay GetDetayById(int eczaneNobetDegisimArzId)
+        {
+            return _eczaneNobetDegisimArzDal.GetDetay(x => x.Id == eczaneNobetDegisimArzId);
+        }
+            
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetDegisimArzDetay> GetDetaylar()
+        {
+            return _eczaneNobetDegisimArzDal.GetDetayList();
+        }
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetDegisimArzDetay> GetDetaylar(int nobetUstGrupId)
+        {
+            return _eczaneNobetDegisimArzDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId);
+        }
+        [CacheAspect(typeof(MemoryCacheManager))]
 
-        //public EczaneNobetDegisimArzDetay GetDetayById(int eczaneNobetDegisimId)
-        //{
-        //    return _eczaneNobetDegisimTalepDal.GetDetay(x => x.Id == eczaneNobetDegisimId);
-        //}
+        public List<EczaneNobetDegisimArzDetay> GetDetaylarByEczaneSonucId(int eczaneNobetSonucId)
+        {
+            return _eczaneNobetDegisimArzDal.GetDetayList(x => x.EczaneNobetSonucId == eczaneNobetSonucId);
 
-        //[CacheAspect(typeof(MemoryCacheManager))]
-        //public List<EczaneNobetDegisimArzDetay> GetDetaylar()
-        //{
-        //    return _eczaneNobetDegisimTalepDal.GetDetayList();
-        //}
-
-        //[CacheAspect(typeof(MemoryCacheManager))]
-        //public List<EczaneNobetDegisimArzDetay> GetDetaylar(int nobetUstGrupId)
-        //{
-        //    return _eczaneNobetDegisimTalepDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId);
-        //}
-    }
+        }
+    } 
 }

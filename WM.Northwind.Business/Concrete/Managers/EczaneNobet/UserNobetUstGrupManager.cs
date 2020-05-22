@@ -105,5 +105,11 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _userUstGrupDal.GetDetayList(x => nobetUstGrupIdList.Contains(x.NobetUstGrupId));
         }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<UserNobetUstGrupDetay> GetDetayListByUserId(int userId)
+        {
+            return _userUstGrupDal.GetDetayList(x => x.UserId == userId);
+        }
     }
 }

@@ -212,6 +212,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             _eczaneNobetMazeretDal.Update(sonuc);
         }
-
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetMazeretDetay> GetDetaylarByEczaneNobetId(DateTime? baslangicTarihi, DateTime? bitisTarihi, int eczaneNobetGrupId)
+        {
+            return _eczaneNobetMazeretDal.GetDetayList(x => (x.Tarih >= baslangicTarihi || baslangicTarihi == null)
+                                                         && (x.Tarih <= bitisTarihi || bitisTarihi == null)
+                                                         && eczaneNobetGrupId == x.EczaneNobetGrupId);
+        }
     }
 }

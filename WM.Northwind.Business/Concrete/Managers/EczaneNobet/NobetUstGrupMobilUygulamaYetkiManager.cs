@@ -58,6 +58,10 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetUstGrupMobilUygulamaYetkiDal.GetDetayList();
         }
-
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public List<NobetUstGrupMobilUygulamaYetkiDetay> GetDetayListByNobetUstGrupId(int nobetUstGrupId)
+        {
+            return _nobetUstGrupMobilUygulamaYetkiDal.GetDetayList(w => w.NobetUstGrupId == nobetUstGrupId);
+        }
     }
 }

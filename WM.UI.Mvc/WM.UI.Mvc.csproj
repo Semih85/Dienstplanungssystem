@@ -1357,6 +1357,7 @@
     <Compile Include="Areas\EczaneNobet\Models\PivotGunFarklariDemoViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\PivotGunFarklariViewModel.cs" />
     <Compile Include="Areas\EczaneNobet\Models\UpdateSonuclarInsertDegisimViewModel.cs" />
+    <Compile Include="Areas\EczaneNobet\PushNotification.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Areas\EczaneNobet\Models\KuralKategorilerPartialViewModel.cs" />
     <Compile Include="Controllers\LanguageController.cs" />

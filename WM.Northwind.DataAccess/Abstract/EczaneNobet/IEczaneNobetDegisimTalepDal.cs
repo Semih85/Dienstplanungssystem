@@ -10,7 +10,7 @@ using WM.Northwind.Entities.Concrete.EczaneNobet;
 
 namespace WM.Northwind.DataAccess.Abstract.EczaneNobet
 {
-    public interface IEczaneNobetDegisimTalepDal : IEntityRepository<EczaneNobetDegisimTalep> //, IEntityDetayRepository<EczaneNobetDegisimTalepDetay>
+    public interface IEczaneNobetDegisimTalepDal : IEntityRepository<EczaneNobetDegisimTalep> , IEntityDetayRepository<EczaneNobetDegisimTalepDetay>
     {  
     } 
 } 

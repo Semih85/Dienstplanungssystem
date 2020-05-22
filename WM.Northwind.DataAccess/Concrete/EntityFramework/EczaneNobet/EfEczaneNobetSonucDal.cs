@@ -145,5 +145,40 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                 }
             }
         }
+
+        public List<EczaneNobetSonucMobilUygulama> GetDetayListMobilUygulama(Expression<Func<EczaneNobetSonucMobilUygulama, bool>> filter = null)
+        {
+            using (var ctx = new EczaneNobetContext())
+            {
+                //var liste1 = ctx.EczaneNobetSonuclar
+                //    .Where(w => w.EczaneNobetFeragat.NobetFeragatTipId == 2).ToList();
+
+                //;
+                var liste = from s in ctx.EczaneNobetSonuclar
+                            where s.EczaneNobetFeragat.NobetFeragatTipId != 2
+                            let sanalNobetDurumu = s.EczaneNobetSanalSonuc
+                            let eczaneNobetGrup = s.EczaneNobetFeragat.NobetFeragatTipId == 4 ? s.EczaneNobetFeragat.EczaneNobetGrup : s.EczaneNobetGrup
+                            let eczaneNobetGrupAltGrup = eczaneNobetGrup.EczaneNobetGrupAltGruplar
+                                .Where(w => w.BaslangicTarihi <= s.Takvim.Tarih && (s.Takvim.Tarih <= w.BitisTarihi || w.BitisTarihi == null)).FirstOrDefault()
+                            select new EczaneNobetSonucMobilUygulama
+                            {
+                                Id = s.Id,
+                                EczaneAdi = eczaneNobetGrup.Eczane.Adi,
+                                EczaneNobetGrupId = eczaneNobetGrup.Id,
+                                NobetSaatAraligi = eczaneNobetGrup.NobetGrupGorevTip.NobetGorevTip.NobetSaatAraligi, //s.NobetGorevTip.Adi,
+                                NobetGrupAdi = eczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Adi,
+                                NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId,
+                                NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Id,
+                                Tarih = s.Takvim.Tarih,
+                                NobetGrupGorevTipId = eczaneNobetGrup.NobetGrupGorevTipId,
+                                YayimlandiMi = s.YayimlandiMi
+                            };
+
+                return filter == null
+                   ? liste.ToList()
+                   : liste.Where(filter).ToList();
+            }
+        }
+
     }
 }

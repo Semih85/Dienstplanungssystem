@@ -85,5 +85,12 @@ namespace WM.Northwind.Business.Concrete.Managers.Authorization
         {
             return _userRoleDal.GetDetayList();
         }
+
+
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public List<UserRoleDetay> GetDetayListByUserId(int userId)
+        {
+            return _userRoleDal.GetDetayList(w => w.UserId == userId);
+        }
     }
 }

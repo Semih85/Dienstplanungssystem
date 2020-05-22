@@ -154,5 +154,15 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _eczaneDal.GetDetayList(x => nobetUstGrupIdList.Contains(x.NobetUstGrupId));
         }
+        [CacheAspect(typeof(MemoryCacheManager))]
+
+        public NobetUstGrup GetByEczaneNobetGrupId(int eczaneNobetGrupId)
+        {
+            EczaneNobetGrup ecaneNobetGrup = _eczaneNobetGrupService.GetById(eczaneNobetGrupId);
+            int eczaneId = ecaneNobetGrup.EczaneId;
+            Eczane eczane = GetById(eczaneId);
+            NobetUstGrup nobetUstGrup = _nobetUstGrupService.GetById(eczane.NobetUstGrupId);
+            return nobetUstGrup;
+        }
     }
 }

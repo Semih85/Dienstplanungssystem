@@ -15,57 +15,58 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
 {
     public class EfEczaneNobetDegisimArzDal : EfEntityRepositoryBase<EczaneNobetDegisimArz, EczaneNobetContext>, IEczaneNobetDegisimArzDal
     {
-        //public EczaneNobetDegisimDetay GetDetay(Expression<Func<EczaneNobetDegisimDetay, bool>> filter)
-        //{
-        //    using (var ctx = new EczaneNobetContext())
-        //    {
-        //        return ctx.EczaneNobetDegisimler
-        //            .Select(s => new EczaneNobetDegisimDetay
-        //            {
-        //                EczaneNobetSonucId = s.EczaneNobetSonucId,
-        //                NobetGrupAdi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Adi,
-        //                NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Id,
-        //                EczaneAdi = s.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Adi,
-        //                EczaneId = s.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Id,
-        //                EczaneNobetGrupId = s.EczaneNobetGrupId,
-        //                UserId = s.UserId,
-        //                Kaydeden = s.User.Email,
-        //                Aciklama = s.Aciklama,
-        //                Id = s.Id,
-        //                KayitTarihi = s.KayitTarihi,
-        //                EskiNobetciEczaneAdi = s.EczaneNobetGrup.Eczane.Adi,
-        //                NobetTarihi = s.EczaneNobetSonuc.Takvim.Tarih,
-        //                NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId
-        //            }).SingleOrDefault(filter);
-        //    }
-        //}
-        //public List<EczaneNobetDegisimDetay> GetDetayList(Expression<Func<EczaneNobetDegisimDetay, bool>> filter = null)
-        //{
-        //    using (var ctx = new EczaneNobetContext())
-        //    {
-        //        var liste = ctx.EczaneNobetDegisimler
-        //            .Select(s => new EczaneNobetDegisimDetay
-        //            {
-        //                EczaneNobetSonucId = s.EczaneNobetSonucId,
-        //                NobetGrupAdi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Adi,
-        //                NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Id,
-        //                EczaneAdi = s.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Adi,
-        //                EczaneId = s.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Id,
-        //                EczaneNobetGrupId = s.EczaneNobetGrupId,
-        //                UserId = s.UserId,
-        //                Kaydeden = s.User.Email,
-        //                Aciklama = s.Aciklama,
-        //                Id = s.Id,
-        //                KayitTarihi = s.KayitTarihi,
-        //                EskiNobetciEczaneAdi = s.EczaneNobetGrup.Eczane.Adi,
-        //                NobetTarihi = s.EczaneNobetSonuc.Takvim.Tarih,
-        //                NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId
-        //            });
+        public EczaneNobetDegisimArzDetay GetDetay(Expression<Func<EczaneNobetDegisimArzDetay, bool>> filter)
+        {
+            using (var ctx = new EczaneNobetContext())
+            {
+                return ctx.EczaneNobetDegisimArzlar
+                    .Select(s => new EczaneNobetDegisimArzDetay
+                    {
+                        EczaneNobetSonucId = s.EczaneNobetSonucId,
+                        NobetGrupAdi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Adi,
+                        NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Id,
+                        EczaneAdi = s.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Adi,
+                        EczaneId = s.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Id,
+                        EczaneNobetGrupId = s.EczaneNobetGrupId,
+                        UserId = s.UserId,
+                        Kaydeden = s.User.Email,
+                        Aciklama = s.Aciklama,
+                        Id = s.Id,
+                        KayitTarihi = s.KayitTarihi,
+                        NobetTarihi = s.EczaneNobetSonuc.Takvim.Tarih,
+                        NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId
 
-        //        return filter == null
-        //            ? liste.ToList()
-        //            : liste.Where(filter).ToList();
-        //    }
-        //}
+                    }).SingleOrDefault(filter);
+            }
+        }
+        public List<EczaneNobetDegisimArzDetay> GetDetayList(Expression<Func<EczaneNobetDegisimArzDetay, bool>> filter = null)
+        {
+            using (var ctx = new EczaneNobetContext())
+            {
+                var liste = ctx.EczaneNobetDegisimArzlar
+                    .Select(s => new EczaneNobetDegisimArzDetay
+                    {
+                        EczaneNobetSonucId = s.EczaneNobetSonucId,
+                        NobetGrupAdi = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Adi,
+                        NobetGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.Id,
+                        EczaneAdi = s.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Adi,
+                        EczaneId = s.EczaneNobetSonuc.EczaneNobetGrup.Eczane.Id,
+                        EczaneNobetGrupId = s.EczaneNobetGrupId,
+                        UserId = s.UserId,
+                        Kaydeden = s.User.Email,
+                        Aciklama = s.Aciklama,
+                        Id = s.Id,
+                        KayitTarihi = s.KayitTarihi,
+                        NobetTarihi = s.EczaneNobetSonuc.Takvim.Tarih,
+                        NobetUstGrupId = s.EczaneNobetGrup.NobetGrupGorevTip.NobetGrup.NobetUstGrupId
+
+                    });
+
+                return filter == null
+                    ? liste.ToList()
+                    : liste.Where(filter).ToList();
+            }
+        }
+
     }
 }
