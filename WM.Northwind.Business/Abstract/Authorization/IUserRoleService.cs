@@ -23,6 +23,8 @@ namespace WM.Northwind.Business.Abstract.Authorization
         List<UserRole> GetListByUserId(int userId);
         UserRoleDetay GetDetayById(int userRoleId);
         List<UserRoleDetay> GetDetaylar();
+        List<UserRoleDetay> GetDetayListByUserId(int userId);
+
 
     }
 }

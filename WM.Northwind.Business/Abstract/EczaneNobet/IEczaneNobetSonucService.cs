@@ -69,6 +69,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneNobetSonucListe2> GetSonuclarUstGrupBaslamaTarihindenSonra(int nobetUstGrupId);
         List<EczaneGrupNobetSonuc> GetEczaneGrupNobetSonuc(int nobetUstGrupId);
         List<EczaneGrupNobetSonuc> GetEczaneGrupNobetSonuc(List<int> nobetGrupIdList);
+
         List<EczaneNobetGrupGunKuralIstatistik> GetEczaneNobetGrupGunKuralIstatistik(int nobetUstGrupId);
         List<EczaneNobetGrupGunKuralIstatistik> GetEczaneNobetGrupGunKuralIstatistik(List<EczaneGrupNobetSonuc> eczaneGrupNobetSonuc);
         List<EczaneNobetGrupGunKuralIstatistik> GetEczaneNobetGrupGunKuralIstatistik(List<EczaneNobetGrupDetay> eczaneNobetGruplar, List<EczaneGrupNobetSonuc> eczaneGrupNobetSonuc);
@@ -79,5 +80,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void InsertSonuclarInsertSanalSonuclar(EczaneNobetSonuc eczaneNobetSonuc, EczaneNobetSanalSonuc eczaneNobetSanalSonuc);
         void UpdateSonuclarUpdateSanalSonuclar(EczaneNobetSonuc eczaneNobetSonuc, EczaneNobetSanalSonuc eczaneNobetSanalSonuc);
         void SilSonuclarSilSanalSonuclar(int eczaneNobetSonucId);
+        List<EczaneNobetSonucMobilUygulama> GetSonuclarMobilUygulama(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId);
+        List<EczaneGrupNobetSonuc> GetEczaneGrupNobetSonuc(DateTime baslangicTarihi, DateTime bitisTarihi, int nobetUstGrupId);
+
     }
 }

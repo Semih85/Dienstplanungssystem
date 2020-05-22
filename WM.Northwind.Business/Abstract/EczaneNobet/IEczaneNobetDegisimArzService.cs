@@ -5,21 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
-using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
+//using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 
 namespace WM.Northwind.Business.Abstract.EczaneNobet
 {
     public interface IEczaneNobetDegisimArzService
     {
-        EczaneNobetDegisimArz GetById(int eczaneNobetDegisimId);
+        EczaneNobetDegisimArz GetById(int eczaneNobetDegisimArzId);
         List<EczaneNobetDegisimArz> GetList();
-        EczaneNobetDegisimArz GetBySonucIdVeNobetGrupId(int eczaneNobetSonucId, int eczaneNobetGrupId);
         //List<EczaneNobetDegisimArz> GetByCategory(int categoryId);
-        void Insert(EczaneNobetDegisimArz eczaneNobetDegisim);
-        void Update(EczaneNobetDegisimArz eczaneNobetDegisim);
-        void Delete(int eczaneNobetDegisimId);
-        //EczaneNobetDegisimArzDetay GetDetayById(int eczaneNobetDegisimId);
-        //List<EczaneNobetDegisimArzDetay> GetDetaylar();
-        //List<EczaneNobetDegisimArzDetay> GetDetaylar(int nobetUstGrupId);
+        void Insert(EczaneNobetDegisimArz eczaneNobetDegisimArz);
+        void Update(EczaneNobetDegisimArz eczaneNobetDegisimArz);
+        void Delete(int eczaneNobetDegisimArzId);
+        EczaneNobetDegisimArzDetay GetDetayById(int eczaneNobetDegisimArzId);
+        List <EczaneNobetDegisimArzDetay> GetDetaylar();
+        List<EczaneNobetDegisimArzDetay> GetDetaylar(int nobetUstGrupId);
+        List<EczaneNobetDegisimArzDetay> GetDetaylarByEczaneSonucId(int eczaneNobetSonucId);
+
     }
-}
+} 

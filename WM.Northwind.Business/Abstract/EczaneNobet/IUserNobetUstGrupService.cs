@@ -23,5 +23,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<UserNobetUstGrupDetay> GetDetaylar();
         List<UserNobetUstGrupDetay> GetDetaylar(int nobetUstGrupId);
         List<UserNobetUstGrupDetay> GetDetaylar(List<int> nobetUstGrupIdList);
+
+        List<UserNobetUstGrupDetay> GetDetayListByUserId(int userId);
+
     }
 }
