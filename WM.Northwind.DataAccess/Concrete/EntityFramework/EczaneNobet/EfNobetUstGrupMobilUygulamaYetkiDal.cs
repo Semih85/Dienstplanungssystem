@@ -22,6 +22,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                 return ctx.NobetUstGrupMobilUygulamaYetkiler
                     .Select(s => new NobetUstGrupMobilUygulamaYetkiDetay
                     {
+                        Id = s.Id,
                         NobetUstGrupId = s.NobetUstGrupId,
                         MobilUygulamaYetkiAdi = s.MobilUygulamaYetki.Adi,
                         MobilUygulamaYetkiId = s.MobilUygulamaYetkiId,
@@ -37,6 +38,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                 var liste = ctx.NobetUstGrupMobilUygulamaYetkiler
                     .Select(s => new NobetUstGrupMobilUygulamaYetkiDetay
                     {
+                        Id = s.Id,
                         NobetUstGrupId = s.NobetUstGrupId,
                         MobilUygulamaYetkiAdi = s.MobilUygulamaYetki.Adi,
                         MobilUygulamaYetkiId = s.MobilUygulamaYetkiId,

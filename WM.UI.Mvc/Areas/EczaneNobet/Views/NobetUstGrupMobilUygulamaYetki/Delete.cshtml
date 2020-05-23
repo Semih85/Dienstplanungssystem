@@ -1,0 +1,40 @@
+﻿@model NobetUstGrupMobilUygulamaYetkiDetay
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h5 class="text-danger">Silmek istediğinizden emin misiniz?</h5>
+<div>
+    <h4>UserRole</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MobilUygulamaYetkiAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MobilUygulamaYetkiAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetUstGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetUstGrupAdi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
