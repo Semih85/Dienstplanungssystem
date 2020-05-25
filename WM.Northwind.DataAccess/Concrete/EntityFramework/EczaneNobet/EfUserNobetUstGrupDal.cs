@@ -28,7 +28,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupId = s.NobetUstGrupId,
                         UserId = s.UserId,
                         BaslamaTarihi = s.BaslamaTarihi,
-                        BitisTarihi = s.BitisTarihi
+                        BitisTarihi = s.BitisTarihi,
+                        CihazId = s.User.CihazId
                     }).SingleOrDefault(filter);
             }
         }
@@ -47,7 +48,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupId = s.NobetUstGrupId,
                         UserId = s.UserId,
                         BaslamaTarihi = s.BaslamaTarihi,
-                        BitisTarihi = s.BitisTarihi
+                        BitisTarihi = s.BitisTarihi,
+                        CihazId = s.User.CihazId
                     }).ToList()
                    : ctx.UserNobetUstGruplar
                     .Select(s => new UserNobetUstGrupDetay
@@ -58,7 +60,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupId = s.NobetUstGrupId,
                         UserId = s.UserId,
                         BaslamaTarihi = s.BaslamaTarihi,
-                        BitisTarihi = s.BitisTarihi
+                        BitisTarihi = s.BitisTarihi,
+                        CihazId = s.User.CihazId
                     })
                       .Where(filter)
                       .ToList();

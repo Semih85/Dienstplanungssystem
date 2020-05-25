@@ -50,7 +50,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
-            var _userNobetUstGrupDetaylar = _userNobetUstGrupService.GetDetaylar(nobetUstGrup.Id);
+            var _userNobetUstGrupDetaylar = _userNobetUstGrupService.GetDetaylar(nobetUstGrup.Id)
+                .Where(w=>w.CihazId!= null);// mobil uygulamayı yüklemeyene yani cihazId si null olan listeye hiç gelmesin.
 
             ViewBag.UserId = new SelectList(_userNobetUstGrupDetaylar.Select(s => new { s.UserId, s.KullaniciAdi }), "UserId", "KullaniciAdi");
 
