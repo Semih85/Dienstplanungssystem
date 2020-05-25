@@ -72,9 +72,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     if (item != null)
                     {
                         User User = _userService.GetById(item);
-                        PushNotification pushNotification = new PushNotification(bildirimModel.Metin,
-                      bildirimModel.Baslik,
-                      User.CihazId);
+                        if (User.CihazId != null)
+                        {
+                            PushNotification pushNotification = new PushNotification(bildirimModel.Metin,bildirimModel.Baslik, User.CihazId);
+                        }
                     }
                 }
                 TempData["BildirimGonderilenKullanici"] = "Secilen kullanıcılara bildirim gönderilmiştir.";
