@@ -10,6 +10,7 @@ using WM.Northwind.Business.Abstract.Authorization;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
+using WM.Northwind.Entities.Concrete.Authorization;
 using WM.Northwind.Entities.Concrete.Enums;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.UI.Mvc.Areas.EczaneNobet.Models;
@@ -51,6 +52,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetGrupKuralService _nobetGrupKuralService;
         private IEczaneUzaklikMatrisService _eczaneUzaklikMatrisService;
         private INobetUstGrupKisitService _nobetUstGrupKisitService;
+        private IUserNobetUstGrupService _userNobetUstGrupService;
 
         public EczaneNobetSonucController(ITakvimService takvimService,
                                           IEczaneNobetGrupService eczaneNobetGrupService,
@@ -80,7 +82,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                           INobetDurumService nobetDurumService,
                                           INobetGrupKuralService nobetGrupKuralService,
                                           IEczaneUzaklikMatrisService eczaneUzaklikMatrisService,
-                                          INobetUstGrupKisitService nobetUstGrupKisitService
+                                          INobetUstGrupKisitService nobetUstGrupKisitService,
+                                          IUserNobetUstGrupService userNobetUstGrupService
                                           )
         {
             _takvimService = takvimService;
@@ -113,6 +116,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _nobetGrupKuralService = nobetGrupKuralService;
             _eczaneUzaklikMatrisService = eczaneUzaklikMatrisService;
             _nobetUstGrupKisitService = nobetUstGrupKisitService;
+            _userNobetUstGrupService = userNobetUstGrupService;
         }
         #endregion
 
@@ -1619,7 +1623,10 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var yayimlanacakNobetler = yayimlanacakNobetlerTumu
                 .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)
                 .Select(s => s.Id).ToArray();
-
+            // yayimlanacakNobetler deki nobetUstGruplardaki mobil kullanıcılara bildirim gidecek.
+            var bildirimGonderilecekNobetUstGruplar = yayimlanacakNobetlerTumu
+                .Where(w => w.Tarih >= w.NobetGrupGorevTipBaslamaTarihi)
+                .Select(s => s.NobetUstGrupId).ToList();
             //var silinecekNobetlerPlanlanan = _eczaneNobetSonucPlanlananService.GetDetaylar(baslangicTarihi, nobetUstGrup.Id)
             //    .Where(w => w.NobetGrupId == nobetGrupId || nobetGrupId == 0)
             //    .Select(s => s.Id).ToArray();
@@ -1636,6 +1643,18 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 try
                 {
                     _eczaneNobetSonucService.CokluNobetYayimla(yayimlanacakNobetler, yayimlandiMi);
+                    // yayimlanacakNobetler deki nobetUstGruplardaki mobil kullanıcılara bildirim gidecek.
+
+                    foreach (var item in bildirimGonderilecekNobetUstGruplar)
+                    {
+                        User User = new User();
+                        int userId = _userNobetUstGrupService.GetById(item).UserId;
+                        User = _userService.GetById(userId);
+                        if (User.CihazId != null)
+                        {
+                            PushNotification pushNotification = new PushNotification("Nöbetyaz", "Yeni dönem nöbetler yayınlanmıştır.", User.CihazId);
+                        }
+                    }
                 }
                 catch (Exception)
                 {
