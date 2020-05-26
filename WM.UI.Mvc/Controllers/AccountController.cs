@@ -20,6 +20,7 @@ using System.Security.Cryptography;
 using System.Data.Entity.Infrastructure;
 using System.Net;
 using WM.Northwind.Entities.ComplexTypes;
+using WM.Northwind.Entities.Concrete.EczaneNobet;
 
 namespace WM.UI.Mvc.Controllers
 {
@@ -27,18 +28,27 @@ namespace WM.UI.Mvc.Controllers
     public class AccountController : Controller
     {
         private IUserService _userService;
+        private IEczaneService _eczaneService;
+        private IUserEczaneService _userEczaneService;
+        private IUserRoleService _userRoleService;
         private IUserNobetUstGrupService _userNobetUstGrupService;
         private IUserEczaneOdaService _userEczaneOdaService;
         private INobetUstGrupService _nobetUstGrupService;
         private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public AccountController(IUserService userService,
+            IUserRoleService userRoleService,
+            IEczaneService eczaneService,
+            IUserEczaneService userEczaneService,
             IUserNobetUstGrupService userNobetUstGrupService,
             IUserEczaneOdaService userEczaneOdaService,
             INobetUstGrupService nobetUstGrupService,
             INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _userService = userService;
+            _eczaneService = eczaneService;
+            _userRoleService = userRoleService;
+            _userEczaneService = userEczaneService;
             _userNobetUstGrupService = userNobetUstGrupService;
             _userEczaneOdaService = userEczaneOdaService;
             _nobetUstGrupService = nobetUstGrupService;
@@ -63,23 +73,23 @@ namespace WM.UI.Mvc.Controllers
 
             if (rolId == 1)
             {//Admin için tüm kullanıclar
-                 kullanicilar = _userService.GetList()
-                    .OrderBy(o => o.UserName)
-                    .ToList();
+                kullanicilar = _userService.GetList()
+                   .OrderBy(o => o.UserName)
+                   .ToList();
             }
-            else if(rolId == 2 || rolId == 3)
+            else if (rolId == 2 || rolId == 3)
             {//Oda ve üst grup yetkilisi için seçili nöbet üst grup kullanıcıları gelecek
                 kullaniciIDler = _userNobetUstGrupService.GetListByNobetUstGrupId(ustGrupSession.Id)
                     .OrderBy(o => o.KullaniciAdi)
-                    .Select(s=>s.UserId)
+                    .Select(s => s.UserId)
                     .ToList();
                 foreach (var item in kullaniciIDler)
                 {
                     kullanicilar.Add(_userService.GetById(item));
                 }
             }
-          
-           
+
+
 
             return View(kullanicilar);
         }
@@ -207,7 +217,24 @@ namespace WM.UI.Mvc.Controllers
         {
             return View();
         }
+        [AllowAnonymous]
+        public ActionResult RegisterEczaciMobilKullanici()
+        {
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
+            //if (ustGrupSession.Id != 0)
+            //{
+            //    nobetUstGrup = ustGrupSession;
+            //}
+            var mevcutEczaneler = _userEczaneService.GetList()
+                .Select(s => s.EczaneId);
+            var eczaneler = _eczaneService.GetByNobetUstGrupId(ustGrupSession.Id)
+                .Where(w => !mevcutEczaneler.Contains(w.Id));
+            eczaneler = eczaneler.OrderBy(o => o.EczaneAdi);
+
+            ViewBag.EczaneId = new SelectList(eczaneler, "Id", "EczaneAdi");
+            return View();
+        }
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -321,7 +348,174 @@ namespace WM.UI.Mvc.Controllers
             //    return View("Fail");
             //}
         }
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        [Authorize]
+        public ActionResult RegisterEczaciMobilKullanici(RegisterViewModelMobil model)
+        {
+            //if (ReCaptcha.Validate("6LfnxisUAAAAAHvALIZD4c_ai1fu41L8HjCQ0-00"))
+            //{
+            //var token = "";
+            try
+            {//son true kullanıcıya doğrulama maili göndermek için
+             // token = WebSecurity.CreateUserAndAccount(Model.User.EMail, Model.User.Password, new { First_name = Model.User.FirstName, Last_name = Model.User.LastName }, true);
 
+                //foreach (var user in _userService.GetList())
+                //{
+                //    user.Password = SHA256(user.Password);
+                //    user.Email = user.Email.Trim();
+
+                //    _userService.Update(user);
+                //}
+
+                
+                User user = new User();
+                user = _userService.GetByEmail(model.User.Email);
+
+                if (user != null)
+                {// eğer kullanıcı daha önceden akyıt olmuşsa sadece userEczane ye seçilen EczaneId ile 
+                    //ve userRole de eczane rolü ile kaydı yapılacak, else den sonra yazıldı ortak olduğu için.
+
+                }
+                else
+                {
+                    model.User.Password = SHA256("1234");
+                    model.User.UserName = model.User.Email;
+                    model.User.BaslamaTarihi = DateTime.Now;
+                    _userService.Insert(model.User);
+
+                    #region userNobetUstGrup
+                    UserNobetUstGrup userNobetUstGrup = new UserNobetUstGrup();
+                    userNobetUstGrup.BaslamaTarihi = DateTime.Now;
+                    var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+                    userNobetUstGrup.NobetUstGrupId = ustGrupSession.Id;
+                    userNobetUstGrup.UserId = model.User.Id;
+
+                    _userNobetUstGrupService.Insert(userNobetUstGrup);
+                    #endregion
+
+                    #region userEczaneOda
+                    UserEczaneOda userEczaneOda = new UserEczaneOda();
+                    NobetUstGrup nobetUstGrup = new NobetUstGrup();
+                    userEczaneOda.BaslamaTarihi = DateTime.Now;
+                    userEczaneOda.EczaneOdaId = ustGrupSession.EczaneOdaId;
+                    userEczaneOda.UserId = model.User.Id; 
+
+                    _userEczaneOdaService.Insert(userEczaneOda);
+                    #endregion
+                }
+
+                #region userRole
+                user = _userService.GetByUserNameAndPassword(model.User.UserName, model.User.Password);
+                UserRole userRole = new UserRole();
+                userRole.UserId = user.Id;
+                userRole.BaslamaTarihi = DateTime.Now;
+                userRole.RoleId = 4;
+
+                _userRoleService.Insert(userRole);
+                #endregion
+
+                #region userEczane
+                UserEczane userEczane = new UserEczane();
+                userEczane.BaslamaTarihi = DateTime.Now;
+                userEczane.EczaneId = model.EczaneId;
+                userEczane.UserId = user.Id;
+
+                _userEczaneService.Insert(userEczane);
+                #endregion
+
+
+
+
+
+                // Roles.AddUserToRole(Model.User.Email, "Members");
+                var subject = "NöbetYaz Mobil Uygulama Kayıt";
+
+                var body =
+                    $"<p>" +
+                        $"Merhaba, Sayın {model.User.FirstName} {model.User.LastName.ToUpper()}." +
+                    $"</p>" +
+                    $"<p>" +
+                        $"Bu mesaj, <b>Nöbetyaz</b> mobil uygulamasına yapmış olduğunuz üyelik hakkında bilgilendirme amacıyla gönderilmiştir. " +
+                        $"<br/>" +
+                        $"<strong>Uygulamaya giriş yapmak için Google veya Apple storedan indiriniz.</strong>" +
+                    $"</p>" +
+                    $"<span>Kullanıcı bilgileriniz:</span>" +
+                    $"<table>" +
+                        $"<tr>" +
+                            $"<td>" +
+                                $"<b>Kullanıcı Adı</b>" +
+                            $"</td>" +
+                             $"<td>" +
+                                $":" +
+                            $"</td>" +
+                            $"<td>" +
+                                $"{model.User.UserName}" +
+                            $"</td>" +
+                        $"</tr>" +
+                        $"<tr>" +
+                            $"<td>" +
+                                $"<b>Parola</b>" +
+                            $"</td>" +
+                            $"<td>" +
+                                $":" +
+                            $"</td>" +
+                            $"<td>" +
+                                $"{model.User.Password}" +
+                            $"</td>" +
+                        $"</tr>" +
+                        $"<tr>" +
+                            $"<td>" +
+                                $"<b>Başlama Tarihi</b>" +
+                            $"</td>" +
+                            $"<td>" +
+                                $":" +
+                            $"</td>" +
+                            $"<td>" +
+                                $"{model.User.BaslamaTarihi}" +
+                            $"</td>" +
+                        $"</tr>" +
+                    $"</table>"
+                    ;
+
+                var toEmail = "ozdamar85@gmail.com";//;Model.User.Email;
+
+                //SendMail(subject, body, toEmail);
+
+                TempData["KayitSonuc"] = "Kayıt başarılı.";
+            }
+            catch (DbUpdateException ex)
+            {
+                var hata = ex.InnerException.ToString();
+
+                string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+
+                var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+
+                if (dublicateRowHatasiMi)
+                {
+                    throw new Exception("Mükerrer kayıt eklenemez... <strong>(Mükerrer kayıt !)</strong>", ex);
+                }
+
+                throw ex;
+            }
+            catch (Exception e)
+            {
+                TempData["Message"] = "Bu email ile kayıt zaten yapılmış!";
+
+                return View("Error", e);
+            }
+
+            return RedirectToAction("Index");
+            //}
+            //else
+            //{
+            //    TempData["Message"] = "ReCaptcha yanlış!";
+
+            //    return View("Fail");
+            //}
+        }
         [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Edit(string userName)
         {
@@ -392,7 +586,7 @@ namespace WM.UI.Mvc.Controllers
                         Email = editUser.Email,
                         Id = kullanici.Id
                     };
-                    
+
                     _userService.Update(user);
 
                     TempData["KullaniciDurumu"] = mesaj;

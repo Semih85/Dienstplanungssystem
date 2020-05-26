@@ -21,5 +21,7 @@ namespace WM.Northwind.Business.Abstract.Authorization
         void Update(User user);
         void Delete(int userId);
         List<User> GetList(List<int> userIdList);
+        User GetByEmail(string email);
+
     }
 }

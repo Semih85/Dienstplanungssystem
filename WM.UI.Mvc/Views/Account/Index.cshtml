@@ -8,16 +8,24 @@
     ViewBag.Title = "Kullanıcılar";
 }
 
-<div class="row justify-content-between mb-2">
-    <div class="col-md-4 mb-2">
-        <div class="form-inline">
-            <h4 class="mr-5">Kullanıcılar</h4>
-            <div class="form-group">
-                <a class="btn btn-outline-success btn-sm" href="@Url.Action("Register", null, null)"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+    <div class="row justify-content-between mb-2">
+        <div class="col-md-4 mb-2">
+            <div class="form-inline">
+                <h4 class="mr-5">Kullanıcılar</h4>
+                <div class="form-group">
+                    <a class="btn btn-outline-success btn-sm" href="@Url.Action("Register", null, null)"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+                </div>
             </div>
         </div>
-    </div>
-    @*<div class="col-md-4 col-xl-3">
+
+        <div class="col-md-4 mb-2">
+            <div class="form-inline">
+                <div class="form-group">
+                    <a class="btn btn-outline-info btn-sm" href="@Url.Action("RegisterEczaciMobilKullanici", null, null)"><span class="fa fa-plus"></span> Yeni Eczacı Mobil Kullanıcı Ekle</a>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-md-4 col-xl-3">
 
             <button class="btn btn-dark btn-sm" type="button" id="btnExceleAktar">
                 <i class="fa fa-file-excel-o text-success"></i> Excele Aktar
@@ -25,15 +33,15 @@
             </button>
         </div>*@
 
-    <div class="col-md-4 col-xl-3">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+        <div class="col-md-4 col-xl-3">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+                </div>
+                <input type="text" id="myInput" class="form-control" placeholder="Tabloda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
             </div>
-            <input type="text" id="myInput" class="form-control" placeholder="Tabloda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
         </div>
     </div>
-</div>
 
 @if (TempData["KayitSonuc"] != null)
 {

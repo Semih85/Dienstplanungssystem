@@ -1406,6 +1406,7 @@
     <Compile Include="Models\GridMvcAjaxPartialViewModel.cs" />
     <Compile Include="Models\HomeListViewModel.cs" />
     <Compile Include="Areas\Northwind\Models\ProductListViewModel.cs" />
+    <Compile Include="Models\RegisterViewModelMobil.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
     <Compile Include="Models\WMUIMvcContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1527,6 +1528,7 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Account\RegisterEczaciMobilKullanici.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

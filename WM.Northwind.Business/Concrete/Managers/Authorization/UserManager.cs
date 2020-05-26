@@ -105,5 +105,10 @@ namespace WM.Northwind.Business.Concrete.Managers.Authorization
         {
             return _userDal.GetList(x => userIdList.Contains(x.Id));
         }
+
+        public User GetByEmail(string email)
+        {
+            return _userDal.Get(u => u.Email == email && u.BitisTarihi == null);
+        }
     }
 }
