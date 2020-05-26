@@ -7,8 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WM.Northwind.Business.Abstract.Authorization;
+using WM.Northwind.Business.Abstract.EczaneNobet;
+using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Authorization;
 using WM.UI.Mvc.Models;
+using WM.UI.Mvc.Services;
 
 namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 {
@@ -16,24 +19,74 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
     [HandleError]
     public class UserRoleController : Controller
     {
+        #region ctor
         private IUserRoleService _userRoleService;
         private IUserService _userService;
         private IRoleService _roleService;
+        private IUserNobetUstGrupService _userNobetUstGrupService;
+        private IUserEczaneOdaService _userEczaneOdaService;
+        private INobetUstGrupService _nobetUstGrupService;
+        private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public UserRoleController(IUserRoleService userRoleService,
                                   IUserService userService,
-                                  IRoleService roleService)
+                                  IRoleService roleService,
+            IUserNobetUstGrupService userNobetUstGrupService,
+            IUserEczaneOdaService userEczaneOdaService,
+            INobetUstGrupService nobetUstGrupService,
+            INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _userRoleService = userRoleService;
             _userService = userService;
             _roleService = roleService;
+            _userNobetUstGrupService = userNobetUstGrupService;
+            _userEczaneOdaService = userEczaneOdaService;
+            _nobetUstGrupService = nobetUstGrupService;
+            _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
-
+        #endregion
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         // GET: EczaneNobet/UserRole
         public ActionResult Index()
         {
-            var model = _userRoleService.GetDetaylar();
-            return View(model);
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+            var rolId = rolIdler.FirstOrDefault();
+
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(nobetUstGruplar.Select(s => s.Id).ToList());
+
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var userRolDetaylar = new List<UserRoleDetay>();
+            var userRoleIdler = new List<int>();
+            var userIdler = new List<int>();
+
+            if (rolId == 1)
+            {//Admin için tüm kullanıclar
+                userRolDetaylar = _userRoleService.GetDetaylar();
+            }
+            else if (rolId == 2 || rolId == 3)
+            {//Oda ve üst grup yetkilisi için seçili nöbet üst grup kullanıcıları gelecek
+                userIdler = _userNobetUstGrupService.GetListByNobetUstGrupId(ustGrupSession.Id)
+                    .OrderBy(o => o.KullaniciAdi)
+                    .Select(s => s.UserId)
+                    .ToList();
+                foreach (var item in userIdler)
+                {
+                    userRoleIdler = _userRoleService.GetDetayListByUserId(item)
+                        .Select(s=>s.Id).ToList();
+                    foreach (var item2 in userRoleIdler)
+                    {
+                        userRolDetaylar.Add(_userRoleService.GetDetayById(item2));
+
+                    }
+
+                }
+            }
+
+            //var model = _userRoleService.GetDetaylar();
+            return View(userRolDetaylar);
         }
 
         // GET: EczaneNobet/UserRole/Details/5
@@ -54,8 +107,27 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // GET: EczaneNobet/UserRole/Create
         public ActionResult Create()
         {
-            ViewBag.RoleId = new SelectList(_roleService.GetList().Select(s => new { s.Id, s.Name }), "Id", "Name");
-            ViewBag.UserId = new SelectList(_userService.GetList().Select(s => new { s.Id, s.UserName }), "Id", "UserName");
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+            var rolId = rolIdler.FirstOrDefault();
+
+            List<int> userIdler = _userNobetUstGrupService.GetListByNobetUstGrupId(ustGrupSession.Id)
+                   .OrderBy(o => o.KullaniciAdi)
+                   .Select(s => s.UserId)
+                   .ToList();
+
+            List<User> users = new List<User>();
+            foreach (var item in userIdler)
+            {
+                users.Add(_userService.GetById(item));
+            }
+            if(rolId == 1)// admin , admin yetkisi verebilsin
+                ViewBag.RoleId = new SelectList(_roleService.GetList().Select(s => new { s.Id, s.Name }), "Id", "Name");
+            else//admin olamyan sadece altına yetki verebilsin
+                ViewBag.RoleId = new SelectList(_roleService.GetList().Where(w => w.Id > rolId).Select(s => new { s.Id, s.Name }), "Id", "Name");
+
+            ViewBag.UserId = new SelectList(users.Select(s => new { s.Id, s.UserName }), "Id", "UserName");
             return View();
         }
 

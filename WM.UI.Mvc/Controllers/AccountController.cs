@@ -28,36 +28,58 @@ namespace WM.UI.Mvc.Controllers
     {
         private IUserService _userService;
         private IUserNobetUstGrupService _userNobetUstGrupService;
+        private IUserEczaneOdaService _userEczaneOdaService;
         private INobetUstGrupService _nobetUstGrupService;
         private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public AccountController(IUserService userService,
             IUserNobetUstGrupService userNobetUstGrupService,
+            IUserEczaneOdaService userEczaneOdaService,
             INobetUstGrupService nobetUstGrupService,
             INobetUstGrupSessionService nobetUstGrupSessionService)
         {
             _userService = userService;
             _userNobetUstGrupService = userNobetUstGrupService;
+            _userEczaneOdaService = userEczaneOdaService;
             _nobetUstGrupService = nobetUstGrupService;
             _nobetUstGrupSessionService = nobetUstGrupSessionService;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Index()
         {
-            //var user = _userService.GetByUserName(User.Identity.Name);
-            //var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
-            //var rolId = rolIdler.FirstOrDefault();
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+            var rolId = rolIdler.FirstOrDefault();
 
-            //var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
-            //var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(nobetUstGruplar.Select(s => s.Id).ToList());
+            var nobetUstGruplar = _nobetUstGrupService.GetListByUser(user);
+            var userNobetUstGruplar = _userNobetUstGrupService.GetDetaylar(nobetUstGruplar.Select(s => s.Id).ToList());
 
-            //var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
-            var kullanicilar = _userService.GetList()
-                .OrderBy(o => o.UserName)
-                .ToList();
-            //var liste = new List<User>();
+            var kullanicilar = new List<User>();
+            var nobetUstGrupIdler = new List<int>();
+            var kullaniciIDler = new List<int>();
+
+            if (rolId == 1)
+            {//Admin için tüm kullanıclar
+                 kullanicilar = _userService.GetList()
+                    .OrderBy(o => o.UserName)
+                    .ToList();
+            }
+            else if(rolId == 2 || rolId == 3)
+            {//Oda ve üst grup yetkilisi için seçili nöbet üst grup kullanıcıları gelecek
+                kullaniciIDler = _userNobetUstGrupService.GetListByNobetUstGrupId(ustGrupSession.Id)
+                    .OrderBy(o => o.KullaniciAdi)
+                    .Select(s=>s.UserId)
+                    .ToList();
+                foreach (var item in kullaniciIDler)
+                {
+                    kullanicilar.Add(_userService.GetById(item));
+                }
+            }
+          
+           
 
             return View(kullanicilar);
         }
