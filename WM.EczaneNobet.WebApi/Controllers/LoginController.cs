@@ -145,40 +145,40 @@ namespace WM.EczaneNobet.WebApi.Controllers
             }
         }
 
-        [Route("parola-degistir-get")]
-        //[Route("login/{eMail:maxlength(100)}/{password:maxlength(100)}")]
-        [HttpGet]
-        public HttpResponseMessage GetParolaDegistir()//([FromUri]string eMail, [FromUri]string password)
-        {
-            UserApi userApi = new UserApi
-            {
-                CihazId = "ci2ssXB9fUM:APA91bHGY05FVss6IsiggGnR54AhdlgWpZgzPjKbHxcKjbUHZk9hkwAL7MBFsHWw__2a-y5pYUzW4hnUp16J9sBxwjvuscueMTjBncvBWjPHHJtfElnZKt4IPZkHdXVQJ7Bnen5NnPR7",
-                NewPassword = "0327ates",
-                Password = "1234",
-                Username = "atesates2012@gmail.com"
-            };
-            LoginItem loginUser;
-            User user;
-            _yetkilendirme.YetkiKontrolu(userApi, out loginUser, out user);
+        //[Route("parola-degistir-get")]
+        ////[Route("login/{eMail:maxlength(100)}/{password:maxlength(100)}")]
+        //[HttpGet]
+        //public HttpResponseMessage GetParolaDegistir()//([FromUri]string eMail, [FromUri]string password)
+        //{
+        //    UserApi userApi = new UserApi
+        //    {
+        //        CihazId = "ci2ssXB9fUM:APA91bHGY05FVss6IsiggGnR54AhdlgWpZgzPjKbHxcKjbUHZk9hkwAL7MBFsHWw__2a-y5pYUzW4hnUp16J9sBxwjvuscueMTjBncvBWjPHHJtfElnZKt4IPZkHdXVQJ7Bnen5NnPR7",
+        //        NewPassword = "0327ates",
+        //        Password = "0327ates",
+        //        Username = "atesates2012@gmail.com"
+        //    };
+        //    LoginItem loginUser;
+        //    User user;
+        //    _yetkilendirme.YetkiKontrolu(userApi, out loginUser, out user);
 
 
-            if (user != null)
-            {
-                user.Password = _yetkilendirme.SHA256(userApi.NewPassword);
-                _userService.Update(user);
-                string token = _yetkilendirme.GetToken2(loginUser);
-                List<UserRoleDetay> UserRoleDetayList = new List<UserRoleDetay>();
-                UserRoleDetayList = _userRoleService.GetDetayListByUserId(user.Id).ToList();
-                return Request.CreateResponse(HttpStatusCode.OK, "UserId:" + UserRoleDetayList[0].UserId
-                    + ",Token:" + token
-                    + ",CihazId:" + UserRoleDetayList[0].CihazId
-                    + ",Password:" + user.Password);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.Unauthorized, "Kullanıcı adı ve şifresi geçersiz.");
-            }
-        }
+        //    if (user != null)
+        //    {
+        //        user.Password = _yetkilendirme.SHA256(userApi.NewPassword);
+        //        _userService.Update(user);
+        //        string token = _yetkilendirme.GetToken2(loginUser);
+        //        List<UserRoleDetay> UserRoleDetayList = new List<UserRoleDetay>();
+        //        UserRoleDetayList = _userRoleService.GetDetayListByUserId(user.Id).ToList();
+        //        return Request.CreateResponse(HttpStatusCode.OK, "UserId:" + UserRoleDetayList[0].UserId
+        //            + ",Token:" + token
+        //            + ",CihazId:" + UserRoleDetayList[0].CihazId
+        //            + ",Password:" + user.Password);
+        //    }
+        //    else
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.Unauthorized, "Kullanıcı adı ve şifresi geçersiz.");
+        //    }
+        //}
 
         [Route("cihazId")]
         //[Route("login/{eMail:maxlength(100)}/{password:maxlength(100)}")]
