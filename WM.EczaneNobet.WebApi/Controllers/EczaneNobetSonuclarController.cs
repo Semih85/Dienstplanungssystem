@@ -22,6 +22,7 @@ namespace WM.EczaneNobet.WebApi.Controllers
         private IUserService _userService;
         private IUserEczaneService _userEczaneService;
         private INobetUstGrupService _nobetUstGrupService;
+        private INobetGrupService _nobetGrupService;
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private IEczaneService _eczaneService;
         private IEczaneNobetOrtakService _eczaneNobetOrtakService;
@@ -32,6 +33,7 @@ namespace WM.EczaneNobet.WebApi.Controllers
         public EczaneNobetSonuclarController(IEczaneNobetSonucService eczaneNobetSonucService,
                                                 IUserService userService,
                                                 IUserEczaneService userEczaneService,
+                                                INobetGrupService nobetGrupService,
                                                 INobetUstGrupService nobetUstGrupService,
                                                 IEczaneNobetGrupService eczaneNobetGrupService,
                                                 IEczaneService eczaneService,
@@ -41,6 +43,7 @@ namespace WM.EczaneNobet.WebApi.Controllers
         {
             _userService = userService;
             _eczaneNobetSonucService = eczaneNobetSonucService;
+            _nobetGrupService = nobetGrupService;
             _userEczaneService = userEczaneService;
             _nobetUstGrupService = nobetUstGrupService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
@@ -66,8 +69,10 @@ namespace WM.EczaneNobet.WebApi.Controllers
             //user = _userService.GetById(userId);
             int eczaneId = _userEczaneService.GetListByUserId(userId).Select(s => s.EczaneId).FirstOrDefault();
             int eczaneNobetGrupId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).Id;
+            int nobetGrupGorevTipId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).NobetGrupGorevTipId;
+            NobetGrup nobetGrup = _nobetGrupService.GetById(nobetGrupGorevTipId);
             NobetUstGrup nobetUstGrup = _eczaneService.GetByEczaneNobetGrupId(eczaneNobetGrupId);
-            return _eczaneNobetSonucService.GetEczaneGrupNobetSonuc(nobetUstGrup.BaslangicTarihi,DateTime.Now.AddMonths(12), nobetUstGrup.Id)
+            return _eczaneNobetSonucService.GetEczaneGrupNobetSonuc(nobetGrup.BaslamaTarihi,DateTime.Now.AddMonths(12), nobetUstGrup.Id)
                 //.OrderByDescending(o => o.Tarih)
                 .ToList();
         }
@@ -89,7 +94,9 @@ namespace WM.EczaneNobet.WebApi.Controllers
             int eczaneNobetGrupId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).Id;
             NobetUstGrup nobetUstGrup = _eczaneService.GetByEczaneNobetGrupId(eczaneNobetGrupId);
             int nobetUstGrupId = _nobetUstGrupService.GetListByUser(user).FirstOrDefault().Id;
-            return _eczaneNobetSonucService.GetEczaneGrupNobetSonuc(nobetUstGrup.BaslangicTarihi, DateTime.Now.AddMonths(12), nobetUstGrupId)
+            int nobetGrupGorevTipId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).NobetGrupGorevTipId;
+            NobetGrup nobetGrup = _nobetGrupService.GetById(nobetGrupGorevTipId);
+            return _eczaneNobetSonucService.GetEczaneGrupNobetSonuc(nobetGrup.BaslamaTarihi, DateTime.Now.AddMonths(12), nobetUstGrupId)
                 .Where(w => w.EczaneNobetGrupId == eczaneNobetGrupId)
                 //.OrderByDescending(o => o.Tarih)
                 .ToList();
@@ -104,7 +111,9 @@ namespace WM.EczaneNobet.WebApi.Controllers
             int eczaneId = _userEczaneService.GetListByUserId(userId).Select(s => s.EczaneId).FirstOrDefault();
             int eczaneNobetGrupId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).Id;
             NobetUstGrup nobetUstGrup = _eczaneService.GetByEczaneNobetGrupId(eczaneNobetGrupId);
-            return _eczaneNobetSonucService.GetSonuclarMobilUygulama(nobetUstGrup.BaslangicTarihi, DateTime.Now.AddMonths(12), nobetUstGrup.Id)
+            int nobetGrupGorevTipId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).NobetGrupGorevTipId;
+            NobetGrup nobetGrup = _nobetGrupService.GetById(nobetGrupGorevTipId);
+            return _eczaneNobetSonucService.GetSonuclarMobilUygulama(nobetGrup.BaslamaTarihi, DateTime.Now.AddMonths(12), nobetUstGrup.Id)
                 .Where(w => w.EczaneNobetGrupId == eczaneNobetGrupId
                 && w.YayimlandiMi == true)
                 //.OrderByDescending(o => o.Tarih)
@@ -122,7 +131,9 @@ namespace WM.EczaneNobet.WebApi.Controllers
             int eczaneNobetGrupId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).Id;
 
             NobetUstGrup nobetUstGrup = _eczaneService.GetByEczaneNobetGrupId(eczaneNobetGrupId);
-            return _eczaneNobetSonucService.GetSonuclarMobilUygulama(nobetUstGrup.BaslangicTarihi,
+            int nobetGrupGorevTipId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).NobetGrupGorevTipId;
+            NobetGrup nobetGrup = _nobetGrupService.GetById(nobetGrupGorevTipId);
+            return _eczaneNobetSonucService.GetSonuclarMobilUygulama(nobetGrup.BaslamaTarihi,
                 DateTime.Now.AddMonths(12), nobetUstGrup.Id)
                  .Where(w => w.YayimlandiMi == true)
                 //.OrderByDescending(o=>o.Tarih)
@@ -146,7 +157,9 @@ namespace WM.EczaneNobet.WebApi.Controllers
             int eczaneId = _userEczaneService.GetListByUserId(userId).Select(s => s.EczaneId).FirstOrDefault();
             int eczaneNobetGrupId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).Id;
             NobetUstGrup nobetUstGrup = _eczaneService.GetByEczaneNobetGrupId(eczaneNobetGrupId);
-            return _eczaneNobetSonucService.GetEczaneGrupNobetSonuc(nobetUstGrup.BaslangicTarihi, DateTime.Now.AddMonths(12), nobetUstGrup.Id)
+            int nobetGrupGorevTipId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).NobetGrupGorevTipId;
+            NobetGrup nobetGrup = _nobetGrupService.GetById(nobetGrupGorevTipId);
+            return _eczaneNobetSonucService.GetEczaneGrupNobetSonuc(nobetGrup.BaslamaTarihi, DateTime.Now.AddMonths(12), nobetUstGrup.Id)
                 .Where(w => w.EczaneNobetGrupId == eczaneNobetGrupId)
                 //----********---- yayinlsndiMi burada önceden kontrol edliyor!!!!!
 
@@ -167,7 +180,9 @@ namespace WM.EczaneNobet.WebApi.Controllers
             int eczaneNobetGrupId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).Id;
             NobetUstGrup nobetUstGrup = _eczaneService.GetByEczaneNobetGrupId(eczaneNobetGrupId);
             List<EczaneGrupNobetSonuc> list = new List<EczaneGrupNobetSonuc>();
-            list =  _eczaneNobetSonucService.GetEczaneGrupNobetSonuc(nobetUstGrup.BaslangicTarihi, DateTime.Now.AddMonths(12), nobetUstGrup.Id)
+            int nobetGrupGorevTipId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).NobetGrupGorevTipId;
+            NobetGrup nobetGrup = _nobetGrupService.GetById(nobetGrupGorevTipId);
+            list =  _eczaneNobetSonucService.GetEczaneGrupNobetSonuc(nobetGrup.BaslamaTarihi, DateTime.Now.AddMonths(12), nobetUstGrup.Id)
                 .Where(w => w.EczaneNobetGrupId == eczaneNobetGrupId)
                 //----********---- yayinlsndiMi burada önceden kontrol edliyor!!!!!
                // && w.YayimlandiMi == true)
@@ -187,7 +202,9 @@ namespace WM.EczaneNobet.WebApi.Controllers
             NobetUstGrup nobetUstGrup = _eczaneService.GetByEczaneNobetGrupId(eczaneNobetGrupId);
             List<DateTime> tarihListe = _eczaneNobetSonucService.GetEczaneGrupNobetSonuc(nobetUstGrup.Id)
                 .Where(w => w.EczaneNobetGrupId == eczaneNobetGrupId).Select(s => s.Tarih).ToList();
-            List<EczaneGrupNobetSonuc> returnList = _eczaneNobetSonucService.GetEczaneGrupNobetSonuc(nobetUstGrup.BaslangicTarihi, DateTime.Now.AddMonths(12), nobetUstGrup.Id)
+            int nobetGrupGorevTipId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).NobetGrupGorevTipId;
+            NobetGrup nobetGrup = _nobetGrupService.GetById(nobetGrupGorevTipId);
+            List<EczaneGrupNobetSonuc> returnList = _eczaneNobetSonucService.GetEczaneGrupNobetSonuc(nobetGrup.BaslamaTarihi, DateTime.Now.AddMonths(12), nobetUstGrup.Id)
                .Where(w => tarihListe.Contains(w.Tarih))
                 // .OrderByDescending(o => o.Tarih)
                 .ToList();
@@ -203,10 +220,11 @@ namespace WM.EczaneNobet.WebApi.Controllers
             int eczaneId = _userEczaneService.GetListByUserId(userId).Select(s => s.EczaneId).FirstOrDefault();
             int eczaneNobetGrupId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).Id;
             NobetUstGrup nobetUstGrup = _eczaneService.GetByEczaneNobetGrupId(eczaneNobetGrupId);
-            
-            List<DateTime> tarihListe = _eczaneNobetSonucService.GetSonuclarMobilUygulama(nobetUstGrup.BaslangicTarihi, DateTime.Now.AddMonths(12), nobetUstGrup.Id)
+            int nobetGrupGorevTipId = _eczaneNobetGrupService.GetDetayByEczaneId(eczaneId).NobetGrupGorevTipId;
+            NobetGrup nobetGrup = _nobetGrupService.GetById(nobetGrupGorevTipId);
+            List<DateTime> tarihListe = _eczaneNobetSonucService.GetSonuclarMobilUygulama(nobetGrup.BaslamaTarihi, DateTime.Now.AddMonths(12), nobetUstGrup.Id)
                 .Where(w => w.EczaneNobetGrupId == eczaneNobetGrupId).Select(s => s.Tarih).ToList();
-            List<EczaneNobetSonucMobilUygulama> returnList = _eczaneNobetSonucService.GetSonuclarMobilUygulama(nobetUstGrup.BaslangicTarihi, DateTime.Now.AddMonths(12), nobetUstGrup.Id)
+            List<EczaneNobetSonucMobilUygulama> returnList = _eczaneNobetSonucService.GetSonuclarMobilUygulama(nobetGrup.BaslamaTarihi, DateTime.Now.AddMonths(12), nobetUstGrup.Id)
                .Where(w => tarihListe.Contains(w.Tarih)
                && w.YayimlandiMi == true)
                 // .OrderByDescending(o => o.Tarih)

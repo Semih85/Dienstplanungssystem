@@ -228,7 +228,7 @@ namespace WM.UI.Mvc.Controllers
             //}
             var mevcutEczaneler = _userEczaneService.GetList()
                 .Select(s => s.EczaneId);
-            var eczaneler = _eczaneService.GetByNobetUstGrupId(ustGrupSession.Id)
+            var eczaneler = _eczaneService.GetDetaylar(ustGrupSession.Id)
                 .Where(w => !mevcutEczaneler.Contains(w.Id));
             eczaneler = eczaneler.OrderBy(o => o.EczaneAdi);
 
@@ -370,8 +370,8 @@ namespace WM.UI.Mvc.Controllers
                 //}
 
                 
-                User user = new User();
-                user = _userService.GetByEmail(model.User.Email);
+                //User user = new User();
+                User user = _userService.GetByEmail(model.User.Email);
 
                 if (user != null)
                 {// eğer kullanıcı daha önceden akyıt olmuşsa sadece userEczane ye seçilen EczaneId ile 
