@@ -368,8 +368,9 @@ namespace WM.UI.Mvc.Controllers
 
                 //    _userService.Update(user);
                 //}
-
-                
+                #region kayıt
+                Random rnd = new Random();
+                string parola = rnd.Next(111111, 999999).ToString();
                 //User user = new User();
                 User user = _userService.GetByEmail(model.User.Email);
 
@@ -380,7 +381,7 @@ namespace WM.UI.Mvc.Controllers
                 }
                 else
                 {
-                    model.User.Password = SHA256("1234");
+                    model.User.Password = SHA256(parola);
                     model.User.UserName = model.User.Email;
                     model.User.BaslamaTarihi = DateTime.Now;
                     _userService.Insert(model.User);
@@ -400,7 +401,7 @@ namespace WM.UI.Mvc.Controllers
                     NobetUstGrup nobetUstGrup = new NobetUstGrup();
                     userEczaneOda.BaslamaTarihi = DateTime.Now;
                     userEczaneOda.EczaneOdaId = ustGrupSession.EczaneOdaId;
-                    userEczaneOda.UserId = model.User.Id; 
+                    userEczaneOda.UserId = model.User.Id;
 
                     _userEczaneOdaService.Insert(userEczaneOda);
                     #endregion
@@ -424,65 +425,32 @@ namespace WM.UI.Mvc.Controllers
 
                 _userEczaneService.Insert(userEczane);
                 #endregion
+                #endregion
 
+                string eczaneAdi = _eczaneService.GetById(model.EczaneId).Adi;
 
-
-
-
+                #region email
                 // Roles.AddUserToRole(Model.User.Email, "Members");
                 var subject = "NöbetYaz Mobil Uygulama Kayıt";
 
-                var body =
-                    $"<p>" +
-                        $"Merhaba, Sayın {model.User.FirstName} {model.User.LastName.ToUpper()}." +
-                    $"</p>" +
-                    $"<p>" +
-                        $"Bu mesaj, <b>Nöbetyaz</b> mobil uygulamasına yapmış olduğunuz üyelik hakkında bilgilendirme amacıyla gönderilmiştir. " +
-                        $"<br/>" +
-                        $"<strong>Uygulamaya giriş yapmak için Google veya Apple storedan indiriniz.</strong>" +
-                    $"</p>" +
-                    $"<span>Kullanıcı bilgileriniz:</span>" +
-                    $"<table>" +
-                        $"<tr>" +
-                            $"<td>" +
-                                $"<b>Kullanıcı Adı</b>" +
-                            $"</td>" +
-                             $"<td>" +
-                                $":" +
-                            $"</td>" +
-                            $"<td>" +
-                                $"{model.User.UserName}" +
-                            $"</td>" +
-                        $"</tr>" +
-                        $"<tr>" +
-                            $"<td>" +
-                                $"<b>Parola</b>" +
-                            $"</td>" +
-                            $"<td>" +
-                                $":" +
-                            $"</td>" +
-                            $"<td>" +
-                                $"{model.User.Password}" +
-                            $"</td>" +
-                        $"</tr>" +
-                        $"<tr>" +
-                            $"<td>" +
-                                $"<b>Başlama Tarihi</b>" +
-                            $"</td>" +
-                            $"<td>" +
-                                $":" +
-                            $"</td>" +
-                            $"<td>" +
-                                $"{model.User.BaslamaTarihi}" +
-                            $"</td>" +
-                        $"</tr>" +
-                    $"</table>"
-                    ;
+                var body = "Merhaba, Sayın " + model.User.FirstName + " " + model.User.LastName 
+                    + System.Environment.NewLine + 
+                    "Bu mesaj, eczacı odanızın " + eczaneAdi + " ECZANESİ adına Nöbetyaz mobil uygulamasına yapmış olduğu kayıt hakkında sizi bilgilendirme amacıyla gönderilmiştir. " 
+                     + System.Environment.NewLine +
+                       "Google veya Apple mağazalarında Nöbetyaz uygulamasını ücretsiz indirip giriş yapabilirsiniz."
+                     + System.Environment.NewLine +
+                     "Nöbetyaz uygulaması sayesinde eczacı odanızdan güncel duyurular ve nöbetler ile ilgili bildirimler alabilirsiniz."
+                     + System.Environment.NewLine +
+                     "Kullanıcı bilgileriniz:"
+                      + System.Environment.NewLine +
+                   "Kullanıcı Adınız: " + model.User.Email
+                      + System.Environment.NewLine +
+                    "Parolanız: " + parola;
 
-                var toEmail = "ozdamar85@gmail.com";//;Model.User.Email;
+                var toEmail = model.User.Email;
 
-                //SendMail(subject, body, toEmail);
-
+                SendMail(subject, body, toEmail);
+                #endregion
                 TempData["KayitSonuc"] = "Kayıt başarılı.";
             }
             catch (DbUpdateException ex)
@@ -679,8 +647,8 @@ namespace WM.UI.Mvc.Controllers
             // SendMail msg = new SendMail();
             // msg.AddandSend(this.Form, "naklentenis@gmail.com", txtemail.Text, "naklentenis.com seyirci girişi için email ve parolanız:", mesaj, "", "");
 
-            var fromEmail = "yoneylemci@hotmail.com";
-            var fromPW = "semihates2017";
+            var fromEmail = "defitenis@gmail.com";
+            var fromPW = "StanWawrinka";
 
             var htmlMessage = new StringBuilder();
 
@@ -694,26 +662,28 @@ namespace WM.UI.Mvc.Controllers
             htmlMessage.Append(Environment.NewLine);
             htmlMessage.Append("</body></html>");
 
-            var message = new MailMessage
-            {
-                From = new MailAddress(fromEmail),
-                Subject = subject,
-                DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure,
-                IsBodyHtml = true,
-                Body = htmlMessage.ToString()
-            };
+           
+            // SendMail msg = new SendMail();
+            // msg.AddandSend(this.Form, "naklentenis@gmail.com", txtemail.Text, "naklentenis.com seyirci girişi için email ve parolanız:", mesaj, "", "");
 
+            System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
+            
+            
+          
+            message.From = new MailAddress(fromEmail);
             message.To.Add(toEmail);
+            message.Subject = subject;
+            message.Body = body;
+            message.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
 
-            var smtpClient = new SmtpClient("smtp.live.com", 587)
-            {
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = true,
-                Credentials = new System.Net.NetworkCredential(fromEmail, fromPW)
-            };
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.EnableSsl = true;
+            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtpClient.UseDefaultCredentials = true;
+            smtpClient.Credentials = new System.Net.NetworkCredential(fromEmail, fromPW);
 
-            smtpClient.Send(message);
+            smtpClient.Send(message.From.ToString(), message.To.ToString(),
+                message.Subject, message.Body);
         }
 
         public string SHA256(string strGiris)
@@ -749,5 +719,6 @@ namespace WM.UI.Mvc.Controllers
             }
             return hash.ToString().ToUpper();
         }
+
     }
 }
