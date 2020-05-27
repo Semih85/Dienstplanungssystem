@@ -647,8 +647,8 @@ namespace WM.UI.Mvc.Controllers
             // SendMail msg = new SendMail();
             // msg.AddandSend(this.Form, "naklentenis@gmail.com", txtemail.Text, "naklentenis.com seyirci girişi için email ve parolanız:", mesaj, "", "");
 
-            var fromEmail = "defitenis@gmail.com";
-            var fromPW = "StanWawrinka";
+            var fromEmail = "nobetyaz@gmail.com";
+            var fromPW = "Marvelyus";
 
             var htmlMessage = new StringBuilder();
 
