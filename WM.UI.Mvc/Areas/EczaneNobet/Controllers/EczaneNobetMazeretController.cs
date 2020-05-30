@@ -69,6 +69,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
         #endregion
 
+        
         // GET: EczaneNobet/EczaneNobetMazeret
         [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Index()
@@ -166,7 +167,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 TakvimId = model.TakvimId,
                 Tarih = model.Tarih,
                 Yil = model.Yil,
-                NobetGorevTipAdi = model.NobetGorevTipAdi
+                NobetGorevTipAdi = model.NobetGorevTipAdi,
+                Onay = model.Onay
             };
 
             return myEczaneNobetMazeretIstekDetay;
@@ -191,7 +193,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 TakvimId = model.TakvimId,
                 Tarih = model.Tarih,
                 Yil = model.Yil,
-                NobetGorevTipAdi = model.NobetGorevTipAdi
+                NobetGorevTipAdi = model.NobetGorevTipAdi,
+                Onay = model.Onay
             };
 
             return myEczaneNobetMazeretIstekDetay;
@@ -380,7 +383,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             return jsonResult;
         }
-
+       
         // GET: EczaneNobet/EczaneNobetMazeret/Details/5
         public ActionResult Details(int id)
         {
@@ -853,7 +856,222 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //return PartialView("EczaneNobetMazeretPartialView", eczaneNobetMazeretlerVeIstekler);
             //  return Json(unSelectedEczaneMazeretIstekIDs, JsonRequestBehavior.AllowGet);          
         }
-        
+        public List<EczaneNobetMazeretIstekDetay> GetMazeretlerForOnay(int[] nobetGrupGorevTipId,
+         DateTime? baslangicTarihi = null,
+         DateTime? bitisTarihi = null,
+         int? eczaneNobetMazeretIstekTipId = 0)
+        {
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var eczaneNobetMazeretler = new List<EczaneNobetMazeretDetay>();
+            var eczaneNobetIstekler = new List<EczaneNobetIstekDetay>();
+            var eczaneNobetMazeretlerVeIstekler = new List<EczaneNobetMazeretIstekDetay>();
+
+            if (nobetGrupGorevTipId == null)
+            {
+                throw new Exception("Lütfen nöbet grubunu seçiniz...");
+            }
+
+            if (eczaneNobetMazeretIstekTipId == 0)
+            {
+                eczaneNobetMazeretler = _eczaneNobetMazeretService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+                eczaneNobetIstekler = _eczaneNobetIstekService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+            }
+            else if (eczaneNobetMazeretIstekTipId == 1)
+            {
+                eczaneNobetMazeretler = _eczaneNobetMazeretService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+            }
+            else if (eczaneNobetMazeretIstekTipId == 2)
+            {
+                eczaneNobetIstekler = _eczaneNobetIstekService.GetDetaylar(baslangicTarihi, bitisTarihi, nobetGrupGorevTipId);
+            }
+
+            foreach (var item in eczaneNobetIstekler)
+            {
+                eczaneNobetMazeretlerVeIstekler.Add(ConvertEczaneNobetIstekDetayToEczaneNobetMazeretIstekDetay(item));
+            }
+
+            foreach (var item in eczaneNobetMazeretler)
+            {
+                eczaneNobetMazeretlerVeIstekler.Add(ConvertEczaneNobetIMazeretDetayToEczaneNobetMazeretIstekDetay(item));
+            }
+
+            var sonuclar = eczaneNobetMazeretlerVeIstekler
+                .Where(w => w.MazeretIstekId == eczaneNobetMazeretIstekTipId
+                        || eczaneNobetMazeretIstekTipId == 0)
+                .OrderByDescending(o => o.Tarih)
+                .ThenBy(f => f.EczaneAdi).ToList();
+
+            //var jsonResult = Json(sonuclar, JsonRequestBehavior.AllowGet);
+
+            //jsonResult.MaxJsonLength = int.MaxValue;
+
+            return sonuclar;
+        }
+        public void SecilenleriOnayla(string selectedEczaneMazeretIstekIDsForOnay, string unSelectedEczaneMazeretIstekIDsForOnay,
+            string baslangicTarihiForOnay, string  bitisTarihiForOnay, string eczaneNobetMazeretIstekTipIdForOnay, string  nobetGrupGorevTipIdForOnay)
+        {
+            var cor = "Seçim Yapmadınız!";
+
+            if (selectedEczaneMazeretIstekIDsForOnay == "" || selectedEczaneMazeretIstekIDsForOnay == null)
+            {
+                throw new Exception(cor);
+                //return Json(cor, JsonRequestBehavior.AllowGet);
+            }
+            //seçilenleri sil
+            
+            var onaylanacakKayitlar = selectedEczaneMazeretIstekIDsForOnay.Split(',');
+
+            foreach (string item in onaylanacakKayitlar)
+            {
+                
+                var id = item.Substring(0, item.IndexOf(';'));
+                var ind = item.IndexOf(';');
+                var tur = item.Substring(item.IndexOf(';') + 1, item.Length - item.IndexOf(';') - 1);
+                if (tur == "1")
+                {
+                    var eczaneNobetMazeretOrj = _eczaneNobetMazeretService.GetById(Convert.ToInt32(id));
+                    var eczaneNobetMazeret = new EczaneNobetMazeret
+                    {
+                        EczaneNobetGrupId = eczaneNobetMazeretOrj.EczaneNobetGrupId,
+                        MazeretId = eczaneNobetMazeretOrj.MazeretId,
+                        Aciklama = eczaneNobetMazeretOrj.Aciklama,
+                        TakvimId = eczaneNobetMazeretOrj.TakvimId,
+                        Id = eczaneNobetMazeretOrj.Id,
+                        Onay = true
+                    };
+                    _eczaneNobetMazeretService.Update(eczaneNobetMazeret);
+                }
+                else if (tur == "2")
+                {
+                    var eczaneNobetIstekOrj = _eczaneNobetIstekService.GetById(Convert.ToInt32(id));
+                    var eczaneNobetIstek = new EczaneNobetIstek
+                    {
+                        EczaneNobetGrupId = eczaneNobetIstekOrj.EczaneNobetGrupId,
+                        IstekId = eczaneNobetIstekOrj.IstekId,
+                        Aciklama = eczaneNobetIstekOrj.Aciklama,
+                        TakvimId = eczaneNobetIstekOrj.TakvimId,
+                        Id = eczaneNobetIstekOrj.Id,
+                        Onay = true
+                    };
+                    _eczaneNobetIstekService.Update(eczaneNobetIstek);
+                }
+            }
+
+            //if (baslangicTarihiForOnay == "")
+            //    baslangicTarihiForOnay = DateTime.Now.ToString();
+            //if (bitisTarihiForOnay == "")
+            //    bitisTarihiForOnay = null;
+
+            //int[] nobetGrupGorevTipId;
+            //List<int> listnobetGrupGorevTipId = new List<int>();
+            //var liste = nobetGrupGorevTipIdForOnay.Split(',');
+            //if (liste[0].Length > 0)
+            //{
+            //    foreach (string item in liste)
+            //    {
+            //        try
+            //        {
+            //            listnobetGrupGorevTipId.Add(Convert.ToInt32(item));
+            //        }
+            //        catch { }
+            //    }
+            //}
+            //nobetGrupGorevTipId = listnobetGrupGorevTipId.ToArray();
+            ////TempData["silinenMazeretSayisi"] = liste.Length;
+            ////seçilmeyenleri döndür
+            //var eczaneNobetMazeretlerVeIstekler = new List<EczaneNobetMazeretIstekDetay>();
+            //if(bitisTarihiForOnay == null)
+            //    eczaneNobetMazeretlerVeIstekler = GetMazeretlerForOnay(nobetGrupGorevTipId, Convert.ToDateTime(baslangicTarihiForOnay),
+            //    null , Convert.ToInt32(eczaneNobetMazeretIstekTipIdForOnay));
+            //else eczaneNobetMazeretlerVeIstekler = GetMazeretlerForOnay(nobetGrupGorevTipId, Convert.ToDateTime(baslangicTarihiForOnay),
+            //    Convert.ToDateTime(bitisTarihiForOnay), Convert.ToInt32(eczaneNobetMazeretIstekTipIdForOnay));
+
+            //return PartialView("EczaneNobetMazeretPartialView", eczaneNobetMazeretlerVeIstekler);
+                    
+        }
+        public void SecilenlerinOnayiniKaldir(string selectedEczaneMazeretIstekIDsForOnayKaldir, string unSelectedEczaneMazeretIstekIDsForOnayKaldir,
+            string baslangicTarihiForOnayKaldir, string bitisTarihiForOnayKaldir, string eczaneNobetMazeretIstekTipIdForOnayKaldir, string nobetGrupGorevTipIdForOnayKaldir)
+        {
+            var cor = "Seçim Yapmadınız!";
+
+            if (selectedEczaneMazeretIstekIDsForOnayKaldir == "" || selectedEczaneMazeretIstekIDsForOnayKaldir == null)
+            {
+                throw new Exception(cor);
+                //return Json(cor, JsonRequestBehavior.AllowGet);
+            }
+            //seçilenleri sil
+
+            var onaylanacakKayitlar = selectedEczaneMazeretIstekIDsForOnayKaldir.Split(',');
+
+            foreach (string item in onaylanacakKayitlar)
+            {
+
+                var id = item.Substring(0, item.IndexOf(';'));
+                var ind = item.IndexOf(';');
+                var tur = item.Substring(item.IndexOf(';') + 1, item.Length - item.IndexOf(';') - 1);
+                if (tur == "1")
+                {
+                    var eczaneNobetMazeretOrj = _eczaneNobetMazeretService.GetById(Convert.ToInt32(id));
+                    var eczaneNobetMazeret = new EczaneNobetMazeret
+                    {
+                        EczaneNobetGrupId = eczaneNobetMazeretOrj.EczaneNobetGrupId,
+                        MazeretId = eczaneNobetMazeretOrj.MazeretId,
+                        Aciklama = eczaneNobetMazeretOrj.Aciklama,
+                        TakvimId = eczaneNobetMazeretOrj.TakvimId,
+                        Id = eczaneNobetMazeretOrj.Id,
+                        Onay = false
+                    };
+                    _eczaneNobetMazeretService.Update(eczaneNobetMazeret);
+                }
+                else if (tur == "2")
+                {
+                    var eczaneNobetIstekOrj = _eczaneNobetIstekService.GetById(Convert.ToInt32(id));
+                    var eczaneNobetIstek = new EczaneNobetIstek
+                    {
+                        EczaneNobetGrupId = eczaneNobetIstekOrj.EczaneNobetGrupId,
+                        IstekId = eczaneNobetIstekOrj.IstekId,
+                        Aciklama = eczaneNobetIstekOrj.Aciklama,
+                        TakvimId = eczaneNobetIstekOrj.TakvimId,
+                        Id = eczaneNobetIstekOrj.Id,
+                        Onay = false
+                    };
+                    _eczaneNobetIstekService.Update(eczaneNobetIstek);
+                }
+            }
+
+            //if (baslangicTarihiForOnayKaldir == "")
+            //    baslangicTarihiForOnayKaldir = DateTime.Now.ToString();
+            //if (bitisTarihiForOnayKaldir == "")
+            //    bitisTarihiForOnayKaldir = null;
+
+            //int[] nobetGrupGorevTipId;
+            //List<int> listnobetGrupGorevTipId = new List<int>();
+            //var liste = nobetGrupGorevTipIdForOnayKaldir.Split(',');
+            //if (liste[0].Length > 0)
+            //{
+            //    foreach (string item in liste)
+            //    {
+            //        try
+            //        {
+            //            listnobetGrupGorevTipId.Add(Convert.ToInt32(item));
+            //        }
+            //        catch { }
+            //    }
+            //}
+            //nobetGrupGorevTipId = listnobetGrupGorevTipId.ToArray();
+            ////TempData["silinenMazeretSayisi"] = liste.Length;
+            ////seçilmeyenleri döndür
+            //var eczaneNobetMazeretlerVeIstekler = new List<EczaneNobetMazeretIstekDetay>();
+            //if (bitisTarihiForOnayKaldir == null)
+            //    eczaneNobetMazeretlerVeIstekler = GetMazeretlerForOnay(nobetGrupGorevTipId, Convert.ToDateTime(baslangicTarihiForOnayKaldir),
+            //    null, Convert.ToInt32(eczaneNobetMazeretIstekTipIdForOnayKaldir));
+            //else eczaneNobetMazeretlerVeIstekler = GetMazeretlerForOnay(nobetGrupGorevTipId, Convert.ToDateTime(baslangicTarihiForOnayKaldir),
+            //    Convert.ToDateTime(bitisTarihiForOnayKaldir), Convert.ToInt32(eczaneNobetMazeretIstekTipIdForOnayKaldir));
+
+            //return PartialView("EczaneNobetMazeretPartialView", eczaneNobetMazeretlerVeIstekler);
+        }
+
         // GET: EczaneNobet/EczaneNobetMazeret/Delete/5
         [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Delete(int id)

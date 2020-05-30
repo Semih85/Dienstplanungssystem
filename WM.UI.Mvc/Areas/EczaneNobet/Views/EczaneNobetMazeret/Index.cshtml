@@ -7,6 +7,16 @@
     {
         silinenKayitSayisi = (int)TempData["silinenMazeretSayisi"];
     }
+    var onaylananKayitSayisi = 0;
+    if (TempData["onaylananMazeretSayisi"] != null)
+    {
+        onaylananKayitSayisi = (int)TempData["onaylananMazeretSayisi"];
+    }
+    var onayiKaldirilanKayitSayisi = 0;
+    if (TempData["onayiKaldirilanMazeretSayisi"] != null)
+    {
+        onayiKaldirilanKayitSayisi = (int)TempData["onayiKaldirilanMazeretSayisi"];
+    }
 }
 
 <!-- #region ajaxOptions -->
@@ -21,6 +31,29 @@
         //OnBegin = "OnBegin",
         LoadingElementId = "progressBarWait",
         OnSuccess = "OnSuccess(this)"
+    };
+   
+     var onaylaAjaxOptionsSecili = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("SecilenleriOnayla", "EczaneNobetMazeret"),
+        //HttpMethod = "POST",
+        //UpdateTargetId = "DivTablo",
+        //InsertionMode = InsertionMode.Replace,
+        //OnBegin = "OnBegin",
+        LoadingElementId = "progressBarWait",
+        OnSuccess = "OnSuccessOnay(this)"
+    };
+     var onayiKaldirAjaxOptionsSecili = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("SecilenlerinOnayiniKaldir", "EczaneNobetMazeret"),
+        //HttpMethod = "POST",
+        //UpdateTargetId = "DivTablo",
+        //InsertionMode = InsertionMode.Replace,
+        //OnBegin = "OnBegin",
+        LoadingElementId = "progressBarWait",
+        OnSuccess = "OnSuccessOnayKaldir(this)"
     };
 }
 <!-- #endregion -->
@@ -195,7 +228,7 @@
             <div class="tab-pane fade show active" id="pills-liste" role="tabpanel" aria-labelledby="pills-liste-tab">
 
                 <div class="row my-2">
-                    <div class="col-6">
+                    <div class="col-3">
                         <div class="input-group" style="width:300px;">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
@@ -203,7 +236,39 @@
                             <input type="text" id="myInput" class="form-control" placeholder="Tabloda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-3">
+                        @using (Ajax.BeginForm(null, null, onaylaAjaxOptionsSecili, new { id = "formSeciliOnayla", @class = "form-inline pull-right" }))
+                        {
+                            <button type="submit" id="onayla" value="Seçilenleri Onayla" style="display:none;" class="btn btn-success"
+                                    onclick="return confirm('Seçilen kayıtları onaylamak istediğinizden emin misiniz?');">
+                                <i class="fa fa-unlock"></i> <span class="d-none d-sm-inline"> Seçilenleri</span> Onayla
+                            </button>
+
+                            @Html.Hidden("selectedEczaneMazeretIstekIDsForOnay")
+                            @Html.Hidden("unSelectedEczaneMazeretIstekIDsForOnay")
+                            @Html.Hidden("baslangicTarihiForOnay")
+                            @Html.Hidden("bitisTarihiForOnay")
+                            @Html.Hidden("eczaneNobetMazeretIstekTipIdForOnay")
+                            @Html.Hidden("nobetGrupGorevTipIdForOnay")
+                        }
+                    </div>
+                    <div class="col-3">
+                        @using (Ajax.BeginForm(null, null, onayiKaldirAjaxOptionsSecili, new { id = "formSeciliOnayiKaldir", @class = "form-inline pull-right" }))
+                        {
+                            <button type="submit" id="onaylama" value="Seçilenlerin Onayını Kaldır" style="display:none;" class="btn btn-warning"
+                                    onclick="return confirm('Seçilen kayıtları onayını kaldırmak istediğinizden emin misiniz?');">
+                                <i class="fa fa-lock"></i> <span class="d-none d-sm-inline"> Seçilenlerin</span> Onayını Kaldır
+                            </button>
+
+                            @Html.Hidden("selectedEczaneMazeretIstekIDsForOnayKaldir")
+                            @Html.Hidden("unSelectedEczaneMazeretIstekIDsForOnayKaldir")
+                            @Html.Hidden("baslangicTarihiForOnayKaldir")
+                            @Html.Hidden("bitisTarihiForOnayKaldir")
+                            @Html.Hidden("eczaneNobetMazeretIstekTipIdForOnayKaldir")
+                            @Html.Hidden("nobetGrupGorevTipIdForOnayKaldir")
+                        }
+                    </div>
+                    <div class="col-3">
                         @using (Ajax.BeginForm(null, null, deleteAjaxOptionsSecili, new { id = "formSeciliSil", @class = "form-inline pull-right" }))
                         {
                             <button type="submit" id="delete" value="Seçilenleri Sil" style="display:none;" class="btn btn-danger"
@@ -227,12 +292,25 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+                        <div class="alert alert-success alert-dismissible fade show mb-2" role="alert" id="onayDurumMesaj" style="display:none">
+                            <i class="fa fa-check"></i> <span id="onaylananKayitSayisi"></span> adet kayıt başarı ile onaylanmıştır.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="alert alert-success alert-dismissible fade show mb-2" role="alert" id="onayKaldirmaDurumMesaj" style="display:none">
+                            <i class="fa fa-check"></i> <span id="onayiKaldirilanKayitSayisi"></span> adet kayıtın onayı başarı ile kaldırılmıştır.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
                         <div id="DivTablo" class="w-100"></div>
                         @*<div id="eczaneNobetMazeretler">
-                                @{
-                                        Html.RenderAction("EczaneNobetMazeretPartialView", "EczaneNobetMazeret");
-                                    }
-                            </div>*@
+            @{
+                    Html.RenderAction("EczaneNobetMazeretPartialView", "EczaneNobetMazeret");
+                }
+        </div>*@
                         <nav class="navbar navbar-expand-lg navbar-light bg-light" aria-label="...">
                             <ul class="navbar-nav">
                                 <li class="nav-link" id="myPaging">
@@ -329,7 +407,7 @@
         }
 
         $("#BaslangicTarihi").change(function () {
-            alert($("#BaslangicTarihi").val())
+            //alert($("#BaslangicTarihi").val())
             if ($("#BaslangicTarihi").val() != null) {
                 $("#btnSilBaslangicTarihiFiltre").hide();
                 $("#btnSilBaslangicTarihi").show();
@@ -416,7 +494,7 @@
                 eczaneId = $("#EczaneId").val();
             }
 
-            alert(eczaneId)
+            //alert(eczaneId)
         }
 
         $("#EczaneId").change(function () {
@@ -549,7 +627,34 @@
                 pivotlariGuncelle();
             }
         }
+         function getNobetGrubuString() {
+            //alert(1)
 
+             var sonucString = "";
+
+            //else {
+            $('#NobetGrupGorevTipId :selected').each(function () {
+                sonucString = $(this).val() + "," + sonucString
+            });
+             //alert('sonucString: ' + sonucString)
+            nobetGrubu = [];
+
+              $('#NobetGrupGorevTipId :selected').each(function () {
+                nobetGrubu.push({ Id: parseInt($(this).val()) });
+              });
+
+            if ($('#NobetGrupGorevTipId option').length == 1) {
+                $('#frmGrupNobetGrupGorevTipId').hide()
+                $('#tumunuSecKaldir').hide()
+                $('#lblnobetGrupGorevTipId').hide()
+            }
+
+            secilenGrupSayisi = nobetGrubu.length;
+            //}
+            //alert(2)
+            //console.log(nobetGrubu)
+            return sonucString;// + ' ' + selected.text();
+        }
         function getNobetGrubu() {
             //alert(1)
 
@@ -663,6 +768,8 @@
             getJsonDagilimlar(urlDagilimlar, serializedForm);
 
             $("#delete").show();
+            $("#onayla").show();
+            $("#onaylama").show();
 
         });
         function pivotSekilleriSifirla() {
@@ -760,6 +867,7 @@
                             Id: n.Id,
                             Tip: n.MazeretIstekTipAdi,
                             TipId: n.MazeretIstekId,
+                            Onay: n.OnayString,//= 0 ? "Onaysız" : "Onaylı",
                             ["Görev Tipi"]: n.NobetGorevTipAdi
                         });
                     });
@@ -819,7 +927,9 @@
         $('#pills-istatistik-tab').click(function () {
             //$('#btnExceleAktar').show();
             $("#delete").hide();
-
+            
+            $("#onayla").hide();
+            $("#onaylama").hide();
             if (mazeretListe != null) {
                 mazeretListe;
             }
@@ -895,7 +1005,9 @@
 
         $('#pills-liste-tab').click(function () {
             //$('#btnExceleAktar').show();
-            $("#delete").show();
+            $("#delete").show();            
+            $("#onayla").show();
+            $("#onaylama").show();
             if (tablo != null) {
                 tablo;
             }
@@ -954,6 +1066,107 @@
             $("#unSelectedEczaneMazeretIstekIDs").val(unseletedeIDs);
 
         });
+        $("#onayla").click(function () {
+
+            //alert(1)
+            //secilenEczaneSayisi = selectedIDs.length;
+
+            selectedIDs = new Array();
+            unseletedeIDs = new Array();
+
+            $('input:checkbox.checkBox').each(function () {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+                }
+                else {
+                    unseletedeIDs.push($(this).val());
+                }
+            });
+
+            //alert(selectedIDs.length)
+
+            if (selectedIDs.length == 0) {
+                alert("Lütfen onaylamak için en az 1 mazeret ya da istek seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+
+            //alert("seçilen kayıt sayısı: " + selectedIDs.length)
+            //alert("ilk: " + mazeretSonuclarFiltreli.length)
+
+            //alert("mazeretSonuclarFiltreli: " + mazeretSonuclarFiltreli.length + " mazeretSonuclar:" + mazeretSonuclar.length)
+
+            //alert("mazeretSonuclarFiltreli2: " + mazeretSonuclarFiltreli.length + " mazeretSonuclar2:" + mazeretSonuclar.length)
+
+            //pivotSekilleriSifirla();
+            //tabloOlustur();
+            //getPaging(currentPage);
+            //sayfalamaYap(mazeretSonuclarFiltreli, 10);
+            //alert(selectedIDs);
+
+             var str = getNobetGrubuString();
+            $("#selectedEczaneMazeretIstekIDsForOnay").val(selectedIDs);
+            $("#unSelectedEczaneMazeretIstekIDsForOnay").val(unseletedeIDs);
+
+            //alert('nobetGrubu:' + str)
+            //alert('baslangicTarihi:' + $('#BaslangicTarihi').val())
+            //alert('bitisTarihi:' +  $('#BitisTarihi').val())
+            //alert('eczaneNobetMazeretIstekTipId:' + eczaneNobetMazeretIstekTipId)
+
+            $("#nobetGrupGorevTipIdForOnay").val(str);
+            $("#baslangicTarihiForOnay").val($('#BaslangicTarihi').val());
+            $("#bitisTarihiForOnay").val( $('#BitisTarihi').val());
+            $("#eczaneNobetMazeretIstekTipIdForOnay").val(eczaneNobetMazeretIstekTipId);
+
+        });
+        $("#onaylama").click(function () {
+
+            //alert(1)
+            //secilenEczaneSayisi = selectedIDs.length;
+
+            selectedIDs = new Array();
+            unseletedeIDs = new Array();
+
+            $('input:checkbox.checkBox').each(function () {
+                if ($(this).prop('checked')) {
+                    selectedIDs.push($(this).val());
+                }
+                else {
+                    unseletedeIDs.push($(this).val());
+                }
+            });
+
+            //alert(selectedIDs.length)
+
+            if (selectedIDs.length == 0) {
+                alert("Lütfen onay kaldırmak için en az 1 mazeret ya da istek seçiniz...")
+                e.preventDefault();
+                return false;
+            }
+
+            //alert("seçilen kayıt sayısı: " + selectedIDs.length)
+            //alert("ilk: " + mazeretSonuclarFiltreli.length)
+
+            //alert("mazeretSonuclarFiltreli: " + mazeretSonuclarFiltreli.length + " mazeretSonuclar:" + mazeretSonuclar.length)
+
+            //alert("mazeretSonuclarFiltreli2: " + mazeretSonuclarFiltreli.length + " mazeretSonuclar2:" + mazeretSonuclar.length)
+
+            //pivotSekilleriSifirla();
+            //tabloOlustur();
+            //getPaging(currentPage);
+            //sayfalamaYap(mazeretSonuclarFiltreli, 10);
+            //alert(selectedIDs);
+             var str = getNobetGrubuString();
+
+            $("#selectedEczaneMazeretIstekIDsForOnayKaldir").val(selectedIDs);
+            $("#unSelectedEczaneMazeretIstekIDsForOnayKaldir").val(unseletedeIDs);
+
+            $("#nobetGrupGorevTipIdForOnayKaldir").val(str);
+            $("#baslangicTarihiForOnayKaldir").val($('#BaslangicTarihi').val());
+            $("#bitisTarihiForOnayKaldir").val( $('#BitisTarihi').val());
+            $("#eczaneNobetMazeretIstekTipIdForOnayKaldir").val(eczaneNobetMazeretIstekTipId);
+
+        });
         var filtreliMi = false;
         var seciliMi = false;
         const tabloOlustur = () => {
@@ -972,6 +1185,7 @@
                     + "<th style='width:8%'>Mazeret</th>"
                     + "<th style='width:4%'>Tarih</th>"
                     + "<th style='width:25%'>Açıklama</th>"
+                    + "<th style='width:25%'>Onay</th>"
                     + "<th style='width:2%'>Düzenle</th>"
                     + "</tr>"
                     + "</thead><tbody id='mazeretIstekTablo'>";
@@ -993,6 +1207,7 @@
                         + "<td>" + mazeretSonuclarFiltreli[i].Mazeret + "</td>"
                         + "<td>" + mazeretSonuclarFiltreli[i].Tarih + "</td>"
                         + "<td>" + mazeretSonuclarFiltreli[i].Açıklama + "</td>"
+                        + "<td>" + mazeretSonuclarFiltreli[i].Onay + "</td>"
                         + forEdit
                         + "</tr>";
                 }
@@ -1069,6 +1284,8 @@
                     //});
                 });
                 $("#delete").show();
+                $("#onayla").show();
+                $("#onaylama").show();
             }
             else {
                 //nobetciEczaneler;
@@ -1202,6 +1419,58 @@
                 sayfalamaYap(mazeretSonuclarFiltreli, safyaBoyutu, currentPage);
                 $("#silinenKayitSayisi").text(selectedIDs.length);
                 $("#silmeDurumMesaj").show();
+            }
+
+            //getPaging(currentPage);
+            //sayfalamaYap(data, 10);
+        }
+        function OnSuccessOnay() {
+            if (selectedIDs.length > 0) {
+               //alert(selectedIDs.length)
+                
+                getJsonDagilimlar(urlDagilimlar, serializedForm);
+
+                //$(data).closest('tr').remove();
+                //console.log("bit. uzunluk: " + mazeretSonuclarFiltreli.length)
+                pivotSekilleriSifirla();
+                tabloOlustur();
+                sayfalamaYap(mazeretSonuclarFiltreli, safyaBoyutu, currentPage);
+                $("#onaylananKayitSayisi").text(selectedIDs.length);
+                $("#onayDurumMesaj").show();
+            }
+
+            //getPaging(currentPage);
+            //sayfalamaYap(data, 10);
+        }
+        function OnSuccessOnayKaldir() {
+            if (selectedIDs.length > 0) {
+
+                getJsonDagilimlar(urlDagilimlar, serializedForm);
+
+                //alert(selectedIDs.length)
+                //$.each(selectedIDs, function (key, item) {
+                //    //console.log(key + ": " + value);
+                //    //console.log("bşl. uzunluk: " + mazeretSonuclarFiltreli.length)
+                //    mazeretSonuclarFiltreli = $.grep(mazeretSonuclarFiltreli, function (n, i) {
+                //        //console.log("filtreli sonuçlar: " + n.Id + ";" + n.TipId + " - silinecek id: " + item)
+                //        //if (n.Id + ";" + n.TipId == item) {
+                //        //    console.log("eşit - filtreli sonuçlar: " + n.Id + ";" + n.TipId + " - silinecek id: " + item)
+                //        //}
+                //        return n.Id + ";" + n.TipId != item;
+                //    });
+
+                //    mazeretSonuclar = $.grep(mazeretSonuclar, function (n, i) {
+                //        //console.log("mevcut sonuçlar: " + n.Id + ";" + n.TipId + " - silinecek id: " + item)
+                //        return n.Id + ";" + n.TipId != item;
+                //    });
+                //});
+                //$(data).closest('tr').remove();
+                //console.log("bit. uzunluk: " + mazeretSonuclarFiltreli.length)
+                pivotSekilleriSifirla();
+                tabloOlustur();
+                sayfalamaYap(mazeretSonuclarFiltreli, safyaBoyutu, currentPage);
+                $("#onayiKaldirilanKayitSayisi").text(selectedIDs.length);
+                $("#onayKaldirmaDurumMesaj").show();
             }
 
             //getPaging(currentPage);

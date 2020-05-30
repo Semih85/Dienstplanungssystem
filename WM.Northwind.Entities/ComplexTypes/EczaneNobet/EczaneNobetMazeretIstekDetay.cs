@@ -39,7 +39,10 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
 
         [Display(Name = "Açıklama")]
         public string Aciklama { get; set; }
-
+        public bool Onay { get; set; }
+        public string OnayString => Onay == false
+            ? "Yok"
+            : "Var";
         public DateTime? BaslangicTarihi { get; internal set; }
         public DateTime? BitisTarihi { get; internal set; }
     }
