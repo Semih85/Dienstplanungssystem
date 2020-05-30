@@ -24,6 +24,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
     {
         #region ctor
         private IEczaneNobetOrtakService _eczaneNobetOrtakService;
+        private IEczaneNobetDegisimArzService _eczaneNobetDegisimArzService;
+        private IEczaneNobetDegisimTalepService _eczaneNobetDegisimTalepService;
         private IEczaneNobetSonucService _eczaneNobetSonucService;
         private IEczaneNobetSonucAktifService _eczaneNobetSonucAktifService;
         private ITakvimService _takvimService;
@@ -56,6 +58,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public EczaneNobetSonucController(ITakvimService takvimService,
                                           IEczaneNobetGrupService eczaneNobetGrupService,
+                                          IEczaneNobetDegisimArzService eczaneNobetDegisimArzService,
+                                          IEczaneNobetDegisimTalepService eczaneNobetDegisimTalepService,
                                           IEczaneNobetSonucService eczaneNobetSonucService,
                                           IEczaneNobetSonucAktifService eczaneNobetSonucAktifService,
                                           INobetGrupGorevTipService nobetGrupGorevTipService,
@@ -89,6 +93,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _takvimService = takvimService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _eczaneNobetSonucService = eczaneNobetSonucService;
+            _eczaneNobetDegisimArzService = eczaneNobetDegisimArzService;
+            _eczaneNobetDegisimTalepService = eczaneNobetDegisimTalepService;
             _eczaneNobetSonucAktifService = eczaneNobetSonucAktifService;
             _nobetGrupGorevTipService = nobetGrupGorevTipService;
             _nobetGorevTipService = nobetGorevTipService;
@@ -2460,12 +2466,39 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 return HttpNotFound();
             }
+            var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+            var nobetUstGrupId = nobetUstGrup.Id;
+
+            var eczaneNobetDegisimArzId = _eczaneNobetDegisimArzService.GetDetaylarByEczaneSonucId(eczaneNobetSonucId)
+                .Where(w=>w.NobetUstGrupId == nobetUstGrupId).Select(s=>s.Id);
+
+            List<EczaneNobetDegisimTalepDetay> eczaneNobetDegisimTalepDetaylar = new List<EczaneNobetDegisimTalepDetay>();
+            if (eczaneNobetDegisimArzId !=null)
+              eczaneNobetDegisimTalepDetaylar = _eczaneNobetDegisimTalepService.GetDetaylarByEczaneNobetDegisimArzId(eczaneNobetDegisimArzId.FirstOrDefault());
+
 
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetAktifEczaneNobetGrup(eczaneNobetSonuc.NobetGrupId)
                 .OrderBy(s => s.EczaneAdi)
                 .ThenBy(t => t.NobetGrupAdi)
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" });
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" }).ToList();
 
+            var eczaneNobetGruplarTwins = _eczaneNobetGrupService.GetAktifEczaneNobetGrup(eczaneNobetSonuc.NobetGrupId)
+               .OrderBy(s => s.EczaneAdi)
+               .ThenBy(t => t.NobetGrupAdi)
+               .Select(s => new MyDrop { Id = s.Id, Value = $"{s.EczaneAdi}, {s.NobetGrupGorevTipAdi}" }).ToList();
+
+            foreach (var eczaneNobetDegisimArzDetay in eczaneNobetDegisimTalepDetaylar)
+            {
+                foreach (var eczaneNobetGrup in eczaneNobetGruplarTwins)
+                {
+                    if (eczaneNobetGrup.Id == eczaneNobetDegisimArzDetay.EczaneNobetGrupId)
+                    {
+                        eczaneNobetGruplar.Remove(eczaneNobetGrup);
+                        eczaneNobetGruplar.Add(new MyDrop { Id = eczaneNobetGrup.Id, Value = eczaneNobetGrup.Value + " --- Talebi Var --- " });
+                    }
+                }
+            }
+            eczaneNobetGruplar.Reverse();
             var tarihler = _takvimService.GetList()
                 .Select(s => new MyDrop { Id = s.Id, Value = $"{s.Tarih.ToLongDateString()}" });
 
