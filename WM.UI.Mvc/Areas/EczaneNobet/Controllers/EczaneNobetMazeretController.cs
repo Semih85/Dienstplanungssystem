@@ -498,6 +498,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         EczaneNobetGrupId = eczaneNobetGrupId,// eczaneNobetMazeretCoklu.EczaneNobetGrupId,
                         TakvimId = item.TakvimId,
                         Aciklama = eczaneNobetMazeretCoklu.Aciklama,
+                        Onay = true
                     });
                 }
             }
@@ -654,7 +655,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                         EczaneNobetGrupId = eczaneNobetGrupId,// eczaneNobetMazeretCoklu.EczaneNobetGrupId,
                         TakvimId = item.TakvimId,
                         Aciklama = eczaneNobetMazeretCoklu.Aciklama,
-                    });
+                        Onay = true
+                    }); ;
                 }
             }
 
@@ -676,7 +678,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                             NobetGorevTipAdi = eczane.NobetGorevTipAdi,
                             EczaneAdi = eczane.EczaneAdi,
                             Tarih = _takvimService.GetById(item.TakvimId).Tarih,
-                            Aciklama = item.Aciklama
+                            Aciklama = item.Aciklama,
+                            Onay = true
                         });
                     }
                 }
