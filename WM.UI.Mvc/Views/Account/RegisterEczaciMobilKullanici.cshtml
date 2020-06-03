@@ -5,7 +5,7 @@
 }
 
 @{
-    ViewBag.Title = "Yeni Mobil Kullanıcı Eczacı Ekle |  Nöbet Yaz";
+    ViewBag.Title = "Yeni Eczacı Ekle |  Nöbet Yaz";
 }
 
 <h4>Yeni Mobil Kullanıcı Eczacı Ekle</h4>
@@ -26,7 +26,7 @@
             @Html.TextBoxFor(model => model.User.LastName, new { @class = "form-control", @placeholder = "Soyadınız..." })
             @Html.ValidationMessageFor(model => model.User.LastName, "", new { @class = "text-danger" })
         </div>
-    
+
     </div>
 
     <div class="form-row">
@@ -42,14 +42,41 @@
         </div>
     </div>
     <div class="form-row">
-     
+
         <div class="form-group col-md-4">
-            @Html.LabelFor(model => model.EczaneId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.EczaneId, "Eczane", htmlAttributes: new { @class = "control-label" })
             @Html.DropDownList("EczaneId", null, htmlAttributes: new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.EczaneId, "", new { @class = "text-danger" })
         </div>
     </div>
+    <div class="form-row">
 
+        <div class="form-group col-md-4">
+            @*@Html.LabelFor(model => model.AcilisTarihi, htmlAttributes: new { @class = "control-label" })*@
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text p-2">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                </div>
+                @Html.TextBoxFor(model => model.BaslamaTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Başlama Tarihi" })
+            </div>
+            @Html.ValidationMessageFor(model => model.BaslamaTarihi, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group col-md-4">
+            @*@Html.LabelFor(model => model.KapanisTarihi, htmlAttributes: new { @class = "control-label" })*@
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text p-2">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </span>
+                </div>
+                @Html.TextBoxFor(model => model.BitisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Bitiş Tarihi" })
+            </div>
+            @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
 
 
@@ -62,7 +89,9 @@
 
 
     <button type="submit" class="btn btn-primary">Ekle</button>
-    @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+    @*@Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })*@
+    @Html.ActionLink("Listeye Dön", "UserEczaneListeyeGit", "AccountController", new { area = "EczaneNobet" })
+
 }
 
 @section Styles{

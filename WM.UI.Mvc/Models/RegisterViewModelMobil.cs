@@ -22,6 +22,11 @@ namespace WM.UI.Mvc.Models
         [Compare("Password", ErrorMessage = "{0} ve {1} alanı aynı olmalıdır")]
         public string PasswordVerify { get; set; }
 
+        [Display(Name = "Başlama Tarihi")]
+        public DateTime BaslamaTarihi { get; set; }
+        [Display(Name = "Bitiş Tarihi")]
+        public DateTime? BitisTarihi { get; set; }
+
     }
 
 }

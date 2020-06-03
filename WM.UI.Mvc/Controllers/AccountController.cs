@@ -217,24 +217,7 @@ namespace WM.UI.Mvc.Controllers
         {
             return View();
         }
-        [AllowAnonymous]
-        public ActionResult RegisterEczaciMobilKullanici()
-        {
-            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
-
-            //if (ustGrupSession.Id != 0)
-            //{
-            //    nobetUstGrup = ustGrupSession;
-            //}
-            var mevcutEczaneler = _userEczaneService.GetList()
-                .Select(s => s.EczaneId);
-            var eczaneler = _eczaneService.GetDetaylar(ustGrupSession.Id)
-                .Where(w => !mevcutEczaneler.Contains(w.Id));
-            eczaneler = eczaneler.OrderBy(o => o.EczaneAdi);
-
-            ViewBag.EczaneId = new SelectList(eczaneler, "Id", "EczaneAdi");
-            return View();
-        }
+      
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -349,6 +332,24 @@ namespace WM.UI.Mvc.Controllers
             //}
         }
         [AllowAnonymous]
+        public ActionResult RegisterEczaciMobilKullanici()
+        {
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            //if (ustGrupSession.Id != 0)
+            //{
+            //    nobetUstGrup = ustGrupSession;
+            //}
+            var mevcutEczaneler = _userEczaneService.GetList()
+                .Select(s => s.EczaneId);
+            var eczaneler = _eczaneService.GetDetaylar(ustGrupSession.Id)
+                .Where(w => !mevcutEczaneler.Contains(w.Id));
+            eczaneler = eczaneler.OrderBy(o => o.EczaneAdi);
+
+            ViewBag.EczaneId = new SelectList(eczaneler, "Id", "EczaneAdi");
+            return View();
+        }
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [HttpPost]
         [Authorize]
@@ -379,7 +380,7 @@ namespace WM.UI.Mvc.Controllers
                 if (user != null)
                 {// eğer kullanıcı daha önceden akyıt olmuşsa sadece userEczane ye seçilen EczaneId ile 
                  //ve userRole de eczane rolü ile kaydı yapılacak, else den sonra yazıldı ortak olduğu için.
-                    
+
                     TempData["KayitSonuc"] = "Eski kullanıcı";
                 }
                 else
@@ -390,12 +391,14 @@ namespace WM.UI.Mvc.Controllers
                     parola = rnd.Next(111111, 999999).ToString();
                     model.User.Password = SHA256(parola);
                     model.User.UserName = model.User.Email;
-                    model.User.BaslamaTarihi = DateTime.Now;
+                    model.User.BaslamaTarihi = model.BaslamaTarihi;
+                    model.User.BitisTarihi = model.BitisTarihi;
                     _userService.Insert(model.User);
 
                     #region userNobetUstGrup
                     UserNobetUstGrup userNobetUstGrup = new UserNobetUstGrup();
-                    userNobetUstGrup.BaslamaTarihi = DateTime.Now;
+                    userNobetUstGrup.BaslamaTarihi = model.BaslamaTarihi;
+                    userNobetUstGrup.BitisTarihi = model.BitisTarihi;
                     var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
                     userNobetUstGrup.NobetUstGrupId = ustGrupSession.Id;
                     userNobetUstGrup.UserId = model.User.Id;
@@ -406,7 +409,8 @@ namespace WM.UI.Mvc.Controllers
                     #region userEczaneOda
                     UserEczaneOda userEczaneOda = new UserEczaneOda();
                     NobetUstGrup nobetUstGrup = new NobetUstGrup();
-                    userEczaneOda.BaslamaTarihi = DateTime.Now;
+                    userEczaneOda.BaslamaTarihi = model.BaslamaTarihi;
+                    userEczaneOda.BitisTarihi = model.BitisTarihi;
                     userEczaneOda.EczaneOdaId = ustGrupSession.EczaneOdaId;
                     userEczaneOda.UserId = model.User.Id;
 
@@ -424,7 +428,8 @@ namespace WM.UI.Mvc.Controllers
                     emailGitsinMi = true;
                     UserRole userRole = new UserRole();
                     userRole.UserId = user.Id;
-                    userRole.BaslamaTarihi = DateTime.Now;
+                    userRole.BaslamaTarihi = model.BaslamaTarihi;
+                    userRole.BitisTarihi = model.BitisTarihi;
                     userRole.RoleId = 4;
 
                     _userRoleService.Insert(userRole);
@@ -442,12 +447,13 @@ namespace WM.UI.Mvc.Controllers
                 string eczaneAdi = "";
 
                 #region userEczane
-                int userEczaci = _userEczaneService.GetListByUserId(user.Id).Select(s=>s.Id).Count();
+                int userEczaci = _userEczaneService.GetListByUserId(user.Id).Select(s => s.Id).Count();
                 if (userEczaci == 0)
                 {
                     emailGitsinMi = true;
                     UserEczane userEczane = new UserEczane();
-                    userEczane.BaslamaTarihi = DateTime.Now;
+                    userEczane.BaslamaTarihi = model.BaslamaTarihi;
+                    userEczane.BitisTarihi = model.BitisTarihi;
                     userEczane.EczaneId = model.EczaneId;
                     userEczane.UserId = user.Id;
 
@@ -530,7 +536,9 @@ namespace WM.UI.Mvc.Controllers
                 return View("Error", e);
             }
 
-            return RedirectToAction("Index");
+           // return RedirectToAction("Index");
+            return RedirectToAction("Index", "UserEczane", new { area = "EczaneNobet" });
+
             //}
             //else
             //{
@@ -538,6 +546,10 @@ namespace WM.UI.Mvc.Controllers
 
             //    return View("Fail");
             //}
+        }
+        public ActionResult UserEczaneListeyeGit()
+        {
+            return RedirectToAction("Index", "UserEczane", new { area = "EczaneNobet" });
         }
         [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Edit(string userName)

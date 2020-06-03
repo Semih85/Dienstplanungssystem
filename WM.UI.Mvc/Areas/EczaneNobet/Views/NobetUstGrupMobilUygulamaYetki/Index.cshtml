@@ -4,46 +4,53 @@
     ViewBag.Title = "Nöbet Üst Grup Mobil Uygulama Yetkiler | Nöbet Sistemi";
 }
 
-    <h4>Nöbet Üst Grup Mobil Uygulama Yetki</h4>
 
-    <p>
-       @* @Html.ActionLink("Ekle", "Create")*@
-        <a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+<div class="row justify-content-between mb-2">
+    <div class="col-md-4 mb-2">
+        <div class="form-inline">
+            <h4 class="mr-6">Nöbet Üst Grup Mobil Uygulama Yetki </h4>
+            <div class="form-group">
+                <a class="btn btn-outline-success btn-sm ml-3" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div >
 
-    </p>
-<table class="table table-hover table-sm">
-    <thead class="thead-light">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.MobilUygulamaYetkiAdi)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NobetUstGrupAdi)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MobilUygulamaYetkiAdi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NobetUstGrupAdi)
-            </td>
-            <td>
-                @{
-                    var target = $"#islem{@item.Id}";
-                }
-                <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="fa fa-cog"></span>
-                </button>
-                <div class="collapse d-md-block" id="@target.Remove(0,1)">
-                    <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
-                </div>
-            </td>
-        </tr>
-    }
+    <table class="table table-hover table-striped table-bordered table-sm">
+        <thead class="thead-light">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.MobilUygulamaYetkiAdi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NobetUstGrupAdi)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MobilUygulamaYetkiAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NobetUstGrupAdi)
+                </td>
+                <td>
+                    @{
+                        var target = $"#islem{@item.Id}";
+                    }
+                    <button class="btn btn-sm btn-secondary d-sm-block d-md-none" type="button" data-toggle="collapse" data-target="@target" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="fa fa-cog"></span>
+                    </button>
+                    <div class="collapse d-md-block" id="@target.Remove(0,1)">
+                        <a class="btn btn-outline-danger py-0 btn-sm" title="Sil" href="@Url.Action("Delete", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-trash"></span></a>
+                    </div>
+                </td>
+            </tr>
+        }
 
-</table>
+    </table>
+</div>
