@@ -369,18 +369,25 @@ namespace WM.UI.Mvc.Controllers
                 //    _userService.Update(user);
                 //}
                 #region kayıt
+                string parola = "";
                 Random rnd = new Random();
-                string parola = rnd.Next(111111, 999999).ToString();
                 //User user = new User();
                 User user = _userService.GetByEmail(model.User.Email);
+                bool emailGitsinMi = false;
+                bool yeniKullaniciMi = false;
 
                 if (user != null)
                 {// eğer kullanıcı daha önceden akyıt olmuşsa sadece userEczane ye seçilen EczaneId ile 
-                    //ve userRole de eczane rolü ile kaydı yapılacak, else den sonra yazıldı ortak olduğu için.
-
+                 //ve userRole de eczane rolü ile kaydı yapılacak, else den sonra yazıldı ortak olduğu için.
+                    
+                    TempData["KayitSonuc"] = "Eski kullanıcı";
                 }
                 else
                 {
+                    emailGitsinMi = true;
+                    yeniKullaniciMi = true;
+                    user = model.User;
+                    parola = rnd.Next(111111, 999999).ToString();
                     model.User.Password = SHA256(parola);
                     model.User.UserName = model.User.Email;
                     model.User.BaslamaTarihi = DateTime.Now;
@@ -404,54 +411,102 @@ namespace WM.UI.Mvc.Controllers
                     userEczaneOda.UserId = model.User.Id;
 
                     _userEczaneOdaService.Insert(userEczaneOda);
+
+                    TempData["KayitSonuc"] = "Yeni kullanıcı";
+
                     #endregion
                 }
 
                 #region userRole
-                user = _userService.GetByUserNameAndPassword(model.User.UserName, model.User.Password);
-                UserRole userRole = new UserRole();
-                userRole.UserId = user.Id;
-                userRole.BaslamaTarihi = DateTime.Now;
-                userRole.RoleId = 4;
+                int eczaciRol = _userRoleService.GetListByUserId(user.Id).Where(w => w.RoleId == 4).Count();
+                if (eczaciRol == 0)
+                {
+                    emailGitsinMi = true;
+                    UserRole userRole = new UserRole();
+                    userRole.UserId = user.Id;
+                    userRole.BaslamaTarihi = DateTime.Now;
+                    userRole.RoleId = 4;
 
-                _userRoleService.Insert(userRole);
+                    _userRoleService.Insert(userRole);
+
+                    TempData["KayitSonuc"] = TempData["KayitSonuc"] + ", Eczacı rolü kaydı başarılı";
+
+                }
+                else
+                {//eczacı rolü var önceden
+                    TempData["KayitSonuc"] = TempData["KayitSonuc"] + ", Eczacı rolü kaydı daha önce tanımlanmış";
+
+                }
                 #endregion
+
+                string eczaneAdi = "";
 
                 #region userEczane
-                UserEczane userEczane = new UserEczane();
-                userEczane.BaslamaTarihi = DateTime.Now;
-                userEczane.EczaneId = model.EczaneId;
-                userEczane.UserId = user.Id;
+                int userEczaci = _userEczaneService.GetListByUserId(user.Id).Select(s=>s.Id).Count();
+                if (userEczaci == 0)
+                {
+                    emailGitsinMi = true;
+                    UserEczane userEczane = new UserEczane();
+                    userEczane.BaslamaTarihi = DateTime.Now;
+                    userEczane.EczaneId = model.EczaneId;
+                    userEczane.UserId = user.Id;
 
-                _userEczaneService.Insert(userEczane);
+                    _userEczaneService.Insert(userEczane);
+
+                    eczaneAdi = _eczaneService.GetById(model.EczaneId).Adi;
+
+                    TempData["KayitSonuc"] = TempData["KayitSonuc"] + ", Eczane kullanıcıya tanımlandı. ";
+                }
+                else
+                {//daha önce eczane tanımlanmış
+                    int eczaneId = _userEczaneService.GetListByUserId(user.Id).Select(s => s.EczaneId).FirstOrDefault();
+                    Eczane eczane = _eczaneService.GetById(eczaneId);
+                    eczaneAdi = eczane.Adi;
+
+                    TempData["KayitSonuc"] = TempData["KayitSonuc"] + ", Eczane kullanıcıya daha önce tanımlanmış. ";
+
+                }
+
+                if (emailGitsinMi)
+                {//email gönder
+                    #region email
+                    // Roles.AddUserToRole(Model.User.Email, "Members");
+                    var subject = "NöbetYaz Mobil Uygulama Kayıt";
+                    if (!yeniKullaniciMi)
+                    {
+                        parola = "Mevcut parolanız.";
+                    }
+                    var body = "Merhaba, Sayın " + user.FirstName + " " + user.LastName
+                    + System.Environment.NewLine +
+                        "Bu mesaj, eczacı odanızın " + eczaneAdi + " ECZANESİ adına Nöbetyaz mobil uygulamasına yapmış olduğu kayıt hakkında sizi bilgilendirme amacıyla gönderilmiştir. "
+                    + System.Environment.NewLine +
+                           "Google (https://play.google.com/store/apps/details?id=com.nobetyax.android)"
+                    + System.Environment.NewLine +
+                           "veya"
+                    + System.Environment.NewLine +
+                           "Apple mağazalarında Nöbetyaz uygulamasını ücretsiz indirip giriş yapabilirsiniz."
+                    + System.Environment.NewLine +
+                         "Nöbetyaz uygulaması sayesinde eczacı odanızdan güncel duyurular ve nöbetler ile ilgili bildirimler alabilirsiniz."
+                    + System.Environment.NewLine +
+                         "Kullanıcı bilgileriniz:"
+                    + System.Environment.NewLine +
+                        "Kullanıcı Adınız: " + user.Email
+                    + System.Environment.NewLine +
+                            "Parolanız: " + parola;
+
+                    var toEmail = user.Email;
+
+                    SendMail(subject, body, toEmail);
+
+                    TempData["KayitSonuc"] = TempData["KayitSonuc"] + ", Eczane kullanıcı kaydı başarılı.";
+
+                    #endregion
+                }
                 #endregion
+
                 #endregion
 
-                string eczaneAdi = _eczaneService.GetById(model.EczaneId).Adi;
 
-                #region email
-                // Roles.AddUserToRole(Model.User.Email, "Members");
-                var subject = "NöbetYaz Mobil Uygulama Kayıt";
-
-                var body = "Merhaba, Sayın " + model.User.FirstName + " " + model.User.LastName 
-                    + System.Environment.NewLine + 
-                    "Bu mesaj, eczacı odanızın " + eczaneAdi + " ECZANESİ adına Nöbetyaz mobil uygulamasına yapmış olduğu kayıt hakkında sizi bilgilendirme amacıyla gönderilmiştir. " 
-                     + System.Environment.NewLine +
-                       "Google veya Apple mağazalarında Nöbetyaz uygulamasını ücretsiz indirip giriş yapabilirsiniz."
-                     + System.Environment.NewLine +
-                     "Nöbetyaz uygulaması sayesinde eczacı odanızdan güncel duyurular ve nöbetler ile ilgili bildirimler alabilirsiniz."
-                     + System.Environment.NewLine +
-                     "Kullanıcı bilgileriniz:"
-                      + System.Environment.NewLine +
-                   "Kullanıcı Adınız: " + model.User.Email
-                      + System.Environment.NewLine +
-                    "Parolanız: " + parola;
-
-                var toEmail = model.User.Email;
-
-                SendMail(subject, body, toEmail);
-                #endregion
-                TempData["KayitSonuc"] = "Kayıt başarılı.";
             }
             catch (DbUpdateException ex)
             {
