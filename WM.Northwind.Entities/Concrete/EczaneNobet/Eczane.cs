@@ -48,5 +48,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public virtual List<EczaneUzaklikMatris> EczaneUzaklikMatrislerFrom { get; set; }
         public virtual List<EczaneUzaklikMatris> EczaneUzaklikMatrislerTo { get; set; }
 
+        public virtual List<EczaneMobilBildirim> EczaneMobilBildirimler { get; set; }
+
     }
 }

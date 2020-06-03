@@ -85,6 +85,7 @@
     <Compile Include="Abstract\EczaneNobet\IDebugEczaneService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneGorevTipService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneGrupTanimTipService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneMobilBildirimService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetDegisimArzService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetDegisimTalepService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetDegisimService.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetOrtakService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSanalSonucService.cs" />
     <Compile Include="Abstract\EczaneNobet\ILogService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IMobilBildirimService.cs" />
     <Compile Include="Abstract\EczaneNobet\IMobilUygulamaYetkiService.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetUstGrupMobilUygulamaYetkiService.cs" />
     <Compile Include="Abstract\EczaneNobet\IRaporKategoriService.cs" />
@@ -195,6 +197,7 @@
     <Compile Include="Concrete\Managers\EczaneNobet\DebugEczaneManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneGorevTipManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneGrupTanimTipManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneMobilBildirimManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetDegisimArzManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetDegisimTalepManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetDegisimManager.cs" />
@@ -203,6 +206,7 @@
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetMuafiyetManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSanalSonucManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\LogManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\MobilBildirimManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\MobilUygulamaYetkiManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetUstGrupMobilUygulamaYetkiManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\RaporKategoriManager.cs" />

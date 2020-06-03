@@ -65,7 +65,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<NobetUstGrupGunGrup> NobetUstGrupGunGruplar { get; set; }
         public DbSet<NobetGrupGorevTipTakvimOzelGun> NobetGrupGorevTipTakvimOzelGunler { get; set; }
         public DbSet<NobetOzelGun> NobetOzelGunler { get; set; }
-
+        public DbSet<MobilBildirim> MobilBildirimler { get; set; }
+        public DbSet<EczaneMobilBildirim> EczaneMobilBildirimler { get; set; }
 
         #region Eczane Nöbet
         public DbSet<NobetKural> NobetKurallar { get; set; }
@@ -220,9 +221,10 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new RaporNobetUstGrupMap());
             modelBuilder.Configurations.Add(new EczaneNobetSanalSonucMap());
             modelBuilder.Configurations.Add(new DebugEczaneMap());
-
-        #endregion
-    }
+            modelBuilder.Configurations.Add(new MobilBildirimMap());
+            modelBuilder.Configurations.Add(new EczaneMobilBildirimMap());
+            #endregion
+        }
     #endregion
 }
 }
