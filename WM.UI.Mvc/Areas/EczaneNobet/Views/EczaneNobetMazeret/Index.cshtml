@@ -1197,19 +1197,41 @@
                     if (mazeretSonuclarFiltreli[i].Tip == "İstek") {
                         forEdit = "<td> <a class='btn btn-outline-success py-0 btn-sm' href='/EczaneNobet/EczaneNobetIstek/Edit/" + mazeretSonuclarFiltreli[i].Id + "' target='_blank'><span class='fa fa-edit'></span></a></td>";
                     }
+                    
+                    if (mazeretSonuclarFiltreli[i].Onay == 'Yok') {
+                        tablo += "<tr class='gridtr'>"
+                            + "<td> <input type='checkbox' class='checkBox' value='" + mazeretSonuclarFiltreli[i].Id + ";" + mazeretSonuclarFiltreli[i].TipId + "' /></td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i].Tip + "</td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i].NöbetGrubu + "</td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i]["Görev Tipi"] + "</td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i].Eczane + "</td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i].Mazeret + "</td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i].Tarih + "</td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i].Açıklama + "</td>"
 
-                    tablo += "<tr class='gridtr'>"
-                        + "<td> <input type='checkbox' class='checkBox' value='" + mazeretSonuclarFiltreli[i].Id + ";" + mazeretSonuclarFiltreli[i].TipId + "' /></td>"
-                        + "<td>" + mazeretSonuclarFiltreli[i].Tip + "</td>"
-                        + "<td>" + mazeretSonuclarFiltreli[i].NöbetGrubu + "</td>"
-                        + "<td>" + mazeretSonuclarFiltreli[i]["Görev Tipi"] + "</td>"
-                        + "<td>" + mazeretSonuclarFiltreli[i].Eczane + "</td>"
-                        + "<td>" + mazeretSonuclarFiltreli[i].Mazeret + "</td>"
-                        + "<td>" + mazeretSonuclarFiltreli[i].Tarih + "</td>"
-                        + "<td>" + mazeretSonuclarFiltreli[i].Açıklama + "</td>"
-                        + "<td>" + mazeretSonuclarFiltreli[i].Onay + "</td>"
-                        + forEdit
-                        + "</tr>";
+                            + "<td><span class='badge badge-danger'><i class='fa fa-check-circle-o' aria-hidden='true'></i>Yok</span></td>"
+
+
+                            + forEdit
+                            + "</tr>";
+                    }
+                    else {
+                          tablo += "<tr class='gridtr'>"
+                            + "<td> <input type='checkbox' class='checkBox' value='" + mazeretSonuclarFiltreli[i].Id + ";" + mazeretSonuclarFiltreli[i].TipId + "' /></td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i].Tip + "</td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i].NöbetGrubu + "</td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i]["Görev Tipi"] + "</td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i].Eczane + "</td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i].Mazeret + "</td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i].Tarih + "</td>"
+                            + "<td>" + mazeretSonuclarFiltreli[i].Açıklama + "</td>"
+
+                            + "<td><span class='badge badge-success'><i class='fa fa-check-circle-o' aria-hidden='true'></i>Var</span></td>"
+
+
+                            + forEdit
+                            + "</tr>";
+                    }
                 }
 
                 tablo += "</tbody></table>";
