@@ -6,9 +6,11 @@
 
     <h4>Nöbet Üst Grup Mobil Uygulama Yetki</h4>
 
-<p>
-    @Html.ActionLink("Ekle", "Create")
-</p>
+    <p>
+       @* @Html.ActionLink("Ekle", "Create")*@
+        <a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+
+    </p>
 <table class="table table-hover table-sm">
     <thead class="thead-light">
         <tr>
