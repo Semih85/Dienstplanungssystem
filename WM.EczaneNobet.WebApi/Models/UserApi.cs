@@ -12,6 +12,7 @@ namespace WM.EczaneNobet.WebApi.Models
         public string Password { get; set; }
         public string NewPassword { get; set; }
         public string CihazId { get; set; }
+        public int MobilBildirimId { get; set; }
 
     }
 }

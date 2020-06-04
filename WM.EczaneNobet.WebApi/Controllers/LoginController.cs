@@ -41,29 +41,7 @@ namespace WM.EczaneNobet.WebApi.Controllers
         //    string token = _yetkilendirme.GetToken2(loginUser);
         //    return token;
         //}
-        [Route("bildirim-test")]
-        //[Route("login/{eMail:maxlength(100)}/{password:maxlength(100)}")]
-        [HttpPost]
-        public HttpResponseMessage PostBildirimTest([FromBody] UserApi userApi)//([FromUri]string eMail, [FromUri]string password)
-        {
-            PushNotification pushNotification = new PushNotification(userApi.Password,
-                 userApi.Username,
-                 userApi.CihazId);
-            return Request.CreateResponse(HttpStatusCode.OK, userApi.CihazId);
-
-        }
-
-        //[Route("bildirim-test-get")]
-        ////[Route("login/{eMail:maxlength(100)}/{password:maxlength(100)}")]
-        //[HttpGet]
-        //public HttpResponseMessage GetBildirimTest()//([FromUri]string eMail, [FromUri]string password)
-        //{
-        //    PushNotification pushNotification = new PushNotification("kan ihtiyacı",
-        //         "Duyuru",
-        //         "cxzrXvNdTCk:APA91bG51xqnymrAW_BuHSJGUTQOZbv-4Mn_LD7hQCHQrzn2j_uNFltw86l3XMpUXnURr7GktU-_bOGWAeuq-qvTXopG1codEEmcotNBsbfwBH3nP705hOziudxWHPhOp_lFytyMzBhw");
-        //    return Request.CreateResponse(HttpStatusCode.OK);
-
-        //}
+     
 
         [Route("login")]
         //[Route("login/{eMail:maxlength(100)}/{password:maxlength(100)}")]
@@ -180,49 +158,6 @@ namespace WM.EczaneNobet.WebApi.Controllers
         //    }
         //}
 
-        [Route("cihazId")]
-        //[Route("login/{eMail:maxlength(100)}/{password:maxlength(100)}")]
-        [HttpPost]
-        public HttpResponseMessage UpdateCihazId([FromBody] UserApi userApi)//([FromUri]string eMail, [FromUri]string password)
-        {
-            LoginItem loginUser;
-            User user;
-            _yetkilendirme.YetkiKontrolu(userApi, out loginUser, out user);
-
-            if (user != null)
-            {
-                user.CihazId = userApi.CihazId;
-                _userService.Update(user);
-                return Request.CreateResponse(HttpStatusCode.OK);
-            }
-            else
-            {
-                return Request.CreateResponse(HttpStatusCode.Unauthorized, "CihazId güncellenemedi.");
-            }
-        }
-        //[Route("cihazId-get")]
-        ////[Route("login/{eMail:maxlength(100)}/{password:maxlength(100)}")]
-        //[HttpGet]
-        //public HttpResponseMessage GetUpdateCihazId()//([FromUri]string eMail, [FromUri]string password)
-        //{
-        //    LoginItem loginUser;
-        //    User user;
-        //    UserApi userApi = new UserApi();
-        //    userApi.Username = "atesates2012@gmail.com";
-        //    userApi.Password = "0327ates";
-        //    _yetkilendirme.YetkiKontrolu(userApi, out loginUser, out user);
-
-        //    if (user != null)
-        //    {
-        //        user.CihazId = userApi.CihazId;
-        //        _userService.Update(user);
-        //        return Request.CreateResponse(HttpStatusCode.OK);
-        //    }
-        //    else
-        //    {
-        //        return Request.CreateResponse(HttpStatusCode.Unauthorized, "CihazId güncellenemedi.");
-        //    }
-        //}
 
         [Route("deneme/{eMail:maxlength(100)}/{password:maxlength(100)}")]
         [HttpGet]
