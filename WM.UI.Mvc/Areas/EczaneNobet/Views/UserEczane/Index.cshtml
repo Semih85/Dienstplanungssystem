@@ -12,9 +12,10 @@
             <h4 class="mr-5">Eczacılar</h4>
             <div class="form-group">
                 @*@Html.ActionLink("Ekle", "Create")*@
+            
 
-                @Html.ActionLink("Yeni Eczacı Ekle", "RegisterEczaciMobilKullanici", "AccountController", new { area = "" })
-           
+                @Html.ActionLink("Yeni Eczacı Ekle", "RegisterEczaciMobilKullanici", "AccountController", new { @class = "btn btn-outline-success btn-sm ", area = "" })
+
             </div>
         </div>
     </div>
