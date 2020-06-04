@@ -23,6 +23,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
     public class EczaneNobetSonucController : Controller
     {
         #region ctor
+        private IMobilBildirimService _mobilBildirimService;
+        private IEczaneMobilBildirimService _eczaneMobilBildirimService;
         private IEczaneNobetOrtakService _eczaneNobetOrtakService;
         private IEczaneNobetDegisimArzService _eczaneNobetDegisimArzService;
         private IEczaneNobetDegisimTalepService _eczaneNobetDegisimTalepService;
@@ -36,6 +38,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
         private INobetGorevTipService _nobetGorevTipService;
         private IUserService _userService;
+        private IUserEczaneService _userEczaneService;
         private IEczaneService _eczaneService;
         private IEczaneNobetGrupAltGrupService _eczaneNobetGrupAltGrupService;
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
@@ -57,6 +60,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IUserNobetUstGrupService _userNobetUstGrupService;
 
         public EczaneNobetSonucController(ITakvimService takvimService,
+                                            IMobilBildirimService mobilBildirimService,
+                                            IEczaneMobilBildirimService eczaneMobilBildirimService,
                                           IEczaneNobetGrupService eczaneNobetGrupService,
                                           IEczaneNobetDegisimArzService eczaneNobetDegisimArzService,
                                           IEczaneNobetDegisimTalepService eczaneNobetDegisimTalepService,
@@ -65,6 +70,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                           INobetGrupGorevTipService nobetGrupGorevTipService,
                                           INobetGorevTipService nobetGorevTipService,
                                           IEczaneGrupService eczaneGrupService,
+                                          IUserEczaneService userEczaneService,
                                           IUserService userService,
                                           INobetUstGrupService nobetUstGrupService,
                                           INobetGrupService nobetGrupService,
@@ -90,6 +96,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                           IUserNobetUstGrupService userNobetUstGrupService
                                           )
         {
+            _eczaneMobilBildirimService = eczaneMobilBildirimService;
+            _mobilBildirimService = mobilBildirimService;
             _takvimService = takvimService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _eczaneNobetSonucService = eczaneNobetSonucService;
@@ -103,6 +111,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _nobetGrupService = nobetGrupService;
             _userService = userService;
             _eczaneGrupService = eczaneGrupService;
+            _userEczaneService = userEczaneService;
             _eczaneService = eczaneService;
             _eczaneNobetOrtakService = eczaneNobetOrtakService;
             _eczaneNobetGrupAltGrupService = eczaneNobetGrupAltGrupService;
@@ -1650,15 +1659,34 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 {
                     _eczaneNobetSonucService.CokluNobetYayimla(yayimlanacakNobetler, yayimlandiMi);
                     // yayimlanacakNobetler deki nobetUstGruplardaki mobil kullanıcılara bildirim gidecek.
+                    MobilBildirim mobilBildirim = new MobilBildirim();
+                    mobilBildirim.Baslik = "Nöbetyaz";
+                    mobilBildirim.Metin = "Yeni dönem nöbetler yayınlanmıştır.";
+                    mobilBildirim.Aciklama = "Yayınlanınca otomatik gönderildi";
+                    mobilBildirim.GonderimTarihi = DateTime.Now;
+                    mobilBildirim.NobetUstGrupId = _nobetUstGrupSessionService.GetSession("nobetUstGrup").Id;
+                    _mobilBildirimService.Insert(mobilBildirim);
+
+                    int mobilBildirimId = _mobilBildirimService.GetDetaylarByNobetUstGrupGonderimTarihi(mobilBildirim.NobetUstGrupId, mobilBildirim.GonderimTarihi)
+                        .Select(s => s.Id).FirstOrDefault();
 
                     foreach (var item in bildirimGonderilecekNobetUstGruplar)
                     {
                         User User = new User();
                         int userId = _userNobetUstGrupService.GetById(item).UserId;
+                        int eczaneId = _userEczaneService.GetListByUserId(userId).Select(s => s.EczaneId).FirstOrDefault();
                         User = _userService.GetById(userId);
                         if (User.CihazId != null)
                         {
-                            PushNotification pushNotification = new PushNotification("Nöbetyaz", "Yeni dönem nöbetler yayınlanmıştır.", User.CihazId);
+                            PushNotification pushNotification = new PushNotification("Nöbetyaz", "Yeni dönem nöbetler yayınlanmıştır.", User.CihazId, mobilBildirimId.ToString());
+
+                            EczaneMobilBildirim eczaneMobilBildirim = new EczaneMobilBildirim();
+
+                            eczaneMobilBildirim.EczaneId = eczaneId;
+                            eczaneMobilBildirim.BildirimGormeTarihi = null;
+                            eczaneMobilBildirim.MobilBildirimId = mobilBildirimId;
+                            _eczaneMobilBildirimService.Insert(eczaneMobilBildirim);
+
                         }
                     }
                 }

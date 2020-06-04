@@ -15,6 +15,8 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public string Metin { get; set; }
         public string Aciklama { get; set; }
         public int NobetUstGrupId { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yy H:mm:ss}", ApplyFormatInEditMode = true)]
         public DateTime GonderimTarihi { get; set; }
         public virtual NobetUstGrup NobetUstGrup { get; set; }
 

@@ -13,7 +13,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
 {
     public class PushNotification
     {
-        public PushNotification(string Message, string Title, string CihazId)
+        public PushNotification(string Message, string Title, string CihazId, string mobilBildirimId)
         {
             try
             {
@@ -32,7 +32,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                     {
                         body = Message,
                         title = Title,
-                        icon = "ic_stat_ic_notification"
+                        icon = "ic_stat_ic_notification",
+                        sound = mobilBildirimId
                     }
                 };
 

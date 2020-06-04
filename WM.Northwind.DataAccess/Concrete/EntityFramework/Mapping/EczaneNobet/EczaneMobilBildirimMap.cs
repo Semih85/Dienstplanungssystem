@@ -32,6 +32,26 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Mapping.EczaneNobet
             this.Property(t => t.EczaneId).IsRequired();
             this.Property(t => t.MobilBildirimId).IsRequired();
             this.Property(t => t.BildirimGormeTarihi).IsOptional();
+
+            this.Property(t => t.EczaneId)
+              .IsRequired()
+              .HasColumnAnnotation("Index",
+                      new IndexAnnotation(
+                          new IndexAttribute("UN_EczaneMobilBildirimler")
+                          {
+                              IsUnique = true,
+                              Order = 1
+                          }));
+
+            this.Property(t => t.MobilBildirimId)
+                .IsRequired()
+                .HasColumnAnnotation("Index",
+                        new IndexAnnotation(
+                            new IndexAttribute("UN_EczaneMobilBildirimler")
+                            {
+                                IsUnique = true,
+                                Order = 2
+                            }));
             #endregion
 
             #region relationship

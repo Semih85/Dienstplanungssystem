@@ -81,7 +81,7 @@
                     @Html.DisplayFor(modelItem => item.Aciklama)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.GonderimTarihi)
+                    @Html.DisplayFor(modelItem => item.GonderimTarihiFormat)
                 </td>
                 <td>
                     @{
@@ -91,7 +91,7 @@
                         <span class="fa fa-cog"></span>
                     </button>
                     <div class="collapse d-md-block" id="@target.Remove(0,1)">
-                        <a class="btn btn-outline-success py-0 btn-sm" title="Gönder" href="@Url.Action("Gonder", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-envelope"></span></a>
+                        <a class="btn btn-outline-success py-0 btn-sm" title="Aynı Bildirimden Kopyala Gönder" href="@Url.Action("Gonder", null, new { id = item.Id, area= "EczaneNobet" })"><span class="fa fa-mail-forward"></span></a>
 
                         <a class="btn btn-outline-primary py-0 btn-sm" title="Detaylar" href="@Url.Action("Index", "EczaneMobilBildirim", new { mobilBildirimId = item.Id, area= "EczaneNobet" })"><span class="fa fa-info-circle"></span></a>
                     </div>

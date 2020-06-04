@@ -34,7 +34,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult Index(int? mobilBildirimId)
         {
             int intMobilBildirimId = Convert.ToInt32(mobilBildirimId);
-            var model = _eczaneMobilBildirimService.GetDetaylarByMobilBildirimId(intMobilBildirimId);
+            var model = _eczaneMobilBildirimService.GetDetaylar(intMobilBildirimId);
             //var menuAltRoles = db.MenuAltRoles.Include(m => m.MenuAlt).Include(m => m.Role);
             return View(model);
         }

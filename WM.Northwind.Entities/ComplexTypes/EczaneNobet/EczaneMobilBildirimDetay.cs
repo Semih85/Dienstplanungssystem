@@ -23,6 +23,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string MobilBildirimBaslik { get; set; }
         [Display(Name = "Bildirim Metni")]
         public string MobilBildirimMetin { get; set; }
+        public string BildirimGormeTarihiFormat => String.Format("{0:dd.MM.yyyy H:mm:ss}", BildirimGormeTarihi);
 
-    } 
+    }
 } 
