@@ -48,16 +48,22 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             _eczaneMobilBildirimDal.Update(eczaneMobilBildirim);
         }
-                                  public EczaneMobilBildirimDetay GetDetayById(int eczaneMobilBildirimId)
-            {
-                return _eczaneMobilBildirimDal.GetDetay(x => x.Id == eczaneMobilBildirimId);
-            }
+        public EczaneMobilBildirimDetay GetDetayById(int eczaneMobilBildirimId)
+        {
+            return _eczaneMobilBildirimDal.GetDetay(x => x.Id == eczaneMobilBildirimId);
+        }
             
-            [CacheAspect(typeof(MemoryCacheManager))]
-            public List<EczaneMobilBildirimDetay> GetDetaylar()
-            {
-                return _eczaneMobilBildirimDal.GetDetayList();
-            }
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneMobilBildirimDetay> GetDetaylar()
+        {
+           return _eczaneMobilBildirimDal.GetDetayList();
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneMobilBildirimDetay> GetDetaylarByMobilBildirimId(int mobilBildirimId)
+        {
+            return _eczaneMobilBildirimDal.GetDetayList(x => x.MobilBildirimId == mobilBildirimId);
+        }
 
     } 
 }

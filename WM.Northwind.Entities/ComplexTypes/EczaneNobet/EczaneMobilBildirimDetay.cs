@@ -15,9 +15,13 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int Id { get; set; }
         public int EczaneId { get; set; }
         public int MobilBildirimId { get; set; }
+        [Display(Name = "Bildirim Görme Tarihi")]
         public DateTime? BildirimGormeTarihi { get; set; }
+        [Display(Name = "Eczane Adı")]
         public string EczaneAdi { get; set; }
+        [Display(Name = "Bildirim Başlığı")]
         public string MobilBildirimBaslik { get; set; }
+        [Display(Name = "Bildirim Metni")]
         public string MobilBildirimMetin { get; set; }
 
     } 

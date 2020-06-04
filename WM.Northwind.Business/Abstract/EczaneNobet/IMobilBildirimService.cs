@@ -19,5 +19,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void Delete(int mobilBildirimId);
          MobilBildirimDetay GetDetayById(int mobilBildirimId);
          List <MobilBildirimDetay> GetDetaylar();
+         List <MobilBildirimDetay> GetDetaylar(int nobetUstGrupId);
+         List <MobilBildirimDetay> GetDetaylarByNobetUstGrupGonderimTarihi(int nobetUstGrupId, DateTime gonderimTarihi);
     }
 } 

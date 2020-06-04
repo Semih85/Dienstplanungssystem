@@ -15,12 +15,12 @@
             <div class="col">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     <i class="fa fa-check"></i>
-                    <strong> @Convert.ToString(TempData["BildirimGonderilenKullanici"])</strong> 
+                    <strong> @Convert.ToString(TempData["BildirimGonderilenKullanici"])</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-          
+
             </div>
         </div>
     }
@@ -33,16 +33,16 @@
         <div class="form-group">
             @*@Html.LabelFor(model => model.EczaneNobetGrupId, "Eczane", htmlAttributes: new { @class = "control-label col-md-2" })*@
             <div class="col-md-10">
-                @Html.DropDownList("UserId", null, htmlAttributes: new
+                @Html.DropDownList("EczaneId", null, htmlAttributes: new
                 {
                     @class = "form-control selectpicker",
                multiple = "true",
                data_live_search = "true",
                data_actions_box = "true",
-               title = "Kullanıcı seçiniz...",
+               title = "Eczane seçiniz...",
                data_selected_text_format = "count > 4"
            })
-               
+
 
             </div>
         </div>
@@ -64,8 +64,22 @@
             </div>
         </div>
 
-
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.Aciklama, "Acıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control", placeHolder = "Acil kan ihtiyacı duyurusu oda başkanı tarafından gönderilmesi istenmiştir. vb." })
+                @*@Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control", placeHolder = "Mazeret açıklaması giriniz..." } })*@
+                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.GonderimTarihi, "GonderimTarihi", htmlAttributes: new { @class = "control-label col-md-2"  })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.GonderimTarihi, new { @class = "form-control", placeHolder = "Acil kan ihtiyacı duyurusu oda başkanı tarafından gönderilmesi istenmiştir. vb." })
+                @*@Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control", placeHolder = "Mazeret açıklaması giriniz..." } })*@
+                @Html.ValidationMessageFor(model => model.GonderimTarihi, "", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Gönder" id="formSubmitButton" class="btn btn-primary" />
@@ -93,18 +107,18 @@
     <script>
         $("#formSubmitButton").click(function (e) {
             //alert('submit clicked')
-           
-            var secilenkullanicisayisi = $("#UserId :selected").length;
+
+            var secilenkullanicisayisi = $("#EczaneId :selected").length;
             //alert($("#UserId :selected").val())
-            
+
              if (secilenkullanicisayisi < 1) {
                 alert("Lütfen kullanıcı seçiniz...")
                 e.preventDefault();
                 return false;
-            }         
-         
+            }
+
             return confirm(secilenkullanicisayisi + ' kullanıcıya bildirim gidecek. Emin misiniz?');
-            
+
         });
 
     </script>

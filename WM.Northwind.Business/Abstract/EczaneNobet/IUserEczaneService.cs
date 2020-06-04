@@ -19,6 +19,7 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void Delete(int userEczaneId);
 
         List<UserEczane> GetListByUserId(int userId);
+        List<UserEczane> GetListByEczaneId(int eczaneId);
         UserEczaneDetay GetDetayById(int userEczaneId);
         List<UserEczaneDetay> GetDetaylar();
         List<UserEczaneDetay> GetDetaylar(List<int> nobetUstGrupIdList);

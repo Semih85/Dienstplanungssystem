@@ -889,9 +889,11 @@
     <Content Include="Areas\EczaneNobet\Views\NobetUstGrupMobilUygulamaYetki\Create.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetUstGrupMobilUygulamaYetki\Delete.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetUstGrupMobilUygulamaYetki\Index.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\BildirimGonder\Index.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetDegisimArz\Details.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetDegisimArz\Index.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\MobilBildirim\Create.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\MobilBildirim\Index.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneMobilBildirim\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -1275,11 +1277,12 @@
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneMisafirController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetDegisimArzController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetDegisimController.cs" />
-    <Compile Include="Areas\EczaneNobet\Controllers\BildirimGonderController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetSanalSonucController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetSonucPlanlananController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneUzaklikMatrisController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EkranController.cs" />
+    <Compile Include="Areas\EczaneNobet\Controllers\EczaneMobilBildirimController.cs" />
+    <Compile Include="Areas\EczaneNobet\Controllers\MobilBildirimController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\NobetKomisyonuController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\NobetUstGrupMobilUygulamaYetkiController.cs" />
     <Compile Include="Areas\EczaneNobet\Models\AyniGunNobetDagilimModel.cs" />

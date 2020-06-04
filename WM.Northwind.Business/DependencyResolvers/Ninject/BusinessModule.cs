@@ -275,6 +275,11 @@ namespace WM.BLL.DependencyResolvers.Ninject
             Bind<IEczaneNobetDegisimTalepService>().To<EczaneNobetDegisimTalepManager>().InSingletonScope();
             Bind<IEczaneNobetDegisimTalepDal>().To<EfEczaneNobetDegisimTalepDal>();
 
+            Bind<IEczaneMobilBildirimService>().To<EczaneMobilBildirimManager>().InSingletonScope();
+            Bind<IEczaneMobilBildirimDal>().To<EfEczaneMobilBildirimDal>();
+
+            Bind<IMobilBildirimService>().To<MobilBildirimManager>().InSingletonScope();
+            Bind<IMobilBildirimDal>().To<EfMobilBildirimDal>();
             #endregion
 
             #region Optimization

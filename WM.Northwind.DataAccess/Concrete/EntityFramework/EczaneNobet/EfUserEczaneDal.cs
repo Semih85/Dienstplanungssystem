@@ -23,6 +23,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                     .Select(s => new UserEczaneDetay
                     {
                         Id = s.Id,
+                        CihazId = s.User.CihazId,
                         KullaniciAdi = s.User.UserName,
                         EczaneAdi = s.Eczane.Adi,
                         EczaneId = s.EczaneId,
@@ -42,6 +43,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                       .Select(s => new UserEczaneDetay
                       {
                           Id = s.Id,
+                          CihazId = s.User.CihazId,
                           KullaniciAdi = s.User.UserName,
                           EczaneAdi = s.Eczane.Adi,
                           EczaneId = s.EczaneId,

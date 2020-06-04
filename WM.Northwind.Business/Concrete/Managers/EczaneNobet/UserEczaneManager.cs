@@ -77,6 +77,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         }
 
         [CacheAspect(typeof(MemoryCacheManager))]
+        public List<UserEczane> GetListByEczaneId(int eczaneId)
+        {
+            return _userEczaneDal.GetList(w => w.EczaneId == eczaneId);
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<UserEczaneDetay> GetDetaylarByUserId(int userId)
         {
             return _userEczaneDal.GetDetayList(w => w.UserId == userId);

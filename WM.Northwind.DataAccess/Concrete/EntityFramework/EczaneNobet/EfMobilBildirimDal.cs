@@ -23,6 +23,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                     .Select(s => new MobilBildirimDetay
                     {
                         NobetUstGrupId = s.NobetUstGrupId,
+                        Id = s.Id,
                         Aciklama = s.Aciklama,
                         Baslik= s.Baslik,
                         GonderimTarihi = s.GonderimTarihi,
@@ -40,6 +41,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                     .Select(s => new MobilBildirimDetay
                     {
                         NobetUstGrupId = s.NobetUstGrupId,
+                        Id = s.Id,
                         Aciklama = s.Aciklama,
                         Baslik = s.Baslik,
                         GonderimTarihi = s.GonderimTarihi,
