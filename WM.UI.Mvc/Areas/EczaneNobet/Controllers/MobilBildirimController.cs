@@ -49,7 +49,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
             var model = _mobilBildirimService.GetDetaylar(nobetUstGrup.Id);
-
+            model = model.OrderByDescending(o => o.Id).ToList();
             return View(model);
         }
 
