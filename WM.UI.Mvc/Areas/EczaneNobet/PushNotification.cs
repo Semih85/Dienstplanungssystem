@@ -26,15 +26,30 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                 tRequest.ContentType = "application/json";
 
                 var data = new
-                {
+                {//android için data, apple için notifications.
+                    //android de notifications da olur ama uygulma kaplalıyken geri bildirim gitmez.
                     to = cihazId,
                     notification = new
                     {
                         body = Message,
                         title = Title,
                         icon = "ic_stat_ic_notification",
-                        sound = mobilBildirimId
+                        sound = mobilBildirimId,
+                        content_available = true
                     }
+                    //,
+                    //data = new
+                    //{
+                    //    body = Message,
+                    //    title = Title,
+                    //    icon = "ic_stat_ic_notification",
+                    //    sound = mobilBildirimId,
+                    //    content_available = true
+                    //    //Id = mobilBildirimId,
+                    //    //Username = "ates  ",
+                    //    //Password = "0327",
+                    //    //Email = "ates@ates.com"
+                    //}
                 };
 
                 var serializer = new JavaScriptSerializer();
