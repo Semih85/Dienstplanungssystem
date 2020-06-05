@@ -49,9 +49,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.MobilBildirimMetin)
                 </th>
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.BildirimGormeTarihi)
-                </th>
+                </th>*@
             </tr>
         </thead>
         <tbody id="eczaneTablo">
@@ -68,9 +68,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.MobilBildirimMetin)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.BildirimGormeTarihiFormat)
-                </td>
+                </td>*@
+
             </tr>
             }
         </tbody>
