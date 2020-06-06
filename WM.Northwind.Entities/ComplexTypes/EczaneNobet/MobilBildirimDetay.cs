@@ -21,6 +21,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int NobetUstGrupId { get; set; }
         [Display(Name = "Bildirim Gönderi Tarihi")]
         public DateTime GonderimTarihi { get; set; }
+        [Display(Name = "Nöbet Üst Grubu")]
         public string NobetUstGrupAdi { get; set; }
         public string GonderimTarihiFormat => String.Format("{0:dd.MM.yyyy H:mm:ss}", GonderimTarihi);
 
