@@ -217,7 +217,7 @@ namespace WM.UI.Mvc.Controllers
         {
             return View();
         }
-      
+
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -358,9 +358,10 @@ namespace WM.UI.Mvc.Controllers
             //if (ReCaptcha.Validate("6LfnxisUAAAAAHvALIZD4c_ai1fu41L8HjCQ0-00"))
             //{
             //var token = "";
-            try
-            {//son true kullanıcıya doğrulama maili göndermek için
-             // token = WebSecurity.CreateUserAndAccount(Model.User.EMail, Model.User.Password, new { First_name = Model.User.FirstName, Last_name = Model.User.LastName }, true);
+            //try
+            //{
+                //son true kullanıcıya doğrulama maili göndermek için
+                // token = WebSecurity.CreateUserAndAccount(Model.User.EMail, Model.User.Password, new { First_name = Model.User.FirstName, Last_name = Model.User.LastName }, true);
 
                 //foreach (var user in _userService.GetList())
                 //{
@@ -501,10 +502,10 @@ namespace WM.UI.Mvc.Controllers
                             "Parolanız: " + parola;
 
                     var toEmail = user.Email;
-
                     SendMail(subject, body, toEmail);
 
-                    TempData["KayitSonuc"] = TempData["KayitSonuc"] + ", Eczane kullanıcı kaydı başarılı.";
+
+                    TempData["KayitSonuc"] = TempData["KayitSonuc"] + ",  Mail gönderildi. ";
 
                     #endregion
                 }
@@ -513,31 +514,32 @@ namespace WM.UI.Mvc.Controllers
                 #endregion
 
 
-            }
-            catch (DbUpdateException ex)
-            {
-                var hata = ex.InnerException.ToString();
+            //}
+            //catch (DbUpdateException ex)
+            //{
+            //    var hata = ex.InnerException.ToString();
 
-                string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
+            //    string[] dublicateHata = { "Cannot insert dublicate row in object", "with unique index" };
 
-                var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
+            //    var dublicateRowHatasiMi = dublicateHata.Any(h => hata.Contains(h));
 
-                if (dublicateRowHatasiMi)
-                {
-                    throw new Exception("Mükerrer kayıt eklenemez... <strong>(Mükerrer kayıt !)</strong>", ex);
-                }
+            //    if (dublicateRowHatasiMi)
+            //    {
+            //        throw new Exception("Mükerrer kayıt eklenemez... <strong>(Mükerrer kayıt !)</strong>", ex);
+            //    }
 
-                throw ex;
-            }
-            catch (Exception e)
-            {
-                TempData["Message"] = "Bu email ile kayıt zaten yapılmış!";
+            //    throw ex;
+            //}
+            //catch (Exception e)
+            //{
+            //    TempData["Message"] = "Bu email ile kayıt zaten yapılmış!";
 
-                return View("Error", e);
-            }
+            //    return View("Error", e);
+            //}
 
-           // return RedirectToAction("Index");
+            // return RedirectToAction("Index");
             return RedirectToAction("Index", "UserEczane", new { area = "EczaneNobet" });
+            //return View();
 
             //}
             //else
@@ -702,6 +704,7 @@ namespace WM.UI.Mvc.Controllers
             return RedirectToAction("Index");
         }
 
+       
         public void SendMail(string subject, string body, string toEmail) // RegisterViewModel Model, string password)
         {
             // string mesaj = "Hesabınız aktif hale gelmiştir.";
@@ -722,21 +725,21 @@ namespace WM.UI.Mvc.Controllers
             htmlMessage.Append("<!DOCTYPE html><body>");
             htmlMessage.Append("<head>");
             htmlMessage.Append("<title>");
-            htmlMessage.Append("Nöbet Yaz Kayıt Bilgilendirme!");
+            htmlMessage.Append("Nöbet Yaz Kayıt Bilgilendirme");
             htmlMessage.Append("</title>");
             htmlMessage.Append("</head>");
             htmlMessage.Append(body);
             htmlMessage.Append(Environment.NewLine);
             htmlMessage.Append("</body></html>");
 
-           
+
             // SendMail msg = new SendMail();
             // msg.AddandSend(this.Form, "naklentenis@gmail.com", txtemail.Text, "naklentenis.com seyirci girişi için email ve parolanız:", mesaj, "", "");
 
             System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage();
-            
-            
-          
+
+
+
             message.From = new MailAddress(fromEmail);
             message.To.Add(toEmail);
             message.Subject = subject;
