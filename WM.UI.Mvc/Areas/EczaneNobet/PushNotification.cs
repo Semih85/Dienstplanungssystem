@@ -36,7 +36,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                         icon = "ic_stat_ic_notification",
                         sound = mobilBildirimId,
                         content_available = true
-                    }
+                    },
+                    priority = "high",
                     //,
                     //data = new
                     //{
@@ -50,7 +51,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                     //    //Password = "0327",
                     //    //Email = "ates@ates.com"
                     //}
-                };
+            };
 
                 var serializer = new JavaScriptSerializer();
                 var json = serializer.Serialize(data);
