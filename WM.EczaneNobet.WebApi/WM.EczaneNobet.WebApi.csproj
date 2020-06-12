@@ -168,6 +168,7 @@
     <Compile Include="Models\EczaneNobetMazeretApi.cs" />
     <Compile Include="Models\EczaneNobetMazeretCokluApi.cs" />
     <Compile Include="Models\EczaneNobetSonucApi.cs" />
+    <Compile Include="Models\MazeretApi.cs" />
     <Compile Include="Models\MazeretTurApi.cs" />
     <Compile Include="Models\NobetUstGrupMobilUygulamaApi.cs" />
     <Compile Include="Models\MobilBildirimModelApi.cs" />
