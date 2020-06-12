@@ -17,7 +17,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             //Database.SetInitializer(new EczaneNobetInitializerAlanya());
             //Database.SetInitializer(new DropCreateDatabaseIfModelChanges<EczaneNobetContext>());
 
-            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<EczaneNobetContext, Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<EczaneNobetContext, Configuration>());
         }
 
         public EczaneNobetContext() : base("Name=EczaneNobetContext")
@@ -117,6 +117,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<RaporNobetUstGrup> RaporNobetUstGruplar { get; set; }
         public DbSet<EczaneNobetSanalSonuc> EczaneNobetSanalSonuclar { get; set; }
         public DbSet<DebugEczane> DebugEczaneler { get; set; }
+        public DbSet<NobetUstGrupKisitIstisnaGunGrup> NobetUstGrupKisitIstisnaGunGruplar { get; set; }
 
         #endregion
 
@@ -223,6 +224,7 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new DebugEczaneMap());
             modelBuilder.Configurations.Add(new MobilBildirimMap());
             modelBuilder.Configurations.Add(new EczaneMobilBildirimMap());
+            modelBuilder.Configurations.Add(new NobetUstGrupKisitIstisnaGunGrupMap());
             #endregion
         }
     #endregion

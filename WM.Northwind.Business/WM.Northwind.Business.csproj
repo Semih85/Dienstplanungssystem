@@ -97,6 +97,7 @@
     <Compile Include="Abstract\EczaneNobet\ILogService.cs" />
     <Compile Include="Abstract\EczaneNobet\IMobilBildirimService.cs" />
     <Compile Include="Abstract\EczaneNobet\IMobilUygulamaYetkiService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetUstGrupKisitIstisnaGunGrupService.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetUstGrupMobilUygulamaYetkiService.cs" />
     <Compile Include="Abstract\EczaneNobet\IRaporKategoriService.cs" />
     <Compile Include="Abstract\EczaneNobet\IRaporService.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Concrete\Managers\EczaneNobet\LogManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\MobilBildirimManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\MobilUygulamaYetkiManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetUstGrupKisitIstisnaGunGrupManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetUstGrupMobilUygulamaYetkiManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\RaporKategoriManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\RaporManager.cs" />

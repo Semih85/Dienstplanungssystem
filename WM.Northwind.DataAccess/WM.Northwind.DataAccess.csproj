@@ -76,6 +76,7 @@
     <Compile Include="Abstract\EczaneNobet\ILogDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IMobilBildirimDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IMobilUygulamaYetkiDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetUstGrupKisitIstisnaGunGrupDal.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetUstGrupMobilUygulamaYetkiDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IRaporDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IRaporKategoriDal.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfLogDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMobilBildirimDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMobilUygulamaYetkiDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetUstGrupKisitIstisnaGunGrupDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetUstGrupMobilUygulamaYetkiDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporKategoriDal.cs" />
@@ -242,6 +244,7 @@
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSanalSonucMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MobilBildirimMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MobilUygulamaYetkiMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetUstGrupKisitIstisnaGunGrupMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetUstGrupMobilUygulamaYetkiMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporKategoriMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporMap.cs" />
