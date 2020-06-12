@@ -31,9 +31,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         KisitAdi = s.NobetUstGrupKisit.Kisit.Adi,
                         GunGrupAdi = s.NobetUstGrupGunGrup.GunGrup.Adi,
                         NobetUstGrupKisitId = s.NobetUstGrupKisitId,
-                        NobetUstGrupGunGrupAdi = s.NobetUstGrupGunGrup.Aciklama,
+                        NobetUstGrupGunGrupAdi = s.NobetUstGrupGunGrup.GunGrup.Adi,
                         NobetUstGrupGunGrupId = s.NobetUstGrupGunGrupId,
-                        NobetUstGrupKisitAdi = s.NobetUstGrupKisit.Aciklama,
+                        NobetUstGrupKisitAdi = s.NobetUstGrupKisit.Kisit.Adi,
                                              
                     }).SingleOrDefault(filter);
             }
@@ -54,9 +54,9 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         KisitAdi = s.NobetUstGrupKisit.Kisit.Adi,
                         GunGrupAdi = s.NobetUstGrupGunGrup.GunGrup.Adi,
                         NobetUstGrupKisitId = s.NobetUstGrupKisitId,
-                        NobetUstGrupGunGrupAdi = s.NobetUstGrupGunGrup.Aciklama,
+                        NobetUstGrupGunGrupAdi = s.NobetUstGrupGunGrup.GunGrup.Adi,
                         NobetUstGrupGunGrupId = s.NobetUstGrupGunGrupId,
-                        NobetUstGrupKisitAdi = s.NobetUstGrupKisit.Aciklama,
+                        NobetUstGrupKisitAdi = s.NobetUstGrupKisit.Kisit.Adi,
 
                     });
 

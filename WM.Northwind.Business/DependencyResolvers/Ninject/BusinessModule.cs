@@ -280,6 +280,9 @@ namespace WM.BLL.DependencyResolvers.Ninject
 
             Bind<IMobilBildirimService>().To<MobilBildirimManager>().InSingletonScope();
             Bind<IMobilBildirimDal>().To<EfMobilBildirimDal>();
+
+            Bind<INobetUstGrupKisitIstisnaGunGrupService>().To<NobetUstGrupKisitIstisnaGunGrupManager>().InSingletonScope();
+            Bind<INobetUstGrupKisitIstisnaGunGrupDal>().To<EfNobetUstGrupKisitIstisnaGunGrupDal>();
             #endregion
 
             #region Optimization

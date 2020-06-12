@@ -1,0 +1,69 @@
+﻿@model WM.Northwind.Entities.ComplexTypes.EczaneNobet.NobetUstGrupKisitIstisnaGunGrupDetay
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MenuAltRole</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetUstGrupGunGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetUstGrupGunGrupAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KisitAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KisitAdi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NobetUstGrupKisitAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NobetUstGrupKisitAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GunGrupAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GunGrupAdi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BaslangicTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BaslangicTarihi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.BitisTarihi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BitisTarihi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Aciklama)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aciklama)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

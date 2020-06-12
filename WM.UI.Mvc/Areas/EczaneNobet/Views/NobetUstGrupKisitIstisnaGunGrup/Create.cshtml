@@ -1,0 +1,154 @@
+﻿@model NobetUstGrupKisitIstisnaGunGrup
+
+<h4>Nöbet Üst Grup Kısıt İstisna Gün Grup Ekle</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.NobetUstGrupKisitId, "Menu Alt", htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.DropDownList("NobetUstGrupKisitId", null, htmlAttributes: new
+                {
+                    @class = "form-control selectpicker",
+               multiple = "true",
+               //data_width = "auto",
+               data_actions_box = "true",
+               mobile = "true",
+               data_live_search = "true",
+               data_selected_text_format = "count > 4",
+               title = "Nöbet Üst Grup Kısıt Seçiniz..."
+           })
+                @Html.ValidationMessageFor(model => model.NobetUstGrupKisitId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NobetUstGrupGunGrupId, "Nöbet Üst Grup Gun Grup", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("NobetUstGrupGunGrupId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NobetUstGrupGunGrupId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            <div class="form-group col-md-4">
+                @*@Html.LabelFor(model => model.AcilisTarihi, htmlAttributes: new { @class = "control-label" })*@
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    @Html.TextBoxFor(model => model.BaslangicTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Başlangıç Tarihi" })
+                </div>
+                @Html.ValidationMessageFor(model => model.BaslangicTarihi, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group col-md-4">
+                @*@Html.LabelFor(model => model.KapanisTarihi, htmlAttributes: new { @class = "control-label" })*@
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text p-2">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    @Html.TextBoxFor(model => model.BitisTarihi, new { @class = "form-control datepicker p-2", autocomplete = "off", placeHolder = "Bitiş Tarihi" })
+                </div>
+                @Html.ValidationMessageFor(model => model.BitisTarihi, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Aciklama, "Açıklama", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Aciklama, new { @class = "form-control", placeHolder = "Alanya cumartesiye istisna istedi. vb." })
+                @*@Html.EditorFor(model => model.Aciklama, new { htmlAttributes = new { @class = "form-control", placeHolder = "Mazeret açıklaması giriniz..." } })*@
+                @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Ekle" class="btn btn-primary" />
+                @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-warning" })
+            </div>
+        </div>
+
+    </div>
+}
+
+@section Styles{
+    @Styles.Render("~/bundle/bootstrap-datepicker/style")
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundle/bootstrap-datepicker/scripts")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+    @Scripts.Render("~/bundle/validation/scripts")
+}
+<script>
+
+    function tarihDondur2(metin) {
+
+        var tarihTanim = metin.substring(0, 10).split(".");
+
+        yil = tarihTanim[2];
+        ay = tarihTanim[1];
+        gun = tarihTanim[0];
+
+        if (gun.length != 4) {
+            return yil + "." + ay + "." + gun;
+        }
+        else {
+            //alert(gun)
+            return metin;
+        }
+    }
+
+    $(function () {
+        var baslamaTarihi = tarihDondur2($("#BaslangicTarihi").val());
+
+        if (baslamaTarihi != null || baslamaTarihi != "") {
+            var d = new Date(baslamaTarihi);
+            $("#BaslangicTarihi").datepicker("setDate", new Date(d));
+        }
+        //$('#btnSilTarihAraligi, #btnSilBaslangicTarihi, #btnSilBitisTarihi, #navbarBrand').css('cursor','pointer');
+    });
+
+    $("#submitEkle").click(function (e) {
+
+        var secilenKisitSayisi = $("#NobetUstGrupKisitId :selected").length;
+        var secilenGunGrupSayisi = $("#NobetUstGrupGunGrupId :selected").length;
+        //alert($("#NobetGrupGorevTipId :selected").val())
+
+        if (secilenGunGrupSayisi < 1 && secilenKisitSayisi < 1) {
+            alert("Lütfen kriter seçiniz...")
+            e.preventDefault();
+            return false;
+        }
+        else if (secilenGunGrupSayisi < 1) {
+            alert("Lütfen gün grubu seçiniz...")
+            e.preventDefault();
+            return false;
+        }
+        else if (secilenKisitSayisi < 1) {
+            alert("Lütfen kısıt seçiniz...")
+            e.preventDefault();
+            return false;
+        };
+
+        var kisit = $("#NobetUstGrupKisitId :selected").text();
+
+        if ($("#Aciklama").val().length > 0) {
+            return confirm(secilenGunGrupSayisi + ' gün grubu ' + kisit + ' kisitla eşleşerek istisna olarak eklenecek. Emin misiniz?');
+        }
+    });
+</script>
