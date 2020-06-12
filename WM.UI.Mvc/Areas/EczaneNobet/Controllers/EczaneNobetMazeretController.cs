@@ -32,6 +32,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IMazeretService _mazeretService;
         private ITakvimService _takvimService;
         private IUserService _userService;
+        private IUserEczaneService _userEczaneService;
+        private IUserRoleService _userRoleService;
         private INobetGrupService _nobetGrupService;
         private INobetGrupGorevTipService _nobetGrupGorevTipService;
         private IBayramService _bayramService;
@@ -42,10 +44,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public EczaneNobetMazeretController(IEczaneNobetMazeretService eczaneNobetMazeretService,
                                             IEczaneNobetIstekService eczaneNobetIstekService,
                                             IEczaneNobetGrupService eczaneNobetGrupService,
+                                            IUserEczaneService userEczaneService,
                                             IEczaneService eczaneService,
                                             IMazeretService mazeretService,
                                             ITakvimService takvimService,
                                             IUserService userService,
+                                            IUserRoleService userRoleService,
                                             INobetGrupService nobetGrupService,
                                             INobetGrupGorevTipService nobetGrupGorevTipService,
                                             IBayramService bayramService,
@@ -59,7 +63,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _eczaneService = eczaneService;
             _mazeretService = mazeretService;
             _takvimService = takvimService;
+            _userEczaneService = userEczaneService;
             _userService = userService;
+            _userRoleService = userRoleService;
             _nobetGrupService = nobetGrupService;
             _bayramService = bayramService;
             _nobetUstGrupService = nobetUstGrupService;
@@ -71,26 +77,44 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         
         // GET: EczaneNobet/EczaneNobetMazeret
-        [Authorize(Roles = "Admin,Oda,Üst Grup")]
+        [Authorize(Roles = "Admin,Oda,Üst Grup,Eczane")]
         public ActionResult Index()
         {
-            //var user = _userService.GetByUserName(User.Identity.Name);
+            var user = _userService.GetByUserName(User.Identity.Name);
+            var rolIdler = _userRoleService.GetDetayListByUserId(user.Id).Select(s => s.RoleId).ToList();
+            var rolId = rolIdler.FirstOrDefault();
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
-            var nobetGruplar = _nobetGrupGorevTipService.GetMyDrop(nobetUstGrup.Id);
 
-            ViewBag.NobetGrupGorevTipId = new SelectList(items: nobetGruplar, dataValueField: "Id", dataTextField: "Value");
-
-            var eczaneNobetMezaretIstekTipler = new List<MyDrop>
+            if (rolIdler.Count() == 1 && rolId == 4)
             {
+                var userEczaneler = _userEczaneService.GetDetaylarByUserId(user.Id);
+                var eczaneIdler = userEczaneler.Select(s => s.EczaneId).ToList();
+                var nobetGruplar = _eczaneNobetGrupService.GetDetaylarByEczaneIdList(eczaneIdler).ToList();
+                var nobetGruplarForDrop = _nobetGrupGorevTipService.GetMyDropByNobetGrupId(nobetGruplar.FirstOrDefault().NobetGrupId);
+
+                ViewBag.NobetGrupGorevTipId = new SelectList(items: nobetGruplarForDrop, dataValueField: "Id", dataTextField: "Value");
+
+            }
+            else
+            {
+
+                //var user = _userService.GetByUserName(User.Identity.Name);
+                var nobetGruplar = _nobetGrupGorevTipService.GetMyDrop(nobetUstGrup.Id);
+
+                ViewBag.NobetGrupGorevTipId = new SelectList(items: nobetGruplar, dataValueField: "Id", dataTextField: "Value");
+            }
+                var eczaneNobetMezaretIstekTipler = new List<MyDrop>
+                {
                 new MyDrop{Id = 1,Value = "Mazeret"},
                 new MyDrop{Id = 2,Value = "İstek"}
-            };
+                };
 
-            ViewBag.EczaneNobetMazeretIstekTipId = new SelectList(eczaneNobetMezaretIstekTipler, "Id", "Value", 0);
-            // ViewBag.EczaneNobetMazeretIstekTipId = new SelectList(items: eczaneNobetMezaretIstekTipler, dataValueField: "Id", dataTextField: "Adi", selectedValue: 0);
-            //ViewData["Sonuclar"] = 1;
+                ViewBag.EczaneNobetMazeretIstekTipId = new SelectList(eczaneNobetMezaretIstekTipler, "Id", "Value", 0);
+                // ViewBag.EczaneNobetMazeretIstekTipId = new SelectList(items: eczaneNobetMezaretIstekTipler, dataValueField: "Id", dataTextField: "Adi", selectedValue: 0);
+                //ViewData["Sonuclar"] = 1;
 
-            ViewBag.NobetUstGrupId = nobetUstGrup.Id;
+                ViewBag.NobetUstGrupId = nobetUstGrup.Id;
+            
             return View();
         }
         public ActionResult EczaneNobetMazeretPartialView(int nobetGrupId = 0, int eczaneId = 0, DateTime? MazeretTarihi = null)
@@ -400,11 +424,12 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/EczaneNobetMazeret/Create
-        [Authorize(Roles = "Admin,Oda,Üst Grup")]
+        [Authorize(Roles = "Admin,Oda,Üst Grup,Eczane")]
         public ActionResult Create()
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+            var user = _userService.GetByUserName(User.Identity.Name);
 
             //var eczaneler = _eczaneService.GetListByUser(user).Select(s => s.Id).ToList();
             var eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetUstGrup.Id);
@@ -414,7 +439,23 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //.OrderBy(s => s.Value), 
             "Id", "Value");
 
-            ViewBag.MazeretId = new SelectList(_mazeretService.GetList().Where(w => w.Id != 3), "Id", "Adi");
+            var roleList = _userRoleService.GetDetayListByUserId(user.Id);
+            if(roleList.Count() == 1 && roleList.FirstOrDefault().RoleId == 4)
+            {//sadece eczacı rolü varsa muafiyet ve rasgele giremesin
+                var userEczaneler = _userEczaneService.GetDetaylarByUserId(user.Id);
+                var eczaneIdler = userEczaneler.Select(s => s.EczaneId).ToList();
+                var nobetGruplar = _eczaneNobetGrupService.GetDetaylarByEczaneIdList(eczaneIdler).ToList();
+                eczaneNobetGruplar = _eczaneNobetGrupService.GetDetaylar(nobetGruplar.FirstOrDefault().NobetGrupId,
+                    eczaneIdler.FirstOrDefault());
+                ViewBag.MazeretId = new SelectList(_mazeretService.GetList().Where(w => w.Id != 3 && w.Id != 6), "Id", "Adi");
+                ViewBag.EczaneNobetGrupId = new SelectList(_eczaneNobetGrupService.GetMyDrop(eczaneNobetGruplar), "Id", "Value");
+
+            }
+            else
+            {//Id = 3 rasgele
+                ViewBag.MazeretId = new SelectList(_mazeretService.GetList().Where(w => w.Id != 3), "Id", "Adi");
+            }
+
             ViewBag.HaftaninGunu = new SelectList(_takvimService.GetHaftaninGunleri(), "Id", "Value");
             ViewBag.SecilenHaftaninGunuSayisi = 0;
 
@@ -430,6 +471,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             //var user = _userService.GetByUserName(User.Identity.Name);
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+            var user = _userService.GetByUserName(User.Identity.Name);
+
+            var roleList = _userRoleService.GetDetayListByUserId(user.Id);
 
             //var haftaninGunleri = Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>().ToList();
             if (eczaneNobetMazeretCoklu.HaftaninGunu == null)
@@ -492,14 +536,28 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 foreach (var item in tarihAraligi)
                 {
-                    eczaneNobetMazeretler.Add(new EczaneNobetMazeret
+                    if (roleList.Count() == 1 && roleList.FirstOrDefault().RoleId == 4)
+                    {//eczacı ise onay = false olarak kaydedecek
+                        eczaneNobetMazeretler.Add(new EczaneNobetMazeret
+                        {
+                            MazeretId = eczaneNobetMazeretCoklu.MazeretId,
+                            EczaneNobetGrupId = eczaneNobetGrupId,// eczaneNobetMazeretCoklu.EczaneNobetGrupId,
+                            TakvimId = item.TakvimId,
+                            Aciklama = eczaneNobetMazeretCoklu.Aciklama,
+                            Onay = false
+                        });
+                    }
+                    else
                     {
-                        MazeretId = eczaneNobetMazeretCoklu.MazeretId,
-                        EczaneNobetGrupId = eczaneNobetGrupId,// eczaneNobetMazeretCoklu.EczaneNobetGrupId,
-                        TakvimId = item.TakvimId,
-                        Aciklama = eczaneNobetMazeretCoklu.Aciklama,
-                        Onay = true
-                    });
+                        eczaneNobetMazeretler.Add(new EczaneNobetMazeret
+                        {
+                            MazeretId = eczaneNobetMazeretCoklu.MazeretId,
+                            EczaneNobetGrupId = eczaneNobetGrupId,// eczaneNobetMazeretCoklu.EczaneNobetGrupId,
+                            TakvimId = item.TakvimId,
+                            Aciklama = eczaneNobetMazeretCoklu.Aciklama,
+                            Onay = true
+                        });
+                    }
                 }
             }
 
@@ -595,7 +653,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult CreatePartial([Bind(Include = "Id,EczaneNobetGrupId,MazeretId,BaslangicTarihi,BitisTarihi,HaftaninGunu,Aciklama")] EczaneNobetMazeretCoklu eczaneNobetMazeretCoklu)
         {
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+            var user = _userService.GetByUserName(User.Identity.Name);
 
+            var roleList = _userRoleService.GetDetayListByUserId(user.Id);
             //var haftaninGunleri = Enum.GetValues(typeof(DayOfWeek)).Cast<DayOfWeek>().ToList();
             if (eczaneNobetMazeretCoklu.HaftaninGunu == null)
             {
@@ -649,14 +709,28 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             {
                 foreach (var item in tarihAraligi)
                 {
-                    eczaneNobetMazeretler.Add(new EczaneNobetMazeret
+                    if (roleList.Count() == 1 && roleList.FirstOrDefault().RoleId == 4)
+                    {//eczacı ise onay = false olarak kaydedecek
+                        eczaneNobetMazeretler.Add(new EczaneNobetMazeret
+                        {
+                            MazeretId = eczaneNobetMazeretCoklu.MazeretId,
+                            EczaneNobetGrupId = eczaneNobetGrupId,// eczaneNobetMazeretCoklu.EczaneNobetGrupId,
+                            TakvimId = item.TakvimId,
+                            Aciklama = eczaneNobetMazeretCoklu.Aciklama,
+                            Onay = false
+                        });
+                    }
+                    else
                     {
-                        MazeretId = eczaneNobetMazeretCoklu.MazeretId,
-                        EczaneNobetGrupId = eczaneNobetGrupId,// eczaneNobetMazeretCoklu.EczaneNobetGrupId,
-                        TakvimId = item.TakvimId,
-                        Aciklama = eczaneNobetMazeretCoklu.Aciklama,
-                        Onay = true
-                    }); ;
+                        eczaneNobetMazeretler.Add(new EczaneNobetMazeret
+                        {
+                            MazeretId = eczaneNobetMazeretCoklu.MazeretId,
+                            EczaneNobetGrupId = eczaneNobetGrupId,// eczaneNobetMazeretCoklu.EczaneNobetGrupId,
+                            TakvimId = item.TakvimId,
+                            Aciklama = eczaneNobetMazeretCoklu.Aciklama,
+                            Onay = true
+                        });
+                    }
                 }
             }
 
@@ -671,16 +745,32 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                     foreach (var item in eczaneNobetMazeretler)
                     {
-                        var eczane = _eczaneNobetGrupService.GetDetayById(item.EczaneNobetGrupId);
 
-                        eklenenEczaneler.Add(new EczaneNobetMazeretDetay
+                        var eczane = _eczaneNobetGrupService.GetDetayById(item.EczaneNobetGrupId);
+                        if (roleList.Count() == 1 && roleList.FirstOrDefault().RoleId == 4)
+                        {//eczacı ise onay = false olarak kaydedecek
+                            eklenenEczaneler.Add(new EczaneNobetMazeretDetay
+                            {
+
+                                NobetGorevTipAdi = eczane.NobetGorevTipAdi,
+                                EczaneAdi = eczane.EczaneAdi,
+                                Tarih = _takvimService.GetById(item.TakvimId).Tarih,
+                                Aciklama = item.Aciklama,
+                                Onay = false
+                            });
+                        }
+                        else
                         {
-                            NobetGorevTipAdi = eczane.NobetGorevTipAdi,
-                            EczaneAdi = eczane.EczaneAdi,
-                            Tarih = _takvimService.GetById(item.TakvimId).Tarih,
-                            Aciklama = item.Aciklama,
-                            Onay = true
-                        });
+                            eklenenEczaneler.Add(new EczaneNobetMazeretDetay
+                            {
+
+                                NobetGorevTipAdi = eczane.NobetGorevTipAdi,
+                                EczaneAdi = eczane.EczaneAdi,
+                                Tarih = _takvimService.GetById(item.TakvimId).Tarih,
+                                Aciklama = item.Aciklama,
+                                Onay = true
+                            });
+                        }
                     }
                 }
                 catch (DbUpdateException ex)
@@ -820,6 +910,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             return View(eczaneNobetMazeret);
         }
         
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         //[HttpPost]
         public void SecilenleriSil(string selectedEczaneMazeretIstekIDs, string unSelectedEczaneMazeretIstekIDs)
         {
@@ -911,6 +1002,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             return sonuclar;
         }
+
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public void SecilenleriOnayla(string selectedEczaneMazeretIstekIDsForOnay, string unSelectedEczaneMazeretIstekIDsForOnay,
             string baslangicTarihiForOnay, string  bitisTarihiForOnay, string eczaneNobetMazeretIstekTipIdForOnay, string  nobetGrupGorevTipIdForOnay)
         {
@@ -993,6 +1086,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             //return PartialView("EczaneNobetMazeretPartialView", eczaneNobetMazeretlerVeIstekler);
                     
         }
+  
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public void SecilenlerinOnayiniKaldir(string selectedEczaneMazeretIstekIDsForOnayKaldir, string unSelectedEczaneMazeretIstekIDsForOnayKaldir,
             string baslangicTarihiForOnayKaldir, string bitisTarihiForOnayKaldir, string eczaneNobetMazeretIstekTipIdForOnayKaldir, string nobetGrupGorevTipIdForOnayKaldir)
         {

@@ -21,6 +21,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
     {
         private IEczaneService _eczaneService;
         private IUserService _userService;
+        private IUserRoleService _userRoleService;
         private IUserEczaneService _userEczaneService;
         private IEczaneNobetGrupService _eczaneNobetGrupService;
         private IEczaneNobetGrupAltGrupService _eczaneNobetGrupAltGrup;
@@ -29,6 +30,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
         public EczaneController(IEczaneService eczaneService,
                                 IUserService userService,
+                                IUserRoleService userRoleService,
                                 IUserEczaneService userEczaneService,
                                 IEczaneNobetGrupService eczaneNobetGrupService,
                                 INobetUstGrupService nobetUstGrupService,
@@ -37,6 +39,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             _eczaneService = eczaneService;
             _userService = userService;
+            _userRoleService = userRoleService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _nobetUstGrupService = nobetUstGrupService;
             _nobetUstGrupSessionService = nobetUstGrupSessionService;
@@ -54,13 +57,15 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var eczaneler = _eczaneService.GetDetaylar(ustGrupSession.Id)
                 .OrderBy(o => o.AcilisTarihi).ToList();
 
-            var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+            //var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+            var rolIdler = _userRoleService.GetDetayListByUserId(user.Id).Select(s => s.RoleId).ToList();
+
             var rolId = rolIdler.FirstOrDefault();
 
             var model = eczaneler;
 
             if (rolIdler.Count() == 1 && rolId == 4)
-            {
+            {//sadece eczane yetkisi varsa
                 var userEczaneler = _userEczaneService.GetDetaylarByUserId(user.Id);
 
                 model = eczaneler.Where(w => userEczaneler.Select(s => s.EczaneId).Contains(w.Id)).ToList();
@@ -134,7 +139,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/Eczane/Edit/5
-        [Authorize(Roles = "Admin,Oda,Üst Grup")]
+        [Authorize(Roles = "Admin,Oda,Üst Grup,Eczane")]
         public ActionResult Edit(int id)
         {
             if (id < 1)
@@ -157,7 +162,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Oda,Üst Grup")]
+        [Authorize(Roles = "Admin,Oda,Üst Grup,Eczane")]
         public ActionResult Edit([Bind(Include = "Id,Adi,AcilisTarihi,KapanisTarihi,Enlem,Boylam,Adres,TelefonNo,MailAdresi,WebSitesi, NobetUstGrupId")] Eczane eczane)
         {
             if (ModelState.IsValid)

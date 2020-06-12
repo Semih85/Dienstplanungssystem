@@ -97,6 +97,21 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 return nobetGrupGorevTipler.Select(s => new MyDrop { Id = s.Id, Value = $"{s.Id}, {s.NobetGrupAdi}" }).ToList();
             }
         }
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<MyDrop> GetMyDropByNobetGrupId(int nobetGrupId)
+        {
+            var nobetGrupGorevTipler = _nobetGrupGorevTipDal.GetDetayList(x => x.NobetGrupId == nobetGrupId);
+
+            if (nobetGrupGorevTipler.Select(s => s.NobetGorevTipId).Distinct().Count() > 1)
+            {
+                return nobetGrupGorevTipler.Select(s => new MyDrop { Id = s.Id, Value = $"{s.Id}, {s.NobetGrupAdi}, {s.NobetGorevTipAdi}" }).ToList();
+            }
+            else
+            {
+                return nobetGrupGorevTipler.Select(s => new MyDrop { Id = s.Id, Value = $"{s.Id}, {s.NobetGrupAdi}" }).ToList();
+            }
+        }
+        
 
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetGrupGorevTipDetay> GetDetaylarByNobetGrupGorevTipId(int nobetGrupGorevTipId)

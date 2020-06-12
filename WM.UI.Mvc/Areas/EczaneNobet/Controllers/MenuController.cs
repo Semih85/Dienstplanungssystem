@@ -21,18 +21,21 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IMenuService _menuService;
         private IMenuAltService _menuAltService;
         private IUserService _userService;
+        private IUserRoleService _userRoleService;
         private IMenuRoleService _menuRoleService;
         private IMenuAltRoleService _menuAltRoleService;
 
         public MenuController(IMenuService menuService,
                               IMenuAltService menuAltService,
                               IUserService userService,
+                              IUserRoleService userRoleService,
                               IMenuRoleService menuRoleService,
                               IMenuAltRoleService menuAltRoleService)
         {
             _menuService = menuService;
             _menuAltService = menuAltService;
             _userService = userService;
+            _userRoleService = userRoleService;
             _menuRoleService = menuRoleService;
             _menuAltRoleService = menuAltRoleService;
         }
@@ -49,7 +52,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public PartialViewResult MenuPartial()
         {
             var user = _userService.GetByUserName(User.Identity.Name);
-            var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+           // var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+            var rolIdler = _userRoleService.GetDetayListByUserId(user.Id).Select(s => s.RoleId).ToList();
 
             var rolId = rolIdler.FirstOrDefault();
             var menuler = _menuRoleService.GetByRoleId(rolId);

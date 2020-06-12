@@ -137,10 +137,12 @@ namespace WM.UI.Mvc.Controllers
                         ? simdi.AddDays(45)
                         : simdi.AddHours(8);
 
-                    var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
-                    var roller = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleName).ToArray();
+                    //var rolIdler = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleId).ToArray();
+                    var rolIdler = _userRoleService.GetDetayListByUserId(user.Id).Select(s => s.RoleId).ToList();
+                    //var roller = _userService.GetUserRoles(user).OrderBy(s => s.RoleId).Select(u => u.RoleName).ToArray();
+                    var roller = _userRoleService.GetDetayListByUserId(user.Id).OrderBy(s => s.RoleId).Select(u => u.RoleName).ToArray();
 
-                    if (rolIdler.Count() > 0)
+                    if (rolIdler.Any())
                     {
                         AuthenticationHelper
                             .CreateAuthCookie(
@@ -170,7 +172,7 @@ namespace WM.UI.Mvc.Controllers
                             //url = RedirectToAction("Index", "NobetUstGrupYonetim", new { area = "EczaneNobet", userId = user.Id });
                             break;
                         case 4:
-                            url = RedirectToAction("Index", "EczaneKullanici", new { area = "EczaneNobet", userId = user.Id });
+                            url = RedirectToAction("Index", "Eczane", new { area = "EczaneNobet" });
                             break;
                         //case 5://misafir
                         //    url = RedirectToAction("Index", "EczaneKullanici", new { area = "EczaneNobet", userId = user.Id });
