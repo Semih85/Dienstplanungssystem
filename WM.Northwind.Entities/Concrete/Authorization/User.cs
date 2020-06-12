@@ -30,8 +30,13 @@ namespace WM.Northwind.Entities.Concrete.Authorization
         //[StringLength(64, ErrorMessage = "Şifre en az 6(altı) karakter olmalıdır..!", MinimumLength = 6)]
         //public string PasswordConfirm { get; set; }
 
+        //      No numbers and the following characters are invalid:
+        //      Should not have more than 3 words
+        //      No preceding or trailing spaces
+        //      Minimum of 2 characters
         [Display(Name = "Adı")]
         [Required(ErrorMessage = "{0} alanı boş bırakılamaz..!")]
+        [RegularExpression(@"^(?=(?:[^A-Za-z]*[A-Za-z]){2})(?![^\d~`?!^*¨ˆ;@=$%{}\[\]|\\\/<>#“.,]*[\d~`?!^*¨ˆ;@=$%{}\[\]|\\\/<>#“.,])\S+(?: \S+){0,2}$", ErrorMessage = "Lütfen 0 dan büyük bir sayı giriniz..!")]
         public string FirstName { get; set; }
 
         [Display(Name = "Soyadı")]
