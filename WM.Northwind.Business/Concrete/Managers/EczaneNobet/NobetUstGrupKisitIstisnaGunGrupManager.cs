@@ -23,6 +23,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             _nobetUstGrupKisitIstisnaGunGrupDal = nobetUstGrupKisitIstisnaGunGrupDal;
         }
+        
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Delete(int nobetUstGrupKisitIstisnaGunGrupId)
         {
@@ -33,31 +34,40 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _nobetUstGrupKisitIstisnaGunGrupDal.Get(x => x.Id == nobetUstGrupKisitIstisnaGunGrupId);
         }
-         [CacheAspect(typeof(MemoryCacheManager))]
+        
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<NobetUstGrupKisitIstisnaGunGrup> GetList()
         {
             return _nobetUstGrupKisitIstisnaGunGrupDal.GetList();
         }
+        
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Insert(NobetUstGrupKisitIstisnaGunGrup nobetUstGrupKisitIstisnaGunGrup)
         {
             _nobetUstGrupKisitIstisnaGunGrupDal.Insert(nobetUstGrupKisitIstisnaGunGrup);
         }
+        
         [CacheRemoveAspect(typeof(MemoryCacheManager))]
         public void Update(NobetUstGrupKisitIstisnaGunGrup nobetUstGrupKisitIstisnaGunGrup)
         {
             _nobetUstGrupKisitIstisnaGunGrupDal.Update(nobetUstGrupKisitIstisnaGunGrup);
         }
-                                  public NobetUstGrupKisitIstisnaGunGrupDetay GetDetayById(int nobetUstGrupKisitIstisnaGunGrupId)
-            {
-                return _nobetUstGrupKisitIstisnaGunGrupDal.GetDetay(x => x.Id == nobetUstGrupKisitIstisnaGunGrupId);
-            }
-            
-            [CacheAspect(typeof(MemoryCacheManager))]
-            public List<NobetUstGrupKisitIstisnaGunGrupDetay> GetDetaylar()
-            {
-                return _nobetUstGrupKisitIstisnaGunGrupDal.GetDetayList();
-            }
+        public NobetUstGrupKisitIstisnaGunGrupDetay GetDetayById(int nobetUstGrupKisitIstisnaGunGrupId)
+        {
+            return _nobetUstGrupKisitIstisnaGunGrupDal.GetDetay(x => x.Id == nobetUstGrupKisitIstisnaGunGrupId);
+        }
 
-    } 
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetUstGrupKisitIstisnaGunGrupDetay> GetDetaylar()
+        {
+            return _nobetUstGrupKisitIstisnaGunGrupDal.GetDetayList();
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<NobetUstGrupKisitIstisnaGunGrupDetay> GetDetaylar(int nobetUstGrupId)
+        {
+            return _nobetUstGrupKisitIstisnaGunGrupDal.GetDetayList(x => x.NobetUstGrupId == nobetUstGrupId);
+        }
+
+    }
 }

@@ -15,6 +15,9 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int Id { get; set; }
         public int NobetUstGrupKisitId { get; set; }
         public int NobetUstGrupGunGrupId { get; set; }
+        public int NobetUstGrupId { get; set; }
+        public string NobetUstGrupAdi { get; set; }
+
         public string Aciklama { get; set; }
         public DateTime BaslangicTarihi { get; set; }
         public DateTime? BitisTarihi { get; set; }
@@ -24,7 +27,5 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public int KisitId { get; set; }
         public string GunGrupAdi { get; set; }
         public string KisitAdi { get; set; }
-
-
     }
 } 

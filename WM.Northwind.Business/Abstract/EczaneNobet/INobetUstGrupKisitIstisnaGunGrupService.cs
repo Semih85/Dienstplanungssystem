@@ -17,7 +17,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void Insert(NobetUstGrupKisitIstisnaGunGrup nobetUstGrupKisitIstisnaGunGrup);
         void Update(NobetUstGrupKisitIstisnaGunGrup nobetUstGrupKisitIstisnaGunGrup);
         void Delete(int nobetUstGrupKisitIstisnaGunGrupId);
-                        NobetUstGrupKisitIstisnaGunGrupDetay GetDetayById(int nobetUstGrupKisitIstisnaGunGrupId);
-                                   List <NobetUstGrupKisitIstisnaGunGrupDetay> GetDetaylar();
+        NobetUstGrupKisitIstisnaGunGrupDetay GetDetayById(int nobetUstGrupKisitIstisnaGunGrupId);
+        List<NobetUstGrupKisitIstisnaGunGrupDetay> GetDetaylar();
+        List<NobetUstGrupKisitIstisnaGunGrupDetay> GetDetaylar(int nobetUstGrupId);
     }
-} 
+}

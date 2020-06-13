@@ -34,7 +34,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupGunGrupAdi = s.NobetUstGrupGunGrup.GunGrup.Adi,
                         NobetUstGrupGunGrupId = s.NobetUstGrupGunGrupId,
                         NobetUstGrupKisitAdi = s.NobetUstGrupKisit.Kisit.Adi,
-                                             
+                        NobetUstGrupAdi = s.NobetUstGrupGunGrup.NobetUstGrup.Adi,
+                        NobetUstGrupId = s.NobetUstGrupGunGrup.NobetUstGrupId
                     }).SingleOrDefault(filter);
             }
         }
@@ -57,7 +58,8 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         NobetUstGrupGunGrupAdi = s.NobetUstGrupGunGrup.GunGrup.Adi,
                         NobetUstGrupGunGrupId = s.NobetUstGrupGunGrupId,
                         NobetUstGrupKisitAdi = s.NobetUstGrupKisit.Kisit.Adi,
-
+                        NobetUstGrupAdi = s.NobetUstGrupGunGrup.NobetUstGrup.Adi,
+                        NobetUstGrupId = s.NobetUstGrupGunGrup.NobetUstGrupId
                     });
 
                 return filter == null
