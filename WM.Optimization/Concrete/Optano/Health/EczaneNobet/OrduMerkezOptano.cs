@@ -137,6 +137,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             var eczaneNobetTarihAralikTumGorevTipleri = data.EczaneNobetTarihAralik.Where(w => w.NobetGunKuralId >= 7).ToList();
 
+            var nobetUstGrupKisitIstisnaGunGruplar = data.NobetUstGrupKisitIstisnaGunGruplar;
+
             var pazarGunAraligi = 120;
             var cumartesiGunAraligi = 70;
 
@@ -555,16 +557,17 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #region cumartesi
                     //06.03.2020 tarihinde kapatıldı
-                    //var pesPeseGorevEnAzCumartesi = (KpPesPeseGorevEnAz)pesPeseGorevEnAzBase.Clone();
+                    var pesPeseGorevEnAzCumartesi = (KpPesPeseGorevEnAz)pesPeseGorevEnAzBase.Clone();
 
-                    //pesPeseGorevEnAzCumartesi.NobetSayisi = eczaneBazliGunKuralIstatistikYatay.NobetSayisiCumartesi;
-                    //pesPeseGorevEnAzCumartesi.EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazliTumGrorevTipler;
-                    //pesPeseGorevEnAzCumartesi.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k37");
-                    //pesPeseGorevEnAzCumartesi.Tarihler = cumartesiGunleri;
-                    //pesPeseGorevEnAzCumartesi.NobetYazilabilecekIlkTarih = yazilabilecekIlkCumartesiTarihi;
-                    //pesPeseGorevEnAzCumartesi.SonNobetTarihi = eczaneBazliGunKuralIstatistikYatay.SonNobetTarihiCumartesi;
+                    pesPeseGorevEnAzCumartesi.NobetSayisi = eczaneBazliGunKuralIstatistikYatay.NobetSayisiCumartesi;
+                    pesPeseGorevEnAzCumartesi.EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazliTumGrorevTipler;
+                    pesPeseGorevEnAzCumartesi.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k37");
+                    pesPeseGorevEnAzCumartesi.Tarihler = cumartesiGunleri;
+                    pesPeseGorevEnAzCumartesi.NobetYazilabilecekIlkTarih = yazilabilecekIlkCumartesiTarihi;
+                    pesPeseGorevEnAzCumartesi.SonNobetTarihi = eczaneBazliGunKuralIstatistikYatay.SonNobetTarihiCumartesi;
+                    pesPeseGorevEnAzCumartesi.GunKuralAdi = "Cumartesi (Gece)";
 
-                    //PesPeseGorevEnAz(pesPeseGorevEnAzCumartesi);
+                    PesPeseGorevEnAz(pesPeseGorevEnAzCumartesi);
 
                     #endregion
 
@@ -1413,7 +1416,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var esGrubaAyniGunNobetYazmaMesafeler = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
                 esGrubaAyniGunNobetYazmaMesafeler.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k59");
                 esGrubaAyniGunNobetYazmaMesafeler.EczaneGruplar = data.MesafeKontrolEczanelerGrupBazli.Where(w => w.NobetGrupGorevTipIdFrom == nobetGrupGorevTip.Id).ToList();
-                esGrubaAyniGunNobetYazmaMesafeler.Tarihler = tarihAraligi;
+                esGrubaAyniGunNobetYazmaMesafeler.Tarihler = tarihAraligi
+                    .Where(w => !(nobetUstGrupKisitIstisnaGunGruplar.Select(s => s.GunGrupId).Contains(w.GunGrupId))).ToList();
                 esGrubaAyniGunNobetYazmaMesafeler.NobetGrupGorevTipAdi = nobetGrupGorevTip.NobetGorevTipAdi;
                 esGrubaAyniGunNobetYazmaMesafeler.EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli
                     .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
@@ -1434,7 +1438,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     Model = model,
                     EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
                     EczaneNobetSonuclar = data.EczaneGrupNobetSonuclar,
-                    Tarihler = data.TarihAraligi,
+                    Tarihler = data.TarihAraligi
+                    .Where(w => !(nobetUstGrupKisitIstisnaGunGruplar.Select(s => s.GunGrupId).Contains(w.GunGrupId))).ToList(),
                     //.Where(w => !(w.GunGrupId == 1)).ToList(),//istisna:
                     //26.03.2020 tarihinde istisnaının kaldırılması talep edildi.
                     //26.04.2020 tarihinde pazarlarda da dikkate alınsın dendi.
@@ -1779,7 +1784,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         Tarihler = cumartesiGunleri,
                         NobetYazilabilecekIlkTarih = yazilabilecekIlkCumartesiTarihi,
                         EczaneNobetGrup = eczaneNobetGrup,
-                        KararDegiskeni = _x
+                        KararDegiskeni = _x,
+                        GunKuralAdi = "Cumartesi (Gündüz)"
                     };
                     PesPeseGorevEnAz(pesPeseGorevEnAzCumartesi);
 
