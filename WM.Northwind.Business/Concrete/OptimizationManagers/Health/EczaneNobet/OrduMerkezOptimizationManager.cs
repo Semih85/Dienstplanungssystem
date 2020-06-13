@@ -40,6 +40,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
         private IDebugEczaneService _debugEczaneService;
         private IEczaneUzaklikMatrisService _eczaneUzaklikMatrisService;
+        private INobetUstGrupKisitIstisnaGunGrupService _nobetUstGrupKisitIstisnaGunGrupService;
 
         public OrduMerkezOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -64,7 +65,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
                     IAyniGunTutulanNobetService ayniGunTutulanNobetService,
                     IDebugEczaneService debugEczaneService,
-                    IEczaneUzaklikMatrisService eczaneUzaklikMatrisService
+                    IEczaneUzaklikMatrisService eczaneUzaklikMatrisService,
+                    INobetUstGrupKisitIstisnaGunGrupService nobetUstGrupKisitIstisnaGunGrupService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -90,6 +92,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _ayniGunTutulanNobetService = ayniGunTutulanNobetService;
             _debugEczaneService = debugEczaneService;
             _eczaneUzaklikMatrisService = eczaneUzaklikMatrisService;
+            _nobetUstGrupKisitIstisnaGunGrupService = nobetUstGrupKisitIstisnaGunGrupService;
         }
         #endregion
 
@@ -448,6 +451,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupId);
             //var grupBazliKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrupId);
 
+            var nobetUstGrupKisitIstisnaGunGruplar = _nobetUstGrupKisitIstisnaGunGrupService.GetDetaylar(nobetUstGrupId);
+
             var dataModel = new OrduMerkezDataModel()
             {
                 Yil = eczaneNobetDataModelParametre.YilBaslangic,
@@ -489,9 +494,10 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
                 NobetGrupGorevTipKisitlar = nobetGrupGorevTipKisitlar,
                 MesafeKontrolEczaneler = mesafeKontrolEczaneler,
-                MesafeKontrolEczanelerGrupBazli = mesafeKontrolEczanelerGrupBazli,                
+                MesafeKontrolEczanelerGrupBazli = mesafeKontrolEczanelerGrupBazli,
                 IkiliEczaneler = ikiliEczaneler,
-                DebugYapilacakEczaneler = debugYapilacakEczaneler
+                DebugYapilacakEczaneler = debugYapilacakEczaneler,
+                NobetUstGrupKisitIstisnaGunGruplar = nobetUstGrupKisitIstisnaGunGruplar
             };
 
             //_eczaneNobetOrtakService.KurallariKontrolEtHaftaIciEnAzEnCok(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);
