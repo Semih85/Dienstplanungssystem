@@ -287,6 +287,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                               //+ $""
                               + $"{p.SonNobetTarihi.ToString(TarihFormatGunAyYilTr)}-{p.NobetYazilabilecekIlkTarih.ToString(TarihFormatGunAyYilTr)}=>"
                               + $"{(int)(p.NobetYazilabilecekIlkTarih - p.SonNobetTarihi).TotalDays} gün"
+                              + $" {p.GunKuralAdi}"
                               + $"";
 
                     var nobetGrupBilgisi = NobetGrupBilgisiDuzenle(p.EczaneNobetGrup);

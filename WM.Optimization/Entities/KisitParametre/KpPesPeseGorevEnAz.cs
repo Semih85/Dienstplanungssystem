@@ -20,6 +20,7 @@ namespace WM.Optimization.Entities.KisitParametre
         public DateTime SonNobetTarihi { get; set; }
         public EczaneNobetGrupDetay EczaneNobetGrup { get; set; }
         public NobetUstGrupKisitDetay NobetUstGrupKisit { get; set; }
+        public string GunKuralAdi { get; internal set; }
 
         public override OptanoKisitParametreModelBase<Model, EczaneNobetTarihAralik> Clone()
         {
