@@ -156,7 +156,8 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                     EczaneIdTo = eczaneIdTo,
 
                     Mesafe = eczanelerArasiMesafe.Mesafe,
-                    NobetUstGrupId = eczanelerArasiMesafe.NobetUstGrupId
+                    NobetUstGrupId = eczanelerArasiMesafe.NobetUstGrupId,
+                    Id = eczanelerArasiMesafe.Id
                 });
             }
 
@@ -227,7 +228,14 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
         public void CokluEkle(List<EczaneUzaklikMatrisDetay> eczaneUzaklikMatrisDetaylar)
         {
-            _eczaneUzaklikMatrisDal.CokluEkle(eczaneUzaklikMatrisDetaylar);
+            try
+            {
+                _eczaneUzaklikMatrisDal.CokluEkle(eczaneUzaklikMatrisDetaylar);
+            }
+            catch (Exception ex)
+            {
+                //TempData["MessageDanger"] = "ERROR: " + ex.InnerException.InnerException.Message.ToString();
+            }            
         }
     }
 }
