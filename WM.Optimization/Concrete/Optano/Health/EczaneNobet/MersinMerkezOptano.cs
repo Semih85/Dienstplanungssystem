@@ -1246,6 +1246,44 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     #endregion
 
                     #endregion
+
+                    #region sonraki dönemdeki istekleri dikkate alarak önceki dönemde nöbet yaz
+
+                    var sonrakiDonemdekiIstekler = data.EczaneNobetIsteklerSonrakiDonem
+                        .Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id)
+                        .ToList();
+
+                    if (sonrakiDonemdekiIstekler.Count > 0)
+                    {
+                        var sonrakiDonemdekiIlkIstekTarihi =  sonrakiDonemdekiIstekler.Max(x => x.Tarih).AddDays(-pespeseNobetSayisi);
+
+                        var sonrakiDonemIsteklerdenKaynakliMazeretler = new List<EczaneNobetMazeretDetay>();
+
+                        foreach (var tarih in tarihler.Where(w => w.Tarih >= sonrakiDonemdekiIlkIstekTarihi).ToList())
+                        {
+                            sonrakiDonemIsteklerdenKaynakliMazeretler.Add(new EczaneNobetMazeretDetay
+                            {
+                                EczaneId = eczaneNobetGrup.EczaneId,
+                                TakvimId = tarih.TakvimId,
+                                Tarih = tarih.Tarih,
+                                MazeretAdi = "sonraki dönem istekler",
+                                EczaneAdi = eczaneNobetGrup.EczaneAdi,
+                                EczaneNobetGrupId = eczaneNobetGrup.Id
+                            });
+                        }
+
+                        var mazereteGorevYazmaKisitSonrakiDonem = new KpMazereteGorevYazma
+                        {
+                            Model = model,
+                            EczaneNobetTarihAralik = data.EczaneNobetTarihAralik.Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id).ToList(),
+                            NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k13"),
+                            EczaneNobetMazeretler = sonrakiDonemIsteklerdenKaynakliMazeretler,
+                            KararDegiskeni = _x
+                        };
+                        MazereteGorevYazma(mazereteGorevYazmaKisitSonrakiDonem);
+                    }
+
+                    #endregion
                 }
                 #endregion
 
@@ -1747,8 +1785,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     .Where(w => altGruplaTakipEdileceklerYenisehir1_2.Select(s => s.NobetGrupId).Contains(w.NobetGrupId)).ToList();
 
                 var y12 = data.AltGruplarlaAyniGunNobetTutmayacakEczanelerYenisehir1_2;
-                    //.Where(w => w.NobetGrupId == 20 || w.NobetGrupId == 21)
-                    //.ToList();
+                //.Where(w => w.NobetGrupId == 20 || w.NobetGrupId == 21)
+                //.ToList();
 
                 foreach (var gunGrup in gunGruplar)
                 {
@@ -1788,8 +1826,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     .Where(w => altGruplaTakipEdileceklerYenisehir3_2.Select(s => s.NobetGrupId).Contains(w.NobetGrupId)).ToList();
 
                 var y32 = data.AltGruplarlaAyniGunNobetTutmayacakEczanelerYenisehir3_2;
-                    //.Where(w => w.NobetGrupId == 21 || w.NobetGrupId == 22)
-                    //.ToList();
+                //.Where(w => w.NobetGrupId == 21 || w.NobetGrupId == 22)
+                //.ToList();
 
                 foreach (var gunGrup in gunGruplar)
                 {

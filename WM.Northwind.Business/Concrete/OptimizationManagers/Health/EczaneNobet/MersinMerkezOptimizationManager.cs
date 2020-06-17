@@ -428,13 +428,16 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             #endregion
 
             #region sonraki aydaki istekler
+
             var sonrakiAy = bitisTarihi.AddDays(1);
+
             var bitisTarihiSonrakiAy = bitisTarihi.AddMonths((int)oncekiAylarAyniGunNobet.SagTarafDegeri + 2);
 
             var eczaneNobetIsteklerSonrakiDonem = _eczaneNobetIstekService.GetDetaylarByNobetGrupIdList(sonrakiAy, bitisTarihiSonrakiAy, nobetGrupIdListe)
                 .Where(w => eczaneNobetGruplar.Select(s => s.EczaneId).Contains(w.EczaneId)).ToList();
 
             var sonrakiDonemAyniGunNobetIstekGirilenler = _eczaneNobetIstekService.SonrakiAylardaAyniGunIstekGirilenEczaneler(eczaneNobetIsteklerSonrakiDonem);
+
             #endregion
 
             var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipler.Select(s => s.Id).ToList());
@@ -471,6 +474,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 AltGruplarlaAyniGunNobetTutmayacakEczanelerToroslar = altGruplarlaAyniGunNobetTutmayacakEczanelerToroslar,
 
                 EczaneNobetIstekler = eczaneNobetIstekler,
+                EczaneNobetIsteklerSonrakiDonem = eczaneNobetIsteklerSonrakiDonem,
+                
                 NobetGrupGunKurallar = _nobetGrupGunKuralService.GetDetaylarAktifList(nobetGrupIdListe),
                 NobetGrupKurallar = nobetGrupKurallar,
                 NobetGrupGorevTipler = nobetGrupGorevTipler,
