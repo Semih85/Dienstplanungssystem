@@ -138,6 +138,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             #region Kısıtlar
 
+            var nobetUstGrupKisitIstisnaGunGruplar = data.NobetUstGrupKisitIstisnaGunGruplar;
+
             foreach (var nobetGrupGorevTip in data.NobetGrupGorevTipler)
             {
                 #region kısıtlar grup bazlı
@@ -1710,7 +1712,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
             foreach (var gunGrup in gunGruplar)
             {
-                kpEsGrubaAyniGunNobetYazma.Tarihler = data.TarihAraligi.Where(w => w.GunGrupId == gunGrup.GunGrupId).Distinct().ToList();
+                var tarihAraligi = data.TarihAraligi.Where(w => w.GunGrupId == gunGrup.GunGrupId).Distinct().ToList();
+
+                kpEsGrubaAyniGunNobetYazma.Tarihler = IstisnaUygulaKuralGunGrup(nobetUstGrupKisitIstisnaGunGruplar, tarihAraligi, 58);
 
                 var kpEsGrubaAyniGunNobetYazmaToroslar = (KpEsGrubaAyniGunNobetYazma)kpEsGrubaAyniGunNobetYazma.Clone();
 
@@ -1748,7 +1752,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 foreach (var gunGrup in gunGruplar)
                 {
-                    kpEsGrubaAyniGunNobetYazma.Tarihler = data.TarihAraligi.Where(w => w.GunGrupId == gunGrup.GunGrupId).Distinct().ToList();
+                    var tarihAraligi = data.TarihAraligi.Where(w => w.GunGrupId == gunGrup.GunGrupId).Distinct().ToList();
+
+                    kpEsGrubaAyniGunNobetYazma.Tarihler = IstisnaUygulaKuralGunGrup(nobetUstGrupKisitIstisnaGunGruplar, tarihAraligi, 29);
 
                     var kpEsGrubaAyniGunNobetYazmaYeniSehir = (KpEsGrubaAyniGunNobetYazma)kpEsGrubaAyniGunNobetYazma.Clone();
 
@@ -1787,7 +1793,9 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 foreach (var gunGrup in gunGruplar)
                 {
-                    kpEsGrubaAyniGunNobetYazma.Tarihler = data.TarihAraligi.Where(w => w.GunGrupId == gunGrup.GunGrupId).Distinct().ToList();
+                    var tarihAraligi = data.TarihAraligi.Where(w => w.GunGrupId == gunGrup.GunGrupId).Distinct().ToList();
+
+                    kpEsGrubaAyniGunNobetYazma.Tarihler = IstisnaUygulaKuralGunGrup(nobetUstGrupKisitIstisnaGunGruplar, tarihAraligi, 29);
 
                     var kpEsGrubaAyniGunNobetYazmaYeniSehir = (KpEsGrubaAyniGunNobetYazma)kpEsGrubaAyniGunNobetYazma.Clone();
 
