@@ -5284,6 +5284,35 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return degrees * Math.PI / 180;
         }
 
+        public List<Eczane> EczaneDetayiEczaneListesineDonustur(List<EczaneDetay> eczaneDetaylar)
+        {
+            var eczaneler = new List<Eczane>();
+
+            foreach (var eczane in eczaneDetaylar)
+            {
+                var adres = eczane.Adres;
+                var enlem = eczane.Enlem;
+                var boylam = eczane.Boylam;
+                var telefonNo = eczane.TelefonNo;
+                var adresTarifi = eczane.AdresTarifi;
+                var adresTarifiKisa = eczane.AdresTarifiKisa;
+
+                eczaneler.Add(new Eczane
+                {
+                    Id = eczane.Id,
+                    Adi = eczane.EczaneAdi,
+                    Adres = adres,
+                    Enlem = enlem,
+                    Boylam = boylam,
+                    TelefonNo = telefonNo,
+                    AdresTarifi = adresTarifi,
+                    AdresTarifiKisa = adresTarifiKisa
+                });
+            }
+
+            return eczaneler;
+        }
+
         #region kısıt kontrol
 
         public void KurallariKontrolEtHaftaIciEnAzEnCok(int nobetUstGrupId, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetSonuclarYatay)

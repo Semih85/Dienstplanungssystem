@@ -155,5 +155,8 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         List<EczaneUzaklikMatrisDetay> SetUzakliklarKusUcusu(List<Eczane> eczaneler);
 
         EczaneUzaklikMatrisDetay EczanelerArasiMesafeHesaplaKusUcusu(Eczane eczaneFrom, Eczane eczaneTo);
+
+        List<Eczane> EczaneDetayiEczaneListesineDonustur(List<EczaneDetay> eczaneDetaylar);
+
     }
 }
