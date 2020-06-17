@@ -3116,7 +3116,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         public List<TakvimNobetGrup> IstisnaUygulaKuralGunGrup(List<NobetUstGrupKisitIstisnaGunGrupDetay> nobetUstGrupKisitIstisnaGunGruplar, List<TakvimNobetGrup> takvimNobetGruplar, int kisitId)
         {
             var kuralIstisnaGunGruplar = nobetUstGrupKisitIstisnaGunGruplar
-                .Where(w => w.KisitId == KisitId)
+                .Where(w => w.KisitId == kisitId)
                 .ToList();
 
             var takvim = takvimNobetGruplar
