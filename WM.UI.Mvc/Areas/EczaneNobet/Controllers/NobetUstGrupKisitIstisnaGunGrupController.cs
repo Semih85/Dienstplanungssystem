@@ -39,10 +39,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
 
-            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar().Where(w => w.NobetUstGrupId == nobetUstGrup.Id).Select(s=>s.Id).ToList();
-            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar().Where(w => w.NobetUstGrupId == nobetUstGrup.Id).Select(s=>s.Id).ToList();
-            var model = _nobetUstGrupKisitIstisnaGunGrupService.GetDetaylar().Where(w=> nobetUstGrupKisitlar.Contains(w.NobetUstGrupKisitId)
-                && nobetUstGrupGunGruplar.Contains(w.NobetUstGrupGunGrupId));
+            var model = _nobetUstGrupKisitIstisnaGunGrupService.GetDetaylar(nobetUstGrup.Id);
+
             //var menuAltRoles = db.MenuAltRoles.Include(m => m.MenuAlt).Include(m => m.Role);
             return View(model);
         }
@@ -70,19 +68,22 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult Create()
         {
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
-            var nobetUstGrupKisitIdler = _nobetUstGrupKisitService.GetDetaylar().Where(w => w.NobetUstGrupId == nobetUstGrup.Id).Select(s => s.Id).ToList();
-            var nobetUstGrupGunGrupIdler = _nobetUstGrupGunGrupService.GetDetaylar().Where(w => w.NobetUstGrupId == nobetUstGrup.Id).Select(s => s.Id).ToList();
 
-            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar()
-                .Where(w => nobetUstGrupKisitIdler.Contains(w.Id))
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.KisitAdi}" })
+            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetUstGrupKisitDrop = nobetUstGrupKisitlar
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.KisitTanimKisa}" })
                 .OrderBy(w => w.Value)
                 .ToList();
-            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar()
-                .Where(w => nobetUstGrupGunGrupIdler.Contains(w.Id))
+
+            var nobetUstGrupGunGrupDrop = nobetUstGrupGunGruplar
                 .Select(s => new MyDrop { Id = s.Id, Value = $"{s.GunGrupAdi}" });
-            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitlar, "Id", "Value");
-            ViewBag.NobetUstGrupGunGrupId = new SelectList(nobetUstGrupGunGruplar, "Id", "Value");
+
+            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitDrop, "Id", "Value");
+            ViewBag.NobetUstGrupGunGrupId = new SelectList(nobetUstGrupGunGrupDrop, "Id", "Value");
+
             return View();
         }
 
@@ -101,19 +102,22 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             }
 
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
-            var nobetUstGrupKisitIdler = _nobetUstGrupKisitService.GetDetaylar().Where(w => w.NobetUstGrupId == nobetUstGrup.Id).Select(s => s.Id).ToList();
-            var nobetUstGrupGunGrupIdler = _nobetUstGrupGunGrupService.GetDetaylar().Where(w => w.NobetUstGrupId == nobetUstGrup.Id).Select(s => s.Id).ToList();
 
-            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar()
-                .Where(w => nobetUstGrupKisitIdler.Contains(w.Id))
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.KisitAdi}" })
+            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetUstGrupKisitDrop = nobetUstGrupKisitlar
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.KisitTanimKisa}" })
                 .OrderBy(w => w.Value)
                 .ToList();
-            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar()
-                .Where(w => nobetUstGrupGunGrupIdler.Contains(w.Id))
+
+            var nobetUstGrupGunGrupDrop = nobetUstGrupGunGruplar
                 .Select(s => new MyDrop { Id = s.Id, Value = $"{s.GunGrupAdi}" });
-            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitlar, "Id", "Value");
-            ViewBag.NobetUstGrupGunGrupId = new SelectList(nobetUstGrupGunGruplar, "Id", "Value");
+
+            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitDrop, "Id", "Value");
+            ViewBag.NobetUstGrupGunGrupId = new SelectList(nobetUstGrupGunGrupDrop, "Id", "Value");
+
             return View(nobetUstGrupKisitIstisnaGunGrup);
         }
 
@@ -131,19 +135,22 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return HttpNotFound();
             }
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
-            var nobetUstGrupKisitIdler = _nobetUstGrupKisitService.GetDetaylar().Where(w => w.NobetUstGrupId == nobetUstGrup.Id).Select(s => s.Id).ToList();
-            var nobetUstGrupGunGrupIdler = _nobetUstGrupGunGrupService.GetDetaylar().Where(w => w.NobetUstGrupId == nobetUstGrup.Id).Select(s => s.Id).ToList();
 
-            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar()
-                .Where(w => nobetUstGrupKisitIdler.Contains(w.Id))
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.KisitAdi}" })
+            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetUstGrupKisitDrop = nobetUstGrupKisitlar
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.KisitTanimKisa}" })
                 .OrderBy(w => w.Value)
                 .ToList();
-            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar()
-                .Where(w => nobetUstGrupGunGrupIdler.Contains(w.Id))
+
+            var nobetUstGrupGunGrupDrop = nobetUstGrupGunGruplar
                 .Select(s => new MyDrop { Id = s.Id, Value = $"{s.GunGrupAdi}" });
-            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitlar, "Id", "Value");
-            ViewBag.NobetUstGrupGunGrupId = new SelectList(nobetUstGrupGunGruplar, "Id", "Value");
+
+            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitDrop, "Id", "Value");
+            ViewBag.NobetUstGrupGunGrupId = new SelectList(nobetUstGrupGunGrupDrop, "Id", "Value");
+
             return View(nobetUstGrupKisitIstisnaGunGrup);
         }
 
@@ -161,20 +168,22 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 return RedirectToAction("Index");
             }
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
-            var nobetUstGrupKisitIdler = _nobetUstGrupKisitService.GetDetaylar().Where(w => w.NobetUstGrupId == nobetUstGrup.Id).Select(s => s.Id).ToList();
-            var nobetUstGrupGunGrupIdler = _nobetUstGrupGunGrupService.GetDetaylar().Where(w => w.NobetUstGrupId == nobetUstGrup.Id).Select(s => s.Id).ToList();
 
-            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar()
-                .Where(w => nobetUstGrupKisitIdler.Contains(w.Id))
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.KisitAdi}" })
+            var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar(nobetUstGrup.Id);
+
+            var nobetUstGrupKisitDrop = nobetUstGrupKisitlar
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.KisitTanimKisa}" })
                 .OrderBy(w => w.Value)
                 .ToList();
-            var nobetUstGrupGunGruplar = _nobetUstGrupGunGrupService.GetDetaylar()
-                .Where(w => nobetUstGrupGunGrupIdler.Contains(w.Id))
-                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.NobetUstGrupAdi}-{s.GunGrupAdi}" }); 
-           
-            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitlar, "Id", "Value");
-            ViewBag.NobetUstGrupGunGrupId = new SelectList(nobetUstGrupGunGruplar, "Id", "Value");
+
+            var nobetUstGrupGunGrupDrop = nobetUstGrupGunGruplar
+                .Select(s => new MyDrop { Id = s.Id, Value = $"{s.GunGrupAdi}" });
+
+            ViewBag.NobetUstGrupKisitId = new SelectList(nobetUstGrupKisitDrop, "Id", "Value");
+            ViewBag.NobetUstGrupGunGrupId = new SelectList(nobetUstGrupGunGrupDrop, "Id", "Value");
+
             return View(nobetUstGrupKisitIstisnaGunGrup);
         }
 
@@ -202,7 +211,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             var nobetUstGrupKisitIstisnaGunGrup = _nobetUstGrupKisitIstisnaGunGrupService.GetById(id);
+
             _nobetUstGrupKisitIstisnaGunGrupService.Delete(id);
+
             return RedirectToAction("Index");
         }       
     }
