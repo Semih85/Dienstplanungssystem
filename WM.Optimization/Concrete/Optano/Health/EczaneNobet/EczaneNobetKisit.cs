@@ -3112,6 +3112,18 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
         {
             return tarihler.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTipId).OrderBy(o => o.Tarih).ToList();
         }
+
+        public List<TakvimNobetGrup> IstisnaUygulaKuralGunGrup(List<NobetUstGrupKisitIstisnaGunGrupDetay> nobetUstGrupKisitIstisnaGunGruplar, List<TakvimNobetGrup> takvimNobetGruplar, int kisitId)
+        {
+            var kuralIstisnaGunGruplar = nobetUstGrupKisitIstisnaGunGruplar
+                .Where(w => w.KisitId == KisitId)
+                .ToList();
+
+            var takvim = takvimNobetGruplar
+                .Where(w => !(kuralIstisnaGunGruplar.Select(s => s.GunGrupId).Contains(w.GunGrupId))).ToList();
+
+            return takvim;
+        }
         #endregion        
     }
 }
