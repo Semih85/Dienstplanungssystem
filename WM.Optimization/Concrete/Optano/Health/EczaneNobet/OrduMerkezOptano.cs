@@ -1416,8 +1416,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var esGrubaAyniGunNobetYazmaMesafeler = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazma.Clone();
                 esGrubaAyniGunNobetYazmaMesafeler.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k59");
                 esGrubaAyniGunNobetYazmaMesafeler.EczaneGruplar = data.MesafeKontrolEczanelerGrupBazli.Where(w => w.NobetGrupGorevTipIdFrom == nobetGrupGorevTip.Id).ToList();
-                esGrubaAyniGunNobetYazmaMesafeler.Tarihler = tarihAraligi
-                    .Where(w => !(nobetUstGrupKisitIstisnaGunGruplar.Select(s => s.GunGrupId).Contains(w.GunGrupId))).ToList();
+                esGrubaAyniGunNobetYazmaMesafeler.Tarihler = IstisnaUygulaKuralGunGrup(nobetUstGrupKisitIstisnaGunGruplar, tarihAraligi, 59);
                 esGrubaAyniGunNobetYazmaMesafeler.NobetGrupGorevTipAdi = nobetGrupGorevTip.NobetGorevTipAdi;
                 esGrubaAyniGunNobetYazmaMesafeler.EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli
                     .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id
@@ -1438,8 +1437,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     Model = model,
                     EczaneNobetTarihAralik = data.EczaneNobetTarihAralik,
                     EczaneNobetSonuclar = data.EczaneGrupNobetSonuclar,
-                    Tarihler = data.TarihAraligi
-                    .Where(w => !(nobetUstGrupKisitIstisnaGunGruplar.Select(s => s.GunGrupId).Contains(w.GunGrupId))).ToList(),
+                    Tarihler = IstisnaUygulaKuralGunGrup(nobetUstGrupKisitIstisnaGunGruplar, tarihAraligi, 59),
                     //.Where(w => !(w.GunGrupId == 1)).ToList(),//istisna:
                     //26.03.2020 tarihinde istisnaının kaldırılması talep edildi.
                     //26.04.2020 tarihinde pazarlarda da dikkate alınsın dendi.
@@ -2235,13 +2233,13 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                 var esGrubaAyniGunNobetYazmaMesafeler = (KpEsGrubaAyniGunNobetYazma)esGrubaAyniGunNobetYazmaEczaneGruplar.Clone();
                 esGrubaAyniGunNobetYazmaMesafeler.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k59");
                 esGrubaAyniGunNobetYazmaMesafeler.EczaneGruplar = data.MesafeKontrolEczanelerGrupBazli.Where(w => w.NobetGrupGorevTipIdFrom == nobetGrupGorevTip2.Id).ToList();
-                esGrubaAyniGunNobetYazmaMesafeler.Tarihler = cumartesiGunleri;
+                esGrubaAyniGunNobetYazmaMesafeler.Tarihler = IstisnaUygulaKuralGunGrup(nobetUstGrupKisitIstisnaGunGruplar, cumartesiGunleri, 59);
                 esGrubaAyniGunNobetYazmaMesafeler.NobetGrupGorevTipAdi = nobetGrupGorevTip2.NobetGorevTipAdi;
                 esGrubaAyniGunNobetYazmaMesafeler.NobetGrupGorevTipAdi = nobetGrupGorevTip2.NobetGorevTipAdi;
                 esGrubaAyniGunNobetYazmaMesafeler.EczaneNobetTarihAralik = eczaneNobetTarihAralikGrupBazli
                     .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip2.Id
-                                             && !(w.GunGrupId == 1)//istisna:
-                                                                   //26.03.2020 tarihinde istisnaının kaldırılması talep edildi.
+                                             //&& !(w.GunGrupId == 1)//istisna:
+                                             //                      //26.03.2020 tarihinde istisnaının kaldırılması talep edildi.
                                              ).ToList();
                 esGrubaAyniGunNobetYazmaMesafeler.EczaneNobetSonuclar = eczaneNobetSonuclarGorevTipBazli;
 
