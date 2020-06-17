@@ -27,6 +27,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private IEczaneNobetGrupAltGrupService _eczaneNobetGrupAltGrup;
         private INobetUstGrupService _nobetUstGrupService;
         private INobetUstGrupSessionService _nobetUstGrupSessionService;
+        private IEczaneUzaklikMatrisService _eczaneUzaklikMatrisService;
+        private IEczaneNobetOrtakService _eczaneNobetOrtakService;
 
         public EczaneController(IEczaneService eczaneService,
                                 IUserService userService,
@@ -35,7 +37,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                 IEczaneNobetGrupService eczaneNobetGrupService,
                                 INobetUstGrupService nobetUstGrupService,
                                 INobetUstGrupSessionService nobetUstGrupSessionService,
-                                IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrup)
+                                IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrup,
+                                IEczaneUzaklikMatrisService eczaneUzaklikMatrisService,
+                                IEczaneNobetOrtakService eczaneNobetOrtakService)
         {
             _eczaneService = eczaneService;
             _userService = userService;
@@ -45,9 +49,11 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _nobetUstGrupSessionService = nobetUstGrupSessionService;
             _userEczaneService = userEczaneService;
             _eczaneNobetGrupAltGrup = eczaneNobetGrupAltGrup;
+            _eczaneUzaklikMatrisService = eczaneUzaklikMatrisService;
+            _eczaneNobetOrtakService = eczaneNobetOrtakService;
         }
 
-        // GET: EczaneNobet/Eczane 
+        // GET: EczaneNobet/Eczane
         [Authorize(Roles = "Admin,Oda,Üst Grup,Eczane")]
         public ActionResult Index()
         {
@@ -167,6 +173,8 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
+                var eczaneMevcut = _eczaneService.GetById(eczane.Id);
+
                 if (eczane.KapanisTarihi != null)
                 {
                     var gruplardakiEczaneler = _eczaneNobetGrupService.GetGruptaAktifOlanEczanelerByEczaneId(eczane.Id);
@@ -178,6 +186,30 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 }
 
                 _eczaneService.Update(eczane);
+
+                if (eczaneMevcut.Enlem != eczane.Enlem
+                 || eczaneMevcut.Boylam != eczane.Boylam)
+                {
+                    var eczanelerArasiUzakliklar = _eczaneUzaklikMatrisService.GetDetaylarByEczaneId(eczane.Id);
+
+                    foreach (var eczanelerArasiUzaklik in eczanelerArasiUzakliklar)
+                    {
+                        var eczaneFrom = _eczaneService.GetById(eczanelerArasiUzaklik.EczaneIdFrom);
+                        var eczaneTo = _eczaneService.GetById(eczanelerArasiUzaklik.EczaneIdTo);
+
+                        var mesafe = _eczaneNobetOrtakService.EczanelerArasiMesafeHesaplaKusUcusu(eczaneFrom, eczaneTo);
+
+                        var eczaneUzaklikMatris = new EczaneUzaklikMatris()
+                        {
+                            Id = eczanelerArasiUzaklik.Id,
+                            EczaneIdFrom = eczaneFrom.Id,
+                            EczaneIdTo = eczaneTo.Id,
+                            Mesafe = mesafe.Mesafe
+                        };
+
+                        _eczaneUzaklikMatrisService.Update(eczaneUzaklikMatris);
+                    }
+                }
 
                 return RedirectToAction("Index");
             }
