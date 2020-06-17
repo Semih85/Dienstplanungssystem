@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<WM.Northwind.Entities.ComplexTypes.EczaneNobet.NobetUstGrupKisitIstisnaGunGrupDetay>
 
 @{
-    ViewBag.Title = "Nöbet Üst Grup Kısıt İstisna Gün Grup | Nöbet Sistemi";
+    ViewBag.Title = "Kural-Gün Grup İstisnalar | Nöbet Sistemi";
 }
 
 <div class="row justify-content-between mb-2">
     <div class="col-md-6 mb-2">
         <div class="form-inline">
-            <h4 class="mr-5">Nöbet Üst Grup Kısıt İstisna Gün Gruplar</h4>
+            <h4 class="mr-5">Kural-Gün Grup İstisnalar</h4>
             <div class="form-group">
                 <a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
             </div>
@@ -47,19 +47,19 @@
         <thead class="thead-light">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.NobetUstGrupGunGrupAdi)
+                    @Html.DisplayName("Gün Grubu")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.NobetUstGrupKisitAdi)
+                    @Html.DisplayName("Kural Adı")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.BaslangicTarihi)
+                    @Html.DisplayName("Baslangıç Tarihi")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.BitisTarihi)
+                    @Html.DisplayName("Bitiş Tarihi")
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Aciklama)
+                    @Html.DisplayName("Açıklama")
                 </th>
                 <th></th>
             </tr>
