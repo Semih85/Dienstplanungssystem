@@ -151,5 +151,9 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void KurallariKontrolEtHaftaIciEnAzEnCok(int nobetUstGrupId, List<EczaneNobetGrupGunKuralIstatistikYatay> eczaneNobetSonuclarYatay);
         void KurallariKontrolEtMazeretIstek(int nobetUstGrupId, List<EczaneNobetMazeretDetay> eczaneNobetMazeretler, List<EczaneNobetIstekDetay> eczaneNobetIstekler);
         void KurallariKontrolEtIstek(int nobetUstGrupId, List<EczaneNobetIstekDetay> eczaneNobetIstekler, List<NobetGrupKuralDetay> nobetGrupKuralDetaylar);
+
+        List<EczaneUzaklikMatrisDetay> SetUzakliklarKusUcusu(List<Eczane> eczaneler);
+
+        EczaneUzaklikMatrisDetay EczanelerArasiMesafeHesaplaKusUcusu(Eczane eczaneFrom, Eczane eczaneTo);
     }
 }

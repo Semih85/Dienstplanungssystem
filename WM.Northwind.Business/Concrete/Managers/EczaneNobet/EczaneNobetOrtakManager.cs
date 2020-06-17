@@ -5,6 +5,7 @@ using WM.Core.Aspects.PostSharp.CacheAspects;
 using WM.Core.CrossCuttingConcerns.Caching.Microsoft;
 using WM.Northwind.Business.Abstract.EczaneNobet;
 using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
+using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Enums;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
@@ -5200,6 +5201,87 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
 
             return ikiliEczanelerMesafe;
+        }
+
+        public List<EczaneUzaklikMatrisDetay> SetUzakliklarKusUcusu(List<Eczane> eczaneler)
+        {
+            var siraliEcaneler = eczaneler.OrderBy(s => s.Id).ToList();
+
+            var eczaneUzaklikMatrisList = new List<EczaneUzaklikMatrisDetay>();
+
+            foreach (var itemFrom in siraliEcaneler)
+            {
+                var kotrol = true;
+
+                if (kotrol)
+                {
+                    if (itemFrom.Adi == "NEFES")
+                    {
+                    }
+                }
+
+                if (itemFrom.Enlem <= 1 || itemFrom.Boylam <= 1)
+                    continue;
+
+                var siraliEcaneler2 = siraliEcaneler.Where(s => s.Id > itemFrom.Id).ToList();
+
+                foreach (var itemTo in siraliEcaneler2)
+                {
+                    var eczanelerArasiMesafe = EczanelerArasiMesafeHesaplaKusUcusu(itemFrom, itemTo);
+
+                    eczaneUzaklikMatrisList.Add(eczanelerArasiMesafe);
+
+                    //var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+                    //var nobetUstGrupId = ustGrupSession.Id;
+                }
+            }
+            return eczaneUzaklikMatrisList;
+        }
+
+        public EczaneUzaklikMatrisDetay EczanelerArasiMesafeHesaplaKusUcusu(Eczane eczaneFrom, Eczane eczaneTo)
+        {
+            double dunyaYaricapiMetre = 6371000;
+
+            var eczanelerArasiMesafe = new EczaneUzaklikMatrisDetay
+            {
+                EczaneIdFrom = eczaneFrom.Id,
+                EczaneIdTo = eczaneTo.Id
+            };
+
+            if (!(eczaneTo.Enlem <= 1 || eczaneTo.Boylam <= 1))
+            {
+                var enlem1 = eczaneFrom.Enlem;
+                var boylam1 = eczaneFrom.Boylam;
+
+                var enlem2 = eczaneTo.Enlem;
+                var boylam2 = eczaneTo.Boylam;
+
+                var dLat = DegreesToRadians(enlem2 - enlem1);
+                var dLon = DegreesToRadians(boylam2 - boylam1);
+
+                enlem1 = DegreesToRadians(enlem1);
+                enlem2 = DegreesToRadians(enlem2);
+
+                double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                    Math.Sin(dLon / 2) * Math.Sin(dLon / 2) * Math.Cos(enlem1) * Math.Cos(enlem2);
+
+                double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+                var mesafe = dunyaYaricapiMetre * c;
+
+                eczanelerArasiMesafe.Mesafe = Convert.ToInt32(mesafe);
+            }
+            else
+            {
+                eczanelerArasiMesafe.Mesafe = 0;
+            }
+
+            return eczanelerArasiMesafe;
+        }
+
+        double DegreesToRadians(double degrees)
+        {
+            return degrees * Math.PI / 180;
         }
 
         #region kısıt kontrol
