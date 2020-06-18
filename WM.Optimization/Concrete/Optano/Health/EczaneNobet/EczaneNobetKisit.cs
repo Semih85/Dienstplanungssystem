@@ -562,12 +562,16 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                             {
                             }
 
-                            var kontrolEdilecekGruptakiEczaneler = new string[] { 
-                                //"DİLEK",
-                                //"ESER"
+                            var kontrolEdilecekGruptakiEczaneler = new string[] {
+                                //"GÜNEŞ",
+                                //"GÜNEY"
                             };
 
                             if (eczaneGruplar.Where(w => kontrolEdilecekGruptakiEczaneler.Contains(w.EczaneAdi)).Count() > 0)
+                            {
+                            }
+
+                            if (eczaneGrupTanim.EczaneGrupTanimAdi == "GÜNEŞ - GÜNEY")
                             {
                             }
                         }
@@ -580,8 +584,8 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                         var eczaneSayisi = kararIndexMaster.Select(s => new { s.EczaneId, s.EczaneAdi }).Distinct();
 
-                        if (eczaneSayisi.Count() == 1)                        
-                            continue;
+                        //if (eczaneSayisi.Count() == 1)                        
+                        //    continue;
 
                         var gruptakiEczanelerinNobetTarihleri = new List<EczaneNobetSonucListe2>();
 
@@ -2580,6 +2584,11 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             var celiskiler = "<div class='table-responsive mt-2 mb-3'>";
 
             celiskiler += "<table class='table table-hover table-bordered table-striped table-sm'>";
+
+            if (solution.ConflictingSet == null)
+            {
+                return "çözüm bulunamadı (ConflictingSet=null)";
+            }
 
             if (solution.ConflictingSet.ConstraintsLB.Count() > 1000)
             {

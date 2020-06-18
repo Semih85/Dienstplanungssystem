@@ -212,10 +212,10 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                       ).ToList();
 
             //sonuçlarda ilişkili eczaneler
-            var eczaneGruplar = _eczaneGrupService.GetDetaylarAktifGruplar(nobetUstGrupId)
-                .Where(x => (eczaneGrupEdges.Select(s => s.From).Distinct().Contains(x.EczaneId) || eczaneGrupEdges.Select(s => s.To).Distinct().Contains(x.EczaneId))
-                          || nobetGrupIdListe.Contains(x.NobetGrupId)
-                      ).ToList();
+            var eczaneGruplar = _eczaneGrupService.GetDetaylarAktifGruplar(nobetUstGrupId);
+                //.Where(x => (eczaneGrupEdges.Select(s => s.From).Distinct().Contains(x.EczaneId) || eczaneGrupEdges.Select(s => s.To).Distinct().Contains(x.EczaneId))
+                //          //|| nobetGrupIdListe.Contains(x.NobetGrupId)
+                //      ).ToList();
 
             //fazladan gelen tanımlar var iyileştirmekte fayda var
             var eczaneGrupTanimlar = _eczaneGrupTanimService.GetDetaylarAktifTanimList(eczaneGruplar.Select(x => x.EczaneGrupTanimId).ToList());
