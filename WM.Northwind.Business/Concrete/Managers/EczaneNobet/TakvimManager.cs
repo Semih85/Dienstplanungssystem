@@ -523,7 +523,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                                               .ToList();
 
             //var vv = takvimNobetGrupGorevTipler
-            //    .Where(w => w.Tarih == new DateTime(2019, 4, 23)).SingleOrDefault();
+            //    .Where(w => w.Tarih == new DateTime(2020, 4, 26)).SingleOrDefault();
 
             //var birdenAzOlanTalepOlanGunler = takvimNobetGrupGorevTipler
             //    .Where(w => w.TalepEdilenNobetciSayisi < 1).ToList();
@@ -2003,10 +2003,16 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
             var kontrol = false;
 
-            var kontrolEdilecekEczane = new string[] {
-                "BULVAR",
-                "KUMBUL", "IŞIN", "LOTUS"
-            };
+            var nobetUstGrupId = eczaneNobetGruplarTumu.Select(s => s.NobetUstGrupId).FirstOrDefault();
+
+            var debugEczaneler = _debugEczaneService.GetDetaylarAktifOlanlar(nobetUstGrupId);
+
+            var kontrolEdilecekEczane = debugEczaneler.Select(s => s.EczaneAdi).ToArray();
+
+            //    new string[] {
+            //    "BULVAR",
+            //    "KUMBUL", "IŞIN", "LOTUS"
+            //};
 
             if (kontrol)
             {
@@ -2214,6 +2220,12 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 
                 for (int i = 0; i < alinacakEczaneSayisiSon; i++)
                 {
+                    var takvim = nobetYazilacakTarihAraligi[k];
+
+                    if (takvim.Tarih == new DateTime(2020, 4, 26) && kontrol)
+                    {
+                    }
+
                     araCozum.Add(new EczaneNobetCozum
                     {
                         EczaneNobetGrupId = siraliAnahtarListeSon[i].EczaneNobetGrupId,
