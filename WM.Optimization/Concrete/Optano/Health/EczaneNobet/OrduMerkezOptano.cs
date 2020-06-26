@@ -272,6 +272,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var talepEdilenNobetciSayisi = tarihler.Sum(s => s.TalepEdilenNobetciSayisi);
                 var talepEdilenNobetciSayisiHaftaIci = haftaIciGunleri.Sum(s => s.TalepEdilenNobetciSayisi);
+                var talepEdilenNobetciSayisiHaftaSonu = cumartesiVePazarGunleri.Sum(s => s.TalepEdilenNobetciSayisi);
                 var talepEdilenNobetciSayisiCuma = cumaGunleri.Sum(s => s.TalepEdilenNobetciSayisi);
                 var talepEdilenNobetciSayisiCumartesi = cumartesiGunleri.Sum(s => s.TalepEdilenNobetciSayisi);
                 var talepEdilenNobetciSayisiCumartesiTumu = cumartesiTumGorevTipleri.Sum(s => s.TalepEdilenNobetciSayisi);
@@ -279,6 +280,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var ortalamaNobetSayisi = OrtalamaNobetSayisi(talepEdilenNobetciSayisi, gruptakiEczaneSayisi);
                 var ortamalaNobetSayisiHaftaIci = OrtalamaNobetSayisi(talepEdilenNobetciSayisiHaftaIci, gruptakiEczaneSayisiIstisnalarHaric);
+                var ortamalaNobetSayisiHaftaSonu = OrtalamaNobetSayisi(talepEdilenNobetciSayisiHaftaSonu, gruptakiEczaneSayisi);
                 var ortalamaNobetSayisiTumGorevTipleri = OrtalamaNobetSayisi(data.TarihAraligi.Sum(s => s.TalepEdilenNobetciSayisi), gruptakiEczaneSayisi);
                 var ortalamaNobetSayisiCumartesiTumGorevTipleri = OrtalamaNobetSayisi(cumartesiTalepEdilenNobetciSayisiTumGorevTipler, gruptakiEczaneSayisi);
                 var ortalamaNobetSayisiBayram = OrtalamaNobetSayisi(bayramlar.Sum(s => s.TalepEdilenNobetciSayisi), gruptakiEczaneSayisiIstisnalarHaric);
@@ -657,6 +659,14 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                     tarihAraligiOrtalamaEnFazlaHaftaIici.GunKuralAdi = "Gece Nöbetleri (Hafta İçi)";
 
                     TarihAraligiOrtalamaEnFazla(tarihAraligiOrtalamaEnFazlaHaftaIici);
+
+                    var ortalamaEnFazlaHaftaSonu = (KpTarihAraligiOrtalamaEnFazla)kpTarihAraligiOrtalamaEnFazla.Clone();
+                    ortalamaEnFazlaHaftaSonu.Tarihler = cumartesiVePazarGunleri;
+                    ortalamaEnFazlaHaftaSonu.GunSayisi = cumartesiSayisi + pazarSayisi;
+                    ortalamaEnFazlaHaftaSonu.OrtalamaNobetSayisi = ortamalaNobetSayisiHaftaSonu;
+                    ortalamaEnFazlaHaftaSonu.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k73");
+
+                    TarihAraligiOrtalamaEnFazla(ortalamaEnFazlaHaftaSonu);
 
                     var tarihAraligiOrtalamaEnFazlaBayram = (KpTarihAraligiOrtalamaEnFazla)kpTarihAraligiOrtalamaEnFazla.Clone();
 
@@ -1990,7 +2000,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
                         KararDegiskeni = _x,
                         EczaneNobetGrup = eczaneNobetGrup,
                         EczaneNobetTarihAralik = eczaneNobetTarihAralikEczaneBazli,
-                        Tarihler = tarihler,
+                        Tarihler = cumartesiGunleri,
                         NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k21"),
                         ToplamNobetSayisi = eczaneNobetIstatistik.NobetSayisiCumartesi,
                         GunKuralAdi = $"C.tesi-Gündüz",
