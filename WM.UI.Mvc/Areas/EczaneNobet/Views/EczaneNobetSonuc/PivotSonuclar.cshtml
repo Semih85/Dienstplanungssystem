@@ -2068,7 +2068,9 @@
                 var pivotCols = ["Gün Grup"];
                 var pivotRendererName = "Sıcaklık Haritası";
 
-                if (nobetUstGrupId == 4) {
+                if (nobetUstGrupId == 4
+                    || nobetUstGrupId == 13//ordu
+                ) {
                     pivotRows = ["Katılış Tarihi", "Eczane"];
                     pivotCols = ["Görev Tipi", "Gün Grup"];
                 }
