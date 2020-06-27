@@ -24,7 +24,9 @@ namespace WM.Northwind.Business.Abstract.EczaneNobet
         void Update(Eczane eczane);
         void Delete(int eczaneId);
 
+        Eczane GetEczane(string eczaneAdi, DateTime acilisTarihi, int nobetUstGrupId);
         EczaneDetay GetDetayById(int eczaneId);
+        EczaneDetay GetDetay(string eczaneAdi, DateTime acilisTarihi, int nobetUstGrupId);
         List<EczaneDetay> GetDetaylar();
         List<EczaneDetay> GetDetaylar(int nobetUstGrupId);
         List<EczaneDetay> GetDetaylar(List<int> nobetUstGrupIdList);
