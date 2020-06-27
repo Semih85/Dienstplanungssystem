@@ -5207,34 +5207,49 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             var siraliEcaneler = eczaneler.OrderBy(s => s.Id).ToList();
 
-            var eczaneUzaklikMatrisList = new List<EczaneUzaklikMatrisDetay>();
+            var eczaneUzaklikMatrisTümü = new List<EczaneUzaklikMatrisDetay>();
 
-            foreach (var itemFrom in siraliEcaneler)
+            foreach (var eczaneFrom in siraliEcaneler)
             {
-                var kotrol = true;
+                #region kontrol
+
+                var kotrol = false;
 
                 if (kotrol)
                 {
-                    if (itemFrom.Adi == "NEFES")
+                    if (eczaneFrom.Adi == "NEFES")
                     {
                     }
                 }
 
-                if (itemFrom.Enlem <= 1 || itemFrom.Boylam <= 1)
-                    continue;
+                #endregion
 
-                var siraliEcaneler2 = siraliEcaneler.Where(s => s.Id > itemFrom.Id).ToList();
+                var siraliEcaneler2 = siraliEcaneler.Where(s => s.Id > eczaneFrom.Id).ToList();
 
-                foreach (var itemTo in siraliEcaneler2)
+                var eczaneBazliListe = SetUzakliklarKusUcusuEczaneBazli(siraliEcaneler2, eczaneFrom);
+
+                eczaneUzaklikMatrisTümü.AddRange(eczaneBazliListe);
+            }
+
+            return eczaneUzaklikMatrisTümü;
+        }
+
+        public List<EczaneUzaklikMatrisDetay> SetUzakliklarKusUcusuEczaneBazli(List<Eczane> eczaneler, Eczane eczaneFrom)
+        {
+            var eczaneUzaklikMatrisList = new List<EczaneUzaklikMatrisDetay>();
+
+            if (eczaneFrom.Enlem > 1 || eczaneFrom.Boylam > 1)
+            {
+                var siraliEcaneler = eczaneler.OrderBy(s => s.Id).ToList();
+
+                foreach (var eczaneTo in siraliEcaneler)
                 {
-                    var eczanelerArasiMesafe = EczanelerArasiMesafeHesaplaKusUcusu(itemFrom, itemTo);
+                    var eczanelerArasiMesafe = EczanelerArasiMesafeHesaplaKusUcusu(eczaneFrom, eczaneTo);
 
                     eczaneUzaklikMatrisList.Add(eczanelerArasiMesafe);
-
-                    //var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
-                    //var nobetUstGrupId = ustGrupSession.Id;
                 }
             }
+
             return eczaneUzaklikMatrisList;
         }
 
