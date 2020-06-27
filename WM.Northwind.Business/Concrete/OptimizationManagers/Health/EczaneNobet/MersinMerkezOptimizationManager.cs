@@ -184,18 +184,18 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetSonuclarBaslamaTarihindenSonrasi = eczaneNobetSonuclarCozulenGruplar
                 .Where(w => w.Tarih >= nobetUstGrupBaslangicTarihi).ToList();
 
-            var son3Ay = new DateTime(2020, 7, 1);
-            //baslangicTarihi.AddMonths(-3);
-
-            var eczaneNobetSonuclarSon3Ay = eczaneNobetSonuclarCozulenGruplar
-                .Where(w => w.Tarih >= son3Ay).ToList();
-
             var sonuclarKontrol = _eczaneNobetSonucService.GetSonuclar(baslangicTarihi, bitisTarihi, eczaneNobetSonuclarCozulenGruplar);
 
             if (sonuclarKontrol.Count > 0)
                 throw new Exception("Kriterlere uygun <strong>daha önce yazılmış nöbetler</strong> bulunmaktadır. Lütfen kontrol ediniz!");
 
             var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplar, eczaneNobetSonuclarCozulenGruplar);
+
+            var son3Ay = new DateTime(2020, 7, 1);
+            //baslangicTarihi.AddMonths(-3);
+
+            var eczaneNobetSonuclarSon3Ay = eczaneNobetSonuclarCozulenGruplar
+                .Where(w => w.Tarih >= son3Ay).ToList();
 
             var enSonNobetlerSon3Ay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplar, eczaneNobetSonuclarSon3Ay);
 
