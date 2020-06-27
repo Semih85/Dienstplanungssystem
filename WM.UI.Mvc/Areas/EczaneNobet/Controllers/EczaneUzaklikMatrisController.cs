@@ -29,7 +29,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetUstGrupService _nobetUstGrupService;
         private IEczaneNobetSonucService _eczaneNobetSonucService;
         private INobetUstGrupSessionService _nobetUstGrupSessionService;
-        private IEczaneNobetOrtakService _eczaneNobetOrtak;
+        private IEczaneNobetOrtakService _eczaneNobetOrtakService;
 
         public EczaneUzaklikMatrisController(IEczaneService eczaneService,
                                 IUserService userService,
@@ -39,7 +39,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                                 IEczaneNobetGrupService eczaneNobetGrupService,
                                 IEczaneNobetSonucService eczaneNobetSonucService,
                                 INobetUstGrupSessionService nobetUstGrupSessionService,
-                                IEczaneNobetOrtakService eczaneNobetOrtak)
+                                IEczaneNobetOrtakService eczaneNobetOrtakService)
         {
             _eczaneService = eczaneService;
             _nobetUstGrupService = nobetUstGrupService;
@@ -49,7 +49,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _userService = userService;
             _eczaneNobetGrupService = eczaneNobetGrupService;
             _nobetUstGrupSessionService = nobetUstGrupSessionService;
-            _eczaneNobetOrtak = eczaneNobetOrtak;
+            _eczaneNobetOrtakService = eczaneNobetOrtakService;
         }
         #endregion
 
@@ -115,9 +115,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var eczaneler = _eczaneService.GetDetaylar(nobetUstGrupId);
 
-            var eczaneListesi = _eczaneNobetOrtak.EczaneDetayiEczaneListesineDonustur(eczaneler);
+            var eczaneListesi = _eczaneNobetOrtakService.EczaneDetayiEczaneListesineDonustur(eczaneler);
 
-            var eczaneUzaklikMatrisList = _eczaneNobetOrtak.SetUzakliklarKusUcusu(eczaneListesi);
+            var eczaneUzaklikMatrisList = _eczaneNobetOrtakService.SetUzakliklarKusUcusu(eczaneListesi);
 
             _eczaneUzaklikMatrisService.CokluEkle(eczaneUzaklikMatrisList);
         }
