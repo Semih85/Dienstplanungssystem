@@ -91,5 +91,15 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
             }
         }
 
+        public virtual void CokluSil(int[] ids)
+        {
+            using (var context = new EczaneNobetContext())
+            {
+                var deletedEntity = context.EczaneUzaklikMatrisler.RemoveRange(context.EczaneUzaklikMatrisler.Where(w => ids.Contains(w.Id)));
+
+                context.SaveChanges();
+            }
+        }
+
     }
 }

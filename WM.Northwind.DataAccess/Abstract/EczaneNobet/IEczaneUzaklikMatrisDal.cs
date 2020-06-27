@@ -13,5 +13,7 @@ namespace WM.Northwind.DataAccess.Abstract.EczaneNobet
     public interface IEczaneUzaklikMatrisDal : IEntityRepository<EczaneUzaklikMatris>, IEntityDetayRepository<EczaneUzaklikMatrisDetay>
     {
         void CokluEkle(List<EczaneUzaklikMatrisDetay> eczaneUzaklikMatrisDetaylar);
+
+        void CokluSil(int[] ids);
     }
 }

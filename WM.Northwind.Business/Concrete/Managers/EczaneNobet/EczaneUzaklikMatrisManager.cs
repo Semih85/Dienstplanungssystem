@@ -12,6 +12,8 @@ using WM.Northwind.Entities.ComplexTypes.EczaneNobet;
 using WM.Northwind.Entities.Concrete.EczaneNobet;
 using WM.Northwind.Entities.Concrete.Optimization.EczaneNobet;
 using WM.Optimization.Abstract.Samples;
+using WM.Core.Aspects.PostSharp.LogAspects;
+using WM.Core.CrossCuttingConcerns.Logging.Log4Net.Logger;
 
 namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
 {
@@ -236,6 +238,13 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             {
                 //TempData["MessageDanger"] = "ERROR: " + ex.InnerException.InnerException.Message.ToString();
             }            
+        }
+
+        [LogAspect(typeof(DatabaseLogger))]
+        [CacheRemoveAspect(typeof(MemoryCacheManager))]
+        public void CokluSil(int[] ids)
+        {
+            _eczaneUzaklikMatrisDal.CokluSil(ids);
         }
     }
 }
