@@ -137,6 +137,16 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             return _eczaneDal.GetDetay(x => x.Id == eczaneId);
         }
 
+        public EczaneDetay GetDetay(string eczaneAdi, DateTime acilisTarihi, int nobetUstGrupId)
+        {
+            return _eczaneDal.GetDetay(x => x.EczaneAdi == eczaneAdi && x.AcilisTarihi == acilisTarihi && x.NobetUstGrupId == nobetUstGrupId);
+        }
+
+        public Eczane GetEczane(string eczaneAdi, DateTime acilisTarihi, int nobetUstGrupId)
+        {
+            return _eczaneDal.Get(x => x.Adi == eczaneAdi && x.AcilisTarihi == acilisTarihi && x.NobetUstGrupId == nobetUstGrupId);
+        }
+
         [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneDetay> GetDetaylar()
         {
