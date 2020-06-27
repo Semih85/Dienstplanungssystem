@@ -224,14 +224,23 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplarTumu, eczaneNobetSonuclarCozulenGruplar);
 
+            var son3Ay = new DateTime(2020, 7, 1);
+            //baslangicTarihi.AddMonths(-3);
+
+            var eczaneNobetSonuclarSon3Ay = eczaneNobetSonuclarCozulenGruplar
+                .Where(w => w.Tarih >= son3Ay).ToList();
+
             var eczaneNobetGrupGunKuralIstatistikYatay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetler);
+
+            var enSonNobetlerSon3Ay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplarTumu, eczaneNobetSonuclarSon3Ay);
+
+            var eczaneNobetGrupGunKuralIstatistikYataySon3Ay = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistikYatay(enSonNobetlerSon3Ay);
 
             //var bak = eczaneNobetGrupGunKuralIstatistikYatay.Where(w => w.NobetGorevTipId == 2).ToList();
             var nobetBorc = _nobetUstGrupKisitService.GetDetay(39, nobetUstGrupId);
 
             if (!nobetBorc.PasifMi && nobetBorc.KisitId > 0)
             {
-
                 var anahtarListe = eczaneNobetSonuclar
                  .Where(w => w.Tarih < w.NobetGrupGorevTipBaslamaTarihi
                  && nobetGrupIdListe.Contains(w.NobetGrupId)).ToList();
@@ -425,6 +434,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneNobetGrupGunKuralIstatistikler = enSonNobetler,
                 TakvimNobetGrupGunDegerIstatistikler = takvimNobetGrupGunDegerIstatistikler,
                 EczaneNobetGrupGunKuralIstatistikYatay = eczaneNobetGrupGunKuralIstatistikYatay,
+                EczaneNobetGrupGunKuralIstatistikYataySon3Ay = eczaneNobetGrupGunKuralIstatistikYataySon3Ay,
                 EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
                 IkiliEczaneler = ikiliEczaneler,
                 NobetGrupGorevTipKisitlar = grupBazliKisitlar,

@@ -66,5 +66,6 @@ namespace WM.Northwind.Entities.Concrete.Optimization.EczaneNobet
         public int TimeLimit { get; set; }
         public int CalismaSayisiLimit { get; set; }
         public List<DebugEczaneDetay> DebugYapilacakEczaneler { get; set; }
+        public List<EczaneNobetGrupGunKuralIstatistikYatay> EczaneNobetGrupGunKuralIstatistikYataySon3Ay { get; set; }
     }
 }
