@@ -1064,6 +1064,30 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     #endregion
 
+                    #region Kümülatif en az - son 3 ay
+
+                    var kpKumulatifToplamEnAzSon3Ay = (KpKumulatifToplam)kpKumulatifToplam.Clone();
+
+                    kpKumulatifToplamEnAzSon3Ay.Tarihler = tarihler;
+                    kpKumulatifToplamEnAzSon3Ay.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k85");
+                    kpKumulatifToplamEnAzSon3Ay.ToplamNobetSayisi = eczaneNobetIstatistikSon3Ay.NobetSayisiToplam;
+
+                    KumulatifToplamEnFazla(kpKumulatifToplamEnAzSon3Ay);
+
+                    #endregion
+
+                    #region Kümülatif hafta içi en az - son 3 ay
+
+                    var kpKumulatifToplamEnAzHaftaIciSon3Ay = (KpKumulatifToplam)kpKumulatifToplam.Clone();
+
+                    kpKumulatifToplamEnAzHaftaIciSon3Ay.Tarihler = haftaIciGunleri;
+                    kpKumulatifToplamEnAzHaftaIciSon3Ay.NobetUstGrupKisit = NobetUstGrupKisit(kisitlarAktif, "k72");
+                    kpKumulatifToplamEnAzHaftaIciSon3Ay.ToplamNobetSayisi = eczaneNobetIstatistikSon3Ay.NobetSayisiHaftaIci;
+
+                    KumulatifToplamEnFazla(kpKumulatifToplamEnAzHaftaIciSon3Ay);
+
+                    #endregion
+
                     #region Kümülatif bayram en az
 
                     var kpKumulatifToplamEnAzBayram = (KpKumulatifToplam)kpKumulatifToplam.Clone();
