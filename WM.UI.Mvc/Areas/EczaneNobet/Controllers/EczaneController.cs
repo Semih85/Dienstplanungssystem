@@ -119,6 +119,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             if (ModelState.IsValid)
             {
                 _eczaneService.Insert(eczane);
+
+                var eklenenEczane = _eczaneService.GetEczane(eczane.Adi, eczane.AcilisTarihi, eczane.NobetUstGrupId);
+
                 TempData["EklenenEczane"] = eczane.Adi;
 
                 var eczaneler = new int[1]
@@ -133,6 +136,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                 };
 
                 TempData["EklenecekEczane"] = eczaneNobetGrupCoklu;
+
+                var eczanelerArasiUzakliklar = _eczaneUzaklikMatrisService.GetDetaylar(eczane.NobetUstGrupId);
+
+                if (eczanelerArasiUzakliklar.Count > 0)
+                {
+                    EczanelerArasiMesafeleriEkle(eklenenEczane);
+                }
 
                 return RedirectToAction("Create", "EczaneNobetGrup");
                 //return RedirectToAction("Index");
@@ -187,29 +197,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
                 _eczaneService.Update(eczane);
 
-                if (eczaneMevcut.Enlem != eczane.Enlem
-                 || eczaneMevcut.Boylam != eczane.Boylam)
-                {
-                    var eczanelerArasiUzakliklar = _eczaneUzaklikMatrisService.GetDetaylarByEczaneId(eczane.Id);
-
-                    foreach (var eczanelerArasiUzaklik in eczanelerArasiUzakliklar)
-                    {
-                        var eczaneFrom = _eczaneService.GetById(eczanelerArasiUzaklik.EczaneIdFrom);
-                        var eczaneTo = _eczaneService.GetById(eczanelerArasiUzaklik.EczaneIdTo);
-
-                        var mesafe = _eczaneNobetOrtakService.EczanelerArasiMesafeHesaplaKusUcusu(eczaneFrom, eczaneTo);
-
-                        var eczaneUzaklikMatris = new EczaneUzaklikMatris()
-                        {
-                            Id = eczanelerArasiUzaklik.Id,
-                            EczaneIdFrom = eczaneFrom.Id,
-                            EczaneIdTo = eczaneTo.Id,
-                            Mesafe = mesafe.Mesafe
-                        };
-
-                        _eczaneUzaklikMatrisService.Update(eczaneUzaklikMatris);
-                    }
-                }
+                EczanelerArasiMesafeleriGuncelle(eczane, eczaneMevcut);
 
                 return RedirectToAction("Index");
             }
@@ -217,6 +205,42 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             var nobetUstGruplar = _nobetUstGrupService.GetDetaylar(ustGrupSession.Id);
             ViewBag.NobetUstGrupId = new SelectList(nobetUstGruplar.Select(s => new { s.Id, s.Adi }), "Id", "Adi");
             return View(eczane);
+        }
+
+        private void EczanelerArasiMesafeleriGuncelle(Eczane eczaneYeni, Eczane eczaneEski)
+        {
+            if (eczaneEski.Enlem != eczaneYeni.Enlem
+             || eczaneEski.Boylam != eczaneYeni.Boylam)
+            {
+                var eczanelerArasiUzakliklar = _eczaneUzaklikMatrisService.GetDetaylarByEczaneId(eczaneYeni.Id);
+
+                foreach (var eczanelerArasiUzaklik in eczanelerArasiUzakliklar)
+                {
+                    var eczaneFrom = _eczaneService.GetById(eczanelerArasiUzaklik.EczaneIdFrom);
+                    var eczaneTo = _eczaneService.GetById(eczanelerArasiUzaklik.EczaneIdTo);
+
+                    var mesafe = _eczaneNobetOrtakService.EczanelerArasiMesafeHesaplaKusUcusu(eczaneFrom, eczaneTo);
+
+                    var eczaneUzaklikMatris = new EczaneUzaklikMatris()
+                    {
+                        Id = eczanelerArasiUzaklik.Id,
+                        EczaneIdFrom = eczaneFrom.Id,
+                        EczaneIdTo = eczaneTo.Id,
+                        Mesafe = mesafe.Mesafe
+                    };
+
+                    _eczaneUzaklikMatrisService.Update(eczaneUzaklikMatris);
+                }
+            }
+        }
+
+        private void EczanelerArasiMesafeleriEkle(Eczane eczane)
+        {
+            var eczaneler = _eczaneService.GetList(eczane.NobetUstGrupId);
+
+            var eczaneUzaklikMatrisList = _eczaneNobetOrtakService.SetUzakliklarKusUcusuEczaneBazli(eczaneler, eczane);
+
+            _eczaneUzaklikMatrisService.CokluEkle(eczaneUzaklikMatrisList);
         }
 
         private void KapananEczanelerinNobetGruplariniKapat(Eczane eczane, EczaneNobetGrup gruplardakiEczane)
