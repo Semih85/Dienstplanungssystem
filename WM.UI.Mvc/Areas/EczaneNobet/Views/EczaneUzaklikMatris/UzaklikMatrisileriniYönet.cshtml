@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "UzaklikMatrisileriniYönet";
+}
+
+<h2>UzaklikMatrisileriniYönet</h2>
+
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <i class="fa fa-warning"></i>
+    Aşağıdaki butonları kullanarak üst grup bazında eczaneler arası mesafeler tablosu silinip yeniden oluşturulabilir.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="form-group">
+    <span class="input-group-btn mr-3">
+        <button type="button" id="eczanelerArasiMesafeleriOlustur" class="btn btn-primary"><i class="fa fa-flash mr-2"></i>Eczaneler Arası Mesafeleri Oluştur</button>
+    </span>
+</div>
+
+<div class="form-group">
+    <span class="input-group-btn mr-3">
+        <button type="button" id="mesafeleriSil" class="btn btn-danger"><i class="fa fa-trash mr-2"></i>Eczaneler Arası Mesafeleri Sil</button>
+    </span>
+</div>
+
+@section Scripts{
+
+    <script>
+
+        var urlDagilimlar = '@Url.Action("UzaklikMatrisiniOlustur")';
+
+        var urlDagilimlarUzaklikMatrisiniSil = '@Url.Action("UzaklikMatrisiniSil")';
+
+        $("#eczanelerArasiMesafeleriOlustur").click(function (e) {
+            getJsonDagilimlar(urlDagilimlar);
+        });
+
+        $("#mesafeleriSil").click(function (e) {
+            getJsonDagilimlar(urlDagilimlarUzaklikMatrisiniSil);
+        });
+
+    function getJsonDagilimlar(url) {
+        $.ajax({
+            //dataType: "json",
+            url: url,
+            type: "post",
+            //data: formElements,
+            success: function (data) {
+                alert("İşlem Başarılı.")
+            },
+            error: function (data) {
+                alert('Hata. Veri okunamadı!');
+            },
+        });
+    }
+    </script>
+}
