@@ -1,61 +1,177 @@
 ﻿@model EczaneUzaklikMatrisViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Eczaneler Arası Mesafeler | Nöbet Sistemi";
+
+    var getAjaxSearch = new AjaxOptions
+    {
+        AllowCache = false,
+        Url = Url.Action("UzaklikMatrisiniOlusturPartialView"),
+        HttpMethod = "GET",
+        UpdateTargetId = "eczanelerArasiMesafelerTablo",
+        InsertionMode = InsertionMode.Replace,
+        LoadingElementId = "loading"
+    };
+
 }
 
-<h2>Index</h2>
+<h2>Eczaneler Arası Mesafeler</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table table-sm table-hover">
-    <tr>
-        @*<th>
-                @Html.DisplayNameFor(model => model.Uzakliklar.FirstOrDefault().EczaneIdFrom)
-            </th>*@
-        <th>
-            @*@Html.DisplayNameFor(model => model.Uzakliklar.FirstOrDefault().EczaneAdiFrom)*@
-            Eczane Adı (From)
-        </th>
-        @*<th>
-                @Html.DisplayNameFor(model => model.Uzakliklar.FirstOrDefault().EczaneIdTo)
-            </th>*@
-        <th>
-            @*@Html.DisplayNameFor(model => model.Uzakliklar.FirstOrDefault().EczaneAdiTo)*@
-            Eczane Adı (To)
-        </th>
-        <th>
-            @*@Html.DisplayNameFor(model => model.Uzakliklar.FirstOrDefault().Mesafe)*@
-            Mesafe (m.)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model.Uzakliklar)
-    {
-        <tr>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.EczaneIdFrom)
-                </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.EczaneAdiFrom)
-            </td>
-            @*<td>
-                    @Html.DisplayFor(modelItem => item.EczaneIdTo)
-                </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.EczaneAdiTo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mesafe)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
+<div class="row justify-content-between mb-2">
+    <div class="col-md-4 mb-2">
 
-</table>
+        <div class="col-4">
+            <div class="form-inline">
+                @using (Ajax.BeginForm(null, null, getAjaxSearch, new { @class = "form-inline mb-2", id = "formTumu" }))
+                {
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="form-group mr-3">
+                                @Html.DropDownList("EczaneId", null, htmlAttributes: new
+                           {
+                               @class = "form-control selectpicker",
+                               //multiple = "true",
+                               //data_width = "auto",
+                               //data_actions_box = "true",
+                               mobile = "true",
+                               data_live_search = "true",
+                               //data_selected_text_format = "count > 4",
+                               title = "Eczane Seçiniz..."
+                           })
+                            </div>
+
+                            <div class="form-group mr-3">
+                                <span class="input-group-btn">
+                                    <button type="submit" id="submitSorgula" class="btn btn-primary my-2 pull-right"><i class="fa fa-search"></i> Sorgula</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        @*<div class="form-inline">
+            <h4 class="mr-5">Eczaneler Arası Mesafeler</h4>
+            <div class="form-group">
+                <a class="btn btn-outline-success btn-sm" href="@Url.Action("Create", null, new { area= "EczaneNobet" })"><span class="fa fa-plus"></span> Yeni Kayıt</a>
+            </div>
+        </div>*@
+    </div>
+    <div class="col-md-4 col-xl-3">
+
+        <button class="btn btn-dark btn-sm" type="button" id="btnExceleAktar">
+            <i class="fa fa-file-excel-o text-success"></i> Excele Aktar
+            <i class="fa fa-download"></i>
+        </button>
+    </div>
+
+    <div class="col-md-4 col-xl-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="text" id="myInput" class="form-control" placeholder="Tabloda ara.." aria-label="Ara.." aria-describedby="basic-addon1">
+        </div>
+    </div>
+</div>
+
+@*<span>Toplam Kayıt Sayısı: @Model.ToplamKayitSayisi</span>*@
+
+@*----------------loading gif--------------------*@
+@*<div class="row">
+    <div class="col-lg-3">
+    </div>
+    <div class="col-lg-4">
+        <div id="loading" align="center" style="margin-top: 10%">
+            <img src="~/Content/images/orig.gif" />
+        </div>
+    </div>
+    <div class="col-lg-4">
+    </div>
+</div>*@
+
+<div class="row">
+    <div class="col">
+        <div id="eczanelerArasiMesafelerTablo">
+            @*@{
+                    Html.RenderAction("EczaneNobetMazeretPartialView", "EczaneNobetMazeret");
+                }*@
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    @*@Styles.Render("~/bundle/bootstrap-datepicker/style")*@
+    @Styles.Render("~/bundle/bootstrap-select/style")
+}
+
+
+@section Scripts{
+    @Scripts.Render("~/bundle/ajax")
+    @Scripts.Render("~/bundle/pager")
+    @Scripts.Render("~/bundle/bootstrap-select/scripts")
+
+<script>
+        $(document).ready(function () {
+
+                @*var model = @Html.Raw(Json.Encode(Model.Uzakliklar
+                                .Select(s=>new { s.EczaneAdiFrom})
+                           ));
+
+                sayfalamaYap(model, 15);
+
+                veriyiGizleLoadingGifiGoster();*@
+
+                $("#myInput").on("keyup", function () {
+                    var value = $(this).val().toLocaleLowerCase('tr-TR');
+                    $("#eczaneTablo tr").filter(function () {
+                        $(this).toggle($(this).text().toLocaleLowerCase('tr-TR').indexOf(value) > -1)
+                    });
+                    if ($(this).val().length == 0) {
+                        getPaging(currentPage)
+                    }
+                });
+
+                $('#btnExceleAktar').click(function () {
+                    // alert('ConfirmSubmit')
+                    $("#gridT > tbody > tr").each(function (i, el) {
+                        $(this).css('display', 'table-row');
+                    });
+                    exportToExcel();
+                    //location.reload();
+                    //sayfalamaYap(model, 15);
+                });
+                function exportToExcel() {
+
+                    var htmls = "";
+
+                    var uri = 'data:application/vnd.ms-excel;base64,';
+
+                    var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+
+                    var base64 = function (s) {
+                        return window.btoa(unescape(encodeURIComponent(s)))
+                    };
+
+                    var format = function (s, c) {
+                        return s.replace(/{(\w+)}/g, function (m, p) {
+                            return c[p];
+                        })
+                    };
+
+                    htmls = $("table").html();
+
+                    var ctx = {
+                        worksheet: 'Worksheet',
+                        table: htmls
+                    }
+
+                    var link = document.createElement("a");
+                    link.download = "eczaneler.xls";
+                    link.href = uri + base64(format(template, ctx));
+                    link.click();
+                }
+            });
+</script>
+}

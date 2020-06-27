@@ -1,39 +1,41 @@
-﻿@model WM.Northwind.Entities.Concrete.EczaneNobet.EczaneUzaklikMatris
+﻿@model EczaneUzaklikMatrisDetay
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Düzenle";
 }
 
-<h2>Edit</h2>
+<h2>Mesafe Düzenle</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>EczaneUzaklikMatris</h4>
+        <h4>Eczaneler Arası Uzaklık</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.EczaneIdFrom)
+        @Html.HiddenFor(model => model.EczaneIdTo)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EczaneIdFrom, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.EczaneIdFrom, "Eczane-From", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EczaneIdFrom, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EczaneIdFrom, "", new { @class = "text-danger" })
+                @Html.DisplayFor(model => model.EczaneAdiFrom, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                @*@Html.ValidationMessageFor(model => model.EczaneIdFrom, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.EczaneIdTo, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.EczaneIdTo, "Eczane-To", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EczaneIdTo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EczaneIdTo, "", new { @class = "text-danger" })
+                @Html.DisplayFor(model => model.EczaneAdiTo, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                @*@Html.ValidationMessageFor(model => model.EczaneIdTo, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Mesafe, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Mesafe, "Mesafe (m)", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Mesafe, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Mesafe, "", new { @class = "text-danger" })
@@ -42,12 +44,11 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Kaydet" class="btn btn-outline-primary" />
+                @Html.ActionLink("Listeye Dön", "Index", null, new { @class = "btn btn-outline-warning" })
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+

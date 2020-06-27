@@ -52,7 +52,6 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             _eczaneNobetOrtak = eczaneNobetOrtak;
         }
         #endregion
-        private WMUIMvcContext db = new WMUIMvcContext();
 
         // GET: EczaneNobet/EczaneUzaklikMatris
         public ActionResult Index()
@@ -63,59 +62,85 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var nobetUstGrupId = ustGrupSession.Id;
 
-            var eczaneGrupIdList = _nobetGrupService.GetListByNobetUstGrupId(nobetUstGrupId).Select(s => s.Id).ToList();
+            //var eczaneGrupIdList = _nobetGrupService.GetListByNobetUstGrupId(nobetUstGrupId).Select(s => s.Id).ToList();
 
-            var eczaneler = _eczaneService.GetDetaylar(nobetUstGrupId); //_eczaneNobetGrupService.GetAktifEczaneNobetGrupList(eczaneGrupIdList);
-            //nobetciEczaneler = nobetciEczaneler.Take(10).ToList();
+            //var eczaneler = _eczaneService.GetDetaylar(nobetUstGrupId); //_eczaneNobetGrupService.GetAktifEczaneNobetGrupList(eczaneGrupIdList);
+
+            var eczaneler = _eczaneService.GetList(nobetUstGrupId)
+                .Where(w => w.KapanisTarihi == null)
+                .OrderBy(s => s.Adi)
+                .ToList();
+
+            //var eczaneListesi = _eczaneNobetOrtak.EczaneDetayiEczaneListesineDonustur(eczaneler);
+
+            //var eczaneUzaklikMatrisList = _eczaneNobetOrtak.SetUzakliklarKusUcusu(eczaneListesi);
+
+            //_eczaneUzaklikMatrisService.CokluEkle(eczaneUzaklikMatrisList);
+
+            //var sonuclar = _eczaneUzaklikMatrisService.GetDetaylar(nobetUstGrupId);
+
+            ViewBag.EczaneId = new SelectList(eczaneler, "Id", "Adi");
 
             var model = new EczaneUzaklikMatrisViewModel
             {
                 Eczaneler = new List<Eczane>(),
                 NobetUstGrupId = nobetUstGrupId,
-                //Uzakliklar = new List<EczaneUzaklikMatrisDetay>()
+                Uzakliklar = new List<EczaneUzaklikMatrisDetay>(),// sonuclar,
             };
-
-            foreach (var eczane in eczaneler)
-            {
-                var adres = eczane.Adres;
-                var enlem = eczane.Enlem;
-                var boylam = eczane.Boylam;
-                var telefonNo = eczane.TelefonNo;
-                var adresTarifi = eczane.AdresTarifi;
-                var adresTarifiKisa = eczane.AdresTarifiKisa;
-
-                model.Eczaneler.Add(new Eczane
-                {
-                    Id = eczane.Id,
-                    Adi = eczane.EczaneAdi,
-                    Adres = adres,
-                    Enlem = enlem,
-                    Boylam = boylam,
-                    TelefonNo = telefonNo,
-                    AdresTarifi = adresTarifi,
-                    AdresTarifiKisa = adresTarifiKisa
-                });
-            }
-
-            var eczaneUzaklikMatrisList = _eczaneNobetOrtak.SetUzakliklarKusUcusu(model.Eczaneler);
-
-            _eczaneUzaklikMatrisService.CokluEkle(eczaneUzaklikMatrisList);
-
-            var sonuclar = _eczaneUzaklikMatrisService.GetDetaylar(nobetUstGrupId);
-
-            model.Uzakliklar = sonuclar;
 
             return View(model);
         }
 
-        // GET: EczaneNobet/EczaneUzaklikMatris/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult UzaklikMatrisileriniYönet()
         {
-            if (id == null)
+            //var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+            //
+            //var nobetUstGrupId = ustGrupSession.Id;
+
+            return View();
+        }
+
+        public ActionResult UzaklikMatrisiniOlusturPartialView(int eczaneId)
+        {
+            var sonuclar = _eczaneUzaklikMatrisService.GetDetaylarByEczaneId(eczaneId);
+
+            return PartialView(sonuclar);
+        }
+
+        public void UzaklikMatrisiniOlustur()
+        {
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var nobetUstGrupId = ustGrupSession.Id;
+
+            var eczaneler = _eczaneService.GetDetaylar(nobetUstGrupId);
+
+            var eczaneListesi = _eczaneNobetOrtak.EczaneDetayiEczaneListesineDonustur(eczaneler);
+
+            var eczaneUzaklikMatrisList = _eczaneNobetOrtak.SetUzakliklarKusUcusu(eczaneListesi);
+
+            _eczaneUzaklikMatrisService.CokluEkle(eczaneUzaklikMatrisList);
+        }
+
+        public void UzaklikMatrisiniSil()
+        {
+            var ustGrupSession = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
+
+            var nobetUstGrupId = ustGrupSession.Id;
+
+            var sonuclar = _eczaneUzaklikMatrisService.GetDetaylar(nobetUstGrupId).Select(s => s.Id).ToArray();
+
+            _eczaneUzaklikMatrisService.CokluSil(sonuclar);
+        }
+
+        // GET: EczaneNobet/EczaneUzaklikMatris/Details/5
+        public ActionResult Details(int id)
+        {
+            if (id < 1)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EczaneUzaklikMatris eczaneUzaklikMatris = db.EczaneUzaklikMatris.Find(id);
+            EczaneUzaklikMatris eczaneUzaklikMatris = _eczaneUzaklikMatrisService.GetById(id);
             if (eczaneUzaklikMatris == null)
             {
                 return HttpNotFound();
@@ -138,8 +163,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.EczaneUzaklikMatris.Add(eczaneUzaklikMatris);
-                db.SaveChanges();
+                _eczaneUzaklikMatrisService.Insert(eczaneUzaklikMatris);
                 return RedirectToAction("Index");
             }
 
@@ -147,13 +171,13 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
 
         // GET: EczaneNobet/EczaneUzaklikMatris/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            if (id < 1)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EczaneUzaklikMatris eczaneUzaklikMatris = db.EczaneUzaklikMatris.Find(id);
+            EczaneUzaklikMatrisDetay eczaneUzaklikMatris = _eczaneUzaklikMatrisService.GetDetayById(id);
             if (eczaneUzaklikMatris == null)
             {
                 return HttpNotFound();
@@ -170,21 +194,21 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(eczaneUzaklikMatris).State = EntityState.Modified;
-                db.SaveChanges();
+                _eczaneUzaklikMatrisService.Update(eczaneUzaklikMatris);
                 return RedirectToAction("Index");
             }
             return View(eczaneUzaklikMatris);
         }
 
         // GET: EczaneNobet/EczaneUzaklikMatris/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            if (id < 1)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EczaneUzaklikMatris eczaneUzaklikMatris = db.EczaneUzaklikMatris.Find(id);
+            EczaneUzaklikMatris eczaneUzaklikMatris = _eczaneUzaklikMatrisService.GetById(id);
+            _eczaneUzaklikMatrisService.Delete(id);
             if (eczaneUzaklikMatris == null)
             {
                 return HttpNotFound();
@@ -197,19 +221,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            EczaneUzaklikMatris eczaneUzaklikMatris = db.EczaneUzaklikMatris.Find(id);
-            db.EczaneUzaklikMatris.Remove(eczaneUzaklikMatris);
-            db.SaveChanges();
+            EczaneUzaklikMatris eczaneUzaklikMatris = _eczaneUzaklikMatrisService.GetById(id);
+            _eczaneUzaklikMatrisService.Delete(id);
             return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
         }
     }
 }
