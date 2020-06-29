@@ -43,7 +43,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         }
         #endregion
         // GET: EczaneNobet/MobilBildirim
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Oda,Üst Grup")]
         public ActionResult Index()
         {
             var nobetUstGrup = _nobetUstGrupSessionService.GetSession("nobetUstGrup");
