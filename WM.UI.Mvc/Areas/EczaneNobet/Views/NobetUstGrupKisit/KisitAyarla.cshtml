@@ -112,7 +112,7 @@
             <a data-toggle="modal" data-target="#nobetKuralDegisimleriModal" href="#" class="btn btn-info pull-right" id="search">
                 <i class="fa fa-info-circle" aria-hidden="true"></i> İşlemler
             </a>
-            
+
         </div>
         <small id="araHelp" class="form-text text-muted">Değeri değişebilen kuralları filtrelemek <a href="#" id="degisebilenKisitlar" class="alert-link">tıklayınız.</a></small>
     </div>
@@ -278,12 +278,15 @@
                                                 </p>
 
                                                 <p>
-                                                    Zamanla nöbet grubuna sonradan katılan/ayrılan eczaneler nedeniyle hesaplanan ortalama değerlerde sapma olabilmektedir. Örneğin; her ay 30 gün ve nöbet grubu 30 kişilik olsun. Ocak ayı nöbet ortalaması 1'dir. Ocak-Şubat iki aylık nöbet ortalaması ise 2'dir. Şubat sonu itibariyle her eczaneye 2 nöbet gelmesi beklenir. Ancak;
+                                                    Zamanla nöbet grubuna sonradan katılan/ayrılan eczaneler nedeniyle hesaplanan ortalama değerlerde sapma olabilmektedir.
+                                                </p>
+                                                <p>
+                                                    <strong>Örneğin;</strong> her ay 30 gün ve nöbet grubu 30 kişilik olsun. Ocak ayı nöbet ortalaması 1'dir. Ocak-Şubat iki aylık nöbet ortalaması ise 2'dir. Şubat sonu itibariyle her eczaneye 2 nöbet gelmesi beklenir. Ancak;
                                                 </p>
 
                                                 <ol>
-                                                    <li>Şubat ayında gruba yeni bir eczane <strong>katılması</strong> halinde kümülatif ortamala azalacaktır <math /> (60/31 = 1,93). Bu durumda ortamala 1 artırılmalılır. </li>
-                                                    <li>Şubat ayında gruba yeni bir eczane <strong>ayrılması</strong> halinde kümülatif ortamala artacaktır <math /> (60/29 = 2,07). Bu durumda ortamala 1 azaltılmalıdır. </li>
+                                                    <li>Şubat ayında gruba yeni bir eczane <strong>katılması</strong> halinde kümülatif ortalama azalacaktır <math /> (60/31 = 1,93). Bu durumda <span class="badge badge-light">Değer=0</span> olarak bırakılabilir. </li>
+                                                    <li>Şubat ayında grutan bir eczane <strong>ayrılması</strong> halinde kümülatif ortalama artacaktır <math /> (60/29 = 2,07). Bu durumda <span class="badge badge-light">Değer</span> 1 azaltılmalıdır. </li>
                                                 </ol>
 
                                             </div>
