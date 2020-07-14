@@ -283,6 +283,18 @@ namespace WM.BLL.DependencyResolvers.Ninject
 
             Bind<INobetUstGrupKisitIstisnaGunGrupService>().To<NobetUstGrupKisitIstisnaGunGrupManager>().InSingletonScope();
             Bind<INobetUstGrupKisitIstisnaGunGrupDal>().To<EfNobetUstGrupKisitIstisnaGunGrupDal>();
+
+            Bind<IAnahtarListeTanimService>().To<AnahtarListeTanimManager>().InSingletonScope();
+            Bind<IAnahtarListeTanimDal>().To<EfAnahtarListeTanimDal>();
+
+            Bind<IEczaneNobetGrupKisitService>().To<EczaneNobetGrupKisitManager>().InSingletonScope();
+            Bind<IEczaneNobetGrupKisitDal>().To<EfEczaneNobetGrupKisitDal>();
+
+            Bind<IEczaneNobetSonucAnahtarListeService>().To<EczaneNobetSonucAnahtarListeManager>().InSingletonScope();
+            Bind<IEczaneNobetSonucAnahtarListeDal>().To<EfEczaneNobetSonucAnahtarListeDal>();
+
+            Bind<INobetAltGrupKisitService>().To<NobetAltGrupKisitManager>().InSingletonScope();
+            Bind<INobetAltGrupKisitDal>().To<EfNobetAltGrupKisitDal>();
             #endregion
 
             #region Optimization

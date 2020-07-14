@@ -58,6 +58,7 @@
     <Compile Include="Abstract\Authorization\IUserRoleDal.cs" />
     <Compile Include="Abstract\Authorization\IRoleDal.cs" />
     <Compile Include="Abstract\Authorization\IUserDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IAnahtarListeTanimDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IAyniGunNobetTakipGrupAltGrupDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IAyniGunTutulanNobetDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IBayramDal.cs" />
@@ -71,11 +72,14 @@
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetDegisimDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetFeragatDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetGrupAltGrupDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetGrupKisitDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetMuafiyetDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSanalSonucDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucAnahtarListeDal.cs" />
     <Compile Include="Abstract\EczaneNobet\ILogDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IMobilBildirimDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IMobilUygulamaYetkiDal.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetAltGrupKisitDal.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetUstGrupKisitIstisnaGunGrupDal.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetUstGrupMobilUygulamaYetkiDal.cs" />
     <Compile Include="Abstract\EczaneNobet\IRaporDal.cs" />
@@ -148,6 +152,7 @@
     <Compile Include="Concrete\EntityFramework\Authorization\EfUserDal.cs" />
     <Compile Include="Concrete\EntityFramework\Contexts\IdentityContext.cs" />
     <Compile Include="Concrete\EntityFramework\Contexts\EczaneNobetContext.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfAnahtarListeTanimDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfAyniGunNobetTakipGrupAltGrupDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfAyniGunTutulanNobetDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfBayramDal.cs" />
@@ -162,12 +167,15 @@
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetDegisimDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetFeragatDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetGrupAltGrupDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetGrupKisitDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetIstekDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetMuafiyetDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSanalSonucDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfEczaneNobetSonucAnahtarListeDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfLogDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMobilBildirimDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfMobilUygulamaYetkiDal.cs" />
+    <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetAltGrupKisitDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetUstGrupKisitIstisnaGunGrupDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfNobetUstGrupMobilUygulamaYetkiDal.cs" />
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfRaporDal.cs" />
@@ -228,6 +236,7 @@
     <Compile Include="Concrete\EntityFramework\EczaneNobet\EfTakvimDal.cs" />
     <Compile Include="Concrete\EntityFramework\EfCategoryDal.cs" />
     <Compile Include="Concrete\EntityFramework\Initializers\IdentityInitializer.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\AnahtarListeTanimMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\AyniGunNobetTakipGrupAltGrupMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\AyniGunTutulanNobetMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\BayramTurMap.cs" />
@@ -241,9 +250,12 @@
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetDegisimMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetFeragatMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetGrupAltGrupMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetGrupKisitMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSanalSonucMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\EczaneNobetSonucAnahtarListeMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MobilBildirimMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\MobilUygulamaYetkiMap.cs" />
+    <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetAltGrupKisitMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetUstGrupKisitIstisnaGunGrupMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\NobetUstGrupMobilUygulamaYetkiMap.cs" />
     <Compile Include="Concrete\EntityFramework\Mapping\EczaneNobet\RaporKategoriMap.cs" />

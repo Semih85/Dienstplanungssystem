@@ -78,6 +78,7 @@
     <Compile Include="Abstract\Authorization\IUserRoleService.cs" />
     <Compile Include="Abstract\Authorization\IRoleService.cs" />
     <Compile Include="Abstract\Authorization\IUserService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IAnahtarListeTanimService.cs" />
     <Compile Include="Abstract\EczaneNobet\IAyniGunNobetTakipGrupAltGrupService.cs" />
     <Compile Include="Abstract\EczaneNobet\IAyniGunTutulanNobetService.cs" />
     <Compile Include="Abstract\EczaneNobet\IBayramService.cs" />
@@ -91,12 +92,15 @@
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetDegisimService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetFeragatService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetGrupAltGrupService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetGrupKisitService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetMuafiyetService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetOrtakService.cs" />
     <Compile Include="Abstract\EczaneNobet\IEczaneNobetSanalSonucService.cs" />
+    <Compile Include="Abstract\EczaneNobet\IEczaneNobetSonucAnahtarListeService.cs" />
     <Compile Include="Abstract\EczaneNobet\ILogService.cs" />
     <Compile Include="Abstract\EczaneNobet\IMobilBildirimService.cs" />
     <Compile Include="Abstract\EczaneNobet\IMobilUygulamaYetkiService.cs" />
+    <Compile Include="Abstract\EczaneNobet\INobetAltGrupKisitService.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetUstGrupKisitIstisnaGunGrupService.cs" />
     <Compile Include="Abstract\EczaneNobet\INobetUstGrupMobilUygulamaYetkiService.cs" />
     <Compile Include="Abstract\EczaneNobet\IRaporKategoriService.cs" />
@@ -190,6 +194,7 @@
     <Compile Include="Concrete\Managers\AdminManager.cs" />
     <Compile Include="Concrete\Managers\Authorization\UserRoleManager.cs" />
     <Compile Include="Concrete\Managers\Authorization\RoleManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\AnahtarListeTanimManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\AyniGunNobetTakipGrupAltGrupManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\AyniGunTutulanNobetManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\BagGrup.cs" />
@@ -204,11 +209,14 @@
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetDegisimManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetFeragatManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetGrupAltGrupManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetGrupKisitManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetMuafiyetManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSanalSonucManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\EczaneNobetSonucAnahtarListeManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\LogManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\MobilBildirimManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\MobilUygulamaYetkiManager.cs" />
+    <Compile Include="Concrete\Managers\EczaneNobet\NobetAltGrupKisitManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetUstGrupKisitIstisnaGunGrupManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\NobetUstGrupMobilUygulamaYetkiManager.cs" />
     <Compile Include="Concrete\Managers\EczaneNobet\RaporKategoriManager.cs" />

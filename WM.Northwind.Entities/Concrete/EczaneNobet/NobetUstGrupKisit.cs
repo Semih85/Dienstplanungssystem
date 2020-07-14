@@ -23,6 +23,9 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public virtual NobetUstGrup NobetUstGrup { get; set; }
         public virtual List<NobetGrupGorevTipKisit> NobetGrupGorevTipKisitlar { get; set; }
         public virtual List<NobetUstGrupKisitIstisnaGunGrup> NobetUstGrupKisitIstisnaGunGruplar { get; set; }
+        public virtual List<EczaneNobetGrupKisit> EczaneNobetGrupKisitlar { get; set; }
+        public virtual List<NobetAltGrupKisit> NobetAltGrupKisitlar { get; set; }
+
 
     }
 }

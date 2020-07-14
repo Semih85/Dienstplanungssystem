@@ -28,6 +28,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public virtual List<NobetDurum> NobetDurumlar2 { get; set; }
         public virtual List<NobetDurum> NobetDurumlar3 { get; set; }
         public virtual List<AyniGunNobetTakipGrupAltGrup> AyniGunNobetTakipGrupAltGruplar { get; set; }
+        public virtual List<NobetAltGrupKisit> NobetAltGrupKisitlar { get; set; }
 
     }
 }

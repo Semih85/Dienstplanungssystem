@@ -118,6 +118,14 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<EczaneNobetSanalSonuc> EczaneNobetSanalSonuclar { get; set; }
         public DbSet<DebugEczane> DebugEczaneler { get; set; }
         public DbSet<NobetUstGrupKisitIstisnaGunGrup> NobetUstGrupKisitIstisnaGunGruplar { get; set; }
+        public DbSet<AnahtarListeTanim> AnahtarListeTanimlar { get; set; }
+        public DbSet<EczaneNobetGrupKisit> EczaneNobetGrupKisitlar { get; set; }
+        public DbSet<EczaneNobetSonucAnahtarListe> EczaneNobetSonucAnahtarListeler { get; set; }
+        public DbSet<NobetAltGrupKisit> NobetAltGrupKisitlar { get; set; }
+
+
+
+
 
         #endregion
 
@@ -225,6 +233,11 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.Contexts
             modelBuilder.Configurations.Add(new MobilBildirimMap());
             modelBuilder.Configurations.Add(new EczaneMobilBildirimMap());
             modelBuilder.Configurations.Add(new NobetUstGrupKisitIstisnaGunGrupMap());
+
+            modelBuilder.Configurations.Add(new AnahtarListeTanimMap());
+            modelBuilder.Configurations.Add(new EczaneNobetGrupKisitMap());
+            modelBuilder.Configurations.Add(new NobetAltGrupKisitMap());
+            modelBuilder.Configurations.Add(new EczaneNobetSonucAnahtarListeMap());
             #endregion
         }
     #endregion

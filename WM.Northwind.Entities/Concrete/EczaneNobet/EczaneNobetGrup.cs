@@ -43,5 +43,7 @@ namespace WM.Northwind.Entities.Concrete.EczaneNobet
         public virtual List<Kalibrasyon> Kalibrasyonlar { get; set; }
         public virtual List<EczaneNobetFeragat> EczaneNobetFeragatlar { get; set; }
         public virtual List<DebugEczane> DebugEczaneler { get; set; }
+        public virtual List<EczaneNobetGrupKisit> EczaneNobetGrupKisitlar { get; set; }
+        public virtual List<EczaneNobetSonucAnahtarListe> EczaneNobetSonucAnahtarListeler { get; set; }
     }
 }
