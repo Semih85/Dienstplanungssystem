@@ -101,19 +101,28 @@
                             <img src="~/Content/images/@MultiLanguage.HomeTexts.DilSecenegiLogo" /> @MultiLanguage.HomeTexts.DilSecenegi
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="@Url.Action("Change","Language",  new { language = "tr", viewName =((RazorView)ViewContext.View).ViewPath })">
+                            <a class="dropdown-item" href="@Url.Action("Change","Language",  new { language = "tr"
+                                                          , viewName = Request.Url.AbsolutePath
+                                                          //, viewName =((RazorView)ViewContext.View).ViewPath
+                                                      })">
                                 <img src="~/Content/images/flags/tr.png" />
                                 @MultiLanguage.HomeTexts.Turkce
                             </a>
                             @*<a class="dropdown-item" href="@Url.Action("EczaneNobetSistemiDetay","Home")">Eczane Nöbet Sistemi Detaylar</a>*@
                             @*<a class="dropdown-item" href="@Url.Action("HemsireNobetYazDetay","Home")">Hemşire Nöbet Sistemi</a>*@
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="@Url.Action("Change","Language", new { language = "en" , viewName =((RazorView)ViewContext.View).ViewPath})">
+                            <a class="dropdown-item" href="@Url.Action("Change","Language", new { language = "en"
+                                                          , viewName = Request.Url.AbsolutePath
+                                                          //, viewName =((RazorView)ViewContext.View).ViewPath
+                                                      })">
                                 <img src="~/Content/images/flags/en.png" />
                                 @MultiLanguage.HomeTexts.Ingilizce
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="@Url.Action("Change","Language", new { language = "de", viewName =((RazorView)ViewContext.View).ViewPath })">
+                            <a class="dropdown-item" href="@Url.Action("Change","Language", new { language = "de"
+                                                          , viewName = Request.Url.AbsolutePath
+                                                          //, viewName =((RazorView)ViewContext.View).ViewPath
+                                                      })">
                                 <img src="~/Content/images/flags/de.png" />
                                 @MultiLanguage.HomeTexts.Almanca
                             </a>

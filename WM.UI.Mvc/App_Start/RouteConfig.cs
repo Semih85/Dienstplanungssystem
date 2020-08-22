@@ -15,24 +15,46 @@ namespace WM.UI.Mvc
 
             routes.MapMvcAttributeRoutes();
 
+            var lang = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
+
+            if (lang.Length > 2)
+            {
+                lang = lang.Substring(0, 2);
+            }
+
             routes.MapRoute(
                 name: "Login",
-                url: "giris",
-                defaults: new { controller = "Account", action = "Login" },
+                url: "{language}/giris",
+                defaults: new
+                {
+                    language = lang,
+                    controller = "Account",
+                    action = "Login"
+                },
                 namespaces: new string[] { "WM.UI.Mvc.Controllers" }
             );
 
             routes.MapRoute(
                 name: "Contact",
-                url: "iletisim",
-                defaults: new { controller = "Home", action = "Contact" },
+                url: "{language}/iletisim",
+                defaults: new
+                {
+                    language = lang,
+                    controller = "Home",
+                    action = "Contact"
+                },
                 namespaces: new string[] { "WM.UI.Mvc.Controllers" }
             );
 
             routes.MapRoute(
                 name: "NobetYazDetay",
-                url: "nobet-sistemi-detaylar",
-                defaults: new { controller = "Home", action = "NobetYazDetay" },
+                url: "{language}/nobet-sistemi-detaylar",
+                defaults: new
+                {
+                    language = lang,
+                    controller = "Home",
+                    action = "NobetYazDetay"
+                },
                 namespaces: new string[] { "WM.UI.Mvc.Controllers" }
             );
 
@@ -55,21 +77,39 @@ namespace WM.UI.Mvc
                 url: "online-eczane-ekrani",
                 defaults: new { controller = "Home", action = "DijitalTabela" },
                 namespaces: new string[] { "WM.UI.Mvc.Controllers" }
-            );            
+            );
 
             routes.MapRoute(
                 name: "Anasayfa",
-                url: "anaSayfa",
-                defaults: new { controller = "Home", action = "Index" },
+                url: "{language}/anaSayfa",
+                defaults: new
+                {
+                    language = lang,
+                    controller = "Home",
+                    action = "Index"
+                },
                 namespaces: new string[] { "WM.UI.Mvc.Controllers" }
             );
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                url: "{language}/{controller}/{action}/{id}",
+                defaults: new
+                {
+                    language = lang,
+                    controller = "Home",
+                    action = "Index",
+                    id = UrlParameter.Optional
+                },
                 namespaces: new string[] { "WM.UI.Mvc.Controllers" }
             );
+
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+            //    namespaces: new string[] { "WM.UI.Mvc.Controllers" }
+            //);
         }
     }
 }

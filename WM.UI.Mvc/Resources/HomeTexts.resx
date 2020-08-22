@@ -124,7 +124,7 @@
     <value>Ana Sayfa</value>
   </data>
   <data name="AncakIhtiyacaGore" xml:space="preserve">
-    <value>Ancak ihtiyaca göre, çok sayıda &lt;b&gt;nöbet kuralları&lt;/b&gt; probleme ilave olmaktadır</value>
+    <value>İhtiyaca göre, çok sayıda &lt;b&gt;kural&lt;/b&gt; probleme ilave olmaktadır</value>
   </data>
   <data name="BasindaBiz" xml:space="preserve">
     <value>Basında Biz</value>
@@ -139,7 +139,7 @@
     <value>Bir de olası bir hatada gelecek itirazlar dikkate alındığında &lt;b&gt;"Nöbet Sistemi"nin varlığı önem kazanmaktadır&lt;/b&gt;</value>
   </data>
   <data name="BuProblemdeEnyalinHaliyle" xml:space="preserve">
-    <value>Bu problemde -en yalın haliyle- hangi periyotta hangi nöbetçilere görev yazılacağına karar verilir</value>
+    <value>Bu problemde hangi periyotta hangi nöbetçilere görev yazılacağına karar verilir</value>
   </data>
   <data name="BuYonuyleNoberYazmaSureci" xml:space="preserve">
     <value>Bu yönüyle nöbet &lt;b class='text-danger'&gt;yazma süreci fazlasıyla zaman, emek ve zihin yorgunluğu oluşturmaktadır&lt;/b&gt;</value>

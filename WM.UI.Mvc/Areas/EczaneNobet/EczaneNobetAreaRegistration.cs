@@ -15,12 +15,23 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
         public override void RegisterArea(AreaRegistrationContext context)
         {
 
+            var lang = System.Threading.Thread.CurrentThread.CurrentUICulture.Name;
+
+            if (lang.Length > 2)
+            {
+                lang = lang.Substring(0, 2);
+            }
+
             #region ekle
 
             context.MapRoute(
                     name: "EczaneCreate",
                     url: "eczane-ekle",
-                    defaults: new { controller = "Eczane", action = "Create" }
+                    defaults: new
+                    {
+                        controller = "Eczane",
+                        action = "Create"
+                    }
                 );
 
             context.MapRoute(
@@ -236,7 +247,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                 "Delete",
                 "eczane-nobet/{controller}/sil/{id}",
                 new { action = "Delete", id = UrlParameter.Optional }
-            );  
+            );
 
             #endregion
 
@@ -308,8 +319,23 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
 
             context.MapRoute(
                 name: "NobetYaz",
+                url: "{language}/eczane-nobet-yaz",
+                defaults: new
+                {
+                    language = lang,
+                    controller = "NobetYaz",
+                    action = "Index"
+                }
+            );
+
+            context.MapRoute(
+                name: "NobetYaz2",
                 url: "eczane-nobet-yaz",
-                defaults: new { controller = "NobetYaz", action = "Index" }
+                defaults: new
+                {
+                    controller = "NobetYaz",
+                    action = "Index"
+                }
             );
 
             context.MapRoute(
@@ -365,7 +391,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                 url: "sonuclari-guncelle-degisimlere-ekle/{eczaneNobetSonucId}",
                 defaults: new { controller = "EczaneNobetSonuc", action = "UpdateSonuclarInsertDegisim", eczaneNobetSonucId = UrlParameter.Optional }
             );
-            
+
             context.MapRoute(
                 name: "NobetciEczaneHarita",
                 url: "nobetci-eczane-harita",
@@ -456,7 +482,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                     defaults: new { controller = "EczaneNobetSonuc", action = "NobetciEczaneMesafeler" }
                 );
 
-            
+
             #endregion
 
             context.MapRoute(
@@ -476,7 +502,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
                 url: "nobet-komisyonu",
                 defaults: new { controller = "NobetKomisyonu", action = "Index" }
             );
-            
+
             context.MapRoute(
                 name: "NobetciEczaneEkrani",
                 url: "onee/{eczaneId}",///{name}/{password}",

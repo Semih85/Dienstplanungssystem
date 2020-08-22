@@ -1,5 +1,6 @@
 ﻿using FluentValidation.Mvc;
 using System;
+using System.Globalization;
 using System.Security.Principal;
 using System.Threading;
 using System.Web;
@@ -77,15 +78,37 @@ namespace WM.UI.Mvc
             HttpCookie cookie = HttpContext.Current.Request.Cookies["Language"];
             if (cookie != null && cookie.Value != null)
             {
-                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cookie.Value);
-                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(cookie.Value);
+                Thread.CurrentThread.CurrentCulture = new CultureInfo(cookie.Value);
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo(cookie.Value);
             }
             else
             {
-                Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("tr");
-                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("tr");
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("tr");
+                Thread.CurrentThread.CurrentUICulture = new CultureInfo("tr");
             }
         }
 
+        protected void Application_AcquireRequestState()
+        {
+            var routes = RouteTable.Routes;
+
+            var httpContext = Request.RequestContext.HttpContext;
+            if (httpContext == null) return;
+
+            var routeData = routes.GetRouteData(httpContext);
+
+            var language = routeData.Values["language"] as string;
+            if (!(language == "tr"
+                || language == "de"
+                || language == "en"))
+            {
+                return;
+            }
+
+            var cultureInfo = new CultureInfo(language);
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = cultureInfo;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = cultureInfo;
+        }
     }
 }

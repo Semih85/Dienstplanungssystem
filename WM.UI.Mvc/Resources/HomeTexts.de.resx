@@ -124,7 +124,7 @@
     <value>Startseite</value>
   </data>
   <data name="AncakIhtiyacaGore" xml:space="preserve">
-    <value>Je nach Bedarf werden dem Problem jedoch zahlreiche Dienstplanung Regeln hinzugefügt</value>
+    <value>Viele Regeln können je nach Bedarf dem Problem hinzugefügt werden</value>
   </data>
   <data name="BasindaBiz" xml:space="preserve">
     <value>Wir in der Presse</value>
@@ -133,13 +133,13 @@
     <value>Behalte mich</value>
   </data>
   <data name="BirBaskaSorunIseSonradanOrtayaCikanMazeretlerin" xml:space="preserve">
-    <value>Ein weiteres Problem ist, dass alle nachfolgenden Ausreden berücksichtigt werden, ohne die Regeln zu verletzen</value>
+    <value>Dazu müssen niemals die Regeln verletzt werden, wenn die Ausreden nachher nötig sein</value>
   </data>
   <data name="BirDeOlasiHatadaGelecekItirazlar" xml:space="preserve">
-    <value>&lt;b&gt;Darüber hinaus wird die Existenz des "Duty Scheduling System" wichtig,&lt;/b&gt; wenn ein möglicher Fehler berücksichtigt wird und zukünftige Einwände berücksichtigt werden</value>
+    <value>Außerdem &lt;b&gt;gewinnt die Existenz des Dutyschedulingsystems an Bedeutung,&lt;/b&gt; wenn die mögliche Fehler und Wiederreden bzw. Beschwerden berücksichtigt werden</value>
   </data>
   <data name="BuProblemdeEnyalinHaliyle" xml:space="preserve">
-    <value>In diesem Problem wird entschieden, welche Dienstzeit welcher Einrichtung/Person zugeordnet ist</value>
+    <value>Durch unserer Applikation wird optimal bestimmt, welche Apotheken in welcher Periode Notdienst haben</value>
   </data>
   <data name="BuYonuyleNoberYazmaSureci" xml:space="preserve">
     <value>In dieser Hinsicht verursacht &lt;b class='text-danger'&gt;der Prozess der Dienstplanung zu viel Zeit, Arbeit und geistige Ermüdung&lt;/b&gt;</value>
@@ -160,16 +160,16 @@
     <value>Bearbeiten</value>
   </data>
   <data name="EczaciOdasi" xml:space="preserve">
-    <value>Apothekerkammer</value>
+    <value>Apothekerkammern</value>
   </data>
   <data name="Eczane" xml:space="preserve">
-    <value>Apotheke</value>
+    <value>Apotheken</value>
   </data>
   <data name="EczaneNobetSistemi" xml:space="preserve">
     <value>Notdienstplanungssystem</value>
   </data>
   <data name="ElleYazilirkenBileEnCokIstenenKuallarGozdenKacabilir" xml:space="preserve">
-    <value>Beim manuellen Schreiben, auch die am häufigsten angeforderten Regeln können übersehen  werden</value>
+    <value>Da diese Art von Problemen manuell gelöst werden, können die notwendige Regeln auch übersehen</value>
   </data>
   <data name="Eposta" xml:space="preserve">
     <value>Email</value>
@@ -178,7 +178,7 @@
     <value>Email oder Passwort ist falsch</value>
   </data>
   <data name="ExcelGibiProgramlar" xml:space="preserve">
-    <value>Diese Listen, auf die versucht wird, mit Programmen wie Excel zu folgen, werden mit der Zeit komplex</value>
+    <value>Die Listen, die mit den Programmen wie Excel verfolgen und kontrollieren, werden im Laufe der Zeit &lt;b&gt;sehr kompliziert&lt;/b&gt;</value>
   </data>
   <data name="Faaliyetlerimiz" xml:space="preserve">
     <value>Über uns</value>
@@ -194,7 +194,7 @@
     <comment>Krankenschwester Pflicht</comment>
   </data>
   <data name="HerNobetPeriyodundaGrubaYeniKatilan" xml:space="preserve">
-    <value>In jeder Dienstzeit kann es eine neue Einrichtung/Person geben, die der Gruppe beigetreten ist oder diese verlassen hat</value>
+    <value>Irgendwann können einige Apotheken der Gruppe beitreten oder sie verlassen</value>
   </data>
   <data name="Hesabim" xml:space="preserve">
     <value>Mein Konto</value>
@@ -224,13 +224,13 @@
     <value>Die besten Lösungen für viele Bereiche wie das Apotheke Dienstplanung System, das Online Apothekeschirm und das Krankenschwester  Dienstplanungsystem sind im Dienstplanungsystem enthalten.</value>
   </data>
   <data name="NobetBolgesi" xml:space="preserve">
-    <value>Dienstplanbereich</value>
+    <value>Dienstplanbereiche</value>
   </data>
   <data name="NobetHakkindaHerSey" xml:space="preserve">
     <value>Alles über "Dienstplannug"</value>
   </data>
   <data name="NobetlerinIstatistikOlarakTakipZorunluluguVardır" xml:space="preserve">
-    <value>Pflichten müssen statistisch verfolgt werden</value>
+    <value>Anzahlen der notdiensthabenden Apotheken &lt;b&gt;müssen statistisch verfolgt werden&lt;/b&gt;</value>
   </data>
   <data name="NobetSistemi" xml:space="preserve">
     <value>Dienstplanungssystem</value>
@@ -242,7 +242,7 @@
     <value>Run</value>
   </data>
   <data name="NobetYazmakSanildigiKadar" xml:space="preserve">
-    <value>Die Einsatzplanung ist &lt;b&gt;nicht so einfach wie es scheint&lt;/b&gt; und ein Mehrkomponentenproblem</value>
+    <value>Die Zeitplanung ist &lt;b&gt;ein schwieriges Problem als es scheint&lt;/b&gt;</value>
   </data>
   <data name="OnlineEczaneEkrani" xml:space="preserve">
     <value>Online-Apothekenbildschirm</value>
@@ -257,10 +257,10 @@
     <value>Planung</value>
   </data>
   <data name="ProbleminYapisiGeregi" xml:space="preserve">
-    <value>Da das Problem aufgrund seiner Natur &lt;b class='text-danger'&gt;Tausende von Kombinationen&lt;/b&gt; aufweist, &lt;b&gt;ist es  sehr schwierig, die Lösung manuell zu finden, auch mit Software&lt;/b&gt;</value>
+    <value>Deshalb bestehten diese Probleme aus seiner Natur &lt;b class='text-danger'&gt;Tausende von Kombinationen&lt;/b&gt;</value>
   </data>
   <data name="Referanslarimiz" xml:space="preserve">
-    <value>Verweise</value>
+    <value>Referenzen</value>
   </data>
   <data name="SaniyelerIcindeNobetlerinizYazilsin" xml:space="preserve">
     <value>Zeitplanung wird in Sekunden schrieben</value>
@@ -272,7 +272,7 @@
     <value>Verschwenden Sie keine Zeit</value>
   </data>
   <data name="SurecFazlasiylaDinamiktir" xml:space="preserve">
-    <value>Der Prozess ist äußerst dynamisch</value>
+    <value>&lt;b&gt;Der Prozess ist äußerst dynamisch&lt;/b&gt;</value>
   </data>
   <data name="TumCihazlardan7/24ulasin" xml:space="preserve">
     <value>Verwenden Sie mit allen Geräten</value>
@@ -293,9 +293,9 @@
     <value>Anwendung</value>
   </data>
   <data name="YazilanNobet" xml:space="preserve">
-    <value>Geplante Zeitplanung</value>
+    <value>Geplante Zeitplanungen</value>
   </data>
   <data name="ZamaniSizeKalsin" xml:space="preserve">
-    <value>Sparen Ihre Zeit</value>
+    <value>Sparen Sie Ihre Zeit</value>
   </data>
 </root>
