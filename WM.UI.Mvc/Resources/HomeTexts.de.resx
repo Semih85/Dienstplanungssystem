@@ -133,7 +133,7 @@
     <value>Behalte mich</value>
   </data>
   <data name="BirBaskaSorunIseSonradanOrtayaCikanMazeretlerin" xml:space="preserve">
-    <value>Dazu müssen niemals die Regeln verletzt werden, wenn die Ausreden nachher nötig sein</value>
+    <value>Dazu müssen niemals die Regeln verletzt werden, wenn die Ausreden nachher nötig sind</value>
   </data>
   <data name="BirDeOlasiHatadaGelecekItirazlar" xml:space="preserve">
     <value>Außerdem &lt;b&gt;gewinnt die Existenz des Dutyschedulingsystems an Bedeutung,&lt;/b&gt; wenn die mögliche Fehler und Wiederreden bzw. Beschwerden berücksichtigt werden</value>
@@ -169,7 +169,7 @@
     <value>Notdienstplanungssystem</value>
   </data>
   <data name="ElleYazilirkenBileEnCokIstenenKuallarGozdenKacabilir" xml:space="preserve">
-    <value>Da diese Art von Problemen manuell gelöst werden, können die notwendige Regeln auch übersehen</value>
+    <value>Da diese Art von Problemen manuell gelöst werden, kann man die notwendige Regeln auch übersehen</value>
   </data>
   <data name="Eposta" xml:space="preserve">
     <value>Email</value>
@@ -242,7 +242,7 @@
     <value>Run</value>
   </data>
   <data name="NobetYazmakSanildigiKadar" xml:space="preserve">
-    <value>Die Zeitplanung ist &lt;b&gt;ein schwieriges Problem als es scheint&lt;/b&gt;</value>
+    <value>Die Zeitplanung ist &lt;b&gt;ein schwierigeres Problem als es scheint&lt;/b&gt;</value>
   </data>
   <data name="OnlineEczaneEkrani" xml:space="preserve">
     <value>Online-Apothekenbildschirm</value>
@@ -263,7 +263,7 @@
     <value>Referenzen</value>
   </data>
   <data name="SaniyelerIcindeNobetlerinizYazilsin" xml:space="preserve">
-    <value>Zeitplanung wird in Sekunden schrieben</value>
+    <value>Zeitplanung wird in Sekunden erarbeitet</value>
   </data>
   <data name="SizSadeceKurallariBelirleyin" xml:space="preserve">
     <value>Legen Sie nur Ihre Regeln fest</value>
