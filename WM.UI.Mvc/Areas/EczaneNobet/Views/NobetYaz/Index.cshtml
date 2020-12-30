@@ -371,7 +371,9 @@
                 <button type="button" class="btn btn-outline-success" id="btnModalClickSubmit">Evet</button>
                 <button type="button" class="btn btn-outline-danger"
                         @*onclick="return confirm('Çözüm iptal edilecek. Emin misiniz?');"*@
-                        id="btnModeliKapat" disabled data-dismiss="modal">
+                        id="btnModeliKapat" 
+                        @*disabled*@ 
+                        data-dismiss="modal">
                     İptal
                 </button>
             </div>
@@ -1316,7 +1318,7 @@
                 return false;
             };
 
-            var url = "/NobetUstGrupKisit/GetDegisenKisitlar";
+            var url = "~/NobetUstGrupKisit/GetDegisenKisitlar";
 
             $.get(url, { nobetUstGrupId: @Model.NobetUstGrupId }, function (data) {
 
@@ -1390,7 +1392,7 @@
         //    //var tarih = tarihDondur2(this.value);
         //    //$('#BaslangicTarihi').datepicker('setEndDate', new Date(tarih));
         //});
-                
+
         $("#btnTarihAraligi").click(function () {
             var baslangicStr = tarihDondur2($("#TarihBaslangic").val());
 
