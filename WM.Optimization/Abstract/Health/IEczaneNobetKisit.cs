@@ -71,7 +71,9 @@ namespace WM.Optimization.Abstract.Health
         string CozulenGruplariYazdir(List<NobetGrupGorevTipDetay> nobetGrupGorevTipDetaylar);
         double GetNobetGunKural(List<NobetGrupKuralDetay> nobetGrupKurallar, int nobetKuralId);
         NobetUstGrupKisitDetay GetNobetGunKuralIlgiliKisitTarihAraligi(List<NobetUstGrupKisitDetay> kisitlarAktif, int nobetGunKuralId);
-        List<NobetUstGrupKisitDetay> GetKisitlarNobetGrupBazli(List<NobetUstGrupKisitDetay> kisitlarUstGrupBazli, List<NobetGrupGorevTipKisitDetay> kisitlarGrupBazli);
+        List<NobetUstGrupKisitDetay> GetKisitlarKritereGore(List<NobetUstGrupKisitDetay> kisitlarUstGrupBazli, List<NobetGrupGorevTipKisitDetay> kisitlarGrupBazli);
+        List<NobetUstGrupKisitDetay> GetKisitlarKritereGore(List<NobetUstGrupKisitDetay> kisitlarUstGrupBazli, List<EczaneNobetGrupKisitDetay> eczaneNobetGrupKisitlar);
+
         void NobetGrupBuyuklugunuTakvimeEkle(List<TakvimNobetGrup> tarihler, int eczaneSayisi);
         double GetArdisikBosGunSayisi(int pespeseNobetSayisi, double altLimit);
         List<AyniGunTutulanNobetDetay> GetAyniGunNobetTutanEczaneler(List<EczaneNobetTarihAralik> sonuclar);
@@ -97,6 +99,7 @@ namespace WM.Optimization.Abstract.Health
         List<TakvimNobetGrup> TarihleriFiltrele(List<TakvimNobetGrup> tarihler, int[] nobetGunKuralIds);
         List<TakvimNobetGrup> TarihleriFiltreleVeSirala(List<TakvimNobetGrup> tarihler, int nobetGrupGorevTipId);
         List<TakvimNobetGrup> IstisnaUygulaKuralGunGrup(List<NobetUstGrupKisitIstisnaGunGrupDetay> nobetUstGrupKisitIstisnaGunGruplar, List<TakvimNobetGrup> takvimNobetGruplar, int kisitId);
+
     }
 }
 

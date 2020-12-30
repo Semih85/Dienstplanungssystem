@@ -148,7 +148,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var kisitlarGrupBazli = data.NobetGrupGorevTipKisitlar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                var kisitlarAktifNobetGrupGorevTipBazli = GetKisitlarNobetGrupBazli(data.Kisitlar, kisitlarGrupBazli);
+                var kisitlarAktifNobetGrupGorevTipBazli = GetKisitlarKritereGore(data.Kisitlar, kisitlarGrupBazli);
 
                 #endregion
 
@@ -420,7 +420,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     var eczaneNobetGrupBazliKisitlar = data.EczaneNobetGrupKisitlar.Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id).ToList();
 
-                    var kisitlarAktif = GetKisitlarNobetGrupBazli(kisitlarAktifNobetGrupGorevTipBazli, eczaneNobetGrupBazliKisitlar);
+                    var kisitlarAktif = GetKisitlarKritereGore(kisitlarAktifNobetGrupGorevTipBazli, eczaneNobetGrupBazliKisitlar);
 
                     #region eczaneye nöbet yazılamayacak gün mazeretleri.
 
@@ -1474,7 +1474,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                 var kisitlarGrupBazli = data.NobetGrupGorevTipKisitlar.Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                var kisitlarAktifNobetGrupGorevTipBazli = GetKisitlarNobetGrupBazli(data.Kisitlar, kisitlarGrupBazli);
+                var kisitlarAktifNobetGrupGorevTipBazli = GetKisitlarKritereGore(data.Kisitlar, kisitlarGrupBazli);
 
                 #endregion
 
@@ -1717,7 +1717,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
 
                     var eczaneNobetGrupBazliKisitlar = data.EczaneNobetGrupKisitlar.Where(w => w.EczaneNobetGrupId == eczaneNobetGrup.Id).ToList();
 
-                    var kisitlarAktif = GetKisitlarNobetGrupBazli(kisitlarAktifNobetGrupGorevTipBazli, eczaneNobetGrupBazliKisitlar);
+                    var kisitlarAktif = GetKisitlarKritereGore(kisitlarAktifNobetGrupGorevTipBazli, eczaneNobetGrupBazliKisitlar);
 
                     // karar değişkeni - eczane bazlı filtrelenmiş
                     var eczaneNobetTarihAralikEczaneBazli = eczaneNobetTarihAralikGrupBazli

@@ -2957,7 +2957,7 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             return nobetGunKuralTarihler;
         }
 
-        public List<NobetUstGrupKisitDetay> GetKisitlarNobetGrupBazli(List<NobetUstGrupKisitDetay> kisitlarUstGrupBazli, List<NobetGrupGorevTipKisitDetay> kisitlarGrupBazli)
+        public List<NobetUstGrupKisitDetay> GetKisitlarKritereGore(List<NobetUstGrupKisitDetay> kisitlarUstGrupBazli, List<NobetGrupGorevTipKisitDetay> kisitlarGrupBazli)
         {
             var kisitlarAktif = new List<NobetUstGrupKisitDetay>();
 
@@ -2965,6 +2965,24 @@ namespace WM.Optimization.Concrete.Optano.Health.EczaneNobet
             kisitlarUstGrupBazli.ForEach(x => kisitlarAktif.Add((NobetUstGrupKisitDetay)x.Clone()));
 
             foreach (var grupBazliKisit in kisitlarGrupBazli)
+            {
+                var kisitGrupBazli = kisitlarAktif.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId);
+
+                kisitGrupBazli.PasifMi = grupBazliKisit.PasifMi;
+                kisitGrupBazli.SagTarafDegeri = grupBazliKisit.SagTarafDegeri;
+            }
+
+            return kisitlarAktif;
+        }
+
+        public List<NobetUstGrupKisitDetay> GetKisitlarKritereGore(List<NobetUstGrupKisitDetay> kisitlarUstGrupBazli, List<EczaneNobetGrupKisitDetay> eczaneNobetGrupKisitlar)
+        {
+            var kisitlarAktif = new List<NobetUstGrupKisitDetay>();
+
+            //üst grup kısıtlar olduğu gibi aktif listeye aktarıldı. grup bazlı değişen olursa aktiften değişecek.
+            kisitlarUstGrupBazli.ForEach(x => kisitlarAktif.Add((NobetUstGrupKisitDetay)x.Clone()));
+
+            foreach (var grupBazliKisit in eczaneNobetGrupKisitlar)
             {
                 var kisitGrupBazli = kisitlarAktif.SingleOrDefault(w => w.KisitId == grupBazliKisit.KisitId);
 
