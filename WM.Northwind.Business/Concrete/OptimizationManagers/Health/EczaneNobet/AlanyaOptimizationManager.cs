@@ -593,7 +593,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     var kisitlarGrupBazli = grupBazliKisitlar
                         .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
 
-                    var kisitlarAktif = _eczaneNobetKisit.GetKisitlarNobetGrupBazli(nobetUstGrupKisitlar, kisitlarGrupBazli);
+                    var kisitlarAktif = _eczaneNobetKisit.GetKisitlarKritereGore(nobetUstGrupKisitlar, kisitlarGrupBazli);
 
                     var eczaneNobetTarihAralikGrupBazli = takvimNobetGrupGunDegerIstatistiklerTarihAralik
                         .Where(w => w.NobetGrupGorevTipId == nobetGrupGorevTip.Id).ToList();
