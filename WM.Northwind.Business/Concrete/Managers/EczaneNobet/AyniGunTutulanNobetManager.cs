@@ -222,7 +222,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
             }
             else if (nobetUstGrupId == 6 || nobetUstGrupId == 9)
             {//bartın, Çorum 
-           
+
                 var eczaneNobetGruplar1 = eczaneNobetGruplar.OrderBy(o => o.Id).ToArray();
 
                 foreach (var eczaneNobetGrup1 in eczaneNobetGruplar1)
@@ -650,7 +650,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
                 ikiliEczane.AyniGunNobetSayisi = 0;
                 ikiliEczane.AyniGunNobetTutamayacaklariGunSayisi = 0;
 
-               //_ayniGunTutulanNobetDal.Update(ikiliEczane);
+                //_ayniGunTutulanNobetDal.Update(ikiliEczane);
             }
 
             _ayniGunTutulanNobetDal.UpdateTumKolonlar(ikiliEczanelerTumu);
