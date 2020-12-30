@@ -41,6 +41,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private IDebugEczaneService _debugEczaneService;
         private IEczaneUzaklikMatrisService _eczaneUzaklikMatrisService;
         private INobetUstGrupKisitIstisnaGunGrupService _nobetUstGrupKisitIstisnaGunGrupService;
+        private IEczaneNobetGrupKisitService _eczaneNobetGrupKisitService;
 
         public OrduMerkezOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -66,7 +67,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     IAyniGunTutulanNobetService ayniGunTutulanNobetService,
                     IDebugEczaneService debugEczaneService,
                     IEczaneUzaklikMatrisService eczaneUzaklikMatrisService,
-                    INobetUstGrupKisitIstisnaGunGrupService nobetUstGrupKisitIstisnaGunGrupService
+                    INobetUstGrupKisitIstisnaGunGrupService nobetUstGrupKisitIstisnaGunGrupService,
+                    IEczaneNobetGrupKisitService eczaneNobetGrupKisitService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -93,6 +95,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _debugEczaneService = debugEczaneService;
             _eczaneUzaklikMatrisService = eczaneUzaklikMatrisService;
             _nobetUstGrupKisitIstisnaGunGrupService = nobetUstGrupKisitIstisnaGunGrupService;
+            _eczaneNobetGrupKisitService = eczaneNobetGrupKisitService;
         }
         #endregion
 
@@ -412,6 +415,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var nobetGrupGorevTipKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrupId);
 
+            var eczaneNobetGrupKisitlar = _eczaneNobetGrupKisitService.GetDetaylar(nobetUstGrupId);
+
             #region mesafe kontrol
 
             var eczanelerArasiMesafeyiKoru = _nobetUstGrupKisitService.GetDetay("eczanelerArasiMesafeyiKoru", nobetUstGrupId);
@@ -493,6 +498,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneBazliGunKuralIstatistikYatay = eczaneBazliGunKuralIstatistikYatay,
                 EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
                 NobetGrupGorevTipKisitlar = nobetGrupGorevTipKisitlar,
+                EczaneNobetGrupKisitlar = eczaneNobetGrupKisitlar,
                 MesafeKontrolEczaneler = mesafeKontrolEczaneler,
                 MesafeKontrolEczanelerGrupBazli = mesafeKontrolEczanelerGrupBazli,
                 IkiliEczaneler = ikiliEczaneler,

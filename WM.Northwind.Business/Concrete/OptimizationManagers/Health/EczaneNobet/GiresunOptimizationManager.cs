@@ -37,6 +37,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
         private INobetGrupGorevTipKisitService _nobetGrupGorevTipKisitService;
         private IAyniGunTutulanNobetService _ayniGunTutulanNobetService;
         private IDebugEczaneService _debugEczaneService;
+        private IEczaneNobetGrupKisitService _eczaneNobetGrupKisitService;
+        private INobetAltGrupService _nobetAltGrupService;
 
         public GiresunOptimizationManager(
                     IEczaneGrupService eczaneGrupService,
@@ -60,7 +62,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                     IEczaneNobetGrupAltGrupService eczaneNobetGrupAltGrupService,
                     INobetGrupGorevTipKisitService nobetGrupGorevTipKisitService,
                     IAyniGunTutulanNobetService ayniGunTutulanNobetService,
-                    IDebugEczaneService debugEczaneService
+                    IDebugEczaneService debugEczaneService,
+                    IEczaneNobetGrupKisitService eczaneNobetGrupKisitService,
+                    INobetAltGrupService nobetAltGrupService
             )
         {
             _eczaneGrupService = eczaneGrupService;
@@ -85,6 +89,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             _nobetGrupGorevTipKisitService = nobetGrupGorevTipKisitService;
             _ayniGunTutulanNobetService = ayniGunTutulanNobetService;
             _debugEczaneService = debugEczaneService;
+            _eczaneNobetGrupKisitService = eczaneNobetGrupKisitService;
+            _nobetAltGrupService = nobetAltGrupService;
         }
         #endregion
 
@@ -198,7 +204,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetSonuclarCozulenGruplar = eczaneNobetSonuclar
                 .Where(w => eczaneNobetGruplarTumu.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
 
-            var son3Ay = new DateTime(2020, 1, 1);
+            var son3Ay = new DateTime(2021, 1, 1);
                 //baslangicTarihi.AddMonths(-2);
 
             var eczaneNobetSonuclarSon3Ay = eczaneNobetSonuclarCozulenGruplar
@@ -489,6 +495,8 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupId);
             var grupBazliKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrupId);
+            var eczaneNobetGrupKisitlar = _eczaneNobetGrupKisitService.GetDetaylar(nobetUstGrupId);
+            var nobetAltGruplar = _nobetAltGrupService.GetDetaylar(nobetUstGrupId);
 
             var giresunDataModel = new GiresunDataModel()
             {
@@ -534,8 +542,10 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
                 EczaneBazliGunKuralIstatistikYatay = eczaneBazliGunKuralIstatistikYatay,
                 EczaneNobetGrupAltGruplar = eczaneNobetGrupAltGruplar,
                 NobetGrupGorevTipKisitlar = grupBazliKisitlar,
+                EczaneNobetGrupKisitlar = eczaneNobetGrupKisitlar,
                 IkiliEczaneler = ikiliEczaneler,
-                DebugYapilacakEczaneler = debugYapilacakEczaneler
+                DebugYapilacakEczaneler = debugYapilacakEczaneler,
+                NobetAltGruplar = nobetAltGruplar
             };
 
             //_eczaneNobetOrtakService.KurallariKontrolEtHaftaIciEnAzEnCok(nobetUstGrupId, eczaneNobetGrupGunKuralIstatistikYatay);
