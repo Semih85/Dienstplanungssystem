@@ -139,7 +139,7 @@
     <value>Außerdem &lt;b&gt;gewinnt die Existenz des Dutyschedulingsystems an Bedeutung,&lt;/b&gt; wenn die mögliche Fehler und Wiederreden bzw. Beschwerden berücksichtigt werden</value>
   </data>
   <data name="BuProblemdeEnyalinHaliyle" xml:space="preserve">
-    <value>Durch unserer Applikation wird optimal bestimmt, welche Apotheken in welcher Periode Notdienst haben</value>
+    <value>Durch Dienstplanungssystem wird optimal bestimmt, welche Apotheken in welcher Periode Notdienst haben</value>
   </data>
   <data name="BuYonuyleNoberYazmaSureci" xml:space="preserve">
     <value>In dieser Hinsicht verursacht &lt;b class='text-danger'&gt;der Prozess der Dienstplanung zu viel Zeit, Arbeit und geistige Ermüdung&lt;/b&gt;</value>
@@ -169,7 +169,7 @@
     <value>Notdienstplanungssystem</value>
   </data>
   <data name="ElleYazilirkenBileEnCokIstenenKuallarGozdenKacabilir" xml:space="preserve">
-    <value>Da diese Art von Problemen manuell gelöst werden, kann man die notwendige Regeln auch übersehen</value>
+    <value>Abschließend lässt sich sagen, dass man mansche notwendige Regeln übersehen kann, wenn diese Art von Problemen manuell gelöst werden</value>
   </data>
   <data name="Eposta" xml:space="preserve">
     <value>Email</value>
@@ -178,7 +178,7 @@
     <value>Email oder Passwort ist falsch</value>
   </data>
   <data name="ExcelGibiProgramlar" xml:space="preserve">
-    <value>Die Listen, die mit den Programmen wie Excel verfolgen und kontrollieren, werden im Laufe der Zeit &lt;b&gt;sehr kompliziert&lt;/b&gt;</value>
+    <value>Die Listen, die mit den Programmen wie Excel verfolgen und kontrollieren, &lt;b&gt;werden im Laufe der Zeit sehr kompliziert&lt;/b&gt;</value>
   </data>
   <data name="Faaliyetlerimiz" xml:space="preserve">
     <value>Über uns</value>
@@ -187,14 +187,14 @@
     <value>Einloggen</value>
   </data>
   <data name="HemenBaslayalim" xml:space="preserve">
-    <value>Lass uns anfangen.</value>
+    <value>Lasst uns anfangen!</value>
   </data>
   <data name="HemsireNobetSistemi" xml:space="preserve">
     <value>Dienstplanungssystem</value>
     <comment>Krankenschwester Pflicht</comment>
   </data>
   <data name="HerNobetPeriyodundaGrubaYeniKatilan" xml:space="preserve">
-    <value>Irgendwann können einige Apotheken der Gruppe beitreten oder sie verlassen</value>
+    <value>Daher können in jeder Periode einige Apotheken der Gruppe beitreten oder sie verlassen</value>
   </data>
   <data name="Hesabim" xml:space="preserve">
     <value>Mein Konto</value>
@@ -209,7 +209,7 @@
     <value>Statistik</value>
   </data>
   <data name="IstatistiklerinKeyfiniCikarin" xml:space="preserve">
-    <value>Genieße Statistiken</value>
+    <value>Genießen Sie Statistiken</value>
   </data>
   <data name="KayitIcinIletisimeGecin" xml:space="preserve">
     <value>Kontakt uns für die Registrierung</value>
@@ -230,7 +230,7 @@
     <value>Alles über "Dienstplannug"</value>
   </data>
   <data name="NobetlerinIstatistikOlarakTakipZorunluluguVardır" xml:space="preserve">
-    <value>Anzahlen der notdiensthabenden Apotheken &lt;b&gt;müssen statistisch verfolgt werden&lt;/b&gt;</value>
+    <value>Ein Argument dafür, dass Anzahlen der notdiensthabenden Apotheken &lt;b&gt;statistisch verfolgt werden müssen&lt;/b&gt;</value>
   </data>
   <data name="NobetSistemi" xml:space="preserve">
     <value>Dienstplanungssystem</value>
@@ -242,7 +242,7 @@
     <value>Run</value>
   </data>
   <data name="NobetYazmakSanildigiKadar" xml:space="preserve">
-    <value>Die Zeitplanung ist &lt;b&gt;ein schwierigeres Problem als es scheint&lt;/b&gt;</value>
+    <value>Diese App erstellt Lösungen im Bereich der Zeitplanung, die &lt;b&gt;ein schwierigeres Problem als es scheint&lt;/b&gt; ist</value>
   </data>
   <data name="OnlineEczaneEkrani" xml:space="preserve">
     <value>Online-Apothekenbildschirm</value>
@@ -257,7 +257,7 @@
     <value>Planung</value>
   </data>
   <data name="ProbleminYapisiGeregi" xml:space="preserve">
-    <value>Deshalb bestehten diese Probleme aus seiner Natur &lt;b class='text-danger'&gt;Tausende von Kombinationen&lt;/b&gt;</value>
+    <value>Solche Probleme bestehen nach aus seiner Natur &lt;b class='text-danger'&gt;Tausende von Kombinationen&lt;/b&gt;</value>
   </data>
   <data name="Referanslarimiz" xml:space="preserve">
     <value>Referenzen</value>
