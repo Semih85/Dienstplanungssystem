@@ -152,6 +152,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var bitisTarihi = eczaneNobetDataModelParametre.BitisTarihi;
             var nobetGrupGorevTiplerTumu = eczaneNobetDataModelParametre.NobetGrupGorevTipler;//.Where(w => nobetGrupIdListe.Contains(w.NobetGrupId)).ToList();
             var nobetGorevTipler = eczaneNobetDataModelParametre.NobetGrupGorevTipler.Select(s => s.NobetGorevTipId).Distinct().ToList();
+            var nobetGrupGorevTipIdList = nobetGrupGorevTiplerTumu.Select(s => s.Id).ToList();
             #endregion
 
             var nobetGrupIdListe = eczaneNobetDataModelParametre.NobetGrupGorevTipler.Select(s => s.NobetGrupId).ToList();
@@ -205,7 +206,11 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             var eczaneNobetSonuclarCozulenGruplar = eczaneNobetSonuclar
                 .Where(w => eczaneNobetGruplarTumu.Select(s => s.Id).Contains(w.EczaneNobetGrupId)).ToList();
 
-            var son3Ay = baslangicTarihi.AddMonths(-3);
+            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipIdList);
+
+            var sonAylar = _nobetGrupKuralService.GetDetaylar(nobetGrupGorevTipIdList, 3); //3: varsayılan nöbetçi sayısı
+
+            var son3Ay = baslangicTarihi.AddMonths(-1);
             //new DateTime(2020, 7, 1);
 
             var eczaneNobetSonuclarSon3Ay = eczaneNobetSonuclarCozulenGruplar
@@ -369,8 +374,6 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
             #endregion
 
             var ikiliEczaneler = _ayniGunTutulanNobetService.GetDetaylar(nobetGrupIdListe);
-
-            var nobetGrupKurallar = _nobetGrupKuralService.GetDetaylarByNobetGrupGorevTipIdList(nobetGrupGorevTipler.Select(s => s.Id).ToList());
 
             var nobetUstGrupKisitlar = _nobetUstGrupKisitService.GetDetaylar(nobetUstGrupId);
             var grupBazliKisitlar = _nobetGrupGorevTipKisitService.GetDetaylar(nobetUstGrupId);

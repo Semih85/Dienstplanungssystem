@@ -191,7 +191,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             var enSonNobetler = _eczaneNobetOrtakService.GetEczaneNobetGrupGunKuralIstatistik(eczaneNobetGruplar, eczaneNobetSonuclarCozulenGruplar);
 
-            var son3Ay = new DateTime(2020, 7, 1);
+            var son3Ay = new DateTime(2020, 11, 1);
             //baslangicTarihi.AddMonths(-3);
 
             var eczaneNobetSonuclarSon3Ay = eczaneNobetSonuclarCozulenGruplar
@@ -214,9 +214,9 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
             //sonuçlarda ilişkili eczaneler
             var eczaneGruplar = _eczaneGrupService.GetDetaylarAktifGruplar(nobetUstGrupId);
-                //.Where(x => (eczaneGrupEdges.Select(s => s.From).Distinct().Contains(x.EczaneId) || eczaneGrupEdges.Select(s => s.To).Distinct().Contains(x.EczaneId))
-                //          //|| nobetGrupIdListe.Contains(x.NobetGrupId)
-                //      ).ToList();
+            //.Where(x => (eczaneGrupEdges.Select(s => s.From).Distinct().Contains(x.EczaneId) || eczaneGrupEdges.Select(s => s.To).Distinct().Contains(x.EczaneId))
+            //          //|| nobetGrupIdListe.Contains(x.NobetGrupId)
+            //      ).ToList();
 
             //fazladan gelen tanımlar var iyileştirmekte fayda var
             var eczaneGrupTanimlar = _eczaneGrupTanimService.GetDetaylarAktifTanimList(eczaneGruplar.Select(x => x.EczaneGrupTanimId).ToList());
@@ -476,7 +476,7 @@ namespace WM.Northwind.Business.Concrete.OptimizationManagers.Health.EczaneNobet
 
                 EczaneNobetIstekler = eczaneNobetIstekler,
                 EczaneNobetIsteklerSonrakiDonem = eczaneNobetIsteklerSonrakiDonem,
-                
+
                 NobetGrupGunKurallar = _nobetGrupGunKuralService.GetDetaylarAktifList(nobetGrupIdListe),
                 NobetGrupKurallar = nobetGrupKurallar,
                 NobetGrupGorevTipler = nobetGrupGorevTipler,
