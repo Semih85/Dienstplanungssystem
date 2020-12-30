@@ -98,6 +98,7 @@
     <Compile Include="Abstract\Education\University\IExamLocationAssignmentOpt.cs" />
     <Compile Include="Abstract\Education\University\IExamSchedulingOpt.cs" />
     <Compile Include="Abstract\Education\University\IProctorAssignmentOpt.cs" />
+    <Compile Include="Abstract\Health\IEczaneNobetAlanya2021OptimizationV2.cs" />
     <Compile Include="Abstract\Health\IEczaneNobetAlanyaOptimizationV2.cs" />
     <Compile Include="Abstract\Health\IEczaneNobetAntakyaOptimization.cs" />
     <Compile Include="Abstract\Health\IEczaneNobetKayseriOptimization.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Concrete\IbmCplex\Samples\BlendCplex.cs" />
     <Compile Include="Concrete\MicrosoftSolverFoundation\Examples\SimpleSamples.cs" />
     <Compile Include="Concrete\MicrosoftSolverFoundation\Examples\Taha\BoyaUretim.cs" />
+    <Compile Include="Concrete\Optano\Health\EczaneNobet\Alanya2021Optano.cs" />
     <Compile Include="Concrete\Optano\Health\EczaneNobet\AntakyaOptano.cs" />
     <Compile Include="Concrete\Optano\Health\EczaneNobet\KayseriOptano.cs" />
     <Compile Include="Concrete\Optano\Health\EczaneNobet\OrduMerkezOptano.cs" />
