@@ -30,8 +30,11 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         PasifMi = s.PasifMi,
                         SagTarafDegeri = s.SagTarafDegeri,
                         SagTarafDegeriVarsayilan = s.SagTarafDegeriVarsayilan,
-                        VarsayilanPasifMi = s.VarsayilanPasifMi
-                                              
+                        VarsayilanPasifMi = s.VarsayilanPasifMi,
+                        KisitId = s.NobetUstGrupKisit.KisitId,
+                        NobetUstGrupId = s.NobetUstGrupKisit.NobetUstGrupId,
+                        NobetUstGrupKisitId = s.NobetUstGrupKisitId,
+                         //KisitAdiUzun = s.NobetUstGrupKisit.Kisit.u
                     }).SingleOrDefault(filter);
             }
         }
@@ -50,8 +53,10 @@ namespace WM.Northwind.DataAccess.Concrete.EntityFramework.EczaneNobet
                         PasifMi = s.PasifMi,
                         SagTarafDegeri = s.SagTarafDegeri,
                         SagTarafDegeriVarsayilan = s.SagTarafDegeriVarsayilan,
-                        VarsayilanPasifMi = s.VarsayilanPasifMi
-
+                        VarsayilanPasifMi = s.VarsayilanPasifMi,
+                        KisitId = s.NobetUstGrupKisit.KisitId,
+                        NobetUstGrupId = s.NobetUstGrupKisit.NobetUstGrupId,
+                        NobetUstGrupKisitId = s.NobetUstGrupKisitId
                     });
 
                 return filter == null

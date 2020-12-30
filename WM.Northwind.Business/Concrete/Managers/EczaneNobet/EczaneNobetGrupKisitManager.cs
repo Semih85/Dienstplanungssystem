@@ -33,7 +33,7 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             return _eczaneNobetGrupKisitDal.Get(x => x.Id == eczaneNobetGrupKisitId);
         }
-         [CacheAspect(typeof(MemoryCacheManager))]
+        [CacheAspect(typeof(MemoryCacheManager))]
         public List<EczaneNobetGrupKisit> GetList()
         {
             return _eczaneNobetGrupKisitDal.GetList();
@@ -48,16 +48,22 @@ namespace WM.Northwind.Business.Concrete.Managers.EczaneNobet
         {
             _eczaneNobetGrupKisitDal.Update(eczaneNobetGrupKisit);
         }
-                                  public EczaneNobetGrupKisitDetay GetDetayById(int eczaneNobetGrupKisitId)
-            {
-                return _eczaneNobetGrupKisitDal.GetDetay(x => x.Id == eczaneNobetGrupKisitId);
-            }
-            
-            [CacheAspect(typeof(MemoryCacheManager))]
-            public List<EczaneNobetGrupKisitDetay> GetDetaylar()
-            {
-                return _eczaneNobetGrupKisitDal.GetDetayList();
-            }
+        public EczaneNobetGrupKisitDetay GetDetayById(int eczaneNobetGrupKisitId)
+        {
+            return _eczaneNobetGrupKisitDal.GetDetay(x => x.Id == eczaneNobetGrupKisitId);
+        }
 
-    } 
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetGrupKisitDetay> GetDetaylar()
+        {
+            return _eczaneNobetGrupKisitDal.GetDetayList();
+        }
+
+        [CacheAspect(typeof(MemoryCacheManager))]
+        public List<EczaneNobetGrupKisitDetay> GetDetaylar(int nobetUstGrupId)
+        {
+            return _eczaneNobetGrupKisitDal.GetDetayList(x=> x.NobetUstGrupId == nobetUstGrupId);
+        }
+
+    }
 }

@@ -902,6 +902,11 @@
     <Content Include="Areas\EczaneNobet\Views\NobetUstGrupKisitIstisnaGunGrup\Index.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneUzaklikMatris\UzaklikMatrisiniOlusturPartialView.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneUzaklikMatris\UzaklikMatrisileriniYönet.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetGrupKisit\Create.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetGrupKisit\Delete.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetGrupKisit\Details.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetGrupKisit\Edit.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetGrupKisit\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -1285,6 +1290,7 @@
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneMisafirController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetDegisimArzController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetDegisimController.cs" />
+    <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetGrupKisitController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetSanalSonucController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneNobetSonucPlanlananController.cs" />
     <Compile Include="Areas\EczaneNobet\Controllers\EczaneUzaklikMatrisController.cs" />
@@ -1586,7 +1592,9 @@
     <Analyzer Include="..\packages\Microsoft.NetFramework.Analyzers.2.9.7\analyzers\dotnet\cs\Microsoft.NetFramework.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\HomeTexts.de.resx" />
+    <EmbeddedResource Include="Resources\HomeTexts.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\HomeTexts.en.resx" />
     <EmbeddedResource Include="Resources\HomeTexts.resx" />
   </ItemGroup>

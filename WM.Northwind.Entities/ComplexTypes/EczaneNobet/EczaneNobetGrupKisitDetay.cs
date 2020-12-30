@@ -13,6 +13,8 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
     public class EczaneNobetGrupKisitDetay: IComplexType
  { 
         public int Id { get; set; }
+        public int NobetUstGrupId { get; set; }
+        public int KisitId { get; set; }
         public int NobetUstGrupKisitId { get; set; }
         public int EczaneNobetGrupId { get; set; }
         public bool PasifMi { get; set; }
@@ -22,6 +24,7 @@ namespace WM.Northwind.Entities.ComplexTypes.EczaneNobet
         public string Aciklama { get; set; }
         public string NobetUstGrupKisitAdi { get; set; }
         public string EczaneNobetGrupAdi { get; set; }
+        //public string KisitAdiUzun { get; set; }
 
-    } 
+    }
 } 
