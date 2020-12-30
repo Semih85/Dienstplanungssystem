@@ -19,6 +19,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
     {
         #region ctor
         private IAlanyaOptimizationService _alanyaOptimizationService;
+        private IAlanya2021OptimizationService _alanya2021OptimizationService;
         private IAntalyaMerkezOptimizationService _antalyaMerkezOptimizationService;
         private IMersinMerkezOptimizationServiceV2 _mersinMerkezOptimizationServiceV2;
         private IGiresunOptimizationService _giresunOptimizationService;
@@ -51,6 +52,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
         private INobetUstGrupSessionService _nobetUstGrupSessionService;
 
         public NobetYazController(IAlanyaOptimizationService alanyaOptimizationService,
+            IAlanya2021OptimizationService alanya2021OptimizationService,
                                   IAntalyaMerkezOptimizationService antalyaMerkezOptimizationService,
                                   IMersinMerkezOptimizationServiceV2 mersinMerkezOptimizationServiceV2,
                                   IGiresunOptimizationService giresunOptimizationService,
@@ -84,6 +86,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
             )
         {
             _alanyaOptimizationService = alanyaOptimizationService;
+            _alanya2021OptimizationService = alanya2021OptimizationService;
             _antalyaMerkezOptimizationService = antalyaMerkezOptimizationService;
             _mersinMerkezOptimizationServiceV2 = mersinMerkezOptimizationServiceV2;
             _giresunOptimizationService = giresunOptimizationService;
@@ -319,6 +322,9 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
                     break;
                 case 15:
                     sonucModel = _antakyaOptimizationService.ModelCoz(eczaneNobetModelCoz);
+                    break;
+                case 16:
+                    sonucModel = _alanya2021OptimizationService.ModelCoz(eczaneNobetModelCoz);
                     break;
                 default:
                     return RedirectToAction("Index");
