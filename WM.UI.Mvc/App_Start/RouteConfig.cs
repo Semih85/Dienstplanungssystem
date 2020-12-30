@@ -81,7 +81,7 @@ namespace WM.UI.Mvc
 
             routes.MapRoute(
                 name: "Anasayfa",
-                url: "{language}/anaSayfa",
+                url: "{language}",
                 defaults: new
                 {
                     language = lang,
@@ -92,7 +92,7 @@ namespace WM.UI.Mvc
             );
 
             routes.MapRoute(
-                name: "Default",
+                name: "DefaultWithLang",
                 url: "{language}/{controller}/{action}/{id}",
                 defaults: new
                 {
@@ -104,12 +104,12 @@ namespace WM.UI.Mvc
                 namespaces: new string[] { "WM.UI.Mvc.Controllers" }
             );
 
-            //routes.MapRoute(
-            //    name: "Default",
-            //    url: "{controller}/{action}/{id}",
-            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-            //    namespaces: new string[] { "WM.UI.Mvc.Controllers" }
-            //);
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new string[] { "WM.UI.Mvc.Controllers" }
+            );
         }
     }
 }

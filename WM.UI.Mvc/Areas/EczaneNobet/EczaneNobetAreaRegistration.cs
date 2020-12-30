@@ -318,21 +318,21 @@ namespace WM.UI.Mvc.Areas.EczaneNobet
             #region listeler
 
             context.MapRoute(
-                name: "NobetYaz",
-                url: "{language}/eczane-nobet-yaz",
+                name: "NobetYaz2",
+                url: "eczane-nobet-yaz",
                 defaults: new
                 {
-                    language = lang,
                     controller = "NobetYaz",
                     action = "Index"
                 }
             );
 
             context.MapRoute(
-                name: "NobetYaz2",
-                url: "eczane-nobet-yaz",
+                name: "NobetYaz",
+                url: "{language}/eczane-nobet-yaz",
                 defaults: new
                 {
+                    language = lang,
                     controller = "NobetYaz",
                     action = "Index"
                 }
