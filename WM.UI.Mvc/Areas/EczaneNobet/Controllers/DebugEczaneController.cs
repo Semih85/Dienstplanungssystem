@@ -82,7 +82,7 @@ namespace WM.UI.Mvc.Areas.EczaneNobet.Controllers
 
             var eczaneNobetgrupIdler = _eczaneNobetGrupService.GetDetaylar(ustGrupSession.Id).OrderBy(s => s.EczaneAdi);
 
-            ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetgrupIdler.Select(s => new { s.Id, s.EczaneNobetGrupAdi }), "Id", "EczaneNobetGrupAdi");
+            ViewBag.EczaneNobetGrupId = new SelectList(eczaneNobetgrupIdler.Select(s => new { s.Id, s.EczaneGorevTipAdi }), "Id", "EczaneGorevTipAdi");
             return View();
         }
 
