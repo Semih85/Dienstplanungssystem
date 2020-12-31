@@ -1,5 +1,5 @@
 ﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" />
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.7\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props" Condition="Exists('..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.7\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" />
   <Import Project="..\packages\Microsoft.NetFramework.Analyzers.2.9.7\build\Microsoft.NetFramework.Analyzers.props" Condition="Exists('..\packages\Microsoft.NetFramework.Analyzers.2.9.7\build\Microsoft.NetFramework.Analyzers.props')" />
   <Import Project="..\packages\Microsoft.NetCore.Analyzers.2.9.7\build\Microsoft.NetCore.Analyzers.props" Condition="Exists('..\packages\Microsoft.NetCore.Analyzers.2.9.7\build\Microsoft.NetCore.Analyzers.props')" />
@@ -75,10 +75,10 @@
       <HintPath>..\packages\canvas-lms.v1.0.0.8\lib\portable-net40+sl50+win+wp80\Canvas.v1.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="FakeData, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FakeData.1.0.0\lib\FakeData.dll</HintPath>
@@ -689,8 +689,6 @@
     <Content Include="Areas\EczaneNobet\Views\NobetDurum\Edit.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetDurum\Index.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetciEczaneEkrani\IndexDefault.cshtml" />
-    <Content Include="Scripts\d3\README.md" />
-    <Content Include="Scripts\d3\LICENSE" />
     <Content Include="Scripts\d3\CHANGES.md" />
     <Content Include="Scripts\d3\API.md" />
     <Content Include="Areas\EczaneNobet\Views\NobetYaz\AmacFonksiyonKatsayi.cshtml" />
@@ -740,6 +738,21 @@
     <Content Include="Areas\EczaneNobet\Views\NobetUstGrupKisit\KuralKategorilerPartialView.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetUstGrupKisit\NobetUstGrupKisitDegisimPartialView.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\NobetKomisyonu\Index.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\Shared\ErrorSilinenNobetlerPartial.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Create.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Delete.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Details.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Edit.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Index.cshtml" />
+    <Content Include=".editorconfig" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\NobetciEczaneMesafeler.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\NobetciEczaneMesafelerPartial.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Create.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Delete.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Details.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Edit.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Index.cshtml" />
+    <Content Include="Areas\EczaneNobet\Views\EczaneNobetGrup\EczaneNobetGrupPartialView.cshtml" />
     <Content Include="Scripts\i18n\defaults-am_ET.js" />
     <Content Include="Scripts\i18n\defaults-am_ET.min.js" />
     <Content Include="Scripts\i18n\defaults-ar_AR.js" />
@@ -804,8 +817,12 @@
     <Content Include="Scripts\i18n\defaults-sk_SK.min.js" />
     <Content Include="Scripts\i18n\defaults-sl_SI.js" />
     <Content Include="Scripts\i18n\defaults-sl_SI.min.js" />
+    <Content Include="Scripts\i18n\defaults-sr_SP.js" />
+    <Content Include="Scripts\i18n\defaults-sr_SP.min.js" />
     <Content Include="Scripts\i18n\defaults-sv_SE.js" />
     <Content Include="Scripts\i18n\defaults-sv_SE.min.js" />
+    <Content Include="Scripts\i18n\defaults-th_TH.js" />
+    <Content Include="Scripts\i18n\defaults-th_TH.min.js" />
     <Content Include="Scripts\i18n\defaults-tr_TR.js" />
     <Content Include="Scripts\i18n\defaults-tr_TR.min.js" />
     <Content Include="Scripts\i18n\defaults-ua_UA.js" />
@@ -815,62 +832,7 @@
     <Content Include="Scripts\i18n\defaults-zh_CN.js" />
     <Content Include="Scripts\i18n\defaults-zh_CN.min.js" />
     <Content Include="Scripts\i18n\defaults-zh_TW.js" />
-    <Content Include="Scripts\i18n\defaults-zh_TW.js.map" />
-    <Content Include="Scripts\i18n\defaults-zh_CN.js.map" />
-    <Content Include="Scripts\i18n\defaults-vi_VN.js.map" />
-    <Content Include="Scripts\i18n\defaults-ua_UA.js.map" />
-    <Content Include="Scripts\i18n\defaults-tr_TR.js.map" />
-    <Content Include="Scripts\i18n\defaults-sv_SE.js.map" />
-    <Content Include="Scripts\i18n\defaults-sl_SI.js.map" />
-    <Content Include="Scripts\i18n\defaults-sk_SK.js.map" />
-    <Content Include="Scripts\i18n\defaults-ru_RU.js.map" />
-    <Content Include="Scripts\i18n\defaults-ro_RO.js.map" />
-    <Content Include="Scripts\i18n\defaults-pt_PT.js.map" />
-    <Content Include="Scripts\i18n\defaults-pt_BR.js.map" />
-    <Content Include="Scripts\i18n\defaults-pl_PL.js.map" />
-    <Content Include="Scripts\i18n\defaults-nl_NL.js.map" />
-    <Content Include="Scripts\i18n\defaults-nb_NO.js.map" />
-    <Content Include="Scripts\i18n\defaults-lv_LV.js.map" />
-    <Content Include="Scripts\i18n\defaults-lt_LT.js.map" />
-    <Content Include="Scripts\i18n\defaults-ko_KR.js.map" />
-    <Content Include="Scripts\i18n\defaults-kh_KM.js.map" />
-    <Content Include="Scripts\i18n\defaults-ja_JP.js.map" />
-    <Content Include="Scripts\i18n\defaults-it_IT.js.map" />
-    <Content Include="Scripts\i18n\defaults-id_ID.js.map" />
-    <Content Include="Scripts\i18n\defaults-hu_HU.js.map" />
-    <Content Include="Scripts\i18n\defaults-hr_HR.js.map" />
-    <Content Include="Scripts\i18n\defaults-fr_FR.js.map" />
-    <Content Include="Scripts\i18n\defaults-fi_FI.js.map" />
-    <Content Include="Scripts\i18n\defaults-fa_IR.js.map" />
-    <Content Include="Scripts\i18n\defaults-eu.js.map" />
-    <Content Include="Scripts\i18n\defaults-et_EE.js.map" />
-    <Content Include="Scripts\i18n\defaults-es_ES.js.map" />
-    <Content Include="Scripts\i18n\defaults-es_CL.js.map" />
-    <Content Include="Scripts\i18n\defaults-en_US.js.map" />
-    <Content Include="Scripts\i18n\defaults-de_DE.js.map" />
-    <Content Include="Scripts\i18n\defaults-da_DK.js.map" />
-    <Content Include="Scripts\i18n\defaults-cs_CZ.js.map" />
-    <Content Include="Scripts\i18n\defaults-bg_BG.js.map" />
-    <Content Include="Scripts\i18n\defaults-ar_AR.js.map" />
-    <Content Include="Scripts\i18n\defaults-am_ET.js.map" />
-    <Content Include="Scripts\bootstrap-select.min.js.map" />
-    <Content Include="Scripts\bootstrap-select.js.map" />
-    <Content Include="Content\bootstrap-select.css.map" />
-    <Content Include="Areas\EczaneNobet\Views\Shared\ErrorSilinenNobetlerPartial.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Create.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Delete.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Details.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Edit.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSanalSonuc\Index.cshtml" />
-    <Content Include=".editorconfig" />
-    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\NobetciEczaneMesafeler.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\EczaneNobetSonuc\NobetciEczaneMesafelerPartial.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Create.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Delete.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Details.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Edit.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\DebugEczane\Index.cshtml" />
-    <Content Include="Areas\EczaneNobet\Views\EczaneNobetGrup\EczaneNobetGrupPartialView.cshtml" />
+    <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\index.js.flow" />
     <Content Include="Scripts\esm\popper.min.js.map" />
     <Content Include="Scripts\esm\popper.js.map" />
@@ -907,8 +869,52 @@
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetGrupKisit\Details.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetGrupKisit\Edit.cshtml" />
     <Content Include="Areas\EczaneNobet\Views\EczaneNobetGrupKisit\Index.cshtml" />
+    <Content Include="Scripts\d3\README.md" />
+    <Content Include="Scripts\d3\LICENSE" />
+    <Content Include="Scripts\i18n\defaults-zh_TW.js.map" />
+    <Content Include="Scripts\i18n\defaults-zh_CN.js.map" />
+    <Content Include="Scripts\i18n\defaults-vi_VN.js.map" />
+    <Content Include="Scripts\i18n\defaults-ua_UA.js.map" />
+    <Content Include="Scripts\i18n\defaults-tr_TR.js.map" />
+    <Content Include="Scripts\i18n\defaults-th_TH.js.map" />
+    <Content Include="Scripts\i18n\defaults-sv_SE.js.map" />
+    <Content Include="Scripts\i18n\defaults-sr_SP.js.map" />
+    <Content Include="Scripts\i18n\defaults-sl_SI.js.map" />
+    <Content Include="Scripts\i18n\defaults-sk_SK.js.map" />
+    <Content Include="Scripts\i18n\defaults-ru_RU.js.map" />
+    <Content Include="Scripts\i18n\defaults-ro_RO.js.map" />
+    <Content Include="Scripts\i18n\defaults-pt_PT.js.map" />
+    <Content Include="Scripts\i18n\defaults-pt_BR.js.map" />
+    <Content Include="Scripts\i18n\defaults-pl_PL.js.map" />
+    <Content Include="Scripts\i18n\defaults-nl_NL.js.map" />
+    <Content Include="Scripts\i18n\defaults-nb_NO.js.map" />
+    <Content Include="Scripts\i18n\defaults-lv_LV.js.map" />
+    <Content Include="Scripts\i18n\defaults-lt_LT.js.map" />
+    <Content Include="Scripts\i18n\defaults-ko_KR.js.map" />
+    <Content Include="Scripts\i18n\defaults-kh_KM.js.map" />
+    <Content Include="Scripts\i18n\defaults-ja_JP.js.map" />
+    <Content Include="Scripts\i18n\defaults-it_IT.js.map" />
+    <Content Include="Scripts\i18n\defaults-id_ID.js.map" />
+    <Content Include="Scripts\i18n\defaults-hu_HU.js.map" />
+    <Content Include="Scripts\i18n\defaults-hr_HR.js.map" />
+    <Content Include="Scripts\i18n\defaults-fr_FR.js.map" />
+    <Content Include="Scripts\i18n\defaults-fi_FI.js.map" />
+    <Content Include="Scripts\i18n\defaults-fa_IR.js.map" />
+    <Content Include="Scripts\i18n\defaults-eu.js.map" />
+    <Content Include="Scripts\i18n\defaults-et_EE.js.map" />
+    <Content Include="Scripts\i18n\defaults-es_ES.js.map" />
+    <Content Include="Scripts\i18n\defaults-es_CL.js.map" />
+    <Content Include="Scripts\i18n\defaults-en_US.js.map" />
+    <Content Include="Scripts\i18n\defaults-de_DE.js.map" />
+    <Content Include="Scripts\i18n\defaults-da_DK.js.map" />
+    <Content Include="Scripts\i18n\defaults-cs_CZ.js.map" />
+    <Content Include="Scripts\i18n\defaults-bg_BG.js.map" />
+    <Content Include="Scripts\i18n\defaults-ar_AR.js.map" />
+    <Content Include="Scripts\i18n\defaults-am_ET.js.map" />
+    <Content Include="Scripts\bootstrap-select.min.js.map" />
+    <Content Include="Scripts\bootstrap-select.js.map" />
+    <Content Include="Content\bootstrap-select.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
-    <Content Include="Scripts\i18n\defaults-zh_TW.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -1679,11 +1685,11 @@
     <Error Condition="!Exists('..\packages\Microsoft.NetCore.Analyzers.2.9.7\build\Microsoft.NetCore.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetCore.Analyzers.2.9.7\build\Microsoft.NetCore.Analyzers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.NetFramework.Analyzers.2.9.7\build\Microsoft.NetFramework.Analyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NetFramework.Analyzers.2.9.7\build\Microsoft.NetFramework.Analyzers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.7\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeAnalysis.FxCopAnalyzers.2.9.7\build\Microsoft.CodeAnalysis.FxCopAnalyzers.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.0\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
-  <Import Project="..\packages\EntityFramework.6.4.0\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.0\build\EntityFramework.targets')" />
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

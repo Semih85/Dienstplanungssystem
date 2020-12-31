@@ -24,16 +24,23 @@
 
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Hautapenik ez',
-    noneResultsText: 'Emaitzarik ez {0}',
-    countSelectedText: '{1}(e)tik {0} hautatuta',
-    maxOptionsText: ['Mugara iritsita ({n} {var} gehienez)', 'Taldearen mugara iritsita ({n} {var} gehienez)', ['elementu', 'elementu']],
-    multipleSeparator: ', ',
-    selectAllText: 'Hautatu Guztiak',
-    deselectAllText: 'Desautatu Guztiak'
+    noneSelectedText: 'Izaberite',
+    noneResultsText: 'Nema rezultata za {0}',
+    countSelectedText: function (numSelected, numTotal) {
+      return (numSelected == 1) ? '{0} izabrana' : '{0} izabrane';
+    },
+    maxOptionsText: function (numAll, numGroup) {
+      return [
+        (numAll == 1) ? 'Limit je dostignut ({n} stvar maximalno)' : 'Limit je dostignut ({n} stavke maksimalno)',
+        (numGroup == 1) ? 'Grupni limit je dostignut ({n} stvar maksimalno)' : 'Grupni limit je dostignut ({n} stavke maksimalno)'
+      ];
+    },
+    selectAllText: 'Izaberi sve',
+    deselectAllText: 'Obrisi sve',
+    multipleSeparator: ', '
   };
 })(jQuery);
 
 
 }));
-//# sourceMappingURL=defaults-eu.js.map
+//# sourceMappingURL=defaults-sr_SP.js.map

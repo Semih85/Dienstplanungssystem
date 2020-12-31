@@ -24,16 +24,16 @@
 
 (function ($) {
   $.fn.selectpicker.defaults = {
-    noneSelectedText: 'Hautapenik ez',
-    noneResultsText: 'Emaitzarik ez {0}',
-    countSelectedText: '{1}(e)tik {0} hautatuta',
-    maxOptionsText: ['Mugara iritsita ({n} {var} gehienez)', 'Taldearen mugara iritsita ({n} {var} gehienez)', ['elementu', 'elementu']],
-    multipleSeparator: ', ',
-    selectAllText: 'Hautatu Guztiak',
-    deselectAllText: 'Desautatu Guztiak'
+    noneSelectedText: 'ไม่ได้เลือกอะไรเลย',
+    noneResultsText: 'ไม่มีผลลัพธ์ที่ตรงกัน {0}',
+    countSelectedText: '{0} รายการที่เลือก',
+    maxOptionsText: ['เกินจำนวนที่กำหนด (สูงสุด {n} รายการ)', 'เกินจำนวนที่กำหนด (สูงสุด {n} กลุ่ม)'],
+    selectAllText: 'เลือกทั้งหมด',
+    deselectAllText: 'ไม่เลือกทั้งหมด',
+    multipleSeparator: ', '
   };
 })(jQuery);
 
 
 }));
-//# sourceMappingURL=defaults-eu.js.map
+//# sourceMappingURL=defaults-th_TH.js.map
