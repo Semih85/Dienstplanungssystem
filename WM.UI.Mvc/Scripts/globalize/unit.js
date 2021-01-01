@@ -1,5 +1,5 @@
 /**
- * Globalize v1.3.0
+ * Globalize v1.4.2
  *
  * http://github.com/jquery/globalize
  *
@@ -7,10 +7,10 @@
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2017-07-03T21:37Z
+ * Date: 2019-03-07T13:47Z
  */
 /*!
- * Globalize v1.3.0 2017-07-03T21:37Z Released under the MIT license
+ * Globalize v1.4.2 2019-03-07T13:47Z Released under the MIT license
  * http://git.io/TrdQbw
  */
 (function( root, factory ) {
@@ -67,7 +67,7 @@ var formatMessage = Globalize._formatMessage,
  */
 var unitFormat = function( value, numberFormatter, pluralGenerator, unitProperties ) {
 	var compoundUnitPattern = unitProperties.compoundUnitPattern, dividend, dividendProperties,
-		formattedValue, divisor, divisorProperties, message, pluralValue;
+		formattedValue, divisor, divisorProperties, message, pluralValue, oneProperty;
 
 	unitProperties = unitProperties.unitProperties;
 	formattedValue = numberFormatter( value );
@@ -77,9 +77,10 @@ var unitFormat = function( value, numberFormatter, pluralGenerator, unitProperti
 	if ( unitProperties instanceof Array ) {
 		dividendProperties = unitProperties[ 0 ];
 		divisorProperties = unitProperties[ 1 ];
+		oneProperty = divisorProperties.hasOwnProperty( "one" ) ? "one" : "other";
 
-		dividend = formatMessage( dividendProperties[ pluralValue ], [ value ] );
-		divisor = formatMessage( divisorProperties.one, [ "" ] ).trim();
+		dividend = formatMessage( dividendProperties[ pluralValue ], [ formattedValue ] );
+		divisor = formatMessage( divisorProperties[oneProperty], [ "" ] ).trim();
 
 		return formatMessage( compoundUnitPattern, [ dividend, divisor ] );
 	}
